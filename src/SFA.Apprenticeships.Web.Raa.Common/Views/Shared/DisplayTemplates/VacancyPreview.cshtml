@@ -279,8 +279,9 @@
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
-                <div class="text">
+                <div class="text editable-item">
                     <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
                 </div>
             </div>
         </div>
@@ -288,18 +289,21 @@
     <div class="grid-wrapper">
         <div class="grid grid-1-2">
             <div class="inner-block-padr">
-                <div class="text">
-                    <h3 class="bold-small">Employer</h3>
-                    <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-                    @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
-                    {
-                        <p>
+            <div class="text">
+                <h3 class="bold-small">Employer</h3>
+                <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                {
+                    <p>
+                        <div class="editable-item">
                             <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
                                id="vacancy-employer-website"
                                target="_blank"
                                title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
                             @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, string.Empty, string.Empty))
-                        </p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                        </div>
+                    </p>
                     }
                     @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
                     {

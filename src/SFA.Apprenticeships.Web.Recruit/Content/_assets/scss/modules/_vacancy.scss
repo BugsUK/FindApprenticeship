@@ -29,7 +29,7 @@
     }
 }
 
-html:not(.touch) .editable-item {
+html:not(.touch).js .editable-item {
     border: 1px dotted #fff;
     .edit-comment-link {
         color: white;

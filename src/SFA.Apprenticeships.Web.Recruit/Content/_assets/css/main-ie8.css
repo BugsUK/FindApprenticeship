@@ -6136,16 +6136,16 @@ aside h2:first-child {
         padding-top: 5px;
         padding-bottom: 5px; } }
 
-html:not(.touch) .editable-item {
+html:not(.touch).js .editable-item {
   border: 1px dotted #fff; }
-  html:not(.touch) .editable-item .edit-comment-link {
+  html:not(.touch).js .editable-item .edit-comment-link {
     color: white; }
-    html:not(.touch) .editable-item .edit-comment-link:focus {
+    html:not(.touch).js .editable-item .edit-comment-link:focus {
       color: #005ea5; }
-  html:not(.touch) .editable-item:hover {
+  html:not(.touch).js .editable-item:hover {
     background: rgba(0, 0, 0, 0.025);
     border: 1px dotted #d4d4d4; }
-    html:not(.touch) .editable-item:hover .edit-comment-link {
+    html:not(.touch).js .editable-item:hover .edit-comment-link {
       color: #005ea5; }
 
 .fa-flag {

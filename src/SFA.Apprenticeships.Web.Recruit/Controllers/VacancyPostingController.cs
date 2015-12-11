@@ -546,6 +546,7 @@
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = vacancyViewModel.ProviderSite.Ern, ern = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid });
 
             ModelState.Clear();
 

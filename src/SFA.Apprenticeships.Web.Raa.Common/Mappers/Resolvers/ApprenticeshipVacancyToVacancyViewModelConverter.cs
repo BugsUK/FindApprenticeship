@@ -34,6 +34,7 @@
                 NumberOfPositions = source.NumberOfPositions
             };
 
+            destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
             return destination;
         }
     }
