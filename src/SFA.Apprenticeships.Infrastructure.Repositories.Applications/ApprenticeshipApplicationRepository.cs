@@ -149,7 +149,7 @@
         {
             _logger.Debug("Calling repository to get submitted ApprenticeshipApplicationSummaries with VacancyId:{0}", vacancyId);
 
-            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).ToArray();
+            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).OrderBy(a => a.Status).ThenByDescending(a => a.DateApplied).ToArray();
 
             _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
 

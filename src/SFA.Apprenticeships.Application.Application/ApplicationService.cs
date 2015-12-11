@@ -16,7 +16,7 @@
 
         public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetApplicationSummaries(vacancyId);
+            return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }
 
         public int GetApplicationCount(string vacancyReference)
