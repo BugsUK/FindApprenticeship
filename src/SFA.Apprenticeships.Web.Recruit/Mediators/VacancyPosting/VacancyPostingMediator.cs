@@ -546,7 +546,14 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            if (vacancyViewModel.Status != ProviderVacancyStatuses.Live)
+            if (vacancyViewModel.Status == ProviderVacancyStatuses.Live)
+            {
+                if (vacancyViewModel.ApplicationCount == 0)
+                {
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
+                }
+            }
+            else
             {
                 var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel,
                     ruleSet: RuleSets.ErrorsAndWarnings);
