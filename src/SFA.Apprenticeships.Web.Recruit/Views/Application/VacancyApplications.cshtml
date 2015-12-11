@@ -115,7 +115,7 @@
                     <td>
                         <h4 class="applicant-name">
                             <input class="applicantCheckbox" type="checkbox">
-                            <a href="" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.ReviewApprenticeshipApplication, new {applicationId = applicationSummary.ApplicationId})" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
                         </h4>
                     </td>
                     <td>

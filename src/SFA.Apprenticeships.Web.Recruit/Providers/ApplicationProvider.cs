@@ -11,6 +11,7 @@
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
     using ViewModels.Application;
+    using ViewModels.Application.Apprenticeship;
 
     public class ApplicationProvider : IApplicationProvider
     {
@@ -61,6 +62,28 @@
             {
                 Page = applicationSummaryViewModels
             };
+
+            return viewModel;
+        }
+
+        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(Guid applicationId)
+        {
+            var application = _applicationService.GetApplication(applicationId);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+            viewModel.Vacancy = _mapper.Map<ApprenticeshipVacancy, ApplicationVacancyViewModel>(vacancy);
+
+            //TODO: Store geopoints for employers
+            if (vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude == 0 || vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude == 0)
+            {
+                //Coventry
+                vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude = 52.4009991288043;
+                vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude = -1.50812239495425;
+            }
+            //TODO: This distance calculation should be done in a new elastic index of applications which will also form the basis of a filter and sorting mechanism
+            viewModel.ApplicantDetails.Distance = Distance(application.CandidateDetails.Address.GeoPoint.Latitude,
+                    application.CandidateDetails.Address.GeoPoint.Longitude, vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude,
+                    vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude);
 
             return viewModel;
         }

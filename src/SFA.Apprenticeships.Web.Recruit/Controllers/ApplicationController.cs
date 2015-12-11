@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Attributes;
+    using Common.Mediators;
     using Constants;
     using Mediators.Application;
 
@@ -18,9 +19,16 @@
         [HttpGet]
         public ActionResult VacancyApplications(long vacancyReferenceNumber)
         {
-            var result = _applicationMediator.GetVacancyApplicationsViewModel(vacancyReferenceNumber);
+            var response = _applicationMediator.GetVacancyApplicationsViewModel(vacancyReferenceNumber);
 
-            return View(result.ViewModel);
+            switch (response.Code)
+            {
+                case ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }

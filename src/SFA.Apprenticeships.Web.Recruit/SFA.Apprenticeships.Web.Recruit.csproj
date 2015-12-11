@@ -303,11 +303,15 @@
     <Compile Include="Constants\Roles.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Mappers\RecruitMappers.cs" />
     <Compile Include="Mediators\Application\ApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApplicationMediatorCodes.cs" />
+    <Compile Include="Mediators\Application\ApprenticeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApplicationMediator.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
@@ -330,7 +334,12 @@
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -529,6 +538,8 @@
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\_DisabilityStatus.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

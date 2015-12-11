@@ -6,6 +6,7 @@
 
     public class ApplicationSummaryViewModel
     {
+        public Guid ApplicationId { get; set; }
         public string ApplicantName { get; set; }
         public string ApplicantLocation { get; set; }
         public GeoPointViewModel ApplicantGeoPoint { get; set; }

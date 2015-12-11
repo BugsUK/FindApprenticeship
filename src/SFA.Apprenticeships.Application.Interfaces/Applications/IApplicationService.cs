@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Applications
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Applications;
 
@@ -10,5 +11,7 @@
         int GetApplicationCount(string vacancyReference);
 
         int GetApplicationCount(int vacancyId);
+
+        ApprenticeshipApplicationDetail GetApplication(Guid applicationId);
     }
 }

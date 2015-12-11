@@ -94,6 +94,7 @@
             For<IProviderUserMediator>().Use<ProviderUserMediator>();
             For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
             For<IApplicationMediator>().Use<ApplicationMediator>();
+            For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
         }
     }
 }

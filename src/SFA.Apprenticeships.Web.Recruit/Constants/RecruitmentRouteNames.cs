@@ -60,5 +60,6 @@
 
         // Applications
         public const string VacancyApplications = "VacancyApplications";
+        public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
     }
 }
