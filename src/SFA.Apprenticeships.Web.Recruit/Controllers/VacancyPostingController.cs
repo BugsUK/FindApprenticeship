@@ -171,9 +171,9 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewCreateVacancy(long vacancyReferenceNumber)
+        public ActionResult ReviewCreateVacancy(long vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true);
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -358,9 +358,9 @@
         #region Requirements and Prospects
 
         [HttpGet]
-        public ActionResult VacancyRequirementsProspects(long vacancyReferenceNumber)
+        public ActionResult VacancyRequirementsProspects(long vacancyReferenceNumber, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false);
+            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
 
             switch (response.Code)
@@ -376,7 +376,7 @@
         [HttpGet]
         public ActionResult ReviewVacancyRequirementsProspects(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true);
+            var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true, true);
             var viewModel = response.ViewModel;
 
             ModelState.Clear();
@@ -434,7 +434,7 @@
                         });
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
                     var routeName = RecruitmentRouteNames.VacancyQuestions;
-                    if (response.ViewModel.Status == ProviderVacancyStatuses.RejectedByQA)
+                    if (response.ViewModel.Status == ProviderVacancyStatuses.RejectedByQA || response.ViewModel.ComeFromPreview)
                     {
                         routeName = RecruitmentRouteNames.PreviewVacancy;
                     }
@@ -542,11 +542,11 @@
 
             var vacancyViewModel = response.ViewModel;
 
-            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewCreateVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
-            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = vacancyViewModel.ProviderSite.Ern, ern = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid });
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewCreateVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = vacancyViewModel.ProviderSite.Ern, ern = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
 
             ModelState.Clear();
 

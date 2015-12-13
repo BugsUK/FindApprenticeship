@@ -250,9 +250,10 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
         {
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
+            viewModel.ComeFromPreview = comeFromPreview ?? false;
 
             if (validate)
             {
@@ -436,9 +437,10 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber, bool validate)
+        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
+            vacancyViewModel.ComeFromPreview = comeFromPreview ?? false;
 
             if (validate)
             {

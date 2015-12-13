@@ -32,5 +32,6 @@
         public string DesiredQualificationsComment { get; set; }
         public ProviderVacancyStatuses Status { get; set; }
 
+        public bool ComeFromPreview { get; set; }
     }
 }

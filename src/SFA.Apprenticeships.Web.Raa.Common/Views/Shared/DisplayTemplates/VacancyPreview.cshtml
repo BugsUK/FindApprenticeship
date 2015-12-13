@@ -281,7 +281,7 @@
             <div class="inner-block-padr">
                 <div class="text editable-item">
                     <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.ProviderDescriptionComment))
                 </div>
             </div>
         </div>
@@ -301,7 +301,7 @@
                                target="_blank"
                                title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
                             @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, string.Empty, string.Empty))
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
                         </div>
                     </p>
                     }

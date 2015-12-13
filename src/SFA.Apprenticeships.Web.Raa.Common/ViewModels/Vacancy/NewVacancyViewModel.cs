@@ -78,5 +78,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         public int? NumberOfPositions { get; set; }
+
+        public string ProviderWebsiteUrlComment { get; set; }
+
+        public string ProviderDescriptionComment { get; set; }
+
+        public bool ComeFromPreview { get; set; }
     }
 }

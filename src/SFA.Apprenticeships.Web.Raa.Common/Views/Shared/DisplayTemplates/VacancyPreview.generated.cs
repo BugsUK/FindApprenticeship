@@ -1408,7 +1408,7 @@ WriteLiteral("                    ");
 
             
             #line 284 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-               Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment)));
+               Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.ProviderDescriptionComment)));
 
             
             #line default
@@ -1438,14 +1438,14 @@ WriteLiteral(">Employer</h3>\r\n                <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 19982), Tuple.Create("\"", 20109)
+WriteAttribute("class", Tuple.Create(" class=\"", 19981), Tuple.Create("\"", 20108)
             
             #line 294 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 19990), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+, Tuple.Create(Tuple.Create("", 19989), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 19990), false)
+, 19989), false)
 );
 
 WriteLiteral(">");
@@ -1481,29 +1481,29 @@ WriteLiteral(">\r\n                            <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 20432), Tuple.Create("\"", 20501)
+WriteAttribute("href", Tuple.Create(" href=\"", 20431), Tuple.Create("\"", 20500)
             
             #line 299 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 20439), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 20438), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 20439), false)
+, 20438), false)
 );
 
 WriteLiteral("\r\n                               id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                               target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                               title=\"", 20612), Tuple.Create("\"", 20725)
+WriteAttribute("title", Tuple.Create("\r\n                               title=\"", 20611), Tuple.Create("\"", 20724)
             
             #line 302 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 20652), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 20651), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 20652), false)
-, Tuple.Create(Tuple.Create(" ", 20717), Tuple.Create("Website", 20718), true)
+, 20651), false)
+, Tuple.Create(Tuple.Create(" ", 20716), Tuple.Create("Website", 20717), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1534,7 +1534,7 @@ WriteLiteral("                            ");
 
             
             #line 304 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.VacancyQuestionsViewModel.SecondQuestionComment)));
+                       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment)));
 
             
             #line default
@@ -1898,16 +1898,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 26140), Tuple.Create("\"", 26342)
-, Tuple.Create(Tuple.Create("", 26146), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26146), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26137), Tuple.Create("\"", 26339)
+, Tuple.Create(Tuple.Create("", 26143), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26143), true)
             
             #line 375 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 26191), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 26188), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 26191), false)
-, Tuple.Create(Tuple.Create("", 26278), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26278), true)
+, 26188), false)
+, Tuple.Create(Tuple.Create("", 26275), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26275), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -1948,16 +1948,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 26863), Tuple.Create("\"", 27037)
-, Tuple.Create(Tuple.Create("", 26869), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26869), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 26860), Tuple.Create("\"", 27034)
+, Tuple.Create(Tuple.Create("", 26866), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 26866), true)
             
             #line 383 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 26914), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 26911), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 26914), false)
-, Tuple.Create(Tuple.Create("", 26973), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26973), true)
+, 26911), false)
+, Tuple.Create(Tuple.Create("", 26970), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 26970), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -2052,14 +2052,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 28325), Tuple.Create("\"", 28380)
+WriteAttribute("href", Tuple.Create(" href=\"", 28322), Tuple.Create("\"", 28377)
             
             #line 403 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 28332), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 28329), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 28332), false)
+, 28329), false)
 );
 
 WriteLiteral(" target=\"_blank\"");

@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
 
-    var saveButtonText = Model.Status == ProviderVacancyStatuses.RejectedByQA ? "Save and return to Preview" : "Save and continue";
+    var saveButtonText = ( Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview ) ? "Save and return to Preview" : "Save and continue";
 }
 
 <h1 class="heading-xlarge">
@@ -17,7 +17,8 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(model => model.Status)
+    @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.ComeFromPreview)
 
     <section>
         <div class="form-group">

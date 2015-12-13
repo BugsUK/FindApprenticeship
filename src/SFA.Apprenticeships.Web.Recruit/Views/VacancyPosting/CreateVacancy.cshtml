@@ -2,7 +2,6 @@
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
 @{
     ViewBag.Title = "Recruit an Apprentice - Select framework and level";
 
@@ -17,7 +16,7 @@
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "CreateVacancyAndPreview";
