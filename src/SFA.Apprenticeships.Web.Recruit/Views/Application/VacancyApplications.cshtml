@@ -28,16 +28,10 @@
             </div>
             <div class="grid grid-1-3">
                 <p class="small-btm-margin">
-                    <a href="">Clone</a>
-                </p>
-                <p class="small-btm-margin">
-                    <a href="">Extend</a>
+                    <a href="">Manage vacancy dates</a>
                 </p>
                 <p class="small-btm-margin">
                     <a href="">Withdraw</a>
-                </p>
-                <p>
-                    <a href="">Close</a>
                 </p>
             </div>
         </div>
@@ -55,7 +49,7 @@
                 {
                     <p>This vacancy is due to close in 1 day.</p>
                 }
-                if (daysTillClose > 1)
+                if (daysTillClose > 1 && daysTillClose <= 5)
                 {
                     <p>This vacancy is due to close in @daysTillClose days.</p>
                 }
@@ -90,15 +84,11 @@
                 <col class="t40">
                 <col class="t20">
                 <col class="t20">
-                <col class="t20">
             </colgroup>
             <thead>
                 <tr>
                     <th>
                         <a href="" class="font-black">Applicant name</a>
-                    </th>
-                    <th>
-                        <a href="" class="font-black">Location</a>
                     </th>
                     <th>
                         <a href="" class="font-black">Submitted</a>
@@ -114,13 +104,8 @@
                 <tr class="applicant">
                     <td>
                         <h4 class="applicant-name">
-                            <input class="applicantCheckbox" type="checkbox">
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.ReviewApprenticeshipApplication, new {applicationId = applicationSummary.ApplicationId})" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
                         </h4>
-                    </td>
-                    <td>
-                        <span class="applicant-location">@applicationSummary.ApplicantLocation</span>
-                        <span class="applicant-distance">@applicationSummary.Distance.ToDistanceInMilesDisplayText()</span>
                     </td>
                     <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
                     <td>
