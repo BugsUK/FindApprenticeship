@@ -19,7 +19,7 @@
         public class Addresses
         {
             public const string NoAddressesErrorText =
-                "You must enter the employer’s postcode or address before continuing";
+                "You must enter at least one location before continuing";
         }
     }
 }
