@@ -120,7 +120,9 @@
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
-                    Addresses = new List<VacancyLocationAddressViewModel>()
+                    Addresses = new List<VacancyLocationAddressViewModel>(),
+                    Status = vacancy.Status,
+                    VacancyReferenceNumber = vacancy.VacancyReferenceNumber
                 };
 
                 vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
@@ -225,7 +227,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Ukprn = newVacancyViewModel.Ukprn,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
-                Status = ProviderVacancyStatuses.Draft,
+                Status = newVacancyViewModel.Status,
                 AdditionalLocationInformation = newVacancyViewModel.AdditionalLocationInformation,
                 LocationAddresses = new List<VacancyLocationAddress>()
             });
@@ -376,6 +378,10 @@
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+
+            if (vacancy == null)
+                return null;
+
             var viewModel = GetVacancyViewModelFrom(vacancy);
             return viewModel;
         }
@@ -390,6 +396,32 @@
             }
 
             return null;
+        }
+
+        public void RemoveLocationAddresses(Guid vacancyGuid)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            if (vacancy != null)
+            {
+                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+                vacancy.AdditionalLocationInformation = null;
+
+                _apprenticeshipVacancyWriteRepository.Save(vacancy);
+            }
+        }
+
+        public void RemoveVacancyLocationInformation(Guid vacancyGuid)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            if (vacancy != null)
+            {
+                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+                vacancy.NumberOfPositions = null;
+                vacancy.IsEmployerLocationMainApprenticeshipLocation = null;
+                vacancy.AdditionalLocationInformation = null;
+
+                _apprenticeshipVacancyWriteRepository.Save(vacancy);
+            }
         }
 
         private VacancyViewModel GetVacancyViewModelFrom(ApprenticeshipVacancy vacancy)
@@ -836,6 +868,35 @@
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            return viewModel;
+        }
+
+        public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            if (vacancy != null)
+            {
+                vacancy.NumberOfPositions = null;
+                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+                viewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
+                {
+                    Address = new Address
+                    {
+                        AddressLine1 = a.Address.AddressLine1,
+                        AddressLine2 = a.Address.AddressLine2,
+                        AddressLine3 = a.Address.AddressLine3,
+                        AddressLine4 = a.Address.AddressLine4,
+                        Postcode = a.Address.Postcode,
+                        Uprn = a.Address.Uprn
+                    },
+                    NumberOfPositions = a.NumberOfPositions.Value
+                }));
+
+                vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
+            }
+
+            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
             return viewModel;
         }
     }

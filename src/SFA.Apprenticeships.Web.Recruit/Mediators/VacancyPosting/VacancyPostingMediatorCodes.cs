@@ -121,5 +121,10 @@
         {
             public const string Ok = "VacancyPosting.SearchLocations.Ok";
         }
+
+        public class ClearLocationInformation
+        {
+            public const string Ok = "VacancyPosting.ClearLocationInformation.Ok";
+        }
     }
 }

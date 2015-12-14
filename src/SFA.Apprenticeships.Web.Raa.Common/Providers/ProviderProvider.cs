@@ -87,10 +87,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
 
             var result = providerSiteEmployerLink.Convert();
-            result.VacancyGuid = viewModel.VacancyGuid;
-            result.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            result.NumberOfPositions = viewModel.NumberOfPositions;
-
+            
             return result;
         }
 

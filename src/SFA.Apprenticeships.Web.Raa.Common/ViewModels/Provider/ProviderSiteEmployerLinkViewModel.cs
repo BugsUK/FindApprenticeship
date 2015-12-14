@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Vacancy;
     using Validators.Provider;
@@ -28,5 +29,11 @@
         public int? NumberOfPositions { get; set; }
 
         public bool ShowNumberOfPositions { get; set; }
+
+        public bool ComeFromPreview { get; set; }
+
+        public ProviderVacancyStatuses Status { get; set; }
+
+        public long VacancyReferenceNumber { get; set; }
     }
 }

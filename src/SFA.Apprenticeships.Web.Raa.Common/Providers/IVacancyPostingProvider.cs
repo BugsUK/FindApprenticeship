@@ -47,5 +47,11 @@
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
+
+        void RemoveVacancyLocationInformation(Guid vacancyGuid);
+
+        void RemoveLocationAddresses(Guid vacancyGuid);
+
+        LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
     }
 }

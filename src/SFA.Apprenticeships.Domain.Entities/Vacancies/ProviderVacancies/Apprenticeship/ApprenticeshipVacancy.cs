@@ -33,8 +33,8 @@
         public string AdditionalLocationInformation { get; set; }
 
         public List<VacancyLocationAddress> LocationAddresses { get; set; }
-        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
-        public int NumberOfPositions { get; set; }
+        public int? NumberOfPositions { get; set; }
     }
 }

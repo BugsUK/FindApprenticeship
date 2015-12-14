@@ -148,7 +148,7 @@
 
             @if (IsSingleLocation(Model))
             {
-                var positions = Model.IsEmployerLocationMainApprenticeshipLocation ? Model.NumberOfPositions : Model.LocationAddresses.First().NumberOfPositions;
+                var positions = Model.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NumberOfPositions : Model.LocationAddresses.First().NumberOfPositions;
 
                 <div class="editable-item">
                     <h3 class="bold-small">Positions</h3>
@@ -318,51 +318,66 @@
                             </div>
                         </div>
                     }
-                    else if (Model.LocationAddresses != null && Model.LocationAddresses.Count() == 1)
-                    {
-                        <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                            <h3 class="bold-small">Address</h3>
-                            <div itemprop="address">
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine1</p>
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine2</p>
-                                <p class="small-btm-margin" itemprop="addressLocality">@Model.LocationAddresses.First().Address.AddressLine3</p>
-                                <p class="small-btm-margin" itemprop="addressRegion">@Model.LocationAddresses.First().Address.AddressLine4</p>
-                                <p class="small-btm-margin" itemprop="postalCode">@Model.LocationAddresses.First().Address.Postcode</p>
-                            </div>
-                        </div>
-                    }
                     else
                     {
-                        <p></p>
-                                <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                                    <h3 class="bold-small">Addresses</h3>
-                                    <div id="locationAddressesTable">
-                                        <table>
-                                            <colgroup>
-                                                <col class="t60">
-                                                <col class="t45">
-                                            </colgroup>
-
-                                            <thead>
-                                                <tr>
-                                                    <th>
-                                                        <span class="heading-span">Location</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="heading-span">Number of positions</span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                                                @foreach (var locationAddress in Model.LocationAddresses)
-                                                {
-                                                    @Html.DisplayFor(m => locationAddress)
-                                                }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        if (Model.LocationAddresses != null && Model.LocationAddresses.Count() == 1)
+                        {
+                            <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
+                                <h3 class="bold-small">Address</h3>
+                                <div itemprop="address">
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.LocationAddresses.First().Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.LocationAddresses.First().Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.LocationAddresses.First().Address.Postcode</p>
                                 </div>
+
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                            </div>
+                        }
+                        else
+                        {
+                            <p></p>
+                            <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
+                                <h3 class="bold-small">Addresses</h3>
+                                <div id="locationAddressesTable">
+                                    <table>
+                                        <colgroup>
+                                            <col class="t60">
+                                            <col class="t45">
+                                        </colgroup>
+
+                                        <thead>
+                                        <tr>
+                                            <th>
+                                                <span class="heading-span">Location</span>
+                                            </th>
+                                            <th>
+                                                <span class="heading-span">Number of positions</span>
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                        @foreach (var locationAddress in Model.LocationAddresses)
+                                        {
+                                            @Html.DisplayFor(m => locationAddress)
+                                        }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                            </div>
+                        }
+                        if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
+                        {
+                            <div class="editable-item">
+                                <h3 class="bold-small">Additional location information</h3>
+                                <p class="preserve-formatting">@Html.Raw(Model.AdditionalLocationInformation)</p>
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                            </div>
+                        }
                     }
                 </div>
             </div>

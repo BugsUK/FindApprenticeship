@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies.ProviderVacancies;
 
     public class LocationSearchViewModel
     {
@@ -24,5 +25,11 @@
         public string AdditionalLocationInformation { get; set; }
 
         public string Ukprn { get; set; }
+
+        public bool ComeFromPreview { get; set; }
+
+        public ProviderVacancyStatuses Status { get; set; }
+
+        public long VacancyReferenceNumber { get; set; }
     }
 }

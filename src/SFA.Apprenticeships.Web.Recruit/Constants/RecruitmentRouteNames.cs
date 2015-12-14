@@ -2,7 +2,6 @@
 {
     public class RecruitmentRouteNames
     {
-        
         public const string RecruitmentHome = "RecruitmentHome";
 
         // Provider set up
@@ -42,7 +41,8 @@
         public const string SubmitVacancy = "SubmitVacancy";
         public const string VacancySubmitted = "VacancySubmitted";
         public const string CloneVacancy = "CloneVacancy";
-        
+        public const string ConfirmEmployerSelection = "ConfirmEmployerSelection";
+
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
         public const string SearchExistingEmployer = "SearchExistingEmployer";

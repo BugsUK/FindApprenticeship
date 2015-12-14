@@ -31,7 +31,8 @@
                     context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
                         source.LocationAddresses),
                 IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = source.NumberOfPositions
+                NumberOfPositions = source.NumberOfPositions,
+                AdditionalLocationInformation = source.AdditionalLocationInformation
             };
 
             destination.NewVacancyViewModel.VacancyGuid = source.EntityId;

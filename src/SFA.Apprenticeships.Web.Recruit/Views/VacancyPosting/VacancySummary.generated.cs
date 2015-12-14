@@ -81,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "VacancySummaryAndPreview";
@@ -233,14 +233,14 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 1963), Tuple.Create("\"", 2021)
+WriteAttribute("name", Tuple.Create(" name=\"", 1988), Tuple.Create("\"", 2046)
             
             #line 45 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 1970), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.WageType).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 1995), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.WageType).ToString().ToLower()
             
             #line default
             #line hidden
-, 1970), false)
+, 1995), false)
 );
 
 WriteLiteral("></a>\r\n                    <label");
@@ -251,15 +251,15 @@ WriteLiteral(" for=\"weekly-wage\"");
 
 WriteLiteral(">Wage</label>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2131), Tuple.Create("\"", 2230)
-, Tuple.Create(Tuple.Create("", 2139), Tuple.Create("form-group", 2139), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2156), Tuple.Create("\"", 2255)
+, Tuple.Create(Tuple.Create("", 2164), Tuple.Create("form-group", 2164), true)
             
             #line 47 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 2149), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType))
+, Tuple.Create(Tuple.Create(" ", 2174), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType))
             
             #line default
             #line hidden
-, 2150), false)
+, 2175), false)
 );
 
 WriteLiteral(" data-editable-x=\"\"");
@@ -389,27 +389,27 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4423), Tuple.Create("\"", 4522)
-, Tuple.Create(Tuple.Create("", 4431), Tuple.Create("form-group", 4431), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4448), Tuple.Create("\"", 4547)
+, Tuple.Create(Tuple.Create("", 4456), Tuple.Create("form-group", 4456), true)
             
             #line 77 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4441), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
+, Tuple.Create(Tuple.Create(" ", 4466), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration))
             
             #line default
             #line hidden
-, 4442), false)
+, 4467), false)
 );
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 4548), Tuple.Create("\"", 4606)
+WriteAttribute("name", Tuple.Create(" name=\"", 4573), Tuple.Create("\"", 4631)
             
             #line 78 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 4555), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 4580), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.Duration).ToString().ToLower()
             
             #line default
             #line hidden
-, 4555), false)
+, 4580), false)
 );
 
 WriteLiteral("></a>\r\n");
@@ -473,29 +473,29 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </fieldset>\r\n\r\n            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5238), Tuple.Create("\"", 5364)
-, Tuple.Create(Tuple.Create("", 5246), Tuple.Create("form-group", 5246), true)
-, Tuple.Create(Tuple.Create(" ", 5256), Tuple.Create("inline-fixed", 5257), true)
-, Tuple.Create(Tuple.Create(" ", 5269), Tuple.Create("date-input", 5270), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5263), Tuple.Create("\"", 5389)
+, Tuple.Create(Tuple.Create("", 5271), Tuple.Create("form-group", 5271), true)
+, Tuple.Create(Tuple.Create(" ", 5281), Tuple.Create("inline-fixed", 5282), true)
+, Tuple.Create(Tuple.Create(" ", 5294), Tuple.Create("date-input", 5295), true)
             
             #line 89 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5280), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))
+, Tuple.Create(Tuple.Create(" ", 5305), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))
             
             #line default
             #line hidden
-, 5281), false)
+, 5306), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 5386), Tuple.Create("\"", 5447)
+WriteAttribute("name", Tuple.Create(" name=\"", 5411), Tuple.Create("\"", 5472)
             
             #line 90 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 5393), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ClosingDate).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 5418), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ClosingDate).ToString().ToLower()
             
             #line default
             #line hidden
-, 5393), false)
+, 5418), false)
 );
 
 WriteLiteral("></a>\r\n                <legend");
@@ -548,29 +548,29 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</div>\r\n            <fieldset");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5876), Tuple.Create("\"", 6008)
-, Tuple.Create(Tuple.Create("", 5884), Tuple.Create("form-group", 5884), true)
-, Tuple.Create(Tuple.Create(" ", 5894), Tuple.Create("inline-fixed", 5895), true)
-, Tuple.Create(Tuple.Create(" ", 5907), Tuple.Create("date-input", 5908), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 5901), Tuple.Create("\"", 6033)
+, Tuple.Create(Tuple.Create("", 5909), Tuple.Create("form-group", 5909), true)
+, Tuple.Create(Tuple.Create(" ", 5919), Tuple.Create("inline-fixed", 5920), true)
+, Tuple.Create(Tuple.Create(" ", 5932), Tuple.Create("date-input", 5933), true)
             
             #line 96 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5918), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))
+, Tuple.Create(Tuple.Create(" ", 5943), Tuple.Create<System.Object, System.Int32>(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))
             
             #line default
             #line hidden
-, 5919), false)
+, 5944), false)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 6030), Tuple.Create("\"", 6097)
+WriteAttribute("name", Tuple.Create(" name=\"", 6055), Tuple.Create("\"", 6122)
             
             #line 97 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-, Tuple.Create(Tuple.Create("", 6037), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 6062), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()
             
             #line default
             #line hidden
-, 6037), false)
+, 6062), false)
 );
 
 WriteLiteral("></a>\r\n                <legend");
@@ -659,14 +659,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 6935), Tuple.Create("\"", 6959)
+WriteAttribute("value", Tuple.Create(" value=\"", 6960), Tuple.Create("\"", 6984)
             
             #line 108 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                    , Tuple.Create(Tuple.Create("", 6943), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                    , Tuple.Create(Tuple.Create("", 6968), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 6943), false)
+, 6968), false)
 );
 
 WriteLiteral(">");

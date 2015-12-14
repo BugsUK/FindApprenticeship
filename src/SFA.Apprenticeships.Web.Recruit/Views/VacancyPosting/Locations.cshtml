@@ -1,7 +1,10 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Add locations";
+
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 }
 
 <h1 class="heading-xlarge">
@@ -16,6 +19,8 @@
     @Html.HiddenFor(m => m.Ern);
     @Html.HiddenFor(m => m.ProviderSiteErn);
     @Html.HiddenFor(m => m.VacancyGuid);
+    @Html.HiddenFor(m => m.ComeFromPreview);
+    @Html.HiddenFor(m => m.VacancyReferenceNumber);
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
     <noscript>
@@ -179,7 +184,8 @@
             <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
                 @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
             </div>
-            <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+            <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
+            @Html.RouteLink("Use employer's address", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
         </div>
     </div>
 }

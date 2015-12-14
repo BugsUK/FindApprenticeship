@@ -78,9 +78,10 @@
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
-        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn, Guid? vacancyGuid)
+        public MediatorResponse<EmployerSearchViewModel> GetProviderEmployers(string providerSiteErn, Guid? vacancyGuid, bool? comeFromPreview)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModels(providerSiteErn);
+            viewModel.ComeFromPreview = comeFromPreview ?? false;
 
             var validationResult = _employerSearchViewModelServerValidator.Validate(viewModel);
 
@@ -90,6 +91,7 @@
             }
 
             viewModel.VacancyGuid = vacancyGuid;
+
             if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
@@ -138,10 +140,11 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
         {
             var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
             viewModel.VacancyGuid = vacancyGuid;
+            viewModel.ComeFromPreview = comeFromPreview ?? false;
 
             var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyGuid);
 
@@ -150,8 +153,17 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation =
                     existingVacancy.IsEmployerLocationMainApprenticeshipLocation;
                 viewModel.NumberOfPositions = existingVacancy.NumberOfPositions;
+                viewModel.Status = existingVacancy.Status;
+                viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
             }
-            
+
+            if (useEmployerLocation.HasValue && useEmployerLocation.Value)
+            {
+                viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
+            }
+
+            // TODO: if the vacancy already exists, we should update it removing the old locations and the number of positions
+
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
@@ -174,6 +186,18 @@
 
             var newViewModel = _providerProvider.ConfirmProviderSiteEmployerLink(viewModel);
 
+            var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+            if (existingVacancy != null && viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == true)
+            {
+                _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
+            }
+
+            newViewModel.VacancyGuid = viewModel.VacancyGuid;
+            newViewModel.IsEmployerLocationMainApprenticeshipLocation = viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            newViewModel.NumberOfPositions = viewModel.NumberOfPositions;
+            newViewModel.VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
+            
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
@@ -227,6 +251,14 @@
                 }));
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
+        }
+
+        public MediatorResponse ClearLocationInformation(Guid vacancyGuid)
+        {
+            _vacancyPostingProvider.RemoveVacancyLocationInformation(vacancyGuid);
+            var result = new MediatorResponse {Code = VacancyPostingMediatorCodes.ClearLocationInformation.Ok};
+
+            return result;
         }
 
         public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
@@ -362,9 +394,10 @@
                 && ( !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.SecondQuestion));
         }
 
-        public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate)
+        public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
+            vacancyViewModel.ComeFromPreview = comeFromPreview ?? false;
 
             if (validate)
             {
@@ -400,7 +433,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> CreateVacancy(LocationSearchViewModel viewModel)
+        public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)
         {
             var validationResult = _locationSearchViewModelValidator.Validate(viewModel);
 
@@ -410,15 +443,26 @@
                     validationResult);
             }
 
-            var locationSearchViewModel = _vacancyPostingProvider.CreateVacancy(viewModel);
+            LocationSearchViewModel locationSearchViewModel = null;
+
+            var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyGuid);
+            if (existingVacancy == null)
+            {
+                locationSearchViewModel = _vacancyPostingProvider.CreateVacancy(viewModel);
+            }
+            else
+            {
+                locationSearchViewModel = _vacancyPostingProvider.AddLocations(viewModel);
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid)
+        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid, bool? comeFromPreview)
         {
             var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
-
+            locationSearchViewModel.ComeFromPreview = comeFromPreview ?? false;
+            
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok, locationSearchViewModel);
 
         }
@@ -469,6 +513,8 @@
             var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
             
             var completeViewModel = GetVacancyViewModel(viewModel.VacancyReferenceNumber);
+            updatedViewModel.ComeFromPreview = viewModel.ComeFromPreview;
+
             return
                 GetMediatorResponse(
                     completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy
@@ -492,10 +538,10 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber, bool validate)
+        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
-
+            vacancyViewModel.ComeFromPreview = comeFromPreview ?? false;
             if (validate)
             {
                 var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(vacancyViewModel);
@@ -600,37 +646,43 @@
 
         public MediatorResponse<EmployerSearchViewModel> SelectNewEmployer(EmployerSearchViewModel viewModel)
         {
+            EmployerSearchViewModel result = viewModel;
+
             if (viewModel.FilterType == EmployerFilterType.Undefined)
             {
-                viewModel = new EmployerSearchViewModel
+                result = new EmployerSearchViewModel
                 {
                     ProviderSiteErn = viewModel.ProviderSiteErn,
                     FilterType = EmployerFilterType.Undefined,
                     EmployerResults = Enumerable.Empty<EmployerResultViewModel>(),
                     EmployerResultsPage = new PageableViewModel<EmployerResultViewModel>(),
-                    VacancyGuid = viewModel.VacancyGuid
+                    VacancyGuid = viewModel.VacancyGuid,
+                    ComeFromPreview = viewModel.ComeFromPreview
                 };
             }
             else
             {
-                viewModel.EmployerResultsPage = viewModel.EmployerResultsPage ?? new PageableViewModel<EmployerResultViewModel>();
+                result.EmployerResultsPage = result.EmployerResultsPage ?? new PageableViewModel<EmployerResultViewModel>();
 
-                var validationResult = _employerSearchViewModelServerValidator.Validate(viewModel);
+                var validationResult = _employerSearchViewModelServerValidator.Validate(result);
 
                 if (!validationResult.IsValid)
                 {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation, viewModel, validationResult);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation, result, validationResult);
                 }
 
-                viewModel = _employerProvider.GetEmployerViewModels(viewModel);
+                result = _employerProvider.GetEmployerViewModels(viewModel);
+                result.ComeFromPreview = viewModel.ComeFromPreview;
 
-                if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
+                if ((result.EmployerResults == null || !result.EmployerResults.Any()) &&
+                    (result.EmployerResultsPage == null || result.EmployerResultsPage.ResultsCount == 0))
                 {
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsErnRequiredText, UserMessageLevel.Info);
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.NoResults, result,
+                        EmployerSearchViewModelMessages.NoResultsErnRequiredText, UserMessageLevel.Info);
                 }
             }
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, viewModel, EmployerSearchViewModelMessages.ErnAdviceText, UserMessageLevel.Info);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.SelectNewEmployer.Ok, result, EmployerSearchViewModelMessages.ErnAdviceText, UserMessageLevel.Info);
         }
     }
 }

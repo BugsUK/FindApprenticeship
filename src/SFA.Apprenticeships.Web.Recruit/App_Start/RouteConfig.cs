@@ -170,6 +170,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.ConfirmEmployerSelection,
+                url: "vacancy/employer/confirmSelection",
+                defaults: new { controller = "VacancyPosting", action = "ConfirmEmployerSelection" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.SearchExistingEmployer,
                 url: "vacancy/employer/searchexisting",
                 defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployer" }
