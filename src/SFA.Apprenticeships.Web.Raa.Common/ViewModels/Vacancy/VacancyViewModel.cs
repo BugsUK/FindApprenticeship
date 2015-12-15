@@ -45,16 +45,8 @@
 
         public int ApplicationCount { get; set; }
 
-        public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
-
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
-
-        public int? NumberOfPositions { get; set; }
-
         public string EmployerLink { get; set; }
-
-        public string AdditionalLocationInformation { get; set; }
-
+        
         public string LocationsLink { get; set; }
     }
 }

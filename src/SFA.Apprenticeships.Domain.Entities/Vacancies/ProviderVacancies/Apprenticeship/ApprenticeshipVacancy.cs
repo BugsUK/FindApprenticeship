@@ -36,5 +36,8 @@
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         public int? NumberOfPositions { get; set; }
+        public string EmployerDescriptionComment { get; set; }
+        public string EmployerWebsiteUrlComment { get; set; }
+        public string LocationAddressesComment { get; set; }
     }
 }

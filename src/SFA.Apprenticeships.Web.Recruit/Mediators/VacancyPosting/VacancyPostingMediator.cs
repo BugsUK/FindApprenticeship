@@ -151,10 +151,12 @@
             if (existingVacancy != null)
             {
                 viewModel.IsEmployerLocationMainApprenticeshipLocation =
-                    existingVacancy.IsEmployerLocationMainApprenticeshipLocation;
-                viewModel.NumberOfPositions = existingVacancy.NumberOfPositions;
+                    existingVacancy.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
+                viewModel.NumberOfPositions = existingVacancy.NewVacancyViewModel.NumberOfPositions;
                 viewModel.Status = existingVacancy.Status;
                 viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
+                viewModel.DescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
+                viewModel.WebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
             }
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)

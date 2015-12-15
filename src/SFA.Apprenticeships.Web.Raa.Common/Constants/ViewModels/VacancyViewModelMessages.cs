@@ -219,5 +219,15 @@
             public const string LabelText = "I've reviewed this vacancy and would like to resubmit it for approval";
             public const string RequiredErrorText = "Confirm you have reviewed this vacancy and would like to resubmit it for approval";
         }
+
+        public class EmployerDescriptionComment
+        {
+            public const string LabelText = "Description comment";
+        }
+
+        public class EmployerWebsiteUrlComment
+        {
+            public const string LabelText = "Employer's Website Url comment";
+        }
     }
 }

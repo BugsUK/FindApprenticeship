@@ -4,7 +4,7 @@
 
     private static bool IsSingleLocation(VacancyViewModel viewModel)
     {
-        return viewModel.IsEmployerLocationMainApprenticeshipLocation == true || (viewModel.LocationAddresses != null && viewModel.LocationAddresses.Count == 1);
+        return viewModel.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true || (viewModel.NewVacancyViewModel.LocationAddresses != null && viewModel.NewVacancyViewModel.LocationAddresses.Count == 1);
     }
 
 }
@@ -148,7 +148,7 @@
 
             @if (IsSingleLocation(Model))
             {
-                var positions = Model.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NumberOfPositions : Model.LocationAddresses.First().NumberOfPositions;
+                var positions = Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NewVacancyViewModel.NumberOfPositions : Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions;
 
                 <div class="editable-item">
                     <h3 class="bold-small">Positions</h3>
@@ -279,9 +279,13 @@
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
-                <div class="text editable-item">
+                <div class="editable-item">
+                    <h3 class="bold-small">
+                        Description
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                    </h3>
                     <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.ProviderDescriptionComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
@@ -296,16 +300,19 @@
                 {
                     <p>
                         <div class="editable-item">
+                            <h3 class="bold-small">
+                                Website
+                                @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
+                            </h3>
                             <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
                                id="vacancy-employer-website"
                                target="_blank"
                                title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, string.Empty, string.Empty))
-                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                         </div>
                     </p>
                     }
-                    @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
+                    @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
                     {
                         <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                             <h3 class="bold-small">Address</h3>
@@ -320,26 +327,32 @@
                     }
                     else
                     {
-                        if (Model.LocationAddresses != null && Model.LocationAddresses.Count() == 1)
+                        if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
                         {
                             <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">Address</h3>
+                                <h3 class="bold-small">
+                                    Address
+                                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
+                                </h3>
                                 <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.LocationAddresses.First().Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.LocationAddresses.First().Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.LocationAddresses.First().Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.LocationAddresses.First().Address.Postcode</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
                                 </div>
 
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                             </div>
                         }
                         else
                         {
                             <p></p>
                             <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">Addresses</h3>
+                                <h3 class="bold-small">
+                                    Addresses
+                                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.EmployerLink))
+                                </h3>
                                 <div id="locationAddressesTable">
                                     <table>
                                         <colgroup>
@@ -358,7 +371,7 @@
                                         </tr>
                                         </thead>
                                         <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                                        @foreach (var locationAddress in Model.LocationAddresses)
+                                        @foreach (var locationAddress in Model.NewVacancyViewModel.LocationAddresses)
                                         {
                                             @Html.DisplayFor(m => locationAddress)
                                         }
@@ -367,15 +380,15 @@
                                     </table>
                                 </div>
 
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                             </div>
                         }
-                        if (!string.IsNullOrWhiteSpace(Model.AdditionalLocationInformation))
+                        if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
                         {
                             <div class="editable-item">
                                 <h3 class="bold-small">Additional location information</h3>
-                                <p class="preserve-formatting">@Html.Raw(Model.AdditionalLocationInformation)</p>
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.ProviderWebsiteUrlComment))
+                                <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
+                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                             </div>
                         }
                     }
@@ -383,7 +396,7 @@
             </div>
         </div>
         <div class="grid grid-1-2 hide-print">
-            @if (Model.IsEmployerLocationMainApprenticeshipLocation == true)
+            @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
             {
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
@@ -391,11 +404,11 @@
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }
-            else if (Model.LocationAddresses != null && Model.LocationAddresses.Count == 1)
+            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
             {
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
-                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.LocationAddresses.First().Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }

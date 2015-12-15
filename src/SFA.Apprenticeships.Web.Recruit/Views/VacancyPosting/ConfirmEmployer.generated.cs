@@ -396,7 +396,29 @@ WriteLiteral("            ");
 
             
             #line 59 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+       Write(Html.DisplayFor(m => m.WebsiteUrlComment, "Comment"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 60 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
        Write(Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 61 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+       Write(Html.DisplayFor(m => m.DescriptionComment, "Comment"));
 
             
             #line default
@@ -414,7 +436,7 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 62 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                                                                                                   Write(saveButtonText);
 
             
@@ -425,7 +447,7 @@ WriteLiteral("</button>\r\n");
 WriteLiteral("            ");
 
             
-            #line 61 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 63 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
        Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, null));
 
             
@@ -434,7 +456,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n");
 
             
-            #line 63 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 65 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
    }
 
             
@@ -451,7 +473,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n        var comeFromPreview = \"");
 
             
-            #line 68 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 70 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                           Write(Model.ComeFromPreview.ToString());
 
             

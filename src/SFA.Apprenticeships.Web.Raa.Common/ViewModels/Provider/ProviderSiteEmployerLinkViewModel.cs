@@ -35,5 +35,9 @@
         public ProviderVacancyStatuses Status { get; set; }
 
         public long VacancyReferenceNumber { get; set; }
+
+        public string DescriptionComment { get; set; }
+
+        public string WebsiteUrlComment { get; set; }
     }
 }
