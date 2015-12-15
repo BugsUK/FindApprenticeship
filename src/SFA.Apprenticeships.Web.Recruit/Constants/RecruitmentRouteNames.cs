@@ -42,6 +42,7 @@
         public const string VacancySubmitted = "VacancySubmitted";
         public const string CloneVacancy = "CloneVacancy";
         public const string ConfirmEmployerSelection = "ConfirmEmployerSelection";
+        public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";

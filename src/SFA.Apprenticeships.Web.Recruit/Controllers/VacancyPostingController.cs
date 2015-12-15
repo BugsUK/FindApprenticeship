@@ -131,6 +131,25 @@
                 });
         }
 
+        [HttpGet]
+        public ActionResult ConfirmNewEmployerSelection(string providerSiteErn, string ern, Guid vacancyGuid,
+            bool? comeFromPreview)
+        {
+            if (comeFromPreview == true)
+            {
+                _vacancyPostingMediator.ClearLocationInformation(vacancyGuid);
+            }
+
+            return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer,
+                new
+                {
+                    providerSiteErn = providerSiteErn,
+                    ern = ern,
+                    vacancyGuid = vacancyGuid,
+                    comeFromPreview = comeFromPreview
+                });
+        }
+
         [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
         [HttpPost]
         public ActionResult ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel)
@@ -674,6 +693,8 @@
         public ActionResult ConfirmNewEmployer(ProviderSiteEmployerLinkViewModel viewModel)
         {
             var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+
+            ModelState.Clear();
 
             switch (response.Code)
             {
