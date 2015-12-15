@@ -291,9 +291,9 @@
         </div>
     </div>
     <div class="grid-wrapper">
-        <div class="grid grid-1-2">
+        <div>
             <div class="inner-block-padr">
-            <div class="text">
+            <div>
                 <h3 class="bold-small">Employer</h3>
                 <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
                 @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
@@ -348,16 +348,17 @@
                         else
                         {
                             <p></p>
-                            <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
+                            <div id="vacancy-address" class="editable-item grid-wrapper" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">
                                     Addresses
                                     @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.EmployerLink))
                                 </h3>
-                                <div id="locationAddressesTable">
+                                <div class="grid grid-1-2" id="locationAddressesTable">
                                     <table>
                                         <colgroup>
-                                            <col class="t60">
-                                            <col class="t45">
+                                            <col class="t50">
+                                            <col class="t35">
+                                            <col class="t15">
                                         </colgroup>
 
                                         <thead>
@@ -368,6 +369,7 @@
                                             <th>
                                                 <span class="heading-span">Number of positions</span>
                                             </th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody id="location-addresses" data-bind="foreach: locationAddresses">
@@ -375,6 +377,35 @@
                                         {
                                             @Html.DisplayFor(m => locationAddress)
                                         }
+
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <div class="grid grid-1-2" id="locationAddressesTable">
+                                    <table>
+                                        <colgroup>
+                                            <col class="t50">
+                                            <col class="t35">
+                                            <col class="t15">
+                                        </colgroup>
+
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    <span class="heading-span">Location</span>
+                                                </th>
+                                                <th>
+                                                    <span class="heading-span">Number of positions</span>
+                                                </th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                            @foreach (var locationAddress in Model.NewVacancyViewModel.LocationAddresses)
+                                            {
+                                                @Html.DisplayFor(m => locationAddress)
+                                            }
 
                                         </tbody>
                                     </table>
