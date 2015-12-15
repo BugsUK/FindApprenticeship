@@ -43,7 +43,7 @@
 
         public static class WorkingWeekComment
         {
-            public const string LabelText = "Working week comment";
+            public const string LabelText = "Working week/Hours per week comment";
         }
 
         public static class HoursPerWeek
@@ -266,7 +266,7 @@
 
         public static class OfflineApplicationInstructionsComment
         {
-            public const string LabelText = "Offline application instructions comment";
+            public const string LabelText = "Application process explanation comment";
         }
 
         public static class ApprenticeshipLevel
