@@ -285,7 +285,7 @@ WriteLiteral(">");
 
             
             #line 74 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(experience.FromMonth, experience.FromYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(experience.FromMonth, experience.FromYear));
 
             
             #line default
@@ -299,7 +299,7 @@ WriteLiteral(">");
 
             
             #line 77 "..\..\Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(experience.ToMonth, experience.ToYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(experience.ToMonth, experience.ToYear));
 
             
             #line default

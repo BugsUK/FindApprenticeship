@@ -271,7 +271,7 @@ WriteLiteral(">");
 
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(each.FromMonth, each.FromYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(each.FromMonth, each.FromYear));
 
             
             #line default
@@ -285,7 +285,7 @@ WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(each.ToMonth, each.ToYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(each.ToMonth, each.ToYear));
 
             
             #line default

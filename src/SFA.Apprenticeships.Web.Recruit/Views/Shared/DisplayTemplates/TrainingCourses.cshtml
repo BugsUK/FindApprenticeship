@@ -1,25 +1,19 @@
-﻿@model IEnumerable<WorkExperienceViewModel>
+﻿@model IEnumerable<SFA.Apprenticeships.Web.Recruit.ViewModels.Application.TrainingCourseViewModel>
 
 <section class="section-border">
     <h2 class="heading-large">
-        Work experience
-        @if (ViewBag.VacancyId != null)
-        {
-            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyWorkExperience">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
-            </a>
-        }
+        Training courses
     </h2>
 
     @if (!Model.Any())
     {
-        <p id="no-work-experience">I don't have any work experience</p>
+        <p id="no-training-history">Applicant hasn't been on any training courses</p>
     }
 
-    @foreach (WorkExperienceViewModel experience in Model)
+    @foreach (var each in Model)
     {
         <div class="grid-3-4 nobreak-print">
-            <div class="grid-wrapper work-history-item">
+            <div class="grid-wrapper training-history-item">
 
                 <div class="grid grid-1-2">
                     <table class="table-no-btm-border table-compound">
@@ -30,18 +24,16 @@
                         <thead>
                             <tr>
                                 <th>
-                                    <span class="heading-span">Work experience</span>
+                                    <span class="heading-span">Training course</span>
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="form-prepopped cell-span">@experience.Employer</span>
-                                    <span class="form-prepopped cell-span work-hyphen">-</span>
-                                    <span class="form-prepopped cell-span">@experience.JobTitle</span>
-                                    <div></div>
-                                    <span class="form-prepopped cell-span prewrap">@experience.Description</span>
+                                    <span class="form-prepopped cell-span">@each.Provider</span>
+                                    <span class="form-prepopped cell-span training-hyphen">-</span>
+                                    <span class="form-prepopped cell-span">@each.Title</span>
                                 </td>
                             </tr>
                         </tbody>
@@ -71,10 +63,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="form-prepopped cell-span">@QualificationPresenter.GetMonthYearLabel(experience.FromMonth, experience.FromYear)  </span>
+                                    <span class="form-prepopped cell-span">@each.FromDate.GetMonthYearLabel()</span>
                                 </td>
                                 <td>
-                                    <span class="form-prepopped cell-span">@QualificationPresenter.GetMonthYearLabel(experience.ToMonth, experience.ToYear)</span>
+                                    <span class="form-prepopped cell-span">@each.ToDate.GetMonthYearLabel()</span>
                                 </td>
                                 <td></td>
                                 <td></td>
@@ -85,5 +77,4 @@
             </div>
         </div>
     }
-
 </section>

@@ -1,19 +1,14 @@
-﻿@model IEnumerable<WorkExperienceViewModel>
+﻿@using SFA.Apprenticeships.Web.Recruit.ViewModels.Application
+@model IEnumerable<WorkExperienceViewModel>
 
 <section class="section-border">
     <h2 class="heading-large">
         Work experience
-        @if (ViewBag.VacancyId != null)
-        {
-            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyWorkExperience">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
-            </a>
-        }
     </h2>
 
     @if (!Model.Any())
     {
-        <p id="no-work-experience">I don't have any work experience</p>
+        <p id="no-work-experience">Applicant doesn't have any work experience</p>
     }
 
     @foreach (WorkExperienceViewModel experience in Model)
@@ -71,10 +66,10 @@
                         <tbody>
                             <tr>
                                 <td>
-                                    <span class="form-prepopped cell-span">@QualificationPresenter.GetMonthYearLabel(experience.FromMonth, experience.FromYear)  </span>
+                                    <span class="form-prepopped cell-span">@experience.FromDate.GetMonthYearLabel()</span>
                                 </td>
                                 <td>
-                                    <span class="form-prepopped cell-span">@QualificationPresenter.GetMonthYearLabel(experience.ToMonth, experience.ToYear)</span>
+                                    <span class="form-prepopped cell-span">@experience.ToDate.GetMonthYearLabel()</span>
                                 </td>
                                 <td></td>
                                 <td></td>

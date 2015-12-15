@@ -956,7 +956,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AutoSaveDateTimeHelper.cs" />
-    <Compile Include="Helpers\PreviewExtensions.cs" />
     <Compile Include="IoC\CandidateWebRegistry.cs" />
     <Compile Include="Mappers\Resolvers\TraineeshipSearchResultsResolver.cs" />
     <Compile Include="Mappers\TraineeshipCandidateWebMappers.cs" />

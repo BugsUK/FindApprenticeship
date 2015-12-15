@@ -1,19 +1,13 @@
-﻿@model IEnumerable<QualificationsViewModel>
+﻿@model IList<SFA.Apprenticeships.Web.Recruit.ViewModels.Application.QualificationViewModel>
 
-<section id="applyQualifications" class="section-border">
+<fieldset class="fieldset-with-border">
     <h2 class="heading-large">
         Qualifications
-        @if (ViewBag.VacancyId != null)
-        {
-            <a class="icon-with-text" href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipApply, new {id = ViewBag.VacancyId})#applyQualifications">
-                <i class="the-icon fa fa-pencil"></i><span class="the-text">Edit section</span>
-            </a>
-        }
     </h2>
 
     @if (!Model.Any())
     {
-        <p id="no-qualifications">I don't have any qualifications</p>
+        <p id="no-qualifications">Applicant doesn't have any qualifications</p>
     }
 
     @foreach (var group in Model.GroupBy(item => item.QualificationType))
@@ -37,13 +31,13 @@
                         <th>
                             <span class="heading-span">Grade</span>
                         </th>
-                        <th>l
+                        <th>
                             <span class="heading-span">Year</span>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (QualificationsViewModel item in group)
+                    @foreach (var item in group)
                     {
                         <tr>
                             <td>
@@ -63,4 +57,4 @@
         
     }
 
-</section>
+</fieldset>

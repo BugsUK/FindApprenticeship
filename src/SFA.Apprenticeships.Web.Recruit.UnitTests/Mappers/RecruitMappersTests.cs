@@ -57,9 +57,6 @@
             //Assert
             viewModel.Should().NotBeNull();
             viewModel.ApplicantName.Should().Be(source.CandidateDetails.FirstName + " " + source.CandidateDetails.LastName);
-            viewModel.ApplicantLocation.Should().Be(source.CandidateDetails.Address.AddressLine4);
-            viewModel.ApplicantGeoPoint.Should().NotBeNull();
-            viewModel.Distance.Should().Be(0);
             viewModel.DateApplied.Should().Be(source.DateApplied.Value);
             viewModel.Status.Should().Be(source.Status);
         }

@@ -202,8 +202,8 @@ WriteLiteral(">Subject</span>\r\n                        </th>\r\n              
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Grade</span>\r\n                        </th>\r\n                        <th>\r\n     " +
-"                       <span");
+WriteLiteral(">Grade</span>\r\n                        </th>\r\n                        <th>l\r\n    " +
+"                        <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
@@ -231,14 +231,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1885), Tuple.Create("\"", 1906)
+WriteAttribute("value", Tuple.Create(" value=\"", 1886), Tuple.Create("\"", 1907)
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 1893), Tuple.Create<System.Object, System.Int32>(item.Subject
+                              , Tuple.Create(Tuple.Create("", 1894), Tuple.Create<System.Object, System.Int32>(item.Subject
             
             #line default
             #line hidden
-, 1893), false)
+, 1894), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
@@ -248,14 +248,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2090), Tuple.Create("\"", 2149)
+WriteAttribute("value", Tuple.Create(" value=\"", 2091), Tuple.Create("\"", 2168)
             
             #line 53 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 2098), Tuple.Create<System.Object, System.Int32>(Html.GetDisplayGrade(item.Grade, item.IsPredicted)
+                              , Tuple.Create(Tuple.Create("", 2099), Tuple.Create<System.Object, System.Int32>(QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted)
             
             #line default
             #line hidden
-, 2098), false)
+, 2099), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
@@ -265,14 +265,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2333), Tuple.Create("\"", 2351)
+WriteAttribute("value", Tuple.Create(" value=\"", 2352), Tuple.Create("\"", 2370)
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 2341), Tuple.Create<System.Object, System.Int32>(item.Year
+                              , Tuple.Create(Tuple.Create("", 2360), Tuple.Create<System.Object, System.Int32>(item.Year
             
             #line default
             #line hidden
-, 2341), false)
+, 2360), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                        </tr>\r\n");
