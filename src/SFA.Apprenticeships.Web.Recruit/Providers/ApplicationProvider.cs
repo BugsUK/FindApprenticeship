@@ -79,17 +79,17 @@
             return viewModel;
         }
 
-        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(Guid applicationId)
+        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var application = _apprenticeshipApplicationService.GetApplication(applicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
+            var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
         }
 
-        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(Guid applicationId)
+        public ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var application = _apprenticeshipApplicationService.GetApplicationForReview(applicationId);
-            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
+            var application = _apprenticeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
             return viewModel;
         }
 
@@ -98,10 +98,11 @@
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
-        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
+        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+            viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<ApprenticeshipVacancy, ApplicationVacancyViewModel>(vacancy);
             return viewModel;
         }

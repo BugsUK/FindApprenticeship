@@ -10,8 +10,10 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.HiddenFor(m => m.ApplicationId)
-    @Html.HiddenFor(m => m.Vacancy.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
+    @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
+    @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
 
     <div>
         <div class="hgroup">

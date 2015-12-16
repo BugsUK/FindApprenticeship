@@ -11,7 +11,7 @@
             CurrentPage = 1;
         }
 
-        private VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel) : this()
+        protected VacancyApplicationsSearchViewModel(VacancyApplicationsSearchViewModel viewModel) : this()
         {
             VacancyReferenceNumber = viewModel.VacancyReferenceNumber;
             FilterType = viewModel.FilterType;

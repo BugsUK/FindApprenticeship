@@ -1,5 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Recruit.ViewModels.Application
+@using SFA.Apprenticeships.Web.Recruit.ViewModels.Application.Apprenticeship
 @model VacancyApplicationsViewModel
 
 @{
@@ -138,13 +139,13 @@
                             @if (filterType == VacancyApplicationsFilterTypes.Successful)
                             {
                                 <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                <figcaption><h2>Referred</h2></figcaption>
+                                <figcaption><h2>Successful</h2></figcaption>
                             }
                             else
                             {
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful))" class="vacancy-filter">
                                     <p class="count">@Model.SuccessfulApplicationsCount</p>
-                                    <figcaption><h2>Referred</h2></figcaption>
+                                    <figcaption><h2>Successful</h2></figcaption>
                                 </a>
                             }
                         </figure>
@@ -154,13 +155,13 @@
                             @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
                             {
                                 <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                <figcaption><h2>Closing soom</h2></figcaption>
+                                <figcaption><h2>Unsuccessful</h2></figcaption>
                             }
                             else
                             {
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful))" class="vacancy-filter">
                                     <p class="count">@Model.UnsuccessfulApplicationsCount</p>
-                                    <figcaption><h2>Closing soon</h2></figcaption>
+                                    <figcaption><h2>Unsuccessful</h2></figcaption>
                                 </a>
                             }
                         </figure>
@@ -197,7 +198,7 @@
                     <tr class="applicant">
                         <td>
                             <h4 class="applicant-name">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ReviewApprenticeshipApplication, new {applicationId = applicationSummary.ApplicationId})" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ReviewApprenticeshipApplication, new ApplicationSelectionViewModel(Model.VacancyApplicationsSearch, applicationSummary.ApplicationId))" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
                             </h4>
                         </td>
                         <td>

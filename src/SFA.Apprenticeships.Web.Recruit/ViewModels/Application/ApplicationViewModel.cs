@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
 {
-    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
 
     public class ApplicationViewModel
     {
-        public Guid ApplicationId { get; set; }
+        public ApplicationSelectionViewModel ApplicationSelection { get; set; }
 
         public ApplicationVacancyViewModel Vacancy { get; set; }
 

@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
     using Mediators.Application;
+    using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
 
     public class ApprenticeshipApplicationController : RecruitmentControllerBase
@@ -19,9 +19,9 @@
         }
 
         [HttpGet]
-        public ActionResult Review(Guid applicationId)
+        public ActionResult Review(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.Review(applicationId);
+            var response = _apprenticeshipApplicationMediator.Review(applicationSelectionViewModel);
 
             switch (response.Code)
             {
@@ -54,10 +54,10 @@
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, new { applicationId = viewModel.ApplicationId });
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, new { applicationId = viewModel.ApplicationId });
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -85,10 +85,10 @@
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, new { applicationId = viewModel.ApplicationId });
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, new { applicationId = viewModel.ApplicationId });
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -116,10 +116,10 @@
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, new { applicationId = viewModel.ApplicationId });
+                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, new { vacancyReferenceNumber = viewModel.Vacancy.VacancyReferenceNumber });
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

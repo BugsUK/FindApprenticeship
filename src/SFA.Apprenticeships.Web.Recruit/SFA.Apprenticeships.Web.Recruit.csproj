@@ -338,6 +338,7 @@
     <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
