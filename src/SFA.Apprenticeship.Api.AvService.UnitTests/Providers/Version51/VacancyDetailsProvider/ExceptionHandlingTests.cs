@@ -43,6 +43,7 @@
         }
 
         [Test]
+        [Ignore]
         public void ShouldBeAwesome()
         {
             // Arrange.

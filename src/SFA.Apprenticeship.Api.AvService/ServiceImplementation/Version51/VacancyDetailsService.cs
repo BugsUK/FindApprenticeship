@@ -36,9 +36,7 @@
                 throw new SecurityException();
             }
 
-            throw new ArgumentNullException(nameof(request));
-
-            // return _vacancyDetailsProvider.Get(request);
+            return _vacancyDetailsProvider.Get(request);
         }
     }
 }

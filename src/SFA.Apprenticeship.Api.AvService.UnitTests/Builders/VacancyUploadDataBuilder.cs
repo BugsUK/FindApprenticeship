@@ -62,6 +62,7 @@
                     QualificationRequired = _qualificationRequired,
                     PersonalQualities = _personalQualities,
                     FutureProspects = _futureProspects,
+                    SkillsRequired = _skillsRequired,
                     // TODO: US872: AG: OtherImportantInformation not mapped?
                     OtherImportantInformation = null,
                     // TODO: US872: AG: handle multi-location vacancies.

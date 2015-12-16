@@ -354,7 +354,6 @@
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />
-    <Compile Include="Validators\EmployerDataValidatorTests.cs" />
     <Compile Include="Validators\FluentValidationExtensions.cs" />
     <Compile Include="Validators\VacancyUploadRequestValidator.cs" />
   </ItemGroup>
