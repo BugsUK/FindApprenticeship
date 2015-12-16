@@ -13,7 +13,7 @@
 
         public class PostCodeSearch
         {
-            public const string LabelText = "Enter the employer's postcode";
+            public const string LabelText = "Enter the vacancy location or postcode";
         }
 
         public class Addresses

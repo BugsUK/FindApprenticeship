@@ -12,6 +12,7 @@
     using Common.Validators.Extensions;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Exceptions;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -30,6 +31,7 @@
         private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
         private readonly IAddressLookupProvider _addressLookupProvider; // TODO: can we use this provider in this layer?
+        private readonly ILocationsProvider _locationsProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -58,7 +60,9 @@
             VacancyViewModelValidator vacancyViewModelValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, 
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
-            LocationSearchViewModelValidator locationSearchViewModelValidator, IAddressLookupProvider addressLookupProvider)
+            LocationSearchViewModelValidator locationSearchViewModelValidator, 
+            IAddressLookupProvider addressLookupProvider, 
+            ILocationsProvider locationsProvider)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
@@ -69,6 +73,7 @@
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _locationSearchViewModelValidator = locationSearchViewModelValidator;
             _addressLookupProvider = addressLookupProvider;
+            _locationsProvider = locationsProvider;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
@@ -209,24 +214,15 @@
 
         public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel)
         {
-            var possibleAddresses = _addressLookupProvider.GetPossibleAddresses(viewModel.PostcodeSearch);
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
-
-            possibleAddresses.ToList()
-                .ForEach(a => viewModel.SearchResultAddresses.Add(new VacancyLocationAddressViewModel
-                {
-                    Address = new AddressViewModel
-                    {
-                        AddressLine1 = a.AddressLine1,
-                        AddressLine2 = a.AddressLine2,
-                        AddressLine3 = a.AddressLine3,
-                        AddressLine4 = a.AddressLine4,
-                        Postcode = a.Postcode,
-                        Uprn = a.Uprn
-                    }
-                }));
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
+            try
+            {
+                viewModel.SearchResultAddresses = _locationsProvider.GetAddressesFor(viewModel.PostcodeSearch);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
+            }
+            catch (CustomException)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
+            }
         }
 
         public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
