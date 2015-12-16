@@ -7,6 +7,7 @@
     {
         public Guid ApplicationId { get; set; }
         public string ApplicantName { get; set; }
+        public string Notes { get; set; }
         public DateTime DateApplied { get; set; }
         public ApplicationStatuses Status { get; set; }
     }

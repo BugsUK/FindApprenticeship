@@ -84,17 +84,21 @@
                 <col class="t40">
                 <col class="t20">
                 <col class="t20">
+                <col class="t20">
             </colgroup>
             <thead>
                 <tr>
                     <th>
-                        <a href="" class="font-black">Applicant name</a>
+                        <a class="font-black">Applicant name</a>
                     </th>
                     <th>
-                        <a href="" class="font-black">Submitted</a>
+                        <a class="font-black">Vacancy manager notes</a>
                     </th>
                     <th>
-                        <a href="" class="font-black">Status</a>
+                        <a class="font-black">Submitted</a>
+                    </th>
+                    <th>
+                        <a class="font-black">Status</a>
                     </th>
                 </tr>
             </thead>
@@ -106,6 +110,16 @@
                         <h4 class="applicant-name">
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.ReviewApprenticeshipApplication, new {applicationId = applicationSummary.ApplicationId})" title="View @applicationSummary.ApplicantName application">@applicationSummary.ApplicantName</a>
                         </h4>
+                    </td>
+                    <td>
+                        @{
+                            var notes = applicationSummary.Notes;
+                            if (notes != null && notes.Length > 20)
+                            {
+                                notes = notes.Substring(0, 20) + "...";
+                            }
+                        }
+                        @notes
                     </td>
                     <td>@Html.DisplayFor(m => applicationSummary.DateApplied)</td>
                     <td>
