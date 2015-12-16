@@ -56,5 +56,12 @@
 
             return editLinkViewModel;
         }
+
+        public static object GetLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html,
+            Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        {
+            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            return new {Label = commentLabelText};
+        }
     }
 }

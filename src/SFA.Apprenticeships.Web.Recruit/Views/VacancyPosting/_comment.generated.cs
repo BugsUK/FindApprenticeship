@@ -43,10 +43,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         }
         public override void Execute()
         {
-WriteLiteral("\r\n\r\n");
-
             
-            #line 15 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 3 "..\..\Views\VacancyPosting\_comment.cshtml"
  if (Model.HasComment)
 {
 
@@ -60,7 +58,7 @@ WriteLiteral(" class=\"open\"");
 WriteLiteral(" open>\r\n        <summary>");
 
             
-            #line 18 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 6 "..\..\Views\VacancyPosting\_comment.cshtml"
             Write(Model.CommentLabel);
 
             
@@ -77,7 +75,7 @@ WriteLiteral(" class=\"blocklabel-single-container preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 20 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 8 "..\..\Views\VacancyPosting\_comment.cshtml"
                                                                     Write(Model.Comment);
 
             
@@ -86,7 +84,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n    </details>\r\n");
 
             
-            #line 23 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 11 "..\..\Views\VacancyPosting\_comment.cshtml"
 }
             
             #line default
