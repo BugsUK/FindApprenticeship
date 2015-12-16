@@ -8,5 +8,7 @@
     {
         VacancyApplicationsViewModel GetVacancyApplicationsViewModel(long vacancyReferenceNumber);
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(Guid applicationId);
+        ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(Guid applicationId);
+        void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes);
     }
 }

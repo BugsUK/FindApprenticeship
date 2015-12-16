@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.Traineeships;
+    using Vacancies.Traineeships;
 
     public class TraineeshipApplicationDetail : ApplicationDetail
     {

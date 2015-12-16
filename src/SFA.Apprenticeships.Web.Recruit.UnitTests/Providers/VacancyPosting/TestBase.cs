@@ -22,7 +22,7 @@
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
-        protected Mock<IApplicationService> ApplicationService;
+        protected Mock<IApprenticeshipApplicationService> ApprenticeshipApplicationService;
         protected Mock<IApprenticeshipVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
         protected Mock<IApprenticeshipVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
 
@@ -46,7 +46,7 @@
                 .Returns(new CommonWebConfiguration());
 
             MockTimeService = new Mock<IDateTimeService>();
-            ApplicationService = new Mock<IApplicationService>();
+            ApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -60,7 +60,7 @@
                 MockApprenticeshipVacancyReadRepository.Object,
                 MockApprenticeshipVacancyWriteRepository.Object,
                 MockMapper.Object,
-                ApplicationService.Object);
+                ApprenticeshipApplicationService.Object);
         }
     }
 }

@@ -301,6 +301,7 @@
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />

@@ -161,6 +161,7 @@
     <Compile Include="Strategies\Traineeships\SaveTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SaveApprenticeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\SaveCandidateStrategy.cs" />
+    <Compile Include="Strategies\Traineeships\SubmitTraineeshipApplicationStrategy.cs" />
     <Compile Include="Strategies\UnsubscribeStrategy.cs" />
     <Compile Include="Strategies\UpdateUsernameStrategy.cs" />
     <Compile Include="Strategies\VerifyMobileStrategy.cs" />

@@ -5,14 +5,19 @@
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Applications;
+    using Strategies.Apprenticeships;
 
-    public class ApplicationService : IApplicationService
+    public class ApprenticeshipApplicationService : IApprenticeshipApplicationService
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
+        private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
 
-        public ApplicationService(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository)
+        public ApprenticeshipApplicationService(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IGetApplicationForReviewStrategy getApplicationForReviewStrategy, IUpdateApplicationNotesStrategy updateApplicationNotesStrategy)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
+            _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
         }
 
         public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
@@ -33,6 +38,16 @@
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
         {
             return _apprenticeshipApplicationReadRepository.Get(applicationId);
+        }
+
+        public ApprenticeshipApplicationDetail GetApplicationForReview(Guid applicationId)
+        {
+            return _getApplicationForReviewStrategy.GetApplicationForReview(applicationId);
+        }
+
+        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        {
+            _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
         }
     }
 }

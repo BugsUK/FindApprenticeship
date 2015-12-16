@@ -29,5 +29,6 @@
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
         void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
+        void UpdateApplicationNotes(Guid applicationId, string notes);
     }
 }

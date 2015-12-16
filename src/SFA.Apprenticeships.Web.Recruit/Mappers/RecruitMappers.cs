@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mappers
 {
-    using System;
     using System.Collections.Generic;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
@@ -52,6 +51,7 @@
                 .ForMember(v => v.AnythingWeCanDoToSupportYourInterviewAnswer, opt => opt.MapFrom(src => src.CandidateInformation.AboutYou.Support));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>()
+                .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
                 .ForMember(v => v.Vacancy, opt => opt.Ignore())
                 .ForMember(v => v.ApplicantDetails, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicantDetailsViewModel>(src)))
                 .ForMember(v => v.AboutYou, opt => opt.MapFrom(src => Map<AboutYou, AboutYouViewModel>(src.CandidateInformation.AboutYou)))
