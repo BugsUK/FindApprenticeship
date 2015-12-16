@@ -1,6 +1,10 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Validators
 {
+    using AvService.Validators;
+    using Common;
     using DataContracts.Version51;
+    using FluentAssertions;
+    using FluentValidation.TestHelper;
     using NUnit.Framework;
 
     [TestFixture]
@@ -14,321 +18,266 @@
             _validator = new VacancyUploadDataValidator();
         }
 
-        [Test]
-        [Ignore]
-        public void ShouldRequireAvmsHeader()
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", true)]
+        [TestCase("A", false)]
+        public void ShouldRequireTitle(string value, bool expectValidationError)
         {
             // Arrange.
-            var data = new VacancyUploadData();
-
-            // Act.
+            var vacancy = new VacancyUploadData
+            {
+                Title = value
+            };
 
             // Assert.
-            Assert.Fail();
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyTitleIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.Title, vacancy);
+            }
+        }
+
+        [TestCase(1, true)]
+        [TestCase(0, false)]
+        public void ShouldRequireTitleWithMaximumLength(int extraCharacterCount, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                Title = new string('X', VacancyUploadDataValidator.MaxVacancyTitleLength + extraCharacterCount)
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyTitleIsTooLong.InterfaceErrorCode);
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", true)]
+        [TestCase("A", false)]
+        public void ShouldRequireShortDescription(string value, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                ShortDescription = value
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyShortDescriptionIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.ShortDescription, vacancy);
+            }
+        }
+
+        [TestCase(1, true)]
+        [TestCase(0, false)]
+        public void ShouldRequireShortDescriptioneWithMaximumLength(int extraCharacterCount, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                ShortDescription = new string('X', VacancyUploadDataValidator.MaxVacancyShortDescriptionLength + extraCharacterCount)
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyShortDescriptionIsTooLong.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.ShortDescription, vacancy);
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase(" ", true)]
+        [TestCase("A", false)]
+        public void ShouldRequireLongDescription(string value, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                LongDescription = value
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyLongDescriptionIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.LongDescription, vacancy);
+            }
+        }
+
+        [TestCase(-1, true)]
+        [TestCase(0, true)]
+        [TestCase(1, false)]
+        [TestCase(int.MaxValue, false)]
+        public void ShouldRequireDeliveryProviderEdsUrn(int value, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                DeliveryProviderEdsUrn = value
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.DeliveryProviderEdsUrnIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.DeliveryProviderEdsUrn, vacancy);
+            }
+        }
+
+        [TestCase(-1, true)]
+        [TestCase(0, true)]
+        [TestCase(1, false)]
+        [TestCase(int.MaxValue, false)]
+        public void ShouldRequireVacancyManagerEdsUrn(int value, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                VacancyManagerEdsUrn = value
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyManagerEdsUrnIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.VacancyManagerEdsUrn, vacancy);
+            }
+        }
+
+        [TestCase(-1, true)]
+        [TestCase(0, true)]
+        [TestCase(1, false)]
+        [TestCase(int.MaxValue, false)]
+        public void ShouldRequireVacancyOwnerEdsUrn(int value, bool expectValidationError)
+        {
+            // Arrange.
+            var vacancy = new VacancyUploadData
+            {
+                VacancyOwnerEdsUrn = value
+            };
+
+            // Assert.
+            if (expectValidationError)
+            {
+                var errorCodes = _validator
+                    .Validate(vacancy)
+                    .GetErrorCodes();
+
+                errorCodes
+                    .Should()
+                    .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.VacancyOwnerEdsUrnIsMandatory.InterfaceErrorCode);
+            }
+            else
+            {
+                _validator.ShouldNotHaveValidationErrorFor(x => x.VacancyOwnerEdsUrn, vacancy);
+            }
         }
 
         [Test]
-        [Ignore]
-        public void ShouldRequireVacancyUploadRequest()
+        public void ShouldValidateEmployer()
         {
+            /*
             // Arrange.
-
-            // Act.
+            var vacancy = new VacancyUploadData();
 
             // Assert.
-            Assert.Fail();
+            var errorCodes = _validator
+                .Validate(vacancy)
+                .GetErrorCodes();
+
+            errorCodes
+                .Should()
+                .ContainSingle(errorCode => errorCode.InterfaceErrorCode == ApiErrors.Error10022.InterfaceErrorCode);
+            */
+
+            Assert.Inconclusive();
         }
 
         [Test]
-        [Ignore]
-        public void ShouldRequireOneOrMoreVacancies()
+        public void ShouldValidateApplication()
         {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [Test]
-        [Ignore]
-        public void ShouldRequireVacancyId()
+        public void ShouldValidateApprenticeship()
         {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
+            Assert.Inconclusive();
         }
 
         [Test]
-        [Ignore]
-        public void ShouldRequireTitle()
+        public void ShouldValidateVacancy()
         {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
+            Assert.Inconclusive();
         }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireDescriptions()
-        {
-            // Arrange.
-
-            // TODO: short, long.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireLocationType()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireAddressLine1()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireCounty()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequirePostcode()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireTown()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireNumberOfVacancies()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireSupplementaryQuestions()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireClosingDate()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireInterviewStartDate()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequirePossibleStartDate()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireApplicationType()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireEmployerWebsiteWhenApplicationTypeIsOffline()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireValidFramework()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireApprenticeshipVacancyType()
-        {
-            // Arrange.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireContractedProviderUkprn()
-        {
-            // Arrange.
-
-            // TODO: review specification.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireVacancyOwnerEdsUrn()
-        {
-            // Arrange.
-
-            // TODO: review specification.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireVacancyManagerEdsUrn()
-        {
-            // Arrange.
-
-            // TODO: review specification.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-
-        [Test]
-        [Ignore]
-        public void ShouldRequireDeliveryProviderEdsUrn()
-        {
-            // Arrange.
-
-            // TODO: review specification.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-        
-        [Test]
-        [Ignore]
-        public void ShouldRequireIsSmallEmployerWageIncentive()
-        {
-            // Arrange.
-
-            // TODO: non-nullable bool should not require a test.
-
-            // Act.
-
-            // Assert.
-            Assert.Fail();
-        }
-    }
-
-    public class VacancyUploadDataValidator
-    {
     }
 }
