@@ -29,6 +29,7 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;
@@ -131,7 +132,17 @@
             For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendPendingUsernameCodeStrategy>().Use<SendPendingUsernameCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
+
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            if (servicesConfiguration.ServiceImplementation == "Legacy")
+            {
+                For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
+            }
+            else if(servicesConfiguration.ServiceImplementation == "Raa")
+            {
+                For<ISubmitApprenticeshipApplicationStrategy>().Use<SubmitApprenticeshipApplicationStrategy>();
+            }
+
             For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
