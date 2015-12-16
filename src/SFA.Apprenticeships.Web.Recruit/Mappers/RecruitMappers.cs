@@ -54,7 +54,12 @@
                 .ForMember(v => v.AnythingWeCanDoToSupportYourInterviewAnswer, opt => opt.MapFrom(src => src.CandidateInformation.AboutYou.Support));
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()
-                .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId));
+                .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
+                .ForMember(v => v.VacancyReferenceNumber, opt => opt.Ignore())
+                .ForMember(v => v.FilterType, opt => opt.Ignore())
+                .ForMember(v => v.PageSize, opt => opt.Ignore())
+                .ForMember(v => v.PageSizes, opt => opt.Ignore())
+                .ForMember(v => v.CurrentPage, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>()
                 .ForMember(v => v.ApplicationSelection, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>(src)))
