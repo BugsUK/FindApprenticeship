@@ -13,7 +13,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class UploadVacanciesTests
+    public class VacancyUploadProviderTests
     {
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
         private Mock<IVacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;

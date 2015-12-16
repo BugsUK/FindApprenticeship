@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[VacancyPartyRelationship]
 (
-	[VacancyPartyRelationshipId] INT NOT NULL, 
+	[VacancyPartyRelationshipId] INT NOT NULL IDENTITY, 
     [FromVacancyPartyId] INT NOT NULL, 
     [ToVacancyPartyId] INT NOT NULL, 
     [VacancyPartyRelationshipTypeCode] CHAR(3) NULL, 

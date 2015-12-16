@@ -1,10 +1,94 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadProvider
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Validators
 {
+    using DataContracts.Version51;
     using NUnit.Framework;
 
     [TestFixture]
-    public class InvalidVacancyUploadDataTests
+    public class VacancyUploadDataValidatorTests
     {
+        private VacancyUploadDataValidator _validator;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _validator = new VacancyUploadDataValidator();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireAvmsHeader()
+        {
+            // Arrange.
+            var data = new VacancyUploadData();
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireVacancyUploadRequest()
+        {
+            // Arrange.
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireOneOrMoreVacancies()
+        {
+            // Arrange.
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireVacancyId()
+        {
+            // Arrange.
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireTitle()
+        {
+            // Arrange.
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
+        [Test]
+        [Ignore]
+        public void ShouldRequireDescriptions()
+        {
+            // Arrange.
+
+            // TODO: short, long.
+
+            // Act.
+
+            // Assert.
+            Assert.Fail();
+        }
+
         [Test]
         [Ignore]
         public void ShouldRequireLocationType()
@@ -242,5 +326,9 @@
             // Assert.
             Assert.Fail();
         }
+    }
+
+    public class VacancyUploadDataValidator
+    {
     }
 }

@@ -1,3 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="489b5633-14ba-4768-ae98-84726ae63a37" ChangeDateTime="12/09/2015 16:06:32">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[ContractedProviderVacancyPartyId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[ContractOwnerVacancyPartyId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="77c5556a-706d-4e49-8488-42ffb0bb024a" ChangeDateTime="12/09/2015 16:06:44">
+    <Property Name="ElementName" Value="[Vacancy].[Vacancy].[OriginalContractedProviderVacancyPartyId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[OriginalContractOwnerVacancyPartyId]" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="9fb46b4c-5956-4fc7-a932-9904ac3d299a" ChangeDateTime="12/10/2015 10:14:24">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyLocationType].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyLocationType]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="VacancyLocationTypeCode" />
+  </Operation>
 </Operations>
