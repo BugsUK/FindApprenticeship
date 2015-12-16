@@ -6110,6 +6110,12 @@ aside h2:first-child {
 #employer-data-display {
   display: none; }
 
+.locations-table .location-positions {
+  text-align: center; }
+
+.locations-table .locations-positions-header {
+  text-align: center; }
+
 .editable-item {
   position: relative;
   margin: -5px -5px 10px -5px;
@@ -6119,6 +6125,7 @@ aside h2:first-child {
   .editable-item p {
     margin-bottom: 0; }
   .editable-item .edit-comment-link {
+    clear: both;
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.25;

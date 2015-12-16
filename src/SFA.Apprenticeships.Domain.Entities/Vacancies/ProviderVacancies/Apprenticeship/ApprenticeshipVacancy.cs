@@ -39,5 +39,6 @@
         public string EmployerDescriptionComment { get; set; }
         public string EmployerWebsiteUrlComment { get; set; }
         public string LocationAddressesComment { get; set; }
+        public string NumberOfPositionsComment { get; set; }
     }
 }

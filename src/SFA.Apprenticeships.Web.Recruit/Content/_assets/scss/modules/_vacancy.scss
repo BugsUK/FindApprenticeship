@@ -12,6 +12,14 @@
 	display: none;
 }
 
+.locations-table {
+    .location-positions {
+        text-align: center;
+    }
+    .locations-positions-header{
+        text-align: center;
+    }
+}
 
 .editable-item {
     position: relative;
@@ -23,6 +31,7 @@
         margin-bottom: 0;
     }
     .edit-comment-link {
+        clear: both;
         @include copy-16;
         display: block;
         margin: .5rem 0;

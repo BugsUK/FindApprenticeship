@@ -514,9 +514,9 @@
     <Content Include="Views\VacancyPosting\_CommentIcon.cshtml" />
     <Content Include="Views\VacancyPosting\_ValidationResultIcons.cshtml" />
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
