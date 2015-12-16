@@ -1,4 +1,5 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Add locations";
@@ -10,10 +11,12 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
 {
-    @Html.HiddenFor(m => m.Ukprn);
-    @Html.HiddenFor(m => m.Ern);
-    @Html.HiddenFor(m => m.ProviderSiteErn);
-    @Html.HiddenFor(m => m.VacancyGuid);
+    @Html.HiddenFor(m => m.Ukprn)
+    @Html.HiddenFor(m => m.Ern)
+    @Html.HiddenFor(m => m.ProviderSiteErn)
+    @Html.HiddenFor(m => m.VacancyGuid)
+    @Html.HiddenFor(m => m.CurrentPage)
+    @Html.HiddenFor(m => m.TotalNumberOfPages)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
     <noscript>
@@ -23,7 +26,7 @@
                 <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
             </div>
 
-            @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Any())
+            @if (Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
             {
                 <div class="form-group">
                     <div class="tabbed-element tab1 active width-all-1-1">
@@ -33,24 +36,54 @@
                                 <col class="t20">
                             </colgroup>
                             <tbody>
-                            @for (var i = 0; i < Model.SearchResultAddresses.Count; i++)
+                            @{
+                                var index = 0;
+                            }
+                            @foreach (var address in Model.SearchResultAddresses.Page)
                             {
-                                var address = Model.SearchResultAddresses[i];
                                 <tr>
                                     <td>
                                         @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
                                     </td>
                                     <td>
                                         @{
-                                            var buttonName = "UseLocation-" + @i;
+                                            var buttonName = "UseLocation-" + @index;
                                         }
                                         <button id="useLocation" type="submit" class="button-link" name="AddLocations" value="@buttonName">Use location</button>
                                     </td>
                                 </tr>
+                                index = index+1;
                             }
                             </tbody>
                         </table>
                     </div>
+                </div>
+
+                <div class="page-navigation">
+
+                    @{
+                        var currentPage = Model.CurrentPage;
+                        var totalNumberOfPages = Model.TotalNumberOfPages;
+                        var nextPage = Model.CurrentPage + 1;
+                        var previousPage = Model.CurrentPage - 1;
+                     }                 
+
+                    <button name="AddLocations" value="SearchLocations-@previousPage"
+                       style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 50%"
+                       class="page-navigation__btn previous grid grid-1-3">
+                        <i class="arrow-button fa fa-angle-left"></i>
+                        <span class="description">Previous <span class="hide-mob">page</span></span>
+                        <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
+                    </button>
+
+                    <button name="AddLocations" value="SearchLocations-@nextPage"
+                       style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 50%"
+                       class="page-navigation__btn next grid grid-1-3">
+                        <i class="arrow-button fa fa-angle-right"></i>
+                        <span class="description">Next <span class="hide-mob">page</span></span>
+                        <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
+                    </button>
+
                 </div>
             }
 

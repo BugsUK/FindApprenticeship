@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Web.Common.ViewModels;
 
     public class LocationSearchViewModel
     {
         [Display(Name = LocationSearchViewModelMessages.PostCodeSearch.LabelText)]
         public string PostcodeSearch { get; set; } 
 
-        public List<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
+        public PageableViewModel<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
 
@@ -24,5 +25,8 @@
         public string AdditionalLocationInformation { get; set; }
 
         public string Ukprn { get; set; }
+        public int CurrentPage { get; set; }
+
+        public int TotalNumberOfPages { get; set; }
     }
 }

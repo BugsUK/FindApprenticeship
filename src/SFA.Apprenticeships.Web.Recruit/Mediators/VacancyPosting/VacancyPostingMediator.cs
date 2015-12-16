@@ -218,7 +218,8 @@
         {
             try
             {
-                viewModel.SearchResultAddresses = _locationsProvider.GetAddressesFor(viewModel.PostcodeSearch);
+                viewModel = _locationsProvider.GetAddressesFor(viewModel);
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
             }
             catch (CustomException)
@@ -415,6 +416,7 @@
         public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid)
         {
             var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            locationSearchViewModel.CurrentPage = 1;
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok, locationSearchViewModel);
 

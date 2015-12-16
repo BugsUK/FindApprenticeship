@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
     using System.Collections.Generic;
+    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Interfaces.Generic;
     using Interfaces.Locations;
 
     public class AddressSearchService : IAddressSearchService
@@ -15,7 +17,7 @@
             _addressLookupProvider = addressLookupProvider;
         }
 
-        public IEnumerable<Address> GetAddressesFor(string fullPostcode)
+        public Pageable<Address> GetAddressesFor(string fullPostcode, int currentPage, int pageSize)
         {
             Condition.Requires(fullPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
@@ -25,7 +27,16 @@
                 throw new CustomException(message, ErrorCodes.AddressLookupFailed);
             }
 
-            return _addressLookupProvider.GetPossibleAddresses(fullPostcode);
+            var addresses = _addressLookupProvider.GetPossibleAddresses(fullPostcode);
+
+            var addressesPage = new Pageable<Address>
+            {
+                Page = addresses.Skip((currentPage - 1) * pageSize).Take(pageSize),
+                ResultsCount = addresses.Count(),
+                CurrentPage = currentPage,
+                TotalNumberOfPages = ( addresses.Count() / pageSize ) + 1
+            };
+            return addressesPage;
         }
     }
 }

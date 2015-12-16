@@ -61,9 +61,14 @@
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var value = filterContext.HttpContext.Request.Params[SubmitButtonActionName];
-            var parameterValue = value.Split('-').Last();
+            var splittedParameterValue = value.Split('-');
+            object realParameterValue = null;
+            if (splittedParameterValue.Length > 1)
+            {
+                var parameterValue = value.Split('-').Last();
+                realParameterValue = Convert.ChangeType(parameterValue, ParameterType);
+            }
 
-            var realParameterValue = Convert.ChangeType(parameterValue, ParameterType);
             filterContext.ActionParameters[ParameterName] = realParameterValue;
         }
     }

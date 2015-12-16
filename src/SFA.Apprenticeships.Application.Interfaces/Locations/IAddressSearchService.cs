@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Locations
 {
-    using System.Collections.Generic;
     using Domain.Entities.Locations;
+    using Generic;
 
     public interface IAddressSearchService
     {
-        IEnumerable<Address> GetAddressesFor(string fullPostcode);
+        Pageable<Address> GetAddressesFor(string fullPostcode, int currentPage, int pageSize);
     }
 }

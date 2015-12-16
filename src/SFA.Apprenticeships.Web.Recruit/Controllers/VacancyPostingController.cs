@@ -743,9 +743,21 @@
 
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "AddLocations")]
+        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
+        [FillParamterFromActionName(ParameterName = "currentPage", ParameterType = TypeCode.Int32, SubmitButtonActionName = "AddLocations")]
         [HttpPost]
-        public ActionResult SearchLocations(LocationSearchViewModel viewModel)
+        public ActionResult SearchLocations(LocationSearchViewModel viewModel, int? currentPage)
+        {
+            if (currentPage.HasValue)
+            {
+                viewModel.CurrentPage = currentPage.Value;
+            }
+
+            return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, viewModel);
+        }
+
+        [HttpGet]
+        public ActionResult SearchAddresses(LocationSearchViewModel viewModel)
         {
             var response = _vacancyPostingMediator.SearchLocations(viewModel);
 
@@ -777,16 +789,16 @@
         [HttpPost]
         public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            viewModel.SearchResultAddresses = GetSearchResults();
+            //viewModel.SearchResultAddresses = GetSearchResults();
 
-            if (viewModel.Addresses == null)
-            {
-                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
-            }
+            //if (viewModel.Addresses == null)
+            //{
+            //    viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            //}
 
-            viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
+            //viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
 
-            viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
+            //viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
             viewModel.PostcodeSearch = string.Empty;
 
             return View("Locations", viewModel);
@@ -797,14 +809,14 @@
         [HttpPost]
         public ActionResult RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            viewModel.SearchResultAddresses = GetSearchResults();
+            //viewModel.SearchResultAddresses = GetSearchResults();
 
-            if (viewModel.Addresses == null)
-            {
-                viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
-            }
+            //if (viewModel.Addresses == null)
+            //{
+            //    viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
+            //}
 
-            viewModel.Addresses.RemoveAt(locationIndex);
+            //viewModel.Addresses.RemoveAt(locationIndex);
 
             return View("Locations", viewModel);
         }
