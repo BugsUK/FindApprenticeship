@@ -6164,6 +6164,12 @@ h2 a i.raa-icon-comment {
 .preserve-formatting {
   white-space: pre-line; }
 
+.remove-button-link {
+  font-size: 14px; }
+
+.use-location-button-link {
+  font-size: 14px; }
+
 .vacancies-summary {
   list-style: none;
   margin: 0;

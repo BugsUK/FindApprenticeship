@@ -10,6 +10,7 @@
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
+    using Common.ViewModels;
     using Constants;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
@@ -753,6 +754,7 @@
                 viewModel.CurrentPage = currentPage.Value;
             }
 
+            TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, viewModel);
         }
 
@@ -760,6 +762,8 @@
         public ActionResult SearchAddresses(LocationSearchViewModel viewModel)
         {
             var response = _vacancyPostingMediator.SearchLocations(viewModel);
+
+            response.ViewModel.Addresses = (List<VacancyLocationAddressViewModel>) TempData["AlreadyAddedLocations"];
 
             ModelState.Clear();
 
@@ -789,17 +793,15 @@
         [HttpPost]
         public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            //viewModel.SearchResultAddresses = GetSearchResults();
+            var searchResult = _vacancyPostingMediator.SearchLocations(viewModel);
 
-            //if (viewModel.Addresses == null)
-            //{
-            //    viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
-            //}
-
-            //viewModel.Addresses.Add(viewModel.SearchResultAddresses[locationIndex]);
-
-            //viewModel.SearchResultAddresses = new List<VacancyLocationAddressViewModel>();
+            viewModel.Addresses.Add(searchResult.ViewModel.SearchResultAddresses.Page.ToList()[locationIndex]);
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
             viewModel.PostcodeSearch = string.Empty;
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+
+            ModelState.Clear();
 
             return View("Locations", viewModel);
         }
@@ -817,6 +819,14 @@
             //}
 
             //viewModel.Addresses.RemoveAt(locationIndex);
+
+            viewModel.Addresses.RemoveAt(locationIndex);
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
+            viewModel.PostcodeSearch = string.Empty;
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+
+            ModelState.Clear();
 
             return View("Locations", viewModel);
         }

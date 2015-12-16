@@ -219,6 +219,7 @@
             try
             {
                 viewModel = _locationsProvider.GetAddressesFor(viewModel);
+                viewModel.PostcodeSearch = string.Empty;
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
             }

@@ -8,12 +8,19 @@
 
     public class LocationSearchViewModel
     {
+        public LocationSearchViewModel()
+        {
+            Addresses = new List<VacancyLocationAddressViewModel>();
+        }
+
         [Display(Name = LocationSearchViewModelMessages.PostCodeSearch.LabelText)]
         public string PostcodeSearch { get; set; } 
 
         public PageableViewModel<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
+
+        public List<VacancyLocationAddressViewModel> SearchAddresses { get; set; }
 
         public string ProviderSiteErn { get; set; }
 
