@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Candidate;
     
     #line 1 "..\..\Views\Shared\_Layout.cshtml"

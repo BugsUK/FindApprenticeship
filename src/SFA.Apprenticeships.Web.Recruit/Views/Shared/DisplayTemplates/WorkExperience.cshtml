@@ -1,0 +1,84 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.ViewModels.Application
+@model IEnumerable<WorkExperienceViewModel>
+
+<section class="section-border">
+    <h2 class="heading-large">
+        Work experience
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <p id="no-work-experience">Applicant doesn't have any work experience</p>
+    }
+
+    @foreach (WorkExperienceViewModel experience in Model)
+    {
+        <div class="grid-3-4 nobreak-print">
+            <div class="grid-wrapper work-history-item">
+
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">Work experience</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@experience.Employer</span>
+                                    <span class="form-prepopped cell-span work-hyphen">-</span>
+                                    <span class="form-prepopped cell-span">@experience.JobTitle</span>
+                                    <div></div>
+                                    <span class="form-prepopped cell-span prewrap">@experience.Description</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col class="t30">
+                            <col class="t30">
+                            <col class="t25">
+                            <col class="t15">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">From</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">To</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@experience.FromDate.GetMonthYearLabel()</span>
+                                </td>
+                                <td>
+                                    <span class="form-prepopped cell-span">@experience.ToDate.GetMonthYearLabel()</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+
+</section>

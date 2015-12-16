@@ -6,6 +6,7 @@
     using Candidate.ViewModels.VacancySearch;
     using Common.Framework;
     using FluentAssertions;
+    using Infrastructure.Presentation;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;

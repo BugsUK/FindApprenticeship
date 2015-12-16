@@ -235,7 +235,6 @@
     <Compile Include="Constants\YearRangeRegexGenerator.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\IUserController.cs" />
-    <Compile Include="Framework\DateDisplayExtensions.cs" />
     <Compile Include="Framework\SpanLabelExtensions.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
@@ -279,6 +278,11 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
+      <DependentUpon>Date.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -351,6 +355,10 @@
     <None Include="Content\scss\_ie8-hacks.scss" />
     <None Include="Content\scss\_modules.scss" />
     <None Include="packages.config" />
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Date.generated.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

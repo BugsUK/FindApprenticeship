@@ -1,0 +1,17 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Candidates
+@model DisabilityStatus?
+
+@if (Model.HasValue && Model.Value != DisabilityStatus.Unknown)
+{
+    <div class="form-group">
+        <p class="form-label" id="disability-label">Do you have a learning difficulty, disability or health problem?</p>
+        @if (Model.Value == DisabilityStatus.PreferNotToSay)
+        {
+            <span class="form-prepopped">Prefer not to say</span>
+        }
+        else
+        {
+            <span class="form-prepopped">@Model.Value</span>
+        }
+    </div>
+}

@@ -15,33 +15,40 @@
 
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
-    @using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+    @if (Model.Status == ProviderVacancyStatuses.Live)
     {
-        @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-        if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+        <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
+    }
+    else
+    {
+        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
         {
-            Model.ResubmitOption = false;
-            @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
-        }
-        else
-        {
-            Model.ResubmitOption = true;
-            @Html.HiddenFor(model => model.ResubmitOption)
-        }
+            @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-        <section>
-            <div class="form-group">
-                @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
-                {
-                    <button type="submit" class="button">Resubmit vacancy</button>
-                }
-                else
-                {
-                    <button type="submit" class="button">Submit for approval</button>
-                }
-                <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
-            </div>
-        </section>
+            if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+                Model.ResubmitOption = false;
+                @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
+            }
+            else
+            {
+                Model.ResubmitOption = true;
+                @Html.HiddenFor(model => model.ResubmitOption)
+            }
+
+            <section>
+                <div class="form-group">
+                    @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+                    {
+                        <button type="submit" class="button">Resubmit vacancy</button>
+                    }
+                    else
+                    {
+                        <button type="submit" class="button">Submit for approval</button>
+                    }
+                    <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Save and exit</a>
+                </div>
+            </section>
+        }
     }
 </div>

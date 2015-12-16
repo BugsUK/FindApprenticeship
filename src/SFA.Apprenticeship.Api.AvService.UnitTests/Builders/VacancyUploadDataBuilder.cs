@@ -59,7 +59,6 @@
                     Wage = _wage,
                     WageType = _wageType,
                     WorkingWeek = _workingWeek,
-                    SkillsRequired = _skillsRequired,
                     QualificationRequired = _qualificationRequired,
                     PersonalQualities = _personalQualities,
                     FutureProspects = _futureProspects,
