@@ -38,9 +38,32 @@
 
             var applications = _apprenticeshipApplicationService.GetSubmittedApplicationSummaries((int)vacancyApplicationsSearch.VacancyReferenceNumber);
 
+            var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
+            var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
+            var successful = applications.Where(v => v.Status == ApplicationStatuses.Successful).ToList();
+            var unsuccessful = applications.Where(v => v.Status == ApplicationStatuses.Unsuccessful).ToList();
+
+            switch (vacancyApplicationsSearch.FilterType)
+            {
+                case VacancyApplicationsFilterTypes.New:
+                    applications = @new;
+                    break;
+                case VacancyApplicationsFilterTypes.Viewed:
+                    applications = viewed;
+                    break;
+                case VacancyApplicationsFilterTypes.Successful:
+                    applications = successful;
+                    break;
+                case VacancyApplicationsFilterTypes.Unsuccessful:
+                    applications = unsuccessful;
+                    break;
+            }
+
             //TODO: return as part of data query - probably needs migration
-            viewModel.RejectedApplicationsCount = applications.Count(vm => vm.Status == ApplicationStatuses.Unsuccessful);
-            viewModel.UnresolvedApplicationsCount = applications.Count(vm => vm.Status <= ApplicationStatuses.InProgress);
+            viewModel.NewApplicationsCount = @new.Count;
+            viewModel.ViewedApplicationsCount = viewed.Count;
+            viewModel.SuccessfulApplicationsCount = successful.Count;
+            viewModel.UnsuccessfulApplicationsCount = unsuccessful.Count;
 
             vacancyApplicationsSearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacancyApplicationsSearch.PageSize);
 

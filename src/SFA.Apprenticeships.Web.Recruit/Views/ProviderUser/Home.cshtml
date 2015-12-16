@@ -15,10 +15,11 @@
     ViewBag.Title = "Recruit an Apprentice";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 @using (Html.BeginForm(null, "ProviderUser", FormMethod.Post, new { name = "provider-site-form" }))
 {
     @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
@@ -58,7 +59,6 @@
 @using (Html.BeginForm(null, "ProviderUser", FormMethod.Post, new { name = "vacancy-search-form" }))
 {
     @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 

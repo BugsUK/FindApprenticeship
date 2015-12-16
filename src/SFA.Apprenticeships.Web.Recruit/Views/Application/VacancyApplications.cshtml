@@ -6,10 +6,11 @@
     ViewBag.Title = "Recruit an Apprentice - Vacancy applications";
 }
 
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyApplications, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.VacancyApplicationsSearch.FilterType)
@@ -64,30 +65,109 @@
                     }
                 }
 
-                @if (Model.RejectedApplicationsCount == 1)
+                @if (Model.UnsuccessfulApplicationsCount == 1)
                 {
                     <p>You've rejected 1 application.</p>
                 }
-                else if (Model.RejectedApplicationsCount > 1)
+                else if (Model.UnsuccessfulApplicationsCount > 1)
                 {
-                    <p>You've rejected @Model.RejectedApplicationsCount applications.</p>
+                    <p>You've rejected @Model.UnsuccessfulApplicationsCount applications.</p>
                 }
 
-                @if (Model.UnresolvedApplicationsCount == 1)
+                @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)
                 {
                     <p>There is still 1 application to send an outcome to.</p>
                 }
-                else if (Model.UnresolvedApplicationsCount > 1)
+                else if (Model.NewApplicationsCount + Model.ViewedApplicationsCount > 1)
                 {
-                    <p>There are still @Model.UnresolvedApplicationsCount applications to send an outcome to.</p>
+                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send an outcome to.</p>
                 }
             </div>
         </section>
 
         <section class="no-btm-margin" id="applicationsSection">
+            @{
+                var filterType = Model.VacancyApplicationsSearch.FilterType;
+            }
             <div class="hgroup-large">
-                <h2 class="heading-large">Applications</h2>
+                <h2 class="heading-large">
+                    Applications
+                    @if (filterType != VacancyApplicationsFilterTypes.All)
+                    {
+                        <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
+                    }
+                </h2>
             </div>
+
+            <section class="grid-wrapper">
+                <ul class="applications-summary">
+                    <li>
+                        <figure class="data">
+                            @if (filterType == VacancyApplicationsFilterTypes.New)
+                            {
+                                <p class="count">@Model.NewApplicationsCount</p>
+                                <figcaption><h2>New</h2></figcaption>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.New))" class="vacancy-filter">
+                                    <p class="count">@Model.NewApplicationsCount</p>
+                                    <figcaption><h2>New</h2></figcaption>
+                                </a>
+                            }
+                        </figure>
+                    </li>
+                    <li>
+                        <figure class="data">
+                            @if (filterType == VacancyApplicationsFilterTypes.Viewed)
+                            {
+                                <p class="count">@Model.ViewedApplicationsCount</p>
+                                <figcaption><h2>Viewed</h2></figcaption>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Viewed))" class="vacancy-filter">
+                                    <p class="count">@Model.ViewedApplicationsCount</p>
+                                    <figcaption><h2>Viewed</h2></figcaption>
+                                </a>
+                            }
+                        </figure>
+                    </li>
+                    <li>
+                        <figure class="data">
+                            @if (filterType == VacancyApplicationsFilterTypes.Successful)
+                            {
+                                <p class="count">@Model.SuccessfulApplicationsCount</p>
+                                <figcaption><h2>Referred</h2></figcaption>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Successful))" class="vacancy-filter">
+                                    <p class="count">@Model.SuccessfulApplicationsCount</p>
+                                    <figcaption><h2>Referred</h2></figcaption>
+                                </a>
+                            }
+                        </figure>
+                    </li>
+                    <li>
+                        <figure class="data">
+                            @if (filterType == VacancyApplicationsFilterTypes.Unsuccessful)
+                            {
+                                <p class="count">@Model.UnsuccessfulApplicationsCount</p>
+                                <figcaption><h2>Closing soom</h2></figcaption>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.VacancyApplications, new VacancyApplicationsSearchViewModel(Model.VacancyApplicationsSearch, VacancyApplicationsFilterTypes.Unsuccessful))" class="vacancy-filter">
+                                    <p class="count">@Model.UnsuccessfulApplicationsCount</p>
+                                    <figcaption><h2>Closing soon</h2></figcaption>
+                                </a>
+                            }
+                        </figure>
+                    </li>
+                </ul>
+            </section>
+
             <table class="vert-top" id="applicationTable">
                 <colgroup>
                     <col class="t30">

@@ -23,8 +23,10 @@
                 .ForMember(v => v.VacancyApplicationsSearch, opt => opt.Ignore())
                 .ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
                 .ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
-                .ForMember(v => v.RejectedApplicationsCount, opt => opt.Ignore())
-                .ForMember(v => v.UnresolvedApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.NewApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.ViewedApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.SuccessfulApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.UnsuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ApplicationSummaries, opt => opt.Ignore());
             
             Mapper.CreateMap<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>()

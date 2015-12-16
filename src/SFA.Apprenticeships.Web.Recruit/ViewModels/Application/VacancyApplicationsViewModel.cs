@@ -21,9 +21,13 @@
 
         public ProviderVacancyStatuses Status { get; set; }
 
-        public int RejectedApplicationsCount { get; set; }
+        public int NewApplicationsCount { get; set; }
 
-        public int UnresolvedApplicationsCount { get; set; }
+        public int ViewedApplicationsCount { get; set; }
+
+        public int SuccessfulApplicationsCount { get; set; }
+
+        public int UnsuccessfulApplicationsCount { get; set; }
 
         public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
     }
