@@ -14,6 +14,7 @@
         public class PostCodeSearch
         {
             public const string LabelText = "Enter the vacancy location or postcode";
+            public const string ErrorText = "Please enter a full postcode";
         }
 
         public class Addresses

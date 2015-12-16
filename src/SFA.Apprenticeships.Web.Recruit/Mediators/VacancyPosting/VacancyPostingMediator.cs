@@ -16,6 +16,8 @@
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
@@ -221,7 +223,7 @@
             }
             catch (CustomException)
             {
-                return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
             }
         }
 

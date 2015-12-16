@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
     using Attributes;
@@ -12,7 +13,9 @@
     using Constants;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
+    using FluentValidation.Results;
     using Mediators.VacancyPosting;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -746,7 +749,27 @@
         {
             var response = _vacancyPostingMediator.SearchLocations(viewModel);
 
-            return View("Locations", response.ViewModel);
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.SearchLocations.Ok:
+                    return View("Locations", response.ViewModel);
+                case VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode:
+                    AddPostcodeSearchErrorToModelState(viewModel);
+                    return View("Locations", response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        private void AddPostcodeSearchErrorToModelState(LocationSearchViewModel viewModel)
+        {
+            ModelState.AddModelError("PostcodeSearch", LocationSearchViewModelMessages.PostCodeSearch.ErrorText);
+            //To work around an issue with MVC: SetModelValue must be called if AddModelError is called.
+            ModelState.SetModelValue("PostcodeSearch",
+                new ValueProviderResult(viewModel.PostcodeSearch ?? "", (viewModel.PostcodeSearch ?? ""),
+                    CultureInfo.CurrentCulture));
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
