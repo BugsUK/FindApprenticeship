@@ -37,7 +37,7 @@
                         <th>
                             <span class="heading-span">Grade</span>
                         </th>
-                        <th>
+                        <th>l
                             <span class="heading-span">Year</span>
                         </th>
                     </tr>
@@ -50,7 +50,7 @@
                                 <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Subject" readonly>
                             </td>
                             <td>
-                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@Html.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>
+                                <input class="form-control qual-input-edit form-prepopped" type="text" value="@QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted)" readonly>
                             </td>
                             <td>
                                 <input class="form-control qual-input-edit form-prepopped" type="text" value="@item.Year" readonly>

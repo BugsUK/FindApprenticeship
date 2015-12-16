@@ -38,6 +38,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     
     #line 5 "..\..\Views\VacancyPosting\VacancySummary.cshtml"

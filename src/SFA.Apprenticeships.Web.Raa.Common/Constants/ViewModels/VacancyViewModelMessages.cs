@@ -4,6 +4,8 @@
 
     public class VacancyViewModelMessages
     {
+        public const string NoApplications = "You've had no applications submitted for this vacancy";
+
         public static class Title
         {
             public const string LabelText = "Title";

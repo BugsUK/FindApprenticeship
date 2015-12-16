@@ -1,0 +1,18 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@model ApplicationStatuses
+
+@switch (Model)
+{
+    case ApplicationStatuses.Submitted:
+        <span class="tag-newapplication">New application</span>
+        break;
+    case ApplicationStatuses.InProgress:
+        <span class="tag-inprogress">Viewed</span>
+        break;
+    case ApplicationStatuses.Successful:
+        <span class="tag-success">Successful</span>
+        break;
+    case ApplicationStatuses.Unsuccessful:
+        <span class="tag-rejected">Unsuccessful</span>
+        break;
+}

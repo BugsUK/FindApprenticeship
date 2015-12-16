@@ -402,6 +402,11 @@
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
+            if (viewModel.Status == ProviderVacancyStatuses.Live)
+            {
+                //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
+                viewModel.ApplicationCount = _applicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
+            }
             return viewModel;
         }
 

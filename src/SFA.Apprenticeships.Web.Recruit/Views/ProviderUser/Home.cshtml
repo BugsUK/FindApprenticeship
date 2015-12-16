@@ -199,13 +199,17 @@
                                     <div class="vac-title">
                                         @{
                                             var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
-                                            var editRoute = RecruitmentRouteNames.PreviewVacancy;
+                                            var routeName = RecruitmentRouteNames.PreviewVacancy;
                                             if (vacancy.Status == ProviderVacancyStatuses.Draft)
                                             {
-                                                editRoute = RecruitmentRouteNames.ReviewCreateVacancy;
+                                                routeName = RecruitmentRouteNames.ReviewCreateVacancy;
+                                            }
+                                            if (vacancy.Status == ProviderVacancyStatuses.Live && vacancy.ApplicationCount > 0)
+                                            {
+                                                routeName = RecruitmentRouteNames.VacancyApplications;
                                             }
                                         }
-                                        <a href="@Url.RouteUrl(editRoute, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>
+                                        <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>
                                     </div>
                                 </td>
                                 <td class="vac-employer" data-label="Employer">

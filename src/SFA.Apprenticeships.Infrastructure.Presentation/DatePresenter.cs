@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Framework
+﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using System;
 
-    //TODO: Move into presentation project
-    public static class DateDisplayExtensions
+    public static class DatePresenter
     {
         public static string ToFriendlyClosingWeek(this DateTime closingDate)
         {

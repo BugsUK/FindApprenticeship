@@ -85,11 +85,14 @@
             For<IMapper>().Use<ApplicationStatusSummaryMapper>()
                 .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
 
-            For<ILegacyApplicationStatusesProvider>()
-                .Use<LegacyCandidateApplicationStatusesProvider>()
-                .Ctor<IMapper>()
-                .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                .Name = "LegacyCandidateApplicationStatusesProvider";
+            if (servicesConfiguration.ServiceImplementation == "Legacy")
+            {
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
+            }
 
             #endregion
 
