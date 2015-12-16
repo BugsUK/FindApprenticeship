@@ -120,6 +120,7 @@
         public class SearchLocations
         {
             public const string Ok = "VacancyPosting.SearchLocations.Ok";
+            public const string NotFullPostcode = "VacancyPosting.SearchLocations.NotFullPostcode";
         }
     }
 }
