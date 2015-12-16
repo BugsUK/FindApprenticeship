@@ -6,7 +6,7 @@
 
     public interface IApplicationProvider
     {
-        VacancyApplicationsViewModel GetVacancyApplicationsViewModel(long vacancyReferenceNumber);
+        VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModel(Guid applicationId);
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(Guid applicationId);
         void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes);

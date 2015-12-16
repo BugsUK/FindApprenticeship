@@ -10,6 +10,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Mapping;
+    using Raa.Common.Factories;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
 
@@ -30,21 +31,26 @@
             _logService = logService;
         }
 
-        public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(long vacancyReferenceNumber)
+        public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyApplicationsSearch.VacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyApplicationsViewModel>(vacancy);
 
-            var applications = _apprenticeshipApplicationService.GetSubmittedApplicationSummaries((int) vacancyReferenceNumber);
-            var applicationSummaryViewModels = applications.Select(a => _mapper.Map<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>(a)).ToList();
+            var applications = _apprenticeshipApplicationService.GetSubmittedApplicationSummaries((int)vacancyApplicationsSearch.VacancyReferenceNumber);
 
             //TODO: return as part of data query - probably needs migration
-            viewModel.RejectedApplicationsCount = applicationSummaryViewModels.Count(vm => vm.Status == ApplicationStatuses.Unsuccessful);
-            viewModel.UnresolvedApplicationsCount = applicationSummaryViewModels.Count(vm => vm.Status <= ApplicationStatuses.InProgress);
+            viewModel.RejectedApplicationsCount = applications.Count(vm => vm.Status == ApplicationStatuses.Unsuccessful);
+            viewModel.UnresolvedApplicationsCount = applications.Count(vm => vm.Status <= ApplicationStatuses.InProgress);
 
+            vacancyApplicationsSearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacancyApplicationsSearch.PageSize);
+
+            viewModel.VacancyApplicationsSearch = vacancyApplicationsSearch;
             viewModel.ApplicationSummaries = new PageableViewModel<ApplicationSummaryViewModel>
             {
-                Page = applicationSummaryViewModels
+                Page = applications.Skip((vacancyApplicationsSearch.CurrentPage - 1) * vacancyApplicationsSearch.PageSize).Take(vacancyApplicationsSearch.PageSize).Select(a => _mapper.Map<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>(a)).ToList(),
+                ResultsCount = applications.Count,
+                CurrentPage = vacancyApplicationsSearch.CurrentPage,
+                TotalNumberOfPages = applications.Count == 0 ? 1 : (int)Math.Ceiling((double)applications.Count / vacancyApplicationsSearch.PageSize)
             };
 
             return viewModel;

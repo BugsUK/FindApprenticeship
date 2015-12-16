@@ -20,6 +20,7 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyApplicationsViewModel>()
+                .ForMember(v => v.VacancyApplicationsSearch, opt => opt.Ignore())
                 .ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
                 .ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
                 .ForMember(v => v.RejectedApplicationsCount, opt => opt.Ignore())

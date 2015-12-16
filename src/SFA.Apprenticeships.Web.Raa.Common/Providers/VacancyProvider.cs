@@ -21,6 +21,7 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Factories;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -538,7 +539,7 @@
                     break;
             }
 
-            vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
+            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
 
             if (isVacancySearch)
             {
@@ -620,19 +621,6 @@
             result.VacancyGuid = vacancy.EntityId;
 
             return result;
-        }
-
-        
-
-        private List<SelectListItem> GetPageSizes(int pageSize)
-        {
-            return new List<SelectListItem>
-            {
-                new SelectListItem {Value = "5", Text = "5 per page", Selected = pageSize == 5},
-                new SelectListItem {Value = "10", Text = "10 per page", Selected = pageSize == 10},
-                new SelectListItem {Value = "25", Text = "25 per page", Selected = pageSize == 25},
-                new SelectListItem {Value = "50", Text = "50 per page", Selected = pageSize == 50}
-            };
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()

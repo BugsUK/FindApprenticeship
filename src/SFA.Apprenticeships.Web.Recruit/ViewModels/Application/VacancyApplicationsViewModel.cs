@@ -7,7 +7,7 @@
 
     public class VacancyApplicationsViewModel
     {
-        public long VacancyReferenceNumber { get; set; }
+        public VacancyApplicationsSearchViewModel VacancyApplicationsSearch { get; set; }
 
         public string Title { get; set; }
 
@@ -25,6 +25,6 @@
 
         public int UnresolvedApplicationsCount { get; set; }
 
-        public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; } 
+        public PageableViewModel<ApplicationSummaryViewModel> ApplicationSummaries { get; set; }
     }
 }

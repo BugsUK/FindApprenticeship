@@ -145,7 +145,7 @@
             return applicationSummaries;
         }
 
-        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
         {
             _logger.Debug("Calling repository to get submitted ApprenticeshipApplicationSummaries with VacancyId:{0}", vacancyId);
 
@@ -155,7 +155,7 @@
 
             var applicationSummaries =
                 _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
-                    mongoEntities);
+                    mongoEntities).ToList();
 
             return applicationSummaries;
         }

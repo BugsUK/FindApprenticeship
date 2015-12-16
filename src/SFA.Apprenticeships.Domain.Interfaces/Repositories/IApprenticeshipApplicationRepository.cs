@@ -16,7 +16,7 @@
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
 
-        IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
+        IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
 
         IEnumerable<Guid> GetDraftApplicationsForExpiredVacancies(DateTime vacancyExpiryDate);
 
