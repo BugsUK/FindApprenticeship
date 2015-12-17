@@ -19,7 +19,7 @@
 
         public LocationSearchViewModel GetAddressesFor(LocationSearchViewModel viewModel)
         {
-            var pageSize = 20;
+            var pageSize = 20; // TODO: get from configuration?
             var resultsPage = _addressSearchService.GetAddressesFor(viewModel.PostcodeSearch, viewModel.CurrentPage, pageSize);
             var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(ConvertToViewModel));
             viewModel.SearchResultAddresses = resultsViewModelPage;

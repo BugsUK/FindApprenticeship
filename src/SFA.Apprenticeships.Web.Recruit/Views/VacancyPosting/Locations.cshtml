@@ -24,9 +24,11 @@
             <div class="form-group">
                 @{
                     var className = "form-group";
+                    var addAnotherLocationStatus = "";
                     if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
                     {
                         className += " input-validation-error";
+                        addAnotherLocationStatus = "open";
                     }
                 }
 
@@ -42,7 +44,7 @@
                 }
                 else
                 {
-                    <details>
+                    <details @addAnotherLocationStatus>
                         <summary>Add another location</summary>
                         <div class="@className">
                             <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
