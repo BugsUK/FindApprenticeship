@@ -18,18 +18,20 @@
     @Html.HiddenFor(m => m.CurrentPage)
     @Html.HiddenFor(m => m.TotalNumberOfPages)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    
+
     <noscript>
         <div>
             <div class="form-group">
-                @if (Model.Addresses == null || !Model.Addresses.Any())
-                {
+                @{
                     var className = "form-group";
                     if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
                     {
                         className += " input-validation-error";
                     }
+                }
 
+                @if (Model.Addresses == null || !Model.Addresses.Any())
+                {
                     <div class="@className">
                         <a name="postcodesearch"></a>
                         <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
@@ -38,13 +40,14 @@
                     </div>
                     <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
                 }
-                else {
+                else
+                {
                     <details>
                         <summary>Add another location</summary>
-                        <div class="form-group">
+                        <div class="@className">
                             <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
                             <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
-                            <span class="field-validation-valid" data-valmsg-for="PostcodeSearch" data-valmsg-replace="true"></span>
+                            @Html.ValidationMessage("PostcodeSearch")
                         </div>
                         <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
                     </details>
@@ -159,7 +162,7 @@
                                         @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Uprn, new { @id = "addresses_" + i + "address__Uprn", Name = "Addresses[" + i + "].Address.Uprn" })
                                     </td>
                                     <td>
-                                        @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class="form-control-small", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
+                                        @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class="form-control-small", @maxlength = "5", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
                                         @Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions")
                                     </td>
                                     <td class="ta-center">

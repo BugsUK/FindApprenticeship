@@ -13,9 +13,7 @@
                 .NotEmpty()
                 .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.RequiredErrorText)
                 .GreaterThanOrEqualTo(1)
-                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.AtLeastOnePositionErrorText)
-                .LessThanOrEqualTo(1000)
-                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.TooManyPositionsErrorText);
+                .WithMessage(VacancyLocationAddressViewModelMessages.NumberOfPositions.AtLeastOnePositionErrorText);
         }
     }
 }

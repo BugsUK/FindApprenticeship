@@ -213,26 +213,38 @@
 
         public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
         {
+            if (string.IsNullOrWhiteSpace(viewModel.PostcodeSearch))
+            {
+                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
+
+                return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
+            }
+
             try
             {
                 viewModel = _locationsProvider.GetAddressesFor(viewModel);
 
-                var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyGuid);
-                if (existingVacancy != null)
-                {
-                    viewModel.Addresses = existingVacancy.LocationAddresses;
-                }
-
-                if (alreadyAddedLocations != null && alreadyAddedLocations.Any())
-                {
-                    viewModel.Addresses = alreadyAddedLocations;
-                }
+                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
             }
             catch (CustomException)
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
+            }
+        }
+
+        private void AddAlreadyAddedLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
+        {
+            var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyGuid);
+            if (existingVacancy != null)
+            {
+                viewModel.Addresses = existingVacancy.LocationAddresses;
+            }
+
+            if (alreadyAddedLocations != null && alreadyAddedLocations.Any())
+            {
+                viewModel.Addresses = alreadyAddedLocations;
             }
         }
 
