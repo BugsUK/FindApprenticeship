@@ -44,6 +44,7 @@
         public const string CloneVacancy = "CloneVacancy";
         public const string SearchAddresses = "SearchAddresses";
         public const string AddLocations = "AddLocations";
+        public const string ShowLocations = "ShowLocations";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";

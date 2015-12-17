@@ -11,13 +11,10 @@
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
-    using Common.ViewModels.Locations;
     using Domain.Entities.Exceptions;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
@@ -214,12 +211,22 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.SetDifferentLocation.Ok, existingViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel)
+        public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
         {
             try
             {
                 viewModel = _locationsProvider.GetAddressesFor(viewModel);
-                viewModel.PostcodeSearch = string.Empty;
+
+                var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyGuid);
+                if (existingVacancy != null)
+                {
+                    viewModel.Addresses = existingVacancy.LocationAddresses;
+                }
+
+                if (alreadyAddedLocations != null && alreadyAddedLocations.Any())
+                {
+                    viewModel.Addresses = alreadyAddedLocations;
+                }
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.Ok, viewModel);
             }
@@ -227,6 +234,43 @@
             {
                 return GetMediatorResponse(VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
             }
+        }
+
+        public MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postCodeSearch)
+        {
+            viewModel.PostcodeSearch = postCodeSearch;
+            var searchResult = SearchLocations(viewModel, viewModel.Addresses);
+
+            if (searchResult.ViewModel.SearchResultAddresses != null &&
+                searchResult.ViewModel.SearchResultAddresses.Page != null
+                && searchResult.ViewModel.SearchResultAddresses.Page.Count() > locationIndex)
+            {
+                var addressToAdd = searchResult.ViewModel.SearchResultAddresses.Page.ToList()[locationIndex];
+
+                var isNewAddress = viewModel.Addresses.TrueForAll(v => !v.Address.Equals(addressToAdd.Address));
+                if (isNewAddress)
+                {
+                    viewModel.Addresses.Add(addressToAdd);
+                }
+            }
+
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+            viewModel.PostcodeSearch = string.Empty;
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.UseLocation.Ok, viewModel);
+        }
+
+        public MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
+        {
+            viewModel.Addresses.RemoveAt(locationIndex);
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
+            viewModel.PostcodeSearch = string.Empty;
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.RemoveLocation.Ok, viewModel);
         }
 
         public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
@@ -240,9 +284,7 @@
             var viewModel = _vacancyPostingProvider.CloneVacancy(vacancyReferenceNumber);
             return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
-
         
-
         public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {
             var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid, numberOfPositions);

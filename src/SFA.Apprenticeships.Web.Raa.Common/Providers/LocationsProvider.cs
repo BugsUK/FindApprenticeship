@@ -27,16 +27,21 @@
             return viewModel;
         }
 
+        private string GetAddressLineValue(string addressLine)
+        {
+            return string.IsNullOrWhiteSpace(addressLine) ? null : addressLine;
+        }
+
         private VacancyLocationAddressViewModel ConvertToViewModel(Address address)
         {
             return new VacancyLocationAddressViewModel
             {
                 Address = new AddressViewModel
                 {
-                    AddressLine1 = address.AddressLine1,
-                    AddressLine2 = address.AddressLine2,
-                    AddressLine3 = address.AddressLine3,
-                    AddressLine4 = address.AddressLine4,
+                    AddressLine1 = GetAddressLineValue(address.AddressLine1),
+                    AddressLine2 = GetAddressLineValue(address.AddressLine2),
+                    AddressLine3 = GetAddressLineValue(address.AddressLine3),
+                    AddressLine4 = GetAddressLineValue(address.AddressLine4),
                     Postcode = address.Postcode,
                     Uprn = address.Uprn
                 }

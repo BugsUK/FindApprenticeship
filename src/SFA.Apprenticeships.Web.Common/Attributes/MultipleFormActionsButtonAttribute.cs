@@ -50,26 +50,33 @@
         }
     }
 
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class FillParamterFromActionName : ActionFilterAttribute
     {
-        public string ParameterName { get; set; }
+        public string[] ParameterNames { get; set; }
 
         public string SubmitButtonActionName { get; set; }
 
-        public TypeCode ParameterType { get; set; }
+        public TypeCode[] ParameterTypes { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var value = filterContext.HttpContext.Request.Params[SubmitButtonActionName];
             var splittedParameterValue = value.Split('-');
-            object realParameterValue = null;
             if (splittedParameterValue.Length > 1)
             {
-                var parameterValue = value.Split('-').Last();
-                realParameterValue = Convert.ChangeType(parameterValue, ParameterType);
-            }
+                for (var i = 1; i < splittedParameterValue.Length; i++)
+                {
+                    var parameterValue = splittedParameterValue[i];
+                    var realParameterValue = Convert.ChangeType(parameterValue, ParameterTypes[i - 1]);
+                    filterContext.ActionParameters[ParameterNames[i - 1]] = realParameterValue;
+                }
 
-            filterContext.ActionParameters[ParameterName] = realParameterValue;
+            }
+            else
+            {
+                filterContext.ActionParameters[ParameterNames[0]] = null;
+            }
         }
     }
 }

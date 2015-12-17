@@ -32,6 +32,7 @@
         public string AdditionalLocationInformation { get; set; }
 
         public string Ukprn { get; set; }
+
         public int CurrentPage { get; set; }
 
         public int TotalNumberOfPages { get; set; }

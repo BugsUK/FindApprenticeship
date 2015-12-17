@@ -21,9 +21,27 @@
     
     <noscript>
         <div>
-            <div form-group>
-                @Html.FormTextFor(model => model.PostcodeSearch, controlHtmlAttributes: new {type = "text", @class = "form-control-medium", size = "40"}, labelHtmlAttributes: new {@class = "bold-small"})
-                <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+            <div class="form-group">
+                @if (Model.Addresses == null || !Model.Addresses.Any())
+                {
+                    <div class="form-group">
+                        <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
+                        <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
+                        <span class="field-validation-valid" data-valmsg-for="PostcodeSearch" data-valmsg-replace="true"></span>
+                    </div>
+                    <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+                }
+                else {
+                    <details>
+                        <summary>Add another location</summary>
+                        <div class="form-group">
+                            <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
+                            <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
+                            <span class="field-validation-valid" data-valmsg-for="PostcodeSearch" data-valmsg-replace="true"></span>
+                        </div>
+                        <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
+                    </details>
+                }
             </div>
 
             @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
@@ -43,7 +61,12 @@
                             {
                                 <tr>
                                     <td>
-                                        @string.Format("{0}, {1}, {2}", address.Address.Postcode, address.Address.AddressLine1, address.Address.AddressLine4)
+                                        @address.Address.AddressLine1
+                                        @if (!string.IsNullOrWhiteSpace(@address.Address.AddressLine2))
+                                        {
+                                            <br />@address.Address.AddressLine2
+                                        }
+                                        <br />@address.Address.AddressLine4 @address.Address.Postcode
                                         @*@Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.Postcode, new { @id = "searchAddresses" + index + "address__Postcode", Name = "SearchAddresses[" + index + "].Address.Postcode" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine1, new { @id = "searchAddresses_" + index + "address__AddressLine1", Name = "SearchAddresses[" + index + "].Address.AddressLine1" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine2, new { @id = "searchAddresses_" + index + "address__AddressLine2", Name = "SearchAddresses[" + index + "].Address.AddressLine2" })
@@ -52,7 +75,7 @@
                                     </td>
                                     <td>
                                         @{
-                                            var buttonName = "UseLocation-" + @index;
+                                            var buttonName = "UseLocation-" + @index + "-" + @Model.PostcodeSearch;
                                         }
                                         <button id="useLocation" type="submit" class="button-link use-location-button-link" name="AddLocations" value="@buttonName">Use location</button>
                                     </td>
@@ -67,13 +90,13 @@
                 <div class="page-navigation">
 
                     @{
-                        var currentPage = Model.CurrentPage;
-                        var totalNumberOfPages = Model.TotalNumberOfPages;
-                        var nextPage = Model.CurrentPage + 1;
-                        var previousPage = Model.CurrentPage - 1;
-                     }                 
+                        var currentPage = Model.SearchResultAddresses.CurrentPage;
+                        var totalNumberOfPages = Model.SearchResultAddresses.TotalNumberOfPages;
+                        var nextPage = Model.SearchResultAddresses.CurrentPage + 1;
+                        var previousPage = Model.SearchResultAddresses.CurrentPage - 1;
+                     }
 
-                    <button name="AddLocations" value="SearchLocations-@previousPage"
+                    <button name="AddLocations" value="SearchLocations-@previousPage-@Model.PostcodeSearch"
                        style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 50%"
                        class="button-link page-navigation__btn previous grid grid-1-3">
                         <i class="arrow-button fa fa-angle-left"></i>
@@ -81,7 +104,7 @@
                         <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
                     </button>
 
-                    <button name="AddLocations" value="SearchLocations-@nextPage"
+                    <button name="AddLocations" value="SearchLocations-@nextPage-@Model.PostcodeSearch"
                        style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 50%"
                        class="button-link page-navigation__btn next grid grid-1-3">
                         <i class="arrow-button fa fa-angle-right"></i>
@@ -126,9 +149,11 @@
                                         @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
                                         @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"})
                                         @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"})
+                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Uprn, new { @id = "addresses_" + i + "address__Uprn", Name = "Addresses[" + i + "].Address.Uprn" })
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class="form-control-small", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
+                                        @Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions")
                                     </td>
                                     <td class="ta-center">
                                         @{
