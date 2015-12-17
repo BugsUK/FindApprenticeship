@@ -464,7 +464,6 @@
     <Content Include="Content\_assets\img\screenshot-employer-notification.png" />
     <Content Include="Content\_assets\img\screenshot-idams.png" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
