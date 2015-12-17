@@ -543,7 +543,7 @@
 
             if (isVacancySearch)
             {
-                vacancies = vacancies.Where(v => v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                vacancies = vacancies.Where(v => !string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
             }
 
             var vacancyPage = new PageableViewModel<VacancyViewModel>
