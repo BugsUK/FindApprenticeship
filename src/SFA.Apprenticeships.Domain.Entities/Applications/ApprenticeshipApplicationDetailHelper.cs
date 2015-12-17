@@ -32,6 +32,12 @@
             apprenticeshipApplicationDetail.Status = ApplicationStatuses.Submitted;
         }
 
+        public static void SetStateInProgress(this ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
+        {
+            apprenticeshipApplicationDetail.Status = ApplicationStatuses.InProgress;
+            apprenticeshipApplicationDetail.DateLastViewed = DateTime.UtcNow;
+        }
+
         public static void SetStateExpiredOrWithdrawn(this ApprenticeshipApplicationDetail apprenticeshipApplicationDetail)
         {
             apprenticeshipApplicationDetail.Status = ApplicationStatuses.ExpiredOrWithdrawn;

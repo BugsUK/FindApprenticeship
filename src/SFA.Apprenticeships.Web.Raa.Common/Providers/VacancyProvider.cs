@@ -21,6 +21,7 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
+    using Factories;
     using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
@@ -37,14 +38,14 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
         private readonly IDateTimeService _dateTimeService;
-        private readonly IApplicationService _applicationService;
+        private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
         private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApplicationService applicationService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -55,7 +56,7 @@
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
             _configurationService = configurationService;
             _mapper = mapper;
-            _applicationService = applicationService;
+            _apprenticeshipApplicationService = apprenticeshipApplicationService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
@@ -405,7 +406,7 @@
             if (viewModel.Status == ProviderVacancyStatuses.Live)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-                viewModel.ApplicationCount = _applicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
+                viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
             }
             return viewModel;
         }
@@ -538,7 +539,7 @@
                     break;
             }
 
-            vacanciesSummarySearch.PageSizes = GetPageSizes(vacanciesSummarySearch.PageSize);
+            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
 
             if (isVacancySearch)
             {
@@ -556,7 +557,7 @@
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status == ProviderVacancyStatuses.Live))
             {
-                vacancyViewModel.ApplicationCount = _applicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
+                vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
             }
 
             var vacanciesSummary = new VacanciesSummaryViewModel
@@ -620,19 +621,6 @@
             result.VacancyGuid = vacancy.EntityId;
 
             return result;
-        }
-
-        
-
-        private List<SelectListItem> GetPageSizes(int pageSize)
-        {
-            return new List<SelectListItem>
-            {
-                new SelectListItem {Value = "5", Text = "5 per page", Selected = pageSize == 5},
-                new SelectListItem {Value = "10", Text = "10 per page", Selected = pageSize == 10},
-                new SelectListItem {Value = "25", Text = "25 per page", Selected = pageSize == 25},
-                new SelectListItem {Value = "50", Text = "50 per page", Selected = pageSize == 50}
-            };
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()

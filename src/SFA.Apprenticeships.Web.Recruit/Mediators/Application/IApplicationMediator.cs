@@ -5,6 +5,6 @@
 
     public interface IApplicationMediator
     {
-        MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(long vacancyReferenceNumber);
+        MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch);
     }
 }

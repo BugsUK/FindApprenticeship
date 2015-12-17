@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using System.Linq.Expressions;
     using System.Web;
     using Application.Application;
+    using Application.Application.IoC;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -64,12 +65,12 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<ApplicationServicesRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
-                x.For<IApplicationService>().Use<ApplicationService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

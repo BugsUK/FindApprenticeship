@@ -28,7 +28,7 @@
         }
     }
 
-    internal static class NewVacancyViewModelServerValidatorRules
+    internal static class NewVacancyViewModelValidatorRules
     {
         internal static void AddCommonRules(this AbstractValidator<NewVacancyViewModel> validator)
         {

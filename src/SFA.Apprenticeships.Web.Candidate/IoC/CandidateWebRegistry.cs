@@ -137,13 +137,14 @@
             if (servicesConfiguration.ServiceImplementation == "Legacy")
             {
                 For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
+                For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             }
             else if(servicesConfiguration.ServiceImplementation == "Raa")
             {
                 For<ISubmitApprenticeshipApplicationStrategy>().Use<SubmitApprenticeshipApplicationStrategy>();
+                For<ISubmitTraineeshipApplicationStrategy>().Use<SubmitTraineeshipApplicationStrategy>();
             }
 
-            For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);

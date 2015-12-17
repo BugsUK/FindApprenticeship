@@ -1,9 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
 {
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using Constants.ViewModels;
 
     public class ApplicationViewModel
     {
+        public ApplicationSelectionViewModel ApplicationSelection { get; set; }
+
         public ApplicationVacancyViewModel Vacancy { get; set; }
 
         public ApplicantDetailsViewModel ApplicantDetails { get; set; }
@@ -19,5 +23,8 @@
         public IList<TrainingCourseViewModel> TrainingCourses { get; set; }
 
         public VacancyQuestionAnswersViewModel VacancyQuestionAnswers { get; set; }
+
+        [Display(Name = ApplicationViewModelMessages.Notes.LabelText)]
+        public string Notes { get; set; }
     }
 }

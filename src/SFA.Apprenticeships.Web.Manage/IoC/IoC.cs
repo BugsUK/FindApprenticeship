@@ -2,6 +2,7 @@ using SFA.Apprenticeships.Infrastructure.TacticalDataServices.IoC;
 
 namespace SFA.Apprenticeships.Web.Manage.IoC
 {
+    using Application.Application.IoC;
     using Application.Employer;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Logging;
@@ -57,6 +58,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<ApplicationServicesRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
