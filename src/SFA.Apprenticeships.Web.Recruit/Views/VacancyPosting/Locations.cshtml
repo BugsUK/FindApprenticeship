@@ -24,10 +24,17 @@
             <div class="form-group">
                 @if (Model.Addresses == null || !Model.Addresses.Any())
                 {
-                    <div class="form-group">
+                    var className = "form-group";
+                    if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
+                    {
+                        className += " input-validation-error";
+                    }
+
+                    <div class="@className">
+                        <a name="postcodesearch"></a>
                         <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
                         <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
-                        <span class="field-validation-valid" data-valmsg-for="PostcodeSearch" data-valmsg-replace="true"></span>
+                        @Html.ValidationMessage("PostcodeSearch")
                     </div>
                     <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
                 }
@@ -190,6 +197,7 @@
             <div id="address-manual" class="form-group form-group-compound">
                 <a href="#" class="copy-19" id="enterAddressManually"></a><a href="#" class="copy-19" id="enterAddressManually"></a>
                 <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
+                <span class="toggle-content hide-nojs loading-text" id="noResults">No results match your search. You must enter a valid postcode</span>
                 <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service si currently unavailable, please enter the full postcode</span>
             </div>
         </div>
