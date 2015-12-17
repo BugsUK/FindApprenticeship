@@ -153,6 +153,7 @@
                 <div class="editable-item">
                     <h3 class="bold-small">Positions</h3>
                     <p id="vacancy-reference-id">@positions available</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
                 </div>
             }
         </div>
