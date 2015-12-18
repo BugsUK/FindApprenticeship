@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.Traineeships
 {
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Candidate.Mappers;
     using Candidate.Providers;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Moq;
 
     public class TraineeshipApplicationProviderBuilder

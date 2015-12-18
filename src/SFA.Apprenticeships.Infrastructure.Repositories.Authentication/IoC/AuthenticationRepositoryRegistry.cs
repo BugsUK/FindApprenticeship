@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Authentication.IoC
 {
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
-    using Domain.Interfaces.Mapping;
     using Mappers;
     using StructureMap.Configuration.DSL;
 

@@ -6,7 +6,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using ErrorCodes = Interfaces.Locations.ErrorCodes;
 
     public class LocationSearchService : ILocationSearchService

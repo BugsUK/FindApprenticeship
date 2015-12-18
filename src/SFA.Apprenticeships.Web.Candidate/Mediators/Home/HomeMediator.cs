@@ -4,7 +4,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
 {
     using System;
     using System.Web.Mvc;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Constants;
     using Constants.Pages;
     using Providers;

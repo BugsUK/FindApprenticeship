@@ -5,13 +5,12 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Audit.IoC;

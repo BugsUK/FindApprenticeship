@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Processes.Builders
 {
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Processes.Communications;
     using Moq;
 

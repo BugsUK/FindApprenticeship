@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Search;
     using ViewModels.Candidate;
 

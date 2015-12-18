@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.CandidateServiceProvider
 {
     using System;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
     using Candidate.ViewModels.Home;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

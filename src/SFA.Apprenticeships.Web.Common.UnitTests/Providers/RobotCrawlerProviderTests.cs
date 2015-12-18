@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Providers
 {
     using System.Web;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Providers;
     using Moq;
     using NUnit.Framework;

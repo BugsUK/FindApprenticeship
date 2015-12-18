@@ -3,7 +3,7 @@
     using System;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
 
     public class HardDeleteApplicationStrategy : IHardDeleteApplicationStrategy
     {

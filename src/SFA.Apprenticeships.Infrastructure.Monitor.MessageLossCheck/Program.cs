@@ -4,7 +4,7 @@
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Elastic.Common.IoC;
     using Infrastructure.Repositories.Applications.IoC;
     using Infrastructure.Repositories.Candidates.IoC;

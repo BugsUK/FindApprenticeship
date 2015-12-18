@@ -5,10 +5,9 @@
     using System.Linq;
     using Application.Candidates.Configuration;
     using Application.Communications.Housekeeping;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
-    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

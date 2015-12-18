@@ -5,7 +5,7 @@
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Configuration;
     using Common.Providers;
     using Common.Services;
@@ -15,8 +15,6 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels;
     using ViewModels.Candidate;

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Processes.Builders
 {
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Processes.Applications;
     using Infrastructure.Processes.Configuration;

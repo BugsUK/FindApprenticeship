@@ -3,12 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Location;
     using Configuration;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Configuration;
     using Entities;
     using Rest;
 

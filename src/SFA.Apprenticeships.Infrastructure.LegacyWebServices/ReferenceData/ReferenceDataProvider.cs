@@ -3,12 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.ReferenceData;
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Configuration;
     using LegacyReferenceDataProxy;
     using Wcf;
 

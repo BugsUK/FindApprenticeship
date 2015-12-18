@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Attributes
 {
     using System.Web.Mvc;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Providers;
 
     public class PlannedOutageMessageAttribute : ActionFilterAttribute

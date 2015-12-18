@@ -1,4 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
+﻿using SFA.Infrastructure.Interfaces;
 
 namespace SFA.Apprenticeships.Web.Common.Services
 {

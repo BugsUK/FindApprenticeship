@@ -3,8 +3,8 @@
     using Application.Applications;
     using Application.Applications.Entities;
     using Configuration;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Extensions;
 

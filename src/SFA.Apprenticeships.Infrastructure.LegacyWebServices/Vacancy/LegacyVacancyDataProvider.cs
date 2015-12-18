@@ -2,11 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;

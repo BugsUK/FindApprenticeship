@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies
 {
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using UserAccount.Configuration;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy

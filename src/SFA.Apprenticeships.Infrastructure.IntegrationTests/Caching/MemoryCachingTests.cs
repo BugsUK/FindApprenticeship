@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Caching
 {
     using System;
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces.Caching;
     using FluentAssertions;
     using Infrastructure.Caching.Memory;
     using Moq;

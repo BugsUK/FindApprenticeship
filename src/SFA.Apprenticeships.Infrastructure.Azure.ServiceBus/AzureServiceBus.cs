@@ -3,9 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Microsoft.ServiceBus.Messaging;
     using Newtonsoft.Json;

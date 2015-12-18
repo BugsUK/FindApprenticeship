@@ -5,7 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Candidate;
     using Apprenticeships.Application.Interfaces.Applications;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;

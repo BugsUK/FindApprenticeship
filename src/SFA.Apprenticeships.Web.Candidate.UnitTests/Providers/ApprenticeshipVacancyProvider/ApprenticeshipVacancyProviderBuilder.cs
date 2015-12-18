@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApprenticeshipVacancyProvider
 {
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Mapping;
     using Moq;
 
     public class ApprenticeshipVacancyProviderBuilder

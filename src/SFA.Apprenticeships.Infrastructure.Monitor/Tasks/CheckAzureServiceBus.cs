@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.ServiceBus.Configuration;
-    using Domain.Interfaces.Configuration;
     using Microsoft.ServiceBus;
     using Microsoft.ServiceBus.Messaging;
 

@@ -2,14 +2,13 @@
 {
     using System;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Mapping;
     using ViewModels.VacancySearch;
 
     public class TraineeshipVacancyProvider : ITraineeshipVacancyProvider

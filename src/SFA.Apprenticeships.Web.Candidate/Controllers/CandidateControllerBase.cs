@@ -10,7 +10,7 @@
     using Common.Constants;
     using Common.Controllers;
     using Constants;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Logging;
     using NLog.Contrib;
     using Providers;

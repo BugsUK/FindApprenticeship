@@ -2,7 +2,7 @@
 {
     using System;
     using System.ServiceModel;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using MessageContracts.Version51;
     using Namespaces.Version51;

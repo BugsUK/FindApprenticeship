@@ -14,8 +14,7 @@
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Application.VacancyPosting;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.TacticalDataServices;

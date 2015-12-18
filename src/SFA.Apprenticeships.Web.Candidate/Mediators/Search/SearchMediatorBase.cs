@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Common.Constants;
     using Common.Models.Common;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels.VacancySearch;
 
     public abstract class SearchMediatorBase : MediatorBase

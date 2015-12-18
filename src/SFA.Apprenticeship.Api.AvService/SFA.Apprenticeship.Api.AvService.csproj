@@ -434,6 +434,10 @@
       <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

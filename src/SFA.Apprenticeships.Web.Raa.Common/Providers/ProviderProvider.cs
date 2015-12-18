@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Application.Interfaces.Employers;
 using SFA.Apprenticeships.Application.Interfaces.Providers;
 using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
 using SFA.Apprenticeships.Domain.Entities.Providers;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 using SFA.Apprenticeships.Web.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.Configuration;
 using SFA.Apprenticeships.Web.Raa.Common.Converters;

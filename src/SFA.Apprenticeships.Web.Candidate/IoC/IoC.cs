@@ -1,10 +1,9 @@
 namespace SFA.Apprenticeships.Web.Candidate.IoC {
 
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;

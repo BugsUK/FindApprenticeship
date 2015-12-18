@@ -4,7 +4,7 @@ namespace SFA.Apprenticeships.Application.Communications.Housekeeping
     using System.Collections.Generic;
     using System.Linq;
     using Candidates.Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
     public class SavedSearchAlertCommunicationHousekeeper : ISavedSearchAlertCommunicationHousekeeper

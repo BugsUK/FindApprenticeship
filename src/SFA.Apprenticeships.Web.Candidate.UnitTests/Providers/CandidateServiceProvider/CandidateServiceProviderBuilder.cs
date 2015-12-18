@@ -2,14 +2,13 @@
 {
     using System.Web;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Users;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Common.Configuration;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
     using Moq;
 
     public class CandidateServiceProviderBuilder

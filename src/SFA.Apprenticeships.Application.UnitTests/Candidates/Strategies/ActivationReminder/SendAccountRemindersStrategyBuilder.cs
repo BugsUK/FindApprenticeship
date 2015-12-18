@@ -4,7 +4,7 @@
     using Application.Candidates.Strategies;
     using Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Communications;
     using Moq;
 

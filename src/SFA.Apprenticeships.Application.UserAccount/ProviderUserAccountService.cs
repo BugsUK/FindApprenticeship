@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
     using CuttingEdge.Conditions;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using Strategies.ProviderUserAccount;
 

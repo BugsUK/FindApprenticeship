@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2BCE308B-C935-41D9-ADB1-2FBF78415ABF}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SFA.Apprenticeships.Avms.Domain.Entities</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Avms.Domain.Entities</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Local\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdditionalAnswer.cs" />
+    <Compile Include="AdditionalQuestion.cs" />
+    <Compile Include="AlertPreference.cs" />
+    <Compile Include="AlertType.cs" />
+    <Compile Include="Application.cs" />
+    <Compile Include="ApplicationHistory.cs" />
+    <Compile Include="ApplicationHistoryEvent.cs" />
+    <Compile Include="ApplicationNextAction.cs" />
+    <Compile Include="ApplicationStatusType.cs" />
+    <Compile Include="ApplicationUnsuccessfulReasonType.cs" />
+    <Compile Include="ApplicationWithdrawnOrDeclinedReasonType.cs" />
+    <Compile Include="ApprenticeshipFramework.cs" />
+    <Compile Include="ApprenticeshipFrameworkStatusType.cs" />
+    <Compile Include="ApprenticeshipOccupation.cs" />
+    <Compile Include="ApprenticeshipOccupationStatusType.cs" />
+    <Compile Include="ApprenticeshipType.cs" />
+    <Compile Include="AttachedDocument.cs" />
+    <Compile Include="AttachedtoItemType.cs" />
+    <Compile Include="AuditRecord.cs" />
+    <Compile Include="BackgroundSearchLog.cs" />
+    <Compile Include="CAFField.cs" />
+    <Compile Include="CAFFieldsFieldType.cs" />
+    <Compile Include="Candidate.cs" />
+    <Compile Include="CandidateDisability.cs" />
+    <Compile Include="CandidateEthnicOrigin.cs" />
+    <Compile Include="CandidateGender.cs" />
+    <Compile Include="CandidateHistory.cs" />
+    <Compile Include="CandidateHistoryEvent.cs" />
+    <Compile Include="CandidatePreference.cs" />
+    <Compile Include="CandidateStatu.cs" />
+    <Compile Include="CandidateULNStatu.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="ContactPreferenceType.cs" />
+    <Compile Include="County.cs" />
+    <Compile Include="DisplayText.cs" />
+    <Compile Include="EducationResult.cs" />
+    <Compile Include="EducationResultLevel.cs" />
+    <Compile Include="Employer.cs" />
+    <Compile Include="EmployerContact.cs" />
+    <Compile Include="EmployerHistory.cs" />
+    <Compile Include="EmployerHistoryEventType.cs" />
+    <Compile Include="EmployerSICCode.cs" />
+    <Compile Include="EmployerTrainingProviderStatu.cs" />
+    <Compile Include="ExternalApplication.cs" />
+    <Compile Include="FAQ.cs" />
+    <Compile Include="LocalAuthority.cs" />
+    <Compile Include="LocalAuthorityGroup.cs" />
+    <Compile Include="LocalAuthorityGroupPurpose.cs" />
+    <Compile Include="LocalAuthorityGroupType.cs" />
+    <Compile Include="MasterUPIN.cs" />
+    <Compile Include="Message.cs" />
+    <Compile Include="MessageEvent.cs" />
+    <Compile Include="MIMEType.cs" />
+    <Compile Include="Model1.cs" />
+    <Compile Include="NASSupportContact.cs" />
+    <Compile Include="Organisation.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="PersonTitleType.cs" />
+    <Compile Include="PersonType.cs" />
+    <Compile Include="PostcodeOutcode.cs" />
+    <Compile Include="PrivilegeType.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Provider.cs" />
+    <Compile Include="ProviderSite.cs" />
+    <Compile Include="ProviderSiteFramework.cs" />
+    <Compile Include="ProviderSiteHistory.cs" />
+    <Compile Include="ProviderSiteHistoryEventType.cs" />
+    <Compile Include="ProviderSiteLocalAuthority.cs" />
+    <Compile Include="ProviderSiteOffer.cs" />
+    <Compile Include="ProviderSiteRelationship.cs" />
+    <Compile Include="ProviderSiteRelationshipType.cs" />
+    <Compile Include="ReportAgeRanx.cs" />
+    <Compile Include="ReportDefinition.cs" />
+    <Compile Include="RoleType.cs" />
+    <Compile Include="SavedSearchCriteria.cs" />
+    <Compile Include="SavedSearchCriteriaSearchType.cs" />
+    <Compile Include="SavedSearchCriteriaVacancyPostedSince.cs" />
+    <Compile Include="School.cs" />
+    <Compile Include="SchoolAttended.cs" />
+    <Compile Include="SearchAuditRecord.cs" />
+    <Compile Include="SearchFramework.cs" />
+    <Compile Include="SectorSuccessRate.cs" />
+    <Compile Include="SICCode.cs" />
+    <Compile Include="StakeHolder.cs" />
+    <Compile Include="StakeHolderStatu.cs" />
+    <Compile Include="SubVacancy.cs" />
+    <Compile Include="sysdiagram.cs" />
+    <Compile Include="SystemParameter.cs" />
+    <Compile Include="TermsAndCondition.cs" />
+    <Compile Include="UniqueKeyRegister.cs" />
+    <Compile Include="UserType.cs" />
+    <Compile Include="Vacancy.cs" />
+    <Compile Include="VacancyHistory.cs" />
+    <Compile Include="VacancyHistoryEventType.cs" />
+    <Compile Include="VacancyLocation.cs" />
+    <Compile Include="VacancyLocationType.cs" />
+    <Compile Include="VacancyOwnerRelationship.cs" />
+    <Compile Include="VacancyOwnerRelationshipHistory.cs" />
+    <Compile Include="VacancyProvisionRelationshipHistoryEventType.cs" />
+    <Compile Include="VacancyProvisionRelationshipStatusType.cs" />
+    <Compile Include="VacancyReferralComment.cs" />
+    <Compile Include="VacancyReferralCommentsFieldType.cs" />
+    <Compile Include="VacancySearch.cs" />
+    <Compile Include="VacancySearchAudit.cs" />
+    <Compile Include="VacancyStatusType.cs" />
+    <Compile Include="VacancyTextField.cs" />
+    <Compile Include="VacancyTextFieldValue.cs" />
+    <Compile Include="WageType.cs" />
+    <Compile Include="WatchedVacancy.cs" />
+    <Compile Include="WorkExperience.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

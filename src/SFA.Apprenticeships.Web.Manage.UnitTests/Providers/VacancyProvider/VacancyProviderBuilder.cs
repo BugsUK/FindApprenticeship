@@ -1,15 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
     using Application.Interfaces.Applications;
-    using Application.Interfaces.DateTime;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Moq;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
-    using Domain.Interfaces.Mapping;
     using Raa.Common.Providers;
 
 

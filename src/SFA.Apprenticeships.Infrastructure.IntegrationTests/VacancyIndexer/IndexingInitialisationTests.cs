@@ -3,7 +3,7 @@
     using System;
     using Application.Vacancies.Entities;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.Entities;

@@ -6,14 +6,13 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.Configuration;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;

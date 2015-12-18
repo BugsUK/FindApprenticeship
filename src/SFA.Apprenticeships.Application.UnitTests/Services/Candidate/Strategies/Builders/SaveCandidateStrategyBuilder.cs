@@ -5,7 +5,7 @@
     using Application.Candidate.Strategies.Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using Moq;
 

@@ -10,8 +10,8 @@
     using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
     using GatewayServiceProxy;
     using LegacyReferenceDataProxy;
     using Mappers;

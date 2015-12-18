@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Application.Application.IoC;
     using Application.Employer;
     using Application.Interfaces.Employers;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
     using Application.Provider;
@@ -15,7 +15,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;

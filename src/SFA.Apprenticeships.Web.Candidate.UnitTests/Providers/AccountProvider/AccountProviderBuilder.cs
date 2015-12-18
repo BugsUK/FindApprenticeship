@@ -2,13 +2,12 @@
 {
     using System;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Users;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Common.Configuration;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Moq;
 
     public class AccountProviderBuilder

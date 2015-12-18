@@ -5,7 +5,7 @@
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Employers;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Moq;
     using NUnit.Framework;

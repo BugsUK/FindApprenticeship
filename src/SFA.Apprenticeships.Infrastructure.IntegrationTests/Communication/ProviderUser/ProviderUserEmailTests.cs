@@ -2,7 +2,7 @@
 {
     using System;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Infrastructure.Communication.IoC;
     using Moq;

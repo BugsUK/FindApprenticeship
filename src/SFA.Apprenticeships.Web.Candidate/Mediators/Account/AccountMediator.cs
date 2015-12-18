@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Providers;
     using Validators;
     using ViewModels.Account;

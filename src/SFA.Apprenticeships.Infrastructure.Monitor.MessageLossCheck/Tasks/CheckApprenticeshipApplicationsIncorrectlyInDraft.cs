@@ -3,7 +3,7 @@
     using System.Linq;
     using Application.Applications;
     using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;

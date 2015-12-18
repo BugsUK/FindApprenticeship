@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;

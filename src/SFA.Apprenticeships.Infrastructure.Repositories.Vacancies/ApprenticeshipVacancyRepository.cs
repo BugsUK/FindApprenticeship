@@ -7,10 +7,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
     using System.Threading;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
