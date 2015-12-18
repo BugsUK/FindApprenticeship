@@ -20,7 +20,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = "Legacy" }));
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
 
                 // Inject provider under test.
                 x.For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>();

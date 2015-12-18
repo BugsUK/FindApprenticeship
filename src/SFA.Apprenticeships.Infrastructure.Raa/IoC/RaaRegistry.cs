@@ -12,7 +12,7 @@
     {
         public RaaRegistry(ServicesConfiguration servicesConfiguration)
         {
-            if (servicesConfiguration.ServiceImplementation == "Raa")
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
                 For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
 
