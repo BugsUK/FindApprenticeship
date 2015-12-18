@@ -33,6 +33,7 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation);
     @Html.HiddenFor(m => m.NumberOfPositions)
+    @Html.HiddenFor(m => m.ComeFromPreview)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
