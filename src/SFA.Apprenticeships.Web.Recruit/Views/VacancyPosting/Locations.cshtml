@@ -25,9 +25,6 @@
     @Html.HiddenFor(m => m.CurrentPage)
     @Html.HiddenFor(m => m.TotalNumberOfPages)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
-    
-
-
 
     <noscript>
         <div>
@@ -89,12 +86,6 @@
                                             string.Format(", {0}", @address.Address.AddressLine2);
                                         }
                                         @string.Format(", {0} {1}", address.Address.AddressLine4, address.Address.Postcode)
-
-                                        @*@Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.Postcode, new { @id = "searchAddresses" + index + "address__Postcode", Name = "SearchAddresses[" + index + "].Address.Postcode" })
-                                        @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine1, new { @id = "searchAddresses_" + index + "address__AddressLine1", Name = "SearchAddresses[" + index + "].Address.AddressLine1" })
-                                        @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine2, new { @id = "searchAddresses_" + index + "address__AddressLine2", Name = "SearchAddresses[" + index + "].Address.AddressLine2" })
-                                        @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine3, new { @id = "searchAddresses_" + index + "address__AddressLine3", Name = "SearchAddresses[" + index + "].Address.AddressLine3" })
-                                        @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine4, new { @id = "searchAddresses_" + index + "address__AddressLine4", Name = "SearchAddresses[" + index + "].Address.AddressLine4" })*@
                                     </td>
                                     <td class="location-search-results">
                                         @{
@@ -240,7 +231,7 @@
                                 <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
                             </td>
                             <td class="ta-center">
-                                <a href="#" data-bind="click: $root.removeLocationAddress">Remove</a>
+                                <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
                             </td>
                         </tr>
                     </tbody>
