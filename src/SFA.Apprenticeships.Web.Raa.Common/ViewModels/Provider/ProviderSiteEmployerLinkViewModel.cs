@@ -26,7 +26,5 @@
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
-
-        public bool ShowNumberOfPositions { get; set; }
     }
 }

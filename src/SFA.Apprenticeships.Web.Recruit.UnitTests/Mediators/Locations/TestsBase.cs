@@ -1,14 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Locations
 {
     using Application.Location;
     using Moq;
     using NUnit.Framework;
-    using Recruit.Mediators.VacancyPosting;
-    using Recruit.Validators.VacancyPosting;
+    using Raa.Common.Providers;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
-    using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
+    using Recruit.Mediators.VacancyPosting;
+    using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {

@@ -52,11 +52,17 @@ $(document).ready(function () {
                     $('#postcodeServiceUnavailable').hide();
                     $('#enterAddressManually').hide();
                     $('#addressLoading').show();
-
+                    
                     $("#postcode-search").one('blur', function () {
                         $('#enterAddressManually').show();
                         $('#addressLoading').hide();
+                        $("#noResults").hide();
                     });
+
+                    if (data.Items.length === 0) {
+                        $('#addressLoading').hide();
+                        $("#noResults").show();
+                    }
 
                     response($.map(data.Items, function (suggestion) {
                         return {
@@ -70,6 +76,7 @@ $(document).ready(function () {
                     $('#postcodeServiceUnavailable').show();
                     $('#enterAddressManually').hide();
                     $('#address-details').removeClass('disabled');
+                    $("#noResults").hide();
                 }
             });
         },

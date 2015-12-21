@@ -101,10 +101,20 @@
 
         public LocationSearchViewModel CreateVacancy(LocationSearchViewModel viewModel)
         {
-            var vacancy = CreateNewVacancy(viewModel);
+            var existingVacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid);
+            if (existingVacancy != null)
+            {
+                var vacancy = UpdateVacancy(existingVacancy, viewModel);
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            }
+            else
+            {
+                var vacancy = CreateNewVacancy(viewModel);
 
+                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            }
+            
             return viewModel;
         }
 
@@ -243,6 +253,29 @@
                 },
                 NumberOfPositions = a.NumberOfPositions.Value
             }));
+
+            return vacancy;
+        }
+
+        private ApprenticeshipVacancy UpdateVacancy(ApprenticeshipVacancy existingVacancy, LocationSearchViewModel newVacancyViewModel)
+        {
+            existingVacancy.AdditionalLocationInformation = newVacancyViewModel.AdditionalLocationInformation;
+
+            newVacancyViewModel.Addresses.ForEach(a => existingVacancy.LocationAddresses.Add(new VacancyLocationAddress
+            {
+                Address = new Address
+                {
+                    AddressLine1 = a.Address.AddressLine1,
+                    AddressLine2 = a.Address.AddressLine2,
+                    AddressLine3 = a.Address.AddressLine3,
+                    AddressLine4 = a.Address.AddressLine4,
+                    Postcode = a.Address.Postcode,
+                    Uprn = a.Address.Uprn
+                },
+                NumberOfPositions = a.NumberOfPositions.Value
+            }));
+
+            var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(existingVacancy);
 
             return vacancy;
         }
