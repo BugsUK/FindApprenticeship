@@ -19,7 +19,7 @@
 
         public LocationSearchViewModel GetAddressesFor(LocationSearchViewModel viewModel)
         {
-            var pageSize = 20; // TODO: get from configuration?
+            var pageSize = int.MaxValue; // TODO: maybe we can remove the pageable propery. We'll keep it until the design is confirmed.
             var resultsPage = _addressSearchService.GetAddressesFor(viewModel.PostcodeSearch, viewModel.CurrentPage, pageSize);
             var resultsViewModelPage = resultsPage.ToViewModel(resultsPage.Page.Select(ConvertToViewModel));
             viewModel.SearchResultAddresses = resultsViewModelPage;

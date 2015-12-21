@@ -694,16 +694,9 @@
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
-        [FillParamterFromActionName(ParameterNames = new []{ "currentPage", "postcodeSearch" }, ParameterTypes = new []{ TypeCode.Int32, TypeCode.String }, SubmitButtonActionName = "AddLocations")]
         [HttpPost]
-        public ActionResult SearchLocations(LocationSearchViewModel viewModel, int? currentPage, string postcodeSearch)
+        public ActionResult SearchLocations(LocationSearchViewModel viewModel)
         {
-            if (currentPage.HasValue)
-            {
-                viewModel.CurrentPage = currentPage.Value;
-            }
-
-            viewModel.PostcodeSearch = postcodeSearch;
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
             return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, new
             {

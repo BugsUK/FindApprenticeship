@@ -58,12 +58,12 @@
 
             @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
             {
-                <div class="form-group">
+                <div class="form-group grid grid-1-2 scrolling-panel max-height-15">
                     <div class="tabbed-element tab1 active width-all-1-1">
-                        <table class="no-btm-margin grid-3-4">
+                        <table class="no-btm-margin">
                             <colgroup>
-                                <col class="t50">
-                                <col class="t20">
+                                <col class="t70">
+                                <col class="t30">
                             </colgroup>
                             <tbody>
                             @{
@@ -72,24 +72,25 @@
                             @foreach (var address in Model.SearchResultAddresses.Page)
                             {
                                 <tr>
-                                    <td>
+                                    <td class="location-search-results">
                                         @address.Address.AddressLine1
                                         @if (!string.IsNullOrWhiteSpace(@address.Address.AddressLine2))
                                         {
-                                            <br />@address.Address.AddressLine2
+                                            string.Format(", {0}", @address.Address.AddressLine2);
                                         }
-                                        <br />@address.Address.AddressLine4 @address.Address.Postcode
+                                        @string.Format(", {0} {1}", address.Address.AddressLine4, address.Address.Postcode)
+
                                         @*@Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.Postcode, new { @id = "searchAddresses" + index + "address__Postcode", Name = "SearchAddresses[" + index + "].Address.Postcode" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine1, new { @id = "searchAddresses_" + index + "address__AddressLine1", Name = "SearchAddresses[" + index + "].Address.AddressLine1" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine2, new { @id = "searchAddresses_" + index + "address__AddressLine2", Name = "SearchAddresses[" + index + "].Address.AddressLine2" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine3, new { @id = "searchAddresses_" + index + "address__AddressLine3", Name = "SearchAddresses[" + index + "].Address.AddressLine3" })
                                         @Html.HiddenFor(m => Model.SearchResultAddresses.Page.ToList()[index].Address.AddressLine4, new { @id = "searchAddresses_" + index + "address__AddressLine4", Name = "SearchAddresses[" + index + "].Address.AddressLine4" })*@
                                     </td>
-                                    <td>
+                                    <td class="location-search-results">
                                         @{
                                             var buttonName = "UseLocation-" + @index + "-" + @Model.PostcodeSearch;
                                         }
-                                        <button id="useLocation" type="submit" class="button-link use-location-button-link" name="AddLocations" value="@buttonName">Use location</button>
+                                        <button id="useLocation" type="submit" class="button-link use-location-button-link add-location-link" name="AddLocations" value="@buttonName">add location</button>
                                     </td>
                                 </tr>
                                 index = index+1;
@@ -97,33 +98,6 @@
                             </tbody>
                         </table>
                     </div>
-                </div>
-
-                <div class="page-navigation">
-
-                    @{
-                        var currentPage = Model.SearchResultAddresses.CurrentPage;
-                        var totalNumberOfPages = Model.SearchResultAddresses.TotalNumberOfPages;
-                        var nextPage = Model.SearchResultAddresses.CurrentPage + 1;
-                        var previousPage = Model.SearchResultAddresses.CurrentPage - 1;
-                     }
-
-                    <button name="AddLocations" value="SearchLocations-@previousPage-@Model.PostcodeSearch"
-                       style="visibility: @(currentPage == 1 ? "hidden" : "visible"); width: 50%"
-                       class="button-link page-navigation__btn previous grid grid-1-3">
-                        <i class="arrow-button fa fa-angle-left"></i>
-                        <span class="description">Previous <span class="hide-mob">page</span></span>
-                        <span class="counter">@(currentPage - 1) of @totalNumberOfPages</span>
-                    </button>
-
-                    <button name="AddLocations" value="SearchLocations-@nextPage-@Model.PostcodeSearch"
-                       style="visibility: @(currentPage == totalNumberOfPages ? "hidden" : "visible"); width: 50%"
-                       class="button-link page-navigation__btn next grid grid-1-3">
-                        <i class="arrow-button fa fa-angle-right"></i>
-                        <span class="description">Next <span class="hide-mob">page</span></span>
-                        <span class="counter">@(currentPage + 1) of @totalNumberOfPages</span>
-                    </button>
-
                 </div>
             }
 
@@ -171,7 +145,7 @@
                                         @{
                                             var buttonName = "RemoveLocation-" + i;
                                         }
-                                        <button id="removeLocation" type="submit" class="button-link remove-button-link" name="AddLocations" value="@buttonName">Remove</button>
+                                        <button id="removeLocation" type="submit" class="button-link remove-button-link" name="AddLocations" value="@buttonName">remove location</button>
                                     </td>
                                 </tr>
                             }
