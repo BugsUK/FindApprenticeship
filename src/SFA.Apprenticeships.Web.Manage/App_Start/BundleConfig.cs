@@ -12,8 +12,8 @@ namespace SFA.Apprenticeships.Web.Manage
             bundles.Add(new ScriptBundle("~/bundles/vendor").Include(
                 "~/Content/_assets/js/vendor/jquery.validate.js",
                 "~/Content/_assets/js/vendor/jquery.validate.unobtrusive.custom.js",
-                "~/Content/_assets/js/vendor/chosen.jquery.js",
-                "~/Content/_assets/js/vendor/select2.js"));
+                "~/Content/_assets/js/vendor/select2.js",
+                "~/Content/_assets/js/vendor/fastclick.js"));
         }
     }
 }

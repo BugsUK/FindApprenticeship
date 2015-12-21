@@ -82,7 +82,7 @@ h2{
 
 // Dashboard 
 
-.vacancies-summary {
+.vacancies-summary, .applications-summary {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -92,18 +92,6 @@ h2{
         padding: 0 10px;
         display: block;
         float: left;
-        @media screen and ( max-width: 640px ) {
-            padding: 0 10px;
-            width: ( 100% / 1 );
-        }
-        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
-            padding: 0 10px 0 0;
-            width: ( 100% / 3 );
-        }
-        @media screen and ( min-width: 769px ) {
-            padding: 0 10px 0 0;
-            width: ( 100% / 6 );
-        }
         a {
             text-decoration: none;
         }
@@ -143,6 +131,40 @@ h2{
                     }
                 }
             }
+        }
+    }
+}
+
+.vacancies-summary {
+    li {
+        @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 3 );
+        }
+        @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 6 );
+        }
+    }
+}
+
+.applications-summary {
+    li {
+        @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 2 );
+        }
+        @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 4 );
         }
     }
 }

@@ -5,6 +5,7 @@
     using Common.Mediators;
     using Constants;
     using Mediators.Application;
+    using ViewModels.Application;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     public class ApplicationController : RecruitmentControllerBase
@@ -17,9 +18,9 @@
         }
 
         [HttpGet]
-        public ActionResult VacancyApplications(long vacancyReferenceNumber)
+        public ActionResult VacancyApplications(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            var response = _applicationMediator.GetVacancyApplicationsViewModel(vacancyReferenceNumber);
+            var response = _applicationMediator.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
 
             switch (response.Code)
             {
@@ -29,6 +30,12 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpPost]
+        public ActionResult VacancyApplications(VacancyApplicationsViewModel vacancyApplications)
+        {
+            return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, vacancyApplications.VacancyApplicationsSearch);
         }
     }
 }

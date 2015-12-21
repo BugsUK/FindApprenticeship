@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using Application.Interfaces.Logging;
+    using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
     using Domain.Interfaces.Configuration;
     using Microsoft.ServiceBus;
@@ -10,13 +11,16 @@
     {
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
+        private readonly ITopicNameFormatter _topicNameFormatter;
 
         public CheckAzureServiceBus(
             ILogService logger,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService,
+            ITopicNameFormatter topicNameFormatter)
         {
             _logger = logger;
             _configurationService = configurationService;
+            _topicNameFormatter = topicNameFormatter;
         }
 
         public void Run()
@@ -43,13 +47,15 @@
 
             foreach (var topicConfiguration in serviceBusConfiguration.Topics)
             {
+                var topicName = _topicNameFormatter.GetTopicName(topicConfiguration.TopicName);
+
                 var topicMessageCountDetails = GetTopicMessageCountDetails(
-                    namespaceManager, topicConfiguration.TopicName);
+                    namespaceManager, topicName);
 
                 foreach (var subscriptionConfiguration in topicConfiguration.Subscriptions)
                 {
                     var subscriptionPath = string.Format("{0}/{1}",
-                        topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
+                        topicName, subscriptionConfiguration.SubscriptionName);
 
                     var messageCountWarningLimit =
                         subscriptionConfiguration.MessageCountWarningLimit ??
@@ -63,7 +69,7 @@
                         subscriptionPath, messageCountWarningLimit, deadLetterMessageCountWarningLimit);
 
                     var subscriptionMessageCountDetails = GetSubscriptionMessageCountDetails(
-                        namespaceManager, topicConfiguration.TopicName, subscriptionConfiguration.SubscriptionName);
+                        namespaceManager, topicName, subscriptionConfiguration.SubscriptionName);
 
                     var messageCountNarrative = string.Format("Found {0} active, {1} scheduled and {2} dead-lettered message(s) for topic/subscription: {3}",
                         subscriptionMessageCountDetails.ActiveMessageCount,

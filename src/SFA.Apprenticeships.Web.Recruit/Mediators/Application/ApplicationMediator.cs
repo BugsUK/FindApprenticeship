@@ -13,9 +13,9 @@
             _applicationProvider = applicationProvider;
         }
 
-        public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyApplicationsViewModel> GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            var viewModel = _applicationProvider.GetVacancyApplicationsViewModel(vacancyReferenceNumber);
+            var viewModel = _applicationProvider.GetVacancyApplicationsViewModel(vacancyApplicationsSearch);
 
             return GetMediatorResponse(ApplicationMediatorCodes.GetVacancyApplicationsViewModel.Ok, viewModel);
         }
