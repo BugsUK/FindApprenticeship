@@ -70,7 +70,16 @@ WriteLiteral(" ");
             
             #line default
             #line hidden
-WriteLiteral(">\r\n    <summary>Comment</summary>\r\n    <div");
+WriteLiteral(">\r\n    <summary>");
+
+            
+            #line 8 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
+        Write(ViewData["Label"]);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</summary>\r\n    <div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
@@ -84,7 +93,7 @@ WriteLiteral("            ");
 
             
             #line 11 "..\..\Views\Shared\EditorTemplates\Comment.cshtml"
-       Write(Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+       Write(Html.TextAreaFor(m => m, new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
             #line default
