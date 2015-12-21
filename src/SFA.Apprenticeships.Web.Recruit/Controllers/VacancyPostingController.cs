@@ -142,30 +142,7 @@
         #endregion
 		
         #region Basic Details
-
-        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
-        [HttpPost]
-        public ActionResult SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel)
-        {
-            // TODO: validate?
-            var response = _vacancyPostingMediator.SetDifferentLocation(viewModel);
-            ModelState.Clear();
-
-            return View("ConfirmEmployer", response.ViewModel);
-        }
-		
-        [MultipleFormActionsButton(SubmitButtonActionName = "ConfirmEmployer")]
-        [HttpPost]
-        public ActionResult SetEmployersLocationAsMainLocation(ProviderSiteEmployerLinkViewModel viewModel)
-        {
-            // TODO: validate?
-            var response = _vacancyPostingMediator.SetEmployersLocationAsMainLocation(viewModel);
-
-            ModelState.Clear();
-
-            return View("ConfirmEmployer", response.ViewModel);
-        }
-
+        
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {

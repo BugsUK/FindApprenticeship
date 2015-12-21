@@ -181,36 +181,6 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel)
-        {
-            var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
-            existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
-            existingViewModel.Description = viewModel.Description;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
-            existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            existingViewModel.ShowNumberOfPositions = false;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation = false;
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SetDifferentLocation.Ok, existingViewModel);
-        }
-
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> SetEmployersLocationAsMainLocation(ProviderSiteEmployerLinkViewModel viewModel)
-        {
-            var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
-            existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
-            existingViewModel.Description = viewModel.Description;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
-            existingViewModel.VacancyGuid = viewModel.VacancyGuid;
-            existingViewModel.ShowNumberOfPositions = true;
-            existingViewModel.IsEmployerLocationMainApprenticeshipLocation = true;
-
-            return GetMediatorResponse(VacancyPostingMediatorCodes.SetDifferentLocation.Ok, existingViewModel);
-        }
-
         public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
         {
             if (string.IsNullOrWhiteSpace(viewModel.PostcodeSearch))
