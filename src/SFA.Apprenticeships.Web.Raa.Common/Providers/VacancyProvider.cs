@@ -122,7 +122,8 @@
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     Status = vacancy.Status,
-                    VacancyReferenceNumber = vacancy.VacancyReferenceNumber
+                    VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                    IsEmployerLocationMainApprenticeshipLocation = false
                 };
 
                 vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
@@ -229,6 +230,7 @@
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = newVacancyViewModel.Status,
                 AdditionalLocationInformation = newVacancyViewModel.AdditionalLocationInformation,
+                IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 LocationAddresses = new List<VacancyLocationAddress>()
             });
 

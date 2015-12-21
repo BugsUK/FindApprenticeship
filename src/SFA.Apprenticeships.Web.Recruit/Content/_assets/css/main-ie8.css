@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3401,9 +3401,9 @@ select:focus {
       background-color: #00823b; }
     .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
   .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
@@ -6109,6 +6109,9 @@ aside h2:first-child {
 
 #employer-data-display {
   display: none; }
+
+.cancel-link {
+  margin-left: 12px; }
 
 .locations-table .location-positions {
   text-align: center; }

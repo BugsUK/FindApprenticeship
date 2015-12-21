@@ -5,6 +5,7 @@
     ViewBag.Title = "Recruit an Apprentice - Add locations";
 
     var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    var comeFromConfirmEmployer = Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains("employer");
 }
 
 <h1 class="heading-xlarge">
@@ -21,6 +22,7 @@
     @Html.HiddenFor(m => m.VacancyGuid);
     @Html.HiddenFor(m => m.ComeFromPreview);
     @Html.HiddenFor(m => m.VacancyReferenceNumber);
+    @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     
     <noscript>
@@ -120,6 +122,17 @@
                 </div>
                 <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
             }
+            @{
+                if (comeFromConfirmEmployer == true)
+                {
+                    var address = Request.UrlReferrer.PathAndQuery;
+                    <a href="@address" class="cancel-link">Cancel</a>
+                }
+                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
+                {
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "cancel-link"})
+                }
+            }
         </div>
     </noscript>
 
@@ -186,6 +199,21 @@
             </div>
             <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
             @Html.RouteLink("Use employer's address", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
+            @if (Model.ComeFromPreview && Model.Addresses.Any())
+            {
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+            }
+            @{
+                if (comeFromConfirmEmployer == true)
+                {
+                    var address = Request.UrlReferrer.PathAndQuery;
+                    <a href="@address" class="cancel-link">Cancel</a>
+                }
+                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
+                {
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
+                }
+            }
         </div>
     </div>
 }

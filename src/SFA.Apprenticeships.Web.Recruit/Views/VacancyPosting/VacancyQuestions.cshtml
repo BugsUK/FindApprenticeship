@@ -29,5 +29,9 @@
     <div class="grid grid-1-2">
         <button type="submit" class="button" name="VacancyQuestions" value="VacancyQuestions">@saveButtonText</button>
         <button id="VacancyQuestionsAndExit" type="submit" class="button-link" name="VacancyQuestions" value="VacancyQuestionsAndExit">Save and exit</button>
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
     </div>
 }

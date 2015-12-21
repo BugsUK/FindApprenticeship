@@ -453,10 +453,41 @@ WriteLiteral("            ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n        </div>\r\n");
+WriteLiteral("\r\n");
 
             
-            #line 65 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 64 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 64 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+             if (Model.ComeFromPreview)
+            {
+                
+            
+            #line default
+            #line hidden
+            
+            #line 66 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+           Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 66 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                                                                              
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n");
+
+            
+            #line 69 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
    }
 
             
@@ -473,7 +504,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n        var comeFromPreview = \"");
 
             
-            #line 70 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 74 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                           Write(Model.ComeFromPreview.ToString());
 
             

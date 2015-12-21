@@ -153,7 +153,15 @@
                 <div class="editable-item">
                     <h3 class="bold-small">Positions</h3>
                     <p id="vacancy-reference-id">@positions available</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+
+                    @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    }
+                    else
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.LocationsLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    }
                 </div>
             }
         </div>
@@ -165,7 +173,7 @@
                 @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink))
             </h3>
             <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
         </div>
     </div>
 </section>
@@ -280,87 +288,121 @@
     <div class="grid-wrapper">
         <h3 class="bold-small">Employer</h3>
         <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-        <div class="grid-wrapper">
-            <div class="grid grid-2-3">
-                <div class="inner-block-padr">
-                    <div class="editable-item">
-                        <h3 class="bold-small">
-                            Description
-                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
-                        </h3>
-                        <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
-                    </div>
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="editable-item">
+                    <h3 class="bold-small">
+                        Description
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                    </h3>
+                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
-        @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
-        {
-            <div class="grid grid-2-3">
-                <div class="editable-item">
-                    <h3 class="bold-small">
-                        Website
-                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
-                    </h3>
-                    <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
-                       id="vacancy-employer-website"
-                       target="_blank"
-                       title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                </div>
-            </div>
+    </div>
+
+    <div class="grid-wrapper">
+        @{
+            var gridClass = "grid";
+            if (IsSingleLocation(Model))
+            {
+                gridClass += " grid-1-2";
+            }
         }
-     </div>
-        
-        <div class="grid-wrapper">
-            <div>
-                <div class="inner-block-padr">
+        <div class="@gridClass">
+            <div class="inner-block-padr">
+                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                {
+                    <div class="editable-item">
+                        <h3 class="bold-small">
+                            Website
+                            @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
+                        </h3>
+                        <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
+                           id="vacancy-employer-website"
+                           target="_blank"
+                           title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                    </div>
+                }
 
-                    @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
-                    {
-                        <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
-                            <h3 class="bold-small">Address</h3>
-                            <div itemprop="address">
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
-                                <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
-                                <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
-                                <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
-                                <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
-                            </div>
-                        </div>
-                    }
-                    else
-                    {
-                        if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                <div>
+                    <div class="inner-block-padr">
+                        @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
                         {
-                            <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">
-                                    Address
-                                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
-                                </h3>
+                            <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
+                                <h3 class="bold-small">Address</h3>
                                 <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
                                 </div>
-
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                             </div>
                         }
                         else
                         {
-                            var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1) / 2;
-                            <p></p>
-                            <div id="vacancy-address" class="editable-item grid-wrapper" itemscope itemtype="http://schema.org/PostalAddress">
-                                <h3 class="bold-small">
-                                    Addresses
-                                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.EmployerLink))
-                                </h3>
-                                <div class="grid grid-1-2" id="leftLocationAddressesTable">
-                                    <div class="inner-block-padr">
+                            if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                            {
+                                <div id="vacancy-address" class="editable-item" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">
+                                        Address
+                                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
+                                    </h3>
+                                    <div itemprop="address">
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
+                                    </div>
 
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                                </div>
+                            }
+                            else
+                            {
+                                var midIndex = (Model.NewVacancyViewModel.LocationAddresses.Count + 1)/2;
+                                <p></p>
+                                <div id="vacancy-address" class="editable-item grid-wrapper" itemscope itemtype="http://schema.org/PostalAddress">
+                                    <h3 class="bold-small">
+                                        Addresses
+                                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.EmployerLink))
+                                    </h3>
+                                    <div class="grid grid-1-2" id="leftLocationAddressesTable">
+                                        <div class="inner-block-padr">
+
+                                            <table class="locations-table">
+                                                <colgroup>
+                                                    <col class="t50">
+                                                    <col class="t35">
+                                                </colgroup>
+
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        <span class="heading-span">Location</span>
+                                                    </th>
+                                                    <th>
+                                                        <span class="heading-span">Number of positions</span>
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                                @for (var i = 0; i < midIndex; i++)
+                                                {
+                                                    var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
+                                                    @Html.DisplayFor(m => locationAddress)
+                                                }
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="grid grid-1-2" id="rightLocationAddressesTable">
                                         <table class="locations-table">
                                             <colgroup>
                                                 <col class="t50">
@@ -368,35 +410,6 @@
                                             </colgroup>
 
                                             <thead>
-                                                <tr>
-                                                    <th class="locations-positions-header">
-                                                        <span class="heading-span">Location</span>
-                                                    </th>
-                                                    <th>
-                                                        <span class="heading-span">Number of positions</span>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                                                @for (var i = 0; i < midIndex; i++)
-                                                {
-                                                    var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
-                                                    @Html.DisplayFor(m => locationAddress)
-                                                }
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <div class="grid grid-1-2" id="rightLocationAddressesTable">
-                                    <table class="locations-table">
-                                        <colgroup>
-                                            <col class="t50">
-                                            <col class="t35">
-                                        </colgroup>
-
-                                        <thead>
                                             <tr>
                                                 <th>
                                                     <span class="heading-span">Location</span>
@@ -405,30 +418,31 @@
                                                     <span class="heading-span">Number of positions</span>
                                                 </th>
                                             </tr>
-                                        </thead>
-                                        <tbody id="location-addresses" data-bind="foreach: locationAddresses">
+                                            </thead>
+                                            <tbody id="location-addresses" data-bind="foreach: locationAddresses">
                                             @for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
                                             {
                                                 var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
                                                 @Html.DisplayFor(m => locationAddress)
                                             }
 
-                                        </tbody>
-                                    </table>
-                                </div>
+                                            </tbody>
+                                        </table>
+                                    </div>
 
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                            </div>
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                                </div>
+                            }
+                            if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
+                            {
+                                <div class="editable-item">
+                                    <h3 class="bold-small">Additional location information</h3>
+                                    <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
+                                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                                </div>
+                            }
                         }
-                        if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
-                        {
-                            <div class="editable-item">
-                                <h3 class="bold-small">Additional location information</h3>
-                                <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
-                                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
-                            </div>
-                        }
-                    }
+                    </div>
                 </div>
             </div>
         </div>
@@ -436,7 +450,7 @@
             @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
             {
                 <div id="vacancy-map" class="ad-details__map">
-                    <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
+                    <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
                     <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
@@ -444,14 +458,13 @@
             else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
             {
                 <div id="vacancy-map" class="ad-details__map">
-                    <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
+                    <div class="map-overlay" onclick=" style.pointerEvents = 'none' "></div>
                     <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }
         </div>
     </div>
-
 </section>
 
 @if (Model.NewVacancyViewModel.OfflineVacancy)

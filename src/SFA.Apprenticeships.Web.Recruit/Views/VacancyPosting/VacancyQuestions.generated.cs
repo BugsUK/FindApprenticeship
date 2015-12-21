@@ -208,10 +208,41 @@ WriteLiteral(" name=\"VacancyQuestions\"");
 
 WriteLiteral(" value=\"VacancyQuestionsAndExit\"");
 
-WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
+WriteLiteral(">Save and exit</button>\r\n");
 
             
-            #line 33 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 32 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 32 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+         if (Model.ComeFromPreview)
+        {
+            
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+            
+            #line 34 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+                                                                                                                                          
+        }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    </div>\r\n");
+
+            
+            #line 37 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 }
             
             #line default
