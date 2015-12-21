@@ -37,7 +37,6 @@
 
             //Assert
             viewModel.Should().NotBeNull();
-            viewModel.VacancyReferenceNumber.Should().Be(source.VacancyReferenceNumber);
             viewModel.Title.Should().Be(source.Title);
             viewModel.EmployerName.Should().Be(source.ProviderSiteEmployerLink.Employer.Name);
             viewModel.EmployerGeoPoint.Should().NotBeNull();

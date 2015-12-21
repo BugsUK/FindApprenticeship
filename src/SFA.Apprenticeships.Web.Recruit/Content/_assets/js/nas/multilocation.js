@@ -29,23 +29,31 @@
         self.itemPostcode = ko.observable(itemPostcode);
         self.itemUprn = ko.observable(itemUprn);
         self.itemNumberOfPositions = ko.observable(itemNumberOfPositions);
-        //    .extend({
-        //        required: { message: validationMessageNumberOfPositionsRequired }
-        //});
 
-        //self.itemErrors = ko.validation.group(self);
     };
 
     var locationAddressesViewModel = function () {
         var self = this;
-        
         self.locationAddresses = ko.observableArray();
 
         self.showLocationAddresses = ko.observable(false);
+        self.showAddNewLocationLink = ko.observable(false);
 
         self.locationAddressesStatus = ko.computed(function () {
             return self.showLocationAddresses() ? "block" : "none";
         }, self);
+
+        self.addModeOn = ko.computed(function () {
+            return self.showAddNewLocationLink() === false ? "block" : "none";
+        }, self);
+
+        self.addModeOff = ko.computed(function () {
+            return self.showAddNewLocationLink() ? "block" : "none";
+        }, self);
+
+        self.addNewLocation = function() {
+            self.showAddNewLocationLink(false);
+        }
         
         self.errors = ko.validation.group(self);
 
@@ -64,9 +72,8 @@
             if (!found) {
                 self.locationAddresses.push(locationAddressItem);
                 self.showLocationAddresses(true);
+                self.showAddNewLocationLink(true);
             }
-            
-            //self.errors.showAllMessages(false);
         };
 
         self.removeLocationAddress = function (locationAddress) {

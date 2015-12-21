@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mappers
 {
-    using System;
     using System.Collections.Generic;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
@@ -21,10 +20,13 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyApplicationsViewModel>()
+                .ForMember(v => v.VacancyApplicationsSearch, opt => opt.Ignore())
                 .ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
                 .ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
-                .ForMember(v => v.RejectedApplicationsCount, opt => opt.Ignore())
-                .ForMember(v => v.UnresolvedApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.NewApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.ViewedApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.SuccessfulApplicationsCount, opt => opt.Ignore())
+                .ForMember(v => v.UnsuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ApplicationSummaries, opt => opt.Ignore());
             
             Mapper.CreateMap<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>()
@@ -51,7 +53,16 @@
                 .ForMember(v => v.SecondQuestionAnswer, opt => opt.MapFrom(src => src.AdditionalQuestion2Answer))
                 .ForMember(v => v.AnythingWeCanDoToSupportYourInterviewAnswer, opt => opt.MapFrom(src => src.CandidateInformation.AboutYou.Support));
 
+            Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>()
+                .ForMember(v => v.ApplicationId, opt => opt.MapFrom(src => src.EntityId))
+                .ForMember(v => v.VacancyReferenceNumber, opt => opt.Ignore())
+                .ForMember(v => v.FilterType, opt => opt.Ignore())
+                .ForMember(v => v.PageSize, opt => opt.Ignore())
+                .ForMember(v => v.PageSizes, opt => opt.Ignore())
+                .ForMember(v => v.CurrentPage, opt => opt.Ignore());
+
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>()
+                .ForMember(v => v.ApplicationSelection, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicationSelectionViewModel>(src)))
                 .ForMember(v => v.Vacancy, opt => opt.Ignore())
                 .ForMember(v => v.ApplicantDetails, opt => opt.MapFrom(src => Map<ApprenticeshipApplicationDetail, ApplicantDetailsViewModel>(src)))
                 .ForMember(v => v.AboutYou, opt => opt.MapFrom(src => Map<AboutYou, AboutYouViewModel>(src.CandidateInformation.AboutYou)))

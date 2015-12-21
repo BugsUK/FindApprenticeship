@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3401,9 +3401,9 @@ select:focus {
       background-color: #00823b; }
     .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
   .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
@@ -6164,31 +6164,25 @@ h2 a i.raa-icon-comment {
 .preserve-formatting {
   white-space: pre-line; }
 
-.vacancies-summary {
+.remove-button-link {
+  font-size: 14px; }
+
+.use-location-button-link {
+  font-size: 14px; }
+
+.vacancies-summary, .applications-summary {
   list-style: none;
   margin: 0;
   padding: 0;
   display: block; }
-  .vacancies-summary li {
+  .vacancies-summary li, .applications-summary li {
     margin: 0;
     padding: 0 10px;
     display: block;
     float: left; }
-    @media screen and (max-width: 640px) {
-      .vacancies-summary li {
-        padding: 0 10px;
-        width: 100%; } }
-    @media screen and (min-width: 641px) and (max-width: 768px) {
-      .vacancies-summary li {
-        padding: 0 10px 0 0;
-        width: 33.33333%; } }
-    @media screen and (min-width: 769px) {
-      .vacancies-summary li {
-        padding: 0 10px 0 0;
-        width: 16.66667%; } }
-    .vacancies-summary li a {
+    .vacancies-summary li a, .applications-summary li a {
       text-decoration: none; }
-    .vacancies-summary li figure.data .count {
+    .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
       font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
       font-size: 48px;
       line-height: 1.04167;
@@ -6197,11 +6191,11 @@ h2 a i.raa-icon-comment {
       font-weight: 700;
       margin-bottom: 0; }
       @media (max-width: 640px) {
-        .vacancies-summary li figure.data .count {
+        .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
           font-size: 32px;
           line-height: 1.09375; } }
       @media screen and (max-width: 640px) {
-        .vacancies-summary li figure.data .count {
+        .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
           padding: .25em 0;
           font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
           font-size: 48px;
@@ -6210,11 +6204,11 @@ h2 a i.raa-icon-comment {
           text-transform: none;
           font-weight: 700; } }
   @media screen and (max-width: 640px) and (max-width: 640px) {
-    .vacancies-summary li figure.data .count {
+    .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
       font-size: 32px;
       line-height: 1.09375; } }
       @media screen and (max-width: 768px) {
-        .vacancies-summary li figure.data .count {
+        .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
           font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
           font-size: 48px;
           line-height: 1.04167;
@@ -6225,20 +6219,20 @@ h2 a i.raa-icon-comment {
           display: inline-block;
           margin-right: 10px; } }
   @media screen and (max-width: 768px) and (max-width: 640px) {
-    .vacancies-summary li figure.data .count {
+    .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
       font-size: 32px;
       line-height: 1.09375; } }
       @media screen and (min-width: 769px) {
-        .vacancies-summary li figure.data .count {
+        .vacancies-summary li figure.data .count, .applications-summary li figure.data .count {
           text-align: center; } }
-    .vacancies-summary li figure.data figcaption {
+    .vacancies-summary li figure.data figcaption, .applications-summary li figure.data figcaption {
       display: block; }
       @media screen and (max-width: 768px) {
-        .vacancies-summary li figure.data figcaption {
+        .vacancies-summary li figure.data figcaption, .applications-summary li figure.data figcaption {
           vertical-align: middle;
           display: inline-block;
           margin-right: 10px; } }
-      .vacancies-summary li figure.data figcaption h2 {
+      .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
         font-family: "nta", Arial, sans-serif;
         font-size: 16px;
         line-height: 1.25;
@@ -6247,10 +6241,10 @@ h2 a i.raa-icon-comment {
         font-weight: 700;
         margin-bottom: 0; }
         @media (max-width: 640px) {
-          .vacancies-summary li figure.data figcaption h2 {
+          .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
             font-size: 14px; } }
         @media screen and (max-width: 640px) {
-          .vacancies-summary li figure.data figcaption h2 {
+          .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
             font-family: "nta", Arial, sans-serif;
             font-size: 16px;
             line-height: 1.25;
@@ -6258,11 +6252,41 @@ h2 a i.raa-icon-comment {
             text-transform: none;
             font-weight: 700; } }
   @media screen and (max-width: 640px) and (max-width: 640px) {
-    .vacancies-summary li figure.data figcaption h2 {
+    .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
       font-size: 14px; } }
         @media screen and (min-width: 769px) {
-          .vacancies-summary li figure.data figcaption h2 {
+          .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
             text-align: center; } }
+
+@media screen and (max-width: 640px) {
+  .vacancies-summary li {
+    padding: 0 10px;
+    width: 100%; } }
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .vacancies-summary li {
+    padding: 0 10px 0 0;
+    width: 33.33333%; } }
+
+@media screen and (min-width: 769px) {
+  .vacancies-summary li {
+    padding: 0 10px 0 0;
+    width: 16.66667%; } }
+
+@media screen and (max-width: 640px) {
+  .applications-summary li {
+    padding: 0 10px;
+    width: 100%; } }
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .applications-summary li {
+    padding: 0 10px 0 0;
+    width: 50%; } }
+
+@media screen and (min-width: 769px) {
+  .applications-summary li {
+    padding: 0 10px 0 0;
+    width: 25%; } }
 
 @media screen and (max-width: 768px) {
   table#vacancies-table {
@@ -6305,6 +6329,13 @@ h2 a i.raa-icon-comment {
         @media screen and (max-width: 768px) and (max-width: 640px) {
           table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
             font-size: 14px; } }
+
+.location-search-results {
+  padding: 0;
+  vertical-align: middle; }
+
+.add-location-link {
+  margin-top: 8px; }
 
 .applicant-location,
 .applicant-distance {

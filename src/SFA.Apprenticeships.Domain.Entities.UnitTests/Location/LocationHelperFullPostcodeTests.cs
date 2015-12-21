@@ -20,6 +20,7 @@
         [TestCase(" C V 1 2WT ")]
         [TestCase("")]
         [TestCase(default(string))]
+        [TestCase(" CV1 2WT , 99")]
         public void ShouldNotBeIdentitiedAsPostcode(string postcode)
         {
             Assert.IsFalse(LocationHelper.IsPostcode(postcode));
