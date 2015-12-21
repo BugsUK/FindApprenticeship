@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -60,7 +61,7 @@ WriteLiteral("\r\n");
             
             #line 6 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
   
-    ViewBag.Title = "Recruit an Apprentice - Check employer description";
+    ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
     var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) && 
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
@@ -81,7 +82,7 @@ WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n            Check employer description\r\n        </h1>\r\n    </div>\r\n</div>\r\n<di" +
+WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n<di" +
 "v");
 
 WriteLiteral(" class=\"grid-wrapper\"");

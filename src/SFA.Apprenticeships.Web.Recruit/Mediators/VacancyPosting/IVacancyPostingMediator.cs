@@ -2,6 +2,7 @@
 {
     using Common.Mediators;
     using System;
+    using System.Collections.Generic;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -55,17 +56,17 @@
         MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber);
-
+		
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel newVacancyViewModel);
 
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid, bool? comeFromPreview);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetDifferentLocation(ProviderSiteEmployerLinkViewModel viewModel);
+        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> SetEmployersLocationAsMainLocation(
-            ProviderSiteEmployerLinkViewModel viewModel);
+        MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex,
+            string postCodeSearch);
 
-        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel);
+        MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
     }

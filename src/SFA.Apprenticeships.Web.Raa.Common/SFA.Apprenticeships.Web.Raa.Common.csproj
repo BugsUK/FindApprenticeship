@@ -183,12 +183,15 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
+    <Compile Include="Providers\ILocationsProvider.cs" />
     <Compile Include="Providers\IProviderProvider.cs" />
     <Compile Include="Providers\IProviderUserProvider.cs" />
     <Compile Include="Providers\IVacancyPostingProvider.cs" />
     <Compile Include="Providers\IVacancyQAProvider.cs" />
+    <Compile Include="Providers\LocationsProvider.cs" />
     <Compile Include="Providers\ProviderProvider.cs" />
     <Compile Include="Providers\ProviderUserProvider.cs" />
+    <Compile Include="Factories\SelectListItemsFactory.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
@@ -206,6 +209,7 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
+    <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EditLinkViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\HomeViewModel.cs" />

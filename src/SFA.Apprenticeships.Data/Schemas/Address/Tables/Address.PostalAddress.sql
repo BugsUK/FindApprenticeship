@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Address].[PostalAddress]
 (
-	[PostalAddressId] INT NOT NULL , 
+	[PostalAddressId] INT NOT NULL IDENTITY , 
     [AddressLine1] NVARCHAR(MAX) NOT NULL, 
     [AddressLine2] NVARCHAR(MAX) NULL, 
     [AddressLine3] NVARCHAR(MAX) NULL, 

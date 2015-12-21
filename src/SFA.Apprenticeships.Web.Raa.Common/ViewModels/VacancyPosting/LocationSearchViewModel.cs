@@ -5,15 +5,23 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Web.Common.ViewModels;
 
     public class LocationSearchViewModel
     {
+        public LocationSearchViewModel()
+        {
+            Addresses = new List<VacancyLocationAddressViewModel>();
+        }
+
         [Display(Name = LocationSearchViewModelMessages.PostCodeSearch.LabelText)]
         public string PostcodeSearch { get; set; } 
 
-        public List<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
+        public PageableViewModel<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
+
+        public List<VacancyLocationAddressViewModel> SearchAddresses { get; set; }
 
         public string ProviderSiteErn { get; set; }
 
@@ -33,5 +41,9 @@
         public long VacancyReferenceNumber { get; set; }
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+		
+        public int CurrentPage { get; set; }
+
+        public int TotalNumberOfPages { get; set; }
     }
 }

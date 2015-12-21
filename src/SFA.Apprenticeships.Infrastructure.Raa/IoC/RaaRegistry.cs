@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
+    using Application.Applications;
     using Application.Vacancies;
     using Application.Vacancy;
     using Common.Configuration;
@@ -11,7 +12,7 @@
     {
         public RaaRegistry(ServicesConfiguration servicesConfiguration)
         {
-            if (servicesConfiguration.ServiceImplementation == "Raa")
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
                 For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
 
@@ -20,6 +21,9 @@
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Use<TraineeshipVacancyDataProvider>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<NullApplicationStatusesProvider>();
             }
         }
     }

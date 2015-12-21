@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using System.Linq.Expressions;
     using System.Web;
     using Application.Application;
+    using Application.Application.IoC;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
@@ -18,6 +19,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Common.Providers.Azure.AccessControlService;
     using Common.Services;
     using Domain.Interfaces.Configuration;
+    using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -45,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             return new Container(x =>
             {
@@ -61,15 +64,15 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry<ApplicationServicesRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
-                x.For<IApplicationService>().Use<ApplicationService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

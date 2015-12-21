@@ -1,0 +1,19 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Application.AboutYouViewModel
+
+<fieldset class="fieldset-with-border">
+    <legend class="heading-large">
+        About you
+    </legend>
+    <div class="form-group">
+        <label for="strengths" class="form-label">Provide examples of your strengths</label>
+        <span class="form-prepopped" id="strengths">@Model.Strengths</span>
+    </div>
+    <div class="form-group">
+        <label for="improvements" class="form-label">What skills would you like to improve?</label>
+        <span class="form-prepopped" id="improvements">@Model.Improvements</span>
+    </div>
+    <div class="form-group">
+        <label for="hobbies-and-interests" class="form-label">What are you hobbies and interests?</label>
+        <span class="form-prepopped" id="hobbies-and-interests">@Model.HobbiesAndInterests</span>
+    </div>
+</fieldset>

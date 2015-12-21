@@ -63,7 +63,6 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
-            For<IApplicationService>().Use<ApplicationService>();
         }
 
         private void RegisterStrategies()

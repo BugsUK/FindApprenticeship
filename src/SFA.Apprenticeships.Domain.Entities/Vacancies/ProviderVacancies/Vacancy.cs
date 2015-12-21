@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 {
     using System;
-    using Organisations;
     using Providers;
 
     public abstract class Vacancy : BaseEntity
@@ -20,6 +19,7 @@
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public DateTime? InterviewStartDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }
         public string DesiredSkills { get; set; }

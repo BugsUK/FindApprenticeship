@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ApprenticeshipApplicationDetailHelper.cs" />
+    <Compile Include="Applications\TraineeshipApplicationDetailHelper.cs" />
     <Compile Include="Applications\TraineeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationSummary.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="ReferenceData\Standard.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\AgencyUser.cs" />
+    <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\Role.cs" />

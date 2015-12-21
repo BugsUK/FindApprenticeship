@@ -28,8 +28,6 @@
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
 
-        public bool ShowNumberOfPositions { get; set; }
-
         public bool ComeFromPreview { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }

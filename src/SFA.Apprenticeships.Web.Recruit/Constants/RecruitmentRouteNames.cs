@@ -43,6 +43,9 @@
         public const string CloneVacancy = "CloneVacancy";
         public const string ConfirmEmployerSelection = "ConfirmEmployerSelection";
         public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
+        public const string SearchAddresses = "SearchAddresses";
+        public const string AddLocations = "AddLocations";
+        public const string ShowLocations = "ShowLocations";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
@@ -57,6 +60,9 @@
         public const string SelectNewEmployer = "SelectNewEmployer";
         public const string AddNewEmployer = "AddNewEmployer";
         public const string ComfirmNewEmployer = "ConfirmNewEmployer";
-        public const string AddLocations = "AddLocations";
+
+        // Applications
+        public const string VacancyApplications = "VacancyApplications";
+        public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
     }
 }

@@ -36,8 +36,7 @@
                 StartDate = vacancy.PossibleStartDate ?? DateTime.MinValue,
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
                 Description = vacancy.ShortDescription,
-                //TODO: Map once Vicenc has finished with multi location work
-                NumberOfPositions = 1,
+                NumberOfPositions = vacancy.NumberOfPositions,
                 EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
                 //TODO: Get provider
                 //ProviderName = vacancy.ProviderSiteEmployerLink.,

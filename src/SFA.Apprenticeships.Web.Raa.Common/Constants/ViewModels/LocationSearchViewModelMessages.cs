@@ -13,13 +13,14 @@
 
         public class PostCodeSearch
         {
-            public const string LabelText = "Enter the employer's postcode";
+            public const string LabelText = "Enter the vacancy location or postcode";
+            public const string ErrorText = "You must enter a full postcode";
         }
 
         public class Addresses
         {
             public const string NoAddressesErrorText =
-                "You must enter the employer’s postcode or address before continuing";
+                "You must enter at least one location before continuing";
         }
     }
 }

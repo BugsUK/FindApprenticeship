@@ -241,6 +241,30 @@
                defaults: new { controller = "VacancyPosting", action = "Locations" }
                );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.SearchAddresses,
+               url: "vacancy/searchAddresses",
+               defaults: new { controller = "VacancyPosting", action = "SearchAddresses" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ShowLocations,
+               url: "vacancy/showLocations",
+               defaults: new { controller = "VacancyPosting", action = "ShowLocations" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.VacancyApplications,
+               url: "vacancy/applications",
+               defaults: new { controller = "Application", action = "VacancyApplications" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
+               url: "application/review",
+               defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
+               );
+
             routes.LowercaseUrls = true;
 
         }

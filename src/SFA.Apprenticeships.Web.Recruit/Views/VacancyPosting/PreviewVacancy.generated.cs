@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -103,85 +104,112 @@ WriteLiteral("\r\n\r\n");
             #line hidden
             
             #line 18 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-     using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
+     if (Model.Status == ProviderVacancyStatuses.Live)
     {
-        
+
             
             #line default
             #line hidden
+WriteLiteral("        <a");
+
+WriteLiteral(" id=\"dashboardLink\"");
+
+WriteAttribute("href", Tuple.Create(" href=\"", 573), Tuple.Create("\"", 632)
             
             #line 20 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-   Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
-
+, Tuple.Create(Tuple.Create("", 580), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-            
-            #line 20 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                      
+, 580), false)
+);
 
-        if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+WriteLiteral(">Return to recruitment home</a>\r\n");
+
+            
+            #line 21 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+    }
+    else
+    {
+        using (Html.BeginRouteForm(RecruitmentRouteNames.SubmitVacancy, FormMethod.Post))
         {
-            Model.ResubmitOption = false;
             
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-       Write(Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" }));
+            #line 26 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+       Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                                                                                                    
-        }
-        else
-        {
-            Model.ResubmitOption = true;
-            
+            #line 26 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                          
+
+            if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            {
+                Model.ResubmitOption = false;
+                
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-       Write(Html.HiddenFor(model => model.ResubmitOption));
+            #line 31 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+           Write(Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" }));
 
             
             #line default
             #line hidden
             
-            #line 30 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                                                         
-        }
+            #line 31 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                                                                                                         
+            }
+            else
+            {
+                Model.ResubmitOption = true;
+                
+            
+            #line default
+            #line hidden
+            
+            #line 36 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+           Write(Html.HiddenFor(model => model.ResubmitOption));
+
+            
+            #line default
+            #line hidden
+            
+            #line 36 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                                                              
+            }
 
 
             
             #line default
             #line hidden
-WriteLiteral("        <section>\r\n            <div");
+WriteLiteral("            <section>\r\n                <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n");
 
             
-            #line 35 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                
+            #line 41 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    
             
             #line default
             #line hidden
             
-            #line 35 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                 if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
-                {
+            #line 41 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                     if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                    <button");
+WriteLiteral("                        <button");
 
 WriteLiteral(" type=\"submit\"");
 
@@ -190,15 +218,15 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Resubmit vacancy</button>\r\n");
 
             
-            #line 38 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                }
-                else
-                {
+            #line 44 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    }
+                    else
+                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                    <button");
+WriteLiteral("                        <button");
 
 WriteLiteral(" type=\"submit\"");
 
@@ -207,30 +235,31 @@ WriteLiteral(" class=\"button\"");
 WriteLiteral(">Submit for approval</button>\r\n");
 
             
-            #line 42 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                }
+            #line 48 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+                    }
 
             
             #line default
             #line hidden
-WriteLiteral("                <a");
+WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1476), Tuple.Create("\"", 1535)
+WriteAttribute("href", Tuple.Create(" href=\"", 1784), Tuple.Create("\"", 1843)
             
-            #line 43 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1483), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 49 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+, Tuple.Create(Tuple.Create("", 1791), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1483), false)
+, 1791), false)
 );
 
-WriteLiteral(">Save and exit</a>\r\n            </div>\r\n        </section>\r\n");
+WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");
 
             
-            #line 46 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+            #line 52 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
+        }
     }
 
             

@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Candidate;
     using SFA.Apprenticeships.Web.Candidate.Constants;
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
@@ -270,7 +271,7 @@ WriteLiteral(">");
 
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(each.FromMonth, each.FromYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(each.FromMonth, each.FromYear));
 
             
             #line default
@@ -284,7 +285,7 @@ WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml"
-                                                                      Write(Html.GetMonthYearLabel(each.ToMonth, each.ToYear));
+                                                                      Write(QualificationPresenter.GetMonthYearLabel(each.ToMonth, each.ToYear));
 
             
             #line default
