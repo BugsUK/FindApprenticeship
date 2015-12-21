@@ -44,5 +44,9 @@
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
+        public int SubmissionCount { get; set; }
+        //Id if the Provider User who created the vacancy
+        public Guid VacancyManagerId { get; set; }
+        public Guid LastEditedById { get; set; }
     }
 }

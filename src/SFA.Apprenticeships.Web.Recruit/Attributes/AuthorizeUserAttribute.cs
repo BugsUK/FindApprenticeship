@@ -18,8 +18,8 @@
 
                 if (user.Identity.IsAuthenticated)
                 {
-                    var requireVerifiedEmail = Roles.Contains(Constants.Roles.VerifiedEmail);
-                    if (requireVerifiedEmail && !user.IsInRole(Constants.Roles.VerifiedEmail))
+                    var requireVerifiedEmail = Roles.Contains(Domain.Entities.Roles.VerifiedEmail);
+                    if (requireVerifiedEmail && !user.IsInRole(Domain.Entities.Roles.VerifiedEmail))
                     {
                         filterContext.Result = new RedirectToRouteResult(RecruitmentRouteNames.VerifyEmail, null);
                     }

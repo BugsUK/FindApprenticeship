@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
@@ -49,5 +50,7 @@
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         public int NumberOfPositions { get; set; }
+
+        public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
     }
 }
