@@ -28,5 +28,20 @@
         {
             public const string RequiredErrorText = "Select whether the employer’s address is the vacancy location or not";
         }
+
+        public class DescriptionComment
+        {
+            public const string LabelText = "Employer description for candidates comment";
+        }
+
+        public class WebsiteUrlComment
+        {
+            public const string LabelText = "Website comment";
+        }
+
+        public class NumberOfPositionsComment
+        {
+            public const string LabelText = "Number of positions for this vacancy comment";
+        }
     }
 }

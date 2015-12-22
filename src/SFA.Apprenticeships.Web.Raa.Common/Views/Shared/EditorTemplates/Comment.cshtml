@@ -5,10 +5,10 @@
 }
 
 <details class="@state" @state>
-    <summary>Comment</summary>
+    <summary>@ViewData["Label"]</summary>
     <div class="detail-content qa-comment">
         <div class="blocklabel-single-container">
-            @Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+            @Html.TextAreaFor(m => m, new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
         </div>
     </div>
 </details>

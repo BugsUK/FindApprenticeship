@@ -1,6 +1,7 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
 
 @using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
@@ -53,9 +54,9 @@
 
         <div class="grid grid-1-1">
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.EditorFor(m => m.WebsiteUrlComment, "Comment")
+            @Html.EditorFor(m => m.WebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.WebsiteUrlComment))
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.EditorFor(m => m.DescriptionComment, "Comment")
+            @Html.EditorFor(m => m.DescriptionComment, "Comment", Html.GetLabelFor(m => m.DescriptionComment))
             <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
             @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
         </div>

@@ -1,4 +1,5 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
 <noscript>
     <div class="blocklabel-single-container">
@@ -28,7 +29,7 @@
                 <input name="NumberOfPositions" class="form-control-small form-control" id="NumberOfPositions" maxlength="5" size="12" type="text"> positions
                 @Html.ValidationMessage("NumberOfPositions")
             </div>
-            @Html.DisplayFor(m => m.NumberOfPositionsComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.NumberOfPositionsComment))
         </div>
     </div>
 </noscript>

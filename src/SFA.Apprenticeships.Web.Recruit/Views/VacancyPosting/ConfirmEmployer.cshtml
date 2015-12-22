@@ -1,6 +1,8 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
-
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @{
@@ -56,9 +58,9 @@
 
         <div class="grid grid-1-1">
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.DisplayFor(m => m.WebsiteUrlComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.WebsiteUrlComment))
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.DisplayFor(m => m.DescriptionComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DescriptionComment))
             <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
             @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, null)
             @if (Model.ComeFromPreview)

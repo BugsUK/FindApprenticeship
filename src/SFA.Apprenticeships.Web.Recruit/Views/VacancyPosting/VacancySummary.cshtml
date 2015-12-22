@@ -1,9 +1,10 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancySummaryViewModel
+@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
-@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
 
@@ -39,12 +40,12 @@
             <fieldset class="form-group inline-fixed">
                 @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 }, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
             </fieldset>
-            <div class="form-group">@Html.DisplayFor(m => m.WorkingWeekComment, "Comment")</div>
+            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.WorkingWeekComment))</div>
             <div class="blocklabel-single-container">
                 <div class="form-group">
                     <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
                     <label class="form-label" for="weekly-wage">Wage</label>
-                    <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
                         @* ReSharper disable once Html.IdNotResolved *@
                         <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
                             @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
@@ -70,11 +71,11 @@
                         </fieldset>
                     </div>
                 </div>
-                <div class="form-group">@Html.DisplayFor(m => m.WageComment, "Comment")</div>
+                <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.WageComment))</div>
             </div>
 
             <fieldset class="form-group">
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration)))">
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration)))">
                     <a name="@Html.NameFor(m => m.Duration).ToString().ToLower()"></a>
                     @Html.LabelFor(m => m.Duration, new {@class = "form-label"})
                     @Html.TextBoxFor(m => m.Duration, new {@class = "form-control-large form-control", type = "tel", size = 12})
@@ -83,25 +84,25 @@
                 </div>
             </fieldset>
             <fieldset class="form-group">
-                @Html.DisplayFor(m => m.DurationComment, "Comment")
+                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DurationComment))
             </fieldset>
 
-            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
+            <fieldset class="form-group inline-fixed date-input @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
                 <a name="@Html.NameFor(m => m.ClosingDate).ToString().ToLower()"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
                 @Html.EditorFor(m => m.ClosingDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
             </fieldset>
-            <div class="form-group">@Html.DisplayFor(m => m.ClosingDateComment, "Comment")</div>
-            <fieldset class="form-group inline-fixed date-input @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
+            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.ClosingDateComment))</div>
+            <fieldset class="form-group inline-fixed date-input @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
                 <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
                 <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
                 @Html.EditorFor(m => m.PossibleStartDate)
                 @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
             </fieldset>
-            <div class="form-group">@Html.DisplayFor(m => m.PossibleStartDateComment, "Comment")</div>
+            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.PossibleStartDateComment))</div>
             @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
-            @Html.DisplayFor(m => m.LongDescriptionComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LongDescriptionComment))
         </div>
     </section>
     <div class="grid grid-1-2">

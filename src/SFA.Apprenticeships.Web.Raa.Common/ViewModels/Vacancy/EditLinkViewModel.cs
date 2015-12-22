@@ -10,7 +10,7 @@
         {
             Status = status;
             EditUrl = editUrl;
-            CommentViewModel = new CommentViewModel(status, comment, editUrl);
+            CommentViewModel = new CommentViewModel(status, comment, editUrl, string.Empty);
         }
 
         public ProviderVacancyStatuses Status { get; private set; }

@@ -1,5 +1,7 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
@@ -23,15 +25,15 @@
     <section>
         <div class="form-group">
             @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.DesiredSkillsComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DesiredSkillsComment))
             @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.PersonalQualitiesComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.PersonalQualitiesComment))
             @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.DesiredQualificationsComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DesiredQualificationsComment))
             @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.FutureProspectsComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.FutureProspectsComment))
             @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.ThingsToConsiderComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ThingsToConsiderComment))
         </div>
     </section>
     <div class="grid grid-1-2">

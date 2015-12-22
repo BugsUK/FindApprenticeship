@@ -22,5 +22,15 @@
             public const string NoAddressesErrorText =
                 "You must enter at least one location before continuing";
         }
+
+        public class LocationAddressesComment
+        {
+            public const string LabelText = "Vacancy location(s) comment";
+        }
+
+        public class AdditionalLocationInformationComment
+        {
+            public const string LabelText = "Additional location information comment";
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
@@ -21,9 +22,9 @@
     <section>
         <div class="form-group">
             @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.FirstQuestionComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.FirstQuestionComment))
             @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.SecondQuestionComment, "Comment")
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.SecondQuestionComment))
         </div>
     </section>
     <div class="grid grid-1-2">

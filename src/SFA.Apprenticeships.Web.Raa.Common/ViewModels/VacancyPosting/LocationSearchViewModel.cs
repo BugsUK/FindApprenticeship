@@ -46,8 +46,10 @@
 
         public int TotalNumberOfPages { get; set; }
 
+        [Display(Name = LocationSearchViewModelMessages.LocationAddressesComment.LabelText)]
         public string LocationAddressesComment { get; set; }
 
+        [Display(Name = LocationSearchViewModelMessages.AdditionalLocationInformationComment.LabelText)]
         public string AdditionalLocationInformationComment { get; set; }
     }
 }

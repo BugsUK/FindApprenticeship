@@ -21,24 +21,24 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.ApprenticeshipLevelComment.LabelText)]
         public string ApprenticeshipLevelComment { get; set; }
 
         public string FrameworkCodeName { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.FrameworkCodeNameComment.LabelText)]
         public string FrameworkCodeNameComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.TitleComment.LabelText)]
         public string TitleComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ShortDescription.LabelText)]
         public string ShortDescription { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
 
         public List<SelectListItem> SectorsAndFrameworks { get; set; }
@@ -50,13 +50,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.OfflineApplicationUrl.LabelText)]
         public string OfflineApplicationUrl { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.OfflineApplicationUrlComment.LabelText)]
         public string OfflineApplicationUrlComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructions.LabelText)]
         public string OfflineApplicationInstructions { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.OfflineApplicationInstructionsComment.LabelText)]
         public string OfflineApplicationInstructionsComment { get; set; }
 
         public Guid VacancyGuid { get; set; }
@@ -65,7 +65,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int? StandardId { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.StandardIdComment.LabelText)]
         public string StandardIdComment { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }
