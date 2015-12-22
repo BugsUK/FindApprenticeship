@@ -89,5 +89,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string LocationAddressesComment { get; set; }
 
         public string NumberOfPositionsComment { get; set; }
+
+        public string AdditionalLocationInformationComment { get; set; }
     }
 }

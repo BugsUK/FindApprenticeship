@@ -345,6 +345,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Vacancy\EmployerInformation.generated.cs">
+      <DependentUpon>EmployerInformation.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Vacancy\Review.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -487,6 +492,12 @@
     <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
     <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\Vacancy\EmployerInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorJS.cshtml" />
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

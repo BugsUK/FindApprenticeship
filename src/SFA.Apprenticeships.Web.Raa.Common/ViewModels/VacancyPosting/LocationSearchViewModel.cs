@@ -45,5 +45,9 @@
         public int CurrentPage { get; set; }
 
         public int TotalNumberOfPages { get; set; }
+
+        public string LocationAddressesComment { get; set; }
+
+        public string AdditionalLocationInformationComment { get; set; }
     }
 }

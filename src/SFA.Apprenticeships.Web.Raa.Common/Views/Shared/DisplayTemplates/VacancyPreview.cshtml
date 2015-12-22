@@ -374,7 +374,7 @@
                                 <div id="vacancy-address" class="editable-item grid-wrapper" itemscope itemtype="http://schema.org/PostalAddress">
                                     <h3 class="bold-small">
                                         Addresses
-                                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.EmployerLink))
+                                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                     </h3>
                                     <div class="grid grid-1-2" id="leftLocationAddressesTable">
                                         <div class="inner-block-padr">
@@ -441,7 +441,10 @@
                             if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
                             {
                                 <div class="editable-item">
-                                    <h3 class="bold-small">Additional location information</h3>
+                                    <h3 class="bold-small">
+                                        Additional location information
+                                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
+                                    </h3>
                                     <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
                                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                                 </div>

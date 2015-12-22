@@ -115,6 +115,12 @@
                 defaults: new { controller = "Vacancy", action = "Questions" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.EmployerInformation,
+                url: "vacancy/employerinformation",
+                defaults: new { controller = "Vacancy", action = "EmployerInformation" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

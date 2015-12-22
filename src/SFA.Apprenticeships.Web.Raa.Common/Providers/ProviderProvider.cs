@@ -14,7 +14,7 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    public class ProviderProvider : IProviderProvider
+    public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;

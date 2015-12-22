@@ -37,5 +37,7 @@
         public string DescriptionComment { get; set; }
 
         public string WebsiteUrlComment { get; set; }
+
+        public string NumberOfPositionsComment { get; set; }
     }
 }

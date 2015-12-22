@@ -465,6 +465,7 @@
 
             if (!validationResult.IsValid)
             {
+                //TODO: save comments?
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, viewModel,
                     validationResult);
             }

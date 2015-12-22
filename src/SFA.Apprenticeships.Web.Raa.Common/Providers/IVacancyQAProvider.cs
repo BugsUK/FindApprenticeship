@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using ViewModels;
@@ -36,5 +37,9 @@
         List<SelectListItem> GetSectorsAndFrameworks();
 
         List<StandardViewModel> GetStandards();
+
+        void RemoveLocationAddresses(Guid vacancyGuid);
+
+        NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
     }
 }

@@ -134,7 +134,9 @@
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     Status = vacancy.Status,
                     VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
-                    IsEmployerLocationMainApprenticeshipLocation = false
+                    IsEmployerLocationMainApprenticeshipLocation = false,
+                    LocationAddressesComment = vacancy.LocationAddressesComment,
+                    AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
                 };
 
                 vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
@@ -863,6 +865,29 @@
             return viewModel;
         }
 
+        public NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
+        {
+            if (!viewModel.VacancyReferenceNumber.HasValue)
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+
+            
+            //update properties
+            vacancy.Ukprn = viewModel.Ukprn;
+            vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
+            vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
+            vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
+            vacancy.NumberOfPositions = viewModel.NumberOfPositions;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation =
+                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
+            return viewModel;
+        }
+
         public VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
@@ -921,6 +946,8 @@
                 }));
 
                 vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
+                vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
+                vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
             }
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);

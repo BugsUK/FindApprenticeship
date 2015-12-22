@@ -55,6 +55,7 @@
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IProviderQAProvider>().Use<ProviderProvider>();
         }
 
         private void RegisterServices()
