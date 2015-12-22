@@ -29,7 +29,6 @@
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
         private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
-        private readonly IAddressLookupProvider _addressLookupProvider; // TODO: can we use this provider in this layer?
         private readonly ILocationsProvider _locationsProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
@@ -71,7 +70,6 @@
             _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _locationSearchViewModelValidator = locationSearchViewModelValidator;
-            _addressLookupProvider = addressLookupProvider;
             _locationsProvider = locationsProvider;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
@@ -465,7 +463,6 @@
 
             if (!validationResult.IsValid)
             {
-                //TODO: save comments?
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, viewModel,
                     validationResult);
             }
@@ -492,7 +489,6 @@
             locationSearchViewModel.ComeFromPreview = comeFromPreview ?? false;
             
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetLocationAddressesViewModel.Ok, locationSearchViewModel);
-
         }
         
         public MediatorResponse<VacancySummaryViewModel> UpdateVacancyAndExit(VacancySummaryViewModel viewModel)

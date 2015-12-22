@@ -1,4 +1,26 @@
-﻿.editable-item {
+﻿.cancel-link{
+    margin-left: 12px;
+}
+
+.locations-table {
+    .location-positions {
+        text-align: center;
+    }
+    .locations-positions-header{
+        text-align: center;
+    }
+}
+
+.location-search-results{
+    padding: 0;
+    vertical-align: middle;
+}
+
+.add-location-link{
+    margin-top: 8px;
+}
+
+.editable-item {
     position: relative;
     margin: -5px -5px 10px -5px;
     padding: 5px;

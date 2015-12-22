@@ -22,5 +22,8 @@
         public const string RequirementsAndProspoects = "RequirementsAndProspoects";
         public const string Questions = "Questions";
         public const string EmployerInformation = "EmployerInformation";
+        public const string AddLocations = "AddLocations";
+        public const string SearchAddresses = "SearchAddresses";
+        public const string ShowLocations = "ShowLocations";
     }
 }

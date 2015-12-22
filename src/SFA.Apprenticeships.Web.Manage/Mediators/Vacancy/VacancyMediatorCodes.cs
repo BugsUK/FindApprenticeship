@@ -62,5 +62,17 @@
             public const string FailedValidation = "VacancyMediatorCodes.UpdateEmployerInformation.FailedValidation";
             public const string Ok = "VacancyMediatorCodes.UpdateEmployerInformation.Ok";
         }
+
+        public class GetLocationAddressesViewModel
+        {
+            public const string FailedValidation = "VacancyMediatorCodes.GetLocationAddressesViewModel.FailedValidation";
+            public const string Ok = "VacancyMediatorCodes.GetLocationAddressesViewModel.Ok";
+        }
+
+        public class AddLocations
+        {
+            public const string FailedValidation = "VacancyMediatorCodes.AddLocations.FailedValidation";
+            public const string Ok = "VacancyMediatorCodes.AddLocations.Ok";
+        }
     }
 }

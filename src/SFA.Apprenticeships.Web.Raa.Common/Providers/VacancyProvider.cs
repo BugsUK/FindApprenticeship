@@ -96,6 +96,7 @@
             var standards = GetStandards();
             viewModel.SectorsAndFrameworks = sectors;
             viewModel.Standards = standards;
+            viewModel.VacancyGuid = vacancy.EntityId;
             return viewModel;
         }
 
