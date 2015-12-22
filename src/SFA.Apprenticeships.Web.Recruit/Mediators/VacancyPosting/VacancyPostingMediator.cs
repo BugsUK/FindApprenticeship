@@ -159,6 +159,7 @@
                 viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
                 viewModel.DescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
                 viewModel.WebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
+                viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
             }
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)

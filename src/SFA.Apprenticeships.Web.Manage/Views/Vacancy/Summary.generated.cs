@@ -570,10 +570,21 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Save</button>\r\n    </div>\r\n");
+WriteLiteral(">Save</button>\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 93 "..\..\Views\Vacancy\Summary.cshtml"
+            #line 92 "..\..\Views\Vacancy\Summary.cshtml"
+   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 94 "..\..\Views\Vacancy\Summary.cshtml"
 }
             
             #line default

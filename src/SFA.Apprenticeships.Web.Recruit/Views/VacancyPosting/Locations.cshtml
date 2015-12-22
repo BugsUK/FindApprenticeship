@@ -248,20 +248,14 @@
             </div>
             <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
             @Html.RouteLink("Use employer's address", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
-            @if (Model.ComeFromPreview && Model.Addresses.Any())
+            @if (comeFromConfirmEmployer == true)
             {
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+                var address = Request.UrlReferrer.PathAndQuery;
+                <a href="@address" class="cancel-link">Cancel</a>
             }
-            @{
-                if (comeFromConfirmEmployer == true)
-                {
-                    var address = Request.UrlReferrer.PathAndQuery;
-                    <a href="@address" class="cancel-link">Cancel</a>
-                }
-                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
-                {
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
-                }
+            else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
+            {
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
             }
         </div>
     </div>

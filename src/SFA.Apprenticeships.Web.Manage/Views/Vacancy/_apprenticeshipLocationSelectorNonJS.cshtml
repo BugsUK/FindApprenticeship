@@ -27,8 +27,8 @@
                 <h4 class="bold-small">If this is the vacancy location, how many positions will be available?</h4>
                 <input name="NumberOfPositions" class="form-control-small form-control" id="NumberOfPositions" maxlength="5" size="12" type="text"> positions
                 @Html.ValidationMessage("NumberOfPositions")
-                @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment")
             </div>
+            @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment")
         </div>
     </div>
 </noscript>

@@ -1040,10 +1040,21 @@ WriteLiteral(" type=\"submit\"");
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Save</button>\r\n    </div>\r\n");
+WriteLiteral(">Save</button>\r\n");
+
+WriteLiteral("        ");
 
             
-            #line 167 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 166 "..\..\Views\Vacancy\BasicDetails.cshtml"
+   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 168 "..\..\Views\Vacancy\BasicDetails.cshtml"
 }
 
             
@@ -1056,7 +1067,7 @@ DefineSection("scripts", () => {
 WriteLiteral("\r\n    <script>\r\n        $(\"#");
 
             
-            #line 172 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 173 "..\..\Views\Vacancy\BasicDetails.cshtml"
        Write(Html.NameFor(m => m.StandardId));
 
             
@@ -1065,7 +1076,7 @@ WriteLiteral("\r\n    <script>\r\n        $(\"#");
 WriteLiteral("\").change(function () {\r\n            var apprenticeshipLevel = $(\"#");
 
             
-            #line 173 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 174 "..\..\Views\Vacancy\BasicDetails.cshtml"
                                      Write(Html.NameFor(m => m.StandardId));
 
             
@@ -1075,7 +1086,7 @@ WriteLiteral(" option:selected\").attr(\"data-apprenticeship-level\");\r\n      
 "shipLevel === \"");
 
             
-            #line 174 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 175 "..\..\Views\Vacancy\BasicDetails.cshtml"
                                     Write(ApprenticeshipLevel.FoundationDegree.ToString());
 
             
@@ -1084,7 +1095,7 @@ WriteLiteral(" option:selected\").attr(\"data-apprenticeship-level\");\r\n      
 WriteLiteral("\" || apprenticeshipLevel === \"");
 
             
-            #line 174 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 175 "..\..\Views\Vacancy\BasicDetails.cshtml"
                                                                                                                   Write(ApprenticeshipLevel.Masters.ToString());
 
             
@@ -1093,7 +1104,7 @@ WriteLiteral("\" || apprenticeshipLevel === \"");
 WriteLiteral("\") {\r\n                apprenticeshipLevel = \"");
 
             
-            #line 175 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 176 "..\..\Views\Vacancy\BasicDetails.cshtml"
                                   Write(ApprenticeshipLevel.Degree.ToString());
 
             

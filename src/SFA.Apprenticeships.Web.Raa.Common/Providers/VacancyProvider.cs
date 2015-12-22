@@ -882,6 +882,16 @@
             vacancy.NumberOfPositions = viewModel.NumberOfPositions;
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
+
+            if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
+            {
+                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+            }
+            else
+            {
+                vacancy.NumberOfPositions = null;
+            }
             
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 

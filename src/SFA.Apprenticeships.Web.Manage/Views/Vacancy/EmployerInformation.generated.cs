@@ -422,10 +422,21 @@ WriteLiteral(">");
             
             #line default
             #line hidden
-WriteLiteral("</button>\r\n        </div>\r\n");
+WriteLiteral("</button>\r\n");
+
+WriteLiteral("            ");
 
             
-            #line 61 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+            #line 60 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+       Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n        </div>\r\n");
+
+            
+            #line 62 "..\..\Views\Vacancy\EmployerInformation.cshtml"
    }
 
             

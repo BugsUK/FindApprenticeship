@@ -19,7 +19,7 @@
 
         public class NumberOfPositions
         {
-            public const string LabelText = "Number of positions";
+            public const string LabelText = "Number of positions for this vacancy";
             public const string RequiredErrorText = "Enter the number of positions for this vacancy";
             public const string LengthErrorText = "You must enter at least 1 position";
         }

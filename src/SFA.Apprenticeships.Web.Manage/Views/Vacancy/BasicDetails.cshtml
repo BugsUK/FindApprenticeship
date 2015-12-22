@@ -163,6 +163,7 @@
 
     <div class="form-group">
         <button type="submit" class="button">Save</button>
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>
 }
 
