@@ -74,5 +74,21 @@
             public const string FailedValidation = "VacancyMediatorCodes.AddLocations.FailedValidation";
             public const string Ok = "VacancyMediatorCodes.AddLocations.Ok";
         }
+
+        public class SearchLocations
+        {
+            public const string NotFullPostcode = "VacancyMediatorCodes.SearchLocations.NoFullPostcode";
+            public const string Ok = "VacancyMediatorCodes.SearchLocations.Ok";
+        }
+
+        public class UseLocation
+        {
+            public const string Ok = "VacancyMediatorCodes.SearchLocations.Ok";
+        }
+
+        public class RemoveLocation
+        {
+            public const string Ok = "VacancyMediatorCodes.SearchLocations.Ok";
+        }
     }
 }

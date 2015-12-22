@@ -6117,6 +6117,12 @@ aside h2:first-child {
 .add-location-link {
   margin-top: 8px; }
 
+.remove-button-link {
+  font-size: 14px; }
+
+.use-location-button-link {
+  font-size: 14px; }
+
 .editable-item {
   position: relative;
   margin: -5px -5px 10px -5px;
@@ -6126,6 +6132,7 @@ aside h2:first-child {
   .editable-item p {
     margin-bottom: 0; }
   .editable-item .edit-comment-link {
+    clear: both;
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.25;

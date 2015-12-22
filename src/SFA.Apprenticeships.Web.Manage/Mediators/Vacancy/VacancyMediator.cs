@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Common.Mediators;
     using FluentValidation;
     using Common.Validators;
+    using Common.ViewModels;
+    using Domain.Entities.Exceptions;
     using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
@@ -18,6 +21,7 @@
     {
         private readonly IVacancyQAProvider _vacancyQaProvider;
         private readonly IProviderQAProvider _providerQaProvider;
+        private readonly ILocationsProvider _locationsProvider;
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -34,7 +38,7 @@
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator, 
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, 
-            IProviderQAProvider providerQaProvider, LocationSearchViewModelValidator locationSearchViewModelValidator)
+            IProviderQAProvider providerQaProvider, LocationSearchViewModelValidator locationSearchViewModelValidator, ILocationsProvider locationsProvider)
         {
             _vacancyQaProvider = vacancyQaProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
@@ -45,6 +49,7 @@
             _providerSiteEmployerLinkViewModelValidator = providerSiteEmployerLinkViewModelValidator;
             _providerQaProvider = providerQaProvider;
             _locationSearchViewModelValidator = locationSearchViewModelValidator;
+            _locationsProvider = locationsProvider;
         }
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
@@ -320,6 +325,78 @@
             var locationSearchViewModel = _vacancyQaProvider.AddLocations(viewModel);
 
             return GetMediatorResponse(VacancyMediatorCodes.AddLocations.Ok, locationSearchViewModel);
+        }
+
+        public MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.PostcodeSearch))
+            {
+                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
+
+                return GetMediatorResponse(VacancyMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
+            }
+
+            try
+            {
+                viewModel = _locationsProvider.GetAddressesFor(viewModel);
+
+                AddAlreadyAddedLocations(viewModel, alreadyAddedLocations);
+
+                return GetMediatorResponse(VacancyMediatorCodes.SearchLocations.Ok, viewModel);
+            }
+            catch (CustomException)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.SearchLocations.NotFullPostcode, viewModel);
+            }
+        }
+
+        public MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postCodeSearch)
+        {
+            viewModel.PostcodeSearch = postCodeSearch;
+            var searchResult = SearchLocations(viewModel, viewModel.Addresses);
+
+            if (searchResult.ViewModel.SearchResultAddresses?.Page != null && searchResult.ViewModel.SearchResultAddresses.Page.Count() > locationIndex)
+            {
+                var addressToAdd = searchResult.ViewModel.SearchResultAddresses.Page.ToList()[locationIndex];
+
+                var isNewAddress = viewModel.Addresses.TrueForAll(v => !v.Address.Equals(addressToAdd.Address));
+                if (isNewAddress)
+                {
+                    viewModel.Addresses.Add(addressToAdd);
+                }
+            }
+
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+            viewModel.PostcodeSearch = string.Empty;
+
+            return GetMediatorResponse(VacancyMediatorCodes.UseLocation.Ok, viewModel);
+        }
+
+        public MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
+        {
+            viewModel.Addresses.RemoveAt(locationIndex);
+            viewModel.SearchResultAddresses = new PageableViewModel<VacancyLocationAddressViewModel>();
+            viewModel.PostcodeSearch = string.Empty;
+            viewModel.CurrentPage = 1;
+            viewModel.TotalNumberOfPages = 1;
+
+            return GetMediatorResponse(VacancyMediatorCodes.RemoveLocation.Ok, viewModel);
+        }
+
+        private void AddAlreadyAddedLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations)
+        {
+            var existingVacancy = _vacancyQaProvider.GetVacancy(viewModel.VacancyGuid);
+            if (existingVacancy != null)
+            {
+                viewModel.Addresses = existingVacancy.LocationAddresses;
+            }
+
+            if (alreadyAddedLocations != null && alreadyAddedLocations.Any())
+            {
+                viewModel.Addresses = alreadyAddedLocations;
+            }
         }
     }
 }

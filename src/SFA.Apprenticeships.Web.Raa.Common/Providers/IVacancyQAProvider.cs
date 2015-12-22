@@ -47,5 +47,7 @@
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
+
+        VacancyViewModel GetVacancy(Guid vacancyGuid);
     }
 }

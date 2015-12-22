@@ -3,18 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using System.Linq;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Extensions;
     using Common.Mediators;
     using Common.Validators.Extensions;
-    using Common.ViewModels;
     using Constants;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
-    using FluentValidation.Results;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Provider;

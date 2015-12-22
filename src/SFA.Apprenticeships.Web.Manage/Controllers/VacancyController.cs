@@ -1,5 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Globalization;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -8,6 +11,7 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using FluentValidation.Mvc;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -41,7 +45,8 @@
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.EmployerLink = Url.RouteUrl(ManagementRouteNames.EmployerInformation,
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            // vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations, new { providerSiteErn = vacancyViewModel.ProviderSite.Ern, ern = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
+            vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
 
             ModelState.Clear();
 
@@ -363,37 +368,33 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-        /*
+        
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
         public ActionResult SearchLocations(LocationSearchViewModel viewModel)
         {
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
-            return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, new
+            return RedirectToRoute(ManagementRouteNames.SearchAddresses, new
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
-                ProviderSiteErn = viewModel.ProviderSiteErn,
-                Ern = viewModel.Ern,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
-                CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                VacancyReferenceNumber = viewModel.VacancyReferenceNumber
             });
         }
-
+        
         [HttpGet]
         public ActionResult SearchAddresses(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.SearchLocations(viewModel, (List<VacancyLocationAddressViewModel>)TempData["AlreadyAddedLocations"]);
+            var response = _vacancyMediator.SearchLocations(viewModel, (List<VacancyLocationAddressViewModel>)TempData["AlreadyAddedLocations"]);
 
             ModelState.Clear();
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.SearchLocations.Ok:
+                case VacancyMediatorCodes.SearchLocations.Ok:
                     return View("Locations", response.ViewModel);
-                case VacancyPostingMediatorCodes.SearchLocations.NotFullPostcode:
+                case VacancyMediatorCodes.SearchLocations.NotFullPostcode:
                     AddPostcodeSearchErrorToModelState(viewModel);
                     return View("Locations", response.ViewModel);
                 default:
@@ -410,6 +411,22 @@
                     CultureInfo.CurrentCulture));
         }
 
+        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
+        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterNames = new[] { "locationIndex", "postcodeSearch" }, ParameterTypes = new[] { TypeCode.Int32, TypeCode.String })]
+        [HttpPost]
+        public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postcodeSearch)
+        {
+            var response = _vacancyMediator.UseLocation(viewModel, locationIndex, postcodeSearch);
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UseLocation.Ok:
+                    return RedirectToShowLocations(viewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+        
         [HttpGet]
         public ActionResult ShowLocations(LocationSearchViewModel viewModel)
         {
@@ -419,33 +436,16 @@
             return View("Locations", viewModel);
         }
 
-
-        [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
-        [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterNames = new[] { "locationIndex", "postcodeSearch" }, ParameterTypes = new[] { TypeCode.Int32, TypeCode.String })]
-        [HttpPost]
-        public ActionResult UseLocation(LocationSearchViewModel viewModel, int locationIndex, string postcodeSearch)
-        {
-            var response = _vacancyPostingMediator.UseLocation(viewModel, locationIndex, postcodeSearch);
-
-            switch (response.Code)
-            {
-                case VacancyPostingMediatorCodes.UseLocation.Ok:
-                    return RedirectToShowLocations(viewModel);
-                default:
-                    throw new InvalidMediatorCodeException(response.Code);
-            }
-        }
-
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
         [FillParamterFromActionName(SubmitButtonActionName = "AddLocations", ParameterNames = new[] { "locationIndex" }, ParameterTypes = new[] { TypeCode.Int32 })]
         [HttpPost]
         public ActionResult RemoveLocation(LocationSearchViewModel viewModel, int locationIndex)
         {
-            var response = _vacancyPostingMediator.RemoveLocation(viewModel, locationIndex);
+            var response = _vacancyMediator.RemoveLocation(viewModel, locationIndex);
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.RemoveLocation.Ok:
+                case VacancyMediatorCodes.RemoveLocation.Ok:
                     return RedirectToShowLocations(viewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -455,17 +455,14 @@
         private ActionResult RedirectToShowLocations(LocationSearchViewModel viewModel)
         {
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
-            return RedirectToRoute(RecruitmentRouteNames.ShowLocations, new
+            return RedirectToRoute(ManagementRouteNames.ShowLocations, new
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
-                ProviderSiteErn = viewModel.ProviderSiteErn,
-                Ern = viewModel.Ern,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
-                Ukprn = viewModel.Ukprn,
                 CurrentPage = viewModel.CurrentPage,
-                TotalNumberOfPages = viewModel.TotalNumberOfPages
+                VacancyReferenceNumber = viewModel.VacancyReferenceNumber
             });
-        }*/
+        }
     }
 }

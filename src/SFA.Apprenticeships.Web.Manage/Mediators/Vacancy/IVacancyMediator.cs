@@ -3,6 +3,7 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 
 namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
+    using System.Collections.Generic;
     using Common.Mediators;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -38,5 +39,12 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
+
+        MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations);
+
+        MediatorResponse<LocationSearchViewModel> UseLocation(LocationSearchViewModel viewModel, int locationIndex,
+            string postCodeSearch);
+
+        MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
     }
 }

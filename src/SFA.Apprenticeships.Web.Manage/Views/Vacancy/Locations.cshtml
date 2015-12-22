@@ -1,6 +1,4 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 @using SFA.Apprenticeships.Web.Manage.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Add locations";
@@ -23,8 +21,6 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber);
     @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
     @Html.HiddenFor(m => m.CurrentPage)
-    @Html.HiddenFor(m => m.LocationAddressesComment)
-    @Html.HiddenFor(m => m.AdditionalLocationInformationComment)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <noscript>
@@ -95,7 +91,7 @@
                                         <button id="useLocation" type="submit" class="button-link use-location-button-link add-location-link" name="AddLocations" value="@buttonName">add location</button>
                                     </td>
                                 </tr>
-                                index = index+1;
+                                index = index + 1;
                             }
                             </tbody>
                         </table>
@@ -163,7 +159,7 @@
                     @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
                     @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment")
                 </div>
-                <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+                <button type="submit" class="button" name="AddLocations" value="Locations">Save</button>
             }
             @{
                 if (comeFromConfirmEmployer == true)
@@ -171,10 +167,10 @@
                     var address = Request.UrlReferrer.PathAndQuery;
                     <a href="@address" class="cancel-link">Cancel</a>
                 }
-                @*else (Model.Addresses != null && Model.Addresses.Any())
+                else if (Model.Addresses != null && Model.Addresses.Any())
                 {
                     @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "cancel-link"})
-                }*@
+                }
             }
         </div>
     </noscript>
@@ -261,41 +257,41 @@
             }
         </div>
     </div>
+
+    
 }
 
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
 
+    <script type="text/javascript">
+    ko.observable.fn.appendError = function (error) {
+        var thisError = this.error();
+        if (thisError) {
+            this.setError(thisError += '. ' + error);
+        }
+        else {
+            this.setError(error);
+        };
+    };
 
-            @section scripts {
-                @Scripts.Render("~/bundles/knockout")
+    var addressesData = null;
 
-                <script type="text/javascript">
-                ko.observable.fn.appendError = function (error) {
-                    var thisError = this.error();
-                    if (thisError) {
-                        this.setError(thisError += '. ' + error);
-                    }
-                    else {
-                        this.setError(error);
-                    };
-                };
+    addressesData = @Html.Raw(Json.Encode(Model.Addresses));
 
-                var addressesData = null;
+    if (!addressesData) addressesData = [];
 
-                addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+    function getLocationAddressesData() {
+        return addressesData;
+    }
 
-                if (!addressesData) addressesData = [];
+    var modelState = null;
+    modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
 
-                function getLocationAddressesData() {
-                    return addressesData;
-                }
+    function getModelState() {
+        return modelState;
+    }
+    </script>
 
-                var modelState = null;
-                modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
-
-                function getModelState() {
-                    return modelState;
-                }
-                </script>
-
-                @Scripts.Render("~/bundles/location")
-            }
+    @Scripts.Render("~/bundles/location")
+}
