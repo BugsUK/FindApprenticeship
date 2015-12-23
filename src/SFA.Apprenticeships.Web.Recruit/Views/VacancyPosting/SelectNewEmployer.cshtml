@@ -11,6 +11,8 @@
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
+    var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
+    var searchPerformed = !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected);
 }
 
 <div class="grid-wrapper">
@@ -22,7 +24,7 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @if ((Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0))
+    @if (searchPerformed && noResults)
     {
         <div class="no-employers-found">
             <p>No employers matched your search:</p>

@@ -9,7 +9,8 @@
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
-    var detailsOpen = (!string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected)) ? "open" : "";
+    var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
+    var detailsOpen = noResults && (!string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected)) ? "open" : "";
 }
 <div class="grid-wrapper">
     <div class="hgroup">
@@ -20,7 +21,7 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @if ((Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0))
+    @if (noResults)
     {
         <div class="no-employers-found">
             <p>No employers matched your search:</p>
