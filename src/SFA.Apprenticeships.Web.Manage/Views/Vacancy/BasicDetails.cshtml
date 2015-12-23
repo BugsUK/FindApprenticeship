@@ -8,8 +8,8 @@
 
     const string selected = "selected";
 
-    var isApplicationThroughRAAYes = !Model.OfflineVacancy ? selected : null;
-    var isApplicationThroughRAANo = Model.OfflineVacancy ? selected : null;
+    var isApplicationThroughRAAYes = (Model.OfflineVacancy.HasValue && !Model.OfflineVacancy.Value) ? selected : null;
+    var isApplicationThroughRAANo = (Model.OfflineVacancy.HasValue && Model.OfflineVacancy.Value) ? selected : null;
 
     var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;

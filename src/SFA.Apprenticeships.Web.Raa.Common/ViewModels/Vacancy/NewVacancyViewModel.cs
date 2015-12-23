@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
 
-        public bool OfflineVacancy { get; set; }
+        public bool? OfflineVacancy { get; set; }
 
         [Display(Name = VacancyViewModelMessages.OfflineApplicationUrl.LabelText)]
         public string OfflineApplicationUrl { get; set; }

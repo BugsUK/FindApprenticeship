@@ -8,8 +8,8 @@
 
     const string selected = "selected";
 
-    var isApplicationThroughRAAYes = !Model.OfflineVacancy ? selected : null;
-    var isApplicationThroughRAANo = Model.OfflineVacancy ? selected : null;
+    var isApplicationThroughRAAYes = (Model.OfflineVacancy.HasValue && !Model.OfflineVacancy.Value) ? selected : null;
+    var isApplicationThroughRAANo = (Model.OfflineVacancy.HasValue && Model.OfflineVacancy.Value) ? selected : null;
 
     var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
@@ -142,8 +142,9 @@
 
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new { id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel" }) No
+                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) No
                 </label>
+                @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">

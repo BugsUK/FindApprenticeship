@@ -75,8 +75,8 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 
     const string selected = "selected";
 
-    var isApplicationThroughRAAYes = !Model.OfflineVacancy ? selected : null;
-    var isApplicationThroughRAANo = Model.OfflineVacancy ? selected : null;
+    var isApplicationThroughRAAYes = (Model.OfflineVacancy.HasValue && !Model.OfflineVacancy.Value) ? selected : null;
+    var isApplicationThroughRAANo = (Model.OfflineVacancy.HasValue && Model.OfflineVacancy.Value) ? selected : null;
 
     var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
@@ -223,31 +223,31 @@ WriteLiteral(" class=\"blocklabel-single-container\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1792), Tuple.Create("\"", 1980)
-, Tuple.Create(Tuple.Create("", 1800), Tuple.Create("form-group", 1800), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 1874), Tuple.Create("\"", 2062)
+, Tuple.Create(Tuple.Create("", 1882), Tuple.Create("form-group", 1882), true)
             
             #line 37 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1810), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))
+, Tuple.Create(Tuple.Create(" ", 1892), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))
             
             #line default
             #line hidden
-, 1811), false)
-, Tuple.Create(Tuple.Create(" ", 1936), Tuple.Create("inline", 1937), true)
-, Tuple.Create(Tuple.Create(" ", 1943), Tuple.Create("clearfix", 1944), true)
-, Tuple.Create(Tuple.Create(" ", 1952), Tuple.Create("blocklabel-single", 1953), true)
-, Tuple.Create(Tuple.Create(" ", 1970), Tuple.Create("hide-nojs", 1971), true)
+, 1893), false)
+, Tuple.Create(Tuple.Create(" ", 2018), Tuple.Create("inline", 2019), true)
+, Tuple.Create(Tuple.Create(" ", 2025), Tuple.Create("clearfix", 2026), true)
+, Tuple.Create(Tuple.Create(" ", 2034), Tuple.Create("blocklabel-single", 2035), true)
+, Tuple.Create(Tuple.Create(" ", 2052), Tuple.Create("hide-nojs", 2053), true)
 );
 
 WriteLiteral(">\r\n                <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 2002), Tuple.Create("\"", 2064)
+WriteAttribute("name", Tuple.Create(" name=\"", 2084), Tuple.Create("\"", 2146)
             
             #line 38 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 2009), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.TrainingType).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 2091), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.TrainingType).ToString().ToLower()
             
             #line default
             #line hidden
-, 2009), false)
+, 2091), false)
 );
 
 WriteLiteral("></a>\r\n                <label");
@@ -262,15 +262,15 @@ WriteLiteral(" data-target=\"training-type-frameworks-panel\"");
 
 WriteLiteral(" for=\"training-type-frameworks\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2306), Tuple.Create("\"", 2345)
-, Tuple.Create(Tuple.Create("", 2314), Tuple.Create("block-label", 2314), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2388), Tuple.Create("\"", 2427)
+, Tuple.Create(Tuple.Create("", 2396), Tuple.Create("block-label", 2396), true)
             
             #line 41 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                     , Tuple.Create(Tuple.Create(" ", 2325), Tuple.Create<System.Object, System.Int32>(frameworksSelected
+                                     , Tuple.Create(Tuple.Create(" ", 2407), Tuple.Create<System.Object, System.Int32>(frameworksSelected
             
             #line default
             #line hidden
-, 2326), false)
+, 2408), false)
 );
 
 WriteLiteral(">\r\n");
@@ -292,15 +292,15 @@ WriteLiteral(" data-target=\"training-type-standards-panel\"");
 
 WriteLiteral(" for=\"training-type-standards\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2753), Tuple.Create("\"", 2791)
-, Tuple.Create(Tuple.Create("", 2761), Tuple.Create("block-label", 2761), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 2835), Tuple.Create("\"", 2873)
+, Tuple.Create(Tuple.Create("", 2843), Tuple.Create("block-label", 2843), true)
             
             #line 46 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                   , Tuple.Create(Tuple.Create(" ", 2772), Tuple.Create<System.Object, System.Int32>(standardsSelected
+                                   , Tuple.Create(Tuple.Create(" ", 2854), Tuple.Create<System.Object, System.Int32>(standardsSelected
             
             #line default
             #line hidden
-, 2773), false)
+, 2855), false)
 );
 
 WriteLiteral(">\r\n");
@@ -333,39 +333,39 @@ WriteLiteral(" class=\"toggle-content blocklabel-content\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3238), Tuple.Create("\"", 3387)
-, Tuple.Create(Tuple.Create("", 3246), Tuple.Create("form-group", 3246), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3320), Tuple.Create("\"", 3469)
+, Tuple.Create(Tuple.Create("", 3328), Tuple.Create("form-group", 3328), true)
             
             #line 54 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3256), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName))
+, Tuple.Create(Tuple.Create(" ", 3338), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName))
             
             #line default
             #line hidden
-, 3257), false)
+, 3339), false)
 );
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 3413), Tuple.Create("\"", 3480)
+WriteAttribute("name", Tuple.Create(" name=\"", 3495), Tuple.Create("\"", 3562)
             
             #line 55 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 3420), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 3502), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()
             
             #line default
             #line hidden
-, 3420), false)
+, 3502), false)
 );
 
 WriteLiteral("></a>\r\n                    <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 3514), Tuple.Create("\"", 3559)
+WriteAttribute("for", Tuple.Create(" for=\"", 3596), Tuple.Create("\"", 3641)
             
             #line 56 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 3520), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
+, Tuple.Create(Tuple.Create("", 3602), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
             
             #line default
             #line hidden
-, 3520), false)
+, 3602), false)
 );
 
 WriteLiteral(" class=\"form-label\"");
@@ -416,27 +416,27 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("\r\n                </div>\r\n\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4119), Tuple.Create("\"", 4270)
-, Tuple.Create(Tuple.Create("", 4127), Tuple.Create("form-group", 4127), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 4201), Tuple.Create("\"", 4352)
+, Tuple.Create(Tuple.Create("", 4209), Tuple.Create("form-group", 4209), true)
             
             #line 63 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4137), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel))
+, Tuple.Create(Tuple.Create(" ", 4219), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel))
             
             #line default
             #line hidden
-, 4138), false)
+, 4220), false)
 );
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 4296), Tuple.Create("\"", 4365)
+WriteAttribute("name", Tuple.Create(" name=\"", 4378), Tuple.Create("\"", 4447)
             
             #line 64 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 4303), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 4385), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()
             
             #line default
             #line hidden
-, 4303), false)
+, 4385), false)
 );
 
 WriteLiteral("></a>\r\n                    <label");
@@ -560,63 +560,63 @@ WriteLiteral(" class=\"toggle-content blocklabel-content\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6564), Tuple.Create("\"", 6706)
-, Tuple.Create(Tuple.Create("", 6572), Tuple.Create("form-group", 6572), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6646), Tuple.Create("\"", 6788)
+, Tuple.Create(Tuple.Create("", 6654), Tuple.Create("form-group", 6654), true)
             
             #line 92 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 6582), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId))
+, Tuple.Create(Tuple.Create(" ", 6664), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId))
             
             #line default
             #line hidden
-, 6583), false)
+, 6665), false)
 );
 
 WriteLiteral(">\r\n                    <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 6732), Tuple.Create("\"", 6792)
+WriteAttribute("name", Tuple.Create(" name=\"", 6814), Tuple.Create("\"", 6874)
             
             #line 93 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6739), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId).ToString().ToLower()
+, Tuple.Create(Tuple.Create("", 6821), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId).ToString().ToLower()
             
             #line default
             #line hidden
-, 6739), false)
+, 6821), false)
 );
 
 WriteLiteral("></a>\r\n                    <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 6826), Tuple.Create("\"", 6864)
+WriteAttribute("for", Tuple.Create(" for=\"", 6908), Tuple.Create("\"", 6946)
             
             #line 94 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6832), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+, Tuple.Create(Tuple.Create("", 6914), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 6832), false)
+, 6914), false)
 );
 
 WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Apprenticeship standard</label>\r\n                    <select");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 6945), Tuple.Create("\"", 6984)
+WriteAttribute("name", Tuple.Create(" name=\"", 7027), Tuple.Create("\"", 7066)
             
             #line 95 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6952), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+, Tuple.Create(Tuple.Create("", 7034), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 6952), false)
+, 7034), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 6985), Tuple.Create("\"", 7022)
+WriteAttribute("id", Tuple.Create(" id=\"", 7067), Tuple.Create("\"", 7104)
             
             #line 95 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 6990), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+, Tuple.Create(Tuple.Create("", 7072), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 6990), false)
+, 7072), false)
 );
 
 WriteLiteral(" class=\"para-btm-margin chosen-select\"");
@@ -645,14 +645,14 @@ WriteLiteral(">Choose from the list of standards</option>\r\n");
             #line hidden
 WriteLiteral("                            <optgroup");
 
-WriteAttribute("label", Tuple.Create(" label=\"", 7333), Tuple.Create("\"", 7359)
+WriteAttribute("label", Tuple.Create(" label=\"", 7415), Tuple.Create("\"", 7441)
             
             #line 99 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 7341), Tuple.Create<System.Object, System.Int32>(standardGroup.Key
+, Tuple.Create(Tuple.Create("", 7423), Tuple.Create<System.Object, System.Int32>(standardGroup.Key
             
             #line default
             #line hidden
-, 7341), false)
+, 7423), false)
 );
 
 WriteLiteral(">\r\n");
@@ -673,14 +673,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                                    <option");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 7515), Tuple.Create("\"", 7535)
+WriteAttribute("value", Tuple.Create(" value=\"", 7597), Tuple.Create("\"", 7617)
             
             #line 102 "..\..\Views\Vacancy\BasicDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 7523), Tuple.Create<System.Object, System.Int32>(standard.Id
+, Tuple.Create(Tuple.Create("", 7605), Tuple.Create<System.Object, System.Int32>(standard.Id
             
             #line default
             #line hidden
-, 7523), false)
+, 7605), false)
 );
 
 WriteLiteral(" ");

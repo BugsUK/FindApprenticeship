@@ -380,8 +380,9 @@
         private static bool SwitchingFromOnlineToOfflineVacancy(NewVacancyViewModel newVacancyViewModel, VacancyViewModel existingVacancy)
         {
             return existingVacancy != null 
-                && existingVacancy.NewVacancyViewModel.OfflineVacancy == false 
-                && newVacancyViewModel.OfflineVacancy
+                && existingVacancy.NewVacancyViewModel.OfflineVacancy == false
+                && newVacancyViewModel.OfflineVacancy.HasValue
+                && newVacancyViewModel.OfflineVacancy.Value
                 && ( !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(existingVacancy.VacancyQuestionsViewModel.SecondQuestion));
         }
 
@@ -494,7 +495,7 @@
             var completeViewModel = GetVacancyViewModel(viewModel.VacancyReferenceNumber);
             return
                 GetMediatorResponse(
-                    completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy
+                    completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy.Value
                         ? VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk
                         : VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk, updatedViewModel);
         }
