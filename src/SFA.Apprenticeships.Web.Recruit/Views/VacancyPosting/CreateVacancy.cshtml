@@ -41,9 +41,9 @@
     @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
     @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ShortDescriptionComment))
 
-    var isSomeThingSelected = Model.TrainingType != TrainingType.Unknown;
-    var isFramework = isSomeThingSelected && Model.TrainingType == TrainingType.Frameworks;
-    var isStandard = isSomeThingSelected && Model.TrainingType == TrainingType.Standards;
+    var isAnyTrainingTypeSelected = Model.TrainingType != TrainingType.Unknown;
+    var isFramework = isAnyTrainingTypeSelected && Model.TrainingType == TrainingType.Frameworks;
+    var isStandard = isAnyTrainingTypeSelected && Model.TrainingType == TrainingType.Standards;
     var frameworkClass = isFramework ? "" : "hide-nojs";
     var standardClass = isStandard ? "" : "hide-nojs";
 

@@ -7,6 +7,7 @@
     using Mediators.Vacancy;
     using Common.Mediators;
     using Common.Validators.Extensions;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
     using Raa.Common.ViewModels.Vacancy;
 
@@ -73,6 +74,7 @@
             }
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
         [HttpPost]
         public ActionResult BasicDetails(NewVacancyViewModel viewModel)
         {
@@ -96,6 +98,36 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [HttpPost]
+        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
+
+            viewModel.TrainingType = TrainingType.Frameworks;
+            viewModel.Standards = response.ViewModel.Standards;
+            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+            ModelState.Clear();
+
+            return View("BasicDetails", viewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [HttpPost]
+        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
+
+            viewModel.TrainingType = TrainingType.Standards;
+            viewModel.Standards = response.ViewModel.Standards;
+            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+            ModelState.Clear();
+
+            return View("BasicDetails", viewModel);
         }
 
         [HttpGet]

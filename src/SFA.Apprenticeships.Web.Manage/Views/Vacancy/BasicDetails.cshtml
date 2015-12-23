@@ -13,6 +13,11 @@
 
     var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
+
+    var isFramework = Model.TrainingType == TrainingType.Frameworks;
+    var isStandard = Model.TrainingType == TrainingType.Standards;
+    var frameworkClass = isFramework ? "" : "hide-nojs";
+    var standardClass = isStandard ? "" : "hide-nojs";
 }
 
 <h1 class="heading-xlarge">
@@ -50,7 +55,30 @@
                 @Html.ValidationMessageFor(m => m.TrainingType)
             </div>
 
-            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content">
+            <noscript>
+                <div class="form-group">
+                    <h3 class="bold-small">Apprenticeship type</h3>
+                    @if (isFramework)
+                    {
+                        <label class="unselected-apprenticeship-type">Framework</label>
+                    }
+                    else
+                    {
+                        <button id="selectFramework" type="submit" class="button-link" name="BasicDetails" value="SelectFramework">Framework</button>
+                    }
+
+                    @if (isStandard)
+                    {
+                        <label class="unselected-apprenticeship-type">Standard</label>
+                    }
+                    else
+                    {
+                        <button id="selectStandard" type="submit" class="button-link" name="BasicDetails" value="SelectStandard">Standard</button>
+                    }
+                </div>
+            </noscript>
+
+            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
                     <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
@@ -88,7 +116,7 @@
                 </div>
             </div>
 
-            <div id="training-type-standards-panel" class="toggle-content blocklabel-content">
+            <div id="training-type-standards-panel" class="toggle-content blocklabel-content @standardClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                     <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
@@ -112,7 +140,7 @@
                     @Html.ValidationMessageFor(m => m.StandardIdComment)
                 </div>
 
-                <div class="form-group">
+                <div class="form-group hide-nojs">
                     <label class="form-label">Apprenticeship level</label>
                     <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
