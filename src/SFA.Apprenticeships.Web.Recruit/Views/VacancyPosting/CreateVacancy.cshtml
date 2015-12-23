@@ -132,17 +132,16 @@
             <div class="form-group inline clearfix blocklabel-single hide-nojs">
                 <h3 class="heading-small">Manage application method</h3>
                 <p>
-                    Will this vacancy be managed through the find an apprentice
-                    site?
+                    How will candidates apply for this vacancy?
                 </p>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel" @isApplicationThroughRAAYes>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, false, new { id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label" }) Yes
+                    @Html.RadioButtonFor(model => model.OfflineVacancy, false, new { id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label" }) Candidates will apply on this website
                 </label>
 
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) No
+                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) Candidates will apply on an external website
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
