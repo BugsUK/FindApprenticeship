@@ -9,6 +9,8 @@
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
+    var detailsOpen = (!string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected)) ? "open" : "";
+
 }
 <div class="grid-wrapper">
     <div class="hgroup">
@@ -19,9 +21,29 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    @if ((Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0))
+    {
+        <div class="no-employers-found">
+            No employers matched your search:
+            <ul>
+                @if (!string.IsNullOrWhiteSpace(ernSearchSelected))
+                {
+                    <li>check the ERN is correct</li>
+                    <li>try searching by employer name or location</li>
+                }
+                @if (!string.IsNullOrWhiteSpace(nameAndLocationSearchSelected))
+                {
+                    <li>check the name or location are correct</li>
+                    <li>try searching by ERN</li>
+                }
+            </ul>
+            Alternatively, you might need to create a <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid})">link to the employer</a>
+        </div>
+    }
+    
     <section class="clearfix" id="providerSiteResults">
-        <h2 class="heading-small">Your linked employers</h2>
-        <details>
+        <h2 class="heading-small">Search your employers</h2>
+        <details @detailsOpen>
             <summary>Search your employers</summary>
             <div class="detail-content">
                 <div class="blocklabel-single-container">
@@ -116,8 +138,6 @@
                 </table>
             </div>
         }
-
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid})">Link to a new employer</a>
     </section>
 
     <div class="page-navigation">
