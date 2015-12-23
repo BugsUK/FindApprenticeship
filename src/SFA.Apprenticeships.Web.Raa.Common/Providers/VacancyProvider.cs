@@ -887,10 +887,12 @@
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+                vacancy.LocationAddressesComment = null;
             }
             else
             {
                 vacancy.NumberOfPositions = null;
+                vacancy.NumberOfPositionsComment = null;
             }
             
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
