@@ -599,11 +599,6 @@
 
             ModelState.Clear();
 
-            if (response.Message != null)
-            {
-                SetUserMessage(response.Message.Text, response.Message.Level);
-            }
-
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.SelectNewEmployer.FailedValidation:

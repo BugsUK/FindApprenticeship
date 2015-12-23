@@ -6340,6 +6340,9 @@ h2 a i.raa-icon-comment {
 .no-employers-found {
   margin-bottom: 20px; }
 
+.no-employers-optional-action {
+  margin-top: 20px; }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

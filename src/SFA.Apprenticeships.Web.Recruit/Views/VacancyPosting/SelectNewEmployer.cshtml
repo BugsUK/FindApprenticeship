@@ -22,7 +22,28 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    @if ((Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0))
+    {
+        <div class="no-employers-found">
+            <p>No employers matched your search:</p>
+            <ul>
+                @if (!string.IsNullOrWhiteSpace(ernSearchSelected))
+                {
+                    <li>check the ERN is correct</li>
+                    <li>try searching by employer name or location</li>
+                }
+                @if (!string.IsNullOrWhiteSpace(nameAndLocationSearchSelected))
+                {
+                    <li>check the name or location are correct</li>
+                    <li>try searching by ERN</li>
+                }
+            </ul>
+            <p class="no-employers-optional-action">If you can't find the employer you wish to link to, login to EDS to request an ERN</p>
+        </div>
+    }
+
     <div class="blocklabel-single-container">
+        <h2 class="heading-small">Search your employers</h2>
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
             <label data-target="name-location-search-panel" for="name-location-search" class="block-label @nameAndLocationSearchSelected">
@@ -36,7 +57,7 @@
             </label>
         </div>
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form"}))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
@@ -52,7 +73,7 @@
             </div>
         }
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
