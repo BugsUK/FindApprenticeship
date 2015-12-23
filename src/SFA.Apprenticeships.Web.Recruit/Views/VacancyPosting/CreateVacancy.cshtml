@@ -41,6 +41,12 @@
     @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
     @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ShortDescriptionComment))
 
+    var isSomeThingSelected = Model.TrainingType != TrainingType.Unknown;
+    var isFramework = isSomeThingSelected && Model.TrainingType == TrainingType.Frameworks;
+    var isStandard = isSomeThingSelected && Model.TrainingType == TrainingType.Standards;
+    var frameworkClass = isFramework ? "" : "hide-nojs";
+    var standardClass = isStandard ? "" : "hide-nojs";
+
     <div class="form-group">
         <div class="blocklabel-single-container">
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
@@ -59,7 +65,30 @@
                 @Html.ValidationMessageFor(m => m.TrainingType)
             </div>
 
-            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content">
+            <noscript>
+                <div class="form-group">
+                    <h3 class="bold-small">Apprenticeship type</h3>
+                    @if (isFramework)
+                    {
+                        <label class="unselected-apprenticeship-type">Framework</label>
+                    }
+                    else
+                    {
+                        <button id="selectFramework" type="submit" class="button-link" name="CreateVacancy" value="SelectFramework">Framework</button>
+                    }
+
+                    @if (isStandard)
+                    {
+                        <label class="unselected-apprenticeship-type">Standard</label>
+                    }
+                    else
+                    {
+                        <button id="selectStandard" type="submit" class="button-link" name="CreateVacancy" value="SelectStandard">Standard</button>
+                    }
+                </div>
+            </noscript>
+
+            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
                     <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
@@ -92,7 +121,7 @@
                 </div>
             </div>
 
-            <div id="training-type-standards-panel" class="toggle-content blocklabel-content">
+            <div id="training-type-standards-panel" class="toggle-content blocklabel-content @standardClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
                     <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
                     <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
@@ -119,7 +148,7 @@
                     var style = Model.StandardId.HasValue ? "" : "display: none";
                 }
 
-                <div class="form-group" id="apprenticeship-level-container" style="@style">
+                <div class="form-group hide-nojs" id="apprenticeship-level-container" style="@style">
                     <label class="form-label">Apprenticeship level</label>
                     <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
                 </div>
@@ -129,7 +158,7 @@
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group inline clearfix blocklabel-single hide-nojs">
+            <div class="form-group inline clearfix blocklabel-single">
                 <h3 class="heading-small">Manage application method</h3>
                 <p>
                     How will candidates apply for this vacancy?

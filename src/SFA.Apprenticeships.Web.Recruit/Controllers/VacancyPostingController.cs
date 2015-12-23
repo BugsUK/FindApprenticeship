@@ -138,11 +138,12 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-		
+
+ 
         #endregion
-		
+
         #region Basic Details
-        
+
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {
@@ -234,6 +235,38 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), viewModel.ProviderSiteEmployerLink.ProviderSiteErn, 
+                viewModel.ProviderSiteEmployerLink.Employer.Ern, viewModel.VacancyGuid, viewModel.NumberOfPositions);
+
+            viewModel.TrainingType = TrainingType.Frameworks;
+            viewModel.Standards = response.ViewModel.Standards;
+            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", viewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), viewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                viewModel.ProviderSiteEmployerLink.Employer.Ern, viewModel.VacancyGuid, viewModel.NumberOfPositions);
+
+            viewModel.TrainingType = TrainingType.Standards;
+            viewModel.Standards = response.ViewModel.Standards;
+            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", viewModel);
         }
 
         #endregion

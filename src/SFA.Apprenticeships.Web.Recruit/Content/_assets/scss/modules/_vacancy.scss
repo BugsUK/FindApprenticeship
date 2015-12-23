@@ -212,3 +212,15 @@ table#vacancies-table {
 .add-location-link{
     margin-top: 8px;
 }
+
+.unselected-apprenticeship-type {
+  @include core-19;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 $gutter-half $gutter-half 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+}
