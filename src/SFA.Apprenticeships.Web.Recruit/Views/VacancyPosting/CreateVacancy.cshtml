@@ -158,14 +158,14 @@
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group inline clearfix blocklabel-single">
+            <div class="form-group inline clearfix blocklabel-single form-group-compound">
                 <h3 class="heading-small">Manage application method</h3>
                 <p>
                     How will candidates apply for this vacancy?
                 </p>
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel" @isApplicationThroughRAAYes>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, false, new { id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label" }) Candidates will apply on this website
+                    @Html.RadioButtonFor(model => model.OfflineVacancy, false, new {id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label"}) Candidates will apply on this website
                 </label>
 
                 @* ReSharper disable once Html.IdNotResolved *@
@@ -174,6 +174,7 @@
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
+            <div class="hide-js">Only answer if the vacancy applications will be managed through an external website</div>
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
