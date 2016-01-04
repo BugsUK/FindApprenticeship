@@ -41,6 +41,7 @@
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
         public DateTime? DateSubmitted { get; set; }
+        public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }

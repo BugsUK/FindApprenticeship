@@ -454,6 +454,10 @@
 
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
             vacancy.DateSubmitted = _dateTimeService.UtcNow();
+            if (!vacancy.DateFirstSubmitted.HasValue)
+            {
+                vacancy.DateFirstSubmitted = vacancy.DateSubmitted;
+            }
             vacancy.SubmissionCount++;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);

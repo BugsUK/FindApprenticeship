@@ -77,12 +77,12 @@
                                         <span>@vacancy.ProviderName</span>
                                     </td>
                                     <td>
-                                        <span>@vacancy.DateSubmitted.ToFriendlyClosingToday()</span>
+                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
                                     </td>
                                     <td>
                                         <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
                                     </td>
-                                    <td>
+                                    <td class="ta-center">
                                         <span>@vacancy.SubmissionCount</span>
                                     </td>
                                     <td>

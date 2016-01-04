@@ -27,6 +27,12 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 1 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+    using SFA.Apprenticeships.Infrastructure.Presentation;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Date.cshtml")]
     public partial class _Views_Shared_DisplayTemplates_Date_cshtml_ : System.Web.Mvc.WebViewPage<DateTime>
@@ -37,23 +43,14 @@ namespace ASP
         public override void Execute()
         {
             
-            #line 2 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-  
-    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-    var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);
+            #line 3 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+Write(Model.ToGmtDate());
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
+WriteLiteral(";");
 
-            
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-Write(dataTimeByZoneId.ToString("dd MMM yyyy"));
-
-            
-            #line default
-            #line hidden
         }
     }
 }

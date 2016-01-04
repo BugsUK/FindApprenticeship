@@ -69,5 +69,18 @@
                     return utcDateTime.ToString("dd MMM yyyy");
             }
         }
+
+        public static string ToGmtDate(this DateTime? dateTime)
+        {
+            return dateTime.HasValue ? dateTime.Value.ToGmtDate() : "";
+        }
+
+        public static string ToGmtDate(this DateTime dateTime)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var dataTimeByZoneId = TimeZoneInfo.ConvertTime(dateTime.ToUniversalTime(), timeZoneInfo);
+
+            return dataTimeByZoneId.ToString("dd MMM yyyy");
+        }
     }
 }

@@ -18,7 +18,7 @@
                 ProviderName = provider.Name,
                 Email = providerUser.Email,
                 PhoneNumber = providerUser.PhoneNumber,
-                DateFirstSubmitted = vacancy.DateSubmitted,
+                DateFirstSubmitted = vacancy.DateFirstSubmitted ?? vacancy.DateSubmitted,
                 DateLastUpdated = vacancy.DateUpdated
             };
         }
