@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
     using System.Collections.Generic;
+    using Raa.Common.ViewModels.Vacancy;
 
     public class HomeViewModel
     {
