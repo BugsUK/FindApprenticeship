@@ -1,6 +1,3 @@
-﻿@model DateTime
-@{
-    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-    var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);
-}
-@dataTimeByZoneId.ToString("dd MMM yyyy")
+﻿@using SFA.Apprenticeships.Infrastructure.Presentation
+@model DateTime
+@Model.ToGmtDate();

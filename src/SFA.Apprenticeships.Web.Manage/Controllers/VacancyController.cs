@@ -7,6 +7,7 @@
     using Mediators.Vacancy;
     using Common.Mediators;
     using Common.Validators.Extensions;
+    using Domain.Entities;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
     using Raa.Common.ViewModels.Vacancy;

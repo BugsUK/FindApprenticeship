@@ -20,16 +20,27 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<Employer, EmployerViewModel>();
-            Mapper.CreateMap<ProviderSiteEmployerLink, ProviderSiteEmployerLinkViewModel>();
+            Mapper.CreateMap<ProviderSiteEmployerLink, ProviderSiteEmployerLinkViewModel>()
+                .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
+                .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore());
             Mapper.CreateMap<VacancyLocationAddress, VacancyLocationAddressViewModel>();
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
 
-            Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>();
+            Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>()
+                .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
+                .ForMember(dest => dest.Standards, opt => opt.Ignore())
+                .ForMember(dest => dest.Locations, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>()
-                .ForMember(dest => dest.Duration, opt => opt.ResolveUsing<NullableIntToNullableDecimalResolver>().FromMember(src => src.Duration));
+                .ForMember(dest => dest.Duration, opt => opt.ResolveUsing<NullableIntToNullableDecimalResolver>().FromMember(src => src.Duration))
+                .ForMember(dest => dest.WageUnits, opt => opt.Ignore())
+                .ForMember(dest => dest.DurationTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.WarningsHash, opt => opt.Ignore())
+                .ForMember(dest => dest.AcceptWarnings, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>();
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyQuestionsViewModel>();

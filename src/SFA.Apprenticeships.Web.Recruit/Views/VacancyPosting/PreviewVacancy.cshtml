@@ -9,10 +9,6 @@
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div>
-    <h1 class="heading-xlarge">
-        Vacancy preview
-    </h1>
-
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
     @if (Model.Status == ProviderVacancyStatuses.Live)
