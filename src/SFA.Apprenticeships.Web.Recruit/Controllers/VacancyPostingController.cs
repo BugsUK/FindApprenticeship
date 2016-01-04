@@ -68,11 +68,6 @@
 
             ModelState.Clear();
 
-            if (response.Message != null)
-            {
-                SetUserMessage(response.Message.Text, response.Message.Level);
-            }
-
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation:
@@ -80,7 +75,15 @@
                     return View("SelectEmployer", response.ViewModel);
 
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                    return View("SelectEmployer", response.ViewModel);
+
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
+                    if (string.IsNullOrWhiteSpace(viewModel.Location) && string.IsNullOrWhiteSpace(viewModel.Ern) &&
+                        string.IsNullOrWhiteSpace(viewModel.Name))
+                    {
+                        return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer,
+                            new {providerSiteErn = viewModel.ProviderSiteErn, vacancyGuid = viewModel.VacancyGuid});
+                    }
                     return View("SelectEmployer", response.ViewModel);
 
                 default:
@@ -598,11 +601,6 @@
             var response = _vacancyPostingMediator.SelectNewEmployer(viewModel);
 
             ModelState.Clear();
-
-            if (response.Message != null)
-            {
-                SetUserMessage(response.Message.Text, response.Message.Level);
-            }
 
             switch (response.Code)
             {
