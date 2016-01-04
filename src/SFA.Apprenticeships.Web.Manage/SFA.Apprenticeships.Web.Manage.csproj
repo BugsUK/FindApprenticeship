@@ -364,6 +364,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Vacancy\_comment.generated.cs">
+      <DependentUpon>_comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="403.html" />
@@ -485,6 +490,10 @@
     <Content Include="Views\Vacancy\_EditLink.cshtml" />
     <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
     <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
+    <Content Include="Views\Vacancy\_comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_comment.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>

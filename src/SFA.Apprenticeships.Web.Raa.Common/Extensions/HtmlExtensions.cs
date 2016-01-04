@@ -3,6 +3,7 @@
     using System;
     using System.Linq.Expressions;
     using System.Web.Mvc;
+    using System.Web.Mvc.Html;
     using ViewModels.Vacancy;
     using Web.Common.Validators.Extensions;
 
@@ -30,7 +31,27 @@
 
             viewCommentUrl = $"{viewCommentUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, comment, viewCommentUrl);
+            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, comment, viewCommentUrl, string.Empty);
+
+            return commentViewModel;
+        }
+
+        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        {
+            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            var commentText = html.ValueFor(propertyCommentExpression).ToString();
+
+            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, commentText, string.Empty, commentLabelText);
+
+            return commentViewModel;
+        }
+
+        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        {
+            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            var commentText = html.ValueFor(propertyCommentExpression).ToString();
+
+            var commentViewModel = new CommentViewModel(commentText, string.Empty, commentLabelText);
 
             return commentViewModel;
         }
@@ -44,6 +65,13 @@
             var editLinkViewModel = new EditLinkViewModel(vacancyViewModel.Status, editUrl, comment);
 
             return editLinkViewModel;
+        }
+
+        public static object GetLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html,
+            Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        {
+            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            return new {Label = commentLabelText};
         }
     }
 }

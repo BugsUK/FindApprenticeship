@@ -31,11 +31,17 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    
+    #line 2 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.Extensions;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 2 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+    #line 3 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -51,7 +57,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 4 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
 
@@ -65,7 +71,7 @@ WriteLiteral(" class=\"heading-xlarge\"");
 WriteLiteral(">\r\n    Questions for candidates\r\n</h1>\r\n\r\n");
 
             
-            #line 11 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 12 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
  using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyQuestions, FormMethod.Post))
 {
     
@@ -73,28 +79,28 @@ WriteLiteral(">\r\n    Questions for candidates\r\n</h1>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 14 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 14 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 15 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 15 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
                                                            
 
     
@@ -102,14 +108,14 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 17 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 16 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 17 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
                                                   
 
 
@@ -125,7 +131,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 20 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 21 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
        Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -136,19 +142,8 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 21 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-       Write(Html.DisplayFor(m => m.FirstQuestionComment, "Comment"));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
             #line 22 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-       Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+       Write(Html.Partial("_comment", Html.GetCommentViewModel(m => m.FirstQuestionComment)));
 
             
             #line default
@@ -159,7 +154,18 @@ WriteLiteral("            ");
 
             
             #line 23 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
-       Write(Html.DisplayFor(m => m.SecondQuestionComment, "Comment"));
+       Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("            ");
+
+            
+            #line 24 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+       Write(Html.Partial("_comment", Html.GetCommentViewModel(m => m.SecondQuestionComment)));
 
             
             #line default
@@ -195,7 +201,7 @@ WriteLiteral(" value=\"VacancyQuestionsAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n    </div>\r\n");
 
             
-            #line 30 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+            #line 31 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 }
             
             #line default

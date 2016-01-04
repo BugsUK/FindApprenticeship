@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
+namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
 {
     using System;
     using System.Collections.Generic;
@@ -30,20 +30,22 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
-    using SFA.Apprenticeships.Web.Raa.Common;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
+    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
+    using SFA.Apprenticeships.Web.Recruit;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Comment.cshtml")]
-    public partial class Comment_ : System.Web.Mvc.WebViewPage<string>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/_comment.cshtml")]
+    public partial class comment : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.CommentViewModel>
     {
-        public Comment_()
+        public comment()
         {
         }
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
- if (!string.IsNullOrEmpty(Model))
+            #line 3 "..\..\Views\VacancyPosting\_comment.cshtml"
+ if (Model.HasComment)
 {
 
             
@@ -53,7 +55,16 @@ WriteLiteral("    <details");
 
 WriteLiteral(" class=\"open\"");
 
-WriteLiteral(" open>\r\n        <summary>Comment</summary>\r\n        <div");
+WriteLiteral(" open>\r\n        <summary>");
+
+            
+            #line 6 "..\..\Views\VacancyPosting\_comment.cshtml"
+            Write(Model.CommentLabel);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</summary>\r\n        <div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
@@ -64,8 +75,8 @@ WriteLiteral(" class=\"blocklabel-single-container preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
-                                                                    Write(Model);
+            #line 8 "..\..\Views\VacancyPosting\_comment.cshtml"
+                                                                    Write(Model.Comment);
 
             
             #line default
@@ -73,7 +84,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n    </details>\r\n");
 
             
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
+            #line 11 "..\..\Views\VacancyPosting\_comment.cshtml"
 }
             
             #line default
