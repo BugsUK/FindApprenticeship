@@ -291,6 +291,28 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
+        public MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel)
+        {
+            viewModel.TrainingType = TrainingType.Frameworks;
+            viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            viewModel.FrameworkCodeName = null;
+            viewModel.Standards = _vacancyPostingProvider.GetStandards();
+            viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel)
+        {
+            viewModel.TrainingType = TrainingType.Standards;
+            viewModel.StandardId = null;
+            viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            viewModel.Standards = _vacancyPostingProvider.GetStandards();
+            viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
+        }
+
         public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
