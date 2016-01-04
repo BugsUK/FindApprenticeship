@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Users;
 
@@ -9,6 +10,8 @@
     /// </summary>
     public interface IUserProfileService
     {
+        ProviderUser GetProviderUser(Guid id);
+
         ProviderUser GetProviderUser(string username);
 
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);

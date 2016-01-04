@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Common.Mediators;
     using Common.Providers;
     using Constants;
+    using Domain.Entities;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using ViewModels;

@@ -16,6 +16,7 @@
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Ploeh.AutoFixture;
+    using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
     public class CreateVacancyTests : TestBase
@@ -86,6 +87,8 @@
 
             MockVacancyPostingService.Setup(mock => mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingApprenticeshipVacancy);
+            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns<ApprenticeshipVacancy>(v => v);
             MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
@@ -147,7 +150,7 @@
                 mock.GetVacancy(It.IsAny<long>()), Times.Never);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Once);
             MockVacancyPostingService.Verify(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -177,7 +180,7 @@
                 ApprenticeshipLevel = ApprenticeshipLevel.Higher
             });
 
-            MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.OfflineVacancy == offlineVacancy 
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.OfflineVacancy == offlineVacancy 
             && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
         }
 
@@ -202,7 +205,7 @@
                 }
             });
 
-            MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.EntityId == vacancyGuid)));
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.EntityId == vacancyGuid)));
         }
 
         [Test]

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -22,5 +22,7 @@
         public string QAUserName { get; set; }
 
         public bool CanBeReservedForQaByCurrentUser { get; set; }
+
+        public int SubmissionCount { get; set; }
     }
 }
