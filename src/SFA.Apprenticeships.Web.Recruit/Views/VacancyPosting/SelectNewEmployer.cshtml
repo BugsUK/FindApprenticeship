@@ -11,6 +11,8 @@
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
     var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
+    var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
+    var searchPerformed = !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected);
 }
 
 <div class="grid-wrapper">
@@ -22,7 +24,32 @@
 
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    @if (searchPerformed && noResults)
+    {
+        <div class="no-employers-found">
+            <p>No employers matched your search:</p>
+            <ul>
+                @if (!string.IsNullOrWhiteSpace(ernSearchSelected))
+                {
+                    <li>check the ERN is correct</li>
+                    <li>try searching by employer name or location</li>
+                }
+                @if (!string.IsNullOrWhiteSpace(nameAndLocationSearchSelected))
+                {
+                    <li>check the employer name or location are correct</li>
+                    <li>try searching by ERN</li>
+                }
+            </ul>
+            <p class="no-employers-optional-action">If you can't find the employer you wish to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN</p>
+        </div>
+    }
+
     <div class="blocklabel-single-container">
+        <h2 class="heading-small">Search for an employer</h2>
+        <div class="panel-indent blocklabel-content grid grid-2-3">
+            If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
+        </div>
+
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
             <label data-target="name-location-search-panel" for="name-location-search" class="block-label @nameAndLocationSearchSelected">
@@ -36,7 +63,7 @@
             </label>
         </div>
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form"}))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
@@ -52,7 +79,7 @@
             </div>
         }
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
         {
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
