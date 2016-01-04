@@ -52,6 +52,10 @@
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
+            validator.RuleFor(x => x.OfflineVacancy)
+                .NotNull()
+                .WithMessage(VacancyViewModelMessages.OfflineVacancy.RequiredErrorText);
+
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText)
@@ -123,7 +127,7 @@
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value == true);
         }
     }
 }

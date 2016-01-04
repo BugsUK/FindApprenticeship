@@ -44,7 +44,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -79,7 +80,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -114,7 +116,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -155,7 +158,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
@@ -196,7 +200,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),

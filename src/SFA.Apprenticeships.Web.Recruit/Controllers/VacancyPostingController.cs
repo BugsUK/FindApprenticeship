@@ -13,6 +13,7 @@
     using Constants;
     using Domain.Entities;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Mvc;
     using FluentValidation.Results;
     using Mediators.VacancyPosting;
@@ -141,11 +142,12 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-		
+
+ 
         #endregion
-		
+
         #region Basic Details
-        
+
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {
@@ -237,6 +239,28 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", response.ViewModel);
         }
 
         #endregion

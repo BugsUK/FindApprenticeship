@@ -41,7 +41,8 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -82,7 +83,8 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
@@ -123,7 +125,8 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),

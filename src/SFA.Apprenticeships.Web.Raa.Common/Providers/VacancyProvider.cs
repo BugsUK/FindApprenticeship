@@ -218,7 +218,7 @@
                 ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel),
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
-                OfflineVacancy = newVacancyViewModel.OfflineVacancy,
+                OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value, //At this point we will always have a value
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
@@ -313,7 +313,7 @@
             vacancy.FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel);
             vacancy.StandardId = newVacancyViewModel.StandardId;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel);
-            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
+            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
@@ -824,7 +824,7 @@
             vacancy.StandardId = viewModel.StandardId;
             vacancy.StandardIdComment = viewModel.StandardIdComment;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
-            vacancy.OfflineVacancy = viewModel.OfflineVacancy;
+            vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;

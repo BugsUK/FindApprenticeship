@@ -6337,6 +6337,25 @@ h2 a i.raa-icon-comment {
 .add-location-link {
   margin-top: 8px; }
 
+.unselected-apprenticeship-type {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 15px 15px 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased; }
+  @media (max-width: 640px) {
+    .unselected-apprenticeship-type {
+      font-size: 16px;
+      line-height: 1.25; } }
+
 .no-employers-found {
   margin-bottom: 20px; }
 
