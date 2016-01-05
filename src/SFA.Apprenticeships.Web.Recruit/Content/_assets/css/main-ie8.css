@@ -6340,6 +6340,10 @@ h2 a i.raa-icon-comment {
           table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
             font-size: 14px; } }
 
+@media screen and (max-width: 768px) {
+  table#rightLocationAddressesTable thead {
+    display: none; } }
+
 .location-search-results {
   padding: 0;
   vertical-align: middle; }

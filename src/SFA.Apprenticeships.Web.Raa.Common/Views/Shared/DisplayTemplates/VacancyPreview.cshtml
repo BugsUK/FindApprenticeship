@@ -17,6 +17,8 @@
 
 @{
     var editableItemClass = Model.Status == ProviderVacancyStatuses.Live ? "" : "editable-item";
+    var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
+    var editableApprenticeshipLevelClass = !editableApprenticeshipLevel ? "" : "editable-item";
 }
 
 <section>
@@ -137,13 +139,18 @@
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.PossibleStartDate, Model.SummaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment))
             </div>
 
-            <div class="@editableItemClass">
+            <div class="@editableApprenticeshipLevelClass">
                 <h3 class="bold-small">
                     Apprenticeship level
                     @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.NewVacancyViewModel.ApprenticeshipLevelComment, Model.BasicDetailsLink))
                 </h3>
-                <p id="vacancy-type" itemprop="employmentType">@Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.BasicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment))
+                <p id="vacancy-type" itemprop="employmentType">
+                    @Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel) Level Apprenticeship
+                </p>
+                @if (editableApprenticeshipLevel)
+                {
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.BasicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment))
+                }
             </div>
 
             <div>
@@ -376,10 +383,9 @@
                                         Addresses
                                         @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink))
                                     </h3>
-                                    <div class="grid grid-1-2" id="leftLocationAddressesTable">
+                                    <div class="grid grid-1-2">
                                         <div class="inner-block-padr">
-
-                                            <table class="locations-table">
+                                            <table class="locations-table" id="leftLocationAddressesTable">
                                                 <colgroup>
                                                     <col class="t50">
                                                     <col class="t35">
@@ -407,8 +413,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="grid grid-1-2" id="rightLocationAddressesTable">
-                                        <table class="locations-table">
+                                    <div class="grid grid-1-2">
+                                        <table class="locations-table" id="rightLocationAddressesTable">
                                             <colgroup>
                                                 <col class="t50">
                                                 <col class="t35">

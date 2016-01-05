@@ -217,6 +217,14 @@ table#vacancies-table {
     }
 }
 
+table#rightLocationAddressesTable{
+    @media screen and ( max-width: 768px ) {
+        thead{
+            display: none;
+        }
+    }
+}
+
 .location-search-results{
     padding: 0;
     vertical-align: middle;

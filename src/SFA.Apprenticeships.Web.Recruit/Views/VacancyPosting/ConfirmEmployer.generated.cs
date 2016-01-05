@@ -466,7 +466,7 @@ WriteLiteral("            ");
 
             
             #line 65 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, null));
+       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, new {@class = "button-link"}));
 
             
             #line default

@@ -92,22 +92,24 @@ WriteLiteral("\r\n");
             #line 18 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
   
     var editableItemClass = Model.Status == ProviderVacancyStatuses.Live ? "" : "editable-item";
+    var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
+    var editableApprenticeshipLevelClass = !editableApprenticeshipLevel ? "" : "editable-item";
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n\r\n<section>\r\n    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 794), Tuple.Create("\"", 832)
-, Tuple.Create(Tuple.Create("", 802), Tuple.Create("hgroup", 802), true)
-, Tuple.Create(Tuple.Create(" ", 808), Tuple.Create("text", 809), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 977), Tuple.Create("\"", 1015)
+, Tuple.Create(Tuple.Create("", 985), Tuple.Create("hgroup", 985), true)
+, Tuple.Create(Tuple.Create(" ", 991), Tuple.Create("text", 992), true)
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create(" ", 813), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 25 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create(" ", 996), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 814), false)
+, 997), false)
 );
 
 WriteLiteral(">\r\n        <h1");
@@ -123,7 +125,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 25 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 27 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Model.NewVacancyViewModel.Title);
 
             
@@ -134,7 +136,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 26 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 28 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
    Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink)));
 
             
@@ -151,7 +153,7 @@ WriteLiteral(" itemprop=\"hiringOrganization\"");
 WriteLiteral(">");
 
             
-            #line 28 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 30 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                      Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
 
             
@@ -162,7 +164,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("    ");
 
             
-            #line 29 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 31 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
 Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment)));
 
             
@@ -182,14 +184,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1618), Tuple.Create("\"", 1644)
+WriteAttribute("class", Tuple.Create(" class=\"", 1801), Tuple.Create("\"", 1827)
             
-            #line 34 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 1626), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 36 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 1809), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1626), false)
+, 1809), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -201,7 +203,7 @@ WriteLiteral(">\r\n                    Summary\r\n");
 WriteLiteral("                    ");
 
             
-            #line 37 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 39 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink)));
 
             
@@ -222,7 +224,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 40 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 42 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                        Write(Model.NewVacancyViewModel.ShortDescription);
 
             
@@ -233,7 +235,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 41 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 43 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyReferenceNumber, Model.ApplicationCount)));
 
             
@@ -244,7 +246,7 @@ WriteLiteral("\r\n                </div>\r\n");
 WriteLiteral("                ");
 
             
-            #line 43 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 45 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment)));
 
             
@@ -256,14 +258,14 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 2635), Tuple.Create("\"", 2661)
+WriteAttribute("class", Tuple.Create(" class=\"", 2818), Tuple.Create("\"", 2844)
             
-            #line 48 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 2643), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 50 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 2826), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 2643), false)
+, 2826), false)
 );
 
 WriteLiteral(">\r\n            <h3");
@@ -275,7 +277,7 @@ WriteLiteral(">\r\n                Closing date\r\n");
 WriteLiteral("                ");
 
             
-            #line 51 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 53 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment)));
 
             
@@ -288,7 +290,7 @@ WriteLiteral(" id=\"vacancy-closing-date\"");
 WriteLiteral(">");
 
             
-            #line 53 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 55 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                     Write(Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
@@ -299,7 +301,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("            ");
 
             
-            #line 54 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 56 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment)));
 
             
@@ -325,14 +327,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3582), Tuple.Create("\"", 3608)
+WriteAttribute("class", Tuple.Create(" class=\"", 3765), Tuple.Create("\"", 3791)
             
-            #line 63 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 3590), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 65 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 3773), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3590), false)
+, 3773), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -344,7 +346,7 @@ WriteLiteral(">\r\n                    Working week\r\n");
 WriteLiteral("                    ");
 
             
-            #line 66 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 68 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment)));
 
             
@@ -361,7 +363,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 68 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 70 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                          Write(Model.VacancySummaryViewModel.WorkingWeek);
 
             
@@ -370,7 +372,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n                <p>Total hours per week: ");
 
             
-            #line 69 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 71 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                     Write(Model.VacancySummaryViewModel.HoursPerWeek);
 
             
@@ -379,13 +381,13 @@ WriteLiteral("</p>\r\n                <p>Total hours per week: ");
 WriteLiteral("</p>\r\n");
 
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 72 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 70 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 72 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
                 {
 
@@ -396,7 +398,7 @@ WriteLiteral("                    <p>(the hours are based on the candidate being
 "");
 
             
-            #line 73 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 75 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -405,7 +407,7 @@ WriteLiteral("                    <p>(the hours are based on the candidate being
 WriteLiteral("                ");
 
             
-            #line 74 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 76 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment)));
 
             
@@ -413,14 +415,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4629), Tuple.Create("\"", 4655)
+WriteAttribute("class", Tuple.Create(" class=\"", 4812), Tuple.Create("\"", 4838)
             
-            #line 77 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 4637), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 79 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 4820), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4637), false)
+, 4820), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -430,13 +432,13 @@ WriteLiteral(" class=\"bold-small\"");
 WriteLiteral(">\r\n");
 
             
-            #line 79 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 81 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 79 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 81 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
                     {
 
@@ -448,7 +450,7 @@ WriteLiteral("                        <span>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 82 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 84 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Model.VacancySummaryViewModel.WageUnitDisplayText);
 
             
@@ -459,7 +461,7 @@ WriteLiteral("\r\n");
 WriteLiteral("                            ");
 
             
-            #line 83 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 85 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment)));
 
             
@@ -468,7 +470,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </span>\r\n");
 
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     }
                     else
                     {
@@ -481,7 +483,7 @@ WriteLiteral("                        <span>\r\n                            Wage
 WriteLiteral("                            ");
 
             
-            #line 90 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 92 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment)));
 
             
@@ -490,7 +492,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </span>\r\n");
 
             
-            #line 92 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 94 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     }
 
             
@@ -503,7 +505,7 @@ WriteLiteral(" id=\"vacancy-wage\"");
 WriteLiteral(">");
 
             
-            #line 94 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 96 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                 Write(Model.VacancySummaryViewModel.WageDisplayText);
 
             
@@ -514,7 +516,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                ");
 
             
-            #line 95 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 97 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WageType, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment)));
 
             
@@ -523,13 +525,13 @@ WriteLiteral("                ");
 WriteLiteral("\r\n            </div>\r\n\r\n");
 
             
-            #line 98 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 100 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 98 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 100 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
             {
 
@@ -545,7 +547,7 @@ WriteLiteral(">\r\n                        The current National Minimum Wage (NM
 "s is £");
 
             
-            #line 103 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 105 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                Write(Wages.ApprenticeMinimumWage);
 
             
@@ -559,7 +561,7 @@ WriteLiteral(@" per hour.<br />
 ");
 
             
-            #line 108 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 110 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -568,13 +570,13 @@ WriteLiteral(@" per hour.<br />
 WriteLiteral("\r\n");
 
             
-            #line 110 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 112 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 110 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 112 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
             {
 
@@ -589,7 +591,7 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n                        The current National Minimum Wage rates are £");
 
             
-            #line 115 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 117 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                 Write(Wages.Between18And20NationalMinimumWage);
 
             
@@ -598,7 +600,7 @@ WriteLiteral(">\r\n                        The current National Minimum Wage rat
 WriteLiteral(" for 18 to 20 year-olds and £");
 
             
-            #line 115 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 117 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                      Write(Wages.Over21NationalMinimumWage);
 
             
@@ -610,7 +612,7 @@ WriteLiteral(" for anyone aged 21 and over.<br />\r\n                        App
 "ils>\r\n");
 
             
-            #line 119 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 121 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -618,14 +620,14 @@ WriteLiteral(" for anyone aged 21 and over.<br />\r\n                        App
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7387), Tuple.Create("\"", 7413)
+WriteAttribute("class", Tuple.Create(" class=\"", 7570), Tuple.Create("\"", 7596)
             
-            #line 120 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 7395), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 122 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 7578), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 7395), false)
+, 7578), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -637,7 +639,7 @@ WriteLiteral(">\r\n                    Expected duration\r\n");
 WriteLiteral("                    ");
 
             
-            #line 123 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 125 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment)));
 
             
@@ -650,7 +652,7 @@ WriteLiteral(" id=\"vacancy-expected-duration\"");
 WriteLiteral(">");
 
             
-            #line 125 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 127 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                              Write(Model.VacancySummaryViewModel.DurationTypeDisplayText);
 
             
@@ -661,7 +663,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                ");
 
             
-            #line 126 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 128 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.Duration, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment)));
 
             
@@ -669,14 +671,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8115), Tuple.Create("\"", 8141)
+WriteAttribute("class", Tuple.Create(" class=\"", 8298), Tuple.Create("\"", 8324)
             
-            #line 129 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 8123), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 131 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 8306), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 8123), false)
+, 8306), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -688,7 +690,7 @@ WriteLiteral(">\r\n                    Possible start date\r\n");
 WriteLiteral("                    ");
 
             
-            #line 132 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 134 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment)));
 
             
@@ -703,7 +705,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("                    ");
 
             
-            #line 135 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 137 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.PossibleStartDate.Date));
 
             
@@ -714,7 +716,7 @@ WriteLiteral("\r\n                </p>\r\n");
 WriteLiteral("                ");
 
             
-            #line 137 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 139 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.PossibleStartDate, Model.SummaryLink, Model.VacancySummaryViewModel.PossibleStartDateComment)));
 
             
@@ -722,14 +724,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8935), Tuple.Create("\"", 8961)
+WriteAttribute("class", Tuple.Create(" class=\"", 9118), Tuple.Create("\"", 9159)
             
-            #line 140 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 8943), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 142 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 9126), Tuple.Create<System.Object, System.Int32>(editableApprenticeshipLevelClass
             
             #line default
             #line hidden
-, 8943), false)
+, 9126), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -741,7 +743,7 @@ WriteLiteral(">\r\n                    Apprenticeship level\r\n");
 WriteLiteral("                    ");
 
             
-            #line 143 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 145 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.NewVacancyViewModel.ApprenticeshipLevelComment, Model.BasicDetailsLink)));
 
             
@@ -753,27 +755,49 @@ WriteLiteral(" id=\"vacancy-type\"");
 
 WriteLiteral(" itemprop=\"employmentType\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
+
+WriteLiteral("                    ");
 
             
-            #line 145 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                          Write(Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" Level Apprenticeship</p>\r\n");
-
-WriteLiteral("                ");
-
-            
-            #line 146 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.BasicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment)));
+            #line 148 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+               Write(Html.DisplayFor(m => m.NewVacancyViewModel.ApprenticeshipLevel));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n\r\n            <div>\r\n                <h3");
+WriteLiteral(" Level Apprenticeship\r\n                </p>\r\n");
+
+            
+            #line 150 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+                
+            
+            #line default
+            #line hidden
+            
+            #line 150 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+                 if (editableApprenticeshipLevel)
+                {
+                    
+            
+            #line default
+            #line hidden
+            
+            #line 152 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+               Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ApprenticeshipLevel, Model.BasicDetailsLink, Model.NewVacancyViewModel.ApprenticeshipLevelComment)));
+
+            
+            #line default
+            #line hidden
+            
+            #line 152 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+                                                                                                                                                                                                                                
+                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            </div>\r\n\r\n            <div>\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
@@ -784,7 +808,7 @@ WriteLiteral(" id=\"vacancy-reference-id\"");
 WriteLiteral(">");
 
             
-            #line 151 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 158 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                         Write(Model.VacancyReferenceNumber.GetVacancyReference());
 
             
@@ -793,13 +817,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n            </div>\r\n\r\n");
 
             
-            #line 154 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 161 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 154 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 161 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (IsSingleLocation(Model))
             {
                 var positions = Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NewVacancyViewModel.NumberOfPositions : Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions;
@@ -823,7 +847,7 @@ WriteLiteral(" id=\"vacancy-reference-id\"");
 WriteLiteral(">");
 
             
-            #line 160 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 167 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                             Write(positions);
 
             
@@ -832,13 +856,13 @@ WriteLiteral(">");
 WriteLiteral(" available</p>\r\n\r\n");
 
             
-            #line 162 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 169 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 162 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 169 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         
@@ -846,14 +870,14 @@ WriteLiteral(" available</p>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 164 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 171 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment)));
 
             
             #line default
             #line hidden
             
-            #line 164 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 171 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                                                                                                             
                     }
                     else
@@ -863,14 +887,14 @@ WriteLiteral(" available</p>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 168 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 175 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.LocationsLink, Model.NewVacancyViewModel.NumberOfPositionsComment)));
 
             
             #line default
             #line hidden
             
-            #line 168 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 175 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                                                                                                                                        
                     }
 
@@ -880,7 +904,7 @@ WriteLiteral(" available</p>\r\n\r\n");
 WriteLiteral("                </div>\r\n");
 
             
-            #line 171 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 178 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -892,15 +916,15 @@ WriteLiteral(" class=\"grid grid-2-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11173), Tuple.Create("\"", 11204)
-, Tuple.Create(Tuple.Create("", 11181), Tuple.Create("text", 11181), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 11504), Tuple.Create("\"", 11535)
+, Tuple.Create(Tuple.Create("", 11512), Tuple.Create("text", 11512), true)
             
-            #line 175 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create(" ", 11185), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 182 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create(" ", 11516), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 11186), false)
+, 11517), false)
 );
 
 WriteLiteral(" itemprop=\"responsibilities\"");
@@ -914,7 +938,7 @@ WriteLiteral(">\r\n                Vacancy description\r\n");
 WriteLiteral("                ");
 
             
-            #line 178 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 185 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink)));
 
             
@@ -929,7 +953,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 180 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 187 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                     Write(Html.Raw(Model.VacancySummaryViewModel.LongDescription));
 
             
@@ -940,7 +964,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("            ");
 
             
-            #line 181 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 188 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment)));
 
             
@@ -971,13 +995,13 @@ WriteLiteral(" class=\"inner-block-padr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 190 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 197 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 190 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 197 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredSkills))
                 {
 
@@ -986,14 +1010,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12311), Tuple.Create("\"", 12337)
+WriteAttribute("class", Tuple.Create(" class=\"", 12642), Tuple.Create("\"", 12668)
             
-            #line 192 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 12319), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 199 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 12650), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 12319), false)
+, 12650), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1009,7 +1033,7 @@ WriteLiteral(">Desired skills\r\n");
 WriteLiteral("                                ");
 
             
-            #line 195 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 202 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment, Model.RequirementsProspectsLink)));
 
             
@@ -1026,7 +1050,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 197 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 204 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                      Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredSkills));
 
             
@@ -1037,7 +1061,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 198 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 205 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredSkills, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredSkillsComment)));
 
             
@@ -1046,7 +1070,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line 201 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 208 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -1055,7 +1079,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 WriteLiteral("                ");
 
             
-            #line 202 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 209 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.PersonalQualities))
                 {
 
@@ -1064,14 +1088,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 13441), Tuple.Create("\"", 13467)
+WriteAttribute("class", Tuple.Create(" class=\"", 13772), Tuple.Create("\"", 13798)
             
-            #line 204 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 13449), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 211 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 13780), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 13449), false)
+, 13780), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1087,7 +1111,7 @@ WriteLiteral(">Personal qualities\r\n");
 WriteLiteral("                                ");
 
             
-            #line 207 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 214 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment, Model.RequirementsProspectsLink)));
 
             
@@ -1104,7 +1128,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 209 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 216 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                            Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.PersonalQualities));
 
             
@@ -1115,7 +1139,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 210 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 217 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.PersonalQualities, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.PersonalQualitiesComment)));
 
             
@@ -1124,7 +1148,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line 213 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 220 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -1133,7 +1157,7 @@ WriteLiteral("\r\n                        </div>\r\n                    </div>\r
 WriteLiteral("                ");
 
             
-            #line 214 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 221 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications))
                 {
 
@@ -1142,14 +1166,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 14605), Tuple.Create("\"", 14631)
+WriteAttribute("class", Tuple.Create(" class=\"", 14936), Tuple.Create("\"", 14962)
             
-            #line 216 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 14613), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 223 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 14944), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 14613), false)
+, 14944), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1165,7 +1189,7 @@ WriteLiteral(">Qualifications required\r\n");
 WriteLiteral("                                ");
 
             
-            #line 219 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 226 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment, Model.RequirementsProspectsLink)));
 
             
@@ -1182,7 +1206,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 221 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 228 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                      Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.DesiredQualifications));
 
             
@@ -1193,7 +1217,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 222 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 229 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.DesiredQualifications, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.DesiredQualificationsComment)));
 
             
@@ -1202,7 +1226,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n                    </div>\r\n");
 
             
-            #line 225 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 232 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -1215,13 +1239,13 @@ WriteLiteral(" class=\"grid grid-1-2\"");
 WriteLiteral(">\r\n");
 
             
-            #line 229 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 236 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 229 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 236 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
             {
 
@@ -1230,14 +1254,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 15859), Tuple.Create("\"", 15885)
+WriteAttribute("class", Tuple.Create(" class=\"", 16190), Tuple.Create("\"", 16216)
             
-            #line 231 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 15867), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 238 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 16198), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 15867), false)
+, 16198), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -1253,7 +1277,7 @@ WriteLiteral(">Future prospects\r\n");
 WriteLiteral("                            ");
 
             
-            #line 234 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 241 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink)));
 
             
@@ -1270,7 +1294,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 236 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 243 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                       Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects));
 
             
@@ -1281,7 +1305,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 237 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 244 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment)));
 
             
@@ -1290,7 +1314,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
 
             
-            #line 240 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 247 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -1299,7 +1323,7 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
 WriteLiteral("            ");
 
             
-            #line 241 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 248 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
             {
 
@@ -1308,14 +1332,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 16957), Tuple.Create("\"", 16983)
+WriteAttribute("class", Tuple.Create(" class=\"", 17288), Tuple.Create("\"", 17314)
             
-            #line 243 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 16965), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 250 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 17296), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 16965), false)
+, 17296), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -1331,7 +1355,7 @@ WriteLiteral(">Things to consider\r\n");
 WriteLiteral("                            ");
 
             
-            #line 246 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 253 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment, Model.RequirementsProspectsLink)));
 
             
@@ -1348,7 +1372,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 248 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 255 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                    Write(Html.Raw(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider));
 
             
@@ -1359,7 +1383,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 249 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 256 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.ThingsToConsider, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.ThingsToConsiderComment)));
 
             
@@ -1368,7 +1392,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
 
             
-            #line 252 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 259 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -1377,7 +1401,7 @@ WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
 WriteLiteral("        </div>\r\n    </div>\r\n</section>\r\n\r\n");
 
             
-            #line 257 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 264 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
  if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
 {
 
@@ -1409,13 +1433,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 264 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 271 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 264 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 271 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
                     {
 
@@ -1424,14 +1448,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 18522), Tuple.Create("\"", 18548)
+WriteAttribute("class", Tuple.Create(" class=\"", 18853), Tuple.Create("\"", 18879)
             
-            #line 266 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 18530), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 273 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 18861), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 18530), false)
+, 18861), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -1443,7 +1467,7 @@ WriteLiteral(">\r\n                                First question\r\n");
 WriteLiteral("                                ");
 
             
-            #line 269 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 276 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink)));
 
             
@@ -1456,7 +1480,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 271 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 278 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                       Write(Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion));
 
             
@@ -1467,7 +1491,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 272 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 279 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment)));
 
             
@@ -1476,7 +1500,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n");
 
             
-            #line 274 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 281 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     }
 
             
@@ -1485,7 +1509,7 @@ WriteLiteral("\r\n                        </div>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 275 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 282 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
                     {
 
@@ -1494,14 +1518,14 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 19484), Tuple.Create("\"", 19510)
+WriteAttribute("class", Tuple.Create(" class=\"", 19815), Tuple.Create("\"", 19841)
             
-            #line 277 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 19492), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 284 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 19823), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 19492), false)
+, 19823), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -1513,7 +1537,7 @@ WriteLiteral(">\r\n                                Second question\r\n");
 WriteLiteral("                                ");
 
             
-            #line 280 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 287 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink)));
 
             
@@ -1526,7 +1550,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 282 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 289 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                       Write(Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion));
 
             
@@ -1537,7 +1561,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                            ");
 
             
-            #line 283 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 290 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment)));
 
             
@@ -1546,7 +1570,7 @@ WriteLiteral("                            ");
 WriteLiteral("\r\n                        </div>\r\n");
 
             
-            #line 285 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 292 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     }
 
             
@@ -1555,7 +1579,7 @@ WriteLiteral("\r\n                        </div>\r\n");
 WriteLiteral("                </div>\r\n            </div>\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 290 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 297 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
 }
 
             
@@ -1583,20 +1607,20 @@ WriteLiteral(">Employer</h3>\r\n        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 20601), Tuple.Create("\"", 20728)
+WriteAttribute("class", Tuple.Create(" class=\"", 20932), Tuple.Create("\"", 21059)
             
-            #line 295 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 20609), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+            #line 302 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 20940), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 20609), false)
+, 20940), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 295 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 302 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                                                  Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
 
             
@@ -1623,7 +1647,7 @@ WriteLiteral(">\r\n                        Description\r\n");
 WriteLiteral("                        ");
 
             
-            #line 301 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 308 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink)));
 
             
@@ -1638,7 +1662,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 303 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 310 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                 Write(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description));
 
             
@@ -1649,7 +1673,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 304 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 311 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment)));
 
             
@@ -1663,13 +1687,13 @@ WriteLiteral(" class=\"grid-wrapper\"");
 WriteLiteral(">\r\n");
 
             
-            #line 311 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 318 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 311 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 318 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
           
             var gridClass = "grid";
             if (IsSingleLocation(Model))
@@ -1682,14 +1706,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 21973), Tuple.Create("\"", 21991)
+WriteAttribute("class", Tuple.Create(" class=\"", 22304), Tuple.Create("\"", 22322)
             
-            #line 318 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 21981), Tuple.Create<System.Object, System.Int32>(gridClass
+            #line 325 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 22312), Tuple.Create<System.Object, System.Int32>(gridClass
             
             #line default
             #line hidden
-, 21981), false)
+, 22312), false)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -1699,13 +1723,13 @@ WriteLiteral(" class=\"inner-block-padr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 320 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 327 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 320 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 327 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
                 {
 
@@ -1725,7 +1749,7 @@ WriteLiteral(">\r\n                            Website\r\n");
 WriteLiteral("                            ");
 
             
-            #line 325 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 332 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink)));
 
             
@@ -1735,29 +1759,29 @@ WriteLiteral("\r\n                        </h3>\r\n                        <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 22616), Tuple.Create("\"", 22685)
+WriteAttribute("href", Tuple.Create(" href=\"", 22947), Tuple.Create("\"", 23016)
             
-            #line 327 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 22623), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+            #line 334 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 22954), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 22623), false)
+, 22954), false)
 );
 
 WriteLiteral("\r\n                           id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                           target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 22788), Tuple.Create("\"", 22897)
+WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 23119), Tuple.Create("\"", 23228)
             
-            #line 330 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 22824), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+            #line 337 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 23155), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 22824), false)
-, Tuple.Create(Tuple.Create(" ", 22889), Tuple.Create("Website", 22890), true)
+, 23155), false)
+, Tuple.Create(Tuple.Create(" ", 23220), Tuple.Create("Website", 23221), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -1765,7 +1789,7 @@ WriteLiteral(" rel=\"external\"");
 WriteLiteral(">");
 
             
-            #line 330 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 337 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                        Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl);
 
             
@@ -1776,7 +1800,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("                        ");
 
             
-            #line 331 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 338 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -1785,7 +1809,7 @@ WriteLiteral("                        ");
 WriteLiteral("\r\n                    </div>\r\n");
 
             
-            #line 333 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 340 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -1798,13 +1822,13 @@ WriteLiteral(" class=\"inner-block-padr\"");
 WriteLiteral(">\r\n");
 
             
-            #line 337 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 344 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 337 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 344 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                          if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
                         {
 
@@ -1836,7 +1860,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 342 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 349 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1);
 
             
@@ -1851,7 +1875,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 343 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 350 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2);
 
             
@@ -1866,7 +1890,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 344 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 351 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                       Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3);
 
             
@@ -1881,7 +1905,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 345 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 352 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4);
 
             
@@ -1896,7 +1920,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 346 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 353 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                  Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode);
 
             
@@ -1906,7 +1930,7 @@ WriteLiteral("</p>\r\n                                </div>\r\n                
 "\n");
 
             
-            #line 349 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 356 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                         }
                         else
                         {
@@ -1935,7 +1959,7 @@ WriteLiteral(">\r\n                                        Address\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 357 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 364 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink)));
 
             
@@ -1955,7 +1979,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 360 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 367 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1);
 
             
@@ -1970,7 +1994,7 @@ WriteLiteral(" itemprop=\"streetAddress\"");
 WriteLiteral(">");
 
             
-            #line 361 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 368 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2);
 
             
@@ -1985,7 +2009,7 @@ WriteLiteral(" itemprop=\"addressLocality\"");
 WriteLiteral(">");
 
             
-            #line 362 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 369 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                           Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3);
 
             
@@ -2000,7 +2024,7 @@ WriteLiteral(" itemprop=\"addressRegion\"");
 WriteLiteral(">");
 
             
-            #line 363 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 370 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                         Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4);
 
             
@@ -2015,7 +2039,7 @@ WriteLiteral(" itemprop=\"postalCode\"");
 WriteLiteral(">");
 
             
-            #line 364 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 371 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                      Write(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode);
 
             
@@ -2026,7 +2050,7 @@ WriteLiteral("</p>\r\n                                    </div>\r\n\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 367 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 374 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -2035,7 +2059,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 369 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 376 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                             }
                             else
                             {
@@ -2065,7 +2089,7 @@ WriteLiteral(">\r\n                                        Addresses\r\n");
 WriteLiteral("                                        ");
 
             
-            #line 377 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 384 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.NewVacancyViewModel.LocationAddressesComment, Model.LocationsLink)));
 
             
@@ -2076,15 +2100,15 @@ WriteLiteral("\r\n                                    </h3>\r\n                 
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(" id=\"leftLocationAddressesTable\"");
-
 WriteLiteral(">\r\n                                        <div");
 
 WriteLiteral(" class=\"inner-block-padr\"");
 
-WriteLiteral(">\r\n\r\n                                            <table");
+WriteLiteral(">\r\n                                            <table");
 
 WriteLiteral(" class=\"locations-table\"");
+
+WriteLiteral(" id=\"leftLocationAddressesTable\"");
 
 WriteLiteral(">\r\n                                                <colgroup>\r\n                  " +
 "                                  <col");
@@ -2123,13 +2147,13 @@ WriteLiteral(" data-bind=\"foreach: locationAddresses\"");
 WriteLiteral(">\r\n");
 
             
-            #line 399 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 405 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                 
             
             #line default
             #line hidden
             
-            #line 399 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 405 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                  for (var i = 0; i < midIndex; i++)
                                                 {
                                                     var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
@@ -2138,14 +2162,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 402 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 408 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                Write(Html.DisplayFor(m => locationAddress));
 
             
             #line default
             #line hidden
             
-            #line 402 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 408 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                           
                                                 }
 
@@ -2159,11 +2183,11 @@ WriteLiteral("\r\n                                                </tbody>\r\n  
 
 WriteLiteral(" class=\"grid grid-1-2\"");
 
-WriteLiteral(" id=\"rightLocationAddressesTable\"");
-
 WriteLiteral(">\r\n                                        <table");
 
 WriteLiteral(" class=\"locations-table\"");
+
+WriteLiteral(" id=\"rightLocationAddressesTable\"");
 
 WriteLiteral(">\r\n                                            <colgroup>\r\n                      " +
 "                          <col");
@@ -2201,13 +2225,13 @@ WriteLiteral(" data-bind=\"foreach: locationAddresses\"");
 WriteLiteral(">\r\n");
 
             
-            #line 428 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 434 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                             
             
             #line default
             #line hidden
             
-            #line 428 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 434 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                              for (var i = midIndex; i < Model.NewVacancyViewModel.LocationAddresses.Count; i++)
                                             {
                                                 var locationAddress = Model.NewVacancyViewModel.LocationAddresses[i];
@@ -2216,14 +2240,14 @@ WriteLiteral(">\r\n");
             #line default
             #line hidden
             
-            #line 431 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 437 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                            Write(Html.DisplayFor(m => locationAddress));
 
             
             #line default
             #line hidden
             
-            #line 431 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 437 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                       
                                             }
 
@@ -2236,7 +2260,7 @@ WriteLiteral("\r\n                                            </tbody>\r\n      
 WriteLiteral("                                    ");
 
             
-            #line 438 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 444 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -2245,7 +2269,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 440 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 446 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                             }
                             if (!string.IsNullOrWhiteSpace(Model.NewVacancyViewModel.AdditionalLocationInformation))
                             {
@@ -2266,7 +2290,7 @@ WriteLiteral(">\r\n                                        Additional location i
 WriteLiteral("                                        ");
 
             
-            #line 446 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 452 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                    Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink)));
 
             
@@ -2280,7 +2304,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 448 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 454 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                               Write(Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation));
 
             
@@ -2291,7 +2315,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                                    ");
 
             
-            #line 449 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 455 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
@@ -2300,7 +2324,7 @@ WriteLiteral("                                    ");
 WriteLiteral("\r\n                                </div>\r\n");
 
             
-            #line 451 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 457 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                             }
                         }
 
@@ -2315,13 +2339,13 @@ WriteLiteral(" class=\"grid grid-1-2 hide-print\"");
 WriteLiteral(">\r\n");
 
             
-            #line 458 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 464 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             
             
             #line default
             #line hidden
             
-            #line 458 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 464 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
              if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
             {
 
@@ -2350,16 +2374,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33080), Tuple.Create("\"", 33282)
-, Tuple.Create(Tuple.Create("", 33086), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 33086), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 33409), Tuple.Create("\"", 33611)
+, Tuple.Create(Tuple.Create("", 33415), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 33415), true)
             
-            #line 462 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 33131), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+            #line 468 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 33460), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 33131), false)
-, Tuple.Create(Tuple.Create("", 33218), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 33218), true)
+, 33460), false)
+, Tuple.Create(Tuple.Create("", 33547), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 33547), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -2370,7 +2394,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n");
 
             
-            #line 465 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 471 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
             else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
             {
@@ -2400,16 +2424,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 33845), Tuple.Create("\"", 34039)
-, Tuple.Create(Tuple.Create("", 33851), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 33851), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 34174), Tuple.Create("\"", 34368)
+, Tuple.Create(Tuple.Create("", 34180), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 34180), true)
             
-            #line 470 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 33896), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode)
+            #line 476 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 34225), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 33896), false)
-, Tuple.Create(Tuple.Create("", 33975), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 33975), true)
+, 34225), false)
+, Tuple.Create(Tuple.Create("", 34304), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 34304), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -2420,7 +2444,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 "    </div>\r\n");
 
             
-            #line 473 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 479 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
             }
 
             
@@ -2429,7 +2453,7 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 WriteLiteral("        </div>\r\n    </div>\r\n</section>\r\n\r\n");
 
             
-            #line 478 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 484 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
  if (Model.NewVacancyViewModel.OfflineVacancy)
 {
 
@@ -2446,14 +2470,14 @@ WriteLiteral(" style=\"\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 34375), Tuple.Create("\"", 34401)
+WriteAttribute("class", Tuple.Create(" class=\"", 34704), Tuple.Create("\"", 34730)
             
-            #line 481 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 34383), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 487 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 34712), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 34383), false)
+, 34712), false)
 );
 
 WriteLiteral(">\r\n            <h2");
@@ -2465,7 +2489,7 @@ WriteLiteral(">Employer\'s application instructions\r\n");
 WriteLiteral("                ");
 
             
-            #line 483 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 489 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
            Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment, Model.BasicDetailsLink)));
 
             
@@ -2480,7 +2504,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 485 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 491 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                     Write(Model.NewVacancyViewModel.OfflineApplicationInstructions);
 
             
@@ -2491,7 +2515,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("            ");
 
             
-            #line 486 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 492 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment)));
 
             
@@ -2499,14 +2523,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 35145), Tuple.Create("\"", 35171)
+WriteAttribute("class", Tuple.Create(" class=\"", 35474), Tuple.Create("\"", 35500)
             
-            #line 488 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 35153), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 494 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 35482), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 35153), false)
+, 35482), false)
 );
 
 WriteLiteral(">\r\n            <p");
@@ -2520,14 +2544,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 35351), Tuple.Create("\"", 35406)
+WriteAttribute("href", Tuple.Create(" href=\"", 35680), Tuple.Create("\"", 35735)
             
-            #line 490 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 35358), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+            #line 496 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 35687), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 35358), false)
+, 35687), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -2535,7 +2559,7 @@ WriteLiteral(" target=\"_blank\"");
 WriteLiteral(">");
 
             
-            #line 490 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 496 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                 Write(Model.NewVacancyViewModel.OfflineApplicationUrl);
 
             
@@ -2546,7 +2570,7 @@ WriteLiteral("</a>\r\n");
 WriteLiteral("            ");
 
             
-            #line 491 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 497 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.NewVacancyViewModel.OfflineApplicationUrlComment, Model.BasicDetailsLink)));
 
             
@@ -2557,7 +2581,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 492 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 498 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
        Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationUrlComment)));
 
             
@@ -2566,7 +2590,7 @@ WriteLiteral("            ");
 WriteLiteral("\r\n        </div>\r\n    </section>\r\n");
 
             
-            #line 495 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 501 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
 }
 
             
@@ -2597,13 +2621,13 @@ WriteLiteral(" class=\"text\"");
 WriteLiteral(">\r\n");
 
             
-            #line 502 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 508 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 
             
             #line default
             #line hidden
             
-            #line 502 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 508 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                  if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
                 {
 
@@ -2619,7 +2643,7 @@ WriteLiteral(" class=\"preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 504 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 510 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                    Write(Html.Raw(Model.ProviderSite.CandidateDescription));
 
             
@@ -2628,7 +2652,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 505 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 511 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                 }
 
             
@@ -2636,26 +2660,26 @@ WriteLiteral("</p>\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 36475), Tuple.Create("\"", 36501)
+WriteAttribute("class", Tuple.Create(" class=\"", 36804), Tuple.Create("\"", 36830)
             
-            #line 506 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 36483), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            #line 512 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create("", 36812), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 36483), false)
+, 36812), false)
 );
 
 WriteLiteral(">\r\n");
 
             
-            #line 507 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 513 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                     
             
             #line default
             #line hidden
             
-            #line 507 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 513 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (Model.NewVacancyViewModel.TrainingType == TrainingType.Frameworks)
                     {
 
@@ -2671,7 +2695,7 @@ WriteLiteral(">\r\n                            Apprenticeship framework\r\n");
 WriteLiteral("                            ");
 
             
-            #line 511 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 517 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.FrameworkCodeName, Model.NewVacancyViewModel.FrameworkCodeNameComment, Model.BasicDetailsLink)));
 
             
@@ -2686,7 +2710,7 @@ WriteLiteral(" id=\"vacancy-framework\"");
 WriteLiteral(">");
 
             
-            #line 513 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 519 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                              Write(Html.Raw(Model.FrameworkName));
 
             
@@ -2695,20 +2719,20 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 514 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 520 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 514 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 520 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.FrameworkCodeName, Model.BasicDetailsLink, Model.NewVacancyViewModel.FrameworkCodeNameComment)));
 
             
             #line default
             #line hidden
             
-            #line 514 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 520 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                                                                                                                 
                     }
 
@@ -2718,7 +2742,7 @@ WriteLiteral("</p>\r\n");
 WriteLiteral("                    ");
 
             
-            #line 516 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 522 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                      if (Model.NewVacancyViewModel.TrainingType == TrainingType.Standards)
                     {
 
@@ -2734,7 +2758,7 @@ WriteLiteral(">\r\n                            Apprenticeship standard\r\n");
 WriteLiteral("                            ");
 
             
-            #line 520 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 526 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                        Write(Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.StandardId, Model.NewVacancyViewModel.StandardIdComment, Model.BasicDetailsLink)));
 
             
@@ -2749,7 +2773,7 @@ WriteLiteral(" id=\"vacancy-standard\"");
 WriteLiteral(">");
 
             
-            #line 522 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 528 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                             Write(Html.Raw(Model.StandardName));
 
             
@@ -2758,20 +2782,20 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n");
 
             
-            #line 523 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 529 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                         
             
             #line default
             #line hidden
             
-            #line 523 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 529 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                    Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.StandardId, Model.BasicDetailsLink, Model.NewVacancyViewModel.StandardIdComment)));
 
             
             #line default
             #line hidden
             
-            #line 523 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 529 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                                                                                                                                                                                                   
                     }
 
@@ -2803,7 +2827,7 @@ WriteLiteral(" id=\"vacancy-provider-name\"");
 WriteLiteral(">");
 
             
-            #line 533 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 539 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                      Write(Model.ProviderSite.Name);
 
             
@@ -2812,13 +2836,13 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n        </div>\r\n\r\n");
 
             
-            #line 536 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 542 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 536 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 542 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
          if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
         {
 
@@ -2840,7 +2864,7 @@ WriteLiteral(" id=\"vacancy-provider-contact\"");
 WriteLiteral(">");
 
             
-            #line 540 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 546 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
                                             Write(Model.ProviderSite.ContactDetailsForCandidate);
 
             
@@ -2849,7 +2873,7 @@ WriteLiteral(">");
 WriteLiteral("</p>\r\n            </div>\r\n");
 
             
-            #line 542 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
+            #line 548 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
         }
 
             
