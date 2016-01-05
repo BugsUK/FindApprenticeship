@@ -30,8 +30,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 { 
@@ -70,8 +73,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = wagetype,
                     HoursPerWeek = hoursPerWeek
                 },
@@ -111,8 +117,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = WageType.Custom,
                     WageUnit = wageUnit,
                     Wage = wage

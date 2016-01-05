@@ -21,8 +21,11 @@
             var today = DateTime.Today;
             var viewModel = new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel(today),
-                PossibleStartDate = new DateViewModel(today)
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(today),
+                    PossibleStartDate = new DateViewModel(today)
+                }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);

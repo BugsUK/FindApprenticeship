@@ -47,17 +47,20 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new ModelStateDictionary();
             var viewModelToValidate = new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel
+                VacancyDatesViewModel = new VacancyDatesViewModel
                 {
-                    Day = 1,
-                    Month = 2,
-                    Year = year
-                },
-                PossibleStartDate = new DateViewModel
-                {
-                    Day = 1,
-                    Month = 2,
-                    Year = year
+                    ClosingDate = new DateViewModel
+                    {
+                        Day = 1,
+                        Month = 2,
+                        Year = year
+                    },
+                    PossibleStartDate = new DateViewModel
+                    {
+                        Day = 1,
+                        Month = 2,
+                        Year = year
+                    }
                 }
             };
             var validator = new VacancySummaryViewModelServerValidator();

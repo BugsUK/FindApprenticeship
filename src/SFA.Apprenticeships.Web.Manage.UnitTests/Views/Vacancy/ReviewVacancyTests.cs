@@ -1,21 +1,18 @@
-﻿using ReflectionMagic;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.Vacancy
 {
     using System;
-    using NUnit.Framework;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using System.Collections.Generic;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentAssertions;
+    using Manage.Views.Vacancy;
+    using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using FluentAssertions;
-    using RazorGenerator.Testing;
-    using Manage.Views.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates;
+    using RazorGenerator.Testing;
 
     [TestFixture]
     public class ReviewVacancyTests : ViewUnitTest
@@ -33,8 +30,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -69,8 +69,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -105,8 +108,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -145,8 +151,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = wagetype,
                     HoursPerWeek = hoursPerWeek
                 },
@@ -186,8 +195,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = WageType.Custom,
                     WageUnit = wageUnit,
                     Wage = wage

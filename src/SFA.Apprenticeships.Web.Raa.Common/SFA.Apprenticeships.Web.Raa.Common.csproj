@@ -205,6 +205,8 @@
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
+    <Compile Include="Validators\Vacancy\VacancyDatesViewModelBusinessRulesExtensions.cs" />
+    <Compile Include="Validators\Vacancy\VacancyDatesViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />

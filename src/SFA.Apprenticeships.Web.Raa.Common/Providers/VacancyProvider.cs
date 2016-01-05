@@ -23,7 +23,6 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Factories;
-    using ViewModels;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;
@@ -358,13 +357,13 @@
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
-            if (viewModel.ClosingDate.HasValue)
+            if (viewModel.VacancyDatesViewModel.ClosingDate.HasValue)
             {
-                vacancy.ClosingDate = viewModel.ClosingDate?.Date;
+                vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate?.Date;
             }
-            if (viewModel.PossibleStartDate.HasValue)
+            if (viewModel.VacancyDatesViewModel.PossibleStartDate.HasValue)
             {
-                vacancy.PossibleStartDate = viewModel.PossibleStartDate?.Date;
+                vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate?.Date;
             }
             
             vacancy.LongDescription = viewModel.LongDescription;
@@ -821,22 +820,22 @@
             vacancy.DurationType = viewModel.DurationType;
             vacancy.Duration = viewModel.Duration.HasValue ? (int?)Math.Round(viewModel.Duration.Value) : null;
 
-            if (viewModel.ClosingDate.HasValue)
+            if (viewModel.VacancyDatesViewModel.ClosingDate.HasValue)
             {
-                vacancy.ClosingDate = viewModel.ClosingDate?.Date;
+                vacancy.ClosingDate = viewModel.VacancyDatesViewModel.ClosingDate?.Date;
             }
-            if (viewModel.PossibleStartDate.HasValue)
+            if (viewModel.VacancyDatesViewModel.PossibleStartDate.HasValue)
             {
-                vacancy.PossibleStartDate = viewModel.PossibleStartDate?.Date;
+                vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate?.Date;
             }
 
             vacancy.LongDescription = viewModel.LongDescription;
 
             vacancy.WageComment = viewModel.WageComment;
-            vacancy.ClosingDateComment = viewModel.ClosingDateComment;
+            vacancy.ClosingDateComment = viewModel.VacancyDatesViewModel.ClosingDateComment;
             vacancy.DurationComment = viewModel.DurationComment;
             vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
-            vacancy.PossibleStartDateComment = viewModel.PossibleStartDateComment;
+            vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
