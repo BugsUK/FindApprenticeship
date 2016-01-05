@@ -77,5 +77,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
         public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
+
+        public bool ComeFromPreview { get; set; }
     }
 }

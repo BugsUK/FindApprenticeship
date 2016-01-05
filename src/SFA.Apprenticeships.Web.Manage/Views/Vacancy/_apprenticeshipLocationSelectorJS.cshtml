@@ -1,5 +1,6 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+
 <div class="blocklabel-single-container">
     <div class="hide-nojs">
         <div class="form-group inline clearfix blocklabel-single">
@@ -17,7 +18,7 @@
         </div>
         <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location">
             @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id= "NumberOfPositionsJS", Name= "NumberOfPositionsJS" }, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.NumberOfPositionsComment))
+            @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
         </div>
     </div>
 </div>

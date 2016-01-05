@@ -43,6 +43,11 @@
         public string RequirementsProspectsLink { get; set; }
 
         public string QuestionsLink { get; set; }
+
+        public string EmployerLink { get; set; }
+        
+        public string LocationsLink { get; set; }
+
         public int ApplicationCount { get; set; }
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }

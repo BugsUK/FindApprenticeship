@@ -84,11 +84,11 @@
                             Address = new AddressViewModel()
                         }
                     },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
 
             var view = details.RenderAsHtml(viewModel);
@@ -126,11 +126,11 @@
                             Address = new AddressViewModel()
                         }
                     },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
 
             var view = details.RenderAsHtml(viewModel);

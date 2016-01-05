@@ -314,7 +314,17 @@
             public const string RequiredErrorText = "Confirm you have reviewed this vacancy and would like to resubmit it for approval";
         }
 
-        internal class OfflineVacancy
+        public class EmployerDescriptionComment
+        {
+            public const string LabelText = "Description comment";
+        }
+
+        public class EmployerWebsiteUrlComment
+        {
+            public const string LabelText = "Employer's Website Url comment";
+		}
+		
+        public class OfflineVacancy
         {
             public const string RequiredErrorText = "Please select whether the vacancy will be managed through the find an apprentice site or not";
         }

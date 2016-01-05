@@ -27,12 +27,18 @@
                 VacancyRequirementsProspectsViewModel =
                     context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
-                LocationAddresses =
-                    context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
-                        source.LocationAddresses),
-                IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = source.NumberOfPositions
             };
+
+            // TODO: move to its custom mapper?
+            destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
+            destination.NewVacancyViewModel.LocationAddresses =
+                context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
+                    source.LocationAddresses);
+            destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
+            destination.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation =
+                source.IsEmployerLocationMainApprenticeshipLocation;
+            destination.NewVacancyViewModel.NumberOfPositions = source.NumberOfPositions;
+            destination.NewVacancyViewModel.NumberOfPositionsComment = source.NumberOfPositionsComment;
 
             return destination;
         }

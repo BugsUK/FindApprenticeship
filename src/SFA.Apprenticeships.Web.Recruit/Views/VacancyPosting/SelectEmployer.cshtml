@@ -64,6 +64,7 @@
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
+                        @Html.HiddenFor(model => model.ComeFromPreview)
 
                         <div id="ern-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Ern)
@@ -78,6 +79,7 @@
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
+                        @Html.HiddenFor(model => model.ComeFromPreview)
 
                         <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                             @Html.FormTextFor(model => model.Name)
@@ -130,7 +132,7 @@
                             </td>
                             <td>@employerResultsViewModel.Ern</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue })">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview })">Select employer</a>
                             </td>
                         </tr>
                     }
@@ -138,6 +140,8 @@
                 </table>
             </div>
         }
+
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
     </section>
 
     <div class="page-navigation">

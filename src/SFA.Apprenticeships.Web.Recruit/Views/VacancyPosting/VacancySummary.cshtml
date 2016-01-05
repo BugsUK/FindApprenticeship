@@ -11,7 +11,7 @@
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "VacancySummaryAndPreview";
@@ -30,7 +30,7 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Status)
     @Html.HiddenFor(m => m.WarningsHash)
-
+    @Html.HiddenFor(m => m.ComeFromPreview)
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">
@@ -108,5 +108,9 @@
     <div class="grid grid-1-2">
         <button id="vacancySummaryButton" type="submit" class="button" name="VacancySummary" value="@saveButtonValue">@saveButtonText</button>
         <button id="vacancySummaryAndExit" type="submit" class="button-link" name="VacancySummary" value="VacancySummaryAndExit">Save and exit</button>
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
     </div>
 }

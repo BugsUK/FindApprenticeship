@@ -1,13 +1,11 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
 @using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
-@using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Add locations";
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    var saveButtonText = "Save";
     var comeFromConfirmEmployer = Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains("employer");
 }
 
@@ -15,7 +13,7 @@
     Vacancy location(s)
 </h1>
 
-@using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
+@using (Html.BeginRouteForm(ManagementRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
 {
     @Html.HiddenFor(m => m.Ukprn);
     @Html.HiddenFor(m => m.Ern);
@@ -25,8 +23,6 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber);
     @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
     @Html.HiddenFor(m => m.CurrentPage)
-    @Html.HiddenFor(m => m.LocationAddressesComment)
-    @Html.HiddenFor(m => m.AdditionalLocationInformationComment)
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
     <noscript>
@@ -97,7 +93,7 @@
                                         <button id="useLocation" type="submit" class="button-link use-location-button-link add-location-link" name="AddLocations" value="@buttonName">add location</button>
                                     </td>
                                 </tr>
-                                index = index+1;
+                                index = index + 1;
                             }
                             </tbody>
                         </table>
@@ -159,13 +155,13 @@
                     </div>
                 </div>
 
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LocationAddressesComment))
+                @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
 
                 <div class="form-group">
                     @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
+                    @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
                 </div>
-                <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
+                <button type="submit" class="button" name="AddLocations" value="Locations">Save</button>
             }
             @{
                 if (comeFromConfirmEmployer == true)
@@ -173,9 +169,9 @@
                     var address = Request.UrlReferrer.PathAndQuery;
                     <a href="@address" class="cancel-link">Cancel</a>
                 }
-                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
+                else if (Model.Addresses != null && Model.Addresses.Any())
                 {
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "cancel-link"})
+                    @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "cancel-link"})
                 }
             }
         </div>
@@ -241,61 +237,63 @@
                     </tr>
                     </tbody>
                 </table>
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LocationAddressesComment))
+                @Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment))
             </div>
 
             <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
                 @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
+                @Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment))
             </div>
             <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-            @Html.RouteLink("Use employer's address", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
-            @if (comeFromConfirmEmployer == true)
-            {
-                var address = Request.UrlReferrer.PathAndQuery;
-                <a href="@address" class="cancel-link">Cancel</a>
-            }
-            else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
-            {
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
+            @Html.RouteLink("Use employer's address", ManagementRouteNames.EmployerInformation, new { vacancyReferenceNumber = Model.VacancyReferenceNumber, useEmployerLocation = true })
+            @{
+                if (comeFromConfirmEmployer == true)
+                {
+                    var address = Request.UrlReferrer.PathAndQuery;
+                    <a href="@address" class="cancel-link">Cancel</a>
+                }
+                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
+                {
+                    @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
+                }
             }
         </div>
     </div>
+
+    
 }
 
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
 
+    <script type="text/javascript">
+    ko.observable.fn.appendError = function (error) {
+        var thisError = this.error();
+        if (thisError) {
+            this.setError(thisError += '. ' + error);
+        }
+        else {
+            this.setError(error);
+        };
+    };
 
-            @section scripts {
-                @Scripts.Render("~/bundles/knockout")
+    var addressesData = null;
 
-                <script type="text/javascript">
-                ko.observable.fn.appendError = function (error) {
-                    var thisError = this.error();
-                    if (thisError) {
-                        this.setError(thisError += '. ' + error);
-                    }
-                    else {
-                        this.setError(error);
-                    };
-                };
+    addressesData = @Html.Raw(Json.Encode(Model.Addresses));
 
-                var addressesData = null;
+    if (!addressesData) addressesData = [];
 
-                addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+    function getLocationAddressesData() {
+        return addressesData;
+    }
 
-                if (!addressesData) addressesData = [];
+    var modelState = null;
+    modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
 
-                function getLocationAddressesData() {
-                    return addressesData;
-                }
+    function getModelState() {
+        return modelState;
+    }
+    </script>
 
-                var modelState = null;
-                modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
-
-                function getModelState() {
-                    return modelState;
-                }
-                </script>
-
-                @Scripts.Render("~/bundles/location")
-            }
+    @Scripts.Render("~/bundles/location")
+}

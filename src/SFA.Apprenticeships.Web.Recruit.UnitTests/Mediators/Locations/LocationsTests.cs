@@ -26,7 +26,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.GetLocationAddressesViewModel(providerSiteErn, ern, ukprn, vacancyGuid);
+            var result = mediator.GetLocationAddressesViewModel(providerSiteErn, ern, ukprn, vacancyGuid, false);
 
             result.ViewModel.CurrentPage.Should().Be(1);
         }

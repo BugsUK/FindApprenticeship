@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
-    using Application.Application;
     using Application.Communication;
     using Application.Communication.Strategies;
-    using Application.Interfaces.Applications;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
@@ -26,6 +25,7 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
+    using Application.Location;
     using Application.ReferenceData;
     using Raa.Common.Providers;
 
@@ -55,6 +55,8 @@
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IProviderQAProvider>().Use<ProviderProvider>();
+            For<ILocationsProvider>().Use<LocationsProvider>();
         }
 
         private void RegisterServices()
@@ -63,6 +65,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
+            For<IAddressSearchService>().Use<AddressSearchService>();
         }
 
         private void RegisterStrategies()

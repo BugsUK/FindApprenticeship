@@ -95,7 +95,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 FirstQuestion = apprenticeshipVacancy.FirstQuestion,
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,
-                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment
+                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment,
+                Status = apprenticeshipVacancy.Status
             };
 
             return vacancyViewModel;
