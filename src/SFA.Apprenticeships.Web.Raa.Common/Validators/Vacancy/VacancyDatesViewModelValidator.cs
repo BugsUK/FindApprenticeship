@@ -5,33 +5,29 @@
     using ViewModels.Vacancy;
     using Web.Common.Validators;
 
-    public class VacancyDatesViewModelClientValidator : AbstractValidator<VacancyDatesViewModel>
+    public class VacancyDatesViewModelCommonValidator : AbstractValidator<VacancyDatesViewModel>
     {
-        public VacancyDatesViewModelClientValidator()
+        public VacancyDatesViewModelCommonValidator()
         {
             this.AddCommonRules();
             RuleSet(RuleSets.Errors, this.AddCommonRules);
         }
     }
 
-    public class VacancyDatesViewModelServerValidator : AbstractValidator<VacancyDatesViewModel>
+    public class VacancyDatesViewModelServerCommonValidator : AbstractValidator<VacancyDatesViewModel>
     {
-        public VacancyDatesViewModelServerValidator()
+        public VacancyDatesViewModelServerCommonValidator()
         {
-            this.AddCommonRules();
             this.AddServerCommonRules();
-            RuleSet(RuleSets.Errors, this.AddCommonRules);
             RuleSet(RuleSets.Errors, this.AddServerCommonRules);
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
         }
     }
-
 
     public class VacancyDatesViewModelServerWarningValidator : AbstractValidator<VacancyDatesViewModel>
     {
-        public VacancyDatesViewModelServerWarningValidator(string parentPropertyName)
+        public VacancyDatesViewModelServerWarningValidator()
         {
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
         }
     }
 
@@ -39,35 +35,42 @@
     {
         internal static void AddCommonRules(this AbstractValidator<VacancyDatesViewModel> validator)
         {
+            validator.RuleFor(viewModel => viewModel.ClosingDateComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
+            validator.RuleFor(viewModel => viewModel.PossibleStartDateComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }
 
         internal static void AddServerCommonRules(this AbstractValidator<VacancyDatesViewModel> validator)
         {
             validator.RuleFor(x => x.ClosingDate)
-                .Must(Web.Common.Validators.Common.BeValidDate)
+                .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
-                .Must(Web.Common.Validators.Common.BeOneDayInTheFuture)
+                .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
 
             validator.RuleFor(x => x.PossibleStartDate)
-                .Must(Web.Common.Validators.Common.BeValidDate)
+                .Must(Common.BeValidDate)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
-                .Must(Web.Common.Validators.Common.BeOneDayInTheFuture)
+                .Must(Common.BeOneDayInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
                 .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
         }
 
-        internal static void AddServerWarningRules(this AbstractValidator<VacancyDatesViewModel> validator, string parentPropertyName)
+        internal static void AddServerWarningRules(this AbstractValidator<VacancyDatesViewModel> validator,
+            string parentPropertyName)
         {
             validator.RuleFor(x => x.ClosingDate)
-                .Must(Web.Common.Validators.Common.BeTwoWeeksInTheFuture)
+                .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
                 .WithState(s => ValidationType.Warning);
 
             validator.RuleFor(x => x.PossibleStartDate)
-                .Must(Web.Common.Validators.Common.BeTwoWeeksInTheFuture)
+                .Must(Common.BeTwoWeeksInTheFuture)
                 .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
                 .WithState(s => ValidationType.Warning)
                 .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
