@@ -45,10 +45,13 @@
     }
 
     <div class="blocklabel-single-container">
-        <h2 class="heading-small">Search for an employer</h2>
-        <div class="panel-indent blocklabel-content grid grid-2-3">
-            If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
-        </div>
+        <p>Search for an employer</p>
+        @if (!searchPerformed)
+        {
+            <div class="panel-indent grid grid-2-3">
+                If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
+            </div>
+        }
 
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
