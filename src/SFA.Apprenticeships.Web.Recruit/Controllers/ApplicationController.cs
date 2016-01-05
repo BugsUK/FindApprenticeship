@@ -4,6 +4,7 @@
     using Attributes;
     using Common.Mediators;
     using Constants;
+    using Domain.Entities;
     using Mediators.Application;
     using ViewModels.Application;
 

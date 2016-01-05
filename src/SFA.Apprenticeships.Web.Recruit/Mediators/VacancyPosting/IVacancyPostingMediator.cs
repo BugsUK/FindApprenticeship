@@ -68,6 +68,10 @@
 
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
+        MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel);
+		
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
+		
+        MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel);
     }
 }

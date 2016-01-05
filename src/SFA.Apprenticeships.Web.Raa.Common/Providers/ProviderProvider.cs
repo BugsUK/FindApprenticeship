@@ -14,6 +14,8 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private readonly IVacancyPostingService _vacancyPostingService;
@@ -74,7 +76,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             providerSiteEmployerLink.Description = viewModel.Description;
             providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid);
+            var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
                 vacancy.ProviderSiteEmployerLink = providerSiteEmployerLink;
@@ -89,6 +91,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var result = providerSiteEmployerLink.Convert();
             
             return result;
+        }
+
+        private ApprenticeshipVacancy GetVacancy(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
+                          _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            return vacancy;
         }
 
         public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)

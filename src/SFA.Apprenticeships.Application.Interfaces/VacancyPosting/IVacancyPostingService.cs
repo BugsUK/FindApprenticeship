@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 
     public interface IVacancyPostingService
     {
+        ApprenticeshipVacancy CreateApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+
         ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
 
         long GetNextVacancyReferenceNumber();

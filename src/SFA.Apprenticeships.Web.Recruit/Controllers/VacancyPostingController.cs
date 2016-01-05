@@ -10,7 +10,9 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
+    using Domain.Entities;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
@@ -65,11 +67,6 @@
 
             ModelState.Clear();
 
-            if (response.Message != null)
-            {
-                SetUserMessage(response.Message.Text, response.Message.Level);
-            }
-
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetProviderEmployers.FailedValidation:
@@ -77,7 +74,15 @@
                     return View("SelectEmployer", response.ViewModel);
 
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                    return View("SelectEmployer", response.ViewModel);
+
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
+                    if (string.IsNullOrWhiteSpace(viewModel.Location) && string.IsNullOrWhiteSpace(viewModel.Ern) &&
+                        string.IsNullOrWhiteSpace(viewModel.Name))
+                    {
+                        return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer,
+                            new {providerSiteErn = viewModel.ProviderSiteErn, vacancyGuid = viewModel.VacancyGuid});
+                    }
                     return View("SelectEmployer", response.ViewModel);
 
                 default:
@@ -181,11 +186,12 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-		
+
+ 
         #endregion
-		
+
         #region Basic Details
-        
+
         [HttpGet]
         public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {
@@ -277,6 +283,28 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [HttpPost]
+        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("CreateVacancy", response.ViewModel);
         }
 
         #endregion
@@ -644,11 +672,6 @@
             var response = _vacancyPostingMediator.SelectNewEmployer(viewModel);
 
             ModelState.Clear();
-
-            if (response.Message != null)
-            {
-                SetUserMessage(response.Message.Text, response.Message.Level);
-            }
 
             switch (response.Code)
             {

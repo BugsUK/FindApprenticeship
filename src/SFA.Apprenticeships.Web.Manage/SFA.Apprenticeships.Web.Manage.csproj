@@ -299,7 +299,6 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
-    <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />

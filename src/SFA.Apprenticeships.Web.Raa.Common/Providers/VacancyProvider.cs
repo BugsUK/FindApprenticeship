@@ -10,6 +10,7 @@
     using Application.Interfaces.Logging;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
     using Configuration;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -37,6 +38,7 @@
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
+        private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
@@ -45,7 +47,8 @@
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService)
+
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -57,6 +60,7 @@
             _configurationService = configurationService;
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _userProfileService = userProfileService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
@@ -207,7 +211,7 @@
                 _providerService.GetProviderSiteEmployerLink(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
                     newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
 
-            var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
+            var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new ApprenticeshipVacancy
             {
                 EntityId = newVacancyViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -220,7 +224,7 @@
                 ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel),
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
-                OfflineVacancy = newVacancyViewModel.OfflineVacancy,
+                OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value, //At this point we will always have a value
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
@@ -230,25 +234,25 @@
             return vacancy;
         }
 
-        private ApprenticeshipVacancy CreateNewVacancy(LocationSearchViewModel newVacancyViewModel)
+        private ApprenticeshipVacancy CreateNewVacancy(LocationSearchViewModel locationSearchViewModel)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var providerSiteEmployerLink =
-                _providerService.GetProviderSiteEmployerLink(newVacancyViewModel.ProviderSiteErn, newVacancyViewModel.Ern);
+                _providerService.GetProviderSiteEmployerLink(locationSearchViewModel.ProviderSiteErn, locationSearchViewModel.Ern);
 
-            var vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(new ApprenticeshipVacancy
+            var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new ApprenticeshipVacancy
             {
-                EntityId = newVacancyViewModel.VacancyGuid,
+                EntityId = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Ukprn = newVacancyViewModel.Ukprn,
+                Ukprn = locationSearchViewModel.Ukprn,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
-                Status = newVacancyViewModel.Status,
-                AdditionalLocationInformation = newVacancyViewModel.AdditionalLocationInformation,
-                IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                LocationAddresses = new List<VacancyLocationAddress>()
+                Status = locationSearchViewModel.Status,
+                AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
+                IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
+                LocationAddresses = new List<VacancyLocationAddress>(),
             });
 
-            newVacancyViewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
+            locationSearchViewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
             {
                 Address = new Address { 
                     AddressLine1 = a.Address.AddressLine1,
@@ -316,7 +320,7 @@
             vacancy.FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel);
             vacancy.StandardId = newVacancyViewModel.StandardId;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel);
-            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
+            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
@@ -486,7 +490,12 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
-                vacancy.DateSubmitted = _dateTimeService.UtcNow();
+            vacancy.DateSubmitted = _dateTimeService.UtcNow();
+            if (!vacancy.DateFirstSubmitted.HasValue)
+            {
+                vacancy.DateFirstSubmitted = vacancy.DateSubmitted;
+            }
+            vacancy.SubmissionCount++;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             
@@ -715,7 +724,8 @@
                 VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
                 DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
                 QAUserName = apprenticeshipVacancy.QAUserName,
-                CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy)
+                CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy),
+                SubmissionCount = apprenticeshipVacancy.SubmissionCount
             };
         }
 
@@ -783,11 +793,16 @@
             var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
             var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
+            //TODO: Get from data layer via joins once we're on SQL
+            var provider = _providerService.GetProvider(vacancy.Ukprn);
             var providerSite = _providerService.GetProviderSite(vacancy.Ukprn, vacancy.ProviderSiteEmployerLink.ProviderSiteErn);
+            var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
+            viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider, vacancyManager, vacancy);
+
             return viewModel;
         }
 
@@ -846,7 +861,7 @@
             vacancy.StandardId = viewModel.StandardId;
             vacancy.StandardIdComment = viewModel.StandardIdComment;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
-            vacancy.OfflineVacancy = viewModel.OfflineVacancy;
+            vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;

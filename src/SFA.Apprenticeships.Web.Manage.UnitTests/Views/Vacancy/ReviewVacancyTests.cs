@@ -44,7 +44,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -79,7 +80,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -114,7 +116,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -156,7 +159,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                             Address = new AddressViewModel()
                         }
                     },
-                    LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
@@ -197,7 +201,8 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                             Address = new AddressViewModel()
                         }
                     },
-                    LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()

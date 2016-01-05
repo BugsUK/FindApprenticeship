@@ -246,7 +246,7 @@
 
         public static class OfflineApplicationUrl
         {
-            public const string LabelText = "What website address should candidates apply through?";
+            public const string LabelText = "Enter the web address candidates should use to apply for this vacancy";
             public const string RequiredErrorText = "Please enter a valid website address";
             public const string TooLongErrorText = "The website address must not be more than 100 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
@@ -261,7 +261,7 @@
 
         public static class OfflineApplicationInstructions
         {
-            public const string LabelText = "Please explain to candidates what will happen when they apply (optional)";
+            public const string LabelText = "Explain the external website application process (optional)";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The candidate explanation " + Whitelists.FreetextWhitelist.ErrorText;
         }
@@ -322,6 +322,11 @@
         public class EmployerWebsiteUrlComment
         {
             public const string LabelText = "Employer's Website Url comment";
+		}
+		
+        public class OfflineVacancy
+        {
+            public const string RequiredErrorText = "Please select whether the vacancy will be managed through the find an apprentice site or not";
         }
     }
 }

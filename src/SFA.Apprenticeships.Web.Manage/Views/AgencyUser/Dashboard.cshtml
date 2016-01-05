@@ -56,10 +56,10 @@
                                 <tr>
                                     <th>Title</th>
                                     <th>Reference</th>
-                                    <th>Status</th>
                                     <th>Provider</th>
                                     <th>Date submitted</th>
                                     <th>Closing date</th>
+                                    <th>Submission count</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -74,16 +74,16 @@
                                         <span>@vacancy.VacancyReferenceNumber.GetVacancyReference()</span>
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(model => vacancy.Status)
-                                    </td>
-                                    <td>
                                         <span>@vacancy.ProviderName</span>
                                     </td>
                                     <td>
-                                        <span>@vacancy.DateSubmitted.ToFriendlyClosingToday()</span>
+                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
                                     </td>
                                     <td>
                                         <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@vacancy.SubmissionCount</span>
                                     </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)

@@ -22,41 +22,67 @@
 }
 
 <section>
-    <div class="hgroup text @editableItemClass">
-        <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
-            @Model.NewVacancyViewModel.Title
-        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
-    </h1>
-    <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
-    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
-</div>
-<div class="grid-wrapper">
-    <div class="grid grid-2-3">
-        <div class="inner-block-padr">
+    <div class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <h1 class="heading-xlarge">
+                Vacancy preview
+            </h1>
+            <div class="hgroup text @editableItemClass">
+                <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
+                    @Model.NewVacancyViewModel.Title
+                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
+                </h1>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
+            </div>
+        </div>
+        <div class="grid grid-1-3">
+            @if (Model.ContactDetailsAndVacancyHistory != null)
+            {
+                <details>
+                    <summary>Contact details and vacancy history</summary>
+                    <div class="detail-content panel-indent">
+                        @Model.ContactDetailsAndVacancyHistory.FullName<br />
+                        @Model.ContactDetailsAndVacancyHistory.ProviderName<br />
+                        @Model.ContactDetailsAndVacancyHistory.PhoneNumber<br />
+                        @Model.ContactDetailsAndVacancyHistory.Email<br />
+                        First submitted: @Html.DisplayFor(m => m.ContactDetailsAndVacancyHistory.DateFirstSubmitted.Value.Date)<br />
+                        Last updated: @Html.DisplayFor(m => m.ContactDetailsAndVacancyHistory.DateLastUpdated.Value.Date)
+                    </div>
+                </details>
+            }
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="grid-wrapper">
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="@editableItemClass">
+                    <h3 class="bold-small">
+                        Summary
+                        @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
+                    </h3>
+                    <div class="text" itemprop="description">
+                        <p id="vacancy-description" class="preserve-formatting">@Model.NewVacancyViewModel.ShortDescription</p>
+                        @Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyReferenceNumber, Model.ApplicationCount))
+                    </div>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-1-3">
             <div class="@editableItemClass">
                 <h3 class="bold-small">
-                    Summary
-                    @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
+                    Closing date
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
                 </h3>
-                <div class="text" itemprop="description">
-                    <p id="vacancy-description" class="preserve-formatting">@Model.NewVacancyViewModel.ShortDescription</p>
-                    @Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyReferenceNumber, Model.ApplicationCount))
-                </div>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
+                <p id="vacancy-closing-date">@Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
             </div>
         </div>
     </div>
-    <div class="grid grid-1-3">
-        <div class="@editableItemClass">
-            <h3 class="bold-small">
-                Closing date
-                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
-            </h3>
-            <p id="vacancy-closing-date">@Model.VacancySummaryViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>
-            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.ClosingDate, Model.SummaryLink, Model.VacancySummaryViewModel.ClosingDateComment))
-        </div>
-    </div>
-</div>
 </section>
 <section class="section-border grid-wrapper" id="vacancy-info">
     <h2 class="heading-large">Apprenticeship summary</h2>
@@ -481,7 +507,7 @@
     </div>
 </section>
 
-@if (Model.NewVacancyViewModel.OfflineVacancy)
+@if (Model.NewVacancyViewModel.OfflineVacancy.Value)
 {
     <section class="section-border" id="offline-vacancy" style="">
         <div class="@editableItemClass">
