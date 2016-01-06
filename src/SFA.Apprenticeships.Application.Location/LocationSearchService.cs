@@ -14,7 +14,7 @@
         private readonly ILogService _logger;
         private readonly ILocationLookupProvider _locationLookupProvider;
         private readonly IPostcodeLookupProvider _postcodeLookupProvider;
-
+        
         public LocationSearchService(ILocationLookupProvider locationLookupProvider, IPostcodeLookupProvider postcodeLookupProvider, ILogService logger)
         {
             _locationLookupProvider = locationLookupProvider;

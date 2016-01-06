@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.VacancyPosting
 {
     using FluentValidation;
+    using FluentValidation.Validators;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.VacancyPosting;
 

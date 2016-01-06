@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3401,9 +3401,9 @@ select:focus {
       background-color: #00823b; }
     .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
   .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
@@ -6154,6 +6154,25 @@ h2 a i.raa-icon-comment {
 
 .preserve-formatting {
   white-space: pre-line; }
+
+.unselected-apprenticeship-type {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 15px 15px 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased; }
+  @media (max-width: 640px) {
+    .unselected-apprenticeship-type {
+      font-size: 16px;
+      line-height: 1.25; } }
 
 .applicant-location,
 .applicant-distance {

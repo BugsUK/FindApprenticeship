@@ -300,7 +300,7 @@
     <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
-    <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
@@ -334,8 +334,10 @@
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
     <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
@@ -343,6 +345,8 @@
     <Compile Include="ViewModels\Application\EducationViewModel.cs" />
     <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
@@ -363,6 +367,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\VacancyPosting\_comment.generated.cs">
+      <DependentUpon>_comment.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\VacancyPosting\ConfirmEmployer.generated.cs">
       <AutoGen>True</AutoGen>
@@ -407,6 +416,7 @@
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
@@ -458,7 +468,6 @@
     <Content Include="Content\_assets\img\screenshot-employer-notification.png" />
     <Content Include="Content\_assets\img\screenshot-idams.png" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
@@ -551,6 +560,10 @@
     <Content Include="Views\Shared\DisplayTemplates\AboutYou.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Education.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApplicantDetails.cshtml" />
+    <Content Include="Views\VacancyPosting\_comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_comment.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

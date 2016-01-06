@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LocationLookup.IoC
 {
-    using System;
     using Application.Location;
     using StructureMap.Configuration.DSL;
 

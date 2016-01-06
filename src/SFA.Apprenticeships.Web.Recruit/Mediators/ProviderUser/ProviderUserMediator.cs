@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Common.Models.Azure.AccessControlService;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
+    using Domain.Entities;
     using Validators.ProviderUser;
     using ViewModels;
     using ClaimTypes = Common.Constants.ClaimTypes;
@@ -68,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier, viewModel, AuthorizeMessages.MissingProviderIdentifier, UserMessageLevel.Error);
             }
 
-            if (!principal.IsInRole(Constants.Roles.Faa))
+            if (!principal.IsInRole(Roles.Faa))
             {
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Warning);
             }

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
+namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -33,51 +33,35 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
     using SFA.Apprenticeships.Web.Raa.Common;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Comment.cshtml")]
-    public partial class Comment_ : System.Web.Mvc.WebViewPage<string>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/EditorTemplates/CommentDetail.cshtml")]
+    public partial class CommentDetail_ : System.Web.Mvc.WebViewPage<string>
     {
-        public Comment_()
+        public CommentDetail_()
         {
         }
         public override void Execute()
         {
-            
-            #line 3 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
- if (!string.IsNullOrEmpty(Model))
-{
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    <details");
-
-WriteLiteral(" class=\"open\"");
-
-WriteLiteral(" open>\r\n        <summary>Comment</summary>\r\n        <div");
+WriteLiteral("<div");
 
 WriteLiteral(" class=\"detail-content qa-comment\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n    <div");
 
-WriteLiteral(" class=\"blocklabel-single-container preserve-formatting\"");
+WriteLiteral(" class=\"blocklabel-single-container\"");
 
-WriteLiteral(">");
+WriteLiteral(">\r\n");
 
-            
-            #line 8 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
-                                                                    Write(Model);
+WriteLiteral("        ");
 
             
-            #line default
-            #line hidden
-WriteLiteral("</div>\r\n        </div>\r\n    </details>\r\n");
+            #line 5 "..\..\Views\Shared\EditorTemplates\CommentDetail.cshtml"
+   Write(Html.FormTextAreaFor(m => m, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
-            
-            #line 11 "..\..\Views\Shared\DisplayTemplates\Comment.cshtml"
-}
             
             #line default
             #line hidden
+WriteLiteral("\r\n    </div>\r\n</div>");
+
         }
     }
 }

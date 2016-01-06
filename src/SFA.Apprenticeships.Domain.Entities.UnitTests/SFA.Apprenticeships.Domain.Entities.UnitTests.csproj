@@ -98,6 +98,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Builder\CandidateBuilder.cs" />
+    <Compile Include="Builder\ClaimsPrincipalBuilder.cs" />
     <Compile Include="Builder\SavedSearchBuilder.cs" />
     <Compile Include="Builder\UserBuilder.cs" />
     <Compile Include="Candidates\CandidateHelperTests.cs" />

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 {
-    using System;
     using System.Collections.Generic;
     using Locations;
 

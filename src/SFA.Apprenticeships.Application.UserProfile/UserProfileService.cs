@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Users;
@@ -19,6 +20,11 @@
             _providerUserWriteRepository = providerUserWriteRepository;
             _agencyUserReadRepository = agencyUserReadRepository;
             _agencyUserWriteRepository = agencyUserWriteRepository;
+        }
+
+        public ProviderUser GetProviderUser(Guid id)
+        {
+            return _providerUserReadRepository.Get(id);
         }
 
         public ProviderUser GetProviderUser(string username)

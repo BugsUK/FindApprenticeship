@@ -28,7 +28,7 @@
         }
     }
 
-    internal static class NewVacancyViewModelServerValidatorRules
+    internal static class NewVacancyViewModelValidatorRules
     {
         internal static void AddCommonRules(this AbstractValidator<NewVacancyViewModel> validator)
         {
@@ -51,6 +51,10 @@
             validator.RuleFor(m => m.ShortDescriptionComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(x => x.OfflineVacancy)
+                .NotNull()
+                .WithMessage(VacancyViewModelMessages.OfflineVacancy.RequiredErrorText);
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
@@ -123,7 +127,7 @@
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value == true);
         }
     }
 }

@@ -36,5 +36,7 @@
         public DateTime DateUpdated { get; set; }
 
         public DateTime? DateApplied { get; set; }
+
+        public string Notes { get; set; }
     }
 }

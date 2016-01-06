@@ -34,7 +34,7 @@
             For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
-            if (servicesConfiguration.ServiceImplementation == "Legacy")
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
                 For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
 
@@ -85,7 +85,7 @@
             For<IMapper>().Use<ApplicationStatusSummaryMapper>()
                 .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
 
-            if (servicesConfiguration.ServiceImplementation == "Legacy")
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<LegacyCandidateApplicationStatusesProvider>()

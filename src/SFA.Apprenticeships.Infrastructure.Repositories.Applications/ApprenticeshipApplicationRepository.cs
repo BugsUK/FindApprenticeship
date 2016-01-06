@@ -145,17 +145,17 @@
             return applicationSummaries;
         }
 
-        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
         {
             _logger.Debug("Calling repository to get submitted ApprenticeshipApplicationSummaries with VacancyId:{0}", vacancyId);
 
-            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).OrderBy(a => a.Status).ThenByDescending(a => a.DateApplied).ToArray();
+            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).OrderBy(a => a.Status).ThenByDescending(a => a.DateUpdated).ToArray();
 
             _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
 
             var applicationSummaries =
                 _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
-                    mongoEntities);
+                    mongoEntities).ToList();
 
             return applicationSummaries;
         }
@@ -242,6 +242,24 @@
             Save(applicationDetail);
 
             _logger.Debug("Saved expired or withdrawn apprenticeship application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
+        }
+
+        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        {
+            _logger.Debug("Calling repository to update apprenticeship application notes for application with Id={0}", applicationId);
+
+            var result = Collection.Update(Query<ApprenticeshipApplicationDetail>.EQ(e => e.EntityId, applicationId), Update<ApprenticeshipApplicationDetail>.Set(e => e.Notes, notes).Set(e => e.DateUpdated, DateTime.UtcNow));
+
+            if (result.Ok)
+            {
+                _logger.Debug("Called repository to update apprenticeship application notes for application with Id={0} successfully", applicationId);
+            }
+            else
+            {
+                var message = $"Call to repository to update apprenticeship application notes for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+                _logger.Error(message);
+                throw new Exception(message);
+            }
         }
     }
 }

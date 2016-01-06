@@ -6,6 +6,7 @@
         {
             public const string RequiredErrorText = "You must enter the number of positions for this apprenticeship location";
             public const string AtLeastOnePositionErrorText = "You must enter at least 1 position";
+            public const string TooManyPositionsErrorText = "You can't enter more than 1,000 positions";
         } 
     }
 }

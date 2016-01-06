@@ -73,16 +73,12 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div>\r\n    <h1");
-
-WriteLiteral(" class=\"heading-xlarge\"");
-
-WriteLiteral(">\r\n        Vacancy preview\r\n    </h1>\r\n\r\n");
+WriteLiteral("\r\n\r\n<div>\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 15 "..\..\Views\Vacancy\Review.cshtml"
+            #line 11 "..\..\Views\Vacancy\Review.cshtml"
 Write(Html.DisplayFor(m => m, VacancyViewModel.PartialView));
 
             
@@ -91,13 +87,13 @@ Write(Html.DisplayFor(m => m, VacancyViewModel.PartialView));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 17 "..\..\Views\Vacancy\Review.cshtml"
+            #line 13 "..\..\Views\Vacancy\Review.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\Vacancy\Review.cshtml"
+            #line 13 "..\..\Views\Vacancy\Review.cshtml"
      using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
     {
         
@@ -105,14 +101,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Vacancy\Review.cshtml"
+            #line 15 "..\..\Views\Vacancy\Review.cshtml"
    Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Vacancy\Review.cshtml"
+            #line 15 "..\..\Views\Vacancy\Review.cshtml"
                                                       
 
 
@@ -151,20 +147,20 @@ WriteLiteral(">Refer</button>\r\n                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 898), Tuple.Create("\"", 950)
+WriteAttribute("href", Tuple.Create(" href=\"", 827), Tuple.Create("\"", 879)
             
-            #line 25 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 905), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
+            #line 21 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 834), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
             
             #line default
             #line hidden
-, 905), false)
+, 834), false)
 );
 
 WriteLiteral(">Return to dashboard</a>\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 28 "..\..\Views\Vacancy\Review.cshtml"
+            #line 24 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             
