@@ -694,7 +694,7 @@
 
             vacancy.EntityId = Guid.NewGuid();
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
             var result = vacancy.ProviderSiteEmployerLink.Convert();
             result.VacancyGuid = vacancy.EntityId;

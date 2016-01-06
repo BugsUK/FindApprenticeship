@@ -30,7 +30,7 @@
 
             provider.CloneVacancy(initialVacancyReferenceNumber);
 
-            MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => CheckClonedVacancy(v, newVacancyReferenceNumber, dateTimeNow))));
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => CheckClonedVacancy(v, newVacancyReferenceNumber, dateTimeNow))));
         }
 
         private bool CheckClonedVacancy(ApprenticeshipVacancy clonedVacancy, long newVacancyReferenceNumber, DateTime dateTimeNow)
