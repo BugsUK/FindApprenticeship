@@ -46,14 +46,6 @@
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancySummaryViewModelConverter>();
 
-            //Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>()
-            //    .ForMember(dest => dest.Duration, opt => opt.ResolveUsing<NullableIntToNullableDecimalResolver>().FromMember(src => src.Duration))
-            //    .ForMember(dest => dest.WageUnits, opt => opt.Ignore())
-            //    .ForMember(dest => dest.DurationTypes, opt => opt.Ignore())
-            //    .ForMember(dest => dest.WarningsHash, opt => opt.Ignore())
-            //    .ForMember(dest => dest.AcceptWarnings, opt => opt.Ignore())
-            //    .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
-
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyQuestionsViewModel>()

@@ -28,7 +28,10 @@
         [Test]
         public void DefaultShouldHaveValidationErrors()
         {
-            var viewModel = new VacancySummaryViewModel();
+            var viewModel = new VacancySummaryViewModel
+            {
+                VacancyDatesViewModel = new VacancyDatesViewModel()
+            };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             var result = _validator.Validate(viewModel, ruleSet: RuleSet);
