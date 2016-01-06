@@ -69,8 +69,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             //Act
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
-            var closingDateYearError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#closingdate_year");
-            var possibleStartDateError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#possiblestartdate_year");
+            var closingDateYearError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#vacancydatesviewmodel_closingdate_year");
+            var possibleStartDateError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#vacancydatesviewmodel_possiblestartdate_year");
 
             //Assert
             if (expectValid)

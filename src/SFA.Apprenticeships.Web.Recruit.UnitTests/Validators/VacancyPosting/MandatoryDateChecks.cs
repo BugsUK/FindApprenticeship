@@ -103,12 +103,12 @@
             _aggregateValidator.Validate(vacancyViewModel);
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
-            _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel.ClosingDate, viewModel, RuleSet);
-            _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel.PossibleStartDate, viewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel, vm => vm.VacancyDatesViewModel.ClosingDate, viewModel, RuleSet);
+            _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyDatesViewModel, vm => vm.VacancyDatesViewModel.PossibleStartDate, viewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
         }
 
         [Test]

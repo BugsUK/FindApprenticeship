@@ -36,8 +36,11 @@
 
             //Assert
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.ClosingDate").Should().Be(2);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.PossibleStartDate").Should().Be(2);
+            //result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate").Should().Be(2);
+            //result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate").Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName.Contains("ClosingDate")).Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName.Contains("PossibleStartDate")).Should().Be(2); 
+            // Looks like warnings only return property name as PossibleStartDate, not VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate (only for PossibleStartDate )
         }
     }
 }

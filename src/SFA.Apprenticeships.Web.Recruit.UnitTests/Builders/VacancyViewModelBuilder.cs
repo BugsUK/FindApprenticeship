@@ -12,7 +12,6 @@
         private NewVacancyViewModel _newVacancyViewModel = new NewVacancyViewModel();
         private VacancyRequirementsProspectsViewModel _vacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel();
         private VacancyQuestionsViewModel _vacancyQuestionsViewModel = new VacancyQuestionsViewModel();
-        private VacancyDatesViewModel _vacancyDatesViewModel = new VacancyDatesViewModel();
         private VacancySummaryViewModel _vacancySummaryViewModel = new VacancySummaryViewModel
         {
             VacancyDatesViewModel = new VacancyDatesViewModel()
@@ -20,8 +19,6 @@
 
         public VacancyViewModel Build()
         {
-            _vacancySummaryViewModel.VacancyDatesViewModel = _vacancyDatesViewModel;
-
             var viewModel = new VacancyViewModel
             {
                 NewVacancyViewModel = _newVacancyViewModel,
@@ -80,7 +77,7 @@
 
         public VacancyViewModelBuilder With(VacancyDatesViewModel vacancyDatesViewModel)
         {
-            _vacancyDatesViewModel = vacancyDatesViewModel;
+            _vacancySummaryViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
             return this;
         }
     }

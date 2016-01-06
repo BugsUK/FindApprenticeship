@@ -55,4 +55,44 @@
             return destination;
         }
     }
+
+    internal sealed class ApprenticeshipVacancyToVacancySummaryViewModelConverter : ITypeConverter<ApprenticeshipVacancy, VacancySummaryViewModel>
+    {
+        public VacancySummaryViewModel Convert(ResolutionContext context)
+        {
+            var source = (ApprenticeshipVacancy)context.SourceValue;
+
+            /*
+            return source.HasValue ? (decimal?)source.Value : null;
+            Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>()
+                .ForMember(dest => dest.Duration, opt => opt.ResolveUsing<NullableIntToNullableDecimalResolver>().FromMember(src => src.Duration))
+                .ForMember(dest => dest.WageUnits, opt => opt.Ignore())
+                .ForMember(dest => dest.DurationTypes, opt => opt.Ignore())
+                .ForMember(dest => dest.WarningsHash, opt => opt.Ignore())
+                .ForMember(dest => dest.AcceptWarnings, opt => opt.Ignore())
+                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
+            */
+            var destination = new VacancySummaryViewModel
+            {
+                Duration = source.Duration.HasValue ? (decimal?) source.Duration.Value : null,
+                DurationComment = source.DurationComment,
+                DurationType = source.DurationType,
+                HoursPerWeek = source.HoursPerWeek,
+                LongDescription = source.LongDescription,
+                LongDescriptionComment = source.LongDescriptionComment,
+                VacancyReferenceNumber = source.VacancyReferenceNumber,
+                Wage = source.Wage,
+                WageComment = source.WageComment,
+                WageType = source.WageType,
+                WageUnit = source.WageUnit,
+                WorkingWeek = source.WorkingWeek,
+                WorkingWeekComment = source.WorkingWeekComment,
+                Status = source.Status,
+                VacancyDatesViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source)
+            };
+
+
+            return destination;
+        }
+    }
 }
