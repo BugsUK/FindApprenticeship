@@ -22,8 +22,6 @@
             ThingsToConsider = SomeString
         };
 
-        private VacancyViewModel vacancyViewModel;
-
         [Test]
         public void ShouldReturnOkAndExitIfCalledFromTheSaveAndExitAction()
         {

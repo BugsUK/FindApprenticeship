@@ -42,20 +42,18 @@
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
-        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
         private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
             _referenceDataService = referenceDataService;
             _providerService = providerService;
             _dateTimeService = dateTimeService;
-            _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
             _configurationService = configurationService;
             _mapper = mapper;
@@ -611,7 +609,7 @@
             }
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
-            var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
+            var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn);
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
@@ -733,7 +731,7 @@
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
         {
             var vacancies =
-                _apprenticeshipVacancyReadRepository.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+                _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
 
             return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
         }
@@ -800,7 +798,7 @@
 
         public void ApproveVacancy(long vacancyReferenceNumber)
         {
-            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             vacancy.Status = ProviderVacancyStatuses.Live;
             vacancy.DateQAApproved = _dateTimeService.UtcNow();
 
@@ -809,7 +807,7 @@
 
         public void RejectVacancy(long vacancyReferenceNumber)
         {
-            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
             vacancy.QAUserName = null;
 

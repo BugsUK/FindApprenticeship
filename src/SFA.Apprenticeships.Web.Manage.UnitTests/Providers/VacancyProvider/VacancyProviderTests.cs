@@ -20,7 +20,6 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Application.Interfaces.VacancyPosting;
-    using Domain.Entities.Locations;
     using Common.Configuration;
     using Common.ViewModels;
     using Domain.Interfaces.Mapping;
@@ -195,6 +194,7 @@
         {
             //Arrange
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
             const string ukprn = "ukprn";
             var configurationService = new Mock<IConfigurationService>();
@@ -203,7 +203,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            apprenticeshipVacancyRepository.Setup(
+            vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(new List<ApprenticeshipVacancy>
                 {
@@ -225,6 +225,7 @@
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
                     .With(providerService)
+                    .With(vacancyPostingService)
                     .With(configurationService)
                     .Build();
 
@@ -232,7 +233,7 @@
             vacancyProvider.GetPendingQAVacancies();
 
             //Assert
-            apprenticeshipVacancyRepository.Verify(avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA));
+            vacancyPostingService.Verify(avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA));
             providerService.Verify(ps => ps.GetProvider(ukprn), Times.Once);
         }
 
@@ -249,21 +250,23 @@
             var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
             var configurationService = new Mock<IConfigurationService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(apprenticeshipVacancyReadRepository)
                     .With(configurationService)
+                    .With(vacancyPostingService)
                     .Build();
 
             //Act
             vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
-            apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyReferenceNumber));
+            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
             apprenticeshipVacancyWriteRepository.Verify(
                 r =>
                     r.Save(
@@ -285,22 +288,24 @@
 
             var apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            apprenticeshipVacancyReadRepository.Setup(r => r.Get(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyWriteRepository)
                     .With(apprenticeshipVacancyReadRepository)
                     .With(configurationService)
+                    .With(vacancyPostingService)
                     .Build();
 
             //Act
             vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
-            apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyReferenceNumber));
+            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
             apprenticeshipVacancyWriteRepository.Verify(
                 r =>
                     r.Save(
@@ -316,6 +321,7 @@
         {
             //Arrange
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
             const string ukprn = "ukprn";
             const int vacancyReferenceNumber = 1;
@@ -341,7 +347,7 @@
                 }
             };
 
-            apprenticeshipVacancyRepository.Setup(
+            vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
@@ -351,6 +357,7 @@
                 new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
                     .With(providerService)
                     .With(configurationService)
+                    .With(vacancyPostingService)
                     .Build();
 
             //Act
@@ -366,6 +373,7 @@
         {
             //Arrange
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
             const string ukprn = "ukprn";
             const int vacancyReferenceNumberOK = 1;
@@ -409,7 +417,7 @@
                 }
             };
 
-            apprenticeshipVacancyRepository.Setup(
+            vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
@@ -419,6 +427,7 @@
                 new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
                     .With(providerService)
                     .With(configurationService)
+                    .With(vacancyPostingService)
                     .Build();
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
@@ -436,6 +445,7 @@
         {
             //Arrange
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
             const string ukprn = "ukprn";
             const int vacancyReferenceNumberOK = 1;
@@ -479,7 +489,7 @@
                 }
             };
 
-            apprenticeshipVacancyRepository.Setup(
+            vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
@@ -488,6 +498,7 @@
             var vacancyProvider =
                 new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
                     .With(providerService)
+                    .With(vacancyPostingService)
                     .With(configurationService)
                     .Build();
 
@@ -515,6 +526,7 @@
             const int vacancyReferenceNumberNonOK = 2;
 
             var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
             var timeService = new Mock<IDateTimeService>();
             var configurationService = new Mock<IConfigurationService>();
@@ -555,7 +567,7 @@
                 }
             };
 
-            apprenticeshipVacancyRepository.Setup(
+            vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
@@ -565,6 +577,7 @@
                 new VacancyProviderBuilder().With(apprenticeshipVacancyRepository)
                     .With(providerService)
                     .With(timeService)
+                    .With(vacancyPostingService)
                     .With(configurationService)
                     .Build();
 

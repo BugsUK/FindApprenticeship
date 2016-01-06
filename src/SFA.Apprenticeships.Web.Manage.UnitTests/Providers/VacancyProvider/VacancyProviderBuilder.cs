@@ -31,8 +31,8 @@
         public IVacancyQAProvider Build()
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
-                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object, _mapper.Object, _apprenticeshipApplicationService.Object, _userProfileService.Object);
+                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyWriteRepository.Object, 
+                _mapper.Object, _apprenticeshipApplicationService.Object, _userProfileService.Object);
         }
 
         public VacancyProviderBuilder With(
