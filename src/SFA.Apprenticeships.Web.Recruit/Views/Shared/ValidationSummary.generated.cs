@@ -200,7 +200,8 @@ WriteLiteral(">\r\n        <ul>\r\n");
              foreach (var modelKey in Model.Keys)
             {
                 var modelState = Model[modelKey];
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey).Replace("_", ".");
+
                 var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof (ModelError));
                 foreach (var modelError in modelState.Errors)
                 {
@@ -215,7 +216,7 @@ WriteLiteral(">\r\n        <ul>\r\n");
 WriteLiteral("                            <li>");
 
             
-            #line 50 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 51 "..\..\Views\Shared\ValidationSummary.cshtml"
                            Write(modelError.ErrorMessage);
 
             
@@ -224,7 +225,7 @@ WriteLiteral("                            <li>");
 WriteLiteral("</li>\r\n");
 
             
-            #line 51 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 52 "..\..\Views\Shared\ValidationSummary.cshtml"
                         }
                         else
                         {
@@ -234,21 +235,21 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2201), Tuple.Create("\"", 2232)
-, Tuple.Create(Tuple.Create("", 2208), Tuple.Create("#", 2208), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2221), Tuple.Create("\"", 2252)
+, Tuple.Create(Tuple.Create("", 2228), Tuple.Create("#", 2228), true)
             
-            #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create("", 2229), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2209), false)
+, 2229), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
                                                               Write(modelError.ErrorMessage);
 
             
@@ -257,7 +258,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 56 "..\..\Views\Shared\ValidationSummary.cshtml"
                         }
                     }
                 }
@@ -271,7 +272,7 @@ WriteLiteral("        </ul>\r\n");
 WriteLiteral("        ");
 
             
-            #line 60 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 61 "..\..\Views\Shared\ValidationSummary.cshtml"
    Write(Html.Hidden("acceptWarnings", @hasWarnings));
 
             
