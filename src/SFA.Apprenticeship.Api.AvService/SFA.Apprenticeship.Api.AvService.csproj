@@ -170,6 +170,14 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Contrib, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -385,6 +393,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.csproj">
+      <Project>{5C01B37D-8C9E-454F-864A-8861E051A170}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
       <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>

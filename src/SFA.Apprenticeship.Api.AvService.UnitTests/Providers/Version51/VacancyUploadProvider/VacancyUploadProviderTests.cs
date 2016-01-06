@@ -30,7 +30,7 @@
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(new ApprenticeshipVacancy());
 
             // Provider.
@@ -82,7 +82,7 @@
 
             // Assert.
             _mockVacancyPostingService.Verify(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Exactly(vacancyCount));
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Exactly(vacancyCount));
         }
 
         [TestCase(null)]
@@ -108,7 +108,7 @@
 
             // Assert.
             _mockVacancyPostingService.Verify(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Never);
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Never);
         }
     }
 }

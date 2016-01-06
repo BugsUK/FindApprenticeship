@@ -10,15 +10,25 @@
 
     public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
     {
-        public ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadData vacancyUploadData)
+        public ApprenticeshipVacancy ToNewApprenticeshipVacancy(VacancyUploadData vacancyUploadData)
         {
             return new ApprenticeshipVacancy
             {
+                EntityId = Guid.NewGuid(),
                 VacancyReferenceNumber = 0, // allocated on save
                 Ukprn = vacancyUploadData.ContractedProviderUkprn.ToString(),
+
                 Title = vacancyUploadData.Title,
+                TitleComment = null,
+
                 ShortDescription = vacancyUploadData.ShortDescription,
+                ShortDescriptionComment = null,
+
                 LongDescription = vacancyUploadData.LongDescription,
+                LongDescriptionComment = null,
+
+                ProviderSiteEmployerLink = null,
+
                 /*
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLink
                 {
@@ -40,38 +50,69 @@
 
                 WorkingWeek = vacancyUploadData.Vacancy.WorkingWeek,
                 HoursPerWeek = null,
+                WorkingWeekComment = null,
 
                 WageType = WageType.Custom,
                 WageUnit = WageUnit.Weekly,
                 Wage = vacancyUploadData.Vacancy.Wage,
+                WageComment = null,
 
                 DurationType = DurationType.Unknown,
                 Duration = default(int?),
                 DurationComment = vacancyUploadData.Apprenticeship.ExpectedDuration,
 
                 ClosingDate = vacancyUploadData.Application.ClosingDate,
+                ClosingDateComment = null,
+
                 InterviewStartDate = vacancyUploadData.Application.InterviewStartDate,
+
                 PossibleStartDate = vacancyUploadData.Application.PossibleStartDate,
+                PossibleStartDateComment = null,
 
                 DesiredSkills = vacancyUploadData.Vacancy.SkillsRequired,
+                DesiredSkillsComment = null,
+
                 FutureProspects = vacancyUploadData.Vacancy.FutureProspects,
+                FutureProspectsComment = null,
+
                 PersonalQualities = vacancyUploadData.Vacancy.PersonalQualities,
+                PersonalQualitiesComment = null,
+
                 ThingsToConsider = vacancyUploadData.Vacancy.RealityCheck,
+                ThingsToConsiderComment = null,
+
                 DesiredQualifications = vacancyUploadData.Vacancy.QualificationRequired,
+                DesiredQualificationsComment = null,
 
                 FirstQuestion = vacancyUploadData.Vacancy.SupplementaryQuestion1,
+                FirstQuestionComment = null,
+
                 SecondQuestion = vacancyUploadData.Vacancy.SupplementaryQuestion2,
+                SecondQuestionComment = null,
 
                 OfflineVacancy = vacancyUploadData.Application.Type == ApplicationType.Offline,
+
                 OfflineApplicationUrl = vacancyUploadData.Vacancy.LocationDetails.First().EmployerWebsite,
+                OfflineApplicationUrlComment = null,
+
                 OfflineApplicationInstructions = vacancyUploadData.Application.Instructions,
+                OfflineApplicationInstructionsComment = null,
 
                 ApprenticeshipLevel = MapVacancyApprenticeshipType(vacancyUploadData.Apprenticeship.Type),
+                ApprenticeshipLevelComment = null,
+
                 FrameworkCodeName = vacancyUploadData.Apprenticeship.Framework,
+                FrameworkCodeNameComment = null,
+
                 TrainingType = TrainingType.Frameworks,
                 StandardId = default(int?),
                 Status = ProviderVacancyStatuses.Draft,
-                DateCreated = DateTime.UtcNow
+                DateCreated = DateTime.UtcNow,
+
+                // TODO: US872: NumberOfPositions
+                // TODO: US872: IsEmployerLocationMainApprenticeshipLocation
+                // TODO: US872: LocationAddresses
+                // TODO: US872: AdditionalLocationInformation
             };
         }
 

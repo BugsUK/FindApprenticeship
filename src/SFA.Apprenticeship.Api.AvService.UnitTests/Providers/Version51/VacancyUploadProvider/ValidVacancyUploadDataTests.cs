@@ -34,7 +34,7 @@
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(new ApprenticeshipVacancy());
 
             // Builders.
@@ -88,7 +88,7 @@
             };
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(new ApprenticeshipVacancy
                 {
                     VacancyReferenceNumber = vacancyReferenceNumber
@@ -155,11 +155,11 @@
             };
 
             _mockVacancyUploadRequestMapper.Setup(mock =>
-                mock.ToApprenticeshipVacancy(vacancyUploadData))
+                mock.ToNewApprenticeshipVacancy(vacancyUploadData))
                 .Returns(vacancy);
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.SaveApprenticeshipVacancy(vacancy))
+                mock.CreateApprenticeshipVacancy(vacancy))
                 .Returns(vacancy);
 
             // Act.
@@ -171,7 +171,7 @@
             response.Vacancies.Single().ReferenceNumber.Should().Be(vacancyReferenceNumber);
 
             _mockVacancyUploadRequestMapper.Verify(mock =>
-                mock.ToApprenticeshipVacancy(vacancyUploadData), Times.Once);
+                mock.ToNewApprenticeshipVacancy(vacancyUploadData), Times.Once);
         }
     }
 }

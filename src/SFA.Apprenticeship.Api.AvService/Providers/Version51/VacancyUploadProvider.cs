@@ -52,13 +52,13 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
         private VacancyUploadResultData UploadVacancy(VacancyUploadData vacancyUploadData)
         {
-            var mappedVacancy = _vacancyUploadRequestMapper.ToApprenticeshipVacancy(vacancyUploadData);
-            var savedVacancy = _vacancyPostingService.SaveApprenticeshipVacancy(mappedVacancy);
+            var mappedVacancy = _vacancyUploadRequestMapper.ToNewApprenticeshipVacancy(vacancyUploadData);
+            var createdVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(mappedVacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData
             {
                 VacancyId = vacancyUploadData.VacancyId,
-                ReferenceNumber = Convert.ToInt32(savedVacancy.VacancyReferenceNumber),
+                ReferenceNumber = Convert.ToInt32(createdVacancy.VacancyReferenceNumber),
                 Status = VacancyUploadResult.Success,
                 ErrorCodes = new List<ElementErrorData>()
             };

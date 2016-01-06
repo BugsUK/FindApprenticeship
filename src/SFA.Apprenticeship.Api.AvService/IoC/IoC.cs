@@ -1,7 +1,9 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.IoC
+﻿using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+using SFA.Apprenticeships.Application.VacancyPosting;
+using SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
+
+namespace SFA.Apprenticeship.Api.AvService.IoC
 {
-    using Apprenticeships.Application.Interfaces.VacancyPosting;
-    using Apprenticeships.Application.VacancyPosting;
     using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
@@ -22,7 +24,8 @@
 
                 // Repositories.
                 x.AddRegistry<VacancyRepositoryRegistry>();
-
+                x.AddRegistry<UserProfileRepositoryRegistry>();
+                
                 // Services.
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
 

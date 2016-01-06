@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
+﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
+
+namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
 {
     using System;
     using System.Security;
@@ -13,27 +15,45 @@
     [ServiceBehavior(Namespace = Namespace.Uri)]
     public class VacancyManagementService : IVacancyManagement
     {
+        private readonly ILogService _logService;
         private readonly IVacancyUploadProvider _vacancyUploadProvider;
 
-        public VacancyManagementService(IVacancyUploadProvider vacancyUploadProvider)
+        public VacancyManagementService(
+            ILogService logService,
+            IVacancyUploadProvider vacancyUploadProvider)
         {
+            _logService = logService;
             _vacancyUploadProvider = vacancyUploadProvider;
         }
 
         public VacancyUploadResponse UploadVacancies(VacancyUploadRequest request)
         {
-            if (request == null)
+            object context = new
             {
-                throw new ArgumentNullException(nameof(request));
-            }
+                request?.ExternalSystemId,
+                request?.MessageId
+            };
 
-            // TODO: API: AG: remove test code.
-            if (request.MessageId == Guid.Empty)
+            try
             {
-                throw new SecurityException();
-            }
+                if (request == null)
+                {
+                    throw new ArgumentNullException(nameof(request));
+                }
 
-            return _vacancyUploadProvider.UploadVacancies(request);
+                // TODO: API: AG: remove test code.
+                if (request.MessageId == Guid.Empty)
+                {
+                    throw new SecurityException();
+                }
+
+                return _vacancyUploadProvider.UploadVacancies(request);
+            }
+            catch (Exception e)
+            {
+                _logService.Error(e, context);
+                throw;
+            }
         }
     }
 }
