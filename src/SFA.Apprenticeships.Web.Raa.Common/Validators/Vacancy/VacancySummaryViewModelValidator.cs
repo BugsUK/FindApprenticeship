@@ -133,7 +133,7 @@
             validator.Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration, parentPropertyName));
 
             validator.RuleFor(x => x.VacancyDatesViewModel)
-                .SetValidator(new VacancyDatesViewModelServerWarningValidator());
+                .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyName + ".VacancyDatesViewModel"));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

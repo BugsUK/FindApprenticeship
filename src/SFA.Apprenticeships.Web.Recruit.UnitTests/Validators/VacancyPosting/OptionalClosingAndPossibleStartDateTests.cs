@@ -10,7 +10,6 @@
     using NUnit.Framework;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
-    using ReflectionMagic;
 
     [TestFixture]
     public class OptionalClosingAndPossibleStartDateTests
@@ -27,7 +26,7 @@
         {
             _commonValidator = new VacancyDatesViewModelCommonValidator();
             _serverCommonValidator = new VacancyDatesViewModelServerCommonValidator();
-            _serverWarningValidator = new VacancyDatesViewModelServerWarningValidator();
+            _serverWarningValidator = new VacancyDatesViewModelServerWarningValidator(null);
             _aggregateValidator = new VacancyViewModelValidator();
         }
 
@@ -97,7 +96,7 @@
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _serverWarningValidator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
         }
         
         [Test]
@@ -115,7 +114,7 @@
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _serverWarningValidator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel, vm => vm.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, vacancyViewModel, RuleSet);
         }
 
         

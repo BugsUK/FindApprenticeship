@@ -25,9 +25,9 @@
 
     public class VacancyDatesViewModelServerWarningValidator : AbstractValidator<VacancyDatesViewModel>
     {
-        public VacancyDatesViewModelServerWarningValidator()
+        public VacancyDatesViewModelServerWarningValidator(string parentPropertyName)
         {
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));
         }
     }
 
