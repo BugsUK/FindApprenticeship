@@ -178,6 +178,8 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyDatesViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancySummaryViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
