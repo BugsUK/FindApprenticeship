@@ -140,6 +140,18 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
                     .GTE(vacancy => vacancy.DateSubmitted, query.LiveDate));
             }
 
+            if (query.LatestClosingDate.HasValue)
+            {
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .LTE(vacancy => vacancy.ClosingDate, query.LatestClosingDate));
+            }
+
+            if (query.DesiredStatuses.Any())
+            {
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .In(vacancy => vacancy.Status, query.DesiredStatuses));
+            }
+
             var queryBuilder = new QueryBuilder<ApprenticeshipVacancy>();
 
             var vacancies = Collection.Find(queryBuilder.And(mongoQueryConditions))

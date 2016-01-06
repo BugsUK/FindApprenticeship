@@ -201,6 +201,7 @@
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\VacancyAboutToExpireSubscriber.cs" />
     <Compile Include="Vacancies\VacancyEtlMapper.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorSubscriber.cs" />
     <Compile Include="Vacancies\VacancyStatusSummarySubscriber.cs" />
     <Compile Include="Extensions\VacancyStatusSummaryExtensions.cs" />
     <Compile Include="IoC\ProcessesRegistry.cs" />
