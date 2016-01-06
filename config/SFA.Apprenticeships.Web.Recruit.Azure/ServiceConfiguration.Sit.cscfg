@@ -11,7 +11,7 @@
     <AddressAssignments>
       <InstanceAddress roleName="SFA.Apprenticeships.Web.Recruit">
         <Subnets>
-          <Subnet name="CandidateWeb" />
+          <Subnet name="ProviderWeb" />
         </Subnets>
       </InstanceAddress>
     </AddressAssignments>
