@@ -31,6 +31,8 @@
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
             viewModel.NewVacancyViewModel.TrainingType = TrainingType.Frameworks;
             viewModel.NewVacancyViewModel.OfflineVacancy = false;
+            viewModel.NewVacancyViewModel.OfflineApplicationUrl = null;
+            viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;
             viewModel.NewVacancyViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
             viewModel.VacancySummaryViewModel.Status = status;
             viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
