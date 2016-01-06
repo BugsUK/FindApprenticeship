@@ -1043,7 +1043,7 @@ WriteLiteral("\r\n            </div>\r\n            <div");
 WriteLiteral(" class=\"hide-js\"");
 
 WriteLiteral(">Only answer if the vacancy applications will be managed through an external webs" +
-"ite</div>\r\n            <div");
+"ite:</div>\r\n            <div");
 
 WriteLiteral(" id=\"offline-panel\"");
 
@@ -1214,14 +1214,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 13224), Tuple.Create("\"", 13248)
+WriteAttribute("value", Tuple.Create(" value=\"", 13225), Tuple.Create("\"", 13249)
             
             #line 203 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                 , Tuple.Create(Tuple.Create("", 13232), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                 , Tuple.Create(Tuple.Create("", 13233), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 13232), false)
+, 13233), false)
 );
 
 WriteLiteral(">");
@@ -1335,9 +1335,22 @@ WriteLiteral("\") {\r\n                apprenticeshipLevel = \"");
             
             #line default
             #line hidden
-WriteLiteral("\";\r\n            }\r\n            $(\"#apprenticeship-level-name\").text(apprenticeshi" +
-"pLevel);\r\n            $(\"#apprenticeship-level-container\").show();\r\n        });\r" +
-"\n    </script>\r\n");
+WriteLiteral(@""";
+            }
+            $(""#apprenticeship-level-name"").text(apprenticeshipLevel);
+            $(""#apprenticeship-level-container"").show();
+        });
+
+        $(""input[name='OfflineVacancy']"").change(function () {
+            var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
+            if (selectedValue === ""False"") {
+                $(""#apprenticeship-offline-application-url"").val("""");
+                $(""#apprenticheship-offline-application-instructions"").val("""");
+            }
+        });
+
+    </script>
+");
 
 });
 

@@ -175,7 +175,7 @@
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
-            <div class="hide-js">Only answer if the vacancy applications will be managed through an external website</div>
+            <div class="hide-js">Only answer if the vacancy applications will be managed through an external website:</div>
             <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
                 <div class="form-group">
                     @* ReSharper disable once Html.IdNotResolved *@
@@ -220,6 +220,15 @@
             $("#apprenticeship-level-name").text(apprenticeshipLevel);
             $("#apprenticeship-level-container").show();
         });
+
+        $("input[name='OfflineVacancy']").change(function () {
+            var selectedValue = $("input[name='OfflineVacancy']:checked").val();
+            if (selectedValue === "False") {
+                $("#apprenticeship-offline-application-url").val("");
+                $("#apprenticheship-offline-application-instructions").val("");
+            }
+        });
+
     </script>
 }
 
