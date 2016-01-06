@@ -132,8 +132,12 @@
         {
             validator.Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration, parentPropertyName));
 
+            var parentPropertyNameToUse = string.IsNullOrWhiteSpace(parentPropertyName)
+                ? "VacancyDatesViewModel"
+                : parentPropertyName + ".VacancyDatesViewModel";
+
             validator.RuleFor(x => x.VacancyDatesViewModel)
-                .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyName + ".VacancyDatesViewModel"));
+                .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyNameToUse));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

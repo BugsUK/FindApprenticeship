@@ -200,7 +200,7 @@ WriteLiteral(">\r\n        <ul>\r\n");
              foreach (var modelKey in Model.Keys)
             {
                 var modelState = Model[modelKey];
-                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey).Replace("_", ".");
+                var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
 
                 var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof (ModelError));
                 foreach (var modelError in modelState.Errors)
@@ -235,15 +235,15 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2221), Tuple.Create("\"", 2252)
-, Tuple.Create(Tuple.Create("", 2228), Tuple.Create("#", 2228), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2203), Tuple.Create("\"", 2234)
+, Tuple.Create(Tuple.Create("", 2210), Tuple.Create("#", 2210), true)
             
             #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2229), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+, Tuple.Create(Tuple.Create("", 2211), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2229), false)
+, 2211), false)
 );
 
 WriteLiteral(">");
