@@ -9,9 +9,9 @@
   <NetworkConfiguration>
     <VirtualNetworkSite name="nasprod" />
     <AddressAssignments>
-      <InstanceAddress roleName="SFA.Apprenticeships.Web.Candidate">
+      <InstanceAddress roleName="SFA.Apprenticeships.Web.Manage">
         <Subnets>
-          <Subnet name="CandidateWeb" />
+          <Subnet name="ProviderWeb" />
         </Subnets>
       </InstanceAddress>
     </AddressAssignments>
