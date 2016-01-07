@@ -422,7 +422,7 @@
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
 
             vacancy.ClosingDate = viewModel.ClosingDate.Date;
-            vacancy.PossibleStartDate = viewModel.ClosingDate.Date;
+            vacancy.PossibleStartDate = viewModel.PossibleStartDate.Date;
 
             vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 

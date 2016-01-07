@@ -181,6 +181,7 @@
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
     <Compile Include="Providers\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\GetNewVacancyTests.cs" />
+    <Compile Include="Providers\VacancyPosting\ManageDatesTests.cs" />
     <Compile Include="Providers\VacancyPosting\SaveVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />

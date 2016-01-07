@@ -895,7 +895,8 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.ManageDates.Ok:
-                    return View(response.ViewModel); // TODO: Redirect to vacancy applications page
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
+                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                 case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(response.ViewModel);

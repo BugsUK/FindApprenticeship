@@ -39,7 +39,7 @@
                 </div>
                 <div class="grid grid-1-3">
                     <p class="small-btm-margin">
-                        <a href="">Manage vacancy dates</a>
+                        @Html.RouteLink("Manage vacancy dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber }, new { @class = "disp-block" })
                     </p>
                     <p class="small-btm-margin">
                         <a href="">Withdraw</a>
