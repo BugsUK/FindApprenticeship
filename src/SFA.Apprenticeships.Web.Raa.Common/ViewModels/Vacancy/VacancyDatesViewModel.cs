@@ -17,5 +17,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         [Display(Name = VacancyViewModelMessages.PossibleStartDateComment.LabelText)]
         public string PossibleStartDateComment { get; set; }
+
+        public int WarningsHash { get; set; }
+
+        public long VacancyReferenceNumber { get; set; }
     }
 }

@@ -38,6 +38,7 @@
         private readonly VacancyRequirementsProspectsViewModelClientValidator _vacancyRequirementsProspectsViewModelClientValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelClientValidator _vacancyQuestionsViewModelClientValidator;
+        private readonly VacancyDatesViewModelServerValidator _vacancyDatesViewModelServerValidator;
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
@@ -55,6 +56,7 @@
             VacancyRequirementsProspectsViewModelClientValidator vacancyRequirementsProspectsViewModelClientValidator,
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyQuestionsViewModelClientValidator vacancyQuestionsViewModelClientValidator,
+            VacancyDatesViewModelServerValidator vacancyDatesViewModelServerValidator,
             VacancyViewModelValidator vacancyViewModelValidator,
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, 
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
@@ -77,6 +79,7 @@
             _vacancyRequirementsProspectsViewModelClientValidator = vacancyRequirementsProspectsViewModelClientValidator;
             _vacancyQuestionsViewModelServerValidator = vacancyQuestionsViewModelServerValidator;
             _vacancyQuestionsViewModelClientValidator = vacancyQuestionsViewModelClientValidator;
+            _vacancyDatesViewModelServerValidator = vacancyDatesViewModelServerValidator;
             _vacancyViewModelValidator = vacancyViewModelValidator;
         }
 
@@ -347,6 +350,23 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
+        public MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(long vacancyReferenceNumber)
+        {
+            var viewModel = _vacancyPostingProvider.GetVacancyDatesViewModel(vacancyReferenceNumber);
+
+            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (!validationResult.IsValid)
+            {
+                viewModel.WarningsHash = validationResult.GetWarningsHash();
+
+                return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
+                    validationResult);
+            }
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
+        }
+
         public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
@@ -479,6 +499,25 @@
             var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+        }
+
+        public MediatorResponse<VacancyDatesViewModel> UpdateVacancy(VacancyDatesViewModel viewModel, bool acceptWarnings)
+        {
+            var validationResult = _vacancyDatesViewModelServerValidator.Validate(viewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            var warningsAccepted = validationResult.HasWarningsOnly() && validationResult.IsWarningsHashMatch(viewModel.WarningsHash) && acceptWarnings;
+
+            if (!validationResult.IsValid && !warningsAccepted)
+            {
+                viewModel.WarningsHash = validationResult.GetWarningsHash();
+
+                return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.FailedValidation, viewModel,
+                    validationResult);
+            }
+
+            _vacancyPostingProvider.UpdateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
         }
 
         public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)

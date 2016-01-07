@@ -564,6 +564,7 @@
       <LastGenOutput>_comment.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

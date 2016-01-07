@@ -416,7 +416,19 @@
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
         }
-        
+
+        public VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.ClosingDate = viewModel.ClosingDate.Date;
+            vacancy.PossibleStartDate = viewModel.ClosingDate.Date;
+
+            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+
+            return _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
+        }
+
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
@@ -982,6 +994,13 @@
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
             return viewModel;
+        }
+
+        public VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+
+            return _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
         }
     }
 }

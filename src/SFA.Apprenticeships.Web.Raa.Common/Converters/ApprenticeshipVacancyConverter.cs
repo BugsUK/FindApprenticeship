@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Converters
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using System;
     using System.Collections.Generic;

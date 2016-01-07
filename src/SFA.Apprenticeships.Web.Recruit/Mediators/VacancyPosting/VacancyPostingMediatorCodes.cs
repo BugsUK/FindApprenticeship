@@ -137,5 +137,11 @@
         {
             public const string Ok = "VacancyPosting.ClearLocationInformation.Ok";
         }
+
+        public class ManageDates
+        {
+            public const string Ok = "VacancyPosting.ManageDates.Ok";
+            public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
+        }
     }
 }

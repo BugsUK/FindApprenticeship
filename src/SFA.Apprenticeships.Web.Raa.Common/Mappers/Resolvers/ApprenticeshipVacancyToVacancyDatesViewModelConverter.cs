@@ -16,7 +16,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
             var destination = new VacancyDatesViewModel
             {
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
-                PossibleStartDate = context.Engine.Map<DateTime?, DateViewModel>(source.PossibleStartDate)
+                PossibleStartDate = context.Engine.Map<DateTime?, DateViewModel>(source.PossibleStartDate),
+                VacancyReferenceNumber = source.VacancyReferenceNumber
             };
 
 

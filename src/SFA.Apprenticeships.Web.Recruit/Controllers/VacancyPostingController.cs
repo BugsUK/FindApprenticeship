@@ -12,7 +12,6 @@
     using Constants;
     using Domain.Entities;
     using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
@@ -864,6 +863,42 @@
             {
                 case VacancyPostingMediatorCodes.RemoveLocation.Ok:
                     return RedirectToShowLocations(viewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ManageDates(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetVacancyDatesViewModel(vacancyReferenceNumber);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ManageDates.Ok:
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ManageDates(VacancyDatesViewModel viewModel, bool acceptWarnings)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ManageDates.Ok:
+                    return View(response.ViewModel); // TODO: Redirect to vacancy applications page
+                case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

@@ -73,5 +73,9 @@
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
 		
         MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel);
+
+        MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(long vacancyReferenceNumber);
+
+        MediatorResponse<VacancyDatesViewModel> UpdateVacancy(VacancyDatesViewModel viewModel, bool acceptWarnings);
     }
 }

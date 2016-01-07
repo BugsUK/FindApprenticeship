@@ -53,5 +53,9 @@
         void RemoveLocationAddresses(Guid vacancyGuid);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
+
+        VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber);
+
+        VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
     }
 }

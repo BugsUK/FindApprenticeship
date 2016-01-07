@@ -5,6 +5,18 @@
     using ViewModels.Vacancy;
     using Web.Common.Validators;
 
+    public class VacancyDatesViewModelServerValidator : AbstractValidator<VacancyDatesViewModel>
+    {
+        public VacancyDatesViewModelServerValidator()
+        {
+            this.AddCommonRules();
+            this.AddServerCommonRules();
+            RuleSet(RuleSets.Errors, this.AddCommonRules);
+            RuleSet(RuleSets.Errors, this.AddServerCommonRules);
+            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
+        }
+    }
+
     public class VacancyDatesViewModelCommonValidator : AbstractValidator<VacancyDatesViewModel>
     {
         public VacancyDatesViewModelCommonValidator()
