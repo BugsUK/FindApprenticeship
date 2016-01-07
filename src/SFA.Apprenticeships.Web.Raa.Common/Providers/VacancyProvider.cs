@@ -666,6 +666,7 @@
             vacancy.DateCreated = _dateTimeService.UtcNow();
             vacancy.DateUpdated = null;
             vacancy.DateSubmitted = null;
+            vacancy.DateFirstSubmitted = null;
             vacancy.DateStartedToQA = null;
             vacancy.DateQAApproved = null;
             vacancy.ClosingDate = null;
