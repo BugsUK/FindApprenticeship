@@ -514,6 +514,7 @@
     <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorJS.cshtml" />
     <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <Content Include="Views\Vacancy\Locations.cshtml" />
+    <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

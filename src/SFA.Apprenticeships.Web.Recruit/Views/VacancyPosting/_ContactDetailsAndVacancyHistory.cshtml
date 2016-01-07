@@ -1,0 +1,9 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model ContactDetailsAndVacancyHistoryViewModel
+    
+@if (Model != null && Model != ContactDetailsAndVacancyHistoryViewModel.EmptyContactDetailsAndVacancyHistory && Model.DateSubmitted.HasValue)
+{
+    <p>
+        Submitted for review on @Html.DisplayFor(m => m.DateSubmitted.Value.Date)
+    </p>
+}

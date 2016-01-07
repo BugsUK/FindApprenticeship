@@ -16,7 +16,7 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @{
-    var editableItemClass = Model.Status == ProviderVacancyStatuses.Live ? "" : "editable-item";
+    var editableItemClass = Model.Status.IsStateEditable() ? "editable-item" : "";
     var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
     var editableApprenticeshipLevelClass = !editableApprenticeshipLevel ? "" : "editable-item";
 }
@@ -27,6 +27,11 @@
             <h1 class="heading-xlarge">
                 Vacancy preview
             </h1>
+        </div>
+        <div class="grid grid-1-3" style="float: right">
+            @Html.Partial(ContactDetailsAndVacancyHistoryViewModel.PartialView, Model.ContactDetailsAndVacancyHistory ?? ContactDetailsAndVacancyHistoryViewModel.EmptyContactDetailsAndVacancyHistory)
+        </div>
+        <div class="grid grid-2-3" style="clear: left">
             <div class="hgroup text @editableItemClass">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
                     @Model.NewVacancyViewModel.Title
@@ -35,22 +40,6 @@
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
             </div>
-        </div>
-        <div class="grid grid-1-3">
-            @if (Model.ContactDetailsAndVacancyHistory != null)
-            {
-                <details>
-                    <summary>Contact details and vacancy history</summary>
-                    <div class="detail-content panel-indent">
-                        @Model.ContactDetailsAndVacancyHistory.FullName<br />
-                        @Model.ContactDetailsAndVacancyHistory.ProviderName<br />
-                        @Model.ContactDetailsAndVacancyHistory.PhoneNumber<br />
-                        @Model.ContactDetailsAndVacancyHistory.Email<br />
-                        First submitted: @Html.DisplayFor(m => m.ContactDetailsAndVacancyHistory.DateFirstSubmitted.Value.Date)<br />
-                        Last updated: @Html.DisplayFor(m => m.ContactDetailsAndVacancyHistory.DateLastUpdated.Value.Date)
-                    </div>
-                </details>
-            }
         </div>
     </div>
 </section>

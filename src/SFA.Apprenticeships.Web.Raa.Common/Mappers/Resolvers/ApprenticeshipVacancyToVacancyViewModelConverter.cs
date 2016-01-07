@@ -4,6 +4,7 @@
     using AutoMapper;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -27,7 +28,18 @@
                 VacancyRequirementsProspectsViewModel =
                     context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
+                
             };
+
+            if (source.Status.IsStateInQa())
+            {
+                destination.ContactDetailsAndVacancyHistory = new ContactDetailsAndVacancyHistoryViewModel
+                {
+                    DateSubmitted = source.DateSubmitted,
+                    DateFirstSubmitted = source.DateFirstSubmitted ?? source.DateSubmitted,
+                    DateLastUpdated = source.DateUpdated
+                };
+            }
 
             // TODO: move to its custom mapper?
             destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
