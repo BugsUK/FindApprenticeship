@@ -103,6 +103,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
+    <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
     <Compile Include="Mappers\DateTimeToDateViewModelMapperTests.cs" />
     <Compile Include="Mappers\GeoPointToGeoPointViewModelTests.cs" />
