@@ -80,6 +80,10 @@
       <Project>{0298ef49-182c-42b8-a3d1-6f3bea9e4d1f}</Project>
       <Name>SFA.Apprenticeships.NewDB.Domain.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure.Sql\SFA.Infrastructure.Sql.csproj">
+      <Project>{5f790d5c-5da8-4cbb-b24d-7c3d565a251b}</Project>
+      <Name>SFA.Infrastructure.Sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>

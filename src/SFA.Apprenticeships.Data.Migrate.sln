@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Data.Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.NewDB.Domain.Entities", "SFA.Apprenticeships.NewDB.Domain.Entities\SFA.Apprenticeships.NewDB.Domain.Entities.csproj", "{0298EF49-182C-42B8-A3D1-6F3BEA9E4D1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Infrastructure.Sql", "SFA.Infrastructure.Sql\SFA.Infrastructure.Sql.csproj", "{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -159,6 +161,22 @@ Global
 		{0298EF49-182C-42B8-A3D1-6F3BEA9E4D1F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0298EF49-182C-42B8-A3D1-6F3BEA9E4D1F}.Sit|Any CPU.ActiveCfg = Release|Any CPU
 		{0298EF49-182C-42B8-A3D1-6F3BEA9E4D1F}.Sit|Any CPU.Build.0 = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Demo|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Demo|Any CPU.Build.0 = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Dev|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Dev|Any CPU.Build.0 = Debug|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Local|Any CPU.ActiveCfg = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Local|Any CPU.Build.0 = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Pre|Any CPU.ActiveCfg = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Pre|Any CPU.Build.0 = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Prod|Any CPU.ActiveCfg = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Prod|Any CPU.Build.0 = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Sit|Any CPU.ActiveCfg = Release|Any CPU
+		{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}.Sit|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

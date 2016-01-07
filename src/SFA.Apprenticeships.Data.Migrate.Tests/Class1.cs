@@ -13,12 +13,16 @@
     using Infrastructure.Interfaces;
 
     using NewDB = SFA.Apprenticeships.NewDB.Domain.Entities;
+    using Infrastructure.Sql;
 
     [TestFixture]
     public class Class1
     {
         private IAvmsRepository _avms;
         private INewDBRepository _newDB;
+
+        const int VacancyReferenceNumber_VacancyA = 42;
+
 
         [SetUp]
         public void SetUp()
@@ -28,19 +32,16 @@
             var config = configService.Get<MigrateFromAvmsConfiguration>();
 
 
-            _avms = new AvmsDatabaseRespository(() =>
-            {
-                var conn = new SqlConnection(config.AvmsConnectionString);
-                conn.Open();
-                return conn;
-            });
+            _avms = new AvmsDatabaseRespository(new GetOpenConnectionFromConnectionString(config.AvmsConnectionString));
 
-            _newDB = new NewDBDatabaseRespository(() =>
             {
-                var conn = new SqlConnection(config.NewConnectionString);
-                conn.Open();
-                return conn;
-            });
+                var getNewDbConnection = new GetOpenConnectionFromConnectionString(config.NewConnectionString);
+                /*
+                getNewDbConnection.Query<int>("DELETE Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                    new { VacancyReferenceNumber = VacancyReferenceNumber_VacancyA } );
+                */
+                _newDB = new NewDBDatabaseRespository(getNewDbConnection);
+            }
 
             /*
 alter table Vacancy.Vacancy
@@ -124,7 +125,7 @@ values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
                 ContractOwnerVacancyPartyId = VacancyPartyId_ProviderA,
                 EmployerVacancyPartyId = VacancyPartyId_EmployerA,
                 ManagerVacancyPartyId = VacancyPartyId_ProviderA,
-                VacancyReferenceNumber = 42,
+                VacancyReferenceNumber = VacancyReferenceNumber_VacancyA,
                 VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                 VacancyStatusCode = VacancyStatusCode_Live,
                 VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
