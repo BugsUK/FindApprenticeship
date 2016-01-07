@@ -17,6 +17,8 @@
 
         public int AddVacancy(Vacancy.Vacancy vacancy)
         {
+            return (int)_getOpenConnection.Insert(vacancy);
+
             return _getOpenConnection.Query<int>(@"
 INSERT INTO Vacancy.Vacancy
        ( EmployerVacancyPartyId,  VacancyReferenceNumber,  VacancyTypeCode,  VacancyStatusCode,  VacancyLocationTypeCode,  OwnerVacancyPartyId,  ContractOwnerVacancyPartyId,  ManagerVacancyPartyId,  DeliveryProviderVacancyPartyId,  Title,  TrainingTypeCode,  FrameworkId,  FrameworkIdComment,  StandardId,  LevelCode)

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Dapper.Contrib.Extensions;
 
 namespace SFA.Infrastructure.Sql
 {
@@ -31,7 +32,7 @@ namespace SFA.Infrastructure.Sql
         }
     }
 
-    public static class IGetOpenConnectionExtensions
+    public static class IGetOpenConnectionQueryExtensions
     {
         public static IList<T> Query<T>(this IGetOpenConnection goc, string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
         {
@@ -76,5 +77,49 @@ namespace SFA.Infrastructure.Sql
             // TODO: Retries
             return goc.Query<T>(sql, param, commandTimeout, commandType);
         }
+    }
+
+    public static class IGetOpenConnectionMutateExtensions
+    {
+        public static long Insert<T>(this IGetOpenConnection goc, T entity, int? commandTimeout = null) where T : class
+        {
+            // TODO: Log that user did this query
+            // TODO: Retries
+            using (var conn = goc.GetOpenConnection())
+            {
+                return conn.Insert<T>(entity, null, commandTimeout);
+            }
+        }
+
+        public static bool Update<T>(this IGetOpenConnection goc, T entity, int? commandTimeout = null) where T : class
+        {
+            // TODO: Log that user did this query
+            // TODO: Retries
+            using (var conn = goc.GetOpenConnection())
+            {
+                return conn.Update<T>(entity, null, commandTimeout);
+            }
+        }
+
+        public static bool Delete<T>(this IGetOpenConnection goc, T entity, int? commandTimeout = null) where T : class
+        {
+            // TODO: Log that user did this query
+            // TODO: Retries
+            using (var conn = goc.GetOpenConnection())
+            {
+                return conn.Delete<T>(entity, null, commandTimeout);
+            }
+        }
+
+        public static IList<T> MutatingQuery<T>(this IGetOpenConnection goc, string sql, object param = null, int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
+        {
+            // TODO: Log that user did this query
+            // TODO: Retries
+            using (var conn = goc.GetOpenConnection())
+            {
+                return (IList<T>)conn.Query<T>(sql, param, transaction: null, buffered: true, commandTimeout: commandTimeout, commandType: commandType);
+            }
+        }
+
     }
 }

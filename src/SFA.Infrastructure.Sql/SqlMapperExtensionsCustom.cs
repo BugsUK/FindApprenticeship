@@ -19,7 +19,7 @@ using System.Threading;
 
 namespace Dapper.Contrib.Extensions
 {
-    public static partial class SqlMapperExtensions
+    public static partial class SqlMapperExtensionsCustom
     {
         // ReSharper disable once MemberCanBePrivate.Global
         public interface IProxy //must be kept public
@@ -98,7 +98,7 @@ namespace Dapper.Contrib.Extensions
 
             if (keyProperties.Count == 0)
             {
-                var idProp = allProperties.FirstOrDefault(p => p.Name.ToLower() == "id");
+                var idProp = allProperties.FirstOrDefault(p => p.Name == "Id" || p.Name == type.Name() + "Id");
                 if (idProp != null && !idProp.GetCustomAttributes(true).Any(a => a is ExplicitKeyAttribute))
                 {
                     keyProperties.Add(idProp);
@@ -270,7 +270,7 @@ namespace Dapper.Contrib.Extensions
                     name = tableAttr.Name;
                 else
                 {
-                    name = type.Name + "s";
+                    name = type.Name;
                     if (type.IsInterface() && name.StartsWith("I"))
                         name = name.Substring(1);
                 }
