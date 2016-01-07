@@ -9,5 +9,6 @@ namespace SFA.Apprenticeships.Data.Migrate
     public class MigrateFromAvmsConfiguration
     {
         public string AvmsConnectionString;
+        public string NewConnectionString;
     }
 }

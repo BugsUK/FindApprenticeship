@@ -77,6 +77,10 @@
       <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>
       <Name>SFA.Apprenticeships.Data.Migrate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.NewDB.Domain.Entities\SFA.Apprenticeships.NewDB.Domain.Entities.csproj">
+      <Project>{0298ef49-182c-42b8-a3d1-6f3bea9e4d1f}</Project>
+      <Name>SFA.Apprenticeships.NewDB.Domain.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure.Azure\SFA.Infrastructure.Azure.csproj">
       <Project>{fe5b99f5-66d8-42fc-a8b3-6562837623a4}</Project>
       <Name>SFA.Infrastructure.Azure</Name>

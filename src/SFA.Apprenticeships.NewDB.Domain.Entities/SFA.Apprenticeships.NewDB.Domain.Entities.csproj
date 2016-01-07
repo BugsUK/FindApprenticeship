@@ -4,17 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{73C8A0C0-3B18-4ED6-8D14-15F3E009C26C}</ProjectGuid>
+    <ProjectGuid>{0298EF49-182C-42B8-A3D1-6F3BEA9E4D1F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Data.Migrate</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Data.Migrate</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.NewDB.Domain.Entities</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.NewDB.Domain.Entities</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +22,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,25 +29,20 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Local|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Local\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.12.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper-Async.1.03\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -59,31 +51,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NewDBDatabaseRepository.cs" />
-    <Compile Include="Controller.cs" />
-    <Compile Include="AvmsDatabaseRepository.cs" />
-    <Compile Include="INewDBRepository.cs" />
-    <Compile Include="IAvmsRepository.cs" />
-    <Compile Include="MigrateFromAvmsConfiguration.cs" />
+    <Compile Include="Reference\County.cs" />
+    <Compile Include="C__RefactorLog.cs" />
+    <Compile Include="Vacancy\DurationType.cs" />
+    <Compile Include="Reference\Framework.cs" />
+    <Compile Include="Reference\FrameworkStatu.cs" />
+    <Compile Include="Reference\Level.cs" />
+    <Compile Include="Model1.cs" />
+    <Compile Include="Reference\Occupation.cs" />
+    <Compile Include="Reference\OccupationStatu.cs" />
+    <Compile Include="Address\PostalAddress.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reference\Sector.cs" />
+    <Compile Include="Reference\Standard.cs" />
+    <Compile Include="Vacancy\TrainingType.cs" />
+    <Compile Include="Vacancy\Vacancy.cs" />
+    <Compile Include="Vacancy\VacancyLocation.cs" />
+    <Compile Include="Vacancy\VacancyLocationType.cs" />
+    <Compile Include="Vacancy\VacancyParty.cs" />
+    <Compile Include="Vacancy\VacancyPartyRelationship.cs" />
+    <Compile Include="Vacancy\VacancyPartyRelationshipType.cs" />
+    <Compile Include="Vacancy\VacancyPartyType.cs" />
+    <Compile Include="Vacancy\VacancyStatu.cs" />
+    <Compile Include="Vacancy\VacancyType.cs" />
+    <Compile Include="Address\ValidationSource.cs" />
+    <Compile Include="Vacancy\WageType.cs" />
+    <Compile Include="WebProxyConsumer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Avms.Domain.Entities\SFA.Apprenticeships.Avms.Domain.Entities.csproj">
-      <Project>{2bce308b-c935-41d9-adb1-2fbf78415abf}</Project>
-      <Name>SFA.Apprenticeships.Avms.Domain.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.NewDB.Domain.Entities\SFA.Apprenticeships.NewDB.Domain.Entities.csproj">
-      <Project>{0298ef49-182c-42b8-a3d1-6f3bea9e4d1f}</Project>
-      <Name>SFA.Apprenticeships.NewDB.Domain.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

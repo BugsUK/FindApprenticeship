@@ -11,10 +11,14 @@
     using Infrastructure.Azure.Configuration;
     using Infrastructure.Console;
     using Infrastructure.Interfaces;
+
+    using NewDB = SFA.Apprenticeships.NewDB.Domain.Entities;
+
     [TestFixture]
     public class Class1
     {
         private IAvmsRepository _avms;
+        private INewDBRepository _newDB;
 
         [SetUp]
         public void SetUp()
@@ -30,6 +34,33 @@
                 conn.Open();
                 return conn;
             });
+
+            _newDB = new NewDBDatabaseRespository(() =>
+            {
+                var conn = new SqlConnection(config.NewConnectionString);
+                conn.Open();
+                return conn;
+            });
+
+            /*
+alter table Vacancy.Vacancy
+alter column FrameworkId INT NULL
+
+alter table Vacancy.Vacancy
+alter column StandardId INT NULL
+
+insert into vacancy.vacancyparty
+values ('ES', 'Employer A', 'A', null, 'URL', 1, null)
+insert into vacancy.vacancyparty
+values ('PS', 'Provider A', 'A', null, 'URL', null, 1)
+
+insert into reference.occupation
+values (1, 1, 'O01', 'Occupation 1', 'Occupation 1', null)
+
+insert into reference.framework
+values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
+
+            */
         }
 
         private class MyConfigurationManager : IConfigurationManager
@@ -73,6 +104,61 @@
             vacancies.Take(1).Count().Should().Be(1);
         }
 
+        [Test]
+        public void InsertNewVacancy()
+        {
+            const int VacancyPartyId_EmployerA = 3;
+            const int VacancyPartyId_ProviderA = 4;
+            const int FrameworkId_Framework1 = 1;
+            const string VacancyTypeCode_Apprenticeship = "A";
+            const string VacancyStatusCode_Live = "LIV";
+            const string VacancyLocationTypeCode_Specific = "S";
+            const string TrainingTypeCode_Framework = "F";
+            const string LevelCode_Intermediate = "2";
+
+            // Arrange.
+            var vacancy = new NewDB.Vacancy.Vacancy()
+            {
+                DeliveryProviderVacancyPartyId = VacancyPartyId_ProviderA,
+                OwnerVacancyPartyId = VacancyPartyId_ProviderA,
+                ContractOwnerVacancyPartyId = VacancyPartyId_ProviderA,
+                EmployerVacancyPartyId = VacancyPartyId_EmployerA,
+                ManagerVacancyPartyId = VacancyPartyId_ProviderA,
+                VacancyReferenceNumber = 42,
+                VacancyTypeCode = VacancyTypeCode_Apprenticeship,
+                VacancyStatusCode = VacancyStatusCode_Live,
+                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                Title = "X",
+                TrainingTypeCode = TrainingTypeCode_Framework, // Framework
+                FrameworkId = FrameworkId_Framework1,
+                FrameworkIdComment = 42,
+                StandardId = null,
+                LevelCode = LevelCode_Intermediate,
+
+            };
+
+            // Act.
+            vacancy.VacancyId = _newDB.AddVacancy(vacancy);
+
+            // Assert.
+            // No crash!!
+        }
+
+        public void InsertAndFetchNewVacancy()
+        {
+            // Arrange.
+            var vacancy = new NewDB.Vacancy.Vacancy()
+            {
+                DeliveryProviderVacancyPartyId = 42
+            };
+
+            // Act.
+            vacancy.VacancyId = _newDB.AddVacancy(vacancy);
+            var vacancy2 = _newDB.GetVacancy(vacancy.VacancyId);
+
+            // Assert.
+            vacancy.DeliveryProviderVacancyPartyId.ShouldBeEquivalentTo(vacancy2.DeliveryProviderVacancyPartyId);
+        }
 
     }
 }
