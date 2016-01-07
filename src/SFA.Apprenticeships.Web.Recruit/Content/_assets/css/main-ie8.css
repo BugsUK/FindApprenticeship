@@ -6276,12 +6276,14 @@ h2 a i.raa-icon-comment {
 @media screen and (min-width: 641px) and (max-width: 768px) {
   .vacancies-summary li {
     padding: 0 10px 0 0;
-    width: 33.33333%; } }
+    width: 33.33333%;
+    margin-bottom: 10px; } }
 
 @media screen and (min-width: 769px) {
   .vacancies-summary li {
     padding: 0 10px 0 0;
-    width: 16.66667%; } }
+    width: 20%;
+    margin-bottom: 10px; } }
 
 @media screen and (max-width: 640px) {
   .applications-summary li {
