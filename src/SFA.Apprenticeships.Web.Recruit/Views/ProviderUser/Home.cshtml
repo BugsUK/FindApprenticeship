@@ -67,6 +67,7 @@
         <section class="grid-wrapper">
             @{
                 var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
+                var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
             }
             <h2 class="heading-medium">Your vacancies
                 @if (filterType != VacanciesSummaryFilterTypes.All)
@@ -132,81 +133,103 @@
                     }
                 </figure></li>
                 <li><figure class="data">
-                        <a href="#">
-                            <p class="count">&nbsp;</p>
-                            <figcaption><h2>Show less...</h2></figcaption>
-                        </a>
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, !showAllLotteryNumbers))" class="vacancy-filter">
+                        <p class="count">&nbsp;</p>
+                        <figcaption>
+                            @if (showAllLotteryNumbers)
+                            {
+                                <h2>Show less...</h2>
+                            }
+                            else
+                            {
+                                <h2>Show more...</h2>
+                            }
+                        </figcaption>
+                    </a>
                 </figure></li>
-                <li><figure class="data">
-                    @if (filterType == VacanciesSummaryFilterTypes.Draft)
-                    {
-                        <p class="count">@Model.VacanciesSummary.DraftCount</p>
-                        <figcaption><h2>Draft</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
-                            <p class="count">@Model.VacanciesSummary.DraftCount</p>
-                            <figcaption><h2>Draft</h2></figcaption>
-                        </a>
-                    }
-                </figure></li>
-                <li><figure class="data">
-                    @if (filterType == VacanciesSummaryFilterTypes.Submitted)
-                    {
-                        <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
-                        <figcaption><h2>Submitted</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
-                            <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
-                            <figcaption><h2>Submitted</h2></figcaption>
-                        </a>
-                    }
-                </figure></li>
-                <li><figure class="data">
-                    @if (filterType == VacanciesSummaryFilterTypes.Closed)
-                    {
-                        <p class="count">@Model.VacanciesSummary.ClosedCount</p>
-                        <figcaption><h2>Closed</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
-                            <p class="count">@Model.VacanciesSummary.ClosedCount</p>
-                            <figcaption><h2>Closed</h2></figcaption>
-                        </a>
-                    }
-                </figure></li>
-                <li><figure class="data">
-                    @if (filterType == VacanciesSummaryFilterTypes.Withdrawn)
-                    {
-                        <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
-                        <figcaption><h2>Withdrawn</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
-                            <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
-                            <figcaption><h2>Withdrawn</h2></figcaption>
-                        </a>
-                    }
-                </figure></li>
-                <li><figure class="data">
-                    @if (filterType == VacanciesSummaryFilterTypes.Completed)
-                    {
-                        <p class="count">@Model.VacanciesSummary.CompletedCount</p>
-                        <figcaption><h2>Completed</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed))" class="vacancy-filter">
-                            <p class="count">@Model.VacanciesSummary.CompletedCount</p>
-                            <figcaption><h2>Completed</h2></figcaption>
-                        </a>
-                    }
-                </figure></li>
+@if (showAllLotteryNumbers)
+{
+    <li><figure class="data">
+        @if (filterType == VacanciesSummaryFilterTypes.Draft)
+        {
+            <p class="count">@Model.VacanciesSummary.DraftCount</p>
+            <figcaption>
+                <h2>Draft</h2></figcaption>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
+                <p class="count">@Model.VacanciesSummary.DraftCount</p>
+                <figcaption>
+                    <h2>Draft</h2></figcaption>
+            </a>
+        }
+    </figure></li>
+    <li><figure class="data">
+        @if (filterType == VacanciesSummaryFilterTypes.Submitted)
+        {
+            <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
+            <figcaption>
+                <h2>Submitted</h2></figcaption>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
+                <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
+                <figcaption>
+                    <h2>Submitted</h2></figcaption>
+            </a>
+        }
+    </figure></li>
+    <li><figure class="data">
+        @if (filterType == VacanciesSummaryFilterTypes.Closed)
+        {
+            <p class="count">@Model.VacanciesSummary.ClosedCount</p>
+            <figcaption>
+                <h2>Closed</h2></figcaption>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
+                <p class="count">@Model.VacanciesSummary.ClosedCount</p>
+                <figcaption>
+                    <h2>Closed</h2></figcaption>
+            </a>
+        }
+    </figure></li>
+    <li><figure class="data">
+        @if (filterType == VacanciesSummaryFilterTypes.Withdrawn)
+        {
+            <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
+            <figcaption>
+                <h2>Withdrawn</h2></figcaption>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
+                <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
+                <figcaption>
+                    <h2>Withdrawn</h2></figcaption>
+            </a>
+        }
+    </figure></li>
+    <li><figure class="data">
+        @if (filterType == VacanciesSummaryFilterTypes.Completed)
+        {
+            <p class="count">@Model.VacanciesSummary.CompletedCount</p>
+            <figcaption>
+                <h2>Completed</h2></figcaption>
+        }
+        else
+        {
+            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed))" class="vacancy-filter">
+                <p class="count">@Model.VacanciesSummary.CompletedCount</p>
+                <figcaption>
+                    <h2>Completed</h2></figcaption>
+            </a>
+        }
+    </figure></li>
+}
             </ul>
         </section>
 
