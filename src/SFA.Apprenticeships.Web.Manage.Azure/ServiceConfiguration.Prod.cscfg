@@ -5,6 +5,9 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="SSLWebManage" thumbprint="86B23A467637C7365590E719E70FEA46781A82D1" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
   <NetworkConfiguration>
     <VirtualNetworkSite name="nasprod" />
