@@ -16,7 +16,6 @@
 
     public class VacancyProviderBuilder
     {
-        private Mock<IApprenticeshipVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
         private Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
         private Mock<IProviderService> _providerService = new Mock<IProviderService>();
         private Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
@@ -39,13 +38,6 @@
             Mock<IApprenticeshipVacancyWriteRepository> apprenticeshipVacancyWriteRepository)
         {
             _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
-            return this;
-        }
-
-        public VacancyProviderBuilder With(
-            Mock<IApprenticeshipVacancyReadRepository> apprenticeshipVacancyReadRepository)
-        {
-            _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
             return this;
         }
 

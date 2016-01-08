@@ -9,6 +9,7 @@
         ReservedForQA = 4,
         RejectedByQA = 5,
         Closed = 6,
-        Completed = 7
+        Completed = 7,
+        ParentVacancy = 8
     }
 }

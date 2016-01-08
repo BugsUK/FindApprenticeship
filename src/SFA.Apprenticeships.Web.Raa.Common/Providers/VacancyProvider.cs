@@ -796,13 +796,41 @@
             return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
+        private void CreateChildVacancy(ApprenticeshipVacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)
+        {
+            var newVacancy = (ApprenticeshipVacancy)vacancy.Clone();
+            newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+            newVacancy.Status = ProviderVacancyStatuses.Live;
+            newVacancy.EntityId = Guid.NewGuid();
+            newVacancy.LocationAddresses = new List<VacancyLocationAddress>() { address };
+            newVacancy.DateQAApproved = approvalTime;
+            newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+
+            _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
+        }
+
         public void ApproveVacancy(long vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            vacancy.Status = ProviderVacancyStatuses.Live;
-            vacancy.DateQAApproved = _dateTimeService.UtcNow();
+            var qaApprovalDate = _dateTimeService.UtcNow();
+            var submittedVacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            
+            if (submittedVacancy.LocationAddresses != null
+                && submittedVacancy.LocationAddresses.Any())
+            {
+                foreach (var locationAddress in submittedVacancy.LocationAddresses)
+                {
+                    CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                }
 
-            _apprenticeshipVacancyWriteRepository.Save(vacancy);
+                submittedVacancy.Status = ProviderVacancyStatuses.ParentVacancy;
+            }
+            else
+            {
+                submittedVacancy.Status = ProviderVacancyStatuses.Live;    
+            }
+
+            submittedVacancy.DateQAApproved = qaApprovalDate;
+            _vacancyPostingService.SaveApprenticeshipVacancy(submittedVacancy);
         }
 
         public void RejectVacancy(long vacancyReferenceNumber)
