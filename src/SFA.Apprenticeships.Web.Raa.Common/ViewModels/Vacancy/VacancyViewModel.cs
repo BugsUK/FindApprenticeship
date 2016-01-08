@@ -7,6 +7,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using VacancyPosting;
 
     public class VacancyViewModel
@@ -51,6 +52,27 @@
         public int ApplicationCount { get; set; }
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
+
+        public bool IsUnapprovedMultiLocationParentVacancy
+        {
+            get
+            {
+                return
+                    Status != ProviderVacancyStatuses.ParentVacancy
+                    && NewVacancyViewModel.LocationAddresses != null
+                    && NewVacancyViewModel.LocationAddresses.Count() > 1;
+            }
+        }
+
+        public bool IsApprovedMultiLocationChildVacancy
+        {
+            get
+            {
+                return Status == ProviderVacancyStatuses.Live
+                       && NewVacancyViewModel.LocationAddresses != null
+                       && NewVacancyViewModel.LocationAddresses.Count() == 1;
+            }
+        }
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
