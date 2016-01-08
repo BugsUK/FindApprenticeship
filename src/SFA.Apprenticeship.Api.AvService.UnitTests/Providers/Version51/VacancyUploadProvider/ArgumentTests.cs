@@ -4,6 +4,7 @@
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using AvService.Mappers.Version51;
     using AvService.Providers.Version51;
+    using AvService.Validators;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
@@ -28,6 +29,7 @@
 
             // Provider.
             _provider = new VacancyUploadProvider(
+                new VacancyUploadDataValidator(),
                 _mockVacancyUploadRequestMapper.Object,
                 _mockVacancyPostingService.Object);
         }

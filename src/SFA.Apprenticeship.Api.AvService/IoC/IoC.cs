@@ -1,6 +1,14 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+﻿using SFA.Apprenticeships.Application.Interfaces.Organisations;
+using SFA.Apprenticeships.Application.Interfaces.Providers;
+using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+using SFA.Apprenticeships.Application.Organisation;
+using SFA.Apprenticeships.Application.Provider;
 using SFA.Apprenticeships.Application.VacancyPosting;
+using SFA.Apprenticeships.Infrastructure.EmployerDataService.IoC;
+using SFA.Apprenticeships.Infrastructure.Repositories.Providers.IoC;
 using SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
+using SFA.Apprenticeships.Infrastructure.TacticalDataServices;
+using SFA.Apprenticeships.Infrastructure.TacticalDataServices.IoC;
 
 namespace SFA.Apprenticeship.Api.AvService.IoC
 {
@@ -25,9 +33,15 @@ namespace SFA.Apprenticeship.Api.AvService.IoC
                 // Repositories.
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
-                
+                x.AddRegistry<ProviderRepositoryRegistry>();
+
                 // Services.
+                x.AddRegistry<EmployerDataServicesRegistry>();
+                x.AddRegistry<TacticalDataServicesRegistry>();
+
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
+                x.For<IProviderService>().Use<ProviderService>();
+                x.For<IOrganisationService>().Use<OrganisationService>();
 
                 // API Providers.
                 x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();

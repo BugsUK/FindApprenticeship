@@ -7,6 +7,7 @@
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using AvService.Mappers.Version51;
     using AvService.Providers.Version51;
+    using AvService.Validators;
     using Builders;
     using DataContracts.Version51;
     using Extensions;
@@ -42,6 +43,7 @@
 
             // Provider.
             _provider = new VacancyUploadProvider(
+                new VacancyUploadDataValidator(),
                 _mockVacancyUploadRequestMapper.Object,
                 _mockVacancyPostingService.Object);
         }
@@ -155,7 +157,7 @@
             };
 
             _mockVacancyUploadRequestMapper.Setup(mock =>
-                mock.ToNewApprenticeshipVacancy(vacancyUploadData))
+                mock.ToApprenticeshipVacancy(vacancyUploadData))
                 .Returns(vacancy);
 
             _mockVacancyPostingService.Setup(mock =>
@@ -171,7 +173,7 @@
             response.Vacancies.Single().ReferenceNumber.Should().Be(vacancyReferenceNumber);
 
             _mockVacancyUploadRequestMapper.Verify(mock =>
-                mock.ToNewApprenticeshipVacancy(vacancyUploadData), Times.Once);
+                mock.ToApprenticeshipVacancy(vacancyUploadData), Times.Once);
         }
     }
 }

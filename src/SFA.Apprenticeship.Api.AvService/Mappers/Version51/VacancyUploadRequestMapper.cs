@@ -1,4 +1,9 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
+﻿using SFA.Apprenticeships.Application.Interfaces.Providers;
+using SFA.Apprenticeships.Domain.Entities.Locations;
+using SFA.Apprenticeships.Domain.Entities.Organisations;
+using SFA.Apprenticeships.Domain.Entities.Providers;
+
+namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
 {
     using System;
     using System.Linq;
@@ -8,15 +13,33 @@
     using DataContracts.Version51;
     using WageType = Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.WageType;
 
+    // TOOD: US872: AG: move to a service or parameterise mapper with ProviderSiteEmployerLink and VacancyReferenceNumber?
     public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
     {
-        public ApprenticeshipVacancy ToNewApprenticeshipVacancy(VacancyUploadData vacancyUploadData)
+        private readonly IProviderService _providerService;
+
+        public VacancyUploadRequestMapper(IProviderService providerService)
         {
+            _providerService = providerService;
+        }
+
+        public ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadData vacancyUploadData)
+        {
+            var ukprn = Convert.ToString(vacancyUploadData.ContractedProviderUkprn);
+            var providerSiteErn = Convert.ToString(vacancyUploadData.VacancyOwnerEdsUrn);
+            var ern = Convert.ToString(vacancyUploadData.Employer.EdsUrn);
+
+            var providerSite = _providerService.GetProviderSite(ukprn, providerSiteErn);
+            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+
+            var firstLocationDetails = vacancyUploadData.Vacancy.LocationDetails.First();
+
             return new ApprenticeshipVacancy
             {
                 EntityId = Guid.NewGuid(),
-                VacancyReferenceNumber = 0, // allocated on save
-                Ukprn = vacancyUploadData.ContractedProviderUkprn.ToString(),
+                VacancyReferenceNumber = new Random().Next(), // TODO
+
+                Ukprn = ukprn,
 
                 Title = vacancyUploadData.Title,
                 TitleComment = null,
@@ -27,37 +50,53 @@
                 LongDescription = vacancyUploadData.LongDescription,
                 LongDescriptionComment = null,
 
-                ProviderSiteEmployerLink = null,
-
-                /*
+                // TODO: US872: AG: move to separate mapper and unit test.
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLink
                 {
-                    ProviderSiteErn = string.Empty, // TODO
+                    EntityId = Guid.NewGuid(),
+                    DateCreated = DateTime.UtcNow,
+                    ProviderSiteErn = providerSiteErn,
                     Description = vacancyUploadData.Employer.Description,
-                    // TODO: ? = vacancy.Employer.AnonymousName
-                    // TODO: ? = vacancy.Employer.ContactName
+                    // TODO: US872: AG: vacancy.Employer.AnonymousName
+                    // TODO: US872: AG: vacancy.Employer.ContactName
                     WebsiteUrl = vacancyUploadData.Employer.Website,
-                    // TODO: ? = vacancy.Employer.Image
+                    // TODO: US872: AG: vacancy.Employer.Image
                     Employer = new Employer
                     {
-                        DateCreated = DateTime.UtcNow, // TODO: EntityId too?
-                        Ern = vacancyUploadData.Employer.EdsUrn.ToString(), // TODO: simple conversion to string
-                        Name = string.Empty, // TODO
-                        Address = new Address() // TODO
+                        EntityId = Guid.NewGuid(),
+                        DateCreated = DateTime.UtcNow,
+                        Ern = ern,
+                        Name = providerSiteEmployerLink.Employer.Name,
+                        Address = new Address
+                        {
+                            AddressLine1  = firstLocationDetails.AddressDetails.AddressLine1,
+                            AddressLine2 = firstLocationDetails.AddressDetails.AddressLine2,
+                            AddressLine3 = firstLocationDetails.AddressDetails.AddressLine3,
+                            AddressLine4 = firstLocationDetails.AddressDetails.AddressLine4,
+                            // AddressLine5 is not mapped.
+                            GeoPoint = new GeoPoint
+                            {
+                                Latitude = Convert.ToDouble(firstLocationDetails.AddressDetails.Latitude ?? 0.0m),
+                                Longitude = Convert.ToDouble(firstLocationDetails.AddressDetails.Longitude ?? 0.0m)
+                            },
+                            Postcode = firstLocationDetails.AddressDetails.PostCode,
+                            // Uprn is not mapped.
+                        }
                     }
                 },
-                */
+
+                NumberOfPositions = firstLocationDetails.NumberOfVacancies,
 
                 WorkingWeek = vacancyUploadData.Vacancy.WorkingWeek,
                 HoursPerWeek = null,
-                WorkingWeekComment = null,
+                WorkingWeekComment = "Enter the hours per week", // TOOD: content
 
                 WageType = WageType.Custom,
                 WageUnit = WageUnit.Weekly,
                 Wage = vacancyUploadData.Vacancy.Wage,
                 WageComment = null,
 
-                DurationType = DurationType.Unknown,
+                DurationType = DurationType.Weeks, // TODO: US872: AG: confirm default
                 Duration = default(int?),
                 DurationComment = vacancyUploadData.Apprenticeship.ExpectedDuration,
 
@@ -92,7 +131,7 @@
 
                 OfflineVacancy = vacancyUploadData.Application.Type == ApplicationType.Offline,
 
-                OfflineApplicationUrl = vacancyUploadData.Vacancy.LocationDetails.First().EmployerWebsite,
+                OfflineApplicationUrl = firstLocationDetails.EmployerWebsite,
                 OfflineApplicationUrlComment = null,
 
                 OfflineApplicationInstructions = vacancyUploadData.Application.Instructions,
@@ -109,8 +148,8 @@
                 Status = ProviderVacancyStatuses.Draft,
                 DateCreated = DateTime.UtcNow,
 
-                // TODO: US872: NumberOfPositions
-                // TODO: US872: IsEmployerLocationMainApprenticeshipLocation
+                IsEmployerLocationMainApprenticeshipLocation = true
+
                 // TODO: US872: LocationAddresses
                 // TODO: US872: AdditionalLocationInformation
             };
@@ -118,6 +157,7 @@
 
         #region Helpers
 
+        // TODO: US872: remove this mapper, handled by upstream validation.
         private static ApprenticeshipLevel MapVacancyApprenticeshipType(VacancyApprenticeshipType vacancyApprenticeshipType)
         {
             switch (vacancyApprenticeshipType)

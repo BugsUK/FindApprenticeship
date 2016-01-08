@@ -5,6 +5,6 @@
 
     public interface IVacancyUploadRequestMapper
     {
-        ApprenticeshipVacancy ToNewApprenticeshipVacancy(VacancyUploadData vacancyUploadData);
+        ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadData vacancyUploadData);
     }
 }

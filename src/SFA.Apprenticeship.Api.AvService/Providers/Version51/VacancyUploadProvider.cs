@@ -1,3 +1,5 @@
+using SFA.Apprenticeship.Api.AvService.Validators;
+
 namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 {
     using System;
@@ -14,13 +16,16 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
     public class VacancyUploadProvider : IVacancyUploadProvider
     {
+        private readonly VacancyUploadDataValidator _validator;
         private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
         private readonly IVacancyPostingService _vacancyPostingService;
 
         public VacancyUploadProvider(
+            VacancyUploadDataValidator validator,
             IVacancyUploadRequestMapper vacancyUploadRequestMapper,
             IVacancyPostingService vacancyPostingService)
         {
+            _validator = validator;
             _vacancyUploadRequestMapper = vacancyUploadRequestMapper;
             _vacancyPostingService = vacancyPostingService;
         }
@@ -52,7 +57,27 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 
         private VacancyUploadResultData UploadVacancy(VacancyUploadData vacancyUploadData)
         {
-            var mappedVacancy = _vacancyUploadRequestMapper.ToNewApprenticeshipVacancy(vacancyUploadData);
+            var validationResult = _validator.Validate(vacancyUploadData);
+
+            if (!validationResult.IsValid)
+            {
+                var errorCodes = validationResult
+                    .GetErrorCodes()
+                    .Select(each => new ElementErrorData
+                    {
+                        ErrorCode = each.InterfaceErrorCode
+                    })
+                    .ToList();
+
+                return new VacancyUploadResultData
+                {
+                    VacancyId = vacancyUploadData.VacancyId,
+                    Status = VacancyUploadResult.Failure,
+                    ErrorCodes = errorCodes
+                };
+            }
+
+            var mappedVacancy = _vacancyUploadRequestMapper.ToApprenticeshipVacancy(vacancyUploadData);
             var createdVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(mappedVacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData
@@ -60,7 +85,7 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
                 VacancyId = vacancyUploadData.VacancyId,
                 ReferenceNumber = Convert.ToInt32(createdVacancy.VacancyReferenceNumber),
                 Status = VacancyUploadResult.Success,
-                ErrorCodes = new List<ElementErrorData>()
+                ErrorCodes = null
             };
 
             return vacancyUploadResultData;

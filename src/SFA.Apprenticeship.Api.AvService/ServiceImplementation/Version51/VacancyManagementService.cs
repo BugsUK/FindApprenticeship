@@ -1,10 +1,9 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
-
-namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
 {
     using System;
     using System.Security;
     using System.ServiceModel;
+    using Apprenticeships.Application.Interfaces.Logging;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
