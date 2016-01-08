@@ -618,9 +618,11 @@
             var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
             var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
-            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate < _dateTimeService.UtcNow()).ToList();
-            //TODO: Does this include the one's in QA at the moment?
+            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
+            var newApplications = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
+            var withdrawn = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Withdrawn).ToList();
+            var completed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
 
             switch (vacanciesSummarySearch.FilterType)
             {
@@ -641,6 +643,15 @@
                     break;
                 case VacanciesSummaryFilterTypes.Draft:
                     vacancies = draft;
+                    break;
+                case VacanciesSummaryFilterTypes.NewApplications:
+                    vacancies = newApplications;
+                    break;
+                case VacanciesSummaryFilterTypes.Withdrawn:
+                    vacancies = withdrawn;
+                    break;
+                case VacanciesSummaryFilterTypes.Completed:
+                    vacancies = completed;
                     break;
             }
 
@@ -674,6 +685,9 @@
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,
                 DraftCount = draft.Count,
+                NewApplicationsCount = newApplications.Count,
+                WithdrawnCount = withdrawn.Count,
+                CompletedCount = completed.Count,
                 Vacancies = vacancyPage
             };
 
