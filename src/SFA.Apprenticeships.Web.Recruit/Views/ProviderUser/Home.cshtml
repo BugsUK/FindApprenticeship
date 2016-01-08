@@ -122,7 +122,7 @@
                     @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
                     {
                         <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
-                        <figcaption><h2>Closing soom</h2></figcaption>
+                        <figcaption><h2>Closing soon</h2></figcaption>
                     }
                     else
                     {
@@ -310,7 +310,10 @@
                                     </td>
                                     <td class="vac-status">
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
-                                        @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate); }
+                                        @if (vacancy.Status == ProviderVacancyStatuses.Live)
+                                        {
+                                            Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate);
+                                        }
                                     </td>
                                     <td class="vac-toolbox">
                                         @if (VacancyIsClonable(vacancy))
