@@ -53,7 +53,8 @@
 
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
-                    return View(response.ViewModel);
+                        return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer,
+                            new { providerSiteErn = providerSiteErn, vacancyGuid = vacancyGuid });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -76,12 +77,6 @@
                     return View("SelectEmployer", response.ViewModel);
 
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
-                    if (string.IsNullOrWhiteSpace(viewModel.Location) && string.IsNullOrWhiteSpace(viewModel.Ern) &&
-                        string.IsNullOrWhiteSpace(viewModel.Name))
-                    {
-                        return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer,
-                            new {providerSiteErn = viewModel.ProviderSiteErn, vacancyGuid = viewModel.VacancyGuid});
-                    }
                     return View("SelectEmployer", response.ViewModel);
 
                 default:
