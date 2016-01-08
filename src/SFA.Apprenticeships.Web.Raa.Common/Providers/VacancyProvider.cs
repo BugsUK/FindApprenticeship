@@ -611,13 +611,14 @@
             }
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
+            //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
             var vacancies = _apprenticeshipVacancyReadRepository.GetForProvider(ukprn, providerSiteErn);
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
+            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow().Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
             var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
             var newApplications = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
@@ -645,7 +646,7 @@
                     vacancies = draft;
                     break;
                 case VacanciesSummaryFilterTypes.NewApplications:
-                    vacancies = newApplications;
+                    vacancies = newApplications.OrderBy(v => v.ClosingDate).ToList();
                     break;
                 case VacanciesSummaryFilterTypes.Withdrawn:
                     vacancies = withdrawn;
