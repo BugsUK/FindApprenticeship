@@ -7,6 +7,8 @@
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
@@ -151,6 +153,28 @@
             }
 
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel)
+        {
+            viewModel.TrainingType = TrainingType.Frameworks;
+            viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            viewModel.FrameworkCodeName = null;
+            viewModel.Standards = _vacancyQaProvider.GetStandards();
+            viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+
+            return GetMediatorResponse(VacancyMediatorCodes.SelectFrameworkAsTrainingType.Ok, viewModel);
+        }
+
+        public MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel)
+        {
+            viewModel.TrainingType = TrainingType.Standards;
+            viewModel.StandardId = null;
+            viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
+            viewModel.Standards = _vacancyQaProvider.GetStandards();
+            viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+
+            return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
         }
 
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)

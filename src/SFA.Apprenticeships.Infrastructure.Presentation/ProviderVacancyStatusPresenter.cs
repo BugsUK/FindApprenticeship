@@ -16,6 +16,12 @@
                    status == ProviderVacancyStatuses.RejectedByQA;
         }
 
+        public static bool IsStateReviewable(this ProviderVacancyStatuses status)
+        {
+            return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.ReservedForQA || 
+                   status == ProviderVacancyStatuses.RejectedByQA;
+        }
+
         public static bool IsStateInQa(this ProviderVacancyStatuses status)
         {
             return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.ReservedForQA;

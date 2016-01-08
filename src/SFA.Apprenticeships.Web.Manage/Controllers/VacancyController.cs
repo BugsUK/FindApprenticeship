@@ -115,34 +115,56 @@
             }
         }
 
+        //[MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        //[HttpPost]
+        //public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        //{
+        //    var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
+
+        //    viewModel.TrainingType = TrainingType.Frameworks;
+        //    viewModel.Standards = response.ViewModel.Standards;
+        //    viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+        //    ModelState.Clear();
+
+        //    return View("BasicDetails", viewModel);
+        //}
+
+        //[MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        //[HttpPost]
+        //public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        //{
+        //    var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
+
+        //    viewModel.TrainingType = TrainingType.Standards;
+        //    viewModel.Standards = response.ViewModel.Standards;
+        //    viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+
+        //    ModelState.Clear();
+
+        //    return View("BasicDetails", viewModel);
+        //}
+
         [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
         [HttpPost]
         public ActionResult SelectFramework(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
-
-            viewModel.TrainingType = TrainingType.Frameworks;
-            viewModel.Standards = response.ViewModel.Standards;
-            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+            var response = _vacancyMediator.SelectFrameworkAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", viewModel);
+            return View("BasicDetails", response.ViewModel);
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
         [HttpPost]
         public ActionResult SelectStandard(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
-
-            viewModel.TrainingType = TrainingType.Standards;
-            viewModel.Standards = response.ViewModel.Standards;
-            viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
+            var response = _vacancyMediator.SelectStandardAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", viewModel);
+            return View("BasicDetails", response.ViewModel);
         }
 
         [HttpGet]

@@ -52,6 +52,7 @@
                     return View(response.ViewModel);
 
                 case VacancyPostingMediatorCodes.GetProviderEmployers.Ok:
+                    return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.GetProviderEmployers.NoResults:
                         return RedirectToRoute(RecruitmentRouteNames.SelectNewEmployer,
                             new { providerSiteErn = providerSiteErn, vacancyGuid = vacancyGuid });
