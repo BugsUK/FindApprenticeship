@@ -111,6 +111,8 @@
 
             var mediator = GetMediator();
 
+            VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyDatesViewModel>())).Returns(viewModel);
+
             var result = mediator.UpdateVacancy(viewModel, true);
 
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.Ok);
