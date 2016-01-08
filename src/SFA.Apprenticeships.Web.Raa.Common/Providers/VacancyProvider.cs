@@ -19,6 +19,7 @@
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
@@ -424,9 +425,23 @@
             vacancy.ClosingDate = viewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.PossibleStartDate.Date;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            VacancyDatesViewModel result;
 
-            return _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
+            try
+            {
+                vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            }
+            catch (CustomException)
+            {
+                result = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
+                result.State = UpdateVacancyDatesState.InvalidState;
+                return result;
+            }
+            
+            result = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
+            result.State = UpdateVacancyDatesState.Updated;
+
+            return result;
         }
 
         public VacancyViewModel GetVacancy(long vacancyReferenceNumber)

@@ -900,6 +900,9 @@
                 case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.ManageDates.InvalidState:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
+                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

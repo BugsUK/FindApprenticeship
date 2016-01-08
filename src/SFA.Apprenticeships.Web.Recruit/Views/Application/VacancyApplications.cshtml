@@ -39,6 +39,9 @@
                     </div>
                 </div>
                 <div class="grid grid-1-3">
+                    <p class="small-btm-margin">
+                        Closing Date: @Model.ClosingDate.Date.ToFriendlyClosingToday()
+                    </p>
                     @if (Model.Status != ProviderVacancyStatuses.Completed)
                     {
                         <p class="small-btm-margin">

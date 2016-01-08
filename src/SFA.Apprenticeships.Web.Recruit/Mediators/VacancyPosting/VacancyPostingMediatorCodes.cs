@@ -142,6 +142,7 @@
         {
             public const string Ok = "VacancyPosting.ManageDates.Ok";
             public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
+            public const string InvalidState = "VacancyPosting.ManageDates.InvalidState";
         }
     }
 }

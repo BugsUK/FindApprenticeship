@@ -34,6 +34,7 @@
     </fieldset>
 
     <div class="grid grid-1-2">
-        <button class="button" type="submit">Save</button>
+        <button class="button" type="submit">Save and return</button>
+        @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>
 }
