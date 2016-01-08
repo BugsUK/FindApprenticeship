@@ -622,7 +622,7 @@
             var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
             var newApplications = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
             var withdrawn = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Withdrawn).ToList();
-            var completed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
+            var completed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Completed).ToList();
 
             switch (vacanciesSummarySearch.FilterType)
             {
@@ -636,10 +636,10 @@
                     vacancies = rejected;
                     break;
                 case VacanciesSummaryFilterTypes.ClosingSoon:
-                    vacancies = closingSoon;
+                    vacancies = closingSoon.OrderBy(v => v.ClosingDate).ToList();
                     break;
                 case VacanciesSummaryFilterTypes.Closed:
-                    vacancies = closed;
+                    vacancies = closed.OrderByDescending(v => v.ClosingDate).ToList();
                     break;
                 case VacanciesSummaryFilterTypes.Draft:
                     vacancies = draft;
@@ -664,7 +664,7 @@
 
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
-                Page = vacancies.OrderByDescending(v => v.DateCreated).Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(v)).ToList(),
+                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(v)).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
                 TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
