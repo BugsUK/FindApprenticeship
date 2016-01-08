@@ -99,7 +99,7 @@
             const int oldWarningHash = 128335101;
 
             var closingDate = new DateViewModel(DateTime.Now.AddDays(20));
-            var possibleStartDate = new DateViewModel(DateTime.Now.AddDays(20));
+            var possibleStartDate = new DateViewModel(DateTime.Now.AddDays(21));
 
             var viewModel = new VacancyDatesViewModel
             {
