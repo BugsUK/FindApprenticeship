@@ -40,11 +40,13 @@
             clonedVacancy.DateUpdated.Should().NotHaveValue();
             clonedVacancy.VacancyReferenceNumber.Should().Be(newVacancyReferenceNumber);
             clonedVacancy.DateSubmitted.Should().NotHaveValue();
+            clonedVacancy.DateFirstSubmitted.Should().NotHaveValue();
             clonedVacancy.DateStartedToQA.Should().NotHaveValue();
             clonedVacancy.DateQAApproved.Should().NotHaveValue();
             clonedVacancy.Status.Should().Be(ProviderVacancyStatuses.Draft);
             clonedVacancy.ClosingDate.Should().NotHaveValue();
             clonedVacancy.PossibleStartDate.Should().NotHaveValue();
+            clonedVacancy.SubmissionCount.Should().Be(0);
             CheckAllCommentsAreNull(clonedVacancy);
 
             return true;

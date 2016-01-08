@@ -671,6 +671,7 @@
             vacancy.DateQAApproved = null;
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
+            vacancy.SubmissionCount = 0;
             //Comments
             vacancy.TitleComment = null;
             vacancy.ShortDescriptionComment = null;
