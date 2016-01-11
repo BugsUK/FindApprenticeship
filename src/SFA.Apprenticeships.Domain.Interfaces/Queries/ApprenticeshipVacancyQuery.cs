@@ -6,7 +6,7 @@
     {
         public string FrameworkCodeName { get; set; }
 
-        public DateTime? LiveDate { get; set; }
+        public DateTime? LiveDate { get; set; } // TODO: LiveTimeOnOrAfter??
 
         public int CurrentPage { get; set; }
 
