@@ -40,8 +40,9 @@
             <p class="no-employers-optional-action">Alternatively, you might need to create a <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid})">link to the employer</a></p>
         </div>
     }
-    
+
     <section class="clearfix" id="providerSiteResults">
+        <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
         <h2 class="heading-small">Search your employers</h2>
         <details @detailsOpen>
             <summary>Search your employers</summary>
@@ -60,7 +61,7 @@
                         </label>
                     </div>
 
-                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "ern-search-form" }))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "ern-search-form"}))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
@@ -75,7 +76,7 @@
                         </div>
                     }
 
-                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new { @action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form" }))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
                     {
                         @Html.HiddenFor(model => model.ProviderSiteErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
@@ -93,12 +94,12 @@
                 </div>
             </div>
         </details>
-        
+
         @if (Model.EmployerResultsPage.ResultsCount > 0)
         {
             var resultsMessage = Model.EmployerResultsPage.ResultsCount > 1 ? string.Format("Found {0} Employers", Model.EmployerResultsPage.ResultsCount) : "Found one employer";
 
-        <h2 class="heading-small">@resultsMessage</h2>
+            <h2 class="heading-small">@resultsMessage</h2>
 
             <div class="grid grid-3-3">
                 <table>
@@ -126,13 +127,13 @@
                                 @employerResultsViewModel.Address.AddressLine1
                                 @if (!string.IsNullOrWhiteSpace(@employerResultsViewModel.Address.AddressLine2))
                                 {
-                                    <br />@employerResultsViewModel.Address.AddressLine2
+                                    <br/>@employerResultsViewModel.Address.AddressLine2
                                 }
-                                <br />@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
+                                <br/>@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
                             </td>
                             <td>@employerResultsViewModel.Ern</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview })">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }
@@ -140,8 +141,6 @@
                 </table>
             </div>
         }
-
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
     </section>
 
     <div class="page-navigation">
