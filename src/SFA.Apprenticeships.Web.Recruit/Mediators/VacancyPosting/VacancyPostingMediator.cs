@@ -15,6 +15,7 @@
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Infrastructure.Presentation;
     using Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
@@ -679,14 +680,14 @@
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
-            if (vacancyViewModel.Status == ProviderVacancyStatuses.Live)
+            if (vacancyViewModel.Status.CanHaveApplications())
             {
                 if (vacancyViewModel.ApplicationCount == 0)
                 {
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
                 }
             }
-            else
+            else if(vacancyViewModel.Status.IsStateEditable())
             {
                 var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 

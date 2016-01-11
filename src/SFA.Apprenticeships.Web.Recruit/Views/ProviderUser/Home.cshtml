@@ -277,7 +277,7 @@
                                                 {
                                                     routeName = RecruitmentRouteNames.ReviewCreateVacancy;
                                                 }
-                                                if (vacancy.Status == ProviderVacancyStatuses.Live && vacancy.ApplicationCount > 0)
+                                                if (vacancy.Status.CanHaveApplications() && vacancy.ApplicationCount > 0)
                                                 {
                                                     routeName = RecruitmentRouteNames.VacancyApplications;
                                                 }
@@ -292,7 +292,7 @@
                                         @vacancy.VacancyReferenceNumber.GetVacancyReference()
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
-                                        @if (vacancy.Status == ProviderVacancyStatuses.Live)
+                                        @if (vacancy.Status.CanHaveApplications())
                                         {
                                             if (@vacancy.ApplicationCount == 1)
                                             {

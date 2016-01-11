@@ -20,5 +20,11 @@
         {
             return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.ReservedForQA;
         }
+
+        public static bool CanHaveApplications(this ProviderVacancyStatuses status)
+        {
+            return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed ||
+                   status == ProviderVacancyStatuses.Completed || status == ProviderVacancyStatuses.Withdrawn;
+        }
     }
 }

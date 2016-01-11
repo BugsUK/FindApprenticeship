@@ -24,6 +24,7 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Factories;
+    using Infrastructure.Presentation;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;
@@ -503,7 +504,7 @@
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
-            if (viewModel.Status == ProviderVacancyStatuses.Live)
+            if (viewModel.Status.CanHaveApplications())
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
@@ -652,7 +653,7 @@
                     vacancies = withdrawn;
                     break;
                 case VacanciesSummaryFilterTypes.Completed:
-                    vacancies = completed;
+                    vacancies = completed.OrderByDescending(v => v.DateUpdated).ToList();
                     break;
             }
 
@@ -672,7 +673,7 @@
             };
 
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status == ProviderVacancyStatuses.Live))
+            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplications()))
             {
                 vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
             }
