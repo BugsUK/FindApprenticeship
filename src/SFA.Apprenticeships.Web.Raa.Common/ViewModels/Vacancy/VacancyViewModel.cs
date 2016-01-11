@@ -57,5 +57,7 @@
         public int NumberOfPositions { get; set; }
 
         public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
+
+        public bool IsEditable { get; set; }
     }
 }

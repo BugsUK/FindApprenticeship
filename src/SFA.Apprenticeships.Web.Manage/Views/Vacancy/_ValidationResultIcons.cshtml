@@ -1,7 +1,7 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model ValidationResultViewModel
 
-@if (Model.Status.IsStateEditable())
+@if (Model.Status.IsStateReviewable())
 {
     <a name="@Model.AnchorName"></a>
     if (Model.HasWarning)

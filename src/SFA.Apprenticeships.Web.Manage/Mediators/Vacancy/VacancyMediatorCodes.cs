@@ -90,5 +90,15 @@
         {
             public const string Ok = "VacancyMediatorCodes.SearchLocations.Ok";
         }
+
+        public class SelectFrameworkAsTrainingType
+        {
+            public const string Ok = "VacancyMediatorCodes.SelectFrameworkAsTrainingType.Ok";
+        }
+
+        public class SelectStandardAsTrainingType
+        {
+            public const string Ok = "VacancyMediatorCodes.SelectStandardAsTrainingType.Ok";
+        }
     }
 }

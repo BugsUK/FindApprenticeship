@@ -15,6 +15,7 @@
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Infrastructure.Presentation;
     using Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
@@ -99,7 +100,7 @@
 
             if ((viewModel.EmployerResults == null || !viewModel.EmployerResults.Any()) && (viewModel.EmployerResultsPage == null || viewModel.EmployerResultsPage.ResultsCount == 0))
             {
-                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel, EmployerSearchViewModelMessages.NoResultsText, UserMessageLevel.Info);
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.NoResults, viewModel);
             }
             
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
@@ -668,7 +669,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
+        private MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
 
@@ -678,6 +679,7 @@
         public MediatorResponse<VacancyViewModel> GetPreviewVacancyViewModel(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
+            vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
             if (vacancyViewModel.Status == ProviderVacancyStatuses.Live)
             {
@@ -703,7 +705,7 @@
         {
             var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             viewModelToValidate.ResubmitOption = resubmitOptin;
-
+            
             var resubmission = viewModelToValidate.Status == ProviderVacancyStatuses.RejectedByQA;
 
             var validationResult = _vacancyViewModelValidator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndResubmission);
@@ -714,6 +716,7 @@
             }
 
             var vacancyViewModel = _vacancyPostingProvider.SubmitVacancy(vacancyReferenceNumber);
+            vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
             if (resubmission)
             {

@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Routing;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;
+    using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
@@ -17,6 +20,22 @@
     [TestFixture]
     public class ReviewVacancyTests : ViewUnitTest
     {
+        HttpContextBase _context;
+
+        [SetUp]
+        public void Setup()
+        {
+            var request = new Mock<HttpRequestBase>();
+            var routeData = new RouteData();
+            routeData.Values.Add("Vacancy", "Vacancy");
+            request.Setup(r => r.RequestContext).Returns(new RequestContext
+            {
+                RouteData = routeData
+            });
+
+            _context = new HttpContextBuilder().With(request.Object).Build();
+        }
+
         [Test]
         public void ShouldShowApproveButton()
         {
@@ -48,10 +67,11 @@
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("btnApprove").Should().NotBeNull("Should exists an Approve button");
         }
@@ -87,10 +107,11 @@
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
         }
@@ -126,10 +147,11 @@
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("btnReject").Should().NotBeNull("Should exists a return to dashboard button");
         }
@@ -172,10 +194,11 @@
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
@@ -217,10 +240,11 @@
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
