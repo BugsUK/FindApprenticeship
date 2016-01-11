@@ -30,7 +30,7 @@
                     @Html.DropDownListFor(m => m.AgencyUser.TeamId, Model.AgencyUser.Teams)
                 </div>
             </div>
-            <div>
+            <div style="text-align: right">
                 <button class="button">Save</button>
             </div>
         }
@@ -88,7 +88,7 @@
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)
                                         {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">QA vacancy</a>
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Review vacancy</a>
                                         }
                                     </td>
                                 </tr>

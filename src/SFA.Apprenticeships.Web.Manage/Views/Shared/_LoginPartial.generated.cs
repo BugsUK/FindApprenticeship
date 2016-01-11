@@ -125,7 +125,7 @@ WriteAttribute("href", Tuple.Create(" href=\"", 528), Tuple.Create("\"", 580)
 , 535), false)
 );
 
-WriteLiteral(">Dashboard</a>\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral(">Agency home</a>\r\n        </div>\r\n    </div>\r\n");
 
             
             #line 15 "..\..\Views\Shared\_LoginPartial.cshtml"
@@ -144,14 +144,14 @@ WriteLiteral(" id=\"bannerSignedOut\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 700), Tuple.Create("\"", 749)
+WriteAttribute("href", Tuple.Create(" href=\"", 702), Tuple.Create("\"", 751)
             
             #line 19 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 707), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.SignIn)
+, Tuple.Create(Tuple.Create("", 709), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.SignIn)
             
             #line default
             #line hidden
-, 707), false)
+, 709), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");

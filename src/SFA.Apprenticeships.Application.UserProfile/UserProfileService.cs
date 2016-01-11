@@ -80,7 +80,7 @@
             var roles = new List<Role>
             {
                 GetRole("Helpdesk_advisor", "Helpdesk adviser"),
-                GetRole("QA_advisor", "QA adviser", true)
+                GetRole("QA_advisor", "Vacancy reviewer", true)
                 //GetRole(technicalAdvisor, "Technical adviser")
             };
 
