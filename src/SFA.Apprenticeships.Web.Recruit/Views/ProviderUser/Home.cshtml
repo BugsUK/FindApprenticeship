@@ -273,7 +273,7 @@
                                             @{
                                                 var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
                                                 var routeName = RecruitmentRouteNames.PreviewVacancy;
-                                                if (vacancy.Status == ProviderVacancyStatuses.Draft)
+                                                if (vacancy.Status == ProviderVacancyStatuses.Unknown || vacancy.Status == ProviderVacancyStatuses.Draft)
                                                 {
                                                     routeName = RecruitmentRouteNames.ReviewCreateVacancy;
                                                 }

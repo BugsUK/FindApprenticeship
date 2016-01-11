@@ -247,7 +247,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Ukprn = locationSearchViewModel.Ukprn,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
-                Status = locationSearchViewModel.Status,
+                Status = ProviderVacancyStatuses.Draft,
                 AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 LocationAddresses = new List<VacancyLocationAddress>(),
