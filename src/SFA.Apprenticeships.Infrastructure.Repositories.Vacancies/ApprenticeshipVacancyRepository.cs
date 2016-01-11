@@ -82,6 +82,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 
             var mongoEntities = Collection.Find(Query.And(queryConditionList))
                 .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
+                .OrderByDescending(v => v.DateCreated)
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1}, providerSiteErn = {2}", mongoEntities.Count, ukPrn, providerSiteErn));

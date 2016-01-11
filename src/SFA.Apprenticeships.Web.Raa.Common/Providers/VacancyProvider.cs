@@ -24,6 +24,7 @@
     using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Factories;
+    using Infrastructure.Presentation;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;
@@ -244,7 +245,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Ukprn = locationSearchViewModel.Ukprn,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
-                Status = locationSearchViewModel.Status,
+                Status = ProviderVacancyStatuses.Draft,
                 AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 LocationAddresses = new List<VacancyLocationAddress>(),
@@ -501,7 +502,7 @@
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
-            if (viewModel.Status == ProviderVacancyStatuses.Live)
+            if (viewModel.Status.CanHaveApplications())
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
@@ -609,16 +610,19 @@
             }
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
+            //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
             var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn);
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == ProviderVacancyStatuses.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate > _dateTimeService.UtcNow() && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
-            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate < _dateTimeService.UtcNow()).ToList();
-            //TODO: Does this include the one's in QA at the moment?
+            var closingSoon = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow().Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
+            var closed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Draft).ToList();
+            var newApplications = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
+            var withdrawn = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Withdrawn).ToList();
+            var completed = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Completed).ToList();
 
             switch (vacanciesSummarySearch.FilterType)
             {
@@ -632,13 +636,22 @@
                     vacancies = rejected;
                     break;
                 case VacanciesSummaryFilterTypes.ClosingSoon:
-                    vacancies = closingSoon;
+                    vacancies = closingSoon.OrderBy(v => v.ClosingDate).ToList();
                     break;
                 case VacanciesSummaryFilterTypes.Closed:
-                    vacancies = closed;
+                    vacancies = closed.OrderByDescending(v => v.ClosingDate).ToList();
                     break;
                 case VacanciesSummaryFilterTypes.Draft:
                     vacancies = draft;
+                    break;
+                case VacanciesSummaryFilterTypes.NewApplications:
+                    vacancies = newApplications.OrderBy(v => v.ClosingDate).ToList();
+                    break;
+                case VacanciesSummaryFilterTypes.Withdrawn:
+                    vacancies = withdrawn;
+                    break;
+                case VacanciesSummaryFilterTypes.Completed:
+                    vacancies = completed.OrderByDescending(v => v.DateUpdated).ToList();
                     break;
             }
 
@@ -651,14 +664,14 @@
 
             var vacancyPage = new PageableViewModel<VacancyViewModel>
             {
-                Page = vacancies.OrderByDescending(v => v.DateCreated).Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(v)).ToList(),
+                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(v)).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
                 TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
             };
 
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status == ProviderVacancyStatuses.Live))
+            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplications()))
             {
                 vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
             }
@@ -672,6 +685,9 @@
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,
                 DraftCount = draft.Count,
+                NewApplicationsCount = newApplications.Count,
+                WithdrawnCount = withdrawn.Count,
+                CompletedCount = completed.Count,
                 Vacancies = vacancyPage
             };
 

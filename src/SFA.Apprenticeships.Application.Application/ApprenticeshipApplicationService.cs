@@ -25,14 +25,14 @@
             return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }
 
-        public int GetApplicationCount(string vacancyReference)
-        {
-            return _apprenticeshipApplicationReadRepository.GetApplicationCount(vacancyReference);
-        }
-
         public int GetApplicationCount(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetApplicationCount(vacancyId);
+        }
+
+        public int GetNewApplicationCount(int vacancyId)
+        {
+            return _apprenticeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
         }
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)

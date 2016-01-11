@@ -681,14 +681,14 @@
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
-            if (vacancyViewModel.Status == ProviderVacancyStatuses.Live)
+            if (vacancyViewModel.Status.CanHaveApplications())
             {
                 if (vacancyViewModel.ApplicationCount == 0)
                 {
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
                 }
             }
-            else
+            else if(vacancyViewModel.Status.IsStateEditable())
             {
                 var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
 

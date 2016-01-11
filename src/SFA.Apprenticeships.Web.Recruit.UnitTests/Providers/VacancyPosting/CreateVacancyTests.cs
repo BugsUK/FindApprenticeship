@@ -416,5 +416,19 @@
             // Assert.
             viewModel.ApprenticeshipLevel.Should().NotBe(ApprenticeshipLevel.Unknown);
         }
+
+        [Test]
+        public void CreateVacancy_LocationSearchViewModel_StatusIsDraft()
+        {
+            //Arrange
+            var locationSearchViewModel = new LocationSearchViewModel();
+            var provider = GetVacancyPostingProvider();
+
+            //Act
+            provider.CreateVacancy(locationSearchViewModel);
+
+            //Assert
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.Status == ProviderVacancyStatuses.Draft)));
+        }
     }
 }

@@ -10,6 +10,7 @@
         RejectedByQA = 5,
         Closed = 6,
         Completed = 7,
-        ParentVacancy = 8
+        Withdrawn = 8,
+        ParentVacancy = 9
     }
 }

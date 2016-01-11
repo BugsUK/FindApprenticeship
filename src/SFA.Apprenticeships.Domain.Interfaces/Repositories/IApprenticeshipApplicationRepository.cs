@@ -22,9 +22,9 @@
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
 
-        int GetApplicationCount(string vacancyReference);
-
         int GetApplicationCount(int vacancyId);
+
+        int GetNewApplicationCount(int vacancyId);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
