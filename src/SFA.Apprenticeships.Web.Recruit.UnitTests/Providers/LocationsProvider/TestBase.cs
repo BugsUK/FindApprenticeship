@@ -57,7 +57,6 @@
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
                 MockTimeService.Object,
-                MockApprenticeshipVacancyWriteRepository.Object,
                 MockMapper.Object,
                 ApprenticeshipApplicationService.Object,
                 MockUserProfileService.Object);

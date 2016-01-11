@@ -99,5 +99,10 @@
         {
             return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
         }
+
+        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        {
+            return _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+        }
     }
 }

@@ -16,7 +16,6 @@
 
     public class VacancyProviderBuilder
     {
-        private Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
         private Mock<IProviderService> _providerService = new Mock<IProviderService>();
         private Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
         private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
@@ -30,17 +29,10 @@
         public IVacancyQAProvider Build()
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
-                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, _apprenticeshipVacancyWriteRepository.Object, 
+                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, 
                 _mapper.Object, _apprenticeshipApplicationService.Object, _userProfileService.Object);
         }
-
-        public VacancyProviderBuilder With(
-            Mock<IApprenticeshipVacancyWriteRepository> apprenticeshipVacancyWriteRepository)
-        {
-            _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
-            return this;
-        }
-
+        
         public VacancyProviderBuilder With(
             Mock<IProviderService> providerService)
         {

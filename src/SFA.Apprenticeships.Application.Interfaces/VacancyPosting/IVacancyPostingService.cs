@@ -21,5 +21,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
         List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses);
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
+
+        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
     }
 }

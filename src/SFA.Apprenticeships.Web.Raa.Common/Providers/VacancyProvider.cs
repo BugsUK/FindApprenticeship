@@ -42,20 +42,17 @@
         private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
-        //TODO: Providers aren't really supposed to reference repositories directly, they are supposed to use services at least with the current architecture
-        private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
             _referenceDataService = referenceDataService;
             _providerService = providerService;
             _dateTimeService = dateTimeService;
-            _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
             _configurationService = configurationService;
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
@@ -474,7 +471,7 @@
                 vacancy.LocationAddresses = new List<VacancyLocationAddress>();
                 vacancy.AdditionalLocationInformation = null;
 
-                _apprenticeshipVacancyWriteRepository.Save(vacancy);
+                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             }
         }
 
@@ -488,7 +485,7 @@
                 vacancy.IsEmployerLocationMainApprenticeshipLocation = null;
                 vacancy.AdditionalLocationInformation = null;
 
-                _apprenticeshipVacancyWriteRepository.Save(vacancy);
+                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             }
         }
 
@@ -855,12 +852,12 @@
             vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
             vacancy.QAUserName = null;
 
-            _apprenticeshipVacancyWriteRepository.Save(vacancy);
+            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
         }
 
         public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            var vacancy = _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
             var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
             //TODO: Get from data layer via joins once we're on SQL
