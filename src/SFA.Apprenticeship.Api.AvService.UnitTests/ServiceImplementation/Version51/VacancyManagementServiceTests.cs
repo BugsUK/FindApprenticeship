@@ -1,10 +1,13 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51
+﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
+
+namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51
 {
     using System;
     using System.Security;
     using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
+    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
@@ -13,14 +16,20 @@
     [TestFixture]
     public class VacancyManagementServiceTests
     {
-        private Mock<IVacancyUploadProvider> _mockVacancyUploadProvider;
+        private Mock<IVacancyUploadMediator> _mockVacancyUploadProvider;
+        private Mock<ILogService> _mockLogService;
+
         private IVacancyManagement _vacancyManagementService;
 
         [SetUp]
         public void SetUp()
         {
-            _mockVacancyUploadProvider = new Mock<IVacancyUploadProvider>();
-            _vacancyManagementService = new VacancyManagementService(_mockVacancyUploadProvider.Object);
+            _mockVacancyUploadProvider = new Mock<IVacancyUploadMediator>();
+            _mockLogService = new Mock<ILogService>();
+
+            _vacancyManagementService = new VacancyManagementService(
+                _mockLogService.Object,
+                _mockVacancyUploadProvider.Object);
         }
 
         [Test]

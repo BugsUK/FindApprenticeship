@@ -23,7 +23,7 @@
         private DateTime _closingDate;
         private DateTime _interviewStartDate;
         private DateTime _possibleStartDate;
-        private string _someSkillsRequired;
+        private string _skillsRequired;
         private string _futureProspects;
         private string _personalQualities;
         private string _qualificationRequired;
@@ -59,10 +59,10 @@
                     Wage = _wage,
                     WageType = _wageType,
                     WorkingWeek = _workingWeek,
-                    SkillsRequired = _someSkillsRequired,
                     QualificationRequired = _qualificationRequired,
                     PersonalQualities = _personalQualities,
                     FutureProspects = _futureProspects,
+                    SkillsRequired = _skillsRequired,
                     // TODO: US872: AG: OtherImportantInformation not mapped?
                     OtherImportantInformation = null,
                     // TODO: US872: AG: handle multi-location vacancies.
@@ -188,9 +188,9 @@
             return this;
         }
 
-        public VacancyUploadDataBuilder WithSkillsRequired(string someSkillsRequired)
+        public VacancyUploadDataBuilder WithSkillsRequired(string skillsRequired)
         {
-            _someSkillsRequired = someSkillsRequired;
+            _skillsRequired = skillsRequired;
             return this;
         }
 
