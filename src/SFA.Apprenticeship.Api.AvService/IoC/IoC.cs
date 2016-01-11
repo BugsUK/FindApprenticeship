@@ -1,23 +1,22 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Organisations;
-using SFA.Apprenticeships.Application.Interfaces.Providers;
-using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
-using SFA.Apprenticeships.Application.Organisation;
-using SFA.Apprenticeships.Application.Provider;
-using SFA.Apprenticeships.Application.VacancyPosting;
-using SFA.Apprenticeships.Infrastructure.EmployerDataService.IoC;
-using SFA.Apprenticeships.Infrastructure.Repositories.Providers.IoC;
-using SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
-using SFA.Apprenticeships.Infrastructure.TacticalDataServices;
-using SFA.Apprenticeships.Infrastructure.TacticalDataServices.IoC;
-
-namespace SFA.Apprenticeship.Api.AvService.IoC
+﻿namespace SFA.Apprenticeship.Api.AvService.IoC
 {
+    using Apprenticeships.Application.Interfaces.Organisations;
+    using Apprenticeships.Application.Interfaces.Providers;
+    using Apprenticeships.Application.Interfaces.VacancyPosting;
+    using Apprenticeships.Application.Organisation;
+    using Apprenticeships.Application.Provider;
+    using Apprenticeships.Application.VacancyPosting;
     using Apprenticeships.Infrastructure.Common.IoC;
+    using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Providers.IoC;
+    using Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
     using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
+    using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Mappers.Version51;
     using Providers.Version51;
     using StructureMap;
+    using ApprenticeshipVacancyBuilder = Builders.Version51.ApprenticeshipVacancyBuilder;
 
     // NOTE: WCF IoC strategy is based on this article: https://lostechies.com/jimmybogard/2008/07/30/integrating-structuremap-with-wcf/.
     public static class IoC
@@ -52,7 +51,7 @@ namespace SFA.Apprenticeship.Api.AvService.IoC
                 x.For<IApprenticeshipVacancyMapper>().Use<ApprenticeshipVacancyMapper>();
                 x.For<IApprenticeshipVacancyQueryMapper>().Use<ApprenticeshipVacancyQueryMapper>();
                 x.For<IVacancyDurationMapper>().Use<VacancyDurationMapper>();
-                x.For<IVacancyUploadRequestMapper>().Use<VacancyUploadRequestMapper>();
+                x.For<ApprenticeshipVacancyBuilder>().Use<ApprenticeshipVacancyBuilder>();
                 x.For<IWageMapper>().Use<WageMapper>();
             });
         }

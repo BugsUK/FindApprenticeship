@@ -5,7 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using AvService.Mappers.Version51;
+    using AvService.Builders.Version51;
     using AvService.Providers.Version51;
     using AvService.Validators;
     using Builders;
@@ -20,7 +20,7 @@
     public class ValidVacancyUploadDataTests
     {
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
-        private Mock<IVacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
+        private Mock<ApprenticeshipVacancyBuilder> _mockVacancyUploadRequestMapper;
 
         private VacancyUploadDataBuilder _vacancyUploadDataBuilder;
         private VacancyUploadProvider _provider;
@@ -29,7 +29,7 @@
         public void SetUp()
         {
             // Mappers.
-            _mockVacancyUploadRequestMapper = new Mock<IVacancyUploadRequestMapper>();
+            _mockVacancyUploadRequestMapper = new Mock<ApprenticeshipVacancyBuilder>();
 
             // Vacancy Posting Service.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
@@ -52,7 +52,8 @@
         public void ShouldUploadValidVacancy()
         {
             // Arrange.
-            var vacancyUploadData = _vacancyUploadDataBuilder.Build();
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
 
             var request = new VacancyUploadRequest
             {
@@ -79,7 +80,8 @@
         public void ShouldSetVacancyReferenceNumberInResponse(int vacancyReferenceNumber)
         {
             // Arrange.
-            var vacancyUploadData = _vacancyUploadDataBuilder.Build();
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
 
             var request = new VacancyUploadRequest
             {
@@ -141,7 +143,8 @@
         public void ShouldMapVacancyUploadRequestToApprenticeshipVacancy(int vacancyReferenceNumber)
         {
             // Arrange.
-            var vacancyUploadData = _vacancyUploadDataBuilder.Build();
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
 
             var request = new VacancyUploadRequest
             {

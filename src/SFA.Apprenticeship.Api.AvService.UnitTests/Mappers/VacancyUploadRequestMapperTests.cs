@@ -1,13 +1,12 @@
-﻿using Moq;
-using SFA.Apprenticeships.Application.Interfaces.Providers;
-
-namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
 {
     using System;
-    using AvService.Mappers.Version51;
+    using Apprenticeships.Application.Interfaces.Providers;
+    using AvService.Builders.Version51;
     using Builders;
     using Common;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using ProviderVacancies = Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
 
@@ -15,14 +14,14 @@ namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
     public class VacancyUploadRequestMapperTests
     {
         private VacancyUploadDataBuilder _vacancyUploadDataBuilder;
-        private IVacancyUploadRequestMapper _mapper;
+        private ApprenticeshipVacancyBuilder _mapper;
 
         [SetUp]
         public void SetUp()
         {
             var providerService = new Mock<IProviderService>();
 
-            _mapper = new VacancyUploadRequestMapper(providerService.Object);
+            _mapper = new ApprenticeshipVacancyBuilder(providerService.Object);
             _vacancyUploadDataBuilder = new VacancyUploadDataBuilder();
         }
 

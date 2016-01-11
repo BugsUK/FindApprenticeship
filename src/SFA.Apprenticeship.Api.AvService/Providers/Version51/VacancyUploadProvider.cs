@@ -1,15 +1,14 @@
-using SFA.Apprenticeship.Api.AvService.Validators;
-
 namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
+    using Builders.Version51;
     using Common;
     using DataContracts.Version51;
-    using Mappers.Version51;
     using MessageContracts.Version51;
+    using Validators;
 
     // REF: NAVMS: Navms.Ms.ExternalInterfaces.ServiceImplementation.Rel51.VacancyManagementInternalService
     // REF: NAVMS: Capgemini.LSC.Navms.MS.BusinessLogic.VacancyController::BulkUploadVacancies
@@ -17,16 +16,16 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
     public class VacancyUploadProvider : IVacancyUploadProvider
     {
         private readonly VacancyUploadDataValidator _validator;
-        private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
+        private readonly ApprenticeshipVacancyBuilder _apprenticeshipVacancyBuilder;
         private readonly IVacancyPostingService _vacancyPostingService;
 
         public VacancyUploadProvider(
             VacancyUploadDataValidator validator,
-            IVacancyUploadRequestMapper vacancyUploadRequestMapper,
+            ApprenticeshipVacancyBuilder apprenticeshipVacancyBuilder,
             IVacancyPostingService vacancyPostingService)
         {
             _validator = validator;
-            _vacancyUploadRequestMapper = vacancyUploadRequestMapper;
+            _apprenticeshipVacancyBuilder = apprenticeshipVacancyBuilder;
             _vacancyPostingService = vacancyPostingService;
         }
 
@@ -77,7 +76,7 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
                 };
             }
 
-            var mappedVacancy = _vacancyUploadRequestMapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _apprenticeshipVacancyBuilder.ToApprenticeshipVacancy(vacancyUploadData);
             var createdVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(mappedVacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData

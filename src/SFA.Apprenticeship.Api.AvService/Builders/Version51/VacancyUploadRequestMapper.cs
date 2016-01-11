@@ -1,12 +1,11 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Providers;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-using SFA.Apprenticeships.Domain.Entities.Organisations;
-using SFA.Apprenticeships.Domain.Entities.Providers;
-
-namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.Builders.Version51
 {
     using System;
     using System.Linq;
+    using Apprenticeships.Application.Interfaces.Providers;
+    using Apprenticeships.Domain.Entities.Locations;
+    using Apprenticeships.Domain.Entities.Organisations;
+    using Apprenticeships.Domain.Entities.Providers;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Common;
@@ -14,11 +13,11 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
     using WageType = Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.WageType;
 
     // TOOD: US872: AG: move to a service or parameterise mapper with ProviderSiteEmployerLink and VacancyReferenceNumber?
-    public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
+    public class ApprenticeshipVacancyBuilder : IApprenticeshipVacancyBuilder
     {
         private readonly IProviderService _providerService;
 
-        public VacancyUploadRequestMapper(IProviderService providerService)
+        public ApprenticeshipVacancyBuilder(IProviderService providerService)
         {
             _providerService = providerService;
         }
@@ -130,7 +129,6 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
                 SecondQuestionComment = null,
 
                 OfflineVacancy = vacancyUploadData.Application.Type == ApplicationType.Offline,
-
                 OfflineApplicationUrl = firstLocationDetails.EmployerWebsite,
                 OfflineApplicationUrlComment = null,
 
@@ -157,7 +155,6 @@ namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
 
         #region Helpers
 
-        // TODO: US872: remove this mapper, handled by upstream validation.
         private static ApprenticeshipLevel MapVacancyApprenticeshipType(VacancyApprenticeshipType vacancyApprenticeshipType)
         {
             switch (vacancyApprenticeshipType)

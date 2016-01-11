@@ -300,10 +300,10 @@
     <Compile Include="Mappers\Version51\IApprenticeshipVacancyMapper.cs" />
     <Compile Include="Mappers\Version51\IApprenticeshipVacancyQueryMapper.cs" />
     <Compile Include="Mappers\Version51\IVacancyDurationMapper.cs" />
-    <Compile Include="Mappers\Version51\IVacancyUploadRequestMapper.cs" />
+    <Compile Include="Builders\Version51\IApprenticeshipVacancyBuilder.cs" />
     <Compile Include="Mappers\Version51\IWageMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
-    <Compile Include="Mappers\Version51\VacancyUploadRequestMapper.cs" />
+    <Compile Include="Builders\Version51\VacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalResponse.cs" />

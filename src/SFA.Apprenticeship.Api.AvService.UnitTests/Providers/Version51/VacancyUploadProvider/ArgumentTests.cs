@@ -2,7 +2,7 @@
 {
     using System;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
-    using AvService.Mappers.Version51;
+    using AvService.Builders.Version51;
     using AvService.Providers.Version51;
     using AvService.Validators;
     using FluentAssertions;
@@ -14,7 +14,7 @@
     public class ArgumentTests
     {
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
-        private Mock<IVacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
+        private Mock<ApprenticeshipVacancyBuilder> _mockVacancyUploadRequestMapper;
 
         private VacancyUploadProvider _provider;
 
@@ -22,7 +22,7 @@
         public void SetUp()
         {
             // Mappers.
-            _mockVacancyUploadRequestMapper = new Mock<IVacancyUploadRequestMapper>();
+            _mockVacancyUploadRequestMapper = new Mock<ApprenticeshipVacancyBuilder>();
 
             // Vacancy Posting Service.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
