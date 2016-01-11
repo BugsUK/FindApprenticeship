@@ -719,12 +719,15 @@
             var vacancySummaryViewModel = new VacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(30)),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(30)),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(60))
+                },
                 Duration = 3,
                 DurationType = DurationType.Years,
                 HoursPerWeek = 40,
                 LongDescription = "Long description",
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(60)),
                 WageType = WageType.ApprenticeshipMinimumWage,
                 WorkingWeek = "working week"
             };
@@ -737,7 +740,7 @@
         {
             var vacancySummaryViewModel = GetVacancySummaryViewModel(vacancyReferenceNumber);
 
-            vacancySummaryViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(5)); // Warning
+            vacancySummaryViewModel.VacancyDatesViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(5)); // Warning
             vacancySummaryViewModel.WorkingWeek = null; // Error
 
             return vacancySummaryViewModel;

@@ -1,0 +1,17 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model ContactDetailsAndVacancyHistoryViewModel
+    
+@if (Model != null && Model != ContactDetailsAndVacancyHistoryViewModel.EmptyContactDetailsAndVacancyHistory)
+{
+    <details>
+        <summary>Contact details and vacancy history</summary>
+        <div class="detail-content panel-indent">
+            @Model.FullName<br />
+            @Model.ProviderName<br />
+            @Model.PhoneNumber<br />
+            @Model.Email<br />
+            First submitted: @Html.DisplayFor(m => m.DateFirstSubmitted.Value.Date)<br />
+            Last updated: @Html.DisplayFor(m => m.DateLastUpdated.Value.Date)
+        </div>
+    </details>
+}

@@ -9,5 +9,6 @@
         public const string DailyDigest = "dailydigestscheduler";
         public const string DailyMetrics = "dailymetricsscheduler";
         public const string Housekeeping = "housekeepingscheduler";
+        public const string VacancyStatus = "vacancystatusscheduler";
     }
 }

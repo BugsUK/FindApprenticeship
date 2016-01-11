@@ -43,6 +43,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
         private DailyDigestControlQueueConsumer _dailyDigestControlQueueConsumer;
         private HousekeepingControlQueueConsumer _housekeepingControlQueueConsumer;
+        private VacancyStatusControlQueueConsumer _vacancyStatusControlQueueConsumer;
         private IConfigurationService _configurationService;
         private IContainer _container;
 
@@ -59,7 +60,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                         _savedSearchControlQueueConsumer.CheckScheduleQueue(),
                         _vacancyEtlControlQueueConsumer.CheckScheduleQueue(),
                         _applicationEtlControlQueueConsumer.CheckScheduleQueue(),
-                        _housekeepingControlQueueConsumer.CheckScheduleQueue()
+                        _housekeepingControlQueueConsumer.CheckScheduleQueue(),
+                        _vacancyStatusControlQueueConsumer.CheckScheduleQueue()
                     };
 
                     if (CommunicationsIsEnabled)
@@ -169,6 +171,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
             _dailyDigestControlQueueConsumer = _container.GetInstance<DailyDigestControlQueueConsumer>();
             _housekeepingControlQueueConsumer = _container.GetInstance<HousekeepingControlQueueConsumer>();
+            _vacancyStatusControlQueueConsumer = _container.GetInstance<VacancyStatusControlQueueConsumer>();
             _configurationService = _container.GetInstance<IConfigurationService>();
         }
     }

@@ -644,10 +644,10 @@
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
             vacancyPostingService.Setup(vp => vp.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(new ApprenticeshipVacancy());
-            viewModel.ClosingDateComment = closingDateComment;
+            viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
             viewModel.DurationComment = durationComment;
             viewModel.LongDescriptionComment = longDescriptionComment;
-            viewModel.PossibleStartDateComment = possibleStartDateComment;
+            viewModel.VacancyDatesViewModel.PossibleStartDateComment = possibleStartDateComment;
             viewModel.WageComment = wageComment;
             viewModel.WorkingWeekComment = workingWeekComment;
 
@@ -706,8 +706,10 @@
             return new VacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30)),
+                VacancyDatesViewModel = new VacancyDatesViewModel { 
+                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
+                },
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",

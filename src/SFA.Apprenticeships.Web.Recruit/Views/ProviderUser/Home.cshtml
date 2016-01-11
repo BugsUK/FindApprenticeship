@@ -237,7 +237,7 @@
                                 </td>
                                 <td class="vac-status">
                                     @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
-                                    @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.ClosingDate); }
+                                    @{ Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate); }
                                 </td>
                                 <td class="vac-toolbox">
                                     @if (VacancyIsClonable(vacancy))

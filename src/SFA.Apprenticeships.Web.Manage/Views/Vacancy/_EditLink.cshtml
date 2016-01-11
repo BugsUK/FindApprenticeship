@@ -1,3 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditLinkViewModel
-    
-<a href="@Model.EditUrl" class="edit-comment-link">Edit/Comment</a>
+
+@if (Model.Status.IsStateReviewable())
+{
+    <a href="@Model.EditUrl" class="edit-comment-link">Edit/Comment</a>
+}

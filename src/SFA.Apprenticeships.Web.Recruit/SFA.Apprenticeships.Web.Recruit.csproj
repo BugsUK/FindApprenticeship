@@ -548,13 +548,12 @@
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
     <Content Include="Views\Application\VacancyApplications.cshtml" />
     <Content Include="Views\Application\_applicationStatus.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
     <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\DisabilityStatus.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Qualifications.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\TrainingCourses.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\WorkExperience.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\AboutYou.cshtml" />
@@ -564,6 +563,8 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_comment.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

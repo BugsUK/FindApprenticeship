@@ -8,6 +8,7 @@
         Live = 3,
         ReservedForQA = 4,
         RejectedByQA = 5,
-        Closed = 6
+        Closed = 6,
+        Completed = 7
     }
 }

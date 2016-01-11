@@ -5,7 +5,9 @@
     using System.Threading;
     using CuttingEdge.Conditions;
     using Domain.Entities;
+    using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
@@ -49,6 +51,13 @@
         public ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy)
         {
             Condition.Requires(vacancy);
+
+            // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
+            if (vacancy.Status == ProviderVacancyStatuses.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
 
             if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
             {

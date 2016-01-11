@@ -4,15 +4,17 @@
     <Sites>
       <Site name="Web">
         <Bindings>
-          <Binding name="Endpoint1" endpointName="Endpoint1" />
+          <Binding name="Endpoint1" endpointName="SSLRecruitWebEndpoint" />
+          <Binding name="Endpoint2" endpointName="RecruitWebEndpoint" />
         </Bindings>
       </Site>
     </Sites>
+    <Endpoints>
+      <InputEndpoint name="SSLRecruitWebEndpoint" protocol="https" port="443" certificate="SSLWebRecruit" />
+      <InputEndpoint name="RecruitWebEndpoint" protocol="http" port="80" />
+    </Endpoints>
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
     </ConfigurationSettings>
-    <Endpoints>
-      <InputEndpoint name="Endpoint1" protocol="http" port="80" />
-    </Endpoints>
   </WebRole>
 </ServiceDefinition>

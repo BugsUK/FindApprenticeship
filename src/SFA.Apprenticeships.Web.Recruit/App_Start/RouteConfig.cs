@@ -170,6 +170,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.ConfirmEmployerSelection,
+                url: "vacancy/employer/confirmSelection",
+                defaults: new { controller = "VacancyPosting", action = "ConfirmEmployerSelection" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.SearchExistingEmployer,
                 url: "vacancy/employer/searchexisting",
                 defaults: new { controller = "VacancyPosting", action = "SearchExistingEmployer" }
@@ -197,6 +203,12 @@
                 name: RecruitmentRouteNames.SelectNewEmployer,
                 url: "vacancy/employer/selectnew",
                 defaults: new { controller = "VacancyPosting", action = "SelectNewEmployer" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.ConfirmNewEmployerSelection,
+                url: "vacancy/employer/confirmSelectNew",
+                defaults: new { controller = "VacancyPosting", action = "ConfirmNewEmployerSelection" }
                 );
 
             routes.MapRoute(
@@ -239,6 +251,12 @@
                name: RecruitmentRouteNames.ShowLocations,
                url: "vacancy/showLocations",
                defaults: new { controller = "VacancyPosting", action = "ShowLocations" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ManageDates,
+               url: "vacancy/manageDates",
+               defaults: new { controller = "VacancyPosting", action = "ManageDates" }
                );
 
             routes.MapRoute(

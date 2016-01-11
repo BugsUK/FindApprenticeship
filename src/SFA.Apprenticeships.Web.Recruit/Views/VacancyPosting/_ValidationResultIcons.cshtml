@@ -1,8 +1,7 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model ValidationResultViewModel
 
-@if (Model.Status != ProviderVacancyStatuses.Live)
+@if (Model.Status.IsStateEditable())
 {
     <a name="@Model.AnchorName"></a>
     if (Model.HasWarning)

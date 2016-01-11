@@ -48,20 +48,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public DateViewModel ClosingDate { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.ClosingDateComment.LabelText)]
-        public string ClosingDateComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public DateViewModel PossibleStartDate { get; set; }
-
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.PossibleStartDateComment.LabelText)]
-        public string PossibleStartDateComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescriptionComment.LabelText)]
         public string LongDescriptionComment { get; set; }
@@ -77,5 +65,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
         public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
+
+        public bool ComeFromPreview { get; set; }
+
+        public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
     }
 }

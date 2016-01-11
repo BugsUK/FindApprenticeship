@@ -344,6 +344,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Vacancy\EmployerInformation.generated.cs">
+      <DependentUpon>EmployerInformation.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Vacancy\Review.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -420,7 +425,10 @@
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
+    <Content Include="Content\_assets\js\locationAutocomplete.js" />
+    <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
@@ -436,6 +444,10 @@
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\_assets\js\vendor\jstorage.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
@@ -495,6 +507,14 @@
       <LastGenOutput>_comment.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\Vacancy\EmployerInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorJS.cshtml" />
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorNonJS.cshtml" />
+    <Content Include="Views\Vacancy\Locations.cshtml" />
+    <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -577,6 +597,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>

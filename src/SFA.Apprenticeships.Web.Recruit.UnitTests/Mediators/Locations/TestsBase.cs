@@ -38,6 +38,7 @@
                 new VacancyRequirementsProspectsViewModelClientValidator(),
                 new VacancyQuestionsViewModelServerValidator(),
                 new VacancyQuestionsViewModelClientValidator(),
+                new VacancyDatesViewModelServerValidator(), 
                 new VacancyViewModelValidator(), 
                 new ProviderSiteEmployerLinkViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),

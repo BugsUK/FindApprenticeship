@@ -44,7 +44,7 @@
 
         public string Description { get; set; }
 
-        public int NumberOfPositions { get; set; }
+        public int? NumberOfPositions { get; set; }
 
         public string EmployerName { get; set; }
 

@@ -12,6 +12,18 @@
 	display: none;
 }
 
+.cancel-link{
+    margin-left: 12px;
+}
+
+.locations-table {
+    .location-positions {
+        text-align: center;
+    }
+    .locations-positions-header{
+        text-align: center;
+    }
+}
 
 .editable-item {
     position: relative;
@@ -23,13 +35,14 @@
         margin-bottom: 0;
     }
     .edit-comment-link {
+        clear: both;
         @include copy-16;
         display: block;
         margin: .5rem 0;
     }
 }
 
-html:not(.touch) .editable-item {
+html:not(.touch).js .editable-item {
     border: 1px dotted #fff;
     .edit-comment-link {
         color: white;
@@ -200,6 +213,14 @@ table#vacancies-table {
                     }
                 }
             }
+        }
+    }
+}
+
+table#rightLocationAddressesTable{
+    @media screen and ( max-width: 768px ) {
+        thead{
+            display: none;
         }
     }
 }

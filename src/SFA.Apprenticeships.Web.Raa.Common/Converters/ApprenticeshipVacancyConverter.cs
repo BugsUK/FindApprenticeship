@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Converters
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
     using System;
     using System.Collections.Generic;
@@ -28,14 +26,16 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 DurationTypes = GetDurationTypes(),
                 Duration = apprenticeshipVacancy.Duration,
                 Status = apprenticeshipVacancy.Status,
-                ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
-                PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
+                VacancyDatesViewModel = new VacancyDatesViewModel { 
+                    ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
+                    PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
+                    ClosingDateComment = apprenticeshipVacancy.ClosingDateComment,
+                    PossibleStartDateComment = apprenticeshipVacancy.PossibleStartDateComment,
+                },
                 LongDescription = apprenticeshipVacancy.LongDescription,
                 WageComment = apprenticeshipVacancy.WageComment,
-                ClosingDateComment = apprenticeshipVacancy.ClosingDateComment,
                 DurationComment = apprenticeshipVacancy.DurationComment,
                 LongDescriptionComment = apprenticeshipVacancy.LongDescriptionComment,
-                PossibleStartDateComment = apprenticeshipVacancy.PossibleStartDateComment,
                 WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment
             };
 
@@ -95,7 +95,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Converters
                 FirstQuestion = apprenticeshipVacancy.FirstQuestion,
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,
-                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment
+                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment,
+                Status = apprenticeshipVacancy.Status
             };
 
             return vacancyViewModel;

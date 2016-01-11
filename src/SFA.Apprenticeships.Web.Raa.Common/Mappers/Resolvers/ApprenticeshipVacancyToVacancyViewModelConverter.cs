@@ -4,6 +4,7 @@
     using AutoMapper;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -27,12 +28,29 @@
                 VacancyRequirementsProspectsViewModel =
                     context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
-                LocationAddresses =
-                    context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
-                        source.LocationAddresses),
-                IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = source.NumberOfPositions
+                
             };
+
+            if (source.Status.IsStateInQa())
+            {
+                destination.ContactDetailsAndVacancyHistory = new ContactDetailsAndVacancyHistoryViewModel
+                {
+                    DateSubmitted = source.DateSubmitted,
+                    DateFirstSubmitted = source.DateFirstSubmitted ?? source.DateSubmitted,
+                    DateLastUpdated = source.DateUpdated
+                };
+            }
+
+            // TODO: move to its custom mapper?
+            destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
+            destination.NewVacancyViewModel.LocationAddresses =
+                context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
+                    source.LocationAddresses);
+            destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
+            destination.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation =
+                source.IsEmployerLocationMainApprenticeshipLocation;
+            destination.NewVacancyViewModel.NumberOfPositions = source.NumberOfPositions;
+            destination.NewVacancyViewModel.NumberOfPositionsComment = source.NumberOfPositionsComment;
 
             return destination;
         }

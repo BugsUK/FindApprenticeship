@@ -178,6 +178,8 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyDatesViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancySummaryViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
@@ -185,6 +187,7 @@
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
     <Compile Include="Providers\ILocationsProvider.cs" />
+    <Compile Include="Providers\IProviderQAProvider.cs" />
     <Compile Include="Providers\IProviderProvider.cs" />
     <Compile Include="Providers\IProviderUserProvider.cs" />
     <Compile Include="Providers\IVacancyPostingProvider.cs" />
@@ -204,6 +207,8 @@
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
+    <Compile Include="Validators\Vacancy\VacancyDatesViewModelBusinessRulesExtensions.cs" />
+    <Compile Include="Validators\Vacancy\VacancyDatesViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyQuestionsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyRequirementsProspectsViewModelValidator.cs" />
@@ -238,6 +243,7 @@
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
@@ -248,13 +254,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DateTime.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
-      <DependentUpon>Comment.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview1.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview.generated.cs">
       <DependentUpon>VacancyPreview.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
+      <DependentUpon>Comment.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -276,7 +282,7 @@
     </Content>
     <Content Include="Views\Shared\DisplayTemplates\VacancyPreview.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>VacancyPreview.generated.cs</LastGenOutput>
+      <LastGenOutput>VacancyPreview1.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

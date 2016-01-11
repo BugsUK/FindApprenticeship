@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
-    using Constants;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
@@ -13,8 +12,8 @@
     {
         public VacancySummaryViewModelClientValidator()
         {
-            this.AddCommonRules();
-            RuleSet(RuleSets.Errors, this.AddCommonRules);
+            this.AddVacancySummaryViewModelCommonRules();
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
         }
     }
 
@@ -22,11 +21,11 @@
     {
         public VacancySummaryViewModelServerValidator()
         {
-            this.AddCommonRules();
-            this.AddServerCommonRules();
-            RuleSet(RuleSets.Errors, this.AddCommonRules);
-            RuleSet(RuleSets.Errors, this.AddServerCommonRules);
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(null));
+            this.AddVacancySummaryViewModelCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules();
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
+            RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(null));
         }
     }
 
@@ -34,10 +33,10 @@
     {
         public VacancySummaryViewModelServerErrorValidator()
         {
-            this.AddCommonRules();
-            this.AddServerCommonRules();
-            RuleSet(RuleSets.Errors, this.AddCommonRules);
-            RuleSet(RuleSets.Errors, this.AddServerCommonRules);
+            this.AddVacancySummaryViewModelCommonRules();
+            this.AddVacancySummaryViewModelServerCommonRules();
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelCommonRules);
+            RuleSet(RuleSets.Errors, this.AddVacancySummaryViewModelServerCommonRules);
         }
     }
 
@@ -45,13 +44,13 @@
     {
         public VacancySummaryViewModelServerWarningValidator(string parentPropertyName)
         {
-            RuleSet(RuleSets.Warnings, () => this.AddServerWarningRules(parentPropertyName));
+            RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(parentPropertyName));
         }
     }
 
     internal static class VacancySummaryViewModelValidatorRules
     {
-        internal static void AddCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
+        internal static void AddVacancySummaryViewModelCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
         {
             validator.RuleFor(viewModel => viewModel.WorkingWeek)
                 .Length(0, 250)
@@ -63,19 +62,11 @@
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
 
-            validator.RuleFor(viewModel => viewModel.ClosingDateComment)
-                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
-
             validator.RuleFor(viewModel => viewModel.DurationComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.LongDescriptionComment)
-                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
-
-            validator.RuleFor(viewModel => viewModel.PossibleStartDateComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
@@ -86,9 +77,12 @@
             validator.RuleFor(viewModel => viewModel.WorkingWeekComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(viewModel => viewModel.VacancyDatesViewModel)
+                .SetValidator(new VacancyDatesViewModelCommonValidator());
         }
 
-        internal static void AddServerCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
+        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
         {
             validator.RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
@@ -124,20 +118,8 @@
                 .WithMessage(VacancyViewModelMessages.Duration.RequiredErrorText)
                 .Must(HaveAValidDuration)
                 .WithMessage(VacancyViewModelMessages.Duration.DurationCantBeLessThan12Months);
-
-            validator.RuleFor(x => x.ClosingDate)
-                .Must(Common.BeValidDate)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.RequiredErrorText)
-                .Must(Common.BeOneDayInTheFuture)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
-
-            validator.RuleFor(x => x.PossibleStartDate)
-                .Must(Common.BeValidDate)
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.RequiredErrorText)
-                .Must(Common.BeOneDayInTheFuture)
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.AfterTodayErrorText)
-                .SetValidator(new DateViewModelClientValidator()); //Client validatior contains complete rules
+            
+            validator.RuleFor(x => x.VacancyDatesViewModel).SetValidator(new VacancyDatesViewModelServerCommonValidator());
 
             validator.RuleFor(x => x.LongDescription)
                 .NotEmpty()
@@ -146,22 +128,16 @@
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText);
         }
 
-        internal static void AddServerWarningRules(this AbstractValidator<VacancySummaryViewModel> validator, string parentPropertyName)
+        internal static void AddVacancySummaryViewModelServerWarningRules(this AbstractValidator<VacancySummaryViewModel> validator, string parentPropertyName)
         {
             validator.Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration, parentPropertyName));
 
-            validator.RuleFor(x => x.ClosingDate)
-                .Must(Common.BeTwoWeeksInTheFuture)
-                .WithMessage(VacancyViewModelMessages.ClosingDate.TooSoonErrorText)
-                .WithState(s => ValidationType.Warning);
+            var parentPropertyNameToUse = string.IsNullOrWhiteSpace(parentPropertyName)
+                ? "VacancyDatesViewModel"
+                : parentPropertyName + ".VacancyDatesViewModel";
 
-            validator.RuleFor(x => x.PossibleStartDate)
-                .Must(Common.BeTwoWeeksInTheFuture)
-                .WithMessage(VacancyViewModelMessages.PossibleStartDate.TooSoonErrorText)
-                .WithState(s => ValidationType.Warning)
-                .When(x => x.ClosingDate == null || !x.ClosingDate.HasValue);
-
-            validator.Custom(x => x.PossibleStartDateShouldBeAfterClosingDate(x.ClosingDate, parentPropertyName));
+            validator.RuleFor(x => x.VacancyDatesViewModel)
+                .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyNameToUse));
         }
 
         private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)

@@ -45,10 +45,13 @@
     }
 
     <div class="blocklabel-single-container">
-        <h2 class="heading-small">Search for an employer</h2>
-        <div class="panel-indent blocklabel-content grid grid-2-3">
-            If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
-        </div>
+        <p>Search for an employer</p>
+        @if (!searchPerformed)
+        {
+            <div class="panel-indent grid grid-2-3">
+                If you can't find the employer you want to link to, login to <a href="https://edrs.lsc.gov.uk/security/login.aspx" target="_blank">EDS</a> to request an ERN.
+            </div>
+        }
 
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
             @* ReSharper disable once Html.IdNotResolved *@
@@ -68,6 +71,7 @@
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.Ern)
+            @Html.HiddenFor(m => m.ComeFromPreview)
 
             <div id="ern-search-panel" class="toggle-content blocklabel-content">
                 @Html.FormTextFor(model => model.Ern)
@@ -75,7 +79,7 @@
                 <button id="ern-search-button" type="submit" class="button">
                     Find employer
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
             </div>
         }
 
@@ -84,6 +88,7 @@
             @Html.HiddenFor(m => m.ProviderSiteErn)
             @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
+            @Html.HiddenFor(m => m.ComeFromPreview)
 
             <div id="name-location-search-panel" class="toggle-content blocklabel-content">
                 @Html.FormTextFor(model => model.Name)
@@ -136,7 +141,7 @@
                             </td>
                             <td>@employerResultsViewModel.Ern</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ComfirmNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

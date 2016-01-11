@@ -62,6 +62,11 @@
                 .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText);
 
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
+                .Length(0, 0)
+                .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ShouldBeEmpty);
+
             validator.RuleFor(m => m.OfflineApplicationUrlComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
@@ -69,6 +74,11 @@
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText);
+
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
+                .Length(0, 0)
+                .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.ShouldBeEmptyText);
 
             validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)

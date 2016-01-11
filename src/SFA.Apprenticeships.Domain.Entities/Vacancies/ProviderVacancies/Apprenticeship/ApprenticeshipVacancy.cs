@@ -32,8 +32,13 @@
         public string AdditionalLocationInformation { get; set; }
 
         public List<VacancyLocationAddress> LocationAddresses { get; set; }
-        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
-        public int NumberOfPositions { get; set; }
+        public int? NumberOfPositions { get; set; }
+        public string EmployerDescriptionComment { get; set; }
+        public string EmployerWebsiteUrlComment { get; set; }
+        public string LocationAddressesComment { get; set; }
+        public string NumberOfPositionsComment { get; set; }
+        public string AdditionalLocationInformationComment { get; set; }
     }
 }

@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
+namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 {
     using System;
     using System.Collections.Generic;
@@ -27,15 +27,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Manage;
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
-    using SFA.Apprenticeships.Web.Recruit;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/_comment.cshtml")]
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/_comment.cshtml")]
     public partial class comment : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.CommentViewModel>
     {
         public comment()
@@ -44,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         public override void Execute()
         {
             
-            #line 3 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 3 "..\..\Views\Vacancy\_comment.cshtml"
  if (Model.HasComment)
 {
 
@@ -58,7 +59,7 @@ WriteLiteral(" class=\"open\"");
 WriteLiteral(" open>\r\n        <summary>");
 
             
-            #line 6 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 6 "..\..\Views\Vacancy\_comment.cshtml"
             Write(Model.CommentLabel);
 
             
@@ -75,7 +76,7 @@ WriteLiteral(" class=\"blocklabel-single-container preserve-formatting\"");
 WriteLiteral(">");
 
             
-            #line 8 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 8 "..\..\Views\Vacancy\_comment.cshtml"
                                                                     Write(Model.Comment);
 
             
@@ -84,7 +85,7 @@ WriteLiteral(">");
 WriteLiteral("</div>\r\n        </div>\r\n    </details>\r\n");
 
             
-            #line 11 "..\..\Views\VacancyPosting\_comment.cshtml"
+            #line 11 "..\..\Views\Vacancy\_comment.cshtml"
 }
             
             #line default

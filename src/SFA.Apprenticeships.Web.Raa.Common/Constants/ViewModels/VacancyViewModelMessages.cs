@@ -252,6 +252,9 @@
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The website address " + Whitelists.FreetextWhitelist.ErrorText;
             public const string ErrorUriText = "Please enter a valid website address";
+
+            public const string ShouldBeEmpty =
+                "Only enter a web address if the vacancy applications will be managed through an external website";
         }
 
         public static class OfflineApplicationUrlComment
@@ -264,6 +267,9 @@
             public const string LabelText = "Explain the external website application process (optional)";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The candidate explanation " + Whitelists.FreetextWhitelist.ErrorText;
+
+            public const string ShouldBeEmptyText =
+                "Only answer if the vacancy applications will be managed through an external website";
         }
 
         public static class OfflineApplicationInstructionsComment
@@ -314,7 +320,17 @@
             public const string RequiredErrorText = "Confirm you have reviewed this vacancy and would like to resubmit it for approval";
         }
 
-        internal class OfflineVacancy
+        public class EmployerDescriptionComment
+        {
+            public const string LabelText = "Description comment";
+        }
+
+        public class EmployerWebsiteUrlComment
+        {
+            public const string LabelText = "Employer's Website Url comment";
+		}
+		
+        public class OfflineVacancy
         {
             public const string RequiredErrorText = "Please select whether the vacancy will be managed through the find an apprentice site or not";
         }

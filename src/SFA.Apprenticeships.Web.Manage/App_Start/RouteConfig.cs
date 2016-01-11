@@ -115,6 +115,30 @@
                 defaults: new { controller = "Vacancy", action = "Questions" }
                 );
 
+            routes.MapRoute(
+                name: ManagementRouteNames.EmployerInformation,
+                url: "vacancy/employerinformation",
+                defaults: new { controller = "Vacancy", action = "EmployerInformation" }
+                );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.AddLocations,
+               url: "vacancy/locations",
+               defaults: new { controller = "Vacancy", action = "Locations" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.SearchAddresses,
+               url: "vacancy/searchAddresses",
+               defaults: new { controller = "Vacancy", action = "SearchAddresses" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ShowLocations,
+               url: "vacancy/showLocations",
+               defaults: new { controller = "Vacancy", action = "ShowLocations" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

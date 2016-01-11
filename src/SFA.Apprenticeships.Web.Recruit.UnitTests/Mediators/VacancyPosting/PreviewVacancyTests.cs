@@ -21,8 +21,11 @@
             var today = DateTime.Today;
             var viewModel = new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel(today),
-                PossibleStartDate = new DateViewModel(today)
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(today),
+                    PossibleStartDate = new DateViewModel(today)
+                }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
@@ -33,8 +36,8 @@
 
             //Assert
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.ClosingDate").Should().Be(2);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.PossibleStartDate").Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate").Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate").Should().Be(2);
         }
     }
 }

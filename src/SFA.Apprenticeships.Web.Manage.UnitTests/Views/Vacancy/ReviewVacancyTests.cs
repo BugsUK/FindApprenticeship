@@ -1,25 +1,41 @@
-﻿using ReflectionMagic;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.Vacancy
 {
     using System;
-    using NUnit.Framework;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using System.Collections.Generic;
+    using System.Web;
+    using System.Web.Routing;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Vacancies.ProviderVacancies;
+    using FluentAssertions;
+    using Manage.Views.Vacancy;
+    using Moq;
+    using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
-    using System.Collections.Generic;
-    using System.Web.Mvc;
-    using FluentAssertions;
-    using RazorGenerator.Testing;
-    using Manage.Views.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Views.Shared.DisplayTemplates;
+    using RazorGenerator.Testing;
 
     [TestFixture]
     public class ReviewVacancyTests : ViewUnitTest
     {
+        HttpContextBase _context;
+
+        [SetUp]
+        public void Setup()
+        {
+            var request = new Mock<HttpRequestBase>();
+            var routeData = new RouteData();
+            routeData.Values.Add("Vacancy", "Vacancy");
+            request.Setup(r => r.RequestContext).Returns(new RequestContext
+            {
+                RouteData = routeData
+            });
+
+            _context = new HttpContextBuilder().With(request.Object).Build();
+        }
+
         [Test]
         public void ShouldShowApproveButton()
         {
@@ -33,8 +49,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -48,10 +67,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("btnApprove").Should().NotBeNull("Should exists an Approve button");
         }
@@ -69,8 +89,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -84,10 +107,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
         }
@@ -105,8 +129,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
@@ -120,10 +147,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("btnReject").Should().NotBeNull("Should exists a return to dashboard button");
         }
@@ -145,8 +173,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = wagetype,
                     HoursPerWeek = hoursPerWeek
                 },
@@ -159,14 +190,15 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                             Address = new AddressViewModel()
                         }
                     },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
@@ -186,8 +218,11 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = WageType.Custom,
                     WageUnit = wageUnit,
                     Wage = wage
@@ -201,14 +236,15 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Views.VacancyPosting
                             Address = new AddressViewModel()
                         }
                     },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                Status = ProviderVacancyStatuses.ReservedForQA
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }

@@ -11,7 +11,7 @@
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "VacancySummaryAndPreview";
@@ -30,7 +30,7 @@
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Status)
     @Html.HiddenFor(m => m.WarningsHash)
-
+    @Html.HiddenFor(m => m.ComeFromPreview)
     <section>
         <div class="form-group">
             <fieldset class="form-group inline-fixed">
@@ -87,20 +87,20 @@
                 @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DurationComment))
             </fieldset>
 
-            <fieldset class="form-group inline-fixed date-input @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate)))">
-                <a name="@Html.NameFor(m => m.ClosingDate).ToString().ToLower()"></a>
-                <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
-                @Html.EditorFor(m => m.ClosingDate)
-                @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
+            <fieldset class="form-group inline-fixed date-input @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))">
+                <a name="@Html.NameFor(m => m.VacancyDatesViewModel.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
+                <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.ClosingDate).DisplayName</legend>
+                @Html.EditorFor(m => m.VacancyDatesViewModel.ClosingDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.ClosingDate, Html.GetValidationType(m => m.VacancyDatesViewModel.ClosingDate))
             </fieldset>
-            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.ClosingDateComment))</div>
-            <fieldset class="form-group inline-fixed date-input @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate)))">
-                <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().ToLower()"></a>
-                <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
-                @Html.EditorFor(m => m.PossibleStartDate)
-                @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
+            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.VacancyDatesViewModel.ClosingDateComment))</div>
+            <fieldset class="form-group inline-fixed date-input @SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))">
+                <a name="@Html.NameFor(m => m.VacancyDatesViewModel.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
+                <legend class="form-label">@Model.GetMetadata(m => m.VacancyDatesViewModel.PossibleStartDate).DisplayName</legend>
+                @Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDate)
+                @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
             </fieldset>
-            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.PossibleStartDateComment))</div>
+            <div class="form-group">@Html.Partial("_comment", Html.GetCommentViewModel(m => m.VacancyDatesViewModel.PossibleStartDateComment))</div>
             @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
             @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LongDescriptionComment))
         </div>
@@ -108,5 +108,9 @@
     <div class="grid grid-1-2">
         <button id="vacancySummaryButton" type="submit" class="button" name="VacancySummary" value="@saveButtonValue">@saveButtonText</button>
         <button id="vacancySummaryAndExit" type="submit" class="button-link" name="VacancySummary" value="VacancySummaryAndExit">Save and exit</button>
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
     </div>
 }

@@ -40,6 +40,7 @@
             {
                 var modelState = Model[modelKey];
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+
                 var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof (ModelError));
                 foreach (var modelError in modelState.Errors)
                 {
