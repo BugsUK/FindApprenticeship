@@ -79,9 +79,9 @@
 
             var roles = new List<Role>
             {
-                GetRole("Helpdesk_advisor", "Helpdesk advisor"),
-                GetRole("QA_advisor", "QA advisor", true),
-                //GetRole(technicalAdvisor, "Technical advisor")
+                GetRole("Helpdesk_advisor", "Helpdesk adviser"),
+                GetRole("QA_advisor", "QA adviser", true)
+                //GetRole(technicalAdvisor, "Technical adviser")
             };
 
             return roleList == "Serco" ? roles.Where(r => r.Id != technicalAdvisor) : roles;

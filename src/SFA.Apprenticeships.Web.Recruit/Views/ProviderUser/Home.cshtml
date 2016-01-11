@@ -258,7 +258,7 @@
                             <tr>
                                 <th>Vacancy title</th>
                                 <th>Employer</th>
-                                <th>Vacancy ref</th>
+                            	<th>Location</th>
                                 <th>Number of applications</th>
                                 <th>Vacancy status</th>
                                 <th></th>
@@ -289,7 +289,15 @@
                                         @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
                                     </td>
                                     <td class="vac-ref-number" data-label="Vacancy ref">
-                                        @vacancy.VacancyReferenceNumber.GetVacancyReference()
+                                    @if (vacancy.IsApprovedMultiLocationChildVacancy)
+                                    {
+                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4<br/>
+                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1Ellipsis
+                                    }
+                                    else
+                                    {
+                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4
+                                    }
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
                                         @if (vacancy.Status.CanHaveApplications())

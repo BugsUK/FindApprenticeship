@@ -732,7 +732,10 @@
 
             var viewModel = new SubmittedVacancyViewModel
             {
-                VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn, Resubmitted = resubmitted
+                VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
+                Resubmitted = resubmitted,
+                VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location vacancy" : "Vacancy",
+                IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy
             };
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);

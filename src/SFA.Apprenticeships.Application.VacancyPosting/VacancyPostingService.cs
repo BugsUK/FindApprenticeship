@@ -2,6 +2,7 @@
 {
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
+    using System.Collections.Generic;
     using System.Threading;
     using CuttingEdge.Conditions;
     using Domain.Entities;
@@ -87,6 +88,16 @@
         public ApprenticeshipVacancy GetVacancy(Guid vacancyGuid)
         {
             return _apprenticeshipVacancyReadRepository.Get(vacancyGuid);
+        }
+
+        public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
+        {
+            return _apprenticeshipVacancyReadRepository.GetWithStatus(desiredStatuses);
+        }
+
+        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
+        {
+            return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
         }
     }
 }

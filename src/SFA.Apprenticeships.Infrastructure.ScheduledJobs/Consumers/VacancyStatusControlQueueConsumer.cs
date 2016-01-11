@@ -26,8 +26,13 @@
                 var schedulerNotification = GetLatestQueueMessage();
                 if (schedulerNotification != null)
                 {
+                    var yesterday  = DateTime.UtcNow.AddDays(-1);
+                    var endOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 23, 59, 59);
+
                     _logger.Info("Calling vacancy status processor to queue vacancies eligible for closure");
-                    _vacancyStatusProcessor.QueueVacanciesForClosure(DateTime.Today.AddSeconds(-1));
+
+                    _vacancyStatusProcessor.QueueVacanciesForClosure(endOfDay);
+
                     MessageService.DeleteMessage(ScheduledJobQueues.VacancyStatus, schedulerNotification.MessageId, schedulerNotification.PopReceipt);
                     _logger.Info("Queued vacancies eligible for closure and deleted message");
                 }

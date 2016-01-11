@@ -57,7 +57,6 @@
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
                 MockTimeService.Object,
-                MockApprenticeshipVacancyReadRepository.Object,
                 MockApprenticeshipVacancyWriteRepository.Object,
                 MockMapper.Object,
                 ApprenticeshipApplicationService.Object,

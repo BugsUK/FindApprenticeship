@@ -15,6 +15,18 @@
         [Display(Name = AddressViewModelMessages.AddressLine1.LabelText)]
         public string AddressLine1 { get; set; }
 
+        public string AddressLine1Ellipsis
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(AddressLine1)
+                    || AddressLine1.Length <= 20)
+                    return AddressLine1;
+
+                return $"{AddressLine1.Substring(0, 20)}...";
+            }
+        }
+
         [Display(Name = AddressViewModelMessages.AddressLine2.LabelText)]
         public string AddressLine2 { get; set; }
 
