@@ -200,6 +200,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScheduledJobs\Application\ApplicationStatusSummarySubscriberTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
+    <Compile Include="ScheduledJobs\Vacancy\VacancyStatusControlQueueConsumerTests..cs" />
     <Compile Include="ScheduledJobs\Vacancy\VacancySchedulerConsumerTests.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriberTests.cs" />
     <Compile Include="UserDirectory\PasswordHashTests.cs" />
