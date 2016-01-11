@@ -11,8 +11,8 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Domain.Entities;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Mvc;
+    using Infrastructure.Presentation;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
@@ -49,6 +49,8 @@
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations,
                 new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+
+            vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
 
             ModelState.Clear();
 
@@ -114,36 +116,6 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
         }
-
-        //[MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
-        //[HttpPost]
-        //public ActionResult SelectFramework(NewVacancyViewModel viewModel)
-        //{
-        //    var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
-
-        //    viewModel.TrainingType = TrainingType.Frameworks;
-        //    viewModel.Standards = response.ViewModel.Standards;
-        //    viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
-
-        //    ModelState.Clear();
-
-        //    return View("BasicDetails", viewModel);
-        //}
-
-        //[MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
-        //[HttpPost]
-        //public ActionResult SelectStandard(NewVacancyViewModel viewModel)
-        //{
-        //    var response = _vacancyMediator.GetBasicDetails(viewModel.VacancyReferenceNumber.Value);
-
-        //    viewModel.TrainingType = TrainingType.Standards;
-        //    viewModel.Standards = response.ViewModel.Standards;
-        //    viewModel.SectorsAndFrameworks = response.ViewModel.SectorsAndFrameworks;
-
-        //    ModelState.Clear();
-
-        //    return View("BasicDetails", viewModel);
-        //}
 
         [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
         [HttpPost]

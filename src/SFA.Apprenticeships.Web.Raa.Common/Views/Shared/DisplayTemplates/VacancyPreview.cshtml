@@ -16,20 +16,9 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @{
-    var isRecruitSite = Context.Request.RequestContext.RouteData.Values.ContainsValue("VacancyPosting");
-    var isEditable = false;
-    if (isRecruitSite)
-    {
-        isEditable = Model.Status.IsStateEditable();
-    }
-    else
-    {
-        isEditable = Model.Status.IsStateReviewable();
-    }
-
-    var editableItemClass = isEditable ? "editable-item" : "";
+    var editableItemClass = Model.IsEditable ? "editable-item" : "";
     var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
-    var editableApprenticeshipLevelClass = (!isEditable || !editableApprenticeshipLevel ) ? "" : "editable-item";
+    var editableApprenticeshipLevelClass = (!Model.IsEditable || !editableApprenticeshipLevel ) ? "" : "editable-item";
 }
 
 <section>

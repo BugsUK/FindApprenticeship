@@ -15,7 +15,6 @@
     using Raa.Common.Providers;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.VacancyPosting;
-    using Raa.Common.ViewModels;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
 
