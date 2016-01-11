@@ -294,7 +294,11 @@
                                     <td class="vac-no-of-applications" data-label="Number of applications">
                                         @if (vacancy.Status.CanHaveApplications())
                                         {
-                                            if (@vacancy.ApplicationCount == 1)
+                                            if (vacancy.Status == ProviderVacancyStatuses.Live && vacancy.ApplicationCount == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            {
+                                                <span style="color: red; font-weight: bold">0 applications</span>
+                                            }
+                                            else if (@vacancy.ApplicationCount == 1)
                                             {
                                                 <span>1 application</span>
                                             }

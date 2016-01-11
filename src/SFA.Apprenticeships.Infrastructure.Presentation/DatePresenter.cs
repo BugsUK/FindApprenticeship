@@ -82,5 +82,45 @@
 
             return dataTimeByZoneId.ToString("dd MMM yyyy");
         }
+
+        public static int GetDaysTillClose(this DateTime date)
+        {
+            var daysTillClose = (date - DateTime.UtcNow.Date).Days;
+            return daysTillClose;
+        }
+
+        public static bool ShouldEmphasiseClosingDate(this DateTime date)
+        {
+            return date.GetDaysTillClose() == 0;
+        }
+
+        public static bool CloseToClosingDate(this DateTime? date)
+        {
+            return date?.CloseToClosingDate() ?? false;
+        }
+
+        public static bool CloseToClosingDate(this DateTime date)
+        {
+            return date.GetDaysTillClose() <= 5;
+        }
+
+        public static string GetClosingDate(this DateTime date)
+        {
+            var daysTillClose = GetDaysTillClose(date);
+            if (daysTillClose == 0)
+            {
+                return "closing today";
+            }
+            if (daysTillClose == 1)
+            {
+                return "closing in 1 day";
+            }
+            if (daysTillClose > 1 && daysTillClose <= 5)
+            {
+                return $"closing in {daysTillClose} days";
+            }
+
+            return "";
+        }
     }
 }
