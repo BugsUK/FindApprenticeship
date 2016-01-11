@@ -44,8 +44,8 @@
             viewModel.VacancySummaryViewModel.WageType = WageType.NationalMinimumWage;
             viewModel.VacancySummaryViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(14)),
-                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(28))
+                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),
+                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(14))
             };
             viewModel.Status = status;
             return viewModel;
