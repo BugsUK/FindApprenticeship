@@ -85,7 +85,9 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
 
             var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
 
-            var vacancy = _vacancyUploadRequestMapper.ToVacancy(vacancyUploadData, providerSiteEmployerLink);
+            var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
+            var vacancy = _vacancyUploadRequestMapper.ToVacancy(vacancyReferenceNumber, vacancyUploadData, providerSiteEmployerLink);
+
             var newVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData

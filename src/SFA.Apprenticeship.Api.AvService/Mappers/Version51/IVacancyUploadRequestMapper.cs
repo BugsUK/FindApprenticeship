@@ -6,8 +6,6 @@
 
     public interface IVacancyUploadRequestMapper
     {
-        ApprenticeshipVacancy ToVacancy(
-            VacancyUploadData vacancyUploadData,
-            ProviderSiteEmployerLink providerSiteEmployerLink);
+        ApprenticeshipVacancy ToVacancy(long vacancyReferenceNumber, VacancyUploadData vacancyUploadData, ProviderSiteEmployerLink providerSiteEmployerLink);
     }
 }

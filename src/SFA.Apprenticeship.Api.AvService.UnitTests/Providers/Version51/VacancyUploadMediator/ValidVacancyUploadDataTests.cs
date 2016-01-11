@@ -90,40 +90,6 @@
             vacancyUploadResultData.ShouldBeValid();
         }
 
-        [TestCase(1)]
-        [TestCase(42)]
-        public void ShouldSetVacancyReferenceNumberInResponse(int vacancyReferenceNumber)
-        {
-            // Arrange.
-            var vacancyUploadData = _vacancyUploadDataBuilder
-                .Build();
-
-            var request = new VacancyUploadRequest
-            {
-                Vacancies = new List<VacancyUploadData>
-                {
-                    vacancyUploadData
-                }
-            };
-
-            _mockVacancyPostingService.Setup(mock =>
-                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy
-                {
-                    VacancyReferenceNumber = vacancyReferenceNumber
-                });
-
-            // Act.
-            var response = _mediator.UploadVacancies(request);
-
-            // Assert.
-            response.Should().NotBeNull();
-
-            var vacancyUploadResultData = response.Vacancies.Single();
-
-            vacancyUploadResultData.ReferenceNumber.Should().Be(vacancyReferenceNumber);
-        }
-
         [Test]
         public void ShouldReflectVacancyIdInResponse()
         {
@@ -169,18 +135,15 @@
                 }
             };
 
-            var vacancy = new ApprenticeshipVacancy
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
+            var vacancy = new ApprenticeshipVacancy();
 
             _mockVacancyUploadRequestMapper.Setup(mock =>
-                mock.ToVacancy(vacancyUploadData, null))
+                mock.ToVacancy(vacancyReferenceNumber, vacancyUploadData, null))
                 .Returns(vacancy);
 
             _mockVacancyPostingService.Setup(mock =>
-                mock.CreateApprenticeshipVacancy(vacancy))
-                .Returns(vacancy);
+                mock.GetNextVacancyReferenceNumber())
+                .Returns(vacancyReferenceNumber);
 
             // Act.
             var response = _mediator.UploadVacancies(request);
@@ -188,10 +151,9 @@
             // Assert.
             response.Should().NotBeNull();
             response.Vacancies.Count.Should().Be(1);
-            response.Vacancies.Single().ReferenceNumber.Should().Be(vacancyReferenceNumber);
 
             _mockVacancyUploadRequestMapper.Verify(mock =>
-                mock.ToVacancy(vacancyUploadData, null), Times.Once);
+                mock.ToVacancy(vacancyReferenceNumber, vacancyUploadData, null), Times.Once);
         }
     }
 }

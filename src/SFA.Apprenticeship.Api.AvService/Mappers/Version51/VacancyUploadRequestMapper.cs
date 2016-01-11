@@ -13,9 +13,7 @@
 
     public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
     {
-        public ApprenticeshipVacancy ToVacancy(
-            VacancyUploadData vacancyUploadData,
-            ProviderSiteEmployerLink providerSiteEmployerLink)
+        public ApprenticeshipVacancy ToVacancy(long vacancyReferenceNumber, VacancyUploadData vacancyUploadData, ProviderSiteEmployerLink providerSiteEmployerLink)
         {
             var ukprn = Convert.ToString(vacancyUploadData.ContractedProviderUkprn);
             var providerSiteErn = Convert.ToString(vacancyUploadData.VacancyOwnerEdsUrn);
@@ -27,7 +25,7 @@
             return new ApprenticeshipVacancy
             {
                 EntityId = Guid.NewGuid(),
-                VacancyReferenceNumber = 0,
+                VacancyReferenceNumber = vacancyReferenceNumber,
 
                 Ukprn = ukprn,
 
