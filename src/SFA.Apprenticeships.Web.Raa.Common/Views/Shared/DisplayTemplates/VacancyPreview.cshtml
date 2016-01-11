@@ -16,9 +16,9 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @{
-    var editableItemClass = Model.Status.IsStateEditable() ? "editable-item" : "";
+    var editableItemClass = Model.IsEditable ? "editable-item" : "";
     var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
-    var editableApprenticeshipLevelClass = !editableApprenticeshipLevel ? "" : "editable-item";
+    var editableApprenticeshipLevelClass = (!Model.IsEditable || !editableApprenticeshipLevel ) ? "" : "editable-item";
 }
 
 <section>
@@ -177,7 +177,7 @@
             {
                 var positions = Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NewVacancyViewModel.NumberOfPositions : Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions;
 
-                <div class="editable-item">
+                <div class="@editableItemClass">
                     <h3 class="bold-small">Positions</h3>
                     <p id="vacancy-reference-id">@positions available</p>
 
@@ -313,11 +313,13 @@
 <section class="section-border" id="employer-info">
     <h2 class="heading-large">About the employer</h2>
     <div class="grid-wrapper">
-        <h3 class="bold-small">Employer</h3>
-        <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+        <div class="grid">
+            <h3 class="bold-small">Employer</h3>
+            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+        </div>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
-                <div class="editable-item">
+                <div class="@editableItemClass">
                     <h3 class="bold-small">
                         Description
                         @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
