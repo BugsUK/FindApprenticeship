@@ -399,6 +399,38 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
+        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string vacancyIdString, Guid? candidateId)
+        {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
+            }
+
+            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.IncrementClickThroughFor(vacancyId);
+
+            if (vacancyDetailViewModel == null)
+            {
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
+                (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
+            {
+                // Candidate has no application for the vacancy and the vacancy is no longer live OR
+                // candidate has an application (at least a draft) but the vacancy is no longer available.
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
+            }
+
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
+        }
+
         public MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel)
         {
             Guid savedSearchId;
@@ -428,6 +460,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SavedSearch.Ok, savedSearchViewModel);
         }
+
+        
 
         #region Helpers
 

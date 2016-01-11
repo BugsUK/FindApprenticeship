@@ -205,6 +205,42 @@
             }
         }
 
+        public ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId)
+        {
+            _logger.Debug(
+                "Calling ApprenticeshipVacancyDetailProvider to increment click throughs for vacancy ID: {0}.", vacancyId);
+
+            try
+            {
+                var vacancyDetail = _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
+
+                if (vacancyDetail == null) return null;
+
+                var vacancyDetailViewModel = _apprenticeshipSearchMapper.Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
+
+                // vacancyDetailViewModel.ClickThroughs = vacancyDetailViewModel.ClickThroughs + 1;
+
+                // TODO: Call to a service to update the vacancy -> a new service
+
+                return vacancyDetailViewModel;
+            }
+            catch (CustomException e)
+            {
+                var message = $"Increment click throughs failed for vacancy ID: {vacancyId}.";
+
+                _logger.Error(message, e);
+
+                return new ApprenticeshipVacancyDetailViewModel(ApprenticeshipVacancyDetailPageMessages.GetVacancyDetailFailed);
+            }
+            catch (Exception e)
+            {
+                var message = $"Increment click throughs failed for vacancy ID: {vacancyId}.";
+
+                _logger.Error(message, e);
+                throw;
+            }
+        }
+
         private Dictionary<string, SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> ProcessNationalAndNonNationalSearches(
             ApprenticeshipSearchViewModel search, Location searchLocation)
         {

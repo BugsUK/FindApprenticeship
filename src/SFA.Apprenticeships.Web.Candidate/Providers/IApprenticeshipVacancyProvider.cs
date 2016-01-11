@@ -8,5 +8,7 @@
         ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search);
 
         ApprenticeshipVacancyDetailViewModel GetVacancyDetailViewModel(Guid? candidateId, int vacancyId);
+
+        ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId);
     }
 }
