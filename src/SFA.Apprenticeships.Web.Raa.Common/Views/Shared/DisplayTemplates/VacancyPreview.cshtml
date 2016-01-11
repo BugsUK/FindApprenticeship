@@ -2,7 +2,7 @@
 
 @functions{
 
-    private static bool IsSingleLocation(VacancyViewModel viewModel)
+    private static bool IsSingleLocation(VacancyViewModel viewModel) 
     {
         return viewModel.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true || (viewModel.NewVacancyViewModel.LocationAddresses != null && viewModel.NewVacancyViewModel.LocationAddresses.Count == 1);
     }
