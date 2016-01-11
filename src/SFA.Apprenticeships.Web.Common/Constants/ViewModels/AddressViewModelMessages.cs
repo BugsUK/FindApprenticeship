@@ -7,7 +7,7 @@
         public static class AddressLine1
         {
             public const string LabelText = "Address";
-            public const string RequiredErrorText = "Please enter your first line of address";
+            public const string RequiredErrorText = "Enter your first line of address";
             public const string TooLongErrorText = "First line of address must not be more than {0} characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "First line of address " + Whitelists.FreetextWhitelist.ErrorText;
@@ -40,7 +40,7 @@
         public static class Postcode
         {
             public const string LabelText = "Postcode";
-            public const string RequiredErrorText = "Please enter your postcode";
+            public const string RequiredErrorText = "Enter your postcode";
             public const string TooLongErrorText = "Postcode must not be more than 8 characters";
             public const string WhiteListRegularExpression = Whitelists.PostcodeWhitelist.RegularExpression;
             public const string WhiteListErrorText = "'Postcode' " + Whitelists.PostcodeWhitelist.ErrorText;

@@ -50,7 +50,7 @@
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
-                        Summary
+                        Brief overview of the role
                         @Html.Partial(CommentViewModel.PartialView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
                     </h3>
                     <div class="text" itemprop="description">
@@ -136,7 +136,7 @@
             }
             <div class="@editableItemClass">
                 <h3 class="bold-small">
-                    Expected duration
+                    Expected apprenticeship duration
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
                 </h3>
                 <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
@@ -546,7 +546,6 @@
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.StandardId, Model.BasicDetailsLink, Model.NewVacancyViewModel.StandardIdComment))
                     }
                 </div>
-                <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
             </div>
         </div>
     </div>

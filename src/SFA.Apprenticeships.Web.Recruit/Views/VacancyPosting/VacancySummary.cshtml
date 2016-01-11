@@ -6,7 +6,7 @@
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @{
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
+    ViewBag.Title = "Recruit an Apprentice - Enter further details";
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
@@ -19,7 +19,7 @@
 }
 
 <h1 class="heading-xlarge">
-    Enter vacancy details
+    Enter further details
 </h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySummary, FormMethod.Post))

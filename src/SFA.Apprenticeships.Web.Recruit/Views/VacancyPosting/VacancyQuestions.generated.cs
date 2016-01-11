@@ -65,7 +65,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
             
             #line 5 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
   
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
+    ViewBag.Title = "Recruit an Apprentice - Extra questions you'd like to ask candidates (optional)";
 
     var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and preview vacancy";
 
@@ -76,7 +76,7 @@ WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n    Questions for candidates\r\n</h1>\r\n\r\n");
+WriteLiteral(">\r\n    Extra questions you\'d like to ask candidates (optional)\r\n</h1>\r\n\r\n");
 
             
             #line 15 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"

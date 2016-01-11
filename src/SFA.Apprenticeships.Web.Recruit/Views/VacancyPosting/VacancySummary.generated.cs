@@ -82,7 +82,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
             
             #line 8 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
   
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy summary";
+    ViewBag.Title = "Recruit an Apprentice - Enter further details";
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
@@ -100,7 +100,7 @@ WriteLiteral("\r\n\r\n<h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n    Enter vacancy details\r\n</h1>\r\n\r\n");
+WriteLiteral(">\r\n    Enter further details\r\n</h1>\r\n\r\n");
 
             
             #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"

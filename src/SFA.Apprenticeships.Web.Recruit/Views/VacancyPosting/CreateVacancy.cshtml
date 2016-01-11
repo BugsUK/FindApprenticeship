@@ -50,7 +50,7 @@
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
+            <div class="@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
                 <label class="form-label">Apprenticeship type</label>
                 @* ReSharper disable once Html.IdNotResolved *@
@@ -88,6 +88,11 @@
                     }
                 </div>
             </noscript>
+
+            <div id="frameworks-standards-explained">
+                <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
+                <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+            </div>
 
             <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
@@ -171,7 +176,7 @@
 
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) Candidates will apply on an external website
+                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new {id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel"}) Candidates will apply through an external website
                 </label>
                 @Html.ValidationMessageFor(m => m.OfflineVacancy)
             </div>
