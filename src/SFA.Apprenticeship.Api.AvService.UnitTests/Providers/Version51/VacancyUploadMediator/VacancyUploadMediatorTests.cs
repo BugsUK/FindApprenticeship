@@ -1,43 +1,57 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadProvider
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadMediator
 {
     using System;
     using System.Collections.Generic;
+    using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using AvService.Builders.Version51;
-    using AvService.Providers.Version51;
+    using AvService.Mappers.Version51;
     using AvService.Validators;
     using DataContracts.Version51;
     using FluentAssertions;
+    using FluentValidation.Results;
+    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class VacancyUploadProviderTests
+    public class VacancyUploadMediatorTests
     {
-        private Mock<IVacancyPostingService> _mockVacancyPostingService;
-        private Mock<ApprenticeshipVacancyBuilder> _mockVacancyUploadRequestMapper;
+        private Mock<VacancyUploadDataValidator> _mockVacancyUploadDataValidator;
+        private Mock<VacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
 
-        private VacancyUploadProvider _provider;
+        private Mock<IProviderService> _mockProviderService;
+        private Mock<IVacancyPostingService> _mockVacancyPostingService;
+
+        private VacancyUploadMediator _mediator;
 
         [SetUp]
         public void SetUp()
         {
             // Mappers.
-            _mockVacancyUploadRequestMapper = new Mock<ApprenticeshipVacancyBuilder>();
+            _mockVacancyUploadRequestMapper = new Mock<VacancyUploadRequestMapper>();
 
-            // Vacancy Posting Service.
+            // Services.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
+            _mockProviderService = new Mock<IProviderService>();
 
             _mockVacancyPostingService.Setup(mock =>
                 mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(new ApprenticeshipVacancy());
 
+            // Validators.
+            _mockVacancyUploadDataValidator = new Mock<VacancyUploadDataValidator>();
+
+            _mockVacancyUploadDataValidator.Setup(mock =>
+                mock.Validate(It.IsAny<VacancyUploadData>()))
+                .Returns(new ValidationResult());
+
             // Provider.
-            _provider = new VacancyUploadProvider(
-                new VacancyUploadDataValidator(),
+            _mediator = new VacancyUploadMediator(
+                _mockVacancyUploadDataValidator.Object,
                 _mockVacancyUploadRequestMapper.Object,
+                _mockProviderService.Object,
                 _mockVacancyPostingService.Object);
         }
 
@@ -52,7 +66,7 @@
             };
 
             // Act.
-            var actualResponse = _provider.UploadVacancies(request);
+            var actualResponse = _mediator.UploadVacancies(request);
 
             // Assert.
             actualResponse.MessageId.Should().Be(request.MessageId);
@@ -76,7 +90,7 @@
             };
 
             // Act.
-            var response = _provider.UploadVacancies(request);
+            var response = _mediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();
@@ -102,7 +116,7 @@
             };
 
             // Act.
-            var response = _provider.UploadVacancies(request);
+            var response = _mediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();

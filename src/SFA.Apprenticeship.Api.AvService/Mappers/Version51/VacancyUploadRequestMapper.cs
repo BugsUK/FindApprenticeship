@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Builders.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.Mappers.Version51
 {
     using System;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Domain.Entities.Locations;
     using Apprenticeships.Domain.Entities.Organisations;
     using Apprenticeships.Domain.Entities.Providers;
@@ -12,31 +11,23 @@
     using DataContracts.Version51;
     using WageType = Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.WageType;
 
-    // TOOD: US872: AG: move to a service or parameterise mapper with ProviderSiteEmployerLink and VacancyReferenceNumber?
-    public class ApprenticeshipVacancyBuilder : IApprenticeshipVacancyBuilder
+    public class VacancyUploadRequestMapper : IVacancyUploadRequestMapper
     {
-        private readonly IProviderService _providerService;
-
-        public ApprenticeshipVacancyBuilder(IProviderService providerService)
-        {
-            _providerService = providerService;
-        }
-
-        public ApprenticeshipVacancy ToApprenticeshipVacancy(VacancyUploadData vacancyUploadData)
+        public ApprenticeshipVacancy ToVacancy(
+            VacancyUploadData vacancyUploadData,
+            ProviderSiteEmployerLink providerSiteEmployerLink)
         {
             var ukprn = Convert.ToString(vacancyUploadData.ContractedProviderUkprn);
             var providerSiteErn = Convert.ToString(vacancyUploadData.VacancyOwnerEdsUrn);
             var ern = Convert.ToString(vacancyUploadData.Employer.EdsUrn);
 
-            var providerSite = _providerService.GetProviderSite(ukprn, providerSiteErn);
-            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
-
+            // TODO: US872: AG: handle multi-location vacancies in future iteration.
             var firstLocationDetails = vacancyUploadData.Vacancy.LocationDetails.First();
 
             return new ApprenticeshipVacancy
             {
                 EntityId = Guid.NewGuid(),
-                VacancyReferenceNumber = new Random().Next(), // TODO
+                VacancyReferenceNumber = 0,
 
                 Ukprn = ukprn,
 
@@ -65,7 +56,7 @@
                         EntityId = Guid.NewGuid(),
                         DateCreated = DateTime.UtcNow,
                         Ern = ern,
-                        Name = providerSiteEmployerLink.Employer.Name,
+                        Name = providerSiteEmployerLink?.Employer?.Name,
                         Address = new Address
                         {
                             AddressLine1  = firstLocationDetails.AddressDetails.AddressLine1,
@@ -78,7 +69,7 @@
                                 Latitude = Convert.ToDouble(firstLocationDetails.AddressDetails.Latitude ?? 0.0m),
                                 Longitude = Convert.ToDouble(firstLocationDetails.AddressDetails.Longitude ?? 0.0m)
                             },
-                            Postcode = firstLocationDetails.AddressDetails.PostCode,
+                            Postcode = firstLocationDetails.AddressDetails.PostCode
                             // Uprn is not mapped.
                         }
                     }

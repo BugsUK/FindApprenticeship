@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
 {
     using MessageContracts.Version51;
 
-    public interface IVacancyUploadProvider
+    public interface IVacancyUploadMediator
     {
         VacancyUploadResponse UploadVacancies(VacancyUploadRequest request);
     }

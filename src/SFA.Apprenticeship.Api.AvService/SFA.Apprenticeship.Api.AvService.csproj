@@ -300,10 +300,10 @@
     <Compile Include="Mappers\Version51\IApprenticeshipVacancyMapper.cs" />
     <Compile Include="Mappers\Version51\IApprenticeshipVacancyQueryMapper.cs" />
     <Compile Include="Mappers\Version51\IVacancyDurationMapper.cs" />
-    <Compile Include="Builders\Version51\IApprenticeshipVacancyBuilder.cs" />
+    <Compile Include="Mappers\Version51\IVacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\IWageMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
-    <Compile Include="Builders\Version51\VacancyUploadRequestMapper.cs" />
+    <Compile Include="Mappers\Version51\VacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalResponse.cs" />
@@ -354,11 +354,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Version51\IVacancyDetailsProvider.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider.cs" />
+    <Compile Include="Mediators\Version51\VacancyUploadMediator.cs" />
     <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyManagement.cs" />
-    <Compile Include="Providers\Version51\IVacancyUploadProvider.cs" />
+    <Compile Include="Mediators\Version51\IVacancyUploadMediator.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />

@@ -4,6 +4,7 @@
     using System.Security;
     using System.ServiceModel;
     using Apprenticeships.Application.Interfaces.Logging;
+    using Mediators.Version51;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
@@ -15,14 +16,14 @@
     public class VacancyManagementService : IVacancyManagement
     {
         private readonly ILogService _logService;
-        private readonly IVacancyUploadProvider _vacancyUploadProvider;
+        private readonly IVacancyUploadMediator _vacancyUploadMediator;
 
         public VacancyManagementService(
             ILogService logService,
-            IVacancyUploadProvider vacancyUploadProvider)
+            IVacancyUploadMediator vacancyUploadMediator)
         {
             _logService = logService;
-            _vacancyUploadProvider = vacancyUploadProvider;
+            _vacancyUploadMediator = vacancyUploadMediator;
         }
 
         public VacancyUploadResponse UploadVacancies(VacancyUploadRequest request)
@@ -46,7 +47,7 @@
                     throw new SecurityException();
                 }
 
-                return _vacancyUploadProvider.UploadVacancies(request);
+                return _vacancyUploadMediator.UploadVacancies(request);
             }
             catch (Exception e)
             {

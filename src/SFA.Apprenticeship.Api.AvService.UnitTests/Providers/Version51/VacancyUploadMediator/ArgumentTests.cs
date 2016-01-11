@@ -1,11 +1,12 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadProvider
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadMediator
 {
     using System;
+    using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
-    using AvService.Builders.Version51;
-    using AvService.Providers.Version51;
+    using AvService.Mappers.Version51;
     using AvService.Validators;
     using FluentAssertions;
+    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
@@ -13,24 +14,27 @@
     [TestFixture]
     public class ArgumentTests
     {
+        private Mock<IProviderService> _mockProviderService;
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
-        private Mock<ApprenticeshipVacancyBuilder> _mockVacancyUploadRequestMapper;
+        private Mock<VacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
 
-        private VacancyUploadProvider _provider;
+        private VacancyUploadMediator _mediator;
 
         [SetUp]
         public void SetUp()
         {
             // Mappers.
-            _mockVacancyUploadRequestMapper = new Mock<ApprenticeshipVacancyBuilder>();
+            _mockVacancyUploadRequestMapper = new Mock<VacancyUploadRequestMapper>();
 
-            // Vacancy Posting Service.
+            // Services.
+            _mockProviderService = new Mock<IProviderService>();
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
 
             // Provider.
-            _provider = new VacancyUploadProvider(
+            _mediator = new VacancyUploadMediator(
                 new VacancyUploadDataValidator(),
                 _mockVacancyUploadRequestMapper.Object,
+                _mockProviderService.Object,
                 _mockVacancyPostingService.Object);
         }
 
@@ -38,7 +42,7 @@
         public void ShouldThrowIfRequestIsNull()
         {
             // Act.
-            Action action = () => _provider.UploadVacancies(default(VacancyUploadRequest));
+            Action action = () => _mediator.UploadVacancies(default(VacancyUploadRequest));
 
             // Assert.
             action.ShouldThrowExactly<ArgumentNullException>();

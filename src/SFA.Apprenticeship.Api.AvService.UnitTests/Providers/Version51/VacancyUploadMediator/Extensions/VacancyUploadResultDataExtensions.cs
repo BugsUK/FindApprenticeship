@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadProvider.Extensions
+namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadMediator.Extensions
 {
     using Common;
     using DataContracts.Version51;

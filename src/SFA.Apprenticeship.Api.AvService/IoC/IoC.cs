@@ -14,9 +14,9 @@
     using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Mappers.Version51;
+    using Mediators.Version51;
     using Providers.Version51;
     using StructureMap;
-    using ApprenticeshipVacancyBuilder = Builders.Version51.ApprenticeshipVacancyBuilder;
 
     // NOTE: WCF IoC strategy is based on this article: https://lostechies.com/jimmybogard/2008/07/30/integrating-structuremap-with-wcf/.
     public static class IoC
@@ -44,14 +44,14 @@
 
                 // API Providers.
                 x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
-                x.For<IVacancyUploadProvider>().Use<VacancyUploadProvider>();
+                x.For<IVacancyUploadMediator>().Use<VacancyUploadMediator>();
 
                 // API Mappers.
                 x.For<IAddressMapper>().Use<AddressMapper>();
                 x.For<IApprenticeshipVacancyMapper>().Use<ApprenticeshipVacancyMapper>();
                 x.For<IApprenticeshipVacancyQueryMapper>().Use<ApprenticeshipVacancyQueryMapper>();
                 x.For<IVacancyDurationMapper>().Use<VacancyDurationMapper>();
-                x.For<ApprenticeshipVacancyBuilder>().Use<ApprenticeshipVacancyBuilder>();
+                x.For<IVacancyUploadRequestMapper>().Use<VacancyUploadRequestMapper>();
                 x.For<IWageMapper>().Use<WageMapper>();
             });
         }

@@ -1,31 +1,35 @@
-namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
+namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
-    using Builders.Version51;
     using Common;
     using DataContracts.Version51;
+    using Mappers.Version51;
     using MessageContracts.Version51;
     using Validators;
 
     // REF: NAVMS: Navms.Ms.ExternalInterfaces.ServiceImplementation.Rel51.VacancyManagementInternalService
     // REF: NAVMS: Capgemini.LSC.Navms.MS.BusinessLogic.VacancyController::BulkUploadVacancies
 
-    public class VacancyUploadProvider : IVacancyUploadProvider
+    public class VacancyUploadMediator : IVacancyUploadMediator
     {
         private readonly VacancyUploadDataValidator _validator;
-        private readonly ApprenticeshipVacancyBuilder _apprenticeshipVacancyBuilder;
+        private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
+        private readonly IProviderService _providerService;
         private readonly IVacancyPostingService _vacancyPostingService;
 
-        public VacancyUploadProvider(
+        public VacancyUploadMediator(
             VacancyUploadDataValidator validator,
-            ApprenticeshipVacancyBuilder apprenticeshipVacancyBuilder,
+            IVacancyUploadRequestMapper vacancyUploadRequestMapper,
+            IProviderService providerService,
             IVacancyPostingService vacancyPostingService)
         {
             _validator = validator;
-            _apprenticeshipVacancyBuilder = apprenticeshipVacancyBuilder;
+            _vacancyUploadRequestMapper = vacancyUploadRequestMapper;
+            _providerService = providerService;
             _vacancyPostingService = vacancyPostingService;
         }
 
@@ -76,15 +80,20 @@ namespace SFA.Apprenticeship.Api.AvService.Providers.Version51
                 };
             }
 
-            var mappedVacancy = _apprenticeshipVacancyBuilder.ToApprenticeshipVacancy(vacancyUploadData);
-            var createdVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(mappedVacancy);
+            var providerSiteErn = Convert.ToString(vacancyUploadData.VacancyOwnerEdsUrn);
+            var ern = Convert.ToString(vacancyUploadData.Employer?.EdsUrn);
+
+            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+
+            var vacancy = _vacancyUploadRequestMapper.ToVacancy(vacancyUploadData, providerSiteEmployerLink);
+            var newVacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
             var vacancyUploadResultData = new VacancyUploadResultData
             {
                 VacancyId = vacancyUploadData.VacancyId,
-                ReferenceNumber = Convert.ToInt32(createdVacancy.VacancyReferenceNumber),
+                ReferenceNumber = Convert.ToInt32(newVacancy.VacancyReferenceNumber),
                 Status = VacancyUploadResult.Success,
-                ErrorCodes = null
+                ErrorCodes = new List<ElementErrorData>()
             };
 
             return vacancyUploadResultData;

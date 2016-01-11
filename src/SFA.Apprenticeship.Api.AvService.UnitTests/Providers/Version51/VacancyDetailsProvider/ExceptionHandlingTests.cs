@@ -44,8 +44,9 @@
 
         [Test]
         [Ignore]
-        public void ShouldBeAwesome()
+        public void ShouldHandleAndRethrowException()
         {
+            // TODO: US872: AG: implement missing unit test.
             // Arrange.
             _mockApprenticeshipVacancyReadRepository.Setup(mock => mock
                 .Get(It.IsAny<int>()))
