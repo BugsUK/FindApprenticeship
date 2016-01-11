@@ -58,7 +58,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
 
-            var mongoEntities = Collection.Find(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn))
+            var queryConditionList = new List<IMongoQuery>();
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.NotIn(v => v.Status, new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.ParentVacancy }));
+            var mongoEntities = Collection.Find(Query.And(queryConditionList))
                 .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
                 .ToList();
 
@@ -74,6 +77,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             var queryConditionList = new List<IMongoQuery>();
 
             queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.NotIn(v => v.Status, new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.ParentVacancy }));
             queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.ProviderSiteEmployerLink.ProviderSiteErn, providerSiteErn));
 
             var mongoEntities = Collection.Find(Query.And(queryConditionList))
