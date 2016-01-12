@@ -105,6 +105,27 @@
                 .ForMember(v => v.ProviderSiteEmployerLink, opt => opt.Ignore())
                 .ForMember(v => v.FrameworkCodeName, opt => opt.Ignore())
 
+                // VGA -> temp
+                .ForMember(v => v.FrameworkCodeNameComment, opt => opt.Ignore())
+                .ForMember(v => v.WorkingWeekComment, opt => opt.Ignore())
+                .ForMember(v => v.AdditionalLocationInformation, opt => opt.Ignore())
+                .ForMember(v => v.LocationAddresses, opt => opt.Ignore())
+                .ForMember(v => v.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
+                .ForMember(v => v.NumberOfPositions, opt => opt.Ignore())
+                .ForMember(v => v.WageUnit, opt => opt.Ignore())
+                .ForMember(v => v.DateSubmitted, opt => opt.Ignore())
+                .ForMember(v => v.DateStartedToQA, opt => opt.Ignore())
+                .ForMember(v => v.DateCreated, opt => opt.Ignore())
+                .ForMember(v => v.DateUpdated, opt => opt.Ignore())
+                .MapMemberFrom(av => av.OfflineVacancy, v => v.IsDirectApplication)
+                .MapMemberFrom(av => av.OfflineApplicationUrl, v=> v.DirectApplicationUrl)
+                .MapMemberFrom(av => av.OfflineApplicationUrlComment, v=> v.DirectApplicationUrlComment)
+                .MapMemberFrom(av => av.OfflineApplicationInstructions, v=> v.DirectApplicationInstructions)
+                .MapMemberFrom(av => av.OfflineApplicationInstructionsComment, v=> v.DirectApplicationInstructionsComment)
+                
+                
+                // END VGA
+
                 .ForMember(v => v.Wage, opt => opt.MapFrom(av => av.WageValue));
         }
     }

@@ -19,7 +19,7 @@
     [LongDescriptionComment]               NVARCHAR (MAX)  NULL,
     [TrainingTypeCode]                     CHAR (1)        NOT NULL,
     [FrameworkId]                          INT             NULL,
-    [FrameworkIdComment]                   INT             NOT NULL,
+    [FrameworkIdComment]                   NVARCHAR(MAX)   NULL,
     [StandardId]                           INT             NULL,
     [StandardIdComment]                    NVARCHAR (MAX)  NULL,
     [LevelCode]                            CHAR (1)        NOT NULL,
@@ -88,7 +88,7 @@
 GO
 
 CREATE UNIQUE INDEX [IX_Vacancy_VacancyReferenceNumber] ON [Vacancy].[Vacancy] ([VacancyReferenceNumber])
-
+/*
 GO
 GRANT SELECT
     ON OBJECT::[Vacancy].[Vacancy] TO [migrate]
@@ -100,3 +100,4 @@ GRANT INSERT
     ON OBJECT::[Vacancy].[Vacancy] TO [migrate]
     AS [dbo];
 
+	*/

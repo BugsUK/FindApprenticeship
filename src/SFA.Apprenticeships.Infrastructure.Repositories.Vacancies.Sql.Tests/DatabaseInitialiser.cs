@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
-    using System;
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using System.Diagnostics;
@@ -29,14 +28,11 @@
             dacServices.ProgressChanged += dacServices_ProgressChanged;
 
             var databaseProjectName = Path.GetFileName(_databaseProjectPath);
-            var snapshotPath = Path.Combine(_databaseProjectPath + $"\\bin\\Local\\{databaseProjectName}.dacpac"); //configure Local
+            var snapshotPath = Path.Combine(_databaseProjectPath + $"\\bin\\Local\\{databaseProjectName}.dacpac"); //TODO: get configuration from settings
             var dbPackage = DacPackage.Load(snapshotPath);
 
-            var dbDeployOptions = new DacDeployOptions();
-            //Cut out a lot of options here for configuring deployment, but are all part of DacDeployOptions
-            dbDeployOptions.SqlCommandVariableValues.Add("debug", "false");
-            dbDeployOptions.CreateNewDatabase = dropDatabase;
-            
+            var dbDeployOptions = new DacDeployOptions {CreateNewDatabase = dropDatabase};
+
             dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
 
             SeedData(seedScripts, _targetConnectionString);
