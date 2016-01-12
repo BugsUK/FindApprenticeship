@@ -565,6 +565,7 @@
     </Content>
     <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
     <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -597,6 +598,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\" />
+    <Folder Include="ViewModels\Vacancy\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -890,8 +890,11 @@
 
             switch (response.Code)
             {
-                case VacancyPostingMediatorCodes.ManageDates.Ok:
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
+                        new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications:
+                    return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                         new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                 case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);

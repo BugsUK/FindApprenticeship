@@ -92,8 +92,9 @@
             result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.FailedValidation);
         }
 
-        [Test]
-        public void ShouldUpdateTheVacancyIfWeAcceptTheWarningsAndTheyAreEqualFromThePreviousOnes()
+        [TestCase(UpdateVacancyDatesState.UpdatedHasApplications, VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications)]
+        [TestCase(UpdateVacancyDatesState.UpdatedNoApplications, VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications)]
+        public void ShouldUpdateTheVacancyIfWeAcceptTheWarningsAndTheyAreEqualFromThePreviousOnes(UpdateVacancyDatesState state, string expectedCode)
         {
             long vacancyReferenceNumber = 1;
             const int oldWarningHash = 128335101;
@@ -106,7 +107,8 @@
                 ClosingDate = closingDate,
                 PossibleStartDate = possibleStartDate,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                WarningsHash = oldWarningHash
+                WarningsHash = oldWarningHash,
+                State = state
             };
 
             var mediator = GetMediator();
@@ -115,7 +117,7 @@
 
             var result = mediator.UpdateVacancy(viewModel, true);
 
-            result.Code.Should().Be(VacancyPostingMediatorCodes.ManageDates.Ok);
+            result.Code.Should().Be(expectedCode);
             VacancyPostingProvider.Verify(
                 p =>
                     p.UpdateVacancy(
