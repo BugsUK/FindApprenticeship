@@ -32,5 +32,11 @@
             return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed ||
                    status == ProviderVacancyStatuses.Completed || status == ProviderVacancyStatuses.Withdrawn;
         }
+
+        public static bool CanShowVacancyReferencenumber(this ProviderVacancyStatuses status)
+        {
+            return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed ||
+                   status == ProviderVacancyStatuses.Completed || status == ProviderVacancyStatuses.Withdrawn;
+        }
     }
 }

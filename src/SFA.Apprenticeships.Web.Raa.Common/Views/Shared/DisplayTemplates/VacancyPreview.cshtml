@@ -168,10 +168,13 @@
                 }
             </div>
 
-            <div>
-                <h3 class="bold-small">Reference number</h3>
-                <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
-            </div>
+            @if (Model.Status.CanShowVacancyReferencenumber())
+            {
+                <div>
+                    <h3 class="bold-small">Reference number</h3>
+                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
+                </div>
+            }
 
             @if (IsSingleLocation(Model))
             {
