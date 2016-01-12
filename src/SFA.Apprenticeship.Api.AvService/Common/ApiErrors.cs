@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.Common
 {
+    using System.Collections.Generic;
     using DataContracts.Version51;
 
     public static class ApiErrors
@@ -445,6 +446,84 @@
         {
             InterfaceErrorCode = -10068,
             InterfaceErrorDescription = "\"WeeklyWage\" must be £0 for a traineeship"
+        };
+
+        public static List<ErrorCodesData> AllErrorCodes => new List<ErrorCodesData>
+        {
+            Error10001,
+            Error10002,
+            Error10003,
+            Error10004,
+            Error10005,
+            VacancyTitleIsTooLong,
+            VacancyTitleIsMandatory,
+            Error10008,
+            VacancyShortDescriptionIsTooLong,
+            VacancyShortDescriptionIsMandatory,
+            Error10011,
+            Error10012,
+            Error10013,
+            VacancyLongDescriptionIsMandatory,
+            Error10015,
+            Error10016,
+            Error10017,
+            Error10018,
+            Error10019,
+            Error10020,
+            Error10021,
+            Error10022,
+            Error10023,
+            Error10024,
+            Error10025,
+            Error10026,
+            Error10027,
+            VacancyLongDescriptionIsTooLong,
+            Error10029,
+            Error10030,
+            Error10031,
+            Error10032,
+            Error10033,
+            Error10034,
+            Error10035,
+            Error10036,
+            Error10037,
+            Error10038,
+            Error10039,
+            Error10040,
+            Error10041,
+            Error10042,
+            Error10043,
+            Error10044,
+            Error10045,
+            Error10046,
+            Error10047,
+            Error10048,
+            Error10049,
+            Error1,
+            Error10050,
+            Error20001,
+            Error20002,
+            Error20003,
+            Error20004,
+            Error20005,
+            Error10051,
+            Error10052,
+            Error10053,
+            Error10054,
+            Error10055,
+            Error10056,
+            Error10057,
+            Error10058,
+            Error10059,
+            DeliveryProviderEdsUrnIsMandatory,
+            VacancyManagerEdsUrnIsMandatory,
+            VacancyOwnerEdsUrnIsMandatory,
+            Error10063,
+            Error10064,
+            Error10065,
+            Error10066,
+            Error10067,
+            Error10068
         };
     }
 }

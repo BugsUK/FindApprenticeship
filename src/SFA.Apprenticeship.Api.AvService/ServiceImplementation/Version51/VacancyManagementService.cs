@@ -8,7 +8,6 @@
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
-    using Providers.Version51;
     using ServiceContracts.Version51;
 
     [ExceptionShielding("Default Exception Policy")]
