@@ -244,6 +244,7 @@
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyDatesViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />

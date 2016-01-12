@@ -519,8 +519,10 @@
             var result = _vacancyPostingProvider.UpdateVacancy(viewModel);
             switch (result.State)
             {
-                case UpdateVacancyDatesState.Updated:
-                    return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
+                case UpdateVacancyDatesState.UpdatedHasApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications, viewModel);
+                case UpdateVacancyDatesState.UpdatedNoApplications:
+                    return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications, viewModel);
                 case UpdateVacancyDatesState.InvalidState:
                     return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.InvalidState, viewModel);
                 default:

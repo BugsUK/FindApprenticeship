@@ -435,7 +435,7 @@
             }
             
             result = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(vacancy);
-            result.State = UpdateVacancyDatesState.Updated;
+            result.State = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber) > 0 ? UpdateVacancyDatesState.UpdatedHasApplications : UpdateVacancyDatesState.UpdatedNoApplications;
 
             return result;
         }

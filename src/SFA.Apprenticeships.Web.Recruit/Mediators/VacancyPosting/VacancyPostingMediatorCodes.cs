@@ -141,6 +141,8 @@
         public class ManageDates
         {
             public const string Ok = "VacancyPosting.ManageDates.Ok";
+            public const string UpdatedHasApplications = "VacancyPosting.ManageDates.UpdatedHasApplications";
+            public const string UpdatedNoApplications = "VacancyPosting.ManageDates.OkNoApplications";
             public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
             public const string InvalidState = "VacancyPosting.ManageDates.InvalidState";
         }

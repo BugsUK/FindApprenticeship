@@ -27,7 +27,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
     public enum UpdateVacancyDatesState
     {
-        Updated,
+        UpdatedHasApplications,
+        UpdatedNoApplications,
         InvalidState
     }
 }
