@@ -13,18 +13,18 @@
     
     public class DatabaseInitialiser
     {
-        private readonly string _databaseProjectPath;
+        private readonly string _dacpacFilePath;
         private readonly string _targetConnectionString;
         private readonly string _databaseTargetName;
 
-        public DatabaseInitialiser(string databaseProjectPath, string targetConnectionString, string databaseTargetName)
+        public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)
         {
-            _databaseProjectPath = databaseProjectPath;
+            _dacpacFilePath = dacpacFilePath;
             _targetConnectionString = targetConnectionString;
             _databaseTargetName = databaseTargetName;
         }
 
-        public void Publish(bool dropDatabase, IEnumerable<string> seedScripts)
+        public void Publish(bool dropDatabase)
         {
             var dacServices = new DacServices(_targetConnectionString);
 
@@ -32,9 +32,7 @@
             dacServices.Message += dacServices_Message;
             dacServices.ProgressChanged += dacServices_ProgressChanged;
 
-            var databaseProjectName = Path.GetFileName(_databaseProjectPath);
-            var snapshotPath = Path.Combine(_databaseProjectPath + $"\\bin\\Local\\{databaseProjectName}.dacpac"); //TODO: get configuration from settings
-            var dbPackage = DacPackage.Load(snapshotPath);
+            var dbPackage = DacPackage.Load(_dacpacFilePath);
 
             var dbDeployOptions = new DacDeployOptions {CreateNewDatabase = dropDatabase};
 

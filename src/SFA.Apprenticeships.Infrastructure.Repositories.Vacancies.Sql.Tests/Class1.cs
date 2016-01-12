@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
     using System.Data.SqlClient;
-    using System.Reflection;
+    using System.IO;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
     using NewDB.Domain.Entities;
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Sql;
-    using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
+    using Vacancy = NewDB.Domain.Entities.Vacancy;
 
     [TestFixture]
     public class Class1
@@ -28,9 +28,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
         [OneTimeSetUp]
         public void SetUpFixture()
         {
-            var solutionDirectory = AppDomain.CurrentDomain.BaseDirectory + "\\..\\..\\..\\SFA.Apprenticeships.Data";
+            var databaseProjectName = "SFA.Apprenticeships.Data";
+            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{databaseProjectName}";
             var databaseName = "Raa2";
-            var dbInitialiser = new DatabaseInitialiser(solutionDirectory, ConnectionString, databaseName);
+            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\Local\\{databaseProjectName}.dacpac"); //TODO get configuration from settings
+            var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, ConnectionString, databaseName);
             var seedScripts = new[]
             {
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\reference.occupation.sql",
@@ -39,7 +41,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.insertDraftVacancy.sql"
             };
              
-            dbInitialiser.Publish(true, seedScripts);
+            dbInitialiser.Publish(true);
             //dbInitialiser.Seed(seedScripts);
 
             var vacancy = new Vacancy.Vacancy
