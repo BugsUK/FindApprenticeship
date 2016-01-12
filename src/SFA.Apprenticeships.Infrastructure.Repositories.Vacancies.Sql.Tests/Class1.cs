@@ -9,12 +9,15 @@ using System.Threading.Tasks;
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
     using System.Data.SqlClient;
+    using System.Reflection;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using Moq;
+    using NewDB.Domain.Entities;
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Sql;
+    using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
 
     [TestFixture]
     public class Class1
@@ -35,7 +38,72 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.vacancyparty.sql",
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.insertDraftVacancy.sql"
             };
-             dbInitialiser.Publish(true, seedScripts);
+             
+            dbInitialiser.Publish(true, seedScripts);
+            //dbInitialiser.Seed(seedScripts);
+
+            var vacancy = new Vacancy.Vacancy
+            {
+                AV_ContactName = "av contact name",
+                VacancyTypeCode = "A",
+                VacancyStatusCode = "LIV",
+                VacancyLocationTypeCode = "S",
+                Title = "Test vacancy",
+                TrainingTypeCode = "F",
+                LevelCode = "4",
+                FrameworkId = 1,
+                WageValue = 100.0M,
+                ClosingDate = DateTime.Now,
+                ContractOwnerVacancyPartyId = 1,
+                DeliveryProviderVacancyPartyId = 1,
+                EmployerVacancyPartyId = 1,
+                ManagerVacancyPartyId = 1,
+                OriginalContractOwnerVacancyPartyId = 1,
+                ParentVacancyId = 1,
+                OwnerVacancyPartyId = 1,
+                DurationValue = 3
+            };
+
+            var occupation = new Occupation
+            {
+                OccupationId = 1,
+                OccupationStatusId = 1,
+                CodeName = "O01",
+                FullName = "Occupation 1",
+                ShortName = "Occupation 1"
+            };
+
+            var framework = new Framework
+            {
+                FrameworkId = 1,
+                CodeName = "F01",
+                FullName = "Framework 1",
+                ShortName = "Framework 1",
+                FrameworkStatusId = 1,
+                OccupationId = 1
+            };
+
+            var vacancyParty1 = new Vacancy.VacancyParty
+            {
+                VacancyPartyTypeCode = "ES",
+                FullName = "Employer A",
+                Description = "A",
+                WebsiteUrl = "URL",
+                EDSURN = 1,
+                UKPRN = null
+            };
+
+            var vacancyParty2 = new Vacancy.VacancyParty
+            {
+                VacancyPartyTypeCode = "PS",
+                FullName = "Provider A",
+                Description = "A",
+                WebsiteUrl = "URL",
+                EDSURN = null,
+                UKPRN = 1
+            };
+
+            dbInitialiser.Seed(new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy });
         }
 
         [Test]

@@ -1,11 +1,16 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
+    using System;
     using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.SqlClient;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
+    using System.Reflection;
+    using System.Text;
     using Microsoft.SqlServer.Dac;
-
+    
     public class DatabaseInitialiser
     {
         private readonly string _databaseProjectPath;
@@ -34,13 +39,11 @@
             var dbDeployOptions = new DacDeployOptions {CreateNewDatabase = dropDatabase};
 
             dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
-
-            SeedData(seedScripts, _targetConnectionString);
         }
 
-        private void SeedData(IEnumerable<string> seedScripts, string connectionString)
+        public void Seed(string[] seedScripts)
         {
-            using (var connection = new SqlConnection(connectionString))
+            using (var connection = new SqlConnection(_targetConnectionString))
             {
                 connection.Open();
                 foreach (var seedScript in seedScripts)
@@ -51,9 +54,126 @@
             }
         }
 
+        public void Seed(IEnumerable<object> seedObjects)
+        {
+            foreach (var objectToSeed in seedObjects)
+            {
+                var objectType = objectToSeed.GetType();
+
+                var propertiesToInsert = objectType.GetProperties().Where(p => !IsVirtual(p)).ToList();
+
+                var typeIdPropertyName = objectType.Name + "Id";
+                if (ShouldInsertTableId(objectType, typeIdPropertyName))
+                {
+                    typeIdPropertyName = "InsertIdProperty";
+                }
+
+                var sqlBuilder = new StringBuilder($"INSERT INTO {GetTableName(objectType)} (");
+
+                BuildColumnNames(propertiesToInsert, typeIdPropertyName, sqlBuilder);
+
+                BuildValues(propertiesToInsert, objectToSeed, typeIdPropertyName, sqlBuilder);
+
+                ExecuteInsert(sqlBuilder.ToString());
+            }
+        }
+
+        private void ExecuteInsert(string sql)
+        {
+            using (var connection = new SqlConnection(_targetConnectionString))
+            {
+                connection.Open();
+
+                using (var command = new SqlCommand(sql, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
+        }
+
+        private static bool IsVirtual(PropertyInfo property)
+        {
+            return property.GetAccessors()[0].IsVirtual;
+        }
+
+        private static void BuildValues(IList<PropertyInfo> props, object vacancy, string typeIdProperty, StringBuilder sqlBuilder)
+        {
+            for (var i = 0; i < props.Count; i++)
+            {
+                var prop = props[i];
+
+                var propValue = prop.GetValue(vacancy, null);
+
+                var name = prop.Name;
+
+                if (name != typeIdProperty)
+                {
+                    if (propValue == null)
+                    {
+                        sqlBuilder.Append("NULL");
+                    }
+                    else
+                    {
+                        var formattedValue = InstanceFormatter.FormatTypeInstance(propValue, prop.PropertyType);
+                        sqlBuilder.Append(formattedValue);
+                    }
+                    sqlBuilder.Append(i != props.Count - 1 ? ", " : ")");
+                }
+                else
+                {
+                    sqlBuilder.Append(i != props.Count - 1 ? "" : ")");
+                }
+            }
+        }
+
+        private static void BuildColumnNames(IList<PropertyInfo> props, string typeIdProperty, StringBuilder sqlBuilder)
+        {
+            for (int i = 0; i < props.Count; i++)
+            {
+                var prop = props[i];
+
+                var name = prop.Name;
+
+                if (name != typeIdProperty)
+                {
+                    sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                }
+            }
+        }
+
+        private static string GetTableName(Type myType)
+        {
+            var tableName = myType.Name;
+            var tableAttribute =
+                myType.CustomAttributes.FirstOrDefault(
+                    a => a.AttributeType == typeof (TableAttribute));
+            if (tableAttribute != null)
+            {
+                tableName = tableAttribute.ConstructorArguments.First().Value.ToString();
+            }
+            return tableName;
+        }
+
+        private static bool ShouldInsertTableId(Type myType, string tableIdPropertyName)
+        {
+            var idPropertyType = myType.GetProperties().Single(p => p.Name == tableIdPropertyName);
+
+            var identityAttribute =
+                idPropertyType.CustomAttributes.FirstOrDefault(
+                    a => a.AttributeType == typeof(DatabaseGeneratedAttribute));
+
+            if (identityAttribute != null)
+            {
+                return (DatabaseGeneratedOption)identityAttribute.ConstructorArguments.First().Value == DatabaseGeneratedOption.None;
+            }
+
+            return false;
+        }
+
         private void ExecuteScript(string seedScript, SqlConnection connection)
         {
-
             var commandText = File.ReadAllText(seedScript);
 
             using (var command = new SqlCommand(commandText, connection))
