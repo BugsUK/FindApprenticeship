@@ -18,7 +18,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
             var connectionString = "Server=VTUK027\\SQLEXPRESS;Database=Raa2;Trusted_Connection=True;"; //TODO: get from settings
             var databaseName = "Raa2";
             var dbInitialiser = new DatabaseInitialiser(solutionDirectory, connectionString, databaseName);
-            dbInitialiser.Publish(true);    
+            var seedScripts = new[]
+            {
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\reference.occupation.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\reference.framework.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.vacancyparty.sql"
+            };
+            dbInitialiser.Publish(true, seedScripts);
         }
 
         [Test]
