@@ -40,9 +40,11 @@
         }
         */
 
-        public ApprenticeshipVacancyRepository(IGetOpenConnection getOpenConnection)
+        public ApprenticeshipVacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;
+            _mapper = mapper;
+            _logger = logger;
         }
 
         public ApprenticeshipVacancy Get(Guid id)
@@ -51,6 +53,24 @@
 
             var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyGuid = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
+            return MapVacancy(dbVacancy);
+        }
+
+        public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
+        {
+            _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
+
+            var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>(
+                "SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
+                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
+
+            // return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+
+            return MapVacancy(dbVacancy);
+        }
+
+        private ApprenticeshipVacancy MapVacancy(Vacancy.Vacancy dbVacancy)
+        {
             // TODO: Use mapper (automapper?)
             // return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
 
@@ -63,14 +83,14 @@
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             result.Ukprn = _getOpenConnection
-                    .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
-                    .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
-                    .UKPRN.ToString(); // TODO: Casing. TODO: Type?
+                .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
+                .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
+                .UKPRN.ToString(); // TODO: Casing. TODO: Type?
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             var employer = _getOpenConnection
-                    .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
-                    .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
+                .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
+                .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
 
             result.ProviderSiteEmployerLink = new Domain.Entities.Providers.ProviderSiteEmployerLink()
             {
@@ -115,26 +135,6 @@
             result.IsEmployerLocationMainApprenticeshipLocation = true; // TODO
 
             result.NumberOfPositions = 1; // TODO
-
-            return result;
-        }
-
-        public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
-        {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
-
-            var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>(
-                "SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
-                new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
-
-            // return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
-
-            if (dbVacancy == null)
-                return null;
-
-            // TODO: Use mapper (automapper?) as above
-
-            var result = new ApprenticeshipVacancy();
 
             return result;
         }
@@ -253,10 +253,10 @@ FETCH NEXT @PageSize ROWS ONLY
 
             // UpdateEntityTimestamps(entity);
 
-            // TODO: Map from ApprenticeshipVacancy to Apprenticeship
-
-            /*
+            // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
+             
             _getOpenConnection.UpdateSingle(entity);
+            /*
             _getOpenConnection.UpdateSingle(address);
             _getOpenConnection.UpdateSingle(vacancy);
             */

@@ -160,6 +160,9 @@
                 // TODO: vacancy source
 
                 .End();
+                
+                // END VGA
+
         }
     }
 

@@ -1,0 +1,1 @@
+﻿insert into reference.occupation values (1, 1, 'O01', 'Occupation 1', 'Occupation 1', null)
