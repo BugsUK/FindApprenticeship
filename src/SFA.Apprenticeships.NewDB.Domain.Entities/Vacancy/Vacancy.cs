@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         [StringLength(1)]
         public string VacancyLocationTypeCode { get; set; }
 
-        public int? ParentVacancyId { get; set; }
+        public Guid? ParentVacancyId { get; set; }
 
         public int EmployerVacancyPartyId { get; set; }
 

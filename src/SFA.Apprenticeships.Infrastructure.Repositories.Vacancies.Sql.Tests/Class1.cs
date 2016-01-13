@@ -24,6 +24,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
     {
         private const string ConnectionString = "Server=VTUK027\\SQLEXPRESS;Database=Raa2;Trusted_Connection=True;"; //TODO: get from settings
         readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
+        private const int VacancyReferenceNumber = 1;
 
         [OneTimeSetUp]
         public void SetUpFixture()
@@ -46,6 +47,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 
             var vacancy = new Vacancy.Vacancy
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 AV_ContactName = "av contact name",
                 VacancyTypeCode = "A",
                 VacancyStatusCode = "LIV",
@@ -61,7 +63,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
                 EmployerVacancyPartyId = 1,
                 ManagerVacancyPartyId = 1,
                 OriginalContractOwnerVacancyPartyId = 1,
-                ParentVacancyId = 1,
+                ParentVacancyId = null,
                 OwnerVacancyPartyId = 1,
                 DurationValue = 3
             };
@@ -106,6 +108,31 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
             };
 
             dbInitialiser.Seed(new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy });
+        }
+
+        [Test]
+        public void GetVacancyTestByGuid()
+        {
+            var vacancyGuid = Guid.Empty;
+            using (var sqlConnection = new SqlConnection(ConnectionString))
+            {
+                sqlConnection.Open();
+
+                var commandText = $"SELECT [VacancyId] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
+                using (var command = new SqlCommand(commandText, sqlConnection))
+                {
+                    vacancyGuid = (Guid)command.ExecuteScalar();
+                }
+
+                sqlConnection.Close();
+            }
+
+            // configure _mapper
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(ConnectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper, logger.Object);
+
+            var vacancy = repository.Get(vacancyGuid);
         }
 
         [Test]

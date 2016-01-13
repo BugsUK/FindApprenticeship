@@ -23,6 +23,14 @@
         }
     }
 
+    public class GuidFormatter : IObjectFormatter
+    {
+        public string Format(object value)
+        {
+            return $"'{value}'";
+        }
+    }
+
     public class DefaultFormatter : IObjectFormatter
     {
         public string Format(object value)

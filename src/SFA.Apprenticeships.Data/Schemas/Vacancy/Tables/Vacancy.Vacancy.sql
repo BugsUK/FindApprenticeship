@@ -1,10 +1,10 @@
 ﻿CREATE TABLE [Vacancy].[Vacancy] (
-    [VacancyId]                            INT             IDENTITY (1, 1) NOT NULL,
+    [VacancyId]                            UNIQUEIDENTIFIER             DEFAULT NEWSEQUENTIALID() NOT NULL,
     [VacancyReferenceNumber]               INT             NOT NULL,
     [VacancyTypeCode]                      CHAR (1)        NOT NULL,
     [VacancyStatusCode]                    CHAR (3)        NOT NULL,
     [VacancyLocationTypeCode]              CHAR (1)        NOT NULL,
-    [ParentVacancyId]                      INT             NULL,
+    [ParentVacancyId]                      UNIQUEIDENTIFIER             NULL,
     [EmployerVacancyPartyId]               INT             NOT NULL,
     [OwnerVacancyPartyId]                  INT             NOT NULL,
     [ManagerVacancyPartyId]                INT             NOT NULL,
