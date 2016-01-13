@@ -496,7 +496,7 @@
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
-            if (viewModel.Status.CanHaveApplicationsOrClickThroughs())
+            if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
