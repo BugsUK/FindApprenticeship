@@ -53,7 +53,19 @@
             var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
             
             dbInitialiser.Publish(true);
-            
+
+            var seedScripts = new[]
+            {
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.wageType.sql"
+            };
+            var seedObjects = GetSeedObjects();
+
+            dbInitialiser.Seed(seedScripts);
+            dbInitialiser.Seed(seedObjects);
+        }
+
+        private static object[] GetSeedObjects()
+        {
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = VacancyReferenceNumber,
@@ -73,7 +85,7 @@
                 EmployerVacancyPartyId = 1,
                 ManagerVacancyPartyId = 1,
                 OriginalContractOwnerVacancyPartyId = 1,
-                ParentVacancyGuid = null,
+                ParentVacancyId = null,
                 OwnerVacancyPartyId = 1,
                 DurationValue = 3,
                 DurationTypeCode = "Y"
@@ -118,13 +130,8 @@
                 UKPRN = 1
             };
 
-            var seedScripts = new[]
-            {
-                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.wageType.sql"
-            };
-
-            dbInitialiser.Seed(seedScripts);
-            dbInitialiser.Seed(new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy});
+            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy};
+            return seedObjects;
         }
 
         private static ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber)
@@ -170,7 +177,7 @@
         }
 
         [Test]
-        public void GetVacancyTest()
+        public void GetVacancyByVacancyReferenceNumberTest()
         {
             // configure _mapper
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
@@ -178,11 +185,16 @@
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            var vacancy = repository.Get(1);
+            var vacancy = repository.Get(VacancyReferenceNumber);
+
+            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Title.Should().Be("Test vacancy");
+            vacancy.WageType.Should().Be(WageType.Custom);
+            vacancy.TrainingType = TrainingType.Frameworks;
         }
 
         [Test]
-        public void GetVacancyTestByGuid()
+        public void GetVacancyByGuidTest()
         {
             var vacancyGuid = Guid.Empty;
             using (var sqlConnection = new SqlConnection(_connectionString))
@@ -214,6 +226,37 @@
         }
 
         [Test]
+        public void SaveTest()
+        {
+            var newReferenceNumber = 3L;
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            var vacancy = readRepository.Get(VacancyReferenceNumber);
+
+            vacancy.VacancyReferenceNumber = newReferenceNumber;
+
+            writeRepository.Save(vacancy);
+
+            vacancy = readRepository.Get(VacancyReferenceNumber);
+
+            vacancy.Should().BeNull();
+
+            vacancy = readRepository.Get(newReferenceNumber);
+
+            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Title.Should().Be("Test vacancy");
+            vacancy.WageType.Should().Be(WageType.Custom);
+            vacancy.TrainingType = TrainingType.Frameworks;
+        }
+
+        /*
+        [Test]
         public void ReserveVacancyForQaTest()
         {
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
@@ -224,6 +267,6 @@
             repository.ReserveVacancyForQA(1);
 
             var vacancy = GetVacancy(1L);
-        }
+        }*/
     }
 }

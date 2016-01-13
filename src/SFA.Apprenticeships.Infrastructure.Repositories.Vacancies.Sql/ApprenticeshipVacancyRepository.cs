@@ -51,7 +51,7 @@
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancy with Id={0}", id);
 
-            var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyGuid = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
+            var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
             return MapVacancy(dbVacancy);
         }
@@ -254,8 +254,10 @@ FETCH NEXT @PageSize ROWS ONLY
             // UpdateEntityTimestamps(entity);
 
             // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
+
+            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy.Vacancy>(entity);
              
-            _getOpenConnection.UpdateSingle(entity);
+            _getOpenConnection.UpdateSingle(dbVacancy); // it was entity
             /*
             _getOpenConnection.UpdateSingle(address);
             _getOpenConnection.UpdateSingle(vacancy);
@@ -264,11 +266,8 @@ FETCH NEXT @PageSize ROWS ONLY
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
 
             // TODO: Not sure need to map back??
-            /*
-            return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
-            */
-
-            throw new NotImplementedException();
+            
+            return entity;
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)

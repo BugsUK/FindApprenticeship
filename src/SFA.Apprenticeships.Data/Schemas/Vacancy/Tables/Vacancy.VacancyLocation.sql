@@ -6,6 +6,6 @@
     [NumberOfPositions] INT NOT NULL, 
     [DirectApplicationUrl] NVARCHAR(MAX) NULL, 
     CONSTRAINT [PK_VacancyLocation] PRIMARY KEY ([VacancyLocationId]), 
-    CONSTRAINT [FK_VacancyLocation_VacancyId] FOREIGN KEY ([VacancyId]) REFERENCES [Vacancy].[Vacancy]([VacancyGuid]), 
+    CONSTRAINT [FK_VacancyLocation_VacancyId] FOREIGN KEY ([VacancyId]) REFERENCES [Vacancy].[Vacancy]([VacancyId]), 
     CONSTRAINT [CK_VacancyLocation_NumberOfPositions] CHECK (NumberOfPositions > 0) 
 )

@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         }
         */
 
-        public Guid VacancyGuid { get; set; }
+        public Guid VacancyId { get; set; }
 
         public int VacancyReferenceNumber { get; set; }
 
@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         [StringLength(1)]
         public string VacancyLocationTypeCode { get; set; }
 
-        public Guid? ParentVacancyGuid { get; set; }
+        public Guid? ParentVacancyId { get; set; }
 
         public int EmployerVacancyPartyId { get; set; }
 

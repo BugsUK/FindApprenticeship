@@ -96,7 +96,7 @@
                 .MapMemberFrom(v => v.VacancyStatusCode, av => vacancyStatusMap.EnumToCode[av.Status])
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
-                .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
+                .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
 
                 // TODO: Change ApprenticeshipVacancy object in due course
@@ -107,7 +107,7 @@
                 .MapMemberFrom(v => v.IsDirectApplication, av => av.OfflineVacancy)
 
                 // Need to map the following via database lookups
-                .ForMember(v => v.ParentVacancyGuid, opt => opt.Ignore())
+                .ForMember(v => v.ParentVacancyId, opt => opt.Ignore())
                 .ForMember(v => v.EmployerVacancyPartyId, opt => opt.Ignore())
                 .ForMember(v => v.OwnerVacancyPartyId, opt => opt.Ignore()) // To FrameworkId
                 .ForMember(v => v.ManagerVacancyPartyId, opt => opt.Ignore())
@@ -141,7 +141,7 @@
                 .MapMemberFrom(av => av.Status, v => vacancyStatusMap.CodeToEnum[v.VacancyStatusCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
-                .MapMemberFrom(av => av.EntityId, v => v.VacancyGuid)
+                .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
 
                 // TODO: Change ApprenticeshipVacancy object in due course
