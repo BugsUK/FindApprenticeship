@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadMediator
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mediators.VacancyUploadMediator
 {
     using System;
     using System.Collections.Generic;
@@ -6,14 +6,16 @@
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using AvService.Mappers.Version51;
+    using AvService.Mediators.Version51;
     using AvService.Validators;
     using DataContracts.Version51;
     using FluentAssertions;
     using FluentValidation.Results;
-    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
+
+    // TODO: US872: AG: rationalise VacancyUploadServiceMediator unit tests into a single file following refactor to mediator.
 
     [TestFixture]
     public class VacancyUploadMediatorTests
@@ -24,7 +26,7 @@
         private Mock<IProviderService> _mockProviderService;
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
 
-        private VacancyUploadMediator _mediator;
+        private VacancyUploadServiceMediator _vacancyUploadServiceMediator;
 
         [SetUp]
         public void SetUp()
@@ -48,7 +50,7 @@
                 .Returns(new ValidationResult());
 
             // Provider.
-            _mediator = new VacancyUploadMediator(
+            _vacancyUploadServiceMediator = new VacancyUploadServiceMediator(
                 _mockVacancyUploadDataValidator.Object,
                 _mockVacancyUploadRequestMapper.Object,
                 _mockProviderService.Object,
@@ -66,7 +68,7 @@
             };
 
             // Act.
-            var actualResponse = _mediator.UploadVacancies(request);
+            var actualResponse = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             actualResponse.MessageId.Should().Be(request.MessageId);
@@ -90,7 +92,7 @@
             };
 
             // Act.
-            var response = _mediator.UploadVacancies(request);
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();
@@ -116,7 +118,7 @@
             };
 
             // Act.
-            var response = _mediator.UploadVacancies(request);
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();

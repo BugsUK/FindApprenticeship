@@ -44,7 +44,8 @@
 
                 // API Providers.
                 x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
-                x.For<IVacancyUploadMediator>().Use<VacancyUploadMediator>();
+                x.For<IVacancyUploadServiceMediator>().Use<VacancyUploadServiceMediator>();
+                x.For<IReferenceDataServiceMediator>().Use<ReferenceDataServiceMediator>();
 
                 // API Mappers.
                 x.For<IAddressMapper>().Use<AddressMapper>();

@@ -2,7 +2,7 @@
 {
     using MessageContracts.Version51;
 
-    public interface IVacancyUploadMediator
+    public interface IVacancyUploadServiceMediator
     {
         VacancyUploadResponse UploadVacancies(VacancyUploadRequest request);
     }

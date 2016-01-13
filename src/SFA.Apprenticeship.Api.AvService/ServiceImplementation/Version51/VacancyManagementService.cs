@@ -15,11 +15,11 @@
     public class VacancyManagementService : IVacancyManagement
     {
         private readonly ILogService _logService;
-        private readonly IVacancyUploadMediator _vacancyUploadMediator;
+        private readonly IVacancyUploadServiceMediator _vacancyUploadMediator;
 
         public VacancyManagementService(
             ILogService logService,
-            IVacancyUploadMediator vacancyUploadMediator)
+            IVacancyUploadServiceMediator vacancyUploadMediator)
         {
             _logService = logService;
             _vacancyUploadMediator = vacancyUploadMediator;

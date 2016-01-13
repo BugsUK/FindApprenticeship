@@ -4,10 +4,9 @@ namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Versi
 {
     using System;
     using System.Security;
-    using AvService.Providers.Version51;
+    using AvService.Mediators.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
-    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
@@ -16,7 +15,7 @@ namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Versi
     [TestFixture]
     public class VacancyManagementServiceTests
     {
-        private Mock<IVacancyUploadMediator> _mockVacancyUploadProvider;
+        private Mock<IVacancyUploadServiceMediator> _mockVacancyUploadServiceMediator;
         private Mock<ILogService> _mockLogService;
 
         private IVacancyManagement _vacancyManagementService;
@@ -24,12 +23,12 @@ namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Versi
         [SetUp]
         public void SetUp()
         {
-            _mockVacancyUploadProvider = new Mock<IVacancyUploadMediator>();
+            _mockVacancyUploadServiceMediator = new Mock<IVacancyUploadServiceMediator>();
             _mockLogService = new Mock<ILogService>();
 
             _vacancyManagementService = new VacancyManagementService(
                 _mockLogService.Object,
-                _mockVacancyUploadProvider.Object);
+                _mockVacancyUploadServiceMediator.Object);
         }
 
         [Test]
@@ -43,7 +42,7 @@ namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Versi
 
             var expectedResponse = new VacancyUploadResponse();
 
-            _mockVacancyUploadProvider.Setup(mock =>
+            _mockVacancyUploadServiceMediator.Setup(mock =>
                 mock.UploadVacancies(request))
                 .Returns(expectedResponse);
 

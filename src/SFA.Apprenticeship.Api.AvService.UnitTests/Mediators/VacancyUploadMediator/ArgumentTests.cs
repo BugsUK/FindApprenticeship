@@ -1,15 +1,17 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyUploadMediator
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mediators.VacancyUploadMediator
 {
     using System;
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using AvService.Mappers.Version51;
+    using AvService.Mediators.Version51;
     using AvService.Validators;
     using FluentAssertions;
-    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
+
+    // TODO: US872: AG: rationalise VacancyUploadServiceMediator unit tests into a single file following refactor to mediator.
 
     [TestFixture]
     public class ArgumentTests
@@ -18,7 +20,7 @@
         private Mock<IVacancyPostingService> _mockVacancyPostingService;
         private Mock<VacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
 
-        private VacancyUploadMediator _mediator;
+        private VacancyUploadServiceMediator _vacancyUploadServiceMediator;
 
         [SetUp]
         public void SetUp()
@@ -31,7 +33,7 @@
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
 
             // Provider.
-            _mediator = new VacancyUploadMediator(
+            _vacancyUploadServiceMediator = new VacancyUploadServiceMediator(
                 new VacancyUploadDataValidator(),
                 _mockVacancyUploadRequestMapper.Object,
                 _mockProviderService.Object,
@@ -42,7 +44,7 @@
         public void ShouldThrowIfRequestIsNull()
         {
             // Act.
-            Action action = () => _mediator.UploadVacancies(default(VacancyUploadRequest));
+            Action action = () => _vacancyUploadServiceMediator.UploadVacancies(default(VacancyUploadRequest));
 
             // Assert.
             action.ShouldThrowExactly<ArgumentNullException>();

@@ -1,28 +1,36 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51.ReferenceDataService
 {
     using System;
     using System.Linq;
-    using Apprenticeships.Application.ReferenceData;
-    using Apprenticeships.Domain.Entities.ReferenceData;
+    using Apprenticeships.Application.Interfaces.Logging;
+    using AvService.Mediators.Version51;
+    using DataContracts.Version51;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
     using ReferenceDataService = AvService.ServiceImplementation.Version51.ReferenceDataService;
 
-    // TODO: US868: API: reinstate / implement tests here.
+    // TODO: US868: API: reinstate / implement tests here. See GetErrorCodesTests for examples.
 
     [TestFixture]
-    public class ReferenceDataServiceTests
+    public class GetApprenticeshipFrameworksTests
     {
+        private Mock<IReferenceDataServiceMediator> _mockReferenceDataServiceMediator;
+        private Mock<ILogService> _mockLogService;
+
         private ReferenceDataService _service;
-        private Mock<IReferenceDataProvider> _mockReferenceDataProvider;
 
         [SetUp]
         public void SetUp()
         {
-            _mockReferenceDataProvider = new Mock<IReferenceDataProvider>();
-            _service = new ReferenceDataService();
+
+            _mockLogService = new Mock<ILogService>();
+            _mockReferenceDataServiceMediator = new Mock<IReferenceDataServiceMediator>();
+
+            _service = new ReferenceDataService(
+                _mockLogService.Object,
+                _mockReferenceDataServiceMediator.Object);
         }
 
         [Test]
@@ -54,8 +62,8 @@
             _service.GetApprenticeshipFrameworks(request);
 
             // Assert.
-            _mockReferenceDataProvider.Verify(mock =>
-                mock.GetCategories(), Times.Once());
+            _mockReferenceDataServiceMediator.Verify(mock =>
+                mock.GetApprenticeshipFrameworks(), Times.Once());
         }
 
         [Test]
@@ -65,11 +73,11 @@
             // Arrange.
             var request = new GetApprenticeshipFrameworksRequest();
 
-            var categories = Enumerable.Empty<Category>();
+            var frameworks = Enumerable.Empty<ApprenticeshipFrameworkAndOccupationData>().ToList();
 
-            _mockReferenceDataProvider.Setup(mock =>
-                mock.GetCategories())
-                .Returns(categories);
+            _mockReferenceDataServiceMediator.Setup(mock =>
+                mock.GetApprenticeshipFrameworks())
+                .Returns(frameworks);
 
             // Act.
             var response = _service.GetApprenticeshipFrameworks(request);

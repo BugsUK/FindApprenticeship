@@ -14,14 +14,14 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
     // REF: NAVMS: Navms.Ms.ExternalInterfaces.ServiceImplementation.Rel51.VacancyManagementInternalService
     // REF: NAVMS: Capgemini.LSC.Navms.MS.BusinessLogic.VacancyController::BulkUploadVacancies
 
-    public class VacancyUploadMediator : IVacancyUploadMediator
+    public class VacancyUploadServiceMediator : IVacancyUploadServiceMediator
     {
         private readonly VacancyUploadDataValidator _validator;
         private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
         private readonly IProviderService _providerService;
         private readonly IVacancyPostingService _vacancyPostingService;
 
-        public VacancyUploadMediator(
+        public VacancyUploadServiceMediator(
             VacancyUploadDataValidator validator,
             IVacancyUploadRequestMapper vacancyUploadRequestMapper,
             IProviderService providerService,
