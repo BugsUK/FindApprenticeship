@@ -15,6 +15,7 @@
     using Reference = SFA.Apprenticeships.NewDB.Domain.Entities;
     using Domain.Interfaces.Queries;
     using System.Threading;    // TODO GenericSqlClient??
+
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
     {
         private IDictionary<string, WageType> _wageTypeMap = new Dictionary<string, WageType>();

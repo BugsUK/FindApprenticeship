@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     public interface INewDBRepository
     {
         
-        int AddVacancy(Vacancy.Vacancy vacancy);
-        Vacancy.Vacancy GetVacancy(int id);
+        void AddVacancy(Vacancy.Vacancy vacancy);
+        Vacancy.Vacancy GetVacancy(Guid id);
     }
 }

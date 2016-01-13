@@ -82,8 +82,36 @@
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
+                .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
 
-                .ForMember(v => v.WageValue, opt => opt.MapFrom(av => av.Wage));
+                // TODO: Change ApprenticeshipVacancy object in due course
+                .MapMemberFrom(v => v.DirectApplicationInstructions, av => av.OfflineApplicationInstructions)
+                .MapMemberFrom(v => v.DirectApplicationInstructionsComment, av => av.OfflineApplicationInstructionsComment)
+                .MapMemberFrom(v => v.DirectApplicationUrl, av => av.OfflineApplicationUrl)
+                .MapMemberFrom(v => v.DirectApplicationUrlComment, av => av.OfflineApplicationUrlComment)
+                .MapMemberFrom(v => v.IsDirectApplication, av => av.OfflineVacancy)
+
+                // Need to map the following via database lookups
+                .ForMember(v => v.ParentVacancyId, opt => opt.Ignore())
+                .ForMember(v => v.EmployerVacancyPartyId, opt => opt.Ignore())
+                .ForMember(v => v.OwnerVacancyPartyId, opt => opt.Ignore()) // To FrameworkId
+                .ForMember(v => v.ManagerVacancyPartyId, opt => opt.Ignore())
+                .ForMember(v => v.DeliveryProviderVacancyPartyId, opt => opt.Ignore())
+                .ForMember(v => v.ContractOwnerVacancyPartyId, opt => opt.Ignore())
+                .ForMember(v => v.OriginalContractOwnerVacancyPartyId, opt => opt.Ignore())
+                .ForMember(v => v.FrameworkId, opt => opt.Ignore())
+
+                // TODO: Missing from ApprenticeshipVacancy
+                .ForMember(v => v.AV_WageText, opt => opt.Ignore())
+                .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
+                .ForMember(v => v.VacancyTypeCode, opt => opt.Ignore()) // Apprenticeship / Traineeship
+                .ForMember(v => v.VacancyLocationTypeCode, opt => opt.Ignore()) // Multiple locations / Nationwide / Specific - not sure if used
+
+                // TODO: Remove from Vacancy.Vacancy?
+                .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate
+                .ForMember(v => v.EmployerDescription, opt => opt.Ignore()) // Just not there
+
+                .End();
 
             Mapper.CreateMap<Vacancy.Vacancy, ApprenticeshipVacancy>()
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeekText)
@@ -99,13 +127,39 @@
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
                 .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
+                .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
+
+                // TODO: Change ApprenticeshipVacancy object in due course
+                .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.DirectApplicationInstructions)
+                .MapMemberFrom(av => av.OfflineApplicationInstructionsComment, v => v.DirectApplicationInstructionsComment)
+                .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.DirectApplicationUrl)
+                .MapMemberFrom(av => av.OfflineApplicationUrlComment, v => v.DirectApplicationUrlComment)
+                .MapMemberFrom(av => av.OfflineVacancy, v => v.IsDirectApplication)
 
                 // Need to map the following separately
-                .ForMember(v => v.Ukprn, opt => opt.Ignore())
-                .ForMember(v => v.ProviderSiteEmployerLink, opt => opt.Ignore())
-                .ForMember(v => v.FrameworkCodeName, opt => opt.Ignore())
+                .ForMember(av => av.Ukprn, opt => opt.Ignore())
+                .ForMember(av => av.ProviderSiteEmployerLink, opt => opt.Ignore())
+                .ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
+                .ForMember(av => av.LocationAddresses, opt => opt.Ignore())
 
-                .ForMember(v => v.Wage, opt => opt.MapFrom(av => av.WageValue));
+                // TODO: Currently missing from Vacancy.Vacancy
+                .ForMember(av => av.AdditionalLocationInformation, opt => opt.Ignore())
+                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
+
+                // TODO: Definitely missing
+                .ForMember(av => av.WorkingWeekComment, opt => opt.Ignore())
+                .ForMember(av => av.NumberOfPositions, opt => opt.Ignore())
+                .ForMember(av => av.WageUnit, opt => opt.Ignore())
+
+                // TODO: Currently missing from Vacancy.Vacancy, but should be times
+                .ForMember(av => av.DateSubmitted, opt => opt.Ignore()) // Should be DateTimePublished
+                .ForMember(av => av.DateStartedToQA, opt => opt.Ignore()) // Locking field DateTime
+                .ForMember(av => av.DateCreated, opt => opt.Ignore()) // Yes, keep this DateTime
+                .ForMember(av => av.DateUpdated, opt => opt.Ignore()) // Yes, keep this DateTime
+
+                // TODO: vacancy source
+
+                .End();
         }
     }
 
@@ -118,6 +172,16 @@
         {
             return mappingExpression.ForMember(destinationMember, opt => opt.MapFrom<TMember>(mapFunction));
         }
+
+        /// <summary>
+        /// Handy when mappings are being edited so that the terminating ; doesn't keeping moving
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <typeparam name="TDestination"></typeparam>
+        /// <param name="mappingExpression"></param>
+        public static void End<TSource, TDestination>(
+            this IMappingExpression<TSource, TDestination> mappingExpression)
+        { }
     }
 
     public class CodeEnumMap<T> : IEnumerable<KeyValuePair<string, T>>

@@ -120,6 +120,7 @@ values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
             // Arrange.
             var vacancy = new NewDB.Vacancy.Vacancy()
             {
+                VacancyId = Guid.NewGuid(),
                 DeliveryProviderVacancyPartyId = VacancyPartyId_ProviderA,
                 OwnerVacancyPartyId = VacancyPartyId_ProviderA,
                 ContractOwnerVacancyPartyId = VacancyPartyId_ProviderA,
@@ -139,7 +140,7 @@ values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
             };
 
             // Act.
-            vacancy.VacancyId = _newDB.AddVacancy(vacancy);
+            _newDB.AddVacancy(vacancy);
 
             // Assert.
             // No crash!!
@@ -154,7 +155,7 @@ values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
             };
 
             // Act.
-            vacancy.VacancyId = _newDB.AddVacancy(vacancy);
+            _newDB.AddVacancy(vacancy);
             var vacancy2 = _newDB.GetVacancy(vacancy.VacancyId);
 
             // Assert.

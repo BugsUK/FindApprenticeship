@@ -15,20 +15,12 @@
             _getOpenConnection = getOpenConnection;
         }
 
-        public int AddVacancy(Vacancy.Vacancy vacancy)
+        public void AddVacancy(Vacancy.Vacancy vacancy)
         {
-            return (int)_getOpenConnection.Insert(vacancy);
-
-            return _getOpenConnection.Query<int>(@"
-INSERT INTO Vacancy.Vacancy
-       ( EmployerVacancyPartyId,  VacancyReferenceNumber,  VacancyTypeCode,  VacancyStatusCode,  VacancyLocationTypeCode,  OwnerVacancyPartyId,  ContractOwnerVacancyPartyId,  ManagerVacancyPartyId,  DeliveryProviderVacancyPartyId,  Title,  TrainingTypeCode,  FrameworkId,  FrameworkIdComment,  StandardId,  LevelCode)
-VALUES (@EmployerVacancyPartyId, @VacancyReferenceNumber, @VacancyTypeCode, @VacancyStatusCode, @VacancyLocationTypeCode, @OwnerVacancyPartyId, @ContractOwnerVacancyPartyId, @ManagerVacancyPartyId, @DeliveryProviderVacancyPartyId, @Title, @TrainingTypeCode, @FrameworkId, @FrameworkIdComment, @StandardId, @LevelCode)
-;
-SELECT CAST(SCOPE_IDENTITY() AS INT)
-", vacancy).Single();
+            _getOpenConnection.Insert(vacancy);
         }
 
-        public Vacancy.Vacancy GetVacancy(int vacancyId)
+        public Vacancy.Vacancy GetVacancy(Guid vacancyId)
         {
             return _getOpenConnection.Query<Vacancy.Vacancy>(@"
 SELECT *
