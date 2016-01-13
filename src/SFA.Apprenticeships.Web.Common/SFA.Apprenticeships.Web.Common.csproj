@@ -359,6 +359,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Date.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\razorgenerator.directives" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
