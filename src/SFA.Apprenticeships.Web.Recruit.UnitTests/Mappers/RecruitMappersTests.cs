@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mappers
 {
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

@@ -2,9 +2,9 @@
 {
     using System;
     using System.Linq;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Apprenticeships.Domain.Interfaces.Configuration;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using AvService.Mappers.Version51;
     using AvService.Providers.Version51;

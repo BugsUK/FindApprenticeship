@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck.Tasks
 {
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Configuration;

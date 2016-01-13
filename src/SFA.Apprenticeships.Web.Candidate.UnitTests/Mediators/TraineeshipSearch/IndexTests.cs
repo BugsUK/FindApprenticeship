@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

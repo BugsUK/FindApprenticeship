@@ -3,12 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Organisation;
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Organisations;
-    using Domain.Interfaces.Configuration;
     using EmployerDataService;
     using Mappers;
     using WebServices.Wcf;

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
+    using SFA.Infrastructure.Interfaces;
     using Application.Applications;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
@@ -13,7 +14,6 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Consumers;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
     using Repositories.Audit;

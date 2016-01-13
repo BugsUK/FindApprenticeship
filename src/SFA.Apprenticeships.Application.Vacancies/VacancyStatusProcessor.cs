@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using System.Threading;
-    using System.Threading.Tasks;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using Entities;
-    using Interfaces.Logging;
+    using Infrastructure.Interfaces;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor
     {

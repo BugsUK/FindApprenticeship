@@ -2,7 +2,7 @@
 {
     using System;
     using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.LegacyWebServices.Candidate;
     using Infrastructure.LegacyWebServices.GatewayServiceProxy;
     using Infrastructure.LegacyWebServices.Wcf;

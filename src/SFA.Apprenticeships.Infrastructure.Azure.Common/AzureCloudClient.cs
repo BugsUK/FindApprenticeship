@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common
 {
     using System;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Microsoft.WindowsAzure.Storage;
     using Microsoft.WindowsAzure.Storage.Queue;
     using Configuration;

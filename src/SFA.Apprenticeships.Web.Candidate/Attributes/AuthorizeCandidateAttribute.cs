@@ -6,7 +6,7 @@
     using Common.Constants;
     using Common.Controllers;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
 
     public class AuthorizeCandidateAttribute : AuthorizeAttribute
     {

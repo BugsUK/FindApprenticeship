@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
 
     public class SendPendingUsernameCodeStrategy : ISendPendingUsernameCodeStrategy

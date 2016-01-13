@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using Infrastructure.Common.Configuration;
     using Infrastructure.VacancySearch.Configuration;

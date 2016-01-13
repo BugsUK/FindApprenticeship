@@ -8,7 +8,7 @@
     using Configuration;
     using Dapper;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Models;
 
     public class FrameworkDataProvider : IReferenceDataProvider

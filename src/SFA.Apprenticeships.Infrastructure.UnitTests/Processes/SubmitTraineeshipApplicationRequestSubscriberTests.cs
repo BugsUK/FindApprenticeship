@@ -2,7 +2,7 @@
 {
     using System;
     using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Messaging;

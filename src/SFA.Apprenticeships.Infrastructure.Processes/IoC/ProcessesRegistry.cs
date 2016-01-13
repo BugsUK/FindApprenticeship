@@ -25,8 +25,7 @@
     using Communication.Configuration;
     using Communications;
     using Communications.Commands;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Logging.IoC;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.VacancySearch
 {
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.IoC;
     using Infrastructure.VacancySearch.Configuration;

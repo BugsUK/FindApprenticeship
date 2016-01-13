@@ -2,7 +2,7 @@
 {
     using Application.UserAccount.Configuration;
     using Application.UserAccount.Strategies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
 

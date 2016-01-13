@@ -3,7 +3,7 @@
     using System;
     using Application.Candidate;
     using Application.Interfaces.Applications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;

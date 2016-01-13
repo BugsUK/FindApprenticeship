@@ -1,12 +1,10 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Logging;
-
-namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.ServiceImplementation.Version51
 {
     using System;
     using System.Security;
-    using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
+    using Infrastructure.Interfaces;
     using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;

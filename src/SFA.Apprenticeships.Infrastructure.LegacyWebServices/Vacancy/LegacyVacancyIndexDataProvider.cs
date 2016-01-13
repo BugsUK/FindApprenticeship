@@ -3,13 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Wcf;
 

@@ -7,7 +7,7 @@
     using System.Web;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Mongo.Common.Configuration;
     using Infrastructure.Repositories.Vacancies.Entities;
     using IoC;

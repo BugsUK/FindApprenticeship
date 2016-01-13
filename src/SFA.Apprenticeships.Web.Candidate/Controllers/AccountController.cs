@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Common.Providers;
     using Constants;
     using Constants.Pages;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Account;

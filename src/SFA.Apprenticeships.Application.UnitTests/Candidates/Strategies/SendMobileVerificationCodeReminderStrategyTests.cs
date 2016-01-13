@@ -6,10 +6,9 @@
     using Application.Candidates.Strategies;
     using Configuration;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
 

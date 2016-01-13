@@ -17,7 +17,7 @@
     using Extensions;
     using Factories;
     using Interfaces.Locations;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Vacancies;
     using Vacancy;
 

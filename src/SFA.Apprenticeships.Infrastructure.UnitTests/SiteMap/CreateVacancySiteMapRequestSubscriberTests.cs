@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.SiteMap
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies;
     using Application.Vacancies.Entities.SiteMap;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Infrastructure.Processes.Configuration;

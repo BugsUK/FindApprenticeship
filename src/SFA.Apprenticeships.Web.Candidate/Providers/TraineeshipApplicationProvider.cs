@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;

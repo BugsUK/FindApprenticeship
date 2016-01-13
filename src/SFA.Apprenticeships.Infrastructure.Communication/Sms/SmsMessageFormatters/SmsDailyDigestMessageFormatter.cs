@@ -5,7 +5,7 @@
     using Application.Interfaces.Communications;
     using Configuration;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
 
     public class SmsDailyDigestMessageFormatter : SmsMessageFormatter

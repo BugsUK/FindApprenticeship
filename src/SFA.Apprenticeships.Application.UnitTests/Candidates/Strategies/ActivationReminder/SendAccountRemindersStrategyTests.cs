@@ -10,7 +10,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;

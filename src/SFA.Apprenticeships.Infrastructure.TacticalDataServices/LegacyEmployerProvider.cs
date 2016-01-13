@@ -8,7 +8,7 @@
     using Dapper;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
 
     public class LegacyEmployerProvider : ILegacyEmployerProvider
     {

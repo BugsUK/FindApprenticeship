@@ -3,7 +3,7 @@
     using System;
     using System.Security;
     using System.ServiceModel;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using Infrastructure.Interfaces;
     using Mediators.Version51;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;

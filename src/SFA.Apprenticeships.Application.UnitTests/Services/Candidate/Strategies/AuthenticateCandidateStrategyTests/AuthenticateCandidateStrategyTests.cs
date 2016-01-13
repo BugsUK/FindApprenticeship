@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategie
     using Domain.Entities.UnitTests.Builder;
     using Interfaces.Users;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
     [TestFixture]

@@ -3,10 +3,10 @@
     using System;
     using Common.Mappers;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels.Vacancy;
 
     [TestFixture]

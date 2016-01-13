@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Candidate.Mappers;

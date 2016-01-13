@@ -2,16 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Globalization;
-    using Apprenticeships.Application.Interfaces.Logging;
     using Apprenticeships.Application.Vacancies;
-    using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
-    using Elastic.Common.Entities;
     using Infrastructure.ScheduledJobs.Consumers;
     using Moq;
     using NUnit.Framework;
-    using VacancyIndexer;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class VacancyStatusControlQueueConsumerTests

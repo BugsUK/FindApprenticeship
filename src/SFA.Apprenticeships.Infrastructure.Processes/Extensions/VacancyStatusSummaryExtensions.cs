@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Extensions
 {
     using Application.Applications.Entities;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public static class VacancyStatusSummaryExtensions
     {
@@ -16,7 +16,7 @@
         public static CacheDuration CacheDuration(this VacancyStatusSummary vacancyStatusSummary)
         {
             //todo: 1.6: move to config setting
-            return Domain.Interfaces.Caching.CacheDuration.ThirtyMinutes;
+            return SFA.Infrastructure.Interfaces.Caching.CacheDuration.ThirtyMinutes;
         }
     }
 }

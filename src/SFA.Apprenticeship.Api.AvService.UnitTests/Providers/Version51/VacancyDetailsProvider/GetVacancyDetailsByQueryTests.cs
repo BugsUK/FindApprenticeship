@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Domain.Interfaces.Queries;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using AvService.Mappers.Version51;

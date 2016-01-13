@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 

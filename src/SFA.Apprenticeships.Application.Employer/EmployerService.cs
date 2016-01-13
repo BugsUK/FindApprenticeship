@@ -6,7 +6,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Employers;
     using Interfaces.Generic;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
 
     public class EmployerService : IEmployerService

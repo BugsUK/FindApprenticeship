@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Communication
 {
     using Domain.Entities;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Mongo.Common;
     using Mongo.Common.Configuration;
 

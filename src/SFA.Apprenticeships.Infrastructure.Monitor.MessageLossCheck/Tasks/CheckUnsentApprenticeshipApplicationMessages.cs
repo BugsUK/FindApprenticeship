@@ -5,7 +5,7 @@
     using System.Text;
     using System.Threading;
     using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Monitor.Tasks;
     using Repository;

@@ -123,6 +123,7 @@
     <Folder Include="Schemas\WebProxy\Schema" />
     <Folder Include="Schemas\WebProxy\Scripts" />
     <Folder Include="Schemas\WebProxy\Tables" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />

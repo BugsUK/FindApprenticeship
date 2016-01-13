@@ -208,6 +208,10 @@
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancySearch</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configs\readme.txt">

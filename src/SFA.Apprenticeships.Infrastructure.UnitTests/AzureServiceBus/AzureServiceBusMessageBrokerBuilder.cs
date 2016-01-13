@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.AzureServiceBus
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.Factory;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Moq;
 

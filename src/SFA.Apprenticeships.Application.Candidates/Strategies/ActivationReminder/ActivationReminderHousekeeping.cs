@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies.ActivationReminder
 {
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
 
     public class ActivationReminderHousekeeping : IHousekeepingChainOfResponsibility
     {

@@ -2,9 +2,8 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.IoC;

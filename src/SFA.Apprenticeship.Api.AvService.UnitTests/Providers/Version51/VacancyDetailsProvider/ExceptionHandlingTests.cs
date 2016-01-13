@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers.Version51.VacancyDetailsProvider
 {
     using System;
-    using Apprenticeships.Domain.Interfaces.Configuration;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using AvService.Mappers.Version51;
     using AvService.Providers.Version51;
     using DataContracts.Version51;
-    using FluentAssertions;
+    using Infrastructure.Interfaces;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;

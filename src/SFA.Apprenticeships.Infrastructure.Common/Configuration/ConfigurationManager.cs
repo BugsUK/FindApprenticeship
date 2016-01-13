@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Configuration;
     using System.IO;
+    using SFA.Infrastructure.Interfaces;
     using CuttingEdge.Conditions;
 
     internal class ConfigurationManager : IConfigurationManager

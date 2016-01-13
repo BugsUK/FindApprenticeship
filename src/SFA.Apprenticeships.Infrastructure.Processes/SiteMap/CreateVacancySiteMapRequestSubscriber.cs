@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.SiteMap
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies;
     using Application.Vacancies.Entities.SiteMap;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
 
     public class CreateVacancySiteMapRequestSubscriber : IServiceBusSubscriber<CreateVacancySiteMapRequest>

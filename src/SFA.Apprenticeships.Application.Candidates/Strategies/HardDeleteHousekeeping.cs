@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidates.Strategies
 {
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
 
     public class HardDeleteHousekeeping : IHousekeepingChainOfResponsibility
     {
