@@ -302,7 +302,7 @@
                                     <td class="vac-no-of-applications" data-label="Number of applications">
                                         @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
                                         {
-                                            var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy.HasValue && vacancy.NewVacancyViewModel.OfflineVacancy.Value;
+                                            var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy == true;
 
                                             var count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
                                             var unit = isOfflineVacancy ? "click through" : "application";

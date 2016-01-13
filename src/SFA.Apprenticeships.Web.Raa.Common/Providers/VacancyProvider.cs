@@ -716,6 +716,7 @@
             vacancy.DesiredQualificationsComment = null;
             vacancy.OfflineApplicationUrlComment = null;
             vacancy.OfflineApplicationInstructionsComment = null;
+            vacancy.OfflineApplicationClickThroughCount = 0;
             vacancy.ApprenticeshipLevelComment = null;
             vacancy.FrameworkCodeNameComment = null;
             vacancy.StandardIdComment = null;

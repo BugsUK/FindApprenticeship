@@ -685,7 +685,14 @@
 
             if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
             {
-                if (vacancyViewModel.ApplicationCount == 0)
+                if (vacancyViewModel.NewVacancyViewModel.OfflineVacancy == true)
+                {
+                    if (vacancyViewModel.OfflineApplicationClickThroughCount == 0)
+                    {
+                        return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+                    }
+                }
+                else if (vacancyViewModel.ApplicationCount == 0)
                 {
                     return GetMediatorResponse(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, vacancyViewModel, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
                 }
