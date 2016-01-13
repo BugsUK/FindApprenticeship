@@ -1,1 +1,0 @@
-﻿insert into reference.framework values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)

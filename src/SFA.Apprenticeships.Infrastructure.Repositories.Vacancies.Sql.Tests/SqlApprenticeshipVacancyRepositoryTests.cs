@@ -6,6 +6,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
+    using FluentAssertions;
     using Mappers;
     using Moq;
     using NewDB.Domain.Entities;
@@ -13,7 +14,9 @@
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Sql;
+    using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = NewDB.Domain.Entities.Vacancy.Vacancy;
+    using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
 
     [TestFixture]
     public class SqlApprenticeshipVacancyRepositoryTests
@@ -48,15 +51,17 @@
                 LevelCode = "4",
                 FrameworkId = 1,
                 WageValue = 100.0M,
+                WageTypeCode = "CUS",
                 ClosingDate = DateTime.Now,
                 ContractOwnerVacancyPartyId = 1,
                 DeliveryProviderVacancyPartyId = 1,
                 EmployerVacancyPartyId = 1,
                 ManagerVacancyPartyId = 1,
                 OriginalContractOwnerVacancyPartyId = 1,
-                ParentVacancyId = null,
+                ParentVacancyGuid = null,
                 OwnerVacancyPartyId = 1,
-                DurationValue = 3
+                DurationValue = 3,
+                DurationTypeCode = "Y"
             };
 
             var occupation = new Occupation
@@ -98,6 +103,12 @@
                 UKPRN = 1
             };
 
+            var seedScripts = new[]
+            {
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.wageType.sql"
+            };
+
+            dbInitialiser.Seed(seedScripts);
             dbInitialiser.Seed(new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy});
         }
 
@@ -164,7 +175,7 @@
                 sqlConnection.Open();
 
                 var commandText =
-                    $"SELECT [VacancyId] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
+                    $"SELECT [VacancyGuid] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
                 using (var command = new SqlCommand(commandText, sqlConnection))
                 {
                     vacancyGuid = (Guid) command.ExecuteScalar();
@@ -180,6 +191,11 @@
                 logger.Object);
 
             var vacancy = repository.Get(vacancyGuid);
+
+            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Title.Should().Be("Test vacancy");
+            vacancy.WageType.Should().Be(WageType.Custom);
+            vacancy.TrainingType = TrainingType.Frameworks;
         }
 
         [Test]
