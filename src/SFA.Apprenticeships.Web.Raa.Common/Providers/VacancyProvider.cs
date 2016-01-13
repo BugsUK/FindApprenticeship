@@ -818,6 +818,7 @@
             newVacancy.LocationAddresses = new List<VacancyLocationAddress>() { address };
             newVacancy.DateQAApproved = approvalTime;
             newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+            newVacancy.NumberOfPositions = address.NumberOfPositions;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }

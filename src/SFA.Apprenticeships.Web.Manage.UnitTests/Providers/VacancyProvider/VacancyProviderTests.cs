@@ -329,7 +329,7 @@
                     && av.Status == ProviderVacancyStatuses.Live)), Times.Once);
             }
 
-            //save new vacancies with only one of the new addresses
+            //save new vacancies with only one of the new addresses and the position count
             foreach (var location in locationAddresses)
             {
                 vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av
@@ -341,7 +341,8 @@
                        && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
                        && av.LocationAddresses.Single().NumberOfPositions == location.NumberOfPositions
                        && av.Status == ProviderVacancyStatuses.Live
-                       && av.ParentVacancyReferenceNumber == vacancyReferenceNumber)));
+                       && av.ParentVacancyReferenceNumber == vacancyReferenceNumber
+                       && av.NumberOfPositions == location.NumberOfPositions)));
             }
 
             //save the submitted vacancy once
