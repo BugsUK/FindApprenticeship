@@ -259,7 +259,7 @@
                                 <th>Vacancy title</th>
                                 <th>Employer</th>
                             	<th>Location</th>
-                                <th>Number of applications</th>
+                                <th>Applications / click throughs</th>
                                 <th>Vacancy status</th>
                                 <th></th>
                             </tr>
@@ -277,7 +277,7 @@
                                                 {
                                                     routeName = RecruitmentRouteNames.ReviewCreateVacancy;
                                                 }
-                                                if (vacancy.Status.CanHaveApplications() && vacancy.ApplicationCount > 0)
+                                                if (vacancy.Status.CanHaveApplicationsOrClickThroughs() && vacancy.ApplicationCount > 0)
                                                 {
                                                     routeName = RecruitmentRouteNames.VacancyApplications;
                                                 }
@@ -300,19 +300,25 @@
                                     }
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
-                                        @if (vacancy.Status.CanHaveApplications())
+                                        @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
                                         {
-                                            if (vacancy.Status == ProviderVacancyStatuses.Live && vacancy.ApplicationCount == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy.HasValue && vacancy.NewVacancyViewModel.OfflineVacancy.Value;
+
+                                            var count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
+                                            var unit = isOfflineVacancy ? "click through" : "application";
+                                            var units = unit + "s";
+
+                                            if (vacancy.Status == ProviderVacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
                                             {
-                                                <span style="color: red; font-weight: bold">0 applications</span>
+                                                <span style="color: red; font-weight: bold">0 @units</span>
                                             }
                                             else if (@vacancy.ApplicationCount == 1)
                                             {
-                                                <span>1 application</span>
+                                                <span>1 @unit</span>
                                             }
                                             else
                                             {
-                                                <span>@vacancy.ApplicationCount applications</span>
+                                                <span>@count @units</span>
                                             }
                                         }
                                         else

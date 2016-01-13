@@ -29,12 +29,12 @@
 
         public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
         {
-            _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThrough property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
+            _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
 
             var args = new FindAndModifyArgs
             {
                 Query = new QueryBuilder<ApprenticeshipVacancy>().And(Query<ApprenticeshipVacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<ApprenticeshipVacancy>.EQ(d => d.OfflineVacancy, true)),
-                Update = Update.Inc("OfflineApplicationClickThrough", 1),
+                Update = Update.Inc("OfflineApplicationClickThroughCount", 1),
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
 
@@ -47,13 +47,13 @@
                 var entity = _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
 
                 _logger.Debug(
-                    "Call to Mongodb to increment the OfflineApplicationClickThrough property by one for vacancy with reference number: {0} successfully. New value: {1}",
-                    vacancyReferenceNumber, entity.OfflineApplicationClickThrough);
+                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully. New value: {1}",
+                    vacancyReferenceNumber, entity.OfflineApplicationClickThroughCount);
             }
             else
             {
                 _logger.Warn(
-                    "Call to Mongodb to increment the OfflineApplicationClickThrough property by one for vacancy with reference number: {0} failed: {1}, {2}",
+                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
                     vacancyReferenceNumber, result.Code, result.ErrorMessage);
             }
         }

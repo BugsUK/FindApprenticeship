@@ -428,7 +428,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                 return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
             }
 
-            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, vacancyDetailViewModel);
         }
 
         public MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel)

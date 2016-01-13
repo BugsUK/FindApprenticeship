@@ -683,7 +683,7 @@
             var vacancyViewModel = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateEditable();
 
-            if (vacancyViewModel.Status.CanHaveApplications())
+            if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
             {
                 if (vacancyViewModel.ApplicationCount == 0)
                 {
