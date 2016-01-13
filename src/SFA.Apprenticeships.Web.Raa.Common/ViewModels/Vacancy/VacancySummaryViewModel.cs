@@ -19,12 +19,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
-        public decimal? HoursPerWeek { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.WorkingWeekComment.LabelText)]
         public string WorkingWeekComment { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
+        public decimal? HoursPerWeek { get; set; }
+        
         //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
 
@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public List<SelectListItem> WageUnits { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.WageComment.LabelText)]
         public string WageComment { get; set; }
 
         public DurationType DurationType { get; set; }
@@ -45,25 +45,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public decimal? Duration { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public DateViewModel ClosingDate { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
-        public string ClosingDateComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public DateViewModel PossibleStartDate { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
-        public string PossibleStartDateComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.LongDescriptionComment.LabelText)]
         public string LongDescriptionComment { get; set; }
 
         public int WarningsHash { get; set; }
@@ -77,5 +65,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
         public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
+
+        public bool ComeFromPreview { get; set; }
+
+        public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
     }
 }

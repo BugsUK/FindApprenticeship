@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Users;
@@ -19,6 +20,11 @@
             _providerUserWriteRepository = providerUserWriteRepository;
             _agencyUserReadRepository = agencyUserReadRepository;
             _agencyUserWriteRepository = agencyUserWriteRepository;
+        }
+
+        public ProviderUser GetProviderUser(Guid id)
+        {
+            return _providerUserReadRepository.Get(id);
         }
 
         public ProviderUser GetProviderUser(string username)
@@ -73,9 +79,9 @@
 
             var roles = new List<Role>
             {
-                GetRole("Helpdesk_advisor", "Helpdesk advisor"),
-                GetRole("QA_advisor", "QA advisor", true),
-                //GetRole(technicalAdvisor, "Technical advisor")
+                GetRole("Helpdesk_advisor", "Helpdesk adviser"),
+                GetRole("QA_advisor", "Vacancy reviewer", true)
+                //GetRole(technicalAdvisor, "Technical adviser")
             };
 
             return roleList == "Serco" ? roles.Where(r => r.Id != technicalAdvisor) : roles;

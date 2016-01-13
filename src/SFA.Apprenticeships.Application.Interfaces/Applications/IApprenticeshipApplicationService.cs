@@ -8,9 +8,9 @@
     {
         IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
 
-        int GetApplicationCount(string vacancyReference);
-
         int GetApplicationCount(int vacancyId);
+
+        int GetNewApplicationCount(int vacancyId);
 
         ApprenticeshipApplicationDetail GetApplication(Guid applicationId);
 

@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.Threading.Tasks;
     using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -112,6 +113,15 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -126,9 +136,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 //CheckNasGateway monitor task always uses legacy services
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration {ServiceImplementation = "Legacy"}));
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
             });

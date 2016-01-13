@@ -47,7 +47,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
                 AddressLine1 = address.Line1,
                 AddressLine2 = address.Line2,
                 AddressLine3 = address.Line3,
-                AddressLine4 = address.Line4,
+                AddressLine4 = address.City,
                 Postcode = address.PostalCode,
                 Uprn = address.DomesticId
             };

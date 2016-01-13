@@ -18,6 +18,12 @@
             mapper = new RaaCommonWebMappers();
         }
 
+        [Test]
+        public void ShouldCreateMap()
+        {
+            new RaaCommonWebMappers().Mapper.AssertConfigurationIsValid();
+        }
+
         [TestCase("add 1", "add 2", "add 3", "add 4", "uprn", "postcode")]
         [TestCase(null, "add 2", "add 3", "add 4", "uprn", "postcode")]
         [TestCase("add 1", null, "add 3", "add 4", "uprn", "postcode")]

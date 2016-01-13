@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
+    using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -36,6 +37,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             return new Container(x =>
             {
@@ -51,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();

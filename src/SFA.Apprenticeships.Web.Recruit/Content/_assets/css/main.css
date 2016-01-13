@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3401,9 +3401,9 @@ select:focus {
       background-color: #00823b; }
     .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
   .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
@@ -5381,7 +5381,6 @@ details summary:focus {
   padding: 1px 5px 0 5px;
   vertical-align: middle;
   text-align: center;
-  text-transform: uppercase;
   white-space: nowrap;
   width: auto; }
   @media (max-width: 640px) {
@@ -6110,6 +6109,15 @@ aside h2:first-child {
 #employer-data-display {
   display: none; }
 
+.cancel-link {
+  margin-left: 12px; }
+
+.locations-table .location-positions {
+  text-align: center; }
+
+.locations-table .locations-positions-header {
+  text-align: center; }
+
 .editable-item {
   position: relative;
   margin: -5px -5px 10px -5px;
@@ -6119,6 +6127,7 @@ aside h2:first-child {
   .editable-item p {
     margin-bottom: 0; }
   .editable-item .edit-comment-link {
+    clear: both;
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.25;
@@ -6136,16 +6145,16 @@ aside h2:first-child {
         padding-top: 5px;
         padding-bottom: 5px; } }
 
-html:not(.touch) .editable-item {
+html:not(.touch).js .editable-item {
   border: 1px dotted #fff; }
-  html:not(.touch) .editable-item .edit-comment-link {
+  html:not(.touch).js .editable-item .edit-comment-link {
     color: white; }
-    html:not(.touch) .editable-item .edit-comment-link:focus {
+    html:not(.touch).js .editable-item .edit-comment-link:focus {
       color: #005ea5; }
-  html:not(.touch) .editable-item:hover {
+  html:not(.touch).js .editable-item:hover {
     background: rgba(0, 0, 0, 0.025);
     border: 1px dotted #d4d4d4; }
-    html:not(.touch) .editable-item:hover .edit-comment-link {
+    html:not(.touch).js .editable-item:hover .edit-comment-link {
       color: #005ea5; }
 
 .fa-flag {
@@ -6163,6 +6172,12 @@ h2 a i.raa-icon-comment {
 
 .preserve-formatting {
   white-space: pre-line; }
+
+.remove-button-link {
+  font-size: 14px; }
+
+.use-location-button-link {
+  font-size: 14px; }
 
 .vacancies-summary, .applications-summary {
   list-style: none;
@@ -6260,12 +6275,14 @@ h2 a i.raa-icon-comment {
 @media screen and (min-width: 641px) and (max-width: 768px) {
   .vacancies-summary li {
     padding: 0 10px 0 0;
-    width: 33.33333%; } }
+    width: 33.33333%;
+    margin-bottom: 10px; } }
 
 @media screen and (min-width: 769px) {
   .vacancies-summary li {
     padding: 0 10px 0 0;
-    width: 16.66667%; } }
+    width: 20%;
+    margin-bottom: 10px; } }
 
 @media screen and (max-width: 640px) {
   .applications-summary li {
@@ -6323,6 +6340,49 @@ h2 a i.raa-icon-comment {
         @media screen and (max-width: 768px) and (max-width: 640px) {
           table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
             font-size: 14px; } }
+
+@media screen and (max-width: 768px) {
+  table#rightLocationAddressesTable thead {
+    display: none; } }
+
+.location-search-results {
+  padding: 0;
+  vertical-align: middle; }
+
+.add-location-link {
+  margin-top: 8px; }
+
+.unselected-apprenticeship-type {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 15px 15px 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased; }
+  @media (max-width: 640px) {
+    .unselected-apprenticeship-type {
+      font-size: 16px;
+      line-height: 1.25; } }
+
+.no-employers-found {
+  margin-bottom: 20px; }
+
+.no-employers-optional-action {
+  margin-top: 20px; }
+
+.vac-status {
+  text-align: center; }
+
+.select-employer-link-to-new {
+  margin-bottom: 15px;
+  display: block; }
 
 .applicant-location,
 .applicant-distance {

@@ -12,7 +12,7 @@
     public class VacancyUploadRequestMapperTests
     {
         private VacancyUploadDataBuilder _vacancyUploadDataBuilder;
-        private IVacancyUploadRequestMapper _mapper;
+        private VacancyUploadRequestMapper _mapper;
 
         [SetUp]
         public void SetUp()
@@ -22,17 +22,32 @@
         }
 
         [Test]
-        public void ShouldNotSetVacancyReferenceNumber()
+        public void ShouldSetEntityId()
         {
             // Arrange.
             var vacancyUploadData = _vacancyUploadDataBuilder
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
-            mappedVacancy.VacancyReferenceNumber.Should().Be(0);
+            mappedVacancy.EntityId.Should().NotBe(Guid.Empty);
+        }
+
+        [TestCase(1)]
+        [TestCase(42)]
+        public void ShouldNotSetVacancyReferenceNumber(long vacancyReferenceNumber)
+        {
+            // Arrange.
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
+
+            // Act.
+            var mappedVacancy = _mapper.ToVacancy(vacancyReferenceNumber, vacancyUploadData, null);
+
+            // Assert.
+            mappedVacancy.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
         [Test]
@@ -46,7 +61,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.Ukprn.Should().Be(contractedProviderUkprn.ToString());
@@ -63,10 +78,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.Title.Should().Be(title);
+            mappedVacancy.TitleComment.Should().BeNull();
         }
 
         [Test]
@@ -80,10 +96,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.ShortDescription.Should().Be(shortDescription);
+            mappedVacancy.ShortDescriptionComment.Should().BeNull();
         }
 
         [Test]
@@ -97,10 +114,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.LongDescription.Should().Be(longDescription);
+            mappedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
         [Test]
@@ -114,10 +132,24 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.WorkingWeek.Should().Be(workingWeek);
+        }
+
+        [Test]
+        public void ShouldSetWorkingWeekComment()
+        {
+            // Arrange.
+            var vacancyUploadData = _vacancyUploadDataBuilder
+                .Build();
+
+            // Act.
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
+
+            // Assert.
+            mappedVacancy.WorkingWeekComment.Should().NotBeNullOrWhiteSpace();
         }
 
         [Test]
@@ -128,7 +160,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.HoursPerWeek.Should().Be(default(decimal?));
@@ -148,12 +180,13 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.WageType.Should().Be(ProviderVacancies.WageType.Custom);
             mappedVacancy.WageUnit.Should().Be(ProviderVacancies.WageUnit.Weekly);
             mappedVacancy.Wage.Should().Be(weeklyWage);
+            mappedVacancy.WageComment.Should().BeNull();
         }
 
         [Test]
@@ -167,10 +200,10 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
-            mappedVacancy.DurationType.Should().Be(ProviderVacancies.DurationType.Unknown);
+            mappedVacancy.DurationType.Should().Be(ProviderVacancies.DurationType.Weeks);
             mappedVacancy.Duration.Should().Be(default(int?));
             mappedVacancy.DurationComment.Should().Be(expectedDuration);
         }
@@ -186,10 +219,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.ClosingDate.Should().Be(closingDate);
+            mappedVacancy.ClosingDateComment.Should().BeNull();
         }
 
         [Test]
@@ -203,7 +237,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.InterviewStartDate.Should().Be(interviewStartDate);
@@ -220,10 +254,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.PossibleStartDate.Should().Be(possibleStartDate);
+            mappedVacancy.PossibleStartDateComment.Should().BeNull();
         }
 
         [Test]
@@ -237,10 +272,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.DesiredSkills.Should().Be(skillsRequired);
+            mappedVacancy.DesiredSkillsComment.Should().BeNull();
         }
 
         [Test]
@@ -254,10 +290,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.FutureProspects.Should().Be(futureProspects);
+            mappedVacancy.FutureProspectsComment.Should().BeNull();
         }
 
         [Test]
@@ -271,10 +308,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.PersonalQualities.Should().Be(personalQualities);
+            mappedVacancy.PersonalQualitiesComment.Should().BeNull();
         }        
 
         [Test]
@@ -288,10 +326,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.DesiredQualifications.Should().Be(qualificationRequired);
+            mappedVacancy.DesiredQualificationsComment.Should().BeNull();
         }
 
         [Test]
@@ -305,10 +344,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.ThingsToConsider.Should().Be(realityCheck);
+            mappedVacancy.ThingsToConsiderComment.Should().BeNull();
         }
 
         [Test]
@@ -323,11 +363,14 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.FirstQuestion.Should().Be(supplementaryQuestion1);
+            mappedVacancy.FirstQuestionComment.Should().BeNull();
+
             mappedVacancy.SecondQuestion.Should().Be(supplementaryQuestion2);
+            mappedVacancy.SecondQuestionComment.Should().BeNull();
         }
 
         [TestCase(ApplicationType.Online, false)]
@@ -340,7 +383,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.OfflineVacancy.Should().Be(expectedOfflineVacancy);
@@ -357,10 +400,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.OfflineApplicationUrl.Should().Be(employerWebsite);
+            mappedVacancy.OfflineApplicationUrlComment.Should().BeNull();
         }
 
         [Test]
@@ -374,10 +418,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.OfflineApplicationInstructions.Should().Be(employersApplicationInstructions);
+            mappedVacancy.OfflineApplicationInstructionsComment.Should().BeNull();
         }
 
         [Test]
@@ -391,10 +436,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.FrameworkCodeName.Should().Be(frameworkCode);
+            mappedVacancy.FrameworkCodeNameComment.Should().BeNull();
         }
 
         [Test]
@@ -405,10 +451,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.StandardId.Should().Be(default(int?));
+            mappedVacancy.StandardIdComment.Should().BeNull();
         }
 
         [TestCase(VacancyApprenticeshipType.IntermediateLevelApprenticeship, ProviderVacancies.Apprenticeship.ApprenticeshipLevel.Intermediate)]
@@ -424,10 +471,11 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
+            mappedVacancy.ApprenticeshipLevelComment.Should().BeNull();
         }
 
         [TestCase(VacancyApprenticeshipType.Traineeship)]
@@ -440,7 +488,7 @@
                 .Build();
 
             // Act.
-            Action action = () => _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            Action action = () => _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             action.ShouldThrow<ArgumentOutOfRangeException>();
@@ -461,7 +509,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.Status.Should().Be(ProviderVacancies.ProviderVacancyStatuses.Draft);
@@ -475,7 +523,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.DateCreated.Should().BeCloseTo(DateTime.UtcNow, 1000);
@@ -489,7 +537,7 @@
                 .Build();
 
             // Act.
-            var mappedVacancy = _mapper.ToApprenticeshipVacancy(vacancyUploadData);
+            var mappedVacancy = _mapper.ToVacancy(0, vacancyUploadData, null);
 
             // Assert.
             mappedVacancy.TrainingType.Should().Be(ProviderVacancies.TrainingType.Frameworks);

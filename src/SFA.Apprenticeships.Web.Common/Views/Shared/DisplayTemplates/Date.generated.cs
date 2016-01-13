@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -27,29 +27,24 @@ namespace ASP
     using System.Web.UI;
     using System.Web.WebPages;
     
+    #line 1 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+    using SFA.Apprenticeships.Infrastructure.Presentation;
+    
+    #line default
+    #line hidden
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Date.cshtml")]
-    public partial class _Views_Shared_DisplayTemplates_Date_cshtml_ : System.Web.Mvc.WebViewPage<DateTime>
+    public partial class Date_ : System.Web.Mvc.WebViewPage<DateTime>
     {
-        public _Views_Shared_DisplayTemplates_Date_cshtml_()
+        public Date_()
         {
         }
         public override void Execute()
         {
             
-            #line 2 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-  
-    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-    var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-Write(dataTimeByZoneId.ToString("dd MMM yyyy"));
+            #line 3 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+Write(Model.ToGmtDate());
 
             
             #line default

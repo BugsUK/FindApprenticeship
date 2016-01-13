@@ -5,13 +5,16 @@
     <ConfigurationSettings>
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
+    <Certificates>
+      <Certificate name="SSLWebRecruit" thumbprint="86B23A467637C7365590E719E70FEA46781A82D1" thumbprintAlgorithm="sha1" />
+    </Certificates>
   </Role>
   <NetworkConfiguration>
     <VirtualNetworkSite name="nasprod" />
     <AddressAssignments>
-      <InstanceAddress roleName="SFA.Apprenticeships.Web.Candidate">
+      <InstanceAddress roleName="SFA.Apprenticeships.Web.Recruit">
         <Subnets>
-          <Subnet name="CandidateWeb" />
+          <Subnet name="ProviderWeb" />
         </Subnets>
       </InstanceAddress>
     </AddressAssignments>

@@ -202,7 +202,7 @@
                 sqlConnection.Open();
 
                 var commandText =
-                    $"SELECT [VacancyGuid] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
+                    $"SELECT [VacancyId] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
                 using (var command = new SqlCommand(commandText, sqlConnection))
                 {
                     vacancyGuid = (Guid) command.ExecuteScalar();

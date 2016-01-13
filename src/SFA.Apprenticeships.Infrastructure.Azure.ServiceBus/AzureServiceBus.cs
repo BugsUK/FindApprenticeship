@@ -13,16 +13,18 @@
     {
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
+        private readonly ITopicNameFormatter _topicNameFormatter;
 
         private IDictionary<string, TopicClient> _topicClients;
         private readonly object _locker = new object();
 
         public AzureServiceBus(
             ILogService logService,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService, ITopicNameFormatter topicNameFormatter)
         {
             _logService = logService;
             _configurationService = configurationService;
+            _topicNameFormatter = topicNameFormatter;
         }
 
         public void PublishMessage<T>(T message) where T : class
@@ -90,7 +92,8 @@
 
                 foreach (var topic in configuration.Topics)
                 {
-                    var topicClient = TopicClient.CreateFromConnectionString(configuration.ConnectionString, topic.TopicName);
+                    var topicName = _topicNameFormatter.GetTopicName(topic.TopicName);
+                    var topicClient = TopicClient.CreateFromConnectionString(configuration.ConnectionString, topicName);
 
                     topicClients.Add(topic.MessageType, topicClient);
                 }

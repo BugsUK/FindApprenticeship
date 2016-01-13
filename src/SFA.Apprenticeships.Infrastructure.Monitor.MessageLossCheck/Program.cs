@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck
 {
     using System;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -28,14 +29,15 @@
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = "Legacy"}));
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

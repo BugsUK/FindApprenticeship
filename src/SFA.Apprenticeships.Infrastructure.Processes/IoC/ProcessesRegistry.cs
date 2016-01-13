@@ -74,6 +74,8 @@
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
 
+            For<IVacancyStatusProcessor>().Use<VacancyStatusProcessor>();
+
             // site map
             For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
@@ -123,6 +125,7 @@
             RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();
             RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
+            RegisterServiceBusMessageBroker<VacancyStatusProcessorSubscriber, VacancyEligibleForClosure>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
         }
 

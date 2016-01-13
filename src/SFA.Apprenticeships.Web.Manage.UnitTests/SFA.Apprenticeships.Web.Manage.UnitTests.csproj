@@ -176,6 +176,10 @@
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
       <Name>SFA.Apprenticeships.Application.Organisation</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
+      <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>

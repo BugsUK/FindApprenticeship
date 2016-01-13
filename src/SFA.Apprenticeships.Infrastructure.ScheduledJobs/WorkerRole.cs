@@ -8,6 +8,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.Threading.Tasks;
     using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -41,6 +42,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
         private DailyDigestControlQueueConsumer _dailyDigestControlQueueConsumer;
         private HousekeepingControlQueueConsumer _housekeepingControlQueueConsumer;
+        private VacancyStatusControlQueueConsumer _vacancyStatusControlQueueConsumer;
         private IConfigurationService _configurationService;
         private IContainer _container;
 
@@ -57,7 +59,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                         _savedSearchControlQueueConsumer.CheckScheduleQueue(),
                         _vacancyEtlControlQueueConsumer.CheckScheduleQueue(),
                         _applicationEtlControlQueueConsumer.CheckScheduleQueue(),
-                        _housekeepingControlQueueConsumer.CheckScheduleQueue()
+                        _housekeepingControlQueueConsumer.CheckScheduleQueue(),
+                        _vacancyStatusControlQueueConsumer.CheckScheduleQueue()
                     };
 
                     if (CommunicationsIsEnabled)
@@ -136,6 +139,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             _container = new Container(x =>
             {
@@ -143,7 +147,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
@@ -166,6 +170,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
             _dailyDigestControlQueueConsumer = _container.GetInstance<DailyDigestControlQueueConsumer>();
             _housekeepingControlQueueConsumer = _container.GetInstance<HousekeepingControlQueueConsumer>();
+            _vacancyStatusControlQueueConsumer = _container.GetInstance<VacancyStatusControlQueueConsumer>();
             _configurationService = _container.GetInstance<IConfigurationService>();
         }
     }

@@ -69,6 +69,8 @@ Write(Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "for
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
         }
     }
 }

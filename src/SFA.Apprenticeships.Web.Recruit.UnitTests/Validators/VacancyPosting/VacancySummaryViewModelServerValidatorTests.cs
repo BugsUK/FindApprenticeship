@@ -2,7 +2,6 @@
 {
     using Builders;
     using Common.Validators;
-    using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using FluentValidation;
@@ -29,7 +28,10 @@
         [Test]
         public void DefaultShouldHaveValidationErrors()
         {
-            var viewModel = new VacancySummaryViewModel();
+            var viewModel = new VacancySummaryViewModel
+            {
+                VacancyDatesViewModel = new VacancyDatesViewModel()
+            };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
             var result = _validator.Validate(viewModel, ruleSet: RuleSet);
@@ -268,142 +270,7 @@
             }
         }
 
-        [Test]
-        public void ClosingDateRequired()
-        {
-            var viewModel = new VacancySummaryViewModel
-            {
-                ClosingDate = new DateViewModel()
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            _validator.Validate(viewModel, ruleSet: RuleSet);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.Errors);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.Warnings);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-        }
-
-        [Test]
-        public void PossibleStartDateRequired()
-        {
-            var viewModel = new VacancySummaryViewModel
-            {
-                PossibleStartDate = new DateViewModel()
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            _validator.Validate(viewModel, ruleSet: RuleSet);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.Errors);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.Warnings);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-        }
-
-        [Test]
-        public void ClosingDateMustBeAValidDateRequired()
-        {
-            var viewModel = new VacancySummaryViewModel
-            {
-                ClosingDate = new DateViewModel
-                {
-                    Day = 31,
-                    Month = 11,
-                    Year = 2015
-                }
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            _validator.Validate(viewModel, ruleSet: RuleSet);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, viewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.Errors);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.Warnings);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-        }
-
-        [Test]
-        public void PossibleStartMustBeAValidDateDateRequired()
-        {
-            var viewModel = new VacancySummaryViewModel
-            {
-                PossibleStartDate = new DateViewModel
-                {
-                    Day = 31,
-                    Month = 11,
-                    Year = 2015
-                }
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            _validator.Validate(viewModel, ruleSet: RuleSet);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            _validator.ShouldHaveValidationErrorFor(vm => vm.PossibleStartDate, viewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.Errors);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.Warnings);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.PossibleStartDate, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-        }
-
-        [TestCase(16, false)]
-        [TestCase(2016, true)]
-        public void ClosingDateYearFormat(int year, bool expectValid)
-        {
-            var viewModel = new VacancySummaryViewModel
-            {
-                ClosingDate = new DateViewModel
-                {
-                    /*Day = 1,
-                    Month = 2,*/
-                    Year = year
-                }
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            _validator.Validate(viewModel, ruleSet: RuleSet);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            if (expectValid)
-            {
-                _validator.ShouldNotHaveValidationErrorFor(vm => vm.ClosingDate, vm => vm.ClosingDate.Year, viewModel, RuleSet);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-            }
-            else
-            {
-                _validator.ShouldHaveValidationErrorFor(vm => vm.ClosingDate, vm => vm.ClosingDate.Year, viewModel, RuleSet);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.ClosingDate, vm => vm.VacancySummaryViewModel.ClosingDate.Year, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-            }
-        }
+        
 
         [TestCase(null, false)]
         [TestCase("", false)]

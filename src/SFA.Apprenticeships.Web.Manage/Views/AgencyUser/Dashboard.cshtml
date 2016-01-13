@@ -30,7 +30,7 @@
                     @Html.DropDownListFor(m => m.AgencyUser.TeamId, Model.AgencyUser.Teams)
                 </div>
             </div>
-            <div>
+            <div style="text-align: right">
                 <button class="button">Save</button>
             </div>
         }
@@ -45,7 +45,7 @@
                         <table class="no-btm-margin">
                             <colgroup>
                                 <col class="t15">
-                                <col class="t15">
+                                @*<col class="t15">*@
                                 <col class="t15">
                                 <col class="t15">
                                 <col class="t15">
@@ -55,11 +55,11 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Reference</th>
-                                    <th>Status</th>
+                                    @*<th>Reference</th>*@
                                     <th>Provider</th>
                                     <th>Date submitted</th>
                                     <th>Closing date</th>
+                                    <th>Submission count</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -70,25 +70,25 @@
                                     <td>
                                         <span class="vac-title">@vacancy.Title</span>
                                     </td>
-                                    <td>
+                                    @*<td>
                                         <span>@vacancy.VacancyReferenceNumber.GetVacancyReference()</span>
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(model => vacancy.Status)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         <span>@vacancy.ProviderName</span>
                                     </td>
                                     <td>
-                                        <span>@vacancy.DateSubmitted.ToFriendlyClosingToday()</span>
+                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
                                     </td>
                                     <td>
                                         <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
                                     </td>
+                                    <td class="ta-center">
+                                        <span>@vacancy.SubmissionCount</span>
+                                    </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)
                                         {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">QA vacancy</a>
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Review vacancy</a>
                                         }
                                     </td>
                                 </tr>

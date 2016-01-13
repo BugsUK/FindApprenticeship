@@ -192,6 +192,9 @@
     <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SiteMapVacancyProcessorTests.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
     <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

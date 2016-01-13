@@ -98,30 +98,6 @@
 
             return null;
         }
-
-        public static ValidationFailure PossibleStartDateShouldBeAfterClosingDate(this VacancySummaryViewModel viewModel, DateViewModel closingDate, string parentPropertyName)
-        {
-            if (closingDate == null || !closingDate.HasValue || viewModel.PossibleStartDate == null || !viewModel.PossibleStartDate.HasValue || !Common.BeValidDate(closingDate) || !Common.BeValidDate(viewModel.PossibleStartDate))
-            {
-                return null;
-            }
-
-            if (viewModel.PossibleStartDate.Date <= closingDate.Date)
-            {
-                var propertyName = "PossibleStartDate";
-                if (!string.IsNullOrEmpty(parentPropertyName))
-                {
-                    propertyName = parentPropertyName + "." + propertyName;
-                }
-                var validationFailure = new ValidationFailure(propertyName, VacancyViewModelMessages.PossibleStartDate.BeforePublishDateErrorText)
-                {
-                    CustomState = ValidationType.Warning
-                };
-                return validationFailure;
-            }
-
-            return null;
-        }
     }
 
     public class MinimumDurationForHoursPerWeek

@@ -1,0 +1,24 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+
+<div class="blocklabel-single-container">
+    <div class="hide-nojs">
+        <div class="form-group inline clearfix blocklabel-single">
+            <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
+            <h4 class="bold-small">Is this address the vacancy location?</h4>
+
+            <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
+                Yes, this will be the vacancy location
+            </label>
+            <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
+                No, I need to add a different location
+            </label>
+        </div>
+        <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location">
+            @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id= "NumberOfPositionsJS", Name= "NumberOfPositionsJS" }, labelHtmlAttributes: new {@class = "bold-small"})
+            @Html.EditorFor(m => m.NumberOfPositionsComment, "Comment", Html.GetLabelFor(m => m.NumberOfPositionsComment))
+        </div>
+    </div>
+</div>

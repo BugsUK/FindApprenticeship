@@ -42,6 +42,8 @@
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
 
+            For<IVacancyStatusProcessor>().Use<VacancyStatusProcessor>();
+
             //Communications
             For<DailyDigestControlQueueConsumer>().Use<DailyDigestControlQueueConsumer>();
             For<ICommunicationProcessor>().Use<CommunicationProcessor>();
@@ -68,6 +70,9 @@
             For<ISavedSearchAlertCommunicationHousekeeper>().Use<SavedSearchAlertCommunicationHousekeeper>();
 
             For<HousekeepingControlQueueConsumer>().Use<HousekeepingControlQueueConsumer>();
+
+            // Vacancy Housekeeping
+            For<VacancyStatusControlQueueConsumer>().Use<VacancyStatusControlQueueConsumer>();
         }
     }
 }

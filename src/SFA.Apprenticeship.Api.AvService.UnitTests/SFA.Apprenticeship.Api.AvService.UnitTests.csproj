@@ -82,6 +82,10 @@
       <HintPath>..\packages\FluentAssertions.3.5.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Moq, Version=4.2.1507.118, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
       <HintPath>..\packages\Moq.4.2.1507.0118\lib\net40\Moq.dll</HintPath>
       <Private>True</Private>
@@ -111,19 +115,21 @@
     <Compile Include="Mappers\VacancyDurationMapperTests.cs" />
     <Compile Include="Mappers\VacancyUploadRequestMapperTests.cs" />
     <Compile Include="Mappers\WageMapperTests.cs" />
+    <Compile Include="Providers\Version51\VacancyDetailsProvider\ExceptionHandlingTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider\ArgumentTests.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadMediator\ArgumentTests.cs" />
     <Compile Include="Builders\VacancyUploadDataBuilder.cs" />
-    <Compile Include="Validators\MoreInvalidVacancyUploadDataTests.cs" />
+    <Compile Include="Validators\EmployerDataValidatorTests.cs" />
     <Compile Include="Validators\VacancyUploadDataValidatorTests.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider\VacancyUploadProviderTests.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider\Extensions\VacancyUploadResultDataExtensions.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider\ValidVacancyUploadDataTests.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadMediator\VacancyUploadMediatorTests.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadMediator\Extensions\VacancyUploadResultDataExtensions.cs" />
+    <Compile Include="Providers\Version51\VacancyUploadMediator\ValidVacancyUploadDataTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsServiceTests.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementServiceTests.cs" />
+    <Compile Include="Validators\VacancyUploadRequestValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

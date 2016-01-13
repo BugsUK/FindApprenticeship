@@ -20,8 +20,11 @@
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.UtcNow),
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                }
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
@@ -38,8 +41,11 @@
             var vacancyPostingProvider = new Mock<IVacancyQAProvider>();
             vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.UtcNow),
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                }
             });
 
             var mediator = new VacancyMediatorBuilder().With(vacancyPostingProvider).Build();
@@ -86,8 +92,11 @@
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel(DateTime.UtcNow),
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow)
+                }
             };
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -103,7 +112,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = GetValidVacancySummaryViewModel(1);
-            viewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
+            viewModel.VacancyDatesViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
             viewModel.AcceptWarnings = true;
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -119,7 +128,7 @@
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = GetValidVacancySummaryViewModel(1);
-            viewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
+            viewModel.VacancyDatesViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
             viewModel.AcceptWarnings = false;
 
             var result = mediator.UpdateVacancy(viewModel);
@@ -162,8 +171,11 @@
             return new VacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
-                PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30)),
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
+                },
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",

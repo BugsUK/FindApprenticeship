@@ -2,7 +2,7 @@
 {
     using System;
     using System.ServiceModel;
-    using SFA.Infrastructure.Interfaces;
+    using Common;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using MessageContracts.Version51;
     using Namespaces.Version51;
@@ -14,7 +14,12 @@
     {
         public GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request)
         {
-            throw new NotImplementedException();
+            // TODO: US872: AG: unit test.
+            return new GetErrorCodesResponse
+            {
+                MessageId = request.MessageId,
+                ErrorCodes = ApiErrors.AllErrorCodes
+            };
         }
 
         public GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks(GetApprenticeshipFrameworksRequest request)

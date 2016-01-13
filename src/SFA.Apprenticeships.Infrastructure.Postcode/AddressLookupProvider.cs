@@ -30,7 +30,9 @@
 
             var possiblePostcodes = _findPostcodeService.FindPostcodes(postcode);
 
-            return possiblePostcodes.Select(postcodeSearchInfo => _retrieveAddressService.RetrieveAddress(postcodeSearchInfo.Id));
+            return possiblePostcodes
+                .Where(postcodeSearchInfo => postcodeSearchInfo.Id != null)
+                .Select(postcodeSearchInfo => _retrieveAddressService.RetrieveAddress(postcodeSearchInfo.Id));
         }
     }
 }

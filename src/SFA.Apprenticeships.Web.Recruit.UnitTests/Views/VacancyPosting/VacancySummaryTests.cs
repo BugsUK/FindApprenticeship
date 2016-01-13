@@ -47,17 +47,20 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new ModelStateDictionary();
             var viewModelToValidate = new VacancySummaryViewModel
             {
-                ClosingDate = new DateViewModel
+                VacancyDatesViewModel = new VacancyDatesViewModel
                 {
-                    Day = 1,
-                    Month = 2,
-                    Year = year
-                },
-                PossibleStartDate = new DateViewModel
-                {
-                    Day = 1,
-                    Month = 2,
-                    Year = year
+                    ClosingDate = new DateViewModel
+                    {
+                        Day = 1,
+                        Month = 2,
+                        Year = year
+                    },
+                    PossibleStartDate = new DateViewModel
+                    {
+                        Day = 1,
+                        Month = 2,
+                        Year = year
+                    }
                 }
             };
             var validator = new VacancySummaryViewModelServerValidator();
@@ -66,8 +69,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             //Act
             var document = new ValidationSummaryDocument(view.RenderAsHtml(viewModel));
-            var closingDateYearError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#closingdate_year");
-            var possibleStartDateError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#possiblestartdate_year");
+            var closingDateYearError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#vacancydatesviewmodel_closingdate_year");
+            var possibleStartDateError = document.Errors.FirstOrDefault(n => n.FirstChild.Attributes["href"].Value == "#vacancydatesviewmodel_possiblestartdate_year");
 
             //Assert
             if (expectValid)

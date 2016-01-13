@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3401,9 +3401,9 @@ select:focus {
       background-color: #00823b; }
     .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
   .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
@@ -6101,6 +6101,28 @@ aside h2:first-child {
 .training-history-item.edit-mode .toggle-content ~ span {
   display: none; }
 
+.cancel-link {
+  margin-left: 12px; }
+
+.locations-table .location-positions {
+  text-align: center; }
+
+.locations-table .locations-positions-header {
+  text-align: center; }
+
+.location-search-results {
+  padding: 0;
+  vertical-align: middle; }
+
+.add-location-link {
+  margin-top: 8px; }
+
+.remove-button-link {
+  font-size: 14px; }
+
+.use-location-button-link {
+  font-size: 14px; }
+
 .editable-item {
   position: relative;
   margin: -5px -5px 10px -5px;
@@ -6110,6 +6132,7 @@ aside h2:first-child {
   .editable-item p {
     margin-bottom: 0; }
   .editable-item .edit-comment-link {
+    clear: both;
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.25;
@@ -6154,6 +6177,25 @@ h2 a i.raa-icon-comment {
 
 .preserve-formatting {
   white-space: pre-line; }
+
+.unselected-apprenticeship-type {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 15px 15px 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased; }
+  @media (max-width: 640px) {
+    .unselected-apprenticeship-type {
+      font-size: 16px;
+      line-height: 1.25; } }
 
 .applicant-location,
 .applicant-distance {

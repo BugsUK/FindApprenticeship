@@ -88,6 +88,7 @@
     <Compile Include="DistancePresenter.cs" />
     <Compile Include="DurationPresenter.cs" />
     <Compile Include="NamePresenter.cs" />
+    <Compile Include="ProviderVacancyStatusPresenter.cs" />
     <Compile Include="QualificationPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VacancyPresenter.cs" />

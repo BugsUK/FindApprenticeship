@@ -299,7 +299,6 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
-    <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
@@ -345,6 +344,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Vacancy\EmployerInformation.generated.cs">
+      <DependentUpon>EmployerInformation.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Vacancy\Review.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -362,6 +366,11 @@
     </Compile>
     <Compile Include="Views\Vacancy\Questions.generated.cs">
       <DependentUpon>Questions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Vacancy\_comment.generated.cs">
+      <DependentUpon>_comment.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -416,7 +425,10 @@
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
+    <Content Include="Content\_assets\js\locationAutocomplete.js" />
+    <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
@@ -432,6 +444,10 @@
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\_assets\js\vendor\jstorage.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
@@ -486,6 +502,20 @@
     <Content Include="Views\Vacancy\_EditLink.cshtml" />
     <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
     <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
+    <Content Include="Views\Vacancy\_comment.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_comment.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\Vacancy\EmployerInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorJS.cshtml" />
+    <Content Include="Views\Vacancy\_apprenticeshipLocationSelectorNonJS.cshtml" />
+    <Content Include="Views\Vacancy\Locations.cshtml" />
+    <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -569,6 +599,10 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
       <Name>SFA.Apprenticeships.Application.Organisation</Name>
@@ -616,6 +650,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
       <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>

@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
     using Common.UnitTests.Builders;
     using Common.UnitTests.Mediators;
     using Constants.Messages;
+    using Domain.Entities;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.ProviderUser;
@@ -48,7 +49,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
         {
             // Arrange.
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);
@@ -76,7 +77,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
         {
             // Arrange.
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);
@@ -92,7 +93,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
             MockProviderProvider.Setup(p => p.GetProviderViewModel(It.IsAny<string>())).Returns(new ProviderViewModel());
 
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);
@@ -115,7 +116,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
                 .Returns(new List<ProviderUserViewModel> {new ProviderUserViewModel()});
 
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);
@@ -140,7 +141,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
             MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new ProviderUserViewModel());
 
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);
@@ -162,7 +163,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
             MockProviderUserProvider.Setup(p => p.GetUserProfileViewModel(It.IsAny<string>())).Returns(new ProviderUserViewModel {EmailAddressVerified = true});
 
             var mediator = GetMediator();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Constants.Roles.Faa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithUkprn("00001").WithRole(Roles.Faa).Build();
 
             // Act.
             var response = mediator.Authorize(principal);

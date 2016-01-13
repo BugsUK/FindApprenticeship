@@ -3,6 +3,7 @@
     using Builders;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
 
@@ -15,6 +16,7 @@
             var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft);
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<long>())).Returns(vvm);
             var mediator = GetMediator();
 
             var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
@@ -29,6 +31,7 @@
             vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<long>())).Returns(vvm);
             var mediator = GetMediator();
 
             var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true);

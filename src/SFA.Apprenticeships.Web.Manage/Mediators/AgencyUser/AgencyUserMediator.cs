@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
+    using Domain.Entities;
     using Providers;
     using ViewModels;
 
@@ -38,7 +39,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
                 return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.EmptyUsername, viewModel, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
             }
 
-            if (!principal.IsInRole(Constants.Roles.Raa))
+            if (!principal.IsInRole(Roles.Raa))
             {
                 return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Error);
             }

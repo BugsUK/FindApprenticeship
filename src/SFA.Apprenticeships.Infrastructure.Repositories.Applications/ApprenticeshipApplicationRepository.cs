@@ -186,17 +186,6 @@
             return applicationIds;
         }
 
-        public int GetApplicationCount(string vacancyReference)
-        {
-            _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with reference: {0}", vacancyReference);
-
-            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.VacancyReference == vacancyReference);
-
-            _logger.Debug("Called repository to get apprenticeship applications count for vacancy with reference: {0}. Count: {1}", vacancyReference, count);
-
-            return count;
-        }
-
         public int GetApplicationCount(int vacancyId)
         {
             _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with id: {0}", vacancyId);
@@ -204,6 +193,17 @@
             var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
 
             _logger.Debug("Called repository to get apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
+
+            return count;
+        }
+
+        public int GetNewApplicationCount(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get new apprenticeship applications count for vacancy with id: {0}", vacancyId);
+
+            var count = Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
+
+            _logger.Debug("Called repository to get new apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
 
             return count;
         }

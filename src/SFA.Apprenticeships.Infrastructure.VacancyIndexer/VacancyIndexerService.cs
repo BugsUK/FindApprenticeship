@@ -165,7 +165,7 @@
             _logger.Debug("Checking if the index is correctly created.");
 
             var serviceImplementation = _configurationService.Get<ServicesConfiguration>().ServiceImplementation;
-            if (serviceImplementation == "Legacy")
+            if (serviceImplementation == ServicesConfiguration.Legacy)
             {
                 var indexAlias = GetIndexAlias();
                 var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
@@ -186,7 +186,7 @@
                 return result;
             }
 
-            if (serviceImplementation == "Raa")
+            if (serviceImplementation == ServicesConfiguration.Raa)
             {
                 //RAA index creation talks directly to the repositories rather than a service boundary
                 return true;

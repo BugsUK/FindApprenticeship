@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
     using VacancyPosting;
 
     public class VacancyViewModel
@@ -42,12 +44,42 @@
         public string RequirementsProspectsLink { get; set; }
 
         public string QuestionsLink { get; set; }
+
+        public string EmployerLink { get; set; }
+        
+        public string LocationsLink { get; set; }
+
         public int ApplicationCount { get; set; }
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
+        public bool IsUnapprovedMultiLocationParentVacancy
+        {
+            get
+            {
+                return
+                    Status != ProviderVacancyStatuses.ParentVacancy
+                    && NewVacancyViewModel.LocationAddresses != null
+                    && NewVacancyViewModel.LocationAddresses.Count() > 1;
+            }
+        }
+
+        public bool IsApprovedMultiLocationChildVacancy
+        {
+            get
+            {
+                return Status == ProviderVacancyStatuses.Live
+                       && NewVacancyViewModel.LocationAddresses != null
+                       && NewVacancyViewModel.LocationAddresses.Count() == 1;
+            }
+        }
+
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
         public int NumberOfPositions { get; set; }
+
+        public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
+
+        public bool IsEditable { get; set; }
     }
 }

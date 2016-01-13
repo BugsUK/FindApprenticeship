@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
@@ -93,13 +94,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             _container = new Container(x =>
             {
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();

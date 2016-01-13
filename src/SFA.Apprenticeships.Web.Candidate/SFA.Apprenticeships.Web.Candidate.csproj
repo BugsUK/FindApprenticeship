@@ -784,6 +784,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Feedback.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Date.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1271,6 +1275,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>_searchUpdate.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
+      <DependentUpon>Date.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.generated.cs">
       <DependentUpon>_disability.cshtml</DependentUpon>

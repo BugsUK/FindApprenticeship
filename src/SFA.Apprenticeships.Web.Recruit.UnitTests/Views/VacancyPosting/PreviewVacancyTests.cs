@@ -3,12 +3,14 @@
     using Common.ViewModels;
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
+    using System.Web;
+    using System.Web.Routing;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Common.ViewModels.Locations;
+    using Moq;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
@@ -18,6 +20,22 @@
     [TestFixture]
     public class PreviewVacancyTests : ViewUnitTest
     {
+        HttpContextBase _context;
+
+        [SetUp]
+        public void Setup()
+        {
+            var request = new Mock<HttpRequestBase>();
+            var routeData = new RouteData();
+            routeData.Values.Add("VacancyPosting", "VacancyPosting");
+            request.Setup(r => r.RequestContext).Returns(new RequestContext
+            {
+                RouteData = routeData
+            });
+
+            _context = new HttpContextBuilder().With(request.Object).Build();
+        }
+
         [Test]
         public void ShouldShowSaveAndExitButton()
         {
@@ -30,8 +48,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now)
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    }
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 { 
@@ -41,13 +62,14 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
            
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
         }
@@ -69,8 +91,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = wagetype,
                     HoursPerWeek = hoursPerWeek
                 },
@@ -82,14 +107,15 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
-
-            var view = details.RenderAsHtml(viewModel);
+            
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
@@ -109,8 +135,11 @@
                 },
                 VacancySummaryViewModel = new VacancySummaryViewModel
                 {
-                    ClosingDate = new DateViewModel(DateTime.Now),
-                    PossibleStartDate = new DateViewModel(DateTime.Now),
+                    VacancyDatesViewModel = new VacancyDatesViewModel
+                    {
+                        ClosingDate = new DateViewModel(DateTime.Now),
+                        PossibleStartDate = new DateViewModel(DateTime.Now)
+                    },
                     WageType = WageType.Custom,
                     WageUnit = wageUnit,
                     Wage = wage
@@ -123,14 +152,16 @@
                         {
                             Address = new AddressViewModel()
                         }
-                    }
+                    },
+                    LocationAddresses = new List<VacancyLocationAddressViewModel>(),
+                    OfflineVacancy = false
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                LocationAddresses = new List<VacancyLocationAddressViewModel>()
+                Status = ProviderVacancyStatuses.Draft
             };
 
-            var view = details.RenderAsHtml(viewModel);
+            var view = details.RenderAsHtml(_context, viewModel);
 
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }

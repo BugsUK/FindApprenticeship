@@ -179,6 +179,7 @@
     <Compile Include="Consumers\HousekeepingControlQueueConsumer.cs" />
     <Compile Include="Consumers\SavedSearchControlQueueConsumer.cs" />
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
+    <Compile Include="Consumers\VacancyStatusControlQueueConsumer.cs" />
     <Compile Include="IoC\JobsRegistry.cs" />
     <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

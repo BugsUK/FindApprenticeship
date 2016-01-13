@@ -108,11 +108,14 @@
     <Compile Include="Configuration\AzureServiceBusSubscriptionConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusTopicConfiguration.cs" />
     <Compile Include="AzureServiceBus.cs" />
+    <Compile Include="DefaultTopicNameFormatter.cs" />
     <Compile Include="Factory\ClientFactory.cs" />
     <Compile Include="Factory\IClientFactory.cs" />
     <Compile Include="IoC\AzureServiceBusRegistry.cs" />
     <Compile Include="IServiceBusInitialiser.cs" />
     <Compile Include="IServiceBusMessageBroker.cs" />
+    <Compile Include="ITopicNameFormatter.cs" />
+    <Compile Include="MachineNameTopicNameFormatter.cs" />
     <Compile Include="Model\BrokeredMessageWrapper.cs" />
     <Compile Include="Model\IBrokeredMessage.cs" />
     <Compile Include="Model\ISubscriptionClient.cs" />

@@ -9,13 +9,9 @@
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div>
-    <h1 class="heading-xlarge">
-        Vacancy preview
-    </h1>
-
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
-    @if (Model.Status == ProviderVacancyStatuses.Live)
+    @if (Model.Status.IsStateReadOnly())
     {
         <a id="dashboardLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>
     }

@@ -6,10 +6,12 @@
     using Application.Employer;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
+    using Application.Location;
     using Application.Organisation;
     using Application.Provider;
     using Application.ReferenceData;
@@ -59,6 +61,7 @@
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
+            For<ILocationsProvider>().Use<LocationsProvider>();
         }
 
         private void RegisterServices()
@@ -68,6 +71,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
+            For<IAddressSearchService>().Use<AddressSearchService>();
         }
 
         private void RegisterStrategies()

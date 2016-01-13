@@ -1,15 +1,22 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
-
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Check employer description";
+    ViewBag.Title = "Recruit an Apprentice - Check employer information";
+
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) && 
+        Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 }
 
 <div class="grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">
-            Check employer description
+            Check employer information
         </h1>
     </div>
 </div>
@@ -21,6 +28,8 @@
         @Html.HiddenFor(m => m.ProviderSiteErn)
         @Html.HiddenFor(m => m.Employer.Ern)
         @Html.HiddenFor(m => m.VacancyGuid)
+        @Html.HiddenFor(m => m.VacancyReferenceNumber)
+        @Html.HiddenFor(m => m.ComeFromPreview)
 
         <div class="grid grid-1-2">
             <div class="inner-block-padr">
@@ -46,18 +55,36 @@
             @{Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);}
             @{Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);}
         </div>
+
         <div class="grid grid-1-1">
             @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.WebsiteUrlComment))
             @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            <button class="button" name="ConfirmEmployer" value="ConfirmEmployer">Save description and continue</button>
-            @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid}, null)
+            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DescriptionComment))
+            <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
+            @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, new {@class = "button-link"})
+            @if (Model.ComeFromPreview)
+            {
+                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+            }
         </div>
    }
 </div>
 
 @section scripts {
     <script type="text/javascript">
+        var comeFromPreview = "@Model.ComeFromPreview.ToString()";
+
         $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#location-type-main-location").on('click', function () {
+            if (comeFromPreview === "True") {
+                $("#confirmEmployer").text("Save and return to Preview");
+            }
+        });
+
+        $("#location-type-different-location").on('click', function () {
+            $("#confirmEmployer").text("Save and continue");
+        });
     </script>
 
     @*Difficult to put in the partial view. See http://stackoverflow.com/questions/5981490/how-to-render-javascript-into-masterlayout-section-from-partial-view*@

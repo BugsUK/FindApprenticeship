@@ -120,6 +120,31 @@
         public class SearchLocations
         {
             public const string Ok = "VacancyPosting.SearchLocations.Ok";
+            public const string NotFullPostcode = "VacancyPosting.SearchLocations.NotFullPostcode";
+        }
+
+        public class UseLocation
+        {
+            public const string Ok = "VacancyPosting.UseLocation.Ok";
+        }
+
+        public class RemoveLocation
+        {
+            public const string Ok = "VacancyPosting.RemoveLocation.Ok";
+        }
+
+        public class ClearLocationInformation
+        {
+            public const string Ok = "VacancyPosting.ClearLocationInformation.Ok";
+        }
+
+        public class ManageDates
+        {
+            public const string Ok = "VacancyPosting.ManageDates.Ok";
+            public const string UpdatedHasApplications = "VacancyPosting.ManageDates.UpdatedHasApplications";
+            public const string UpdatedNoApplications = "VacancyPosting.ManageDates.OkNoApplications";
+            public const string FailedValidation = "VacancyPosting.ManageDates.FailedValidation";
+            public const string InvalidState = "VacancyPosting.ManageDates.InvalidState";
         }
     }
 }

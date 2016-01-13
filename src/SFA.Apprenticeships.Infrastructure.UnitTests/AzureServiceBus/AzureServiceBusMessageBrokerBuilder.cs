@@ -45,7 +45,7 @@
 
         public AzureServiceBusMessageBroker<TMessage> Build()
         {
-            var broker = new AzureServiceBusMessageBroker<TMessage>(_logService.Object, _configurationService.Object, _subscribers, _clientFactory.Object);
+            var broker = new AzureServiceBusMessageBroker<TMessage>(_logService.Object, _configurationService.Object, _subscribers, _clientFactory.Object, new DefaultTopicNameFormatter());
             return broker;
         }
 

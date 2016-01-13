@@ -56,7 +56,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
 
-            var mongoEntities = Collection.Find(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn))
+            var queryConditionList = new List<IMongoQuery>();
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.NotIn(v => v.Status, new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.ParentVacancy }));
+            var mongoEntities = Collection.Find(Query.And(queryConditionList))
                 .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
                 .ToList();
 
@@ -72,10 +75,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             var queryConditionList = new List<IMongoQuery>();
 
             queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
+            queryConditionList.Add(Query<ApprenticeshipVacancy>.NotIn(v => v.Status, new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.ParentVacancy }));
             queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.ProviderSiteEmployerLink.ProviderSiteErn, providerSiteErn));
 
             var mongoEntities = Collection.Find(Query.And(queryConditionList))
                 .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
+                .OrderByDescending(v => v.DateCreated)
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1}, providerSiteErn = {2}", mongoEntities.Count, ukPrn, providerSiteErn));
@@ -136,6 +141,18 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
                 // TODO: DateSubmitted should be DateLive (or DatePublished).
                 mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
                     .GTE(vacancy => vacancy.DateSubmitted, query.LiveDate));
+            }
+
+            if (query.LatestClosingDate.HasValue)
+            {
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .LTE(vacancy => vacancy.ClosingDate, query.LatestClosingDate));
+            }
+
+            if (query.DesiredStatuses.Any())
+            {
+                mongoQueryConditions.Add(Query<ApprenticeshipVacancy>
+                    .In(vacancy => vacancy.Status, query.DesiredStatuses));
             }
 
             var queryBuilder = new QueryBuilder<ApprenticeshipVacancy>();

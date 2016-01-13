@@ -35,6 +35,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Logging", "SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj", "{A2D82061-BCBD-4030-9EB4-5148AEE79241}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Presentation", "SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj", "{83500887-E1B7-46BD-945B-4CC3D0069B6E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -345,6 +347,24 @@ Global
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{A2D82061-BCBD-4030-9EB4-5148AEE79241}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Development|Any CPU.ActiveCfg = Dev|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Development|Any CPU.Build.0 = Dev|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Local|Any CPU.Build.0 = Local|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{83500887-E1B7-46BD-945B-4CC3D0069B6E}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

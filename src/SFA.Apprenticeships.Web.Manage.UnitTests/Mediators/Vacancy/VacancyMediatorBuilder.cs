@@ -3,7 +3,9 @@
     using Manage.Mediators.Vacancy;
     using Moq;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
+    using Raa.Common.Validators.VacancyPosting;
 
     public class VacancyMediatorBuilder
     {
@@ -18,11 +20,18 @@
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
+        private Mock<IProviderQAProvider> _providerQaProvider = new Mock<IProviderQAProvider>();
+        private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator = new LocationSearchViewModelValidator();
+        private Mock<ILocationsProvider> _locationsProvider = new Mock<ILocationsProvider>();
+        private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator = new ProviderSiteEmployerLinkViewModelValidator();
 
         public IVacancyMediator Build()
-        {
-            return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator, _vacancySummaryViewModelServerValidator, 
-            _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator, _vacancyRequirementsProspectsViewModelServerValidator);
+        {   
+            return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator,
+                _vacancySummaryViewModelServerValidator,
+                _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator,
+                _vacancyRequirementsProspectsViewModelServerValidator, _providerSiteEmployerLinkViewModelValidator,
+                _providerQaProvider.Object, _locationSearchViewModelValidator, _locationsProvider.Object);
         }
 
         public VacancyMediatorBuilder With(Mock<IVacancyQAProvider> provider)

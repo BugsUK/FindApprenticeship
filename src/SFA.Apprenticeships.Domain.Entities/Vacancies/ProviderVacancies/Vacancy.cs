@@ -41,8 +41,14 @@
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
         public DateTime? DateSubmitted { get; set; }
+        public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
+        public int SubmissionCount { get; set; }
+        //Id if the Provider User who created the vacancy
+        public Guid VacancyManagerId { get; set; }
+        public Guid LastEditedById { get; set; }
+        public long ParentVacancyReferenceNumber { get; set; }
     }
 }
