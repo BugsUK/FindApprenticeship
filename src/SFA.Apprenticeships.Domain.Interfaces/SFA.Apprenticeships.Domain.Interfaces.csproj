@@ -93,6 +93,7 @@
     <Compile Include="Messaging\StorageQueueMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
+    <Compile Include="Repositories\IOfflineApprenticeshipVacancyRepository.cs" />
     <Compile Include="Repositories\IProviderSiteEmployerLinkRepository.cs" />
     <Compile Include="Repositories\IReferenceNumberRepository.cs" />
     <Compile Include="Repositories\IApprenticeshipVacancyRepository.cs" />

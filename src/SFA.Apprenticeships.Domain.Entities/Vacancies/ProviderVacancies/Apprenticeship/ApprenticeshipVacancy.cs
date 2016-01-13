@@ -54,6 +54,7 @@
             OfflineApplicationUrlComment = previousVacancy.OfflineApplicationUrlComment;
             OfflineApplicationInstructions = previousVacancy.OfflineApplicationInstructions;
             OfflineApplicationInstructionsComment = previousVacancy.OfflineApplicationInstructionsComment;
+            OfflineApplicationClickThrough = previousVacancy.OfflineApplicationClickThrough;
             DateSubmitted = previousVacancy.DateSubmitted;
             DateFirstSubmitted = previousVacancy.DateFirstSubmitted;
             DateStartedToQA = previousVacancy.DateStartedToQA;

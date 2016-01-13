@@ -12,13 +12,18 @@
             // Apprenticeships.
             For<IMapper>().Use<ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
 
+            For<IApprenticeshipVacancyReadRepository>()
+                .Use<ApprenticeshipVacancyRepository>()
+                .Ctor<IMapper>()
+                .Named("ApprenticeshipVacancyMappers");
+
             For<IApprenticeshipVacancyWriteRepository>()
                 .Use<ApprenticeshipVacancyRepository>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
-            For<IApprenticeshipVacancyReadRepository>()
-                .Use<ApprenticeshipVacancyRepository>()
+            For<IOfflineApprenticeshipVacancyRepository>()
+                .Use<OfflineApprenticeshipVacancyRepository>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
