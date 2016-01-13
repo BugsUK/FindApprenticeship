@@ -247,6 +247,7 @@
     <Compile Include="Mediators\ApprenticeshipSearch\ApprenticeshipSearchMediatorBuilder.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\DetailsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\IndexTests.cs" />
+    <Compile Include="Mediators\ApprenticeshipSearch\RedirectToExternalWebsiteTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\ResultsTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\RunSavedSearchTests.cs" />
     <Compile Include="Mediators\ApprenticeshipSearch\SavedSearchesTabTests.cs" />

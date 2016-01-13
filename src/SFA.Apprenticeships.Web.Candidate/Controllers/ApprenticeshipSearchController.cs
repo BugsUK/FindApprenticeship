@@ -214,8 +214,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         {
             return await Task.Run<ActionResult>(() =>
             {
-                var candidateId = GetCandidateId();
-                var response = _apprenticeshipSearchMediator.RedirectToExternalWebsite(id, candidateId);
+                var response = _apprenticeshipSearchMediator.RedirectToExternalWebsite(id);
 
                 switch (response.Code)
                 {

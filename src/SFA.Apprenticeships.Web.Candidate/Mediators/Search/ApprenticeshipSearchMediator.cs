@@ -21,7 +21,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Infrastructure.Interfaces;
     using Extensions;
-    using Infrastructure.Common.Configuration;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
     using Validators;
@@ -399,7 +398,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
-        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string vacancyIdString, Guid? candidateId)
+        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string vacancyIdString)
         {
             int vacancyId;
 
@@ -418,14 +417,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             if (vacancyDetailViewModel.HasError())
             {
                 return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
-            }
-
-            if ((!vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus != VacancyStatuses.Live) ||
-                (vacancyDetailViewModel.CandidateApplicationStatus.HasValue && vacancyDetailViewModel.VacancyStatus == VacancyStatuses.Unavailable))
-            {
-                // Candidate has no application for the vacancy and the vacancy is no longer live OR
-                // candidate has an application (at least a draft) but the vacancy is no longer available.
-                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
             }
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, vacancyDetailViewModel);
