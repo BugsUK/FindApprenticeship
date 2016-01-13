@@ -3,11 +3,13 @@
     using System;
     using System.Data.SqlClient;
     using System.IO;
+    using Common.IoC;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Mappers;
+    using Logging.IoC;
     using Moq;
     using NewDB.Domain.Entities;
     using NewDB.Domain.Entities.Vacancy;
@@ -17,25 +19,38 @@
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = NewDB.Domain.Entities.Vacancy.Vacancy;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
+    using StructureMap;
+    using Web.Common.Configuration;
 
     [TestFixture]
     public class SqlApprenticeshipVacancyRepositoryTests
     {
-        private const string ConnectionString = "Server=VTUK027\\SQLEXPRESS;Database=Raa2;Trusted_Connection=True;";
-            //TODO: get from settings
-
-        private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         private const int VacancyReferenceNumber = 1;
+        private static string _connectionString = string.Empty;
+        readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
+        private Container _container;
 
         [OneTimeSetUp]
         public void SetUpFixture()
         {
+            _container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = _container.GetInstance<IConfigurationService>();
+
+            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+
+            string databaseName = $"RaaTest-{environment}";
+            _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; //TODO: get from settings
+
             var databaseProjectName = "SFA.Apprenticeships.Data";
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{databaseProjectName}";
-            var databaseName = "Raa2";
-            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\Local\\{databaseProjectName}.dacpac");
+            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{databaseProjectName}.dacpac");
                 //TODO get configuration from settings
-            var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, ConnectionString, databaseName);
+            var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
             
             dbInitialiser.Publish(true);
             
@@ -116,7 +131,7 @@
         {
             ApprenticeshipVacancy vacancy;
 
-            using (var connection = new SqlConnection(ConnectionString))
+            using (var connection = new SqlConnection(_connectionString))
             {
                 connection.Open();
 
@@ -158,7 +173,7 @@
         public void GetVacancyTest()
         {
             // configure _mapper
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(ConnectionString);
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
@@ -170,7 +185,7 @@
         public void GetVacancyTestByGuid()
         {
             var vacancyGuid = Guid.Empty;
-            using (var sqlConnection = new SqlConnection(ConnectionString))
+            using (var sqlConnection = new SqlConnection(_connectionString))
             {
                 sqlConnection.Open();
 
@@ -185,7 +200,7 @@
             }
 
             // configure _mapper
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(ConnectionString);
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
@@ -201,7 +216,7 @@
         [Test]
         public void ReserveVacancyForQaTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(ConnectionString);
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);

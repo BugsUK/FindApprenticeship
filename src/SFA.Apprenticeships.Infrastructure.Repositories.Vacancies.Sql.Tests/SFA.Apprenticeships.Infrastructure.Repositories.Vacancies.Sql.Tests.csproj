@@ -121,6 +121,14 @@
       <HintPath>..\packages\NUnit.3.0.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="StructureMap.Net4, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -150,6 +158,18 @@
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
+      <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
+      <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.csproj">
       <Project>{20ddead1-3417-4a18-8186-d9c8ca88b690}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql</Name>
@@ -157,6 +177,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.NewDB.Domain.Entities\SFA.Apprenticeships.NewDB.Domain.Entities.csproj">
       <Project>{0298ef49-182c-42b8-a3d1-6f3bea9e4d1f}</Project>
       <Name>SFA.Apprenticeships.NewDB.Domain.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
+      <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
+      <Name>SFA.Apprenticeships.Web.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure.Sql\SFA.Infrastructure.Sql.csproj">
       <Project>{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}</Project>
@@ -168,6 +192,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Configs\settings.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +207,15 @@
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>IF "%25COPY_CONFIG_FROM_SECURE_REPO%25" == "true" (
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ConfigurationName)\Configs\ 
+) else (
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\Configs\
+)
+robocopy /IS %25COPY_PATH%25 $(ProjectDir)Configs *.config
+if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
