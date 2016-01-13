@@ -124,7 +124,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
+    <Compile Include="SqlApprenticeshipVacancyRepositoryTests.cs" />
     <Compile Include="DatabaseInitialiser.cs" />
     <Compile Include="Formatters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
