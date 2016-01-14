@@ -116,6 +116,7 @@
     <Compile Include="Mappers\VacancyUploadRequestMapperTests.cs" />
     <Compile Include="Mappers\WageMapperTests.cs" />
     <Compile Include="Mediators\ReferenceDataService\ReferenceDataServiceMediatorTests.cs" />
+    <Compile Include="Providers\Version51\AuthenticationProviderTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\ExceptionHandlingTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
@@ -143,7 +144,7 @@
       <Name>SFA.Apprenticeship.Api.AvService</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
-      <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
+      <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
