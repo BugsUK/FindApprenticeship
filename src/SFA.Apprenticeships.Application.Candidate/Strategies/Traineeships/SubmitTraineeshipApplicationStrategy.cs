@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
     using System;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class SubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy

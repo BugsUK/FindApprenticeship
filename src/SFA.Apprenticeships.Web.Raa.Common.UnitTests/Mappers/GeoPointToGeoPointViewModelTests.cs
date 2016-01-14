@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Mappers
 {
+    using SFA.Infrastructure.Interfaces;
     using Common.Mappers;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using NUnit.Framework;
     using Web.Common.ViewModels.Locations;

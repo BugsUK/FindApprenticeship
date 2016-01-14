@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Communication.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;

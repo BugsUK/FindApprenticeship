@@ -3,7 +3,7 @@
     using Candidate.Mediators.Account;
     using Candidate.Providers;
     using Candidate.Validators;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
 
     internal class AccountMediatorBuilder

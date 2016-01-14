@@ -2,7 +2,7 @@
 {
     using System;
     using Domain.Entities.Exceptions;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 

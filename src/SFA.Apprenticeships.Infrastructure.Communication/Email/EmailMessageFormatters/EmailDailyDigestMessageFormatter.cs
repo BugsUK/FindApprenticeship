@@ -7,7 +7,7 @@
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
     using SendGrid;
 

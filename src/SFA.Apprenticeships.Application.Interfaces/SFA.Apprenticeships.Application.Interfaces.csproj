@@ -93,7 +93,6 @@
     <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchService.cs" />
-    <Compile Include="Logging\ILogService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Communications\CommunicationToken.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />
@@ -109,7 +108,6 @@
     <Compile Include="Providers\IProviderService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\AggregationResult.cs" />
-    <Compile Include="DateTime\IDateTimeService.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />

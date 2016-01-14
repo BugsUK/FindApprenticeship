@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using SFA.Apprenticeships.Application.Interfaces.Employers;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Web.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.Configuration;
 using SFA.Apprenticeships.Web.Raa.Common.Converters;

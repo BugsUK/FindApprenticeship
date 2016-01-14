@@ -4,7 +4,7 @@
     using Application.Applications.Housekeeping;
     using Application.Candidates;
     using Application.Communications.Housekeeping;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 

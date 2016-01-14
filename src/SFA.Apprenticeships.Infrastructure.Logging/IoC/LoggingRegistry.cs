@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Logging.IoC
 {
     using System;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
     public class LoggingRegistry : Registry

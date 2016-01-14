@@ -7,7 +7,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

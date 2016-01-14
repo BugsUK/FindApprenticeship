@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using System.Web.Mvc;
     using System.Web.Routing;
     using System.Web.Security;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -16,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators;

@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Tasks
 {
     using System;
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Elastic.Common.Configuration;
     using Elasticsearch.Net;
     using Nest;

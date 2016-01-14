@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Communication.Sms.SmsMessageFormatters
 {
     using System.Collections.Generic;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Communication.Configuration;
     using Infrastructure.Communication.Sms.SmsMessageFormatters;
     using Moq;

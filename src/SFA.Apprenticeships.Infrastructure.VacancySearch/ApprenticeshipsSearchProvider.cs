@@ -3,14 +3,12 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Elastic.Common.Configuration;
     using Nest;
     using Newtonsoft.Json.Linq;

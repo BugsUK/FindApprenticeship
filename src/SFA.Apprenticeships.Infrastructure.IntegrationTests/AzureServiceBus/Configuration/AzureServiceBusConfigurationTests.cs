@@ -2,7 +2,7 @@
 {
     using Azure.ServiceBus.Configuration;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Logging.IoC;
     using NUnit.Framework;

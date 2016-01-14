@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class ConfigurationCacheKey : BaseCacheKey
     {

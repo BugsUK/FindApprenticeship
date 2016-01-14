@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Elastic.Common.IoC
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using StructureMap.Configuration.DSL;
 
     public class ElasticsearchCommonRegistry : Registry

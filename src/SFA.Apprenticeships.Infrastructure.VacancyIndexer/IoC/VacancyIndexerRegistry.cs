@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.VacancyIndexer.IoC
 {
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
-    using Domain.Interfaces.Mapping;
     using Elastic.Common.Entities;
     using Mappers;
     using StructureMap.Configuration.DSL;

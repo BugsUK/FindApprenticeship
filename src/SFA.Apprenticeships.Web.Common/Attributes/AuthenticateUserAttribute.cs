@@ -6,7 +6,7 @@
     using System.Web.Mvc.Filters;
     using System.Web.Routing;
     using System.Web.Security;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Constants;
     using Services;
 

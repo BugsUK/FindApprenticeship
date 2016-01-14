@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
 

@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Communication
 {
     using System;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
 

@@ -11,8 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
     using StructureMap;
     using Common.IoC;
     using Logging.IoC;
-    using Apprenticeships.Domain.Interfaces.Configuration;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Logging;
 
     public class WorkerRole : RoleEntryPoint

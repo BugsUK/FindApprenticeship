@@ -691,6 +691,10 @@
       <Project>{700d41dd-527a-42bd-94d2-fd49a5f00a18}</Project>
       <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

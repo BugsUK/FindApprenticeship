@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer.Processors
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Microsoft.ServiceBus.Messaging;
     using Services;
 

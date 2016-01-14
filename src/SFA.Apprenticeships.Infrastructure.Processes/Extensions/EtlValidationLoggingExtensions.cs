@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Extensions
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
 
     public static class EtlValidationLoggingExtensions
     {

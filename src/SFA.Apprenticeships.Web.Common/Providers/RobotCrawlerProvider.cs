@@ -4,7 +4,7 @@
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
 
     public class RobotCrawlerProvider : IRobotCrawlerProvider

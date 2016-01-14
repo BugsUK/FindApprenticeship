@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Candidates;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Candidates.Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;

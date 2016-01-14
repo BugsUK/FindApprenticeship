@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.Configuration;
     using Elasticsearch.Net;
     using Nest;

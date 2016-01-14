@@ -2,14 +2,12 @@
 {
     using System;
     using System.Linq;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
-    using Application.Interfaces.Logging;
     using Application.Interfaces.VacancyPosting;
     using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Raa.Common.Factories;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;

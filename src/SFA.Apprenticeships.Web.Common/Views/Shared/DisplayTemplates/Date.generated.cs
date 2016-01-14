@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ASP
+namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -35,9 +35,9 @@ namespace ASP
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Date.cshtml")]
-    public partial class _Views_Shared_DisplayTemplates_Date_cshtml_ : System.Web.Mvc.WebViewPage<DateTime>
+    public partial class Date_ : System.Web.Mvc.WebViewPage<DateTime>
     {
-        public _Views_Shared_DisplayTemplates_Date_cshtml_()
+        public Date_()
         {
         }
         public override void Execute()
@@ -49,8 +49,6 @@ Write(Model.ToGmtDate());
             
             #line default
             #line hidden
-WriteLiteral(";");
-
         }
     }
 }

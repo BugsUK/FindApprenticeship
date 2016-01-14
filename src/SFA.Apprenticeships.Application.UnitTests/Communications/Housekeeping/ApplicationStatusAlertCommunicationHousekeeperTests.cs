@@ -5,7 +5,7 @@
     using Application.Candidates.Configuration;
     using Application.Communications.Housekeeping;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

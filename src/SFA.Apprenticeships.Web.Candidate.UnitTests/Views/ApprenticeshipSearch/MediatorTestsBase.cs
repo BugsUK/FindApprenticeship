@@ -8,7 +8,7 @@
     using Common.Configuration;
     using Common.Providers;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

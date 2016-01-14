@@ -4,10 +4,9 @@
     using Application.Candidates.Strategies;
     using Application.Candidates.Strategies.DormantAccount;
     using Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using Moq;
 
     public class SendAccountRemindersStrategyBuilder

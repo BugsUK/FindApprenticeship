@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Candidates.IoC
 {
     using System;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Mappers;
     using StructureMap.Configuration.DSL;

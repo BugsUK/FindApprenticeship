@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Application.Applications.Entities;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;

@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class CachedLegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {

@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Consumers
 {
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Azure.Common.Messaging;
     using Tasks;

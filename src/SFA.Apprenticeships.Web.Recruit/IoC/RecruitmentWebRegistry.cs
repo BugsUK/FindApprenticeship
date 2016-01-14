@@ -18,8 +18,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;

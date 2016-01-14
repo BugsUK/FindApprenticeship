@@ -6,8 +6,7 @@
     using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
-    using Application.Interfaces.DateTime;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
@@ -15,13 +14,11 @@
     using Configuration;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Factories;
     using Infrastructure.Presentation;
@@ -818,6 +815,7 @@
             newVacancy.LocationAddresses = new List<VacancyLocationAddress>() { address };
             newVacancy.DateQAApproved = approvalTime;
             newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+            newVacancy.NumberOfPositions = address.NumberOfPositions;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }

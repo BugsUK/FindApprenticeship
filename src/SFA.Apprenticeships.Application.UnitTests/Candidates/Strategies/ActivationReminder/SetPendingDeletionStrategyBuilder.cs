@@ -4,9 +4,8 @@
     using Application.Candidates.Strategies;
     using Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
     using Moq;
 
     public class SetPendingDeletionStrategyBuilder

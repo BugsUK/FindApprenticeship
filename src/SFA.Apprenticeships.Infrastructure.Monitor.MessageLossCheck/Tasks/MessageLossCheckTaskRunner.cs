@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Threading;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Monitor.Tasks;
 
     public class MessageLossCheckTaskRunner : IMessageLossCheckTaskRunner

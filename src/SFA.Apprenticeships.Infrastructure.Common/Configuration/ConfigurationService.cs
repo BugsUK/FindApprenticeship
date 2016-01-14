@@ -6,9 +6,8 @@
     using System.Linq;
     using System.Reflection;
     using System.Runtime.Caching;
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces.Caching;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using Newtonsoft.Json;

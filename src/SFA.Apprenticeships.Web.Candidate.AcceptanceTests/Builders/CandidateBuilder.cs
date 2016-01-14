@@ -3,7 +3,7 @@
     using System;
     using Common.Configuration;
     using Domain.Entities.Candidates;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using IoC;
     

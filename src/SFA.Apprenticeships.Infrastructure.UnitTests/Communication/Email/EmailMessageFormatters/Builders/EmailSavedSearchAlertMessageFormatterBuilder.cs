@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Communication.Email.EmailMessageFormatters.Builders
 {
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Communication.Configuration;
     using Infrastructure.Communication.Email.EmailMessageFormatters;
     using Moq;

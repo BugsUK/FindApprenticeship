@@ -5,7 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Communications;
     using Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
 
     public abstract class SmsMessageFormatter
     {

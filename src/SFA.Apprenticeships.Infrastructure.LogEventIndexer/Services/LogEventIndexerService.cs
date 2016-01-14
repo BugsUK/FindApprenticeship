@@ -3,7 +3,7 @@
     using System;
     using System.Diagnostics;
     using Newtonsoft.Json;
-    using Apprenticeships.Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Nest;
     using Configuration;
 

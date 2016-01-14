@@ -2,11 +2,10 @@
 {
     using System;
     using Application.Authentication;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.UserAccount.Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
     using Hash;
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;

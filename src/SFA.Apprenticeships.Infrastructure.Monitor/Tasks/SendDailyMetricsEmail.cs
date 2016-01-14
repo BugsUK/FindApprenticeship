@@ -6,10 +6,9 @@
     using System.Net.Mail;
     using System.Text;
     using Application.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Applications;
-    using Domain.Interfaces.Configuration;
     using Provider;
     using Repositories;
 
