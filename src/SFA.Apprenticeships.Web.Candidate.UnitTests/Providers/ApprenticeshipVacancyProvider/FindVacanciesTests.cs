@@ -23,6 +23,7 @@
         private Mock<ICandidateService> _candidateService; 
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private Mock<ILogService> _logService;
+        private Mock<IOfflineVacancyService> _offlineVacancyService;
 
         [SetUp]
         public void Setup()
@@ -31,6 +32,7 @@
             _candidateService = new Mock<ICandidateService>();
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
             _logService = new Mock<ILogService>();
+            _offlineVacancyService = new Mock<IOfflineVacancyService>();
         }
 
         [TestCase]
@@ -133,7 +135,8 @@
                 _apprenticeshipSearchService.Object,
                 _candidateService.Object,
                 _apprenticeshipMapper,
-                _logService.Object);
+                _logService.Object,
+                _offlineVacancyService.Object);
             return searchProvider;
         }
     }

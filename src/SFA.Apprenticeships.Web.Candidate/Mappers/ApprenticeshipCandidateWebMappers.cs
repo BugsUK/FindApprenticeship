@@ -82,7 +82,9 @@
 
             Mapper.CreateMap<ApprenticeshipSearchResponse, ApprenticeshipVacancySummaryViewModel>()
                 .ForMember(d => d.CandidateApplicationStatus,
-                    opt => opt.Ignore());
+                    opt => opt.Ignore())
+                .ForMember(d => d.Wage, 
+                    opt => opt.ResolveUsing<ApprenticeshipVacancySummaryViewModelResolvers.WageResolver>());
             
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<AddressViewModel, Address>();

@@ -100,5 +100,46 @@
             //Assert
             result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
         }
+
+        [TestCase(ProviderVacancyStatuses.Live)]
+        [TestCase(ProviderVacancyStatuses.Closed)]
+        [TestCase(ProviderVacancyStatuses.Completed)]
+        [TestCase(ProviderVacancyStatuses.Withdrawn)]
+        public void CanHaveClickThroughs_NoClickThroughsRouteTest(ProviderVacancyStatuses status)
+        {
+            //Arrange
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
+            vacancyViewModel.OfflineApplicationClickThroughCount = 0;
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            var mediator = GetMediator();
+
+            //Act
+            var result = mediator.GetPreviewVacancyViewModel(0);
+
+            //Assert
+            result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
+        }
+
+        [TestCase(ProviderVacancyStatuses.Live)]
+        [TestCase(ProviderVacancyStatuses.Closed)]
+        [TestCase(ProviderVacancyStatuses.Completed)]
+        [TestCase(ProviderVacancyStatuses.Withdrawn)]
+        public void CanHaveClickThroughs_OneClickThroughRouteTest(ProviderVacancyStatuses status)
+        {
+            //Arrange
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
+            vacancyViewModel.OfflineApplicationClickThroughCount = 1;
+            vacancyViewModel.ApplicationCount = 0;
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            var mediator = GetMediator();
+
+            //Act
+            var result = mediator.GetPreviewVacancyViewModel(0);
+
+            //Assert
+            result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
+        }
     }
 }

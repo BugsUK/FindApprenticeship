@@ -109,6 +109,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Entities\MongoReferenceNumber.cs" />
+    <Compile Include="OfflineApprenticeshipVacancyRepository.cs" />
     <Compile Include="ReferenceNumberRepository.cs" />
     <Compile Include="Entities\MongoApprenticeshipVacancy.cs" />
     <Compile Include="IoC\VacancyRepositoryRegistry.cs" />

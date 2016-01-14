@@ -288,6 +288,10 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
+    </None>
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff2" />
     <None Include="Content\css\font-awesome\fonts\FontAwesome.otf" />
@@ -355,6 +359,12 @@
     <None Include="Content\scss\_ie8-hacks.scss" />
     <None Include="Content\scss\_modules.scss" />
     <None Include="packages.config" />
+    <Content Include="Content\scss\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\scss\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
     <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Date.generated.cs</LastGenOutput>

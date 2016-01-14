@@ -208,5 +208,26 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
                 throw new InvalidMediatorCodeException(response.Code);
             });
         }
+
+        [HttpGet]
+        public async Task<ActionResult> RedirectToExternalWebsite(string id)
+        {
+            return await Task.Run<ActionResult>(() =>
+            {
+                var response = _apprenticeshipSearchMediator.RedirectToExternalWebsite(id);
+
+                switch (response.Code)
+                {
+                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound:
+                        return new ApprenticeshipNotFoundResult();
+                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError:
+                        return RedirectToRoute(CandidateRouteNames.ApprenticeshipDetails, new {id});
+                    case ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok:
+                        return new RedirectResult(response.ViewModel.VacancyUrl);
+                }
+
+                throw new InvalidMediatorCodeException(response.Code);
+            });
+        }
     }
 }

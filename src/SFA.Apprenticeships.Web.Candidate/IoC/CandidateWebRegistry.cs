@@ -104,6 +104,7 @@
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IOfflineVacancyService>().Use<OfflineVacancyService>();
         }
 
         private void RegisterStrategies()

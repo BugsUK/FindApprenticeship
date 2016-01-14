@@ -2,6 +2,7 @@
 {
     using System;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;

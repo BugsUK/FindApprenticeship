@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     public enum WageUnit
     {
