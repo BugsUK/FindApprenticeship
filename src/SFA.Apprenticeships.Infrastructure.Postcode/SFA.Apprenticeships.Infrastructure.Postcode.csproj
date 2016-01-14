@@ -112,6 +112,7 @@
     <Compile Include="IFindPostcodeService.cs" />
     <Compile Include="IoC\PostcodeRegistry.cs" />
     <Compile Include="IRetrieveAddressService.cs" />
+    <Compile Include="PostalAddressLookupProvider.cs" />
     <Compile Include="PostcodeLookupProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rest\IRestService.cs" />
