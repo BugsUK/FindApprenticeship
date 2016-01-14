@@ -23,10 +23,24 @@
     [TestFixture]
     public class SqlApprenticeshipVacancyRepositoryTests
     {
-        private const int VacancyReferenceNumber = 1;
         private static string _connectionString = string.Empty;
         readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         //private Container _container;
+
+        static readonly Guid VacancyId_VacancyA = Guid.NewGuid();
+        private const int VacancyReferenceNumber_VacancyA = 1;
+
+        const int VacancyPartyId_EmployerA = 3;
+        const int VacancyPartyId_ProviderA = 4;
+        const int FrameworkId_Framework1 = 1;
+        const string VacancyTypeCode_Apprenticeship = "A";
+        const string VacancyStatusCode_Live = "LIV";
+        const string VacancyLocationTypeCode_Specific = "S";
+        const string TrainingTypeCode_Framework = "F";
+        const string LevelCode_Intermediate = "2";
+        const string WageTypeCode_Custom = "CUS";
+        const string WageIntervalCode_Weekly = "W";
+
 
         [OneTimeSetUp]
         public void SetUpFixture()
@@ -56,9 +70,8 @@
             
             dbInitialiser.Publish(true);
 
-            var seedScripts = new[]
+            var seedScripts = new string[]
             {
-                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\vacancy.wageType.sql"
             };
             var seedObjects = GetSeedObjects();
 
@@ -70,17 +83,19 @@
         {
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = VacancyReferenceNumber,
+                VacancyId = VacancyId_VacancyA,
+                VacancyReferenceNumber = VacancyReferenceNumber_VacancyA,
                 AV_ContactName = "av contact name",
-                VacancyTypeCode = "A",
-                VacancyStatusCode = "LIV",
-                VacancyLocationTypeCode = "S",
+                VacancyTypeCode = VacancyTypeCode_Apprenticeship,
+                VacancyStatusCode = VacancyStatusCode_Live,
+                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
                 Title = "Test vacancy",
-                TrainingTypeCode = "F",
-                LevelCode = "4",
-                FrameworkId = 1,
+                TrainingTypeCode = TrainingTypeCode_Framework,
+                LevelCode = LevelCode_Intermediate,
+                FrameworkId = FrameworkId_Framework1,
                 WageValue = 100.0M,
-                WageTypeCode = "CUS",
+                WageTypeCode = WageTypeCode_Custom,
+                WageIntervalCode = WageIntervalCode_Weekly,
                 ClosingDate = DateTime.Now,
                 ContractOwnerVacancyPartyId = 1,
                 DeliveryProviderVacancyPartyId = 1,
@@ -90,7 +105,8 @@
                 ParentVacancyId = null,
                 OwnerVacancyPartyId = 1,
                 DurationValue = 3,
-                DurationTypeCode = "Y"
+                DurationTypeCode = "Y",
+                PublishedDateTime = DateTime.UtcNow.AddDays(-1)
             };
 
             var occupation = new Occupation
@@ -104,7 +120,7 @@
 
             var framework = new Framework
             {
-                FrameworkId = 1,
+                FrameworkId = FrameworkId_Framework1,
                 CodeName = "F01",
                 FullName = "Framework 1",
                 ShortName = "Framework 1",
@@ -187,7 +203,7 @@
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            var vacancy = repository.Get(VacancyReferenceNumber);
+            var vacancy = repository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
             vacancy.Title.Should().Be("Test vacancy");
@@ -198,28 +214,13 @@
         [Test]
         public void GetVacancyByGuidTest()
         {
-            var vacancyGuid = Guid.Empty;
-            using (var sqlConnection = new SqlConnection(_connectionString))
-            {
-                sqlConnection.Open();
-
-                var commandText =
-                    $"SELECT [VacancyId] FROM [Vacancy].[Vacancy] WHERE [VacancyReferenceNumber] = {VacancyReferenceNumber}";
-                using (var command = new SqlCommand(commandText, sqlConnection))
-                {
-                    vacancyGuid = (Guid) command.ExecuteScalar();
-                }
-
-                sqlConnection.Close();
-            }
-
             // configure _mapper
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            var vacancy = repository.Get(vacancyGuid);
+            var vacancy = repository.Get(VacancyId_VacancyA);
 
             vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
             vacancy.Title.Should().Be("Test vacancy");
@@ -228,7 +229,7 @@
         }
 
         [Test]
-        public void SaveTest()
+        public void UpdateTest()
         {
             var newReferenceNumber = 3L;
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
@@ -239,13 +240,13 @@
             IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            var vacancy = readRepository.Get(VacancyReferenceNumber);
+            var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.VacancyReferenceNumber = newReferenceNumber;
 
             writeRepository.Save(vacancy);
 
-            vacancy = readRepository.Get(VacancyReferenceNumber);
+            vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.Should().BeNull();
 

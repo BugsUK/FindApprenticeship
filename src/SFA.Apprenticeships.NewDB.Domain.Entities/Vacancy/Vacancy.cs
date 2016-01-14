@@ -85,6 +85,8 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         [StringLength(3)]
         public string WageTypeCode { get; set; }
 
+        public string WageIntervalCode { get; set; }
+
         public string AV_WageText { get; set; }
 
         public string WageComment { get; set; }
@@ -114,11 +116,18 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public string WorkingWeekText { get; set; }
 
+        public string WorkingWeekComment { get; set; }
+
         public decimal? HoursPerWeek { get; set; }
 
         public string AV_ContactName { get; set; }
 
         public string EmployerDescription { get; set; }
+
+        public string EmployerDescriptionComment { get; set; }
+
+        public string EmployerWebsiteUrl { get; set; }
+        public string EmployerWebsiteUrlComment { get; set; }
 
         public bool? IsDirectApplication { get; set; }
 
@@ -129,6 +138,9 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         public string DirectApplicationInstructions { get; set; }
 
         public string DirectApplicationInstructionsComment { get; set; }
+
+        public string AdditionalLocationInformation { get; set; }
+        public string AdditionalLocationInformationComment { get; set; }
 
         public string DesiredSkills { get; set; }
 
@@ -160,8 +172,20 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public string QAUserName { get; set; }
 
+        public string LocationAddressesComment { get; set; }
+
+        public int NumberOfPositions { get; set; }
+
+        public string NumberOfPositionsComment { get; set; }
+
         [Column(TypeName = "datetime2")]
         public DateTime? DateQAApproved { get; set; }
+
+        public DateTime? PublishedDateTime { get; set; } // TODO: Check naming
+
+        public DateTime? FirstSubmittedDateTime { get; set; } // TODO: Check naming
+
+        public int SubmissionCount { get; set; }
 
         /*
         public virtual Framework Framework { get; set; }

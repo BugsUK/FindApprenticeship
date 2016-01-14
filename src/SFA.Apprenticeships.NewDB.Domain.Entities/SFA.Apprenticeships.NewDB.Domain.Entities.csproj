@@ -118,6 +118,7 @@
     <Compile Include="Vacancy\VacancyStatu.cs" />
     <Compile Include="Vacancy\VacancyType.cs" />
     <Compile Include="Address\ValidationSource.cs" />
+    <Compile Include="Vacancy\WageInterval.cs" />
     <Compile Include="Vacancy\WageType.cs" />
     <Compile Include="WebProxyConsumer.cs" />
   </ItemGroup>
