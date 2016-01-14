@@ -6271,6 +6271,8 @@ h2 a i.raa-icon-comment {
         @media screen and (min-width: 769px) {
           .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
             text-align: center; } }
+    .vacancies-summary li figure.data figcaption.underline, .applications-summary li figure.data figcaption.underline {
+      text-decoration: underline; }
 
 @media screen and (max-width: 640px) {
   .vacancies-summary li {
