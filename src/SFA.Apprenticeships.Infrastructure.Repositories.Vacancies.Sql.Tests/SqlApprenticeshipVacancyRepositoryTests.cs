@@ -3,13 +3,11 @@
     using System;
     using System.Data.SqlClient;
     using System.IO;
-    using Common.IoC;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Mappers;
-    using Logging.IoC;
     using Moq;
     using NewDB.Domain.Entities;
     using NewDB.Domain.Entities.Vacancy;
@@ -19,7 +17,7 @@
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = NewDB.Domain.Entities.Vacancy.Vacancy;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
-    using StructureMap;
+    //using StructureMap;
     using Web.Common.Configuration;
 
     [TestFixture]
@@ -28,20 +26,24 @@
         private const int VacancyReferenceNumber = 1;
         private static string _connectionString = string.Empty;
         readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
-        private Container _container;
+        //private Container _container;
 
         [OneTimeSetUp]
         public void SetUpFixture()
         {
+            /*
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
+            */
 
-            var configurationService = _container.GetInstance<IConfigurationService>();
+            //var configurationService = _container.GetInstance<IConfigurationService>();
 
-            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+            //var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+
+            var environment = "local";
 
             string databaseName = $"RaaTest-{environment}";
             _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; //TODO: get from settings
