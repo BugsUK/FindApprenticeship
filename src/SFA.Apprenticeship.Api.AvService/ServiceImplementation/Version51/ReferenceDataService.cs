@@ -2,12 +2,12 @@
 {
     using System;
     using System.ServiceModel;
+    using Infrastructure.Interfaces;
     using Mediators.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using MessageContracts.Version51;
     using Namespaces.Version51;
     using ServiceContracts.Version51;
-    using Apprenticeships.Application.Interfaces.Logging;
 
     [ExceptionShielding("Default Exception Policy")]
     [ServiceBehavior(Namespace = Namespace.Uri)]

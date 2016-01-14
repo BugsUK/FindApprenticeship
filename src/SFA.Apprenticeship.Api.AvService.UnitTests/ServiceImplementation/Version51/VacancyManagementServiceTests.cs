@@ -2,9 +2,11 @@
 {
     using System;
     using System.Security;
+    using AvService.Mediators.Version51;
     using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
+    using Infrastructure.Interfaces;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;

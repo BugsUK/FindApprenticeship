@@ -2,10 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
     using AvService.Mediators.Version51;
     using DataContracts.Version51;
     using FluentAssertions;
+    using Infrastructure.Interfaces;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
