@@ -20,29 +20,13 @@
     //using StructureMap;
     using Web.Common.Configuration;
     using Ploeh.AutoFixture;
-    using FluentAssertions.Equivalency;
+
     [TestFixture]
-    public class SqlApprenticeshipVacancyRepositoryTests
+    public class DatabaseTests : BaseTests
     {
         private static string _connectionString = string.Empty;
         readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         //private Container _container;
-
-        static readonly Guid VacancyId_VacancyA = Guid.NewGuid();
-        private const int VacancyReferenceNumber_VacancyA = 1;
-
-        const int VacancyPartyId_EmployerA = 3;
-        const int VacancyPartyId_ProviderA = 4;
-        const int FrameworkId_Framework1 = 1;
-        const string VacancyTypeCode_Apprenticeship = "A";
-        const string VacancyStatusCode_Live = "LIV";
-        const string VacancyLocationTypeCode_Specific = "S";
-        const string TrainingTypeCode_Framework = "F";
-        const string LevelCode_Intermediate = "2";
-        const string WageTypeCode_Custom = "CUS";
-        const string WageIntervalCode_Weekly = "W";
-        const string DurationTypeCode_Years = "Y";
-
 
         [OneTimeSetUp]
         public void SetUpFixture()
@@ -183,122 +167,6 @@
             return vacancy;
         }
 
-        private Vacancy CreateValidDatabaseVacancy()
-        {
-            return new Fixture().Build<Vacancy>()
-                .With(v => v.WageTypeCode, WageTypeCode_Custom)
-                .With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
-                .With(v => v.DurationTypeCode, DurationTypeCode_Years)
-                .With(v => v.TrainingTypeCode, TrainingTypeCode_Framework)
-                .With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
-                .With(v => v.LevelCode, LevelCode_Intermediate)
-                .With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
-                .Create();
-        }
-
-        private EquivalencyAssertionOptions<Vacancy> ExcludeHardOnes()
-        {
-            return new EquivalencyAssertionOptions<Vacancy>()
-                .Excluding(v => v.VacancyLocationTypeCode) // TODO: Not in Domain object yet
-                .Excluding(v => v.ParentVacancyId) // TODO: Too hard
-                .Excluding(v => v.EmployerVacancyPartyId) // TODO: Too hard
-                .Excluding(v => v.OwnerVacancyPartyId) // TODO: Too hard
-                .Excluding(v => v.ManagerVacancyPartyId) // TODO: Too hard
-                .Excluding(v => v.DeliveryProviderVacancyPartyId) // TODO: Too hard
-                ;
-        }
-
-        [Test]
-        public void DoMappersMapEverything()
-        {
-            // Arrange
-            var x = new ApprenticeshipVacancyMappers();
-
-            // Act
-            x.Initialise();
-
-            // Assert
-            x.Mapper.AssertConfigurationIsValid();
-        }
-
-        [Test]
-        public void DoesApprenticeshipVacancyDomainObjectToDatabaseObjectMapperChokeInPractice()
-        {
-            // Arrange
-            var x = new ApprenticeshipVacancyMappers();
-
-            var vacancy =
-                new Fixture().Build<ApprenticeshipVacancy>()
-                    //                    .With(av => av.EntityId, Guid.Empty)
-                    .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
-                    .With(av => av.QAUserName, null)
-                    .With(av => av.DateStartedToQA, null)
-                    .Create();
-
-
-            // Act / Assert no exception
-            x.Map<ApprenticeshipVacancy, Vacancy>(vacancy);
-        }
-
-        [Test]
-        public void DoesDatabaseVacancyObjectToDomainObjectMapperChokeInPractice()
-        {
-            // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
-            var vacancy = CreateValidDatabaseVacancy();
-
-            // Act / Assert no exception
-            mapper.Map<Vacancy, ApprenticeshipVacancy>(vacancy);
-        }
-
-        [Test]
-        public void DoesDatabaseVacancyObjectRoundTripViaDomainObject()
-        {
-            // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
-            var domainVacancy1 = new Fixture().Create<ApprenticeshipVacancy>();
-
-            // Act
-
-            var databaseVacancy = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy1);
-            var domainVacancy2 = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy);
-
-            // Assert
-            domainVacancy2.ShouldBeEquivalentTo(domainVacancy1);
-        }
-
-        [Test]
-        public void DoesApprenticeshipVacancyDomainObjectRoundTripViaDatabaseObjectExcludingHardOnes()
-        {
-            // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
-            var databaseVacancy1 = CreateValidDatabaseVacancy();
-
-            // Act
-
-            var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
-            var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
-
-            // Assert
-            databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options => ExcludeHardOnes());
-        }
-
-        [Test]
-        public void DoesApprenticeshipVacancyDomainObjectRoundTripViaDatabaseObjectIncludingHardOnes()
-        {
-            // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
-            var databaseVacancy1 = CreateValidDatabaseVacancy();
-
-            // Act
-
-            var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
-            var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
-
-            // Assert
-            databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1);
-        }
-
         [Test, Category("Integration")]
         public void GetVacancyByVacancyReferenceNumberTest()
         {
@@ -385,7 +253,7 @@
             var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
 
             // Assert
-            loadedVacancy.ShouldBeEquivalentTo(vacancy);
+            loadedVacancy.ShouldBeEquivalentTo(vacancy, options => ExcludeHardOnes(options));
         }
 
             /*

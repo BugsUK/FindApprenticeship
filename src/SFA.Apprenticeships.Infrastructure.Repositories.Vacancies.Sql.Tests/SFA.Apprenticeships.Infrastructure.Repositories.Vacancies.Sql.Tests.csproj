@@ -144,7 +144,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SqlApprenticeshipVacancyRepositoryTests.cs" />
+    <Compile Include="BaseTests.cs" />
+    <Compile Include="DatabaseTests.cs" />
+    <Compile Include="MapperTests.cs" />
     <Compile Include="DatabaseInitialiser.cs" />
     <Compile Include="Formatters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
