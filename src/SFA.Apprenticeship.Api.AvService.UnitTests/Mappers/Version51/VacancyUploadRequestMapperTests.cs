@@ -1,12 +1,13 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers.Version51
 {
     using System;
     using AvService.Mappers.Version51;
-    using Builders;
+    using Builders.Version51;
     using Common;
     using FluentAssertions;
     using NUnit.Framework;
     using ProviderVacancies = Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using WageType = Common.WageType;
 
     [TestFixture]
     public class VacancyUploadRequestMapperTests

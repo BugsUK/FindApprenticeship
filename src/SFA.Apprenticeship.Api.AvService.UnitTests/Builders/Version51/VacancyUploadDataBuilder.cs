@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Builders
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Builders.Version51
 {
     using System;
     using System.Collections.Generic;

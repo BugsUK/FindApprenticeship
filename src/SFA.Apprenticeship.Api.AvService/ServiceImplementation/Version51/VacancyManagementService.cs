@@ -35,17 +35,6 @@
 
             try
             {
-                if (request == null)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
-                // TODO: API: AG: remove test code.
-                if (request.MessageId == Guid.Empty)
-                {
-                    throw new SecurityException();
-                }
-
                 return _vacancyUploadMediator.UploadVacancies(request);
             }
             catch (Exception e)

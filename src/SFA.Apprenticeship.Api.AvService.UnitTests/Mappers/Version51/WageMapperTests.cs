@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers.Version51
 {
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using AvService.Mappers.Version51;

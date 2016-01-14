@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Validators
+﻿namespace SFA.Apprenticeship.Api.AvService.Validators.Version51
 {
     using Common;
     using DataContracts.Version51;

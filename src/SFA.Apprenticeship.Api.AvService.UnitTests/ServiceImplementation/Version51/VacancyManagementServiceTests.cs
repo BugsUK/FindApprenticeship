@@ -52,32 +52,5 @@
             // Assert.
             actualResponse.Should().Be(expectedResponse);
         }
-
-        [Test]
-        public void ShouldThrowIfVacancyUploadRequestIsNull()
-        {
-            // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(default(VacancyUploadRequest));
-
-            // Assert.
-            action.ShouldThrow<ArgumentNullException>();
-        }
-
-        [Test]
-        [Description("This is a temporary test and should be removed when API authentication is implemented.")]
-        public void ShouldThrowIfMessageIdIsEmptyGuid()
-        {
-            // Arrange.
-            var request = new VacancyUploadRequest
-            {
-                MessageId = Guid.Empty
-            };
-
-            // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(request);
-
-            // Assert.
-            action.ShouldThrow<SecurityException>();
-        }
     }
 }

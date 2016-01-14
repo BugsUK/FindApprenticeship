@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Validators
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Validators.Version51
 {
     using System.Collections.Generic;
     using System.Linq;
-    using AvService.Validators;
+    using AvService.Validators.Version51;
     using DataContracts.Version51;
     using FluentAssertions;
     using MessageContracts.Version51;

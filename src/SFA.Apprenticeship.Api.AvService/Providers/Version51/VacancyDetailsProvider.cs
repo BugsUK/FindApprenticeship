@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Apprenticeships.Domain.Interfaces.Queries;
     using Apprenticeships.Domain.Interfaces.Repositories;
     using Configuration;

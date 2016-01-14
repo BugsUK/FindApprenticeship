@@ -15,7 +15,10 @@
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Mappers.Version51;
     using Mediators.Version51;
+    using Providers;
     using Providers.Version51;
+    using Repositories;
+    using Services;
     using StructureMap;
 
     // NOTE: WCF IoC strategy is based on this article: https://lostechies.com/jimmybogard/2008/07/30/integrating-structuremap-with-wcf/.
@@ -42,12 +45,21 @@
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IOrganisationService>().Use<OrganisationService>();
 
-                // API Providers.
-                x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
+                // Web Service Mediators.
                 x.For<IVacancyUploadServiceMediator>().Use<VacancyUploadServiceMediator>();
                 x.For<IReferenceDataServiceMediator>().Use<ReferenceDataServiceMediator>();
 
-                // API Mappers.
+                // Web Service Providers.
+                x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
+                x.For<IWebServiceAuthenticationProvider>().Use<WebServiceAuthenticationProvider>();
+
+                // Web Service Services.
+                x.For<IWebServiceConsumerService>().Use<WebServiceConsumerService>();
+
+                // Web Service Repositories.
+                x.For<IWebServiceConsumerReadRepository>().Use<FakeWebServiceConsumerRepository>();
+
+                // Web Service Mappers.
                 x.For<IAddressMapper>().Use<AddressMapper>();
                 x.For<IApprenticeshipVacancyMapper>().Use<ApprenticeshipVacancyMapper>();
                 x.For<IApprenticeshipVacancyQueryMapper>().Use<ApprenticeshipVacancyQueryMapper>();

@@ -1,43 +1,53 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mediators.VacancyUploadMediator
+﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mediators.Version51.VacancyUploadMediator
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security;
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using AvService.Mappers.Version51;
     using AvService.Mediators.Version51;
-    using AvService.Validators;
-    using Builders;
+    using AvService.Providers;
+    using AvService.Validators.Version51;
+    using Builders.Version51;
     using DataContracts.Version51;
     using FluentAssertions;
     using FluentValidation.Results;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
-    using Providers.Version51.VacancyUploadMediator.Extensions;
+    using Extensions;
 
     // TODO: US872: AG: rationalise VacancyUploadServiceMediator unit tests into a single file following refactor to mediator.
 
     [TestFixture]
-    public class ValidVacancyUploadDataTests
+    public class VacancyUploadMediatorTests
     {
         private Mock<VacancyUploadDataValidator> _mockVacancyUploadDataValidator;
         private Mock<IVacancyUploadRequestMapper> _mockVacancyUploadRequestMapper;
 
-        private Mock<IVacancyPostingService> _mockVacancyPostingService;
+        private Mock<IWebServiceAuthenticationProvider> _mockWebServiceAuthenticationProvider;
         private Mock<IProviderService> _mockProviderService;
+        private Mock<IVacancyPostingService> _mockVacancyPostingService;
 
         private VacancyUploadDataBuilder _vacancyUploadDataBuilder;
 
-        private VacancyUploadServiceMediator _serviceMediator;
+        private VacancyUploadServiceMediator _vacancyUploadServiceMediator;
 
         [SetUp]
         public void SetUp()
         {
             // Mappers.
             _mockVacancyUploadRequestMapper = new Mock<IVacancyUploadRequestMapper>();
+
+            // Providers.
+            _mockWebServiceAuthenticationProvider = new Mock<IWebServiceAuthenticationProvider>();
+
+            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>()))
+                .Returns(AuthenticationResult.Authenticated);
 
             // Services.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
@@ -58,11 +68,117 @@
             _vacancyUploadDataBuilder = new VacancyUploadDataBuilder();
 
             // Provider.
-            _serviceMediator = new VacancyUploadServiceMediator(
+            _vacancyUploadServiceMediator = new VacancyUploadServiceMediator(
                 _mockVacancyUploadDataValidator.Object,
                 _mockVacancyUploadRequestMapper.Object,
+                _mockWebServiceAuthenticationProvider.Object,
                 _mockProviderService.Object,
                 _mockVacancyPostingService.Object);
+        }
+
+        [Test]
+        public void ShouldThrowIfRequestIsNull()
+        {
+            // Act.
+            Action action = () => _vacancyUploadServiceMediator.UploadVacancies(default(VacancyUploadRequest));
+
+            // Assert.
+            action.ShouldThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ShouldAuthenticateWebServiceConsumer()
+        {
+            // Arrange.
+            var request = new VacancyUploadRequest
+            {
+                ExternalSystemId = Guid.NewGuid(),
+                PublicKey = "dontletmein"
+            };
+
+            _mockWebServiceAuthenticationProvider.Reset();
+
+            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+                .Authenticate(request.ExternalSystemId, request.PublicKey))
+                .Returns(AuthenticationResult.AuthenticationFailed);
+
+            // Act.
+            Action action = () => _vacancyUploadServiceMediator.UploadVacancies(request);
+
+            // Assert.
+            action.ShouldThrowExactly<SecurityException>();
+        }
+
+        [Test]
+        public void ShouldReflectRequestMessageIdInResponse()
+        {
+            // Arrange.
+            var request = new VacancyUploadRequest
+            {
+                MessageId = Guid.NewGuid(),
+                Vacancies = new List<VacancyUploadData>()
+            };
+
+            // Act.
+            var actualResponse = _vacancyUploadServiceMediator.UploadVacancies(request);
+
+            // Assert.
+            actualResponse.MessageId.Should().Be(request.MessageId);
+        }
+
+        [TestCase(1)]
+        [TestCase(5)]
+        public void ShouldUploadOneOrMoreVacancies(int vacancyCount)
+        {
+            // Arrange.
+            var vacancies = new List<VacancyUploadData>();
+
+            for (var i = 0; i < vacancyCount; i++)
+            {
+                vacancies.Add(new VacancyUploadData());
+            }
+
+            var request = new VacancyUploadRequest
+            {
+                Vacancies = vacancies
+            };
+
+            // Act.
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
+
+            // Assert.
+            response.Should().NotBeNull();
+            response.Vacancies.Count.Should().Be(vacancyCount);
+
+            // Assert.
+            _mockVacancyPostingService.Verify(mock =>
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Exactly(vacancyCount));
+        }
+
+        [TestCase(null)]
+        [TestCase(0)]
+        public void ShouldNotUploadVacanciesIfNullOrEmptyVacancyList(int? vacancyCount)
+        {
+            // Arrange.
+            var vacancies = vacancyCount.HasValue
+                ? new List<VacancyUploadData>()
+                : null;
+
+            var request = new VacancyUploadRequest
+            {
+                Vacancies = vacancies
+            };
+
+            // Act.
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
+
+            // Assert.
+            response.Should().NotBeNull();
+            response.Vacancies.Count.Should().Be(0);
+
+            // Assert.
+            _mockVacancyPostingService.Verify(mock =>
+                mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Never);
         }
 
         [Test]
@@ -81,7 +197,7 @@
             };
 
             // Act.
-            var response = _serviceMediator.UploadVacancies(request);
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();
@@ -111,7 +227,7 @@
             };
 
             // Act.
-            var response = _serviceMediator.UploadVacancies(request);
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();
@@ -148,7 +264,7 @@
                 .Returns(vacancyReferenceNumber);
 
             // Act.
-            var response = _serviceMediator.UploadVacancies(request);
+            var response = _vacancyUploadServiceMediator.UploadVacancies(request);
 
             // Assert.
             response.Should().NotBeNull();

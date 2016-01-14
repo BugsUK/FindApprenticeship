@@ -124,6 +124,9 @@
     <Folder Include="Schemas\WebProxy\Scripts" />
     <Folder Include="Schemas\WebProxy\Tables" />
     <Folder Include="Security\" />
+    <Folder Include="Schemas\WebService" />
+    <Folder Include="Schemas\WebService\Schema" />
+    <Folder Include="Schemas\WebService\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -163,6 +166,8 @@
     <Build Include="Schemas\WebProxy\Tables\WebProxy.WebProxyConsumer.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyLocationType.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyLocationType.Upsert.sql" />
+    <Build Include="Schemas\WebService\Tables\WebService.WebServiceConsumer.sql" />
+    <Build Include="Schemas\WebService\Schema\WebService.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
