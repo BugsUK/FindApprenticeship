@@ -118,6 +118,7 @@
     <Compile Include="Entities\VacancyLevel.cs" />
     <Compile Include="Entities\IVacancySummary.cs" />
     <Compile Include="Entities\WageType.cs" />
+    <Compile Include="Entities\WageUnit.cs" />
     <Compile Include="IoC\ElasticsearchCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

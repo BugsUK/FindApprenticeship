@@ -5,6 +5,7 @@
     using Apprenticeships.Domain.Entities.Locations;
     using Apprenticeships.Domain.Entities.Organisations;
     using Apprenticeships.Domain.Entities.Providers;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Common;

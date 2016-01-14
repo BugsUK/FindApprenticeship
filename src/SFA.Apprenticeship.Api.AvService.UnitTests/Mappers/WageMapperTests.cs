@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
 {
+    using Apprenticeships.Domain.Entities.Vacancies;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     using AvService.Mappers.Version51;
     using FluentAssertions;

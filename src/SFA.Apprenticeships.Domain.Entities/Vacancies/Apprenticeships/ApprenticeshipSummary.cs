@@ -2,13 +2,17 @@
 {
     public class ApprenticeshipSummary : VacancySummary
     {
-        public ApprenticeshipSummary() { }
+        public ApprenticeshipSummary()
+        {
+            WageUnit = WageUnit.Weekly;
+        }
 
         public ApprenticeshipSummary(ApprenticeshipSummary apprenticeshipSummary) : base(apprenticeshipSummary)
         {
             VacancyLocationType = apprenticeshipSummary.VacancyLocationType;
             ApprenticeshipLevel = apprenticeshipSummary.ApprenticeshipLevel;
             Wage = apprenticeshipSummary.Wage;
+            WageUnit = apprenticeshipSummary.WageUnit;
             WorkingWeek = apprenticeshipSummary.WorkingWeek;
         }
 
@@ -17,6 +21,8 @@
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
 
         public string Wage { get; set; }
+
+        public WageUnit WageUnit { get; set; }
 
         public string WorkingWeek { get; set; }
     }

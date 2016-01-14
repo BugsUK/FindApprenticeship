@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mappers
 {
     using System;
+    using Apprenticeships.Domain.Entities.Vacancies;
     using AvService.Mappers.Version51;
     using Builders;
     using Common;
@@ -184,7 +185,7 @@
 
             // Assert.
             mappedVacancy.WageType.Should().Be(ProviderVacancies.WageType.Custom);
-            mappedVacancy.WageUnit.Should().Be(ProviderVacancies.WageUnit.Weekly);
+            mappedVacancy.WageUnit.Should().Be(WageUnit.Weekly);
             mappedVacancy.Wage.Should().Be(weeklyWage);
             mappedVacancy.WageComment.Should().BeNull();
         }
