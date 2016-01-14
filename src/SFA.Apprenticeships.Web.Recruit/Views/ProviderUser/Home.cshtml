@@ -315,15 +315,15 @@
 
                                             if (vacancy.Status == ProviderVacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
                                             {
-                                                <span style="color: red; font-weight: bold">0 @units</span>
+                                                <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
                                             else if (@vacancy.ApplicationCount == 1)
                                             {
-                                                <span>1 @unit</span>
+                                                <span>1<br/> @unit</span>
                                             }
                                             else
                                             {
-                                                <span>@count @units</span>
+                                                <span>@count<br/> @units</span>
                                             }
                                         }
                                         else
