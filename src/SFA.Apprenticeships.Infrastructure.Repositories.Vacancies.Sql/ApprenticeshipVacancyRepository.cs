@@ -255,7 +255,9 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy.Vacancy>(entity);
              
-            _getOpenConnection.UpdateSingle(dbVacancy); // it was entity
+            if (!_getOpenConnection.UpdateSingle(dbVacancy))
+                _getOpenConnection.Insert(dbVacancy);
+
             /*
             _getOpenConnection.UpdateSingle(address);
             _getOpenConnection.UpdateSingle(vacancy);

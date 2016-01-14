@@ -66,7 +66,7 @@
             {
                 { "F", TrainingType.Frameworks },
                 { "S", TrainingType.Standards },
-                { null, TrainingType.Unknown }, // TODO: null = blank??
+                { "U", TrainingType.Unknown }, // TODO: null = blank??
             };
 
             var apprenticeshipLevelMap = new CodeEnumMap<ApprenticeshipLevel>
