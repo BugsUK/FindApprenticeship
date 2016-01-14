@@ -1,18 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Application.Location
+﻿namespace SFA.Apprenticeships.Application.Location
 {
+    using System;
+    using System.Linq;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
     public class PostalAddressSearchService : IPostalAddressSearchService
     {
+        private IPostalAddressLookupProvider _postalAddressLookupProvider;
+
+        public PostalAddressSearchService(IPostalAddressLookupProvider postalAddressLookupProvider)
+        {
+            _postalAddressLookupProvider = postalAddressLookupProvider;
+        }
+
         public PostalAddress GetAddress(string fullPostcode, string addressLine1)
         {
-            throw new NotImplementedException();
+            var results = _postalAddressLookupProvider.GetPostalAddresses(addressLine1, fullPostcode);
+
+            return results?.Single();
         }
     }
 }

@@ -43,6 +43,9 @@
             _mockRetrieveAddressService = new Mock<IRetrieveAddressService>();
             _mockConfigurationService.Setup(m => m.Get<AddressConfiguration>()).Returns(addressConfig);
             _mockClient = new Mock<IRestClient>();
+
+            _palp = new PostalAddressLookupProvider(_mockConfigurationService.Object, _mockLogger.Object, _mockRetrieveAddressService.Object);
+            _palp.Client = _mockClient.Object;
         }
 
         [Test]
@@ -76,8 +79,6 @@
             findResult.Data = SimpleJson.DeserializeObject<List<FindPostalAddressByPartsResult>>(json);
             _mockClient.Setup(m => m.Execute<List<FindPostalAddressByPartsResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
             _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new Address());
-            _palp = new PostalAddressLookupProvider(_mockConfigurationService.Object, _mockLogger.Object, _mockRetrieveAddressService.Object);
-            _palp.Client = _mockClient.Object;
 
             //Act
             var result = _palp.GetPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
