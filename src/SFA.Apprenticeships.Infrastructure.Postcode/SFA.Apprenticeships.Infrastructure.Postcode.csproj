@@ -104,6 +104,7 @@
     <Compile Include="Configuration\PostcodeConfiguration.cs" />
     <Compile Include="Entities\AddressInfo.cs" />
     <Compile Include="Entities\AddressInfoResult.cs" />
+    <Compile Include="Entities\FindPostalAddressByPartsResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfoResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfo.cs" />
     <Compile Include="Entities\PostcodeInfo.cs" />
