@@ -67,7 +67,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public int? FrameworkId { get; set; }
 
-        public int FrameworkIdComment { get; set; }
+        public string FrameworkIdComment { get; set; }
 
         public int? StandardId { get; set; }
 

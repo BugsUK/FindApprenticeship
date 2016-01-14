@@ -123,8 +123,6 @@
                     .CodeName;
             }
 
-            result.FrameworkCodeNameComment = dbVacancy.FrameworkIdComment.ToString(); // TODO
-
             // TODO: Inconsistency of location of comment fields Vacancy vs ApprenticeshipVacancy
             result.WorkingWeekComment = "TODO"; // dbVacancy.WorkingWeekComment;
             result.AdditionalLocationInformation = "TODO";
