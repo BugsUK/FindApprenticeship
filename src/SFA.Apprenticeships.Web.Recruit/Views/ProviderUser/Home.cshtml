@@ -267,6 +267,7 @@
                             <tbody>
                             @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
                             {
+                                var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy == true;
                                 <tr>
                                     <td data-label="Vacancy title">
                                         <div class="vac-title">
@@ -282,7 +283,13 @@
                                                     routeName = RecruitmentRouteNames.VacancyApplications;
                                                 }
                                             }
-                                            <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">@title</a>
+                                            <a href="@Url.RouteUrl(routeName, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" class="disp-block">
+                                                @title
+                                                @if (isOfflineVacancy)
+                                                {
+                                                    <span class="subtitle"><br />(Offline)</span>
+                                                }
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="vac-employer" data-label="Employer">
@@ -302,8 +309,6 @@
                                     <td class="vac-no-of-applications" data-label="Number of applications">
                                         @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
                                         {
-                                            var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy == true;
-
                                             var count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
                                             var unit = isOfflineVacancy ? "click through" : "application";
                                             var units = unit + "s";

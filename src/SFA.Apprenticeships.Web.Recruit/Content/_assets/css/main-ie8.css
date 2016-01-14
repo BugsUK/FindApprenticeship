@@ -6105,6 +6105,8 @@ aside h2:first-child {
   font-weight: bold; }
   .vac-title a {
     text-decoration: none; }
+  .vac-title .subtitle {
+    font-weight: normal; }
 
 #employer-data-display {
   display: none; }
