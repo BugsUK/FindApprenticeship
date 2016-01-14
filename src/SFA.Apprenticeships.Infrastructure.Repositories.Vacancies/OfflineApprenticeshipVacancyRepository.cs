@@ -1,16 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
-    using System;
-    using Application.Interfaces.Logging;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
     using Mongo.Common.Configuration;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using SFA.Infrastructure.Interfaces;
 
     public class OfflineApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy>, IOfflineApprenticeshipVacancyRepository
     {
