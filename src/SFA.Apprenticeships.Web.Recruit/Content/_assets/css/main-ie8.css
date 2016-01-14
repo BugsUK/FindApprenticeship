@@ -6120,6 +6120,9 @@ aside h2:first-child {
 .locations-table .locations-positions-header {
   text-align: center; }
 
+.locations-table tbody tr {
+  height: 78px; }
+
 .editable-item {
   position: relative;
   margin: -5px -5px 10px -5px;

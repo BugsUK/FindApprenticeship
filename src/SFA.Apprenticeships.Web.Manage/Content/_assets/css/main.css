@@ -5381,7 +5381,6 @@ details summary:focus {
   padding: 1px 5px 0 5px;
   vertical-align: middle;
   text-align: center;
-  text-transform: uppercase;
   white-space: nowrap;
   width: auto; }
   @media (max-width: 640px) {
@@ -6109,6 +6108,9 @@ aside h2:first-child {
 
 .locations-table .locations-positions-header {
   text-align: center; }
+
+.locations-table tbody tr {
+  height: 78px; }
 
 .location-search-results {
   padding: 0;
