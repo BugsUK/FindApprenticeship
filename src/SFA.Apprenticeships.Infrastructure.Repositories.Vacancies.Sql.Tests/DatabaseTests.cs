@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
     using System;
-    using System.Data.SqlClient;
+    using System.Collections.Generic;
     using System.IO;
     using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Mappers;
@@ -17,9 +16,7 @@
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = NewDB.Domain.Entities.Vacancy.Vacancy;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
-    //using StructureMap;
     using Web.Common.Configuration;
-    using Ploeh.AutoFixture;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
 
@@ -27,9 +24,9 @@
     public class DatabaseTests : BaseTests
     {
         private static string _connectionString = string.Empty;
-        readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
-        //private Container _container;
-		private readonly Mock<ILogService> logService = new Mock<ILogService>();
+        private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
+		private readonly Mock<ILogService> _logService = new Mock<ILogService>();
+        private const string DatabaseProjectName = "SFA.Apprenticeships.Data";
 
         [OneTimeSetUp]
         public void SetUpFixture()
@@ -39,16 +36,15 @@
                 configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
 
             var configurationService = new AzureBlobConfigurationService(configurationStorageConnectionString,
-                logService.Object);
+                _logService.Object);
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
             string databaseName = $"RaaTest-{environment}";
-            _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; //TODO: get from settings
+            _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; // TODO: use alias?
 
-            var databaseProjectName = "SFA.Apprenticeships.Data";
-            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{databaseProjectName}";
-            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{databaseProjectName}.dacpac");
+            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
+            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac");
                 
             var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
             
@@ -61,108 +57,6 @@
 
             dbInitialiser.Seed(seedScripts);
             dbInitialiser.Seed(seedObjects);
-        }
-
-        private static object[] GetSeedObjects()
-        {
-            var vacancy = new Vacancy
-            {
-                VacancyId = VacancyId_VacancyA,
-                VacancyReferenceNumber = VacancyReferenceNumber_VacancyA,
-                AV_ContactName = "av contact name",
-                VacancyTypeCode = VacancyTypeCode_Apprenticeship,
-                VacancyStatusCode = VacancyStatusCode_Live,
-                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
-                Title = "Test vacancy",
-                TrainingTypeCode = TrainingTypeCode_Framework,
-                LevelCode = LevelCode_Intermediate,
-                FrameworkId = FrameworkId_Framework1,
-                WageValue = 100.0M,
-                WageTypeCode = WageTypeCode_Custom,
-                WageIntervalCode = WageIntervalCode_Weekly,
-                ClosingDate = DateTime.Now,
-                ContractOwnerVacancyPartyId = 1,
-                DeliveryProviderVacancyPartyId = 1,
-                EmployerVacancyPartyId = 1,
-                ManagerVacancyPartyId = 1,
-                OriginalContractOwnerVacancyPartyId = 1,
-                ParentVacancyId = null,
-                OwnerVacancyPartyId = 1,
-                DurationValue = 3,
-                DurationTypeCode = DurationTypeCode_Years,
-                PublishedDateTime = DateTime.UtcNow.AddDays(-1)
-            };
-
-            var occupation = new Occupation
-            {
-                OccupationId = 1,
-                OccupationStatusId = 1,
-                CodeName = "O01",
-                FullName = "Occupation 1",
-                ShortName = "Occupation 1"
-            };
-
-            var framework = new Framework
-            {
-                FrameworkId = FrameworkId_Framework1,
-                CodeName = "F01",
-                FullName = "Framework 1",
-                ShortName = "Framework 1",
-                FrameworkStatusId = 1,
-                OccupationId = 1
-            };
-
-            var vacancyParty1 = new VacancyParty
-            {
-                VacancyPartyTypeCode = "ES",
-                FullName = "Employer A",
-                Description = "A",
-                WebsiteUrl = "URL",
-                EDSURN = 1,
-                UKPRN = null
-            };
-
-            var vacancyParty2 = new VacancyParty
-            {
-                VacancyPartyTypeCode = "PS",
-                FullName = "Provider A",
-                Description = "A",
-                WebsiteUrl = "URL",
-                EDSURN = null,
-                UKPRN = 1
-            };
-
-            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy};
-            return seedObjects;
-        }
-
-        private static ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber)
-        {
-            ApprenticeshipVacancy vacancy;
-
-            using (var connection = new SqlConnection(_connectionString))
-            {
-                connection.Open();
-
-                var commandText =
-                    $"SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = {vacancyReferenceNumber}";
-
-                using (var command = new SqlCommand(commandText, connection))
-                {
-                    using (var reader = command.ExecuteReader())
-                    {
-                        vacancy = new ApprenticeshipVacancy
-                        {
-                            Status =
-                                (ProviderVacancyStatuses)
-                                    Enum.Parse(typeof (ProviderVacancyStatuses), reader[3].ToString())
-                        };
-                    }
-                }
-                connection.Close();
-            }
-
-            return vacancy;
         }
 
         [Test, Category("Integration")]
@@ -248,7 +142,7 @@
             loadedVacancy.ShouldBeEquivalentTo(vacancy, options => ExcludeHardOnes(options));
         }
 
-            /*
+        /*
             [Test]
             public void ReserveVacancyForQaTest()
             {
@@ -261,5 +155,78 @@
 
                 var vacancy = GetVacancy(1L);
             }*/
+
+        private static IEnumerable<object> GetSeedObjects()
+        {
+            var vacancy = new Vacancy
+            {
+                VacancyId = VacancyId_VacancyA,
+                VacancyReferenceNumber = VacancyReferenceNumber_VacancyA,
+                AV_ContactName = "av contact name",
+                VacancyTypeCode = VacancyTypeCode_Apprenticeship,
+                VacancyStatusCode = VacancyStatusCode_Live,
+                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                Title = "Test vacancy",
+                TrainingTypeCode = TrainingTypeCode_Framework,
+                LevelCode = LevelCode_Intermediate,
+                FrameworkId = FrameworkId_Framework1,
+                WageValue = 100.0M,
+                WageTypeCode = WageTypeCode_Custom,
+                WageIntervalCode = WageIntervalCode_Weekly,
+                ClosingDate = DateTime.Now,
+                ContractOwnerVacancyPartyId = 1,
+                DeliveryProviderVacancyPartyId = 1,
+                EmployerVacancyPartyId = 1,
+                ManagerVacancyPartyId = 1,
+                OriginalContractOwnerVacancyPartyId = 1,
+                ParentVacancyId = null,
+                OwnerVacancyPartyId = 1,
+                DurationValue = 3,
+                DurationTypeCode = DurationTypeCode_Years,
+                PublishedDateTime = DateTime.UtcNow.AddDays(-1)
+            };
+
+            var occupation = new Occupation
+            {
+                OccupationId = 1,
+                OccupationStatusId = 1,
+                CodeName = "O01",
+                FullName = "Occupation 1",
+                ShortName = "Occupation 1"
+            };
+
+            var framework = new Framework
+            {
+                FrameworkId = FrameworkId_Framework1,
+                CodeName = "F01",
+                FullName = "Framework 1",
+                ShortName = "Framework 1",
+                FrameworkStatusId = 1,
+                OccupationId = 1
+            };
+
+            var vacancyParty1 = new VacancyParty
+            {
+                VacancyPartyTypeCode = "ES",
+                FullName = "Employer A",
+                Description = "A",
+                WebsiteUrl = "URL",
+                EDSURN = 1,
+                UKPRN = null
+            };
+
+            var vacancyParty2 = new VacancyParty
+            {
+                VacancyPartyTypeCode = "PS",
+                FullName = "Provider A",
+                Description = "A",
+                WebsiteUrl = "URL",
+                EDSURN = null,
+                UKPRN = 1
+            };
+
+            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy};
+            return seedObjects;
         }
+    }
     }

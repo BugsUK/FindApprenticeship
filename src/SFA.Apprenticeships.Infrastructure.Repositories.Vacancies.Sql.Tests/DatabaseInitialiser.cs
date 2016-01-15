@@ -10,7 +10,7 @@
     using System.Reflection;
     using System.Text;
     using Microsoft.SqlServer.Dac;
-    using NewDB.Domain.Entities.Vacancy;
+
     /// <summary>
     /// Class to initialise the database independant (as far as possible) of the database access method used to query data.
     /// </summary>
@@ -185,16 +185,6 @@
             var possiblePropertyNames = new[] { $"{tableName}Id", $"{tableName}Guid" };
 
             return possiblePropertyNames.FirstOrDefault(p => type.GetProperties().Any(prop => prop.Name == p));
-
-            //var possiblePostfixes = new[] {"Id", "Guid"};
-            //foreach (var possiblePostfix in possiblePostfixes)
-            //{
-            //    var propertyName = GetTableName(type) + possiblePostfix;
-            //    if (type.GetProperties().Any(p => p.Name == propertyName))
-            //    {
-            //        return propertyName;
-            //    }
-            //}
         }
 
         private void ExecuteScript(string seedScript, SqlConnection connection)
