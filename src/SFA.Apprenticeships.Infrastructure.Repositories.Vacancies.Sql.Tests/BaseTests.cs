@@ -8,6 +8,7 @@
     using Ploeh.AutoFixture;
     using FluentAssertions.Equivalency;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     [TestFixture]
     public class BaseTests
     {
@@ -20,10 +21,12 @@
         protected const int VacancyPartyId_EmployerA = 3;
         protected const int VacancyPartyId_ProviderA = 4;
         protected const int FrameworkId_Framework1 = 1;
+        protected const int StandardId_Standard1 = 1;
         protected const string VacancyTypeCode_Apprenticeship = "A";
         protected const string VacancyStatusCode_Live = "LIV";
         protected const string VacancyLocationTypeCode_Specific = "S";
         protected const string TrainingTypeCode_Framework = "F";
+        protected const string TrainingTypeCode_Standard = "S";
         protected const string LevelCode_Intermediate = "2";
         protected const string WageTypeCode_Custom = "CUS";
         protected const string WageIntervalCode_Weekly = "W";
@@ -39,7 +42,58 @@
                 .With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
                 .With(v => v.LevelCode, LevelCode_Intermediate)
                 .With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
+                .Do(v =>
+                {
+                    if (v.FrameworkId.GetHashCode() % 2 == 1)
+                    {
+                        v.TrainingTypeCode = TrainingTypeCode_Framework;
+                        v.FrameworkId = FrameworkId_Framework1;
+                        v.StandardId = null;
+                    }
+                    else
+                    {
+                        v.TrainingTypeCode = TrainingTypeCode_Standard;
+                        v.FrameworkId = null;
+                        v.StandardId = StandardId_Standard1;
+                    }
+                })
                 .Create();
+        }
+
+        protected ApprenticeshipVacancy CreateValidDomainVacancy()
+        {
+            var result = new Fixture().Build<ApprenticeshipVacancy>()
+                .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
+                .With(av => av.DateSubmitted, null)
+                .With(av => av.QAUserName, null)
+                .With(av => av.DateStartedToQA, null)
+                .Do(av =>
+                {
+                    if (av.FrameworkCodeName != null && av.FrameworkCodeName.GetHashCode() % 2 == 1)
+                    {
+                        av.StandardId = null;
+                        av.TrainingType = TrainingType.Frameworks;
+                    }
+                    else
+                    {
+                        av.FrameworkCodeName = null;
+                        av.TrainingType = TrainingType.Standards;
+                    }
+                })
+                .Create();
+
+            if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
+            {
+                result.StandardId = null;
+                result.TrainingType = TrainingType.Frameworks;
+            }
+            else
+            {
+                result.FrameworkCodeName = null;
+                result.TrainingType = TrainingType.Standards;
+            }
+
+            return result;
         }
 
         protected EquivalencyAssertionOptions<Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Vacancy> options)

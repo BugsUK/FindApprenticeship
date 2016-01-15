@@ -239,13 +239,7 @@
             var logger = new Mock<ILogService>();
             var repository = new ApprenticeshipVacancyRepository(database, _mapper, logger.Object);
 
-            var vacancy =
-                new Fixture().Build<ApprenticeshipVacancy>()
-//                    .With(av => av.EntityId, Guid.Empty)
-                    .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
-                    .With(av => av.QAUserName, null)
-                    .With(av => av.DateStartedToQA, null)
-                    .Create();
+            var vacancy = CreateValidDomainVacancy();
 
             // Act
             repository.Save(vacancy);

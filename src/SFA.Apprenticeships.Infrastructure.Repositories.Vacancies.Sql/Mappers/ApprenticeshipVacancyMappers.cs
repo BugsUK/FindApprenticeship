@@ -122,7 +122,7 @@
                 .ForMember(v => v.ParentVacancyId, opt => opt.Ignore())
                 .ForMember(v => v.OriginalContractOwnerVacancyPartyId, opt => opt.Ignore())
                 // Just been hacked so that updates don't fail
-                .MapMemberFrom(v => v.FrameworkId, av => 1) // TODO!!!!!!!!!!!!!
+                .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
