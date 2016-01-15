@@ -20,7 +20,7 @@
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
 
-    [TestFixture]
+    [TestFixture(Category = "Integration")]
     public class DatabaseTests : BaseTests
     {
         private static string _connectionString = string.Empty;
@@ -59,7 +59,7 @@
             dbInitialiser.Seed(seedObjects);
         }
 
-        [Test, Category("Integration")]
+        [Test]
         public void GetVacancyByVacancyReferenceNumberTest()
         {
             // configure _mapper
@@ -76,7 +76,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Category("Integration")]
+        [Test]
         public void GetVacancyByGuidTest()
         {
             // configure _mapper
@@ -93,7 +93,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Category("Integration")]
+        [Test]
         public void UpdateTest()
         {
             var newReferenceNumber = 3L;
@@ -123,7 +123,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Category("Integration")]
+        [Test]
         public void RoundTripTest()
         {
             // Arrange
@@ -143,6 +143,22 @@
                 options => ExcludeHardOnes(options)
                 .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
                 .WhenTypeIs<DateTime>());
+        }
+
+        [Test]
+        public void GetForProviderByUkprnTest()
+        {
+            //Ukprn = 1
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            var vacancies = repository.GetForProvider("1");
+            vacancies.Should().HaveCount(1);
+
+            vacancies = repository.GetForProvider("2");
+            vacancies.Should().HaveCount(0);
         }
 
         /*
@@ -180,7 +196,7 @@
                 ContractOwnerVacancyPartyId = 1,
                 DeliveryProviderVacancyPartyId = 1,
                 EmployerVacancyPartyId = 1,
-                ManagerVacancyPartyId = 1,
+                ManagerVacancyPartyId = 2,
                 OriginalContractOwnerVacancyPartyId = 1,
                 ParentVacancyId = null,
                 OwnerVacancyPartyId = 1,

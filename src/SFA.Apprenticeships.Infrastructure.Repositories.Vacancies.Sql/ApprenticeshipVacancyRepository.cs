@@ -132,11 +132,9 @@ WHERE  Vacancy.ManagerVacancyPartyId IN (
     WHERE  p.UKPRN = @UkPrn
 )", new { UkPrn = ukPrn });
 
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn ={1}", dbVacancies.Count, ukPrn));
+            _logger.Debug($"Found {dbVacancies.Count} apprenticeship vacancies with ukprn ={ukPrn}");
 
-            // TODO: Mapping as above
-
-            return new List<ApprenticeshipVacancy>();
+            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
