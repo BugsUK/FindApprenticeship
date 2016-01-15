@@ -14,6 +14,7 @@ Post-Deployment Script Template
 :r ".\Schemas\Address\Scripts\Address.ValidationSource.Upsert.sql"
 
 -- Reference
+:r ".\Schemas\Reference\Scripts\Reference.County.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.FrameworkStatus.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.Level.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql"
