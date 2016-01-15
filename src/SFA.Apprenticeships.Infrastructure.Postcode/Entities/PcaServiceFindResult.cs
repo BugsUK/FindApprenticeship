@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Infrastructure.Postcode.Entities
+﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.Entities
 {
-    public class FindPostalAddressByPartsResult
+    public class PcaServiceFindResult
     {
         public string Id { get; set; }
 

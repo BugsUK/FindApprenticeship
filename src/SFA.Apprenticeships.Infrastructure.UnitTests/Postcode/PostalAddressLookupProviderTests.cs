@@ -20,10 +20,10 @@
         private PostalAddressLookupProvider _palp;
         private Mock<IConfigurationService> _mockConfigurationService;
         private Mock<ILogService> _mockLogger;
-        private Mock<IRetrieveAddressService> _mockRetrieveAddressService;
+        private Mock<IPostalAddressDetailsService> _mockRetrieveAddressService;
         private Mock<IRestClient> _mockClient;
-        private AddressConfiguration addressConfig = new Fixture().Build<AddressConfiguration>()
-            .With(x => x.FindByPartsServiceEndpoint, "http://www.google.com")
+        private PostalAddressServiceConfiguration addressConfig = new Fixture().Build<PostalAddressServiceConfiguration>()
+            .With(x => x.FindByPartsEndpoint, "http://www.google.com")
             .Create();
         private const string _jsonSingleFindResult = "[{\"Id\":\"15499581.00\",\"StreetAddress\":\"115 Pemberton Road\",\"Place\":\"London N4\"}]";
 
@@ -40,8 +40,8 @@
         {
             _mockConfigurationService = new Mock<IConfigurationService>();
             _mockLogger = new Mock<ILogService>();
-            _mockRetrieveAddressService = new Mock<IRetrieveAddressService>();
-            _mockConfigurationService.Setup(m => m.Get<AddressConfiguration>()).Returns(addressConfig);
+            _mockRetrieveAddressService = new Mock<IPostalAddressDetailsService>();
+            _mockConfigurationService.Setup(m => m.Get<PostalAddressServiceConfiguration>()).Returns(addressConfig);
             _mockClient = new Mock<IRestClient>();
 
             _palp = new PostalAddressLookupProvider(_mockConfigurationService.Object, _mockLogger.Object, _mockRetrieveAddressService.Object);
@@ -73,12 +73,12 @@
         public void GetPostalAddresses_ReturnsMultipleAddresses(int count, string json)
         {
             //Arrange
-            var findResult = new RestResponse<List<FindPostalAddressByPartsResult>>();
+            var findResult = new RestResponse<List<PcaServiceFindResult>>();
             findResult.Content = json;
             findResult.ResponseStatus = ResponseStatus.Completed;
-            findResult.Data = SimpleJson.DeserializeObject<List<FindPostalAddressByPartsResult>>(json);
-            _mockClient.Setup(m => m.Execute<List<FindPostalAddressByPartsResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
-            _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new Address());
+            findResult.Data = SimpleJson.DeserializeObject<List<PcaServiceFindResult>>(json);
+            _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
+            _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new PostalAddress());
 
             //Act
             var result = _palp.GetPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);

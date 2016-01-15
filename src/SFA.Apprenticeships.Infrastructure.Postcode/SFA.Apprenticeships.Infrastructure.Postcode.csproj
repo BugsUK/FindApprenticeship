@@ -101,10 +101,12 @@
     </Compile>
     <Compile Include="AddressLookupProvider.cs" />
     <Compile Include="Configuration\AddressConfiguration.cs" />
+    <Compile Include="Configuration\PostalAddressServiceConfiguration.cs" />
     <Compile Include="Configuration\PostcodeConfiguration.cs" />
     <Compile Include="Entities\AddressInfo.cs" />
     <Compile Include="Entities\AddressInfoResult.cs" />
-    <Compile Include="Entities\FindPostalAddressByPartsResult.cs" />
+    <Compile Include="Entities\PcaAddress.cs" />
+    <Compile Include="Entities\PcaServiceFindResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfoResult.cs" />
     <Compile Include="Entities\PostcodeSearchInfo.cs" />
     <Compile Include="Entities\PostcodeInfo.cs" />
@@ -112,7 +114,9 @@
     <Compile Include="FindPostcodeService.cs" />
     <Compile Include="IFindPostcodeService.cs" />
     <Compile Include="IoC\PostcodeRegistry.cs" />
+    <Compile Include="IPostalAddressDetailsService.cs" />
     <Compile Include="IRetrieveAddressService.cs" />
+    <Compile Include="PostalAddressDetailsService.cs" />
     <Compile Include="PostalAddressLookupProvider.cs" />
     <Compile Include="PostcodeLookupProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

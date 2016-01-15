@@ -11,19 +11,20 @@
     using Domain.Interfaces.Configuration;
     using Entities;
     using Rest;
+    using RestSharp.Contrib;
 
     public class PostalAddressLookupProvider : RestService, IPostalAddressLookupProvider
     {
         private readonly ILogService _logger;
-        private readonly IRetrieveAddressService _retrieveAddressService;
-        private AddressConfiguration Config { get; }
+        private readonly IPostalAddressDetailsService _postalAddressDetailsService;
+        private PostalAddressServiceConfiguration Config { get; }
 
-        public PostalAddressLookupProvider(IConfigurationService configurationService, ILogService logger, IRetrieveAddressService retrieveAddressService)
+        public PostalAddressLookupProvider(IConfigurationService configurationService, ILogService logger, IPostalAddressDetailsService postalAddressDetailsService)
         {
             _logger = logger;
-            _retrieveAddressService = retrieveAddressService;
-            Config = configurationService.Get<AddressConfiguration>();
-            BaseUrl = new Uri(Config.FindByPartsServiceEndpoint);
+            _postalAddressDetailsService = postalAddressDetailsService;
+            Config = configurationService.Get<PostalAddressServiceConfiguration>();
+            BaseUrl = new Uri(Config.FindByPartsEndpoint);
         }
 
         public IEnumerable<PostalAddress> GetPostalAddresses(string addressLine1, string postcode)
@@ -38,32 +39,27 @@
                 {
                     new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode("JY37-NM56-JA37-WT99")),
                     new KeyValuePair<string, string>("addressLine1", addressLine1),
-                    new KeyValuePair<string, string>("postcode", postcode),
+                    new KeyValuePair<string, string>("postcode", postcode)
                 }
                 );
+            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
 
-            var addresses = Execute<List<FindPostalAddressByPartsResult>>(request);
+            var addresses = Execute<List<PcaServiceFindResult>>(request);
 
-            if (addresses.Data == null) return null;
+            if (addresses.Data == null
+                || !addresses.Data.Any()
+                || addresses.Data.All(x => x.Id == null)) return null;
 
             var addressList = new List<PostalAddress>();
 
             foreach (var foundAddress in addresses.Data)
             {
-                var retrievedResult = _retrieveAddressService.RetrieveAddress(foundAddress.Id);
+                if (foundAddress.Id == null)
+                    continue;
+
+                var retrievedResult = _postalAddressDetailsService.RetrieveAddress(foundAddress.Id);
                 if (retrievedResult != null)
-                addressList.Add(new PostalAddress()
-                {
-                    AddressLine1 = retrievedResult.AddressLine1,
-                    AddressLine2 = retrievedResult.AddressLine2,
-                    AddressLine3 = retrievedResult.AddressLine3,
-                    AddressLine4 = retrievedResult.AddressLine4,
-                    ValidationSourceCode = "PCA",
-                    ValidationSourceKeyValue = retrievedResult.Uprn,
-                    Postcode = retrievedResult.Postcode,
-                    GeoPoint = retrievedResult.GeoPoint,
-                    DateValidated = DateTime.UtcNow
-                });
+                    addressList.Add(retrievedResult);
             }
 
             return addressList;
@@ -71,7 +67,7 @@
 
         private static string GetFindByPartsServiceUrl()
         {
-            return "?key={key}&Building={addressLine1}&Postcode={postcode}";
+            return "&key={key}&Building={addressLine1}&Postcode={postcode}";
         }
     }
 }

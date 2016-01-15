@@ -11,6 +11,8 @@
             For<IAddressLookupProvider>().Use<AddressLookupProvider>();
             For<IFindPostcodeService>().Use<FindPostcodeService>();
             For<IRetrieveAddressService>().Use<RetrieveAddressService>();
+            For<IPostalAddressDetailsService>().Use<PostalAddressDetailsService>();
+            For<IPostalAddressLookupProvider>().Use<PostalAddressLookupProvider>();
         }
     }
 }
