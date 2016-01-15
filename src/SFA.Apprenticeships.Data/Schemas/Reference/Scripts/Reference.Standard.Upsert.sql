@@ -1,601 +1,85 @@
-﻿MERGE Reference.[Standard] AS dest
-USING (SELECT 1, 'Actuarial Technician', 1, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
+﻿MERGE INTO [Reference].[Standard] AS Target 
+USING (VALUES 
+  (1, 1, 17, N'Actuarial Technician', '4'),
+  (2, 2, 3, N'Aerospace Manufacturing Fitter', '3'),
+  (3, 2, 37, N'Aerospace Engineer', '6'),
+  (4, 2, 38, N'Aerospace Software Development Engineer', '6'),
+  (5, 2, 56, N'Aerospace Manufacturing Electrical, Mechanical and Systems Fitter', '3'),
+  (6, 3, 4, N'Mechatronics Maintenance Technician', '3'),
+  (7, 3, 9, N'Control/Technical Support Engineer', '6'),
+  (8, 3, 10, N'Electrical/Electronic Technical Support Engineer', '6'),
+  (9, 3, 11, N'Manufacturing Engineer', '6'),
+  (10, 3, 12, N'Product Design and Development Engineer', '6'),
+  (11, 3, 13, N'Product Design and Development Technician', '3'),
+  (12, 4, 59, N'Motor Vehicle Service and Maintenance Technician [light vehicle]', '3'),
+  (13, 5, 55, N'Butcher', '2'),
+  (14, 6, 39, N'Conveyancing Technician', '4'),
+  (15, 6, 40, N'Licensed Conveyancer', '6'),
+  (16, 7, 52, N'Systems Engineering Masters Level', '7'),
+  (17, 8, 18, N'Dental Technician', '5'),
+  (18, 8, 19, N'Dental Laboratory Assistant', '3'),
+  (19, 8, 20, N'Dental Practice Manager', '4'),
+  (20, 9, 1, N'Network Engineer', '4'),
+  (21, 9, 2, N'Software Developer', '4'),
+  (22, 9, 25, N'Digital & Technology Solutions Professional – degree apprenticeship', '6'),
+  (23, 10, 5, N'Installation Electrician/Maintenance Electrician', '3'),
+  (24, 11, 6, N'Power Network Craftsperson', '3'),
+  (25, 11, 26, N'Dual Fuel Smart Meter Installer', '2'),
+  (26, 11, 27, N'Water Process Technician', '3'),
+  (27, 11, 53, N'Utilities Engineering Technician', '3'),
+  (28, 11, 57, N'Gas Network Craftsperson', '3'),
+  (29, 11, 58, N'Gas Network Team Leader', '2'),
+  (30, 12, 7, N'Relationship Manager (Banking)', '6'),
+  (31, 12, 8, N'Financial Services Administrator', '3'),
+  (32, 12, 28, N'Financial Services Customer Adviser', '2'),
+  (33, 12, 29, N'Investment Operations Administrator', '2'),
+  (34, 12, 33, N'Investment Operations Technician', '3'),
+  (35, 12, 30, N'Investment Operations Specialist', '4'),
+  (36, 12, 48, N'Paraplanner', '4'),
+  (37, 12, 31, N'Senior Financial Services Customer Adviser', '3'),
+  (38, 12, 32, N'Workplace Pensions (Administrator or Consultant)', '3'),
+  (39, 13, 16, N'Food and Drink Maintenance Engineer', '3'),
+  (40, 14, 21, N'Golf Greenkeeper', '2'),
+  (41, 15, 60, N'Insurance Practitioner', '3'),
+  (42, 16, 41, N'Chartered Legal Executive', '6'),
+  (43, 16, 42, N'Paralegal', '3'),
+  (44, 16, 43, N'Solicitor', '7'),
+  (45, 17, 55, N'Chartered Manager Degree Apprenticeship', '6'),
+  (46, 18, 14, N'Laboratory Technician', '3'),
+  (47, 18, 15, N'Science Manufacturing Technician', '3'),
+  (48, 18, 44, N'Laboratory Scientist', '5'),
+  (49, 18, 45, N'Science Industry Maintenance Technician', '3'),
+  (50, 19, 34, N'Able Seafarer (Deck)', '2'),
+  (51, 20, 22, N'Junior Journalist', '3'),
+  (52, 21, 35, N'Nuclear Welding Inspection Technician', '4'),
+  (53, 21, 46, N'Nuclear Health Physics Monitor', '2'),
+  (54, 21, 47, N'Nuclear Scientist and Nuclear Engineer', '6'),
+  (55, 22, 23, N'Property Maintenance Operative', '2'),
+  (56, 23, 36, N'Public Service Operational Delivery Officer', '3'),
+  (57, 24, 24, N'Railway Engineering Design Technician', '3'),
+  (58, 25, 49, N'Refrigeration Air Conditioning & Heat Pump Engineering Technician', '3'),
+  (59, 26, 50, N'Chartered Surveyor', '6'),
+  (60, 26, 51, N'Surveying Technician', '3'),
+  (61, 8, 61, N'Dental Nurse', '3'),
+  (62, 12, 62, N'Mortgage Advisor', '3'),
+  (63, 12, 63, N'Insurance Professional', '4'),
+  (64, 27, 64, N'Housing Property Management Assistant', '2'),
+  (65, 27, 65, N'Housing Property Management', '3'),
+  (66, 27, 66, N'Senior Housing Property Management', '4'),
+  (67, 28, 67, N'Non-destructive Testing Engineering Technician', '3'),
+  (68, 29, 68, N'Junior Energy Manager', '3')
+) 
+AS Source (StandardId, SectorId, LarsCode, FullName, LevelCode) 
+ON Target.StandardId = Source.StandardId 
+-- update matched rows 
 WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 2, 'Aerospace Manufacturing Fitter', 2, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 3, 'Aerospace Engineer', 2, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 4, 'Aerospace Software Development Engineer', 2, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 5, 'Aerospace Manufacturing Electrical, Mechanical and Systems Fitter', 2, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 6, 'Mechatronics Maintenance Technician', 3, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 7, 'Control/Technical Support Engineer', 3, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 8, 'Electrical/Electronic Technical Support Engineer', 3, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 9, 'Manufacturing Engineer', 3, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 10, 'Product Design and Development Engineer', 3, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 11, 'Product Design and Development Technician', 3, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 12, 'Motor Vehicle Service and Maintenance Technician [light vehicle]', 4, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 13, 'Butcher', 5, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 14, 'Conveyancing Technician', 6, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 15, 'Licensed Conveyancer', 6, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 16, 'Systems Engineering Masters Level', 7, '7') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 17, 'Dental Technician', 8, '5') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 18, 'Dental Laboratory Assistant', 8, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 19, 'Dental Practice Manager', 8, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 20, 'Network Engineer', 9, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 21, 'Software Developer', 9, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 22, 'Digital & Technology Solutions Professional – degree apprenticeship', 9, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 23, 'Installation Electrician/Maintenance Electrician', 10, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 24, 'Power Network Craftsperson', 11, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 25, 'Dual Fuel Smart Meter Installer', 11, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 26, 'Water Process Technician', 11, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 27, 'Utilities Engineering Technician', 11, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 28, 'Gas Network Craftsperson', 11, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 29, 'Gas Network Team Leader', 11, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 30, 'Relationship Manager (Banking)', 12, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 31, 'Financial Services Administrator', 12, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 32, 'Financial Services Customer Adviser', 12, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 33, 'Investment Operations Administrator', 12, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 34, 'Investment Operations Technician', 12, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 35, 'Investment Operations Specialist', 12, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 36, 'Paraplanner', 12, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 37, 'Senior Financial Services Customer Adviser', 12, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 38, 'Workplace Pensions (Administrator or Consultant)', 12, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 39, 'Food and Drink Maintenance Engineer', 13, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 40, 'Golf Greenkeeper', 14, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 41, 'Insurance Practitioner', 15, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 42, 'Chartered Legal Executive', 16, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 43, 'Paralegal', 16, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 44, 'Solicitor', 17, '7') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 45, 'Chartered Manager Degree Apprenticeship', 17, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 46, 'Laboratory Technician', 18, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 47, 'Science Manufacturing Technician', 18, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 48, 'Laboratory Scientist', 18, '5') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 49, 'Science Industry Maintenance Technician', 18, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 50, 'Able Seafarer (Deck)', 19, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 51, 'Junior Journalist', 20, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 52, 'Nuclear Welding Inspection Technician', 21, '4') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 53, 'Nuclear Health Physics Monitor', 21, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 54, 'Nuclear Scientist and Nuclear Engineer', 21, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 55, 'Property Maintenance Operative', 22, '2') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 56, 'Public Service Operational Delivery Officer', 23, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 57, 'Railway Engineering Design Technician', 24, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 58, 'Refrigeration Air Conditioning & Heat Pump Engineering Technician', 25, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 59, 'Chartered Surveyor', 26, '6') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
-
-MERGE Reference.[Standard] AS dest
-USING (SELECT 60, 'Surveying Technician', 26, '3') AS src (StandardId, FullName, SectorId, LevelCode)
-ON (dest.StandardId = src.StandardId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName, SectorId = src.SectorId, LevelCode = src.LevelCode
-WHEN NOT MATCHED THEN
-	INSERT (StandardId, FullName, SectorId, LevelCode)
-	VALUES (src.StandardId, src.FullName, src.SectorId, src.LevelCode)
-;
+UPDATE SET SectorId = Source.SectorId, LarsCode = Source.LarsCode, FullName = Source.FullName, LevelCode = Source.LevelCode
+-- insert new rows 
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (StandardId, SectorId, LarsCode, FullName, LevelCode) 
+VALUES (StandardId, SectorId, LarsCode, FullName, LevelCode) 
+-- delete rows that are in the target but not the source 
+WHEN NOT MATCHED BY SOURCE THEN 
+DELETE;
 
 SELECT * FROM Reference.[Standard]

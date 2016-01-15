@@ -20,5 +20,10 @@
                 ErrorCodes = ApiErrors.ErrorCodes
             };
         }
+
+        public GetCountiesResponse GetCounties(GetCountiesRequest request)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
