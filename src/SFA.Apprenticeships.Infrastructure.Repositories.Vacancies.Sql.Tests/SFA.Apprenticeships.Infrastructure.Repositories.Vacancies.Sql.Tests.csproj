@@ -168,10 +168,6 @@
       <Project>{4fe5e4be-91df-49c6-b6cd-9b69fcd0c0fe}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
-      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
@@ -187,6 +183,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{adb1c795-a6aa-4cb8-82ae-2b8d10e22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure.Azure\SFA.Infrastructure.Azure.csproj">
+      <Project>{FE5B99F5-66D8-42FC-A8B3-6562837623A4}</Project>
+      <Name>SFA.Infrastructure.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure.Sql\SFA.Infrastructure.Sql.csproj">
       <Project>{5F790D5C-5DA8-4CBB-B24D-7C3D565A251B}</Project>

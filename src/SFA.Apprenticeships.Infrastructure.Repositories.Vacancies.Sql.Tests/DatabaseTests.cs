@@ -20,6 +20,8 @@
     //using StructureMap;
     using Web.Common.Configuration;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Azure.Configuration;
+    using SFA.Infrastructure.Configuration;
 
     [TestFixture]
     public class DatabaseTests : BaseTests
@@ -27,23 +29,19 @@
         private static string _connectionString = string.Empty;
         readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         //private Container _container;
+		private readonly Mock<ILogService> logService = new Mock<ILogService>();
 
         [OneTimeSetUp]
         public void SetUpFixture()
         {
-            /*
-            _container = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-            */
+            var configurationManager = new ConfigurationManager();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
 
-            //var configurationService = _container.GetInstance<IConfigurationService>();
+            var configurationService = new AzureBlobConfigurationService(configurationStorageConnectionString,
+                logService.Object);
 
-            //var environment = configurationService.Get<CommonWebConfiguration>().Environment;
-
-            var environment = "local";
+            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
             string databaseName = $"RaaTest-{environment}";
             _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; //TODO: get from settings
@@ -51,7 +49,7 @@
             var databaseProjectName = "SFA.Apprenticeships.Data";
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{databaseProjectName}";
             var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{databaseProjectName}.dacpac");
-                //TODO get configuration from settings
+                
             var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
             
             dbInitialiser.Publish(true);
