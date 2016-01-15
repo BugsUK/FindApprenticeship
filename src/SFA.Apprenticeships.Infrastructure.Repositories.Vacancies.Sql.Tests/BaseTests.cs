@@ -9,6 +9,7 @@
     using FluentAssertions.Equivalency;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Entities.Vacancies.ProviderVacancies;
+
     [TestFixture]
     public class BaseTests
     {
@@ -34,7 +35,7 @@
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
-            return new Fixture().Build<Vacancy>()
+            var result = new Fixture().Build<Vacancy>()
                 .With(v => v.WageTypeCode, WageTypeCode_Custom)
                 .With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
                 .With(v => v.DurationTypeCode, DurationTypeCode_Years)
@@ -42,22 +43,22 @@
                 .With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
                 .With(v => v.LevelCode, LevelCode_Intermediate)
                 .With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
-                .Do(v =>
-                {
-                    if (v.FrameworkId.GetHashCode() % 2 == 1)
-                    {
-                        v.TrainingTypeCode = TrainingTypeCode_Framework;
-                        v.FrameworkId = FrameworkId_Framework1;
-                        v.StandardId = null;
-                    }
-                    else
-                    {
-                        v.TrainingTypeCode = TrainingTypeCode_Standard;
-                        v.FrameworkId = null;
-                        v.StandardId = StandardId_Standard1;
-                    }
-                })
                 .Create();
+
+            if (result.FrameworkId.GetHashCode() % 2 == 1)
+            {
+                result.TrainingTypeCode = TrainingTypeCode_Framework;
+                result.FrameworkId = FrameworkId_Framework1;
+                result.StandardId = null;
+            }
+            else
+            {
+                result.TrainingTypeCode = TrainingTypeCode_Standard;
+                result.FrameworkId = null;
+                result.StandardId = StandardId_Standard1;
+            }
+
+            return result;
         }
 
         protected ApprenticeshipVacancy CreateValidDomainVacancy()
@@ -67,30 +68,18 @@
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
-                .Do(av =>
-                {
-                    if (av.FrameworkCodeName != null && av.FrameworkCodeName.GetHashCode() % 2 == 1)
-                    {
-                        av.StandardId = null;
-                        av.TrainingType = TrainingType.Frameworks;
-                    }
-                    else
-                    {
-                        av.FrameworkCodeName = null;
-                        av.TrainingType = TrainingType.Standards;
-                    }
-                })
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
-                result.StandardId = null;
                 result.TrainingType = TrainingType.Frameworks;
+                result.StandardId = null;
             }
             else
             {
-                result.FrameworkCodeName = null;
                 result.TrainingType = TrainingType.Standards;
+                result.FrameworkCodeName = null;
+                result.StandardId = StandardId_Standard1;
             }
 
             return result;

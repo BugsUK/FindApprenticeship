@@ -139,7 +139,10 @@
             var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
 
             // Assert
-            loadedVacancy.ShouldBeEquivalentTo(vacancy, options => ExcludeHardOnes(options));
+            loadedVacancy.ShouldBeEquivalentTo(vacancy,
+                options => ExcludeHardOnes(options)
+                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                .WhenTypeIs<DateTime>());
         }
 
         /*

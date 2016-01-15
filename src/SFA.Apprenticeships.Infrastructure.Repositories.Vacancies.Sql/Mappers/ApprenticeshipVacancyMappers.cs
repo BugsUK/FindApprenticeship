@@ -132,9 +132,8 @@
                 // TODO: Missing from ApprenticeshipVacancy
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
-                .ForMember(v => v.VacancyLocationTypeCode, opt => opt.Ignore()) 
                 .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Apprenticeship / Traineeship
-                .MapMemberFrom(v => v.VacancyLocationTypeCode, av => av.LocationAddresses.Count > 1 ? "M" : "S") // Multiple locations / Nationwide / Specific - not sure if used
+                .MapMemberFrom(v => v.VacancyLocationTypeCode, av => av.LocationAddresses != null && av.LocationAddresses.Count > 1 ? "M" : "S") // Multiple locations / Nationwide / Specific - not sure if used
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate
@@ -190,7 +189,7 @@
                     av.ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
                     {
                         WebsiteUrl = v.EmployerWebsiteUrl,
-                        Description = v.EmployerDescription
+                        Description = v.EmployerDescription,
                     };
                 })
 

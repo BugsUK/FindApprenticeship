@@ -92,25 +92,19 @@
                 .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
                 .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
 
-            result.ProviderSiteEmployerLink = new Domain.Entities.Providers.ProviderSiteEmployerLink()
+            result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EDSURN.ToString(); // TODO: Verify. TODO: Case. TODO: Type?
+            result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
             {
-                ProviderSiteErn = employer.EDSURN.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
-                Description = employer.Description,
-                WebsiteUrl = employer.WebsiteUrl,
-                Employer = new Domain.Entities.Organisations.Employer()
+                Address = new Domain.Entities.Locations.Address()
                 {
-                    Address = new Domain.Entities.Locations.Address()
-                    {
-                        // TODO
-                    },
-                    //DateCreated = employer.DateCreated, TODO
-                    //DateUpdated = employer.DateUpdated, TODO
-                    //EntityId = employer.VacancyPartyId, // TODO: Verify
-                    Ern = employer.EDSURN.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
-                    Name = employer.FullName
-                }
+                    // TODO
+                },
+                //DateCreated = employer.DateCreated, TODO
+                //DateUpdated = employer.DateUpdated, TODO
+                //EntityId = employer.VacancyPartyId, // TODO: Verify
+                Ern = employer.EDSURN.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
+                Name = employer.FullName
             };
-
 
             // ApprenticeshipVacancy
 
@@ -124,15 +118,6 @@
             }
 
             // TODO: Inconsistency of location of comment fields Vacancy vs ApprenticeshipVacancy
-            result.WorkingWeekComment = "TODO"; // dbVacancy.WorkingWeekComment;
-            result.AdditionalLocationInformation = "TODO";
-
-            // TODO
-            result.LocationAddresses = new List<SFA.Apprenticeships.Domain.Entities.Locations.VacancyLocationAddress>();
-
-            result.IsEmployerLocationMainApprenticeshipLocation = true; // TODO
-
-            result.NumberOfPositions = 1; // TODO
 
             return result;
         }
