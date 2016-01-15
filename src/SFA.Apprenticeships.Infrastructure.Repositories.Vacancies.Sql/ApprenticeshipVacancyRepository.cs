@@ -49,7 +49,7 @@
 
         public ApprenticeshipVacancy Get(Guid id)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancy with Id={0}", id);
+            _logger.Debug("Calling database to get apprenticeship vacancy with Id={0}", id);
 
             var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
@@ -58,7 +58,7 @@
 
         public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
+            _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
             var dbVacancy = _getOpenConnection.Query<Vacancy.Vacancy>(
                 "SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
@@ -71,9 +71,6 @@
 
         private ApprenticeshipVacancy MapVacancy(Vacancy.Vacancy dbVacancy)
         {
-            // TODO: Use mapper (automapper?)
-            // return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
-
             if (dbVacancy == null)
                 return null;
 
@@ -124,7 +121,7 @@
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
+            _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
 
             var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
 SELECT *
@@ -144,7 +141,7 @@ WHERE  Vacancy.ManagerVacancyPartyId IN (
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}", ukPrn, providerSiteErn);
+            _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}", ukPrn, providerSiteErn);
 
             var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
 SELECT *
@@ -163,7 +160,7 @@ WHERE  Vacancy.ManagerVacancyPartyId IN (
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, params ProviderVacancyStatuses[] desiredStatuses)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
+            _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
 
             var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
 SELECT *
@@ -182,7 +179,7 @@ AND    Vacancy.VacancyStatusCode IN (@VacancyStatusCodes)
 
         public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
         {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+            _logger.Debug("Calling database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
             throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
 
@@ -192,7 +189,7 @@ AND    Vacancy.VacancyStatusCode IN (@VacancyStatusCodes)
 
         public List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
         {
-            _logger.Debug("Calling repository to find apprenticeship vacancies");
+            _logger.Debug("Calling database to find apprenticeship vacancies");
 
             var coreQuery = @"
 FROM   Vacancy.Vacancy
@@ -223,7 +220,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
         public void Delete(Guid id)
         {
-            _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", id);
+            _logger.Debug("Calling database to delete apprenticeship vacancy with Id={0}", id);
 
             throw new NotSupportedException("Don't really think vacancies are / should be ever deleted");
 
@@ -232,32 +229,34 @@ FETCH NEXT @PageSize ROWS ONLY
 
         public ApprenticeshipVacancy Save(ApprenticeshipVacancy entity)
         {
-            _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.EntityId);
+            _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.EntityId);
 
-            // UpdateEntityTimestamps(entity);
+            UpdateEntityTimestamps(entity);
 
             // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy.Vacancy>(entity);
-             
+
+            // TODO: This should be the other way around (to avoid a race condition)
+            // and be in a single call to the database (to avoid a double latency hit)
+            // This should be done as a single method in _getOpenConnection
             if (!_getOpenConnection.UpdateSingle(dbVacancy))
                 _getOpenConnection.Insert(dbVacancy);
 
             /*
             _getOpenConnection.UpdateSingle(address);
-            _getOpenConnection.UpdateSingle(vacancy);
             */
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
 
-            // TODO: Not sure need to map back??
+            // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
             
             return entity;
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
-            _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+            _logger.Debug($"Calling database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 
             var userName = Thread.CurrentPrincipal.Identity.Name;
 
@@ -294,6 +293,22 @@ AND    @RowCount = 1
 
             // TODO: Mapping
             return null;
+        }
+
+        private void UpdateEntityTimestamps(ApprenticeshipVacancy entity)
+        {
+            /* TODO
+            // determine whether this is a "new" entity being saved for the first time
+            if (entity.DateTimeCreated == DateTime.MinValue)
+            {
+                entity.DateTimeCreated = DateTime.UtcNow;
+                entity.DateTimeUpdated = null;
+            }
+            else
+            {
+                entity.DateTimeUpdated = DateTime.UtcNow;
+            }
+            */
         }
     }
 }

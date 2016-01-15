@@ -7,12 +7,13 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
-    using Reference = SFA.Apprenticeships.NewDB.Domain.Entities;
+    using Reference = SFA.Apprenticeships.NewDB.Domain.Entities.Reference;
+    using Address = SFA.Apprenticeships.NewDB.Domain.Entities.Address;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using System.Collections;
     using System.Linq.Expressions;
     using Domain.Entities.Providers;
-    // TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
+    using Domain.Entities.Locations;    // TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
     // But don't want to move it to SFA.Infrastructure project because that would then depend on AutoMapper
     public abstract class MapperEngine : IMapper
     {
@@ -194,6 +195,37 @@
                 })
 
                 .End();
+
+            Mapper.CreateMap<Domain.Entities.Locations.Address, Address.PostalAddress>()
+                .MapMemberFrom(a => a.Latitude, a => (decimal?)a.GeoPoint.Latitude)
+                .MapMemberFrom(a => a.Longitude, a => (decimal?)a.GeoPoint.Longitude)
+
+                // TODO: Hacks
+                .MapMemberFrom(a => a.AddressLine5, a => "")
+                .MapMemberFrom(a => a.PostTown, a => a.AddressLine3)
+                .MapMemberFrom(a => a.County, a => new Reference.County())
+
+                // TODO: Remove from Vacancy.Vacancy?
+                .IgnoreMember(a => a.Easting)
+                .IgnoreMember(a => a.Northing)
+
+                // TODO: Not in model and may not need to be
+                .IgnoreMember(a => a.PostalAddressId) // TODO: Need to add to round-trip...?
+                .MapMemberFrom(a => a.ValidationSourceCode, a => "MAV")
+                .MapMemberFrom(a => a.ValidationSourceKeyValue, a => (string)null) // TODO: Parent entity id?
+                .MapMemberFrom(a => a.DateValidated, a => (DateTime?)null)
+                .MapMemberFrom(a => a.CountyId, a => (int?)null)
+
+                //        .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO
+                ;
+
+            Mapper.CreateMap<Address.PostalAddress, Domain.Entities.Locations.Address>()
+                .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
+                .MapMemberFrom(a => a.GeoPoint, a => new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
+
+                // TODO: Hacks
+                .MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
+                ;
         }
     }
 
@@ -205,6 +237,13 @@
             Expression<Func<TSource, TMember>> mapFunction)
         {
             return mappingExpression.ForMember(destinationMember, opt => opt.MapFrom<TMember>(mapFunction));
+        }
+
+        public static IMappingExpression<TSource, TDestination> IgnoreMember<TSource, TDestination>(
+            this IMappingExpression<TSource, TDestination> mappingExpression,
+            Expression<Func<TDestination, object>> destinationMember)
+        {
+            return mappingExpression.ForMember(destinationMember, opt => opt.Ignore());
         }
 
         /// <summary>

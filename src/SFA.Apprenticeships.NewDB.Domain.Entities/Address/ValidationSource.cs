@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.NewDB.Domain.Entities
+namespace SFA.Apprenticeships.NewDB.Domain.Entities.Address
 {
     using System;
     using System.Collections.Generic;

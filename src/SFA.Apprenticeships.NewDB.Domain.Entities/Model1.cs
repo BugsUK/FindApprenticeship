@@ -12,10 +12,10 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities
         {
         }
 
-        public virtual DbSet<PostalAddress> PostalAddresses { get; set; }
-        public virtual DbSet<ValidationSource> ValidationSources { get; set; }
+        public virtual DbSet<Address.PostalAddress> PostalAddresses { get; set; }
+        public virtual DbSet<Address.ValidationSource> ValidationSources { get; set; }
         public virtual DbSet<C__RefactorLog> C__RefactorLog { get; set; }
-        public virtual DbSet<County> Counties { get; set; }
+        public virtual DbSet<Reference.County> Counties { get; set; }
         public virtual DbSet<Framework> Frameworks { get; set; }
         public virtual DbSet<FrameworkStatu> FrameworkStatus { get; set; }
         public virtual DbSet<Level> Levels { get; set; }
