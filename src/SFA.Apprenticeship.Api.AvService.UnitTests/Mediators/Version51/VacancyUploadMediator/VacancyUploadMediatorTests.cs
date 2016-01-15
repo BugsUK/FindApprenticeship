@@ -87,7 +87,7 @@
         }
 
         [Test]
-        public void ShouldAuthenticateWebServiceConsumer()
+        public void ShouldAuthenticateRequest()
         {
             // Arrange.
             var request = new VacancyUploadRequest
