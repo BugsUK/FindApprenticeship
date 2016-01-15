@@ -41,7 +41,7 @@
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
             string databaseName = $"RaaTest-{environment}";
-            _connectionString = $"Server=localhost\\SQLEXPRESS;Database={databaseName};Trusted_Connection=True;"; // TODO: use alias?
+            _connectionString = $"Server=SQLSERVERTESTING;Database={databaseName};Trusted_Connection=True;"; // TODO: use alias?
 
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
             var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac");
