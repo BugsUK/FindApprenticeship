@@ -19,6 +19,7 @@
         //private Container _container;
 
         protected static readonly Guid VacancyId_VacancyA = Guid.NewGuid();
+        protected static readonly Guid VacancyId_VacancyAParent = Guid.NewGuid();
         protected const int VacancyReferenceNumber_VacancyA = 1;
 
         protected const int VacancyPartyId_EmployerA = 3;
@@ -27,6 +28,7 @@
         protected const int StandardId_Standard1 = 1;
         protected const string VacancyTypeCode_Apprenticeship = "A";
         protected const string VacancyStatusCode_Live = "LIV";
+        protected const string VacancyStatusCode_Parent = "PAR";
         protected const string VacancyLocationTypeCode_Specific = "S";
         protected const string TrainingTypeCode_Framework = "F";
         protected const string TrainingTypeCode_Standard = "S";

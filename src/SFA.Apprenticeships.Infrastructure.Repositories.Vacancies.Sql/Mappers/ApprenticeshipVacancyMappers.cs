@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Mappers
 {
     using System;
+    using System.CodeDom;
     using System.Collections.Generic;
     using AutoMapper;
     using AutoMapper.Mappers;
@@ -89,9 +90,13 @@
                 { "PQA", ProviderVacancyStatuses.PendingQA },
                 { "REJ", ProviderVacancyStatuses.RejectedByQA },
                 { "RES", ProviderVacancyStatuses.ReservedForQA },
+                { "PAR", ProviderVacancyStatuses.ParentVacancy },
                 { "UNK", ProviderVacancyStatuses.Unknown} // TODO: review
             };
 
+            Mapper.CreateMap<string, ProviderVacancyStatuses>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
+            Mapper.CreateMap<ProviderVacancyStatuses, string>().ConvertUsing(status => vacancyStatusMap.EnumToCode[status]);
+            
             Mapper.CreateMap<ApprenticeshipVacancy, Vacancy.Vacancy>()
                 .MapMemberFrom(v => v.WorkingWeekText, av => av.WorkingWeek)
                 .MapMemberFrom(v => v.WageTypeCode, av => wageTypeMap.EnumToCode[av.WageType])
@@ -102,7 +107,7 @@
                 .MapMemberFrom(v => v.AV_InterviewStartDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.PossibleStartDateDate, av => av.PossibleStartDate)
                 .MapMemberFrom(v => v.TrainingTypeCode, av => trainingTypeMap.EnumToCode[av.TrainingType])
-                .MapMemberFrom(v => v.VacancyStatusCode, av => vacancyStatusMap.EnumToCode[av.Status])
+                .ForMember( v=> v.VacancyStatusCode, opt => opt.MapFrom(av => av.Status))
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
@@ -151,7 +156,7 @@
                 .MapMemberFrom(av => av.InterviewStartDate, v => v.AV_InterviewStartDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.PossibleStartDateDate)
                 .MapMemberFrom(av => av.TrainingType, v => trainingTypeMap.CodeToEnum[v.TrainingTypeCode])
-                .MapMemberFrom(av => av.Status, v => vacancyStatusMap.CodeToEnum[v.VacancyStatusCode])
+                .ForMember(av => av.Status, opt => opt.MapFrom(v => v.VacancyStatusCode))
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
                 .MapMemberFrom(av => av.EntityId, v => v.VacancyId)

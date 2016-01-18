@@ -4,6 +4,7 @@ USING (
 	SELECT 'PQA', 'Pending QA'       UNION
 	SELECT 'LIV', 'Live'             UNION
 	SELECT 'RES', 'Reserved for QA'  UNION
+	SELECT 'PAR', 'Parent vacancy'   UNION
 	SELECT 'REF', 'Referred by QA'
 ) AS src (VacancyStatusCode, FullName)
 ON (dest.VacancyStatusCode = src.VacancyStatusCode)

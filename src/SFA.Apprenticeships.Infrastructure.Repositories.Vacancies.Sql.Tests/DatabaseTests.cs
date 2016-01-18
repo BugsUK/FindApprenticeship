@@ -47,7 +47,7 @@
             var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac");
                 
             var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
-            
+
             dbInitialiser.Publish(true);
 
             var seedScripts = new string[]
@@ -144,20 +144,43 @@
                 .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
                 .WhenTypeIs<DateTime>());
         }
-
+        
         [Test]
-        public void GetForProviderByUkprnTest()
+        public void GetForProviderByUkprnAndProviderSiteErnTest()
         {
-            //Ukprn = 1
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            var vacancies = repository.GetForProvider("1");
+            var vacancies = repository.GetForProvider("1", "3");
             vacancies.Should().HaveCount(1);
 
-            vacancies = repository.GetForProvider("2");
+            vacancies = repository.GetForProvider("2", "3");
+            vacancies.Should().HaveCount(0);
+
+            vacancies = repository.GetForProvider("1", "4");
+            vacancies.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void GetWithStatusTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            var vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy, ProviderVacancyStatuses.Live);
+            vacancies.Should().HaveCount(2);
+
+            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.Live);
+            vacancies.Should().HaveCount(1);
+
+            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy);
+            vacancies.Should().HaveCount(1);
+
+            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.PendingQA);
             vacancies.Should().HaveCount(0);
         }
 
@@ -177,6 +200,33 @@
 
         private static IEnumerable<object> GetSeedObjects()
         {
+            var parentVacancy = new Vacancy
+            {
+                VacancyId = VacancyId_VacancyAParent,
+                VacancyReferenceNumber = null,
+                AV_ContactName = "av contact name",
+                VacancyTypeCode = VacancyTypeCode_Apprenticeship,
+                VacancyStatusCode = VacancyStatusCode_Parent,
+                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                Title = "Test vacancy",
+                TrainingTypeCode = TrainingTypeCode_Framework,
+                LevelCode = LevelCode_Intermediate,
+                FrameworkId = FrameworkId_Framework1,
+                WageValue = 100.0M,
+                WageTypeCode = WageTypeCode_Custom,
+                WageIntervalCode = WageIntervalCode_Weekly,
+                ClosingDate = DateTime.Now,
+                ContractOwnerVacancyPartyId = 1,
+                DeliveryProviderVacancyPartyId = 1,
+                EmployerVacancyPartyId = 1,
+                ManagerVacancyPartyId = 3,
+                OriginalContractOwnerVacancyPartyId = 1,
+                ParentVacancyId = null,
+                OwnerVacancyPartyId = 1,
+                DurationValue = 3,
+                DurationTypeCode = DurationTypeCode_Years
+            };
+
             var vacancy = new Vacancy
             {
                 VacancyId = VacancyId_VacancyA,
@@ -196,7 +246,7 @@
                 ContractOwnerVacancyPartyId = 1,
                 DeliveryProviderVacancyPartyId = 1,
                 EmployerVacancyPartyId = 1,
-                ManagerVacancyPartyId = 2,
+                ManagerVacancyPartyId = 3,
                 OriginalContractOwnerVacancyPartyId = 1,
                 ParentVacancyId = null,
                 OwnerVacancyPartyId = 1,
@@ -244,7 +294,17 @@
                 UKPRN = 1
             };
 
-            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancy};
+            var vacancyParty3 = new VacancyParty
+            {
+                VacancyPartyTypeCode = "PS",
+                FullName = "Provider B",
+                Description = "B",
+                WebsiteUrl = "URL",
+                EDSURN = 3,
+                UKPRN = 1
+            };
+
+            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancyParty3, parentVacancy, vacancy};
             return seedObjects;
         }
     }

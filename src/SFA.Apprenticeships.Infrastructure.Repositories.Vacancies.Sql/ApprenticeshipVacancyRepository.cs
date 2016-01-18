@@ -14,7 +14,10 @@
     using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
     using Reference = SFA.Apprenticeships.NewDB.Domain.Entities;
     using Domain.Interfaces.Queries;
-    using System.Threading;    // TODO GenericSqlClient??
+    using System.Threading;
+    using Dapper;
+
+// TODO GenericSqlClient??
 
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
     {
@@ -119,26 +122,9 @@
             return result;
         }
 
-        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn)
-        {
-            _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
-
-            var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
-SELECT *
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.ManagerVacancyPartyId IN (
-    SELECT VacancyPartyId
-    FROM   Vacancy.VacancyParty p
-    WHERE  p.UKPRN = @UkPrn
-)", new { UkPrn = ukPrn });
-
-            _logger.Debug($"Found {dbVacancies.Count} apprenticeship vacancies with ukprn ={ukPrn}");
-
-            return dbVacancies.Select(MapVacancy).ToList();
-        }
-
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
         {
+            const string parentVacancyStatusCode = "PAR";
             _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}", ukPrn, providerSiteErn);
 
             var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
@@ -149,40 +135,41 @@ WHERE  Vacancy.ManagerVacancyPartyId IN (
     FROM   Vacancy.VacancyParty p
     WHERE  p.UKPRN = @UkPrn
     AND    p.EDSURN = @ProviderSiteUrn
-)", new { UkPrn = ukPrn, ProviderSiteUrn = providerSiteErn });
+)
+AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
+                new
+                {
+                    UkPrn = ukPrn,
+                    ProviderSiteUrn = providerSiteErn,
+                    VacancyStatusCodes = new [] {parentVacancyStatusCode}
+                });
 
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1}, providerSiteErn = {2}", dbVacancies.Count, ukPrn, providerSiteErn));
+            _logger.Debug(
+                $"Found {dbVacancies.Count} apprenticeship vacancies with ukprn = {ukPrn}, providerSiteErn = {providerSiteErn}");
 
-            return new List<ApprenticeshipVacancy>();
-        }
-
-        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, params ProviderVacancyStatuses[] desiredStatuses)
-        {
-            _logger.Debug("Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
-
-            var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
-SELECT *
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.ManagerVacancyPartyId IN (
-    SELECT VacancyPartyId
-    FROM   Vacancy.VacancyParty p
-    WHERE  p.UKPRN = @UkPrn)
-AND    Vacancy.VacancyStatusCode IN (@VacancyStatusCodes)
-)", new { UkPrn = ukPrn /*, TODO VacancyStatusCodes = new List<string>(desiredStatuses.Select(s => _vacancyStatusReverseMap[s])) */} );
-
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1} and statuses in {2}", dbVacancies.Count, ukPrn, string.Join(",", desiredStatuses)));
-
-            return new List<ApprenticeshipVacancy>();
+            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
         {
-            _logger.Debug("Calling database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+            _logger.Debug("Called database to get apprenticeship vacancies in status {1}", string.Join(",", desiredStatuses));
 
-            throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
+            var statuses = desiredStatuses.Select(_mapper.Map<ProviderVacancyStatuses, string>).ToList();
+            
+            var dbVacancies = _getOpenConnection.Query<Vacancy.Vacancy>(@"
+SELECT *
+FROM   Vacancy.Vacancy
+WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
+            {
+                VacancyStatusCodes = statuses
+            });
 
+            // throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
+            _logger.Debug(
+                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
 
-            //_logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", mongoEntities.Count, string.Join(",", desiredStatuses)));
+            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
