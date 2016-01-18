@@ -291,6 +291,7 @@
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
     <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
     <Compile Include="Providers\Version51\IReferenceDataProvider.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
     <Compile Include="Providers\AuthenticationResult.cs" />
     <Compile Include="Domain\WebServiceConsumer.cs" />
