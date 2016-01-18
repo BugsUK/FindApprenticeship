@@ -95,7 +95,7 @@
                 }
             }
 
-            _apprenticeshipVacancyWriteRepository.Save(vacancy);
+            _apprenticeshipVacancyWriteRepository.ShallowSave(vacancy);
 
             return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
         }
