@@ -148,17 +148,34 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
         {
             _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.EntityId);
 
-            UpdateEntityTimestamps(entity);
-
-            var mongoEntity = _mapper.Map<ApprenticeshipVacancy, MongoApprenticeshipVacancy>(entity);
-
-            Collection.Save(mongoEntity);
+            var mongoEntity = SaveEntity(entity);
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
 
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
+        public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
+        {
+            _logger.Debug("Called Mongodb to shallow save apprenticeship vacancy with id={0}", entity.EntityId);
+
+            var mongoEntity = SaveEntity(entity);
+
+            _logger.Debug("Shallow saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
+
+            return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
+        private MongoApprenticeshipVacancy SaveEntity(ApprenticeshipVacancy entity)
+        {
+            UpdateEntityTimestamps(entity);
+
+            var mongoEntity = _mapper.Map<ApprenticeshipVacancy, MongoApprenticeshipVacancy>(entity);
+
+            Collection.Save(mongoEntity);
+            return mongoEntity;
+        }
+        
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");

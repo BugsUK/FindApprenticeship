@@ -19,5 +19,7 @@
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>
     {
         ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+
+        ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity);
     }
 }

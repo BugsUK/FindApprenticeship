@@ -12,6 +12,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 
         ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
 
+        ApprenticeshipVacancy ShallowSaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+
         long GetNextVacancyReferenceNumber();
 
         ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber);
