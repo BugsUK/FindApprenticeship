@@ -25,6 +25,7 @@
         protected const int VacancyPartyId_EmployerA = 3;
         protected const int VacancyPartyId_ProviderA = 4;
         protected const int FrameworkId_Framework1 = 1;
+        protected const int FrameworkId_Framework2 = 2;
         protected const int StandardId_Standard1 = 1;
         protected const string VacancyTypeCode_Apprenticeship = "A";
         protected const string VacancyStatusCode_Live = "LIV";

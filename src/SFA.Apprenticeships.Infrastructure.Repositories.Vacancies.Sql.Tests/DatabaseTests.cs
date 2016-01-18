@@ -3,7 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Mappers;
@@ -57,6 +59,8 @@
 
             dbInitialiser.Seed(seedScripts);
             dbInitialiser.Seed(seedObjects);
+
+            
         }
 
         [Test]
@@ -154,7 +158,7 @@
                 logger.Object);
 
             var vacancies = repository.GetForProvider("1", "3");
-            vacancies.Should().HaveCount(1);
+            vacancies.Should().HaveCount(12);
 
             vacancies = repository.GetForProvider("2", "3");
             vacancies.Should().HaveCount(0);
@@ -172,10 +176,10 @@
                 logger.Object);
 
             var vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy, ProviderVacancyStatuses.Live);
-            vacancies.Should().HaveCount(2);
+            vacancies.Should().HaveCount(13);
 
             vacancies = repository.GetWithStatus(ProviderVacancyStatuses.Live);
-            vacancies.Should().HaveCount(1);
+            vacancies.Should().HaveCount(12);
 
             vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy);
             vacancies.Should().HaveCount(1);
@@ -184,7 +188,24 @@
             vacancies.Should().HaveCount(0);
         }
 
-        /*
+/*
+        public void FindTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            int totalResultsCount;
+            var query = new ApprenticeshipVacancyQuery
+            {
+                
+            };
+            var vacancies = repository.Find(query, out totalResultsCount);
+
+        }
+
+        
             [Test]
             public void ReserveVacancyForQaTest()
             {
@@ -200,7 +221,43 @@
 
         private static IEnumerable<object> GetSeedObjects()
         {
-            var parentVacancy = new Vacancy
+            var vacancies = new List<Vacancy>();
+
+            for (int i = 0; i < 11; i++)
+            {
+                var frameworkId = i%2 == 0 ? FrameworkId_Framework1 : FrameworkId_Framework2; //5 framework 1, 6 framework 2
+                var date = DateTime.Today.AddDays(-i);
+
+                vacancies.Add(new Vacancy
+                {
+                    VacancyId = Guid.NewGuid(),
+                    VacancyReferenceNumber = null,
+                    AV_ContactName = "av contact name",
+                    VacancyTypeCode = VacancyTypeCode_Apprenticeship,
+                    VacancyStatusCode = VacancyStatusCode_Live,
+                    VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                    Title = "Test vacancy",
+                    TrainingTypeCode = TrainingTypeCode_Framework,
+                    LevelCode = LevelCode_Intermediate,
+                    FrameworkId = frameworkId,
+                    WageValue = 100.0M,
+                    WageTypeCode = WageTypeCode_Custom,
+                    WageIntervalCode = WageIntervalCode_Weekly,
+                    ClosingDate = date,
+                    PublishedDateTime = date,
+                    ContractOwnerVacancyPartyId = 1,
+                    DeliveryProviderVacancyPartyId = 1,
+                    EmployerVacancyPartyId = 1,
+                    ManagerVacancyPartyId = 3,
+                    OriginalContractOwnerVacancyPartyId = 1,
+                    ParentVacancyId = null,
+                    OwnerVacancyPartyId = 1,
+                    DurationValue = 3,
+                    DurationTypeCode = DurationTypeCode_Years
+                });
+            }
+
+            vacancies.Add(new Vacancy
             {
                 VacancyId = VacancyId_VacancyAParent,
                 VacancyReferenceNumber = null,
@@ -225,9 +282,9 @@
                 OwnerVacancyPartyId = 1,
                 DurationValue = 3,
                 DurationTypeCode = DurationTypeCode_Years
-            };
+            });
 
-            var vacancy = new Vacancy
+            vacancies.Add(new Vacancy
             {
                 VacancyId = VacancyId_VacancyA,
                 VacancyReferenceNumber = VacancyReferenceNumber_VacancyA,
@@ -253,7 +310,7 @@
                 DurationValue = 3,
                 DurationTypeCode = DurationTypeCode_Years,
                 PublishedDateTime = DateTime.UtcNow.AddDays(-1)
-            };
+            });
 
             var occupation = new Occupation
             {
@@ -264,7 +321,16 @@
                 ShortName = "Occupation 1"
             };
 
-            var framework = new Framework
+            var occupation2 = new Occupation
+            {
+                OccupationId = 2,
+                OccupationStatusId = 1,
+                CodeName = "O02",
+                FullName = "Occupation 2",
+                ShortName = "Occupation 2"
+            };
+
+            var framework1 = new Framework
             {
                 FrameworkId = FrameworkId_Framework1,
                 CodeName = "F01",
@@ -272,6 +338,16 @@
                 ShortName = "Framework 1",
                 FrameworkStatusId = 1,
                 OccupationId = 1
+            };
+
+            var framework2 = new Framework
+            {
+                FrameworkId = FrameworkId_Framework2,
+                CodeName = "F02",
+                FullName = "Framework 2",
+                ShortName = "Framework 2",
+                FrameworkStatusId = 1,
+                OccupationId = 2
             };
 
             var vacancyParty1 = new VacancyParty
@@ -304,8 +380,9 @@
                 UKPRN = 1
             };
 
-            var seedObjects = new object[] {occupation, framework, vacancyParty1, vacancyParty2, vacancyParty3, parentVacancy, vacancy};
+            var seedObjects = (new object[] {occupation, occupation2, framework1, framework2, vacancyParty1, vacancyParty2, vacancyParty3}).Union(vacancies);
+            
             return seedObjects;
         }
     }
-    }
+}
