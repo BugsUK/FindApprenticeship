@@ -34,6 +34,9 @@
 
         private string _nonEmptyStringParam = "salty lassi";
 
+        private string _ErrorResult =
+            @"[{""Error"":""2"",""Description"":""Unknown key"",""Cause"":""The key you are using to access the service was not found."",""Resolution"":""Please check that the key is correct.It should be in the form AA11-AA11-AA11-AA11.""}]";
+
 
         [SetUp]
         public void Setup()
@@ -85,6 +88,26 @@
 
             //Assert
             Assert.AreEqual(count, result.Count());
+        }
+        
+        [Test]
+        public void GetPostalAddresses_ReturnsNull()
+        {
+            //Arrange
+            var findResult = new RestResponse<List<PcaServiceFindResult>>();
+            findResult.Content = _ErrorResult;
+            findResult.ResponseStatus = ResponseStatus.Completed;
+            findResult.Data = new Fixture().Build<PcaServiceFindResult>()
+                .With(x => x.Id, null)
+                .CreateMany(1).ToList();
+            _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
+            _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new PostalAddress());
+
+            //Act
+            var result = _palp.GetPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
+
+            //Assert
+            Assert.IsNull(result);
         }
     }
 }

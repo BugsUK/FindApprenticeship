@@ -11,7 +11,6 @@
     using Domain.Interfaces.Configuration;
     using Entities;
     using Rest;
-    using RestSharp.Contrib;
 
     public class PostalAddressLookupProvider : RestService, IPostalAddressLookupProvider
     {
@@ -37,7 +36,7 @@
             var request = Create(GetFindByPartsServiceUrl()
                 , new[]
                 {
-                    new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode("JY37-NM56-JA37-WT99")),
+                    new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),
                     new KeyValuePair<string, string>("addressLine1", addressLine1),
                     new KeyValuePair<string, string>("postcode", postcode)
                 }
@@ -46,6 +45,10 @@
 
             var addresses = Execute<List<PcaServiceFindResult>>(request);
 
+            //In the case of an error, the Data property returned will be an empty list of length 1.
+            //This is a failing of RestSharp, IMHO. Although the raw content is also returned,
+            //verifyng the raw JSON is an unsavoury operation. The scenarios tested here should all
+            //return null, so this is valid code, though the last conditionn may be a bit of an inference.
             if (addresses.Data == null
                 || !addresses.Data.Any()
                 || addresses.Data.All(x => x.Id == null)) return null;
@@ -67,7 +70,7 @@
 
         private static string GetFindByPartsServiceUrl()
         {
-            return "&key={key}&Building={addressLine1}&Postcode={postcode}";
+            return "&key={key}&Street={addressLine1}&Postcode={postcode}";
         }
     }
 }

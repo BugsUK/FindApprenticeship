@@ -11,5 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode.Configuration
         public string FindByPartsEndpoint { get; set; }
 
         public string RetrieveByIdEndpoint { get; set; }
+
+        public string Key { get; set; }
     }
 }

@@ -33,7 +33,7 @@
             var request = Create(GetRetrieveServiceUrl()
                 , new[]
                 {
-                    new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode("JY37-NM56-JA37-WT99")),
+                    new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),
                     new KeyValuePair<string, string>("id", addressId)
                 }
                 );

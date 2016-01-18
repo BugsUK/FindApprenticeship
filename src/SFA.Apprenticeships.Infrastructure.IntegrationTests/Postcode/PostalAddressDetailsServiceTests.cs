@@ -12,7 +12,7 @@
     public class PostalAddressDetailsServiceTests
     {
         private Container _container;
-
+        
         [SetUp]
         public void Setup()
         {
@@ -27,9 +27,13 @@
         [Test, Category("Integration")]
         public void ShouldReturnCorrectLocationForPostcode()
         {
+            //Arrange
             var service = _container.GetInstance<IPostalAddressDetailsService>();
 
+            //Act
             var location = service.RetrieveAddress("15499581");
+
+            //Assert
             location.AddressLine1.Should().Be("115 Pemberton Road");
             location.Postcode.Should().Be("N4 1AY");
         }
@@ -37,9 +41,13 @@
         [Test, Category("Integration")]
         public void ShouldReturnNullForInvalidId()
         {
+            //Arrange
             var service = _container.GetInstance<IPostalAddressDetailsService>();
 
+            //Act
             var location = service.RetrieveAddress("0wronginvalid99");
+
+            //Assert
             location.Should().BeNull();
         }
     }
