@@ -41,7 +41,7 @@
 
         public GetCountiesResponse GetCounties(GetCountiesRequest request)
         {
-            throw new NotImplementedException();
+            return GetMediatorResponse(req => _mediator.GetCounties(req), request);
         }
 
         public GetLocalAuthoritiesResponse GetLocalAuthorities(GetLocalAuthoritiesRequest request)
