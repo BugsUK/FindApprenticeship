@@ -3,7 +3,6 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security;
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Common;
@@ -17,12 +16,11 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
     // REF: NAVMS: Navms.Ms.ExternalInterfaces.ServiceImplementation.Rel51.VacancyManagementInternalService
     // REF: NAVMS: Capgemini.LSC.Navms.MS.BusinessLogic.VacancyController::BulkUploadVacancies
 
-    public class VacancyUploadServiceMediator : IVacancyUploadServiceMediator
+    public class VacancyUploadServiceMediator : ServiceMediatorBase, IVacancyUploadServiceMediator
     {
         private readonly VacancyUploadDataValidator _validator;
         private readonly IVacancyUploadRequestMapper _vacancyUploadRequestMapper;
 
-        private readonly IWebServiceAuthenticationProvider _webServiceAuthenticationProvider;
         private readonly IProviderService _providerService;
         private readonly IVacancyPostingService _vacancyPostingService;
 
@@ -31,29 +29,18 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
             IVacancyUploadRequestMapper vacancyUploadRequestMapper,
             IWebServiceAuthenticationProvider webServiceAuthenticationProvider,
             IProviderService providerService,
-            IVacancyPostingService vacancyPostingService)
+            IVacancyPostingService vacancyPostingService) :
+            base(webServiceAuthenticationProvider)
         {
             _validator = validator;
             _vacancyUploadRequestMapper = vacancyUploadRequestMapper;
-            _webServiceAuthenticationProvider = webServiceAuthenticationProvider;
             _providerService = providerService;
             _vacancyPostingService = vacancyPostingService;
         }
 
         public VacancyUploadResponse UploadVacancies(VacancyUploadRequest request)
         {
-            if (request == null)
-            {
-                throw new ArgumentNullException(nameof(request));
-            }
-
-            var authenticationResult = _webServiceAuthenticationProvider.Authenticate(
-                request.ExternalSystemId, request.PublicKey);
-
-            if (authenticationResult != AuthenticationResult.Authenticated)
-            {
-                throw new SecurityException();
-            }
+            AuthenticateRequest(request);
 
             var vacancies = new List<VacancyUploadResultData>();
 
