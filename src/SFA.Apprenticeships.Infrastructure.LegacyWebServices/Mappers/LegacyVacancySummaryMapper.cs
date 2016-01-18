@@ -70,6 +70,9 @@
                 .ForMember(dest => dest.Wage,
                     opt => opt.ResolveUsing<LegacyVacancySummaryWageResolver>().FromMember(src => src))
 
+                .ForMember(dest => dest.WageUnit,
+                    opt => opt.Ignore())
+
                 .ForMember(dest => dest.WorkingWeek,
                     opt => opt.MapFrom(src => src.WorkingWeek))
 

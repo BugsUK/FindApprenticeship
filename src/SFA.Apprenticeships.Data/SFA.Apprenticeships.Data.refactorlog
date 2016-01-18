@@ -28,4 +28,60 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="WageIntervalCode" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f7654988-e783-445f-9829-0c6691927766" ChangeDateTime="01/14/2016 11:25:34">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ExternalSystemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="e7e055f2-fc2e-45d0-927d-b1d6b28e89b3" ChangeDateTime="01/14/2016 11:41:15">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[ExternalSystemId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WebConsumerId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="83594a13-f5bb-484f-8075-e9eb36da7218" ChangeDateTime="01/14/2016 11:46:53">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[FullName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="SystemName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="fc36dd41-b38c-4643-bbac-d57ad9bb21ef" ChangeDateTime="01/14/2016 11:47:43">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[PublicKey]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ExternalSystemId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="b2f2a854-ceab-4037-b645-68c424318a86" ChangeDateTime="01/14/2016 11:48:03">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[SystemName]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="ExternalSystemName" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="c8f7e8a7-9008-4e0e-a4ea-74284a2d34ec" ChangeDateTime="01/14/2016 11:49:03">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[StakeholderTypeCode]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WebServiceConsumerTypeCode" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="74ef11d6-d90e-4190-8f26-301716b969c7" ChangeDateTime="01/14/2016 11:49:11">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[WebConsumerId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="WebServiceConsumerId" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="903930ba-852e-4a19-977f-a5b5c6071144" ChangeDateTime="01/14/2016 12:56:20">
+    <Property Name="ElementName" Value="[Vacancy].[WebServiceConsumer].[AllowReferenceDataServices]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[WebServiceConsumer]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AllowReferenceDataService" />
+  </Operation>
 </Operations>

@@ -448,7 +448,7 @@
             InterfaceErrorDescription = "\"WeeklyWage\" must be £0 for a traineeship"
         };
 
-        public static List<ErrorCodesData> AllErrorCodes => new List<ErrorCodesData>
+        public static List<ErrorCodesData> ErrorCodes => new List<ErrorCodesData>
         {
             Error10001,
             Error10002,

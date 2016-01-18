@@ -28,7 +28,7 @@
                 VacancyRequirementsProspectsViewModel =
                     context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
-                
+                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount
             };
 
             if (source.Status.IsStateInQa())

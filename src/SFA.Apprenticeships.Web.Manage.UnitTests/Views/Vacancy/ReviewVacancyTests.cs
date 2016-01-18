@@ -6,6 +6,7 @@
     using System.Web.Routing;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;

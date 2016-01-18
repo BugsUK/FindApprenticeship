@@ -7,7 +7,6 @@
     using CuttingEdge.Conditions;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;

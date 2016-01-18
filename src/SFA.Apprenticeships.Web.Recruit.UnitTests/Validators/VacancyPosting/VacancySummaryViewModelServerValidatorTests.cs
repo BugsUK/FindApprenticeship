@@ -2,6 +2,7 @@
 {
     using Builders;
     using Common.Validators;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using FluentValidation;

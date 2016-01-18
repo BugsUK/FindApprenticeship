@@ -6105,6 +6105,8 @@ aside h2:first-child {
   font-weight: bold; }
   .vac-title a {
     text-decoration: none; }
+  .vac-title .subtitle {
+    font-weight: normal; }
 
 #employer-data-display {
   display: none; }
@@ -6117,6 +6119,9 @@ aside h2:first-child {
 
 .locations-table .locations-positions-header {
   text-align: center; }
+
+.locations-table tbody tr {
+  height: 78px; }
 
 .editable-item {
   position: relative;
@@ -6266,6 +6271,8 @@ h2 a i.raa-icon-comment {
         @media screen and (min-width: 769px) {
           .vacancies-summary li figure.data figcaption h2, .applications-summary li figure.data figcaption h2 {
             text-align: center; } }
+    .vacancies-summary li figure.data figcaption.underline, .applications-summary li figure.data figcaption.underline {
+      text-decoration: underline; }
 
 @media screen and (max-width: 640px) {
   .vacancies-summary li {
@@ -6378,6 +6385,9 @@ h2 a i.raa-icon-comment {
   margin-top: 20px; }
 
 .vac-status {
+  text-align: center; }
+
+.vac-no-of-applications {
   text-align: center; }
 
 .select-employer-link-to-new {

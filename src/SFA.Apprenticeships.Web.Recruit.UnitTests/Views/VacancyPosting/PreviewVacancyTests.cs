@@ -10,6 +10,7 @@
     using RazorGenerator.Testing;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Vacancies;
     using Moq;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using Constants;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
 
     public static class WagePresenter
@@ -9,7 +10,12 @@
         {
             if (wage.Type != WageType.Custom) return "Weekly wage";
 
-            switch (wage.Unit)
+            return wage.Unit.GetHeaderDisplayText();
+        }
+
+        public static string GetHeaderDisplayText(this WageUnit wageUnit)
+        {
+            switch (wageUnit)
             {
                 case WageUnit.Annually:
                     return "Annual wage";
@@ -17,6 +23,21 @@
                     return "Monthly wage";
                 case WageUnit.Weekly:
                     return "Weekly wage";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetWagePostfix(this WageUnit wageUnit)
+        {
+            switch (wageUnit)
+            {
+                case WageUnit.Annually:
+                    return "p/year";
+                case WageUnit.Monthly:
+                    return "p/month";
+                case WageUnit.Weekly:
+                    return "p/week";
                 default:
                     return string.Empty;
             }
@@ -35,6 +56,16 @@
                 default:
                     return string.Empty;
             }
+        }
+
+        public static WageUnit GetWageUnit(this Wage wage)
+        {
+            if (wage.Type == WageType.Custom)
+            {
+                return wage.Unit;
+            }
+
+            return WageUnit.Weekly;
         }
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
