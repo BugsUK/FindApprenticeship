@@ -1,11 +1,6 @@
 namespace SFA.Apprenticeships.Web.Recruit.IoC
 {
-    using System;
-    using System.Linq.Expressions;
-    using System.Web;
-    using Application.Application;
     using Application.Application.IoC;
-    using Application.Interfaces.Applications;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
@@ -33,24 +28,34 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;
-    using StructureMap.Web.Pipeline;
 
     public static class IoC
     {
         public static IContainer Initialize()
         {
-            var container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            var container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<LoggingRegistry>();
+            });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             return new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig));
+                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
 
                 //// cache service - to allow web site to run without azure cache

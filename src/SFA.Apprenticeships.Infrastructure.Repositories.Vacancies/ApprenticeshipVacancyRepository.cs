@@ -51,23 +51,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
-
-        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn)
-        {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}", ukPrn);
-
-            var queryConditionList = new List<IMongoQuery>();
-            queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
-            queryConditionList.Add(Query<ApprenticeshipVacancy>.NotIn(v => v.Status, new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.ParentVacancy }));
-            var mongoEntities = Collection.Find(Query.And(queryConditionList))
-                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
-                .ToList();
-
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn ={1}", mongoEntities.Count, ukPrn));
-
-            return mongoEntities;
-        }
-
+        
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}", ukPrn, providerSiteErn);
@@ -84,26 +68,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1}, providerSiteErn = {2}", mongoEntities.Count, ukPrn, providerSiteErn));
-
-            return mongoEntities;
-        }
-
-        public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, params ProviderVacancyStatuses[] desiredStatuses)
-        {
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0} and in status {1}", ukPrn, string.Join(",", desiredStatuses));
-
-            var queryConditionList = new List<IMongoQuery>();
-
-            queryConditionList.Add(Query<ApprenticeshipVacancy>.EQ(v => v.Ukprn, ukPrn));
-            queryConditionList.Add(Query<ApprenticeshipVacancy>.In(v => v.Status, desiredStatuses));
-
-            var query = new QueryBuilder<ApprenticeshipVacancy>();
-
-            var mongoEntities = Collection.Find(query.And(queryConditionList))
-                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(e))
-                .ToList();
-
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1} and statuses in {2}", mongoEntities.Count, ukPrn, string.Join(",", desiredStatuses)));
 
             return mongoEntities;
         }

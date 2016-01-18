@@ -66,7 +66,17 @@ namespace SFA.Infrastructure.Sql
             {
                 using (var conn = goc.GetOpenConnection())
                 {
-                    return (IList<T>)conn.Query<T>(sql, param, transaction: null, buffered: true, commandTimeout: commandTimeout, commandType: commandType);
+                    try
+                    {
+                        return
+                            (IList<T>)
+                                conn.Query<T>(sql, param, transaction: null, buffered: true,
+                                    commandTimeout: commandTimeout, commandType: commandType);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
                 }
             }
             );

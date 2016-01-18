@@ -41,7 +41,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public int? UKPRN { get; set; }
 
-        public virtual PostalAddress PostalAddress { get; set; }
+        public virtual Address.PostalAddress PostalAddress { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacancy> Vacancies { get; set; }

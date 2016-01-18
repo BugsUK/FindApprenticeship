@@ -10,6 +10,15 @@
     [UKPRN] INT NULL, 
     CONSTRAINT [PK_VacancyParty] PRIMARY KEY ([VacancyPartyId]), 
     CONSTRAINT [FK_VacancyParty_VacancyTypeCode] FOREIGN KEY ([VacancyPartyTypeCode]) REFERENCES [Vacancy].[VacancyPartyType]([VacancyPartyTypeCode]), 
-    CONSTRAINT [FK_VacancyParty_PostalAddress] FOREIGN KEY ([PostalAddressId]) REFERENCES [Address].[PostalAddress]([PostalAddressId]), 
-    CONSTRAINT [CK_VacancyParty_EDSURN_UKPRN] CHECK ((EDSURN IS NOT NULL AND UKPRN IS NULL) OR (EDSURN IS NULL AND UKPRN IS NOT NULL))
+    CONSTRAINT [FK_VacancyParty_PostalAddress] FOREIGN KEY ([PostalAddressId]) REFERENCES [Address].[PostalAddress]([PostalAddressId])
 )
+
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'Identifies the site',
+    @level0type = N'SCHEMA',
+    @level0name = N'Vacancy',
+    @level1type = N'TABLE',
+    @level1name = N'VacancyParty',
+    @level2type = N'COLUMN',
+    @level2name = N'EDSURN'

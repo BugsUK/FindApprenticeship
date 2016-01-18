@@ -3,6 +3,7 @@
     using System;
     using System.Configuration;
     using System.IO;
+    using ConfigurationManager = SFA.Infrastructure.Configuration.ConfigurationManager;
 
     public abstract class SecureConfigurationSection<T> : ConfigurationSection where T : ConfigurationSection, new()
     {

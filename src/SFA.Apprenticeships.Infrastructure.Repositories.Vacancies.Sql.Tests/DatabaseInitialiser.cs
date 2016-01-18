@@ -10,7 +10,10 @@
     using System.Reflection;
     using System.Text;
     using Microsoft.SqlServer.Dac;
-    
+
+    /// <summary>
+    /// Class to initialise the database independant (as far as possible) of the database access method used to query data.
+    /// </summary>
     public class DatabaseInitialiser
     {
         private readonly string _dacpacFilePath;
@@ -78,6 +81,7 @@
 
         private void ExecuteInsert(string sql)
         {
+            Debug.WriteLine(sql);
             using (var connection = new SqlConnection(_targetConnectionString))
             {
                 connection.Open();
@@ -156,10 +160,15 @@
 
         private static bool ShouldInsertTableId(Type myType, string tableIdPropertyName)
         {
-            var idPropertyType = myType.GetProperties().Single(p => p.Name == tableIdPropertyName);
+            // No default in the database for this - must be inserted by caller
+            // TODO: Rename to Guid to everything knows this??
+            if (tableIdPropertyName == "VacancyId")
+                return true;
+
+            var idPropertyInfo = myType.GetProperties().Single(p => p.Name == tableIdPropertyName);
 
             var identityAttribute =
-                idPropertyType.CustomAttributes.FirstOrDefault(
+                idPropertyInfo.CustomAttributes.FirstOrDefault(
                     a => a.AttributeType == typeof(DatabaseGeneratedAttribute));
 
             if (identityAttribute != null)
@@ -176,16 +185,6 @@
             var possiblePropertyNames = new[] { $"{tableName}Id", $"{tableName}Guid" };
 
             return possiblePropertyNames.FirstOrDefault(p => type.GetProperties().Any(prop => prop.Name == p));
-
-            //var possiblePostfixes = new[] {"Id", "Guid"};
-            //foreach (var possiblePostfix in possiblePostfixes)
-            //{
-            //    var propertyName = GetTableName(type) + possiblePostfix;
-            //    if (type.GetProperties().Any(p => p.Name == propertyName))
-            //    {
-            //        return propertyName;
-            //    }
-            //}
         }
 
         private void ExecuteScript(string seedScript, SqlConnection connection)

@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.NewDB.Domain.Entities
+namespace SFA.Apprenticeships.NewDB.Domain.Entities.Address
 {
     using System;
     using System.Collections.Generic;
@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public PostalAddress()
         {
-            VacancyParties = new HashSet<Vacancy.VacancyParty>();
+            //VacancyParties = new HashSet<Vacancy.VacancyParty>();
         }
 
         public int PostalAddressId { get; set; }
@@ -51,11 +51,13 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities
 
         public int? CountyId { get; set; }
 
-        public virtual County County { get; set; }
+        public virtual Reference.County County { get; set; }
 
+        /*
         public virtual ValidationSource ValidationSource { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Vacancy.VacancyParty> VacancyParties { get; set; }
+        */
     }
 }

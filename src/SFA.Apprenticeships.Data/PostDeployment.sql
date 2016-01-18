@@ -29,6 +29,8 @@ Post-Deployment Script Template
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyPartyType.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyStatus.Upsert.sql"
 :r ".\Schemas\Vacancy\Scripts\Vacancy.VacancyType.Upsert.sql"
+:r ".\Schemas\Vacancy\Scripts\Vacancy.WageType.Upsert.sql"
+:r ".\Schemas\Vacancy\Scripts\Vacancy.WageInterval.Upsert.sql"
 
 -- Web Proxy
 :r ".\Schemas\WebProxy\Scripts\WebProxy.WebProxyConsumer.Upsert.sql"

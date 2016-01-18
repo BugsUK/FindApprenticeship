@@ -5,25 +5,25 @@
     using System.IO;
     using System.Reflection;
     using System.Runtime.Caching; // TODO: Why needed rather than SFA.Infrastructure.Interfaces.Caching?
-    using SFA.Infrastructure.Interfaces;
-    using SFA.Infrastructure.Interfaces.Caching;
+    using Interfaces;
+    using Interfaces.Caching;
     using Microsoft.WindowsAzure.Storage;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
     public class AzureBlobConfigurationService : IConfigurationService
     {
-        private readonly IConfigurationManager _configurationManager;
+        private readonly string _configurationStorageConnectionString;
         private readonly ILogService _loggerService;
-        private readonly static string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(AzureBlobConfigurationService)).Location).FileVersion;
-        private static readonly string CacheKey = string.Format("Configuration_{0}", FileVersion);
-        private static readonly string BlobPath = string.Format("faa/{0}/settings.json", FileVersion);
+        private static readonly string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(AzureBlobConfigurationService)).Location).FileVersion;
+        private static readonly string CacheKey = $"Configuration_{FileVersion}";
+        private static readonly string BlobPath = $"faa/{FileVersion}/settings.json";
         private readonly ObjectCache _cache;
         private readonly object _locker = new object();
 
-        public AzureBlobConfigurationService(IConfigurationManager configurationManager, ILogService loggerService)
+        public AzureBlobConfigurationService(string configurationStorageConnectionString, ILogService loggerService)
         {
-            _configurationManager = configurationManager;
+            _configurationStorageConnectionString = configurationStorageConnectionString;
             _loggerService = loggerService;
             _cache = MemoryCache.Default;
         }
@@ -64,15 +64,13 @@
                 
                 _loggerService.Debug("Loading configuration from Azure Blob Storage");
 
-                var storageConnectionString = _configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
-                if (string.IsNullOrWhiteSpace(storageConnectionString))
+                if (string.IsNullOrWhiteSpace(_configurationStorageConnectionString))
                 {
                     _loggerService.Warn("ConfigurationStorageConnectionString config setting null, can't load config");
                     return null;
                 }
 
-                var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
+                var storageAccount = CloudStorageAccount.Parse(_configurationStorageConnectionString);
 
                 var blobClient = storageAccount.CreateCloudBlobClient();
 

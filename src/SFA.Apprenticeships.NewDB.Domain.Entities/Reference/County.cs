@@ -1,4 +1,4 @@
-namespace SFA.Apprenticeships.NewDB.Domain.Entities
+namespace SFA.Apprenticeships.NewDB.Domain.Entities.Reference
 {
     using System;
     using System.Collections.Generic;
@@ -7,12 +7,12 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities
     using System.Data.Entity.Spatial;
 
     [Table("Reference.County")]
-    public partial class County
+    public partial class County // TODO: Move to Address schema?
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public County()
         {
-            PostalAddresses = new HashSet<PostalAddress>();
+            PostalAddresses = new HashSet<Address.PostalAddress>();
         }
 
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
@@ -28,6 +28,6 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities
         public string FullName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<PostalAddress> PostalAddresses { get; set; }
+        public virtual ICollection<Address.PostalAddress> PostalAddresses { get; set; }
     }
 }

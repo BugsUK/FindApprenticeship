@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[Vacancy] (
-    [VacancyId]                          UNIQUEIDENTIFIER             DEFAULT NEWSEQUENTIALID() NOT NULL,
-    [VacancyReferenceNumber]               INT             NOT NULL,
+    [VacancyId]                          UNIQUEIDENTIFIER  NOT NULL,
+    [VacancyReferenceNumber]               INT             NULL,
     [VacancyTypeCode]                      CHAR (1)        NOT NULL,
     [VacancyStatusCode]                    CHAR (3)        NOT NULL,
     [VacancyLocationTypeCode]              CHAR (1)        NOT NULL,
@@ -25,7 +25,8 @@
     [LevelCode]                            CHAR (1)        NOT NULL,
     [LevelCodeComment]                     NVARCHAR (MAX)  NULL,
     [WageValue]                            MONEY           NULL,
-    [WageTypeCode]                         CHAR (3)        NULL,
+    [WageTypeCode]                         CHAR (3)        NOT NULL,
+    [WageIntervalCode]                     CHAR (1)        NULL,
     [AV_WageText]                          NVARCHAR (MAX)  NULL,
     [WageComment]                          NVARCHAR (MAX)  NULL,
     [PossibleStartDateDate]                DATETIME2 (7)   NULL,
@@ -38,14 +39,20 @@
     [DurationTypeCode]                     CHAR (1)        NULL,
     [DurationComment]                      NVARCHAR (MAX)  NULL,
     [WorkingWeekText]                      NVARCHAR (MAX)  NULL,
+    [WorkingWeekComment]                   NVARCHAR (MAX)  NULL,
     [HoursPerWeek]                         DECIMAL (10, 2) NULL,
     [AV_ContactName]                       NVARCHAR (MAX)  NULL,
     [EmployerDescription]                  NVARCHAR (MAX)  NULL,
+    [EmployerDescriptionComment]           NVARCHAR (MAX)  NULL,
+	[EmployerWebSiteUrl]                   NVARCHAR (MAX)  NULL,
+	[EmployerWebSiteUrlComment]            NVARCHAR (MAX)  NULL,
     [IsDirectApplication]                  BIT             NULL,
     [DirectApplicationUrl]                 NVARCHAR (MAX)  NULL,
     [DirectApplicationUrlComment]          NVARCHAR (MAX)  NULL,
     [DirectApplicationInstructions]        NVARCHAR (MAX)  NULL,
     [DirectApplicationInstructionsComment] NVARCHAR (MAX)  NULL,
+    [AdditionalLocationInformation]        NVARCHAR (MAX)  NULL,
+    [AdditionalLocationInformationComment] NVARCHAR (MAX)  NULL,
     [DesiredSkills]                        NVARCHAR (MAX)  NULL,
     [DesiredSkillsComment]                 NVARCHAR (MAX)  NULL,
     [FutureProspects]                      NVARCHAR (MAX)  NULL,
@@ -61,9 +68,18 @@
     [SecondQuestion]                       NVARCHAR (MAX)  NULL,
     [SecondQuestionComment]                NVARCHAR (MAX)  NULL,
     [QAUserName]                           NVARCHAR (MAX)  NULL,
+	[LocationAddressesComment]             NVARCHAR (MAX)  NULL,
+    [NumberOfPositions]                    INT             NOT NULL,
+    [NumberOfPositionsComment]             NVARCHAR (MAX)  NULL,
     [DateQAApproved]                       DATETIME2 (7)   NULL,
-    PRIMARY KEY CLUSTERED ([VacancyId] ASC),
+    [PublishedDateTime]                    DATETIME2       NULL,
+	 
+    [FirstSubmittedDateTime]               DATETIME2       NULL, -- TODO: Check name
+    [SubmissionCount]                      INT             NOT NULL DEFAULT 0, -- TODO: Check name
+
+	PRIMARY KEY CLUSTERED ([VacancyId] ASC),
     CONSTRAINT [CK_FrameworkId_StandardId] CHECK ([TrainingTypeCode]='F' AND [FrameworkId] IS NOT NULL AND [StandardId] IS NULL OR [TrainingTypeCode]='S' AND [FrameworkId] IS NULL AND [StandardId] IS NOT NULL),
+    CONSTRAINT [CK_PublishedDateTime_VacancyStatusCode] CHECK (([PublishedDateTime] IS NULL AND [VacancyStatusCode] <> 'LIV') OR ([PublishedDateTime] IS NOT NULL AND [VacancyStatusCode] = 'LIV')),
     CONSTRAINT [CK_TrainingTypeCode] CHECK ([TrainingTypeCode]='S' OR [TrainingTypeCode]='F'),
     CONSTRAINT [FK_Vacancy_ContractedProviderVacancyPartyId] FOREIGN KEY ([ContractOwnerVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty] ([VacancyPartyId]),
     CONSTRAINT [FK_Vacancy_DeliveryProviderVacancyPartyId] FOREIGN KEY ([DeliveryProviderVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty] ([VacancyPartyId]),
@@ -80,9 +96,47 @@
     CONSTRAINT [FK_Vacancy_VacancyLocationTypeCode] FOREIGN KEY ([VacancyLocationTypeCode]) REFERENCES [Vacancy].[VacancyLocationType] ([VacancyLocationTypeCode]),
     CONSTRAINT [FK_Vacancy_VacancyStatusCode] FOREIGN KEY ([VacancyStatusCode]) REFERENCES [Vacancy].[VacancyStatus] ([VacancyStatusCode]),
     CONSTRAINT [FK_Vacancy_VacancyTypeCode] FOREIGN KEY ([VacancyTypeCode]) REFERENCES [Vacancy].[VacancyType] ([VacancyTypeCode]),
-    CONSTRAINT [FK_Vacancy_WageTypeCode] FOREIGN KEY ([WageTypeCode]) REFERENCES [Vacancy].[WageType] ([WageTypeCode])
+    CONSTRAINT [FK_Vacancy_WageTypeCode] FOREIGN KEY ([WageTypeCode]) REFERENCES [Vacancy].[WageType] ([WageTypeCode]),
+    CONSTRAINT [FK_Vacancy_WageIntervalCode] FOREIGN KEY ([WageIntervalCode]) REFERENCES [Vacancy].[WageInterval] ([WageIntervalCode])
 );
 
 GO
 
-CREATE UNIQUE INDEX [IX_Vacancy_VacancyReferenceNumber] ON [Vacancy].[Vacancy] ([VacancyReferenceNumber])
+--CREATE UNIQUE INDEX [IX_Vacancy_VacancyReferenceNumber] ON [Vacancy].[Vacancy] ([VacancyReferenceNumber])
+
+--GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'The URL specific to this vacancy. May be the same as VacancyParty.WebsiteUrl or may have been overridden.',
+    @level0type = N'SCHEMA',
+    @level0name = N'Vacancy',
+    @level1type = N'TABLE',
+    @level1name = N'Vacancy',
+    @level2type = N'COLUMN',
+    @level2name = N'EmployerWebSiteUrl'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'When it was first published as a live vacancy',
+    @level0type = N'SCHEMA',
+    @level0name = N'Vacancy',
+    @level1type = N'TABLE',
+    @level1name = N'Vacancy',
+    @level2type = N'COLUMN',
+    @level2name = N'PublishedDateTime'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'When it was first submitted to QA for approval',
+    @level0type = N'SCHEMA',
+    @level0name = N'Vacancy',
+    @level1type = N'TABLE',
+    @level1name = N'Vacancy',
+    @level2type = N'COLUMN',
+    @level2name = N'FirstSubmittedDateTime'
+GO
+EXEC sp_addextendedproperty @name = N'MS_Description',
+    @value = N'Number of times submitted for QA',
+    @level0type = N'SCHEMA',
+    @level0name = N'Vacancy',
+    @level1type = N'TABLE',
+    @level1name = N'Vacancy',
+    @level2type = N'COLUMN',
+    @level2name = N'SubmissionCount'

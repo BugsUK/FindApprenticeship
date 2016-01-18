@@ -160,7 +160,6 @@
     <Compile Include="Configuration\CacheConfiguration.cs" />
     <Compile Include="Configuration\ConfigurationCacheKey.cs" />
     <Compile Include="Configuration\ConfigurationExpressionExtension.cs" />
-    <Compile Include="Configuration\ConfigurationManager.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ServicesConfiguration.cs" />
