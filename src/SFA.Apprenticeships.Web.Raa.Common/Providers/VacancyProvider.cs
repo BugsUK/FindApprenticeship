@@ -19,7 +19,6 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Repositories;
     using Factories;
     using Infrastructure.Presentation;
     using ViewModels.Provider;
@@ -320,7 +319,7 @@
                 newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
 
@@ -362,7 +361,7 @@
             
             vacancy.LongDescription = viewModel.LongDescription;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
@@ -385,7 +384,7 @@
             vacancy.ThingsToConsider = viewModel.ThingsToConsider;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -405,7 +404,7 @@
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
@@ -422,7 +421,7 @@
 
             try
             {
-                vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+                vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
             }
             catch (CustomException)
             {
@@ -516,7 +515,7 @@
             }
             vacancy.SubmissionCount++;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
             
             //TODO: should we return this VM or the one returned by GetVacancy?
             var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(vacancy);
@@ -842,7 +841,7 @@
             }
 
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.SaveApprenticeshipVacancy(submittedVacancy);
+            _vacancyPostingService.ShallowSaveApprenticeshipVacancy(submittedVacancy);
         }
 
         public void RejectVacancy(long vacancyReferenceNumber)
@@ -851,7 +850,7 @@
             vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
             vacancy.QAUserName = null;
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
         }
 
         public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
@@ -903,7 +902,7 @@
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
@@ -937,7 +936,7 @@
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
             var sectors = GetSectorsAndFrameworks();
@@ -976,7 +975,7 @@
                 vacancy.NumberOfPositionsComment = null;
             }
             
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -997,7 +996,7 @@
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -1012,7 +1011,7 @@
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;

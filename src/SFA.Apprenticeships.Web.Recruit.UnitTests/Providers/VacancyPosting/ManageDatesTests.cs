@@ -27,7 +27,7 @@
             var apprenticeshipVacancy = new ApprenticeshipVacancy {VacancyReferenceNumber = vacancyReferenceNumber};
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
@@ -36,7 +36,7 @@
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.ClosingDate == closingDate)));
+            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.ClosingDate == closingDate)));
         }
 
         [Test]
@@ -56,7 +56,7 @@
             var apprenticeshipVacancy = new ApprenticeshipVacancy { VacancyReferenceNumber = vacancyReferenceNumber };
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
@@ -65,7 +65,7 @@
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.SaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.PossibleStartDate == possibleStartDate)));
+            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.PossibleStartDate == possibleStartDate)));
         }
     }
 }

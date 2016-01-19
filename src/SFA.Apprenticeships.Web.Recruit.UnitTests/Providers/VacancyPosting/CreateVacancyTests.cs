@@ -53,18 +53,6 @@
         [SetUp]
         public void SetUp()
         {
-            //MockConfigurationService
-            //    .Setup(mock => mock.Get<CommonWebConfiguration>())
-            //    .Returns(_webConfiguration);
-
-            //MockProviderService
-            //    .Setup(mock => mock.GetProviderSiteEmployerLink(ProviderSiteUrn, EmployerFilterViewModelMessages.Ern))
-            //    .Returns(ProviderSiteEmployerLink);
-
-            //MockReferenceDataService
-            //    .Setup(mock => mock.GetCategories())
-            //    .Returns(_categories);
-
             _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
             {
                 VacancyReferenceNumber = 1,
@@ -92,6 +80,8 @@
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);
             MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns<ApprenticeshipVacancy>(v => v);
+            MockVacancyPostingService.Setup(mock => mock.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
@@ -131,7 +121,7 @@
                 mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Never);
             MockVacancyPostingService.Verify(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
+                mock.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -305,10 +295,7 @@
             _validNewVacancyViewModelWithReferenceNumber.StandardId = standardId;
 
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() {ApprenticeshipLevel = av.ApprenticeshipLevel};
-                });
+                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() {ApprenticeshipLevel = av.ApprenticeshipLevel});
 
             var provider = GetVacancyPostingProvider();
 
@@ -357,10 +344,7 @@
             _validNewVacancyViewModelWithReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
 
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName };
-                });
+                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName });
             var provider = GetVacancyPostingProvider();
 
             // Act.
