@@ -1,41 +1,15 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+﻿@model VacancyRequirementsProspectsViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@{
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
-
-    var saveButtonText = ( Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview ) ? "Save and return to Preview" : "Save and continue";
-}
-
-<h1 class="heading-xlarge">
-    Requirements and prospects
-</h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
-    @Html.HiddenFor(m => m.Status)
-    @Html.HiddenFor(m => m.ComeFromPreview)
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 
-    <section>
-        <div class="form-group">
-            @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DesiredSkillsComment))
-            @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.PersonalQualitiesComment))
-            @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.DesiredQualificationsComment))
-            @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.FutureProspectsComment))
-            @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.Partial("_comment", Html.GetCommentViewModel(m => m.ThingsToConsiderComment))
-        </div>
-    </section>
     <div class="grid grid-1-2">
         <button id="VacancyRequirementsProspectsButton" type="submit" class="button" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">@saveButtonText</button>
         <button id="VacancyRequirementsProspectsAndExit" type="submit" class="button-link" name="VacancyRequirementsProspects" value="VacancyRequirementsProspectsAndExit">Save and exit</button>
