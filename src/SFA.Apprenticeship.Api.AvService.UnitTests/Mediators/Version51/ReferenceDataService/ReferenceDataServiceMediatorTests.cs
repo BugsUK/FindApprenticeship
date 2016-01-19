@@ -25,7 +25,7 @@
 
             _mockWebServiceAuthenticationProvider.Setup(mock => mock
                 .Authenticate(It.IsAny<Guid>(), It.IsAny<string>()))
-                .Returns(AuthenticationResult.Authenticated);
+                .Returns(WebServiceAuthenticationResult.Authenticated);
 
             // Mediator.
             _referenceDataServiceMediator = new ReferenceDataServiceMediator(
@@ -88,7 +88,7 @@
 
             _mockWebServiceAuthenticationProvider.Setup(mock => mock
                 .Authenticate(request.ExternalSystemId, request.PublicKey))
-                .Returns(AuthenticationResult.AuthenticationFailed);
+                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
 
             // Act.
             Action action = () => _referenceDataServiceMediator.GetErrorCodes(request);

@@ -4,6 +4,6 @@
 
     public interface IWebServiceAuthenticationProvider
     {
-        AuthenticationResult Authenticate(Guid externalSystemId, string publicKey);
+        WebServiceAuthenticationResult Authenticate(Guid externalSystemId, string publicKey);
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.Providers
 {
-    public enum AuthenticationResult
+    public enum WebServiceAuthenticationResult
     {
         Unknown = 0,
         Authenticated = 1,

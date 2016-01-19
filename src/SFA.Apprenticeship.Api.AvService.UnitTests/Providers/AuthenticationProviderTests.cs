@@ -44,18 +44,18 @@
             _webServiceAuthenticationProvider = new WebServiceAuthenticationProvider(_mockWebServiceConsumerService.Object);
         }
 
-        [TestCase(ValidExternalSystemId, ValidPublicKey, AuthenticationResult.Authenticated)]
-        [TestCase(ValidExternalSystemId, InvalidPublicKey, AuthenticationResult.AuthenticationFailed)]
-        [TestCase(ValidExternalSystemId, "", AuthenticationResult.InvalidPublicKey)]
-        [TestCase(ValidExternalSystemId, " ", AuthenticationResult.InvalidPublicKey)]
-        [TestCase(InvalidExternalSystemId, ValidPublicKey, AuthenticationResult.InvalidExternalSystemId)]
-        public void ShouldAuthenticate(string externalSystemId, string publicKey, AuthenticationResult expectedAuthenticationResult)
+        [TestCase(ValidExternalSystemId, ValidPublicKey, WebServiceAuthenticationResult.Authenticated)]
+        [TestCase(ValidExternalSystemId, InvalidPublicKey, WebServiceAuthenticationResult.AuthenticationFailed)]
+        [TestCase(ValidExternalSystemId, "", WebServiceAuthenticationResult.InvalidPublicKey)]
+        [TestCase(ValidExternalSystemId, " ", WebServiceAuthenticationResult.InvalidPublicKey)]
+        [TestCase(InvalidExternalSystemId, ValidPublicKey, WebServiceAuthenticationResult.InvalidExternalSystemId)]
+        public void ShouldAuthenticate(string externalSystemId, string publicKey, WebServiceAuthenticationResult expectedWebServiceAuthenticationResult)
         {
             // Act.
             var result = _webServiceAuthenticationProvider.Authenticate(new Guid(externalSystemId), publicKey);
 
             // Assert.
-            result.Should().Be(expectedAuthenticationResult);
+            result.Should().Be(expectedWebServiceAuthenticationResult);
         }
 
     }

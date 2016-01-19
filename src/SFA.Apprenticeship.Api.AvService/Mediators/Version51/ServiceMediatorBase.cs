@@ -24,7 +24,7 @@
             var authenticationResult = _webServiceAuthenticationProvider.Authenticate(
                 request.ExternalSystemId, request.PublicKey);
 
-            if (authenticationResult != AuthenticationResult.Authenticated)
+            if (authenticationResult != WebServiceAuthenticationResult.Authenticated)
             {
                 throw new SecurityException();
             }
