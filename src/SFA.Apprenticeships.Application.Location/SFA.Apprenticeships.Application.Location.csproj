@@ -89,8 +89,10 @@
     <Compile Include="AddressSearchService.cs" />
     <Compile Include="IAddressLookupProvider.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
+    <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />
     <Compile Include="LocationSearchService.cs" />
+    <Compile Include="PostalAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -179,6 +179,8 @@
     <Compile Include="Location\LocationLookupProviderTests.cs" />
     <Compile Include="Monitor\Repositories\ApprenticeshipMetricsRepositoryTests.cs" />
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />
+    <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
+    <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="RabbitMq\Configuration\RabbitConfigurationTests.cs" />
     <Compile Include="Repositories\Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />

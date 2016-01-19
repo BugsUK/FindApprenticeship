@@ -93,6 +93,7 @@
     <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchService.cs" />
+    <Compile Include="Locations\IPostalAddressSearchService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Communications\CommunicationToken.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />
