@@ -1,13 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.LocationsProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
     using System;
     using System.Collections.Generic;
-    using Common.ViewModels.Locations;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using NUnit.Framework;
-    using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
     public class LocationsTests : TestBase

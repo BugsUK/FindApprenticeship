@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.ViewModels.Vacancy;
+    using ViewModels.Vacancy;
+    using Web.Common.ViewModels;
 
     [TestFixture]
     public class ManageDatesTests : TestBase

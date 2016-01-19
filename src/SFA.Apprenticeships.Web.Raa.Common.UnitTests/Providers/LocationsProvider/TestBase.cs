@@ -1,57 +1,62 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
     using Application.Interfaces.Applications;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
-    using Common.Configuration;
+    using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.Providers;
+    using Common.Providers;
+    using SFA.Infrastructure.Interfaces;
+    using Web.Common.Configuration;
 
     public abstract class TestBase
     {
         protected Mock<IConfigurationService> MockConfigurationService;
-        private Mock<ILogService> _mockLogService;
+        protected Mock<ILogService> MockLogService;
         protected Mock<IMapper> MockMapper;
         protected Mock<IProviderService> MockProviderService;
-        private Mock<IUserProfileService> _mockUserProfileService;
+        protected Mock<IUserProfileService> MockUserProfileService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
-        private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService;
+        protected Mock<IApprenticeshipApplicationService> ApprenticeshipApplicationService;
+        protected Mock<IApprenticeshipVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+        protected Mock<IApprenticeshipVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
         [SetUp]
         public void SetUpBase()
         {
-            _mockLogService = new Mock<ILogService>();
+            MockLogService = new Mock<ILogService>();
             MockConfigurationService = new Mock<IConfigurationService>();
             MockMapper = new Mock<IMapper>();
+            MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
+            MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
-            _mockUserProfileService = new Mock<IUserProfileService>();
+            MockUserProfileService = new Mock<IUserProfileService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
             MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
 
             MockTimeService = new Mock<IDateTimeService>();
-            _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            ApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
         {
-            return new VacancyProvider(_mockLogService.Object,
+            return new VacancyProvider(MockLogService.Object,
                 MockConfigurationService.Object,
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
                 MockTimeService.Object,
                 MockMapper.Object,
-                _apprenticeshipApplicationService.Object,
-                _mockUserProfileService.Object);
+                ApprenticeshipApplicationService.Object,
+                MockUserProfileService.Object);
         }
     }
 }

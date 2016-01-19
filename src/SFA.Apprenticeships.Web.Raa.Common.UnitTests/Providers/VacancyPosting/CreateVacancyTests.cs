@@ -1,22 +1,22 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-    using Common.ViewModels.Locations;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
+    using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
-    using System.Collections.Generic;
-    using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Ploeh.AutoFixture;
-    using Raa.Common.ViewModels.VacancyPosting;
+    using ViewModels.Provider;
+    using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
+    using Web.Common.ViewModels.Locations;
 
     [TestFixture]
     public class CreateVacancyTests : TestBase
