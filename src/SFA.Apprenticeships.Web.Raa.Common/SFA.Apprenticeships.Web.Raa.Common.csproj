@@ -275,6 +275,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.generated.cs">
+      <DependentUpon>EmployerQuestions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -302,6 +307,10 @@
     <Content Include="Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>RequirementsProspects.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestions.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

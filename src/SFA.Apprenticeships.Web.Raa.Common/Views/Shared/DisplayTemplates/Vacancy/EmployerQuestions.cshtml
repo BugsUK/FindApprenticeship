@@ -1,0 +1,24 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Extra questions you'd like to ask candidates (optional)";
+}
+
+<h1 class="heading-xlarge">
+    Extra questions you'd like to ask candidates (optional)
+</h1>
+
+@Html.AntiForgeryToken()
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
+@Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+<section>
+    <div class="form-group">
+        @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.FirstQuestionComment, "Comment", Html.GetLabelFor(m => m.FirstQuestionComment))
+        @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.SecondQuestionComment, "Comment", Html.GetLabelFor(m => m.SecondQuestionComment))
+    </div>
+</section>
