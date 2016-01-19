@@ -4,7 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Net;
     using System.Threading;
     using Application.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
@@ -13,7 +13,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.IoC;
     using Communication.IoC;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -22,7 +21,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Raa.IoC;
+    using SFA.Apprenticeships.Infrastructure.Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
@@ -86,9 +85,19 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         private void InitializeIoC()
         {
-            var container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            var container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -99,7 +108,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig));
+                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));

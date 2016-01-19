@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Application.Location;

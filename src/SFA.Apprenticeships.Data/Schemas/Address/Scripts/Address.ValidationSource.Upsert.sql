@@ -1,5 +1,8 @@
 MERGE [Address].ValidationSource AS dest
-USING (SELECT 'PCA', 'Postcode Anywhere') AS src (ValidationSourceCode, FullName)
+USING (
+	SELECT 'PCA', 'Postcode Anywhere' UNION
+	SELECT 'MAV', 'Migrated from AVMS'
+) AS src (ValidationSourceCode, FullName)
 ON (dest.ValidationSourceCode = src.ValidationSourceCode)
 WHEN MATCHED THEN
 	UPDATE SET FullName = src.FullName

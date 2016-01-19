@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -26,6 +26,7 @@
                 location.Longitude = -1.50812239495425;
             }
 
+            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
             var summary = new ApprenticeshipSummary
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
@@ -46,7 +47,8 @@
                 //TODO: How do we determine this in RAA?
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-                Wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit).GetDisplayText(vacancy.HoursPerWeek),
+                Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
+                WageUnit = wage.GetWageUnit(),
                 WorkingWeek = vacancy.WorkingWeek,
                 SubCategoryCode = vacancy.FrameworkCodeName
             };

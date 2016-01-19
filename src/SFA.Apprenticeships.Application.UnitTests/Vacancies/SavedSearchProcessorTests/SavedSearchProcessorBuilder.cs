@@ -5,7 +5,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Locations;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Vacancies;
     using Moq;
     using Vacancy;

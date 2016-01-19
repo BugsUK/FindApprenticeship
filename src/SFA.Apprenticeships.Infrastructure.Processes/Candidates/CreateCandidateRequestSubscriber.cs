@@ -2,10 +2,9 @@
 {
     using System;
     using Application.Candidate;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Configuration;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 

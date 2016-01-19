@@ -2,15 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics.Contracts;
     using System.Linq;
-    using Application.Interfaces.Logging;
     using Configuration;
     using CuttingEdge.Conditions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Configuration;
     using Entities;
     using Rest;
+    using SFA.Infrastructure.Interfaces;
 
     public class PostalAddressDetailsService : RestService, IPostalAddressDetailsService
     {

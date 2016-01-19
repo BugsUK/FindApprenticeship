@@ -40,6 +40,7 @@
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
+        public int OfflineApplicationClickThroughCount { get; set; }
         public DateTime? DateSubmitted { get; set; }
         public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }

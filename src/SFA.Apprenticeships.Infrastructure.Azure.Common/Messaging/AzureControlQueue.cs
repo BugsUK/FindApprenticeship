@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Azure.Common.Messaging
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
 
     public class AzureControlQueue : IJobControlQueue<StorageQueueMessage>

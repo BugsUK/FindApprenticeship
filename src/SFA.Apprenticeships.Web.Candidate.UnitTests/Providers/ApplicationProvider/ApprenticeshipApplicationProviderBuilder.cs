@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Providers.ApplicationProvider
 {
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Common.Configuration;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
     using Moq;
 
     internal class ApprenticeshipApplicationProviderBuilder

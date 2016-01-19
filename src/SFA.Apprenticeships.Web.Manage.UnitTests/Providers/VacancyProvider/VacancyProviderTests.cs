@@ -5,7 +5,6 @@
     using System.Linq;
     using System.Security.Principal;
     using System.Threading;
-    using Application.Interfaces.DateTime;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Domain.Entities.Organisations;
@@ -13,7 +12,7 @@
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
@@ -23,7 +22,6 @@
     using Common.Configuration;
     using Common.ViewModels;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using Moq.Language.Flow;
     using Raa.Common.Configuration;
     using Raa.Common.ViewModels.Vacancy;

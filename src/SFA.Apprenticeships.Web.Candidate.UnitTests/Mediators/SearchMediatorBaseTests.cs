@@ -3,7 +3,7 @@
     using Candidate.Mediators.Search;
     using Common.Configuration;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

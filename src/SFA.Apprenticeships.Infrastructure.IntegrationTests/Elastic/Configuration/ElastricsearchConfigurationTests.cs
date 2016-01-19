@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Elastic.Configuration
 {
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;

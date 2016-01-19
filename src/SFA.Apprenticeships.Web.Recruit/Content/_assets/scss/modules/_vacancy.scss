@@ -6,6 +6,9 @@
   a {
     text-decoration: none;
   }
+  .subtitle{
+      font-weight: normal;
+  }
 }
 
 #employer-data-display {
@@ -22,6 +25,9 @@
     }
     .locations-positions-header{
         text-align: center;
+    }
+    tbody tr{
+        height: 78px;
     }
 }
 
@@ -144,6 +150,9 @@ h2{
                     }
                 }
             }
+            figcaption.underline {
+                text-decoration: underline;
+            }
         }
     }
 }
@@ -257,6 +266,10 @@ table#rightLocationAddressesTable{
 }
 
 .vac-status{
+    text-align: center;
+}
+
+.vac-no-of-applications{
     text-align: center;
 }
 

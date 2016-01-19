@@ -13,7 +13,7 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
     using SendGrid;
 

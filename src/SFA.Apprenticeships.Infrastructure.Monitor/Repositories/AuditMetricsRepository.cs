@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Repositories
 {
     using System.Linq;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Audit.Entities;
     using Mongo.Common.Configuration;
     using MongoDB.Driver;

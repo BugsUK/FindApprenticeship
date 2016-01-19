@@ -3,11 +3,10 @@
     using System;
     using System.Collections.Generic;
     using Application.Interfaces.Locations;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using ViewModels.VacancySearch;
 
     public class SearchProvider : ISearchProvider

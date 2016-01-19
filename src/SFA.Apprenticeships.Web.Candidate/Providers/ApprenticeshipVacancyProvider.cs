@@ -6,7 +6,7 @@
     using System.Linq;
     using System.Threading.Tasks;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
     using Constants.Pages;
@@ -14,7 +14,6 @@
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Mapping;
     using ViewModels.VacancySearch;
 
     public class ApprenticeshipVacancyProvider : IApprenticeshipVacancyProvider
@@ -23,6 +22,7 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
+        private readonly IOfflineVacancyService _offlineVacancyService;
 
         private static class ResultsKeys
         {
@@ -35,12 +35,13 @@
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
             ICandidateService candidateService,
             IMapper apprenticeshipSearchMapper,
-            ILogService logger)
+            ILogService logger, IOfflineVacancyService offlineVacancyService)
         {
             _apprenticeshipSearchService = apprenticeshipSearchService;
             _candidateService = candidateService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _logger = logger;
+            _offlineVacancyService = offlineVacancyService;
         }
 
         public ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search)
@@ -204,6 +205,32 @@
                 _logger.Error(message, e);
                 throw;
             }
+        }
+
+        public ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId)
+        {
+            _logger.Debug(
+                "Calling ApprenticeshipVacancyDetailProvider to increment click throughs for vacancy ID: {0}.", vacancyId);
+
+            var vacancyDetail = _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
+
+            if (vacancyDetail == null) return null;
+
+            var vacancyDetailViewModel = _apprenticeshipSearchMapper.Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
+
+            try
+            {
+                //Incrementing this value should be able to fail and the user still redirected to the offline URL
+                _offlineVacancyService.IncrementOfflineApplicationClickThrough(vacancyId);
+            }
+            catch (Exception e)
+            {
+                var message = $"Increment click throughs failed for vacancy ID: {vacancyId}.";
+
+                _logger.Error(message, e);
+            }
+
+            return vacancyDetailViewModel;
         }
 
         private Dictionary<string, SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>> ProcessNationalAndNonNationalSearches(

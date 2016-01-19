@@ -6,7 +6,7 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
 
     public class SaveCandidateStrategy : ISaveCandidateStrategy

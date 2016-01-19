@@ -2,8 +2,7 @@
 {
     using System;
     using MongoDB.Driver;
-    using Domain.Interfaces.Configuration;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
 
     public class MongoAdminClient : IMongoAdminClient

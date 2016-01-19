@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Net;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Infrastructure.Communication.Configuration;
     using Infrastructure.Communication.Sms;

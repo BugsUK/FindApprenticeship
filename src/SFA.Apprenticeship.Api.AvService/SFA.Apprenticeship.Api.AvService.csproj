@@ -91,6 +91,10 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -284,6 +288,11 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
+    <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\AuthenticationResult.cs" />
+    <Compile Include="Domain\WebServiceConsumer.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandlerBehavior.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandler.cs" />
     <Compile Include="ErrorHandlers\ErrorHandlerBase.cs" />
@@ -305,6 +314,8 @@
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
+    <Compile Include="Mediators\Version51\ReferenceDataServiceMediator.cs" />
+    <Compile Include="Mediators\Version51\IReferenceDataServiceMediator.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetCountiesRequest.cs" />
@@ -332,16 +343,21 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Version51\IVacancyDetailsProvider.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider.cs" />
-    <Compile Include="Mediators\Version51\VacancyUploadMediator.cs" />
+    <Compile Include="Mediators\Version51\VacancyUploadServiceMediator.cs" />
+    <Compile Include="Repositories\IWebServiceConsumerReadRepository.cs" />
+    <Compile Include="Repositories\FakeWebServiceConsumerRepository.cs" />
+    <Compile Include="Repositories\WebServiceConsumerRepository.cs" />
     <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyManagement.cs" />
-    <Compile Include="Mediators\Version51\IVacancyUploadMediator.cs" />
+    <Compile Include="Mediators\Version51\IVacancyUploadServiceMediator.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />
+    <Compile Include="Services\IWebServiceConsumerService.cs" />
+    <Compile Include="Services\WebServiceConsumerService.cs" />
     <Compile Include="Validators\FluentValidationExtensions.cs" />
-    <Compile Include="Validators\VacancyUploadRequestValidator.cs" />
+    <Compile Include="Validators\Version51\VacancyUploadRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
@@ -399,6 +415,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

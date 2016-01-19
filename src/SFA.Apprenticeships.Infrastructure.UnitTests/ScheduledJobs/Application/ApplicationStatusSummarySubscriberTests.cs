@@ -5,7 +5,7 @@
     using Apprenticeships.Application.Applications.Entities;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Infrastructure.Processes.Applications;

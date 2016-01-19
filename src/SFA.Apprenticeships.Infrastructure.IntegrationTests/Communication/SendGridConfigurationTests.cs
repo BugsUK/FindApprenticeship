@@ -2,7 +2,7 @@
 {
     using System.Linq;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Communication.Configuration;
     using Infrastructure.Communication.IoC;
     using Logging.IoC;

@@ -7,6 +7,11 @@
     {
         #region Vacancy
 
+        protected VacancyDetail()
+        {
+            WageUnit = WageUnit.Weekly;
+        }
+
         public int Id { get; set; }
 
         public string VacancyReference { get; set; }
@@ -28,6 +33,8 @@
         public DateTime InterviewFromDate { get; set; }
 
         public decimal Wage { get; set; }
+
+        public WageUnit WageUnit { get; set; }
 
         public string WageDescription { get; set; }
 

@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Common.Configuration;
@@ -17,8 +17,6 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Constants.Pages;
     using ViewModels.Applications;
     using ViewModels.MyApplications;

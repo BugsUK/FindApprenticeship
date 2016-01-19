@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Provider = Domain.Entities.Providers.Provider;
     using ProviderSite = Domain.Entities.Providers.ProviderSite;
 

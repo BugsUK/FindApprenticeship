@@ -2,7 +2,7 @@
 {
     using System;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
 

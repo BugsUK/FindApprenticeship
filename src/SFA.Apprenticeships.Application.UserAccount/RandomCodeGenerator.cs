@@ -2,7 +2,7 @@
 {
     using System.Text;
     using System.Security.Cryptography;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
 
     public class RandomCodeGenerator : ICodeGenerator

@@ -1,7 +1,6 @@
 ﻿using Moq;
 using SFA.Apprenticeships.Application.Candidates.Strategies;
-using SFA.Apprenticeships.Application.Interfaces.Logging;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
+using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
 namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies

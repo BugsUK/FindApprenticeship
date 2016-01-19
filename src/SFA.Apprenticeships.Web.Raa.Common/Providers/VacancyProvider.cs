@@ -6,8 +6,7 @@
     using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
-    using Application.Interfaces.DateTime;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
@@ -15,13 +14,11 @@
     using Configuration;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Configuration;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Factories;
     using Infrastructure.Presentation;
@@ -499,7 +496,7 @@
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
-            if (viewModel.Status.CanHaveApplications())
+            if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
@@ -668,7 +665,7 @@
             };
 
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplications()))
+            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
             {
                 vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
             }
@@ -719,6 +716,7 @@
             vacancy.DesiredQualificationsComment = null;
             vacancy.OfflineApplicationUrlComment = null;
             vacancy.OfflineApplicationInstructionsComment = null;
+            vacancy.OfflineApplicationClickThroughCount = 0;
             vacancy.ApprenticeshipLevelComment = null;
             vacancy.FrameworkCodeNameComment = null;
             vacancy.StandardIdComment = null;

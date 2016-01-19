@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.VacancySearch
 {
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
     using Common.IoC;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.IoC;

@@ -6,7 +6,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Vacancy;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 

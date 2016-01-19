@@ -4,9 +4,8 @@
     using System.Linq;
     using Configuration;
     using MongoDB.Bson;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Mongo.Common;
-    using Application.Interfaces.Logging;
 
     public class CheckMongoReplicaSets : IMonitorTask
     {

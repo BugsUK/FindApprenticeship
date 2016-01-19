@@ -2,7 +2,7 @@
 {
     using System;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Microsoft.WindowsAzure;

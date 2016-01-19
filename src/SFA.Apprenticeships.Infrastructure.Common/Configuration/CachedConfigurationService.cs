@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
 {
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
 
     public class CachedConfigurationService : IConfigurationService
     {

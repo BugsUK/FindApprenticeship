@@ -7,10 +7,9 @@
     using System.Net;
     using System.Net.Mail;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Configuration;
     using EmailFromResolvers;
     using Exceptions;
     using SendGrid;

@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Vacancy].[VacancyLocation]
 (
 	[VacancyLocationId] INT NOT NULL IDENTITY, 
-	[VacancyId] INT NOT NULL, 
+	[VacancyId] UNIQUEIDENTIFIER NOT NULL, 
     [AddressId] INT NOT NULL, 
     [NumberOfPositions] INT NOT NULL, 
     [DirectApplicationUrl] NVARCHAR(MAX) NULL, 

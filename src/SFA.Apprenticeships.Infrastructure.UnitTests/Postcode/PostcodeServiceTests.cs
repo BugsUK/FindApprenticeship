@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Postcode
 {
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Postcode;
     using Infrastructure.Postcode.Configuration;
     using Infrastructure.Postcode.Entities;

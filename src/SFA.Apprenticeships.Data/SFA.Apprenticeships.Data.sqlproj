@@ -123,6 +123,10 @@
     <Folder Include="Schemas\WebProxy\Schema" />
     <Folder Include="Schemas\WebProxy\Scripts" />
     <Folder Include="Schemas\WebProxy\Tables" />
+    <Folder Include="Security\" />
+    <Folder Include="Schemas\WebService" />
+    <Folder Include="Schemas\WebService\Schema" />
+    <Folder Include="Schemas\WebService\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -162,6 +166,11 @@
     <Build Include="Schemas\WebProxy\Tables\WebProxy.WebProxyConsumer.sql" />
     <Build Include="Schemas\Vacancy\Tables\Vacancy.VacancyLocationType.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.VacancyLocationType.Upsert.sql" />
+    <Build Include="Schemas\Vacancy\Tables\Vacancy.WageInterval.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.WageType.Upsert.sql" />
+    <None Include="Schemas\Vacancy\Scripts\Vacancy.WageInterval.Upsert.sql" />
+    <Build Include="Schemas\WebService\Tables\WebService.WebServiceConsumer.sql" />
+    <Build Include="Schemas\WebService\Schema\WebService.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />
@@ -173,7 +182,6 @@
     <None Include="Schemas\Address\Scripts\Address.ValidationSource.Upsert.sql" />
     <None Include="Schemas\Vacancy\Scripts\Vacancy.DurationType.Upsert.sql" />
     <PostDeploy Include="PostDeployment.sql" />
-    <None Include="Schemas\Reference\Scripts\Reference.WageType.Upsert.sql" />
     <None Include="Schemas\WebProxy\Scripts\WebProxy.WebProxyConsumer.Upsert.sql" />
   </ItemGroup>
 </Project>

@@ -4,13 +4,12 @@ namespace SFA.Apprenticeships.Application.Candidates
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Entities;
-    using Interfaces.Logging;
 
     public class CandidateProcessor : ICandidateProcessor
     {

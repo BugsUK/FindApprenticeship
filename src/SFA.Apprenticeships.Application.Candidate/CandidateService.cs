@@ -12,7 +12,7 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Interfaces.Communications;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
     using Strategies;

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Metrics.Candidate.Tasks
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
 
     public class MetricsTaskRunner : IMetricsTaskRunner
     {

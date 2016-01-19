@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.VacancyStatusProcessorTests
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.VacancyStatusProcessorTests
 {
     using Application.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using Infrastructure.Interfaces;
     using Moq;
 
     public class VacancyStatusProcessorBuilder

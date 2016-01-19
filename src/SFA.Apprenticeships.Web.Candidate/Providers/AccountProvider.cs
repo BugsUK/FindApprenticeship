@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Users;
     using Common.Configuration;
     using Common.ViewModels.Locations;
@@ -12,8 +12,6 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Mappers;
     using ViewModels.Account;
     using ErrorCodes = Application.Interfaces.Users.ErrorCodes;

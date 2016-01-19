@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using AutoMapper.Mappers;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
 
     public abstract class MapperEngine : IMapper
     {

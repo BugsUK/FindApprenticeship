@@ -2,7 +2,7 @@
 {
     using System.Web.Mvc;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
 
     public class SiteRootRedirect : ActionFilterAttribute
     {

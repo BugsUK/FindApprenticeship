@@ -4,7 +4,7 @@
     using System.Configuration;
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Configuration;
     using Domain.Entities.Exceptions;
 

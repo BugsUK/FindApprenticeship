@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
@@ -14,7 +14,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Common.IoC;
     using Communication.Configuration;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -131,9 +130,19 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
         private void InitializeIoC()
         {
-            var container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            var container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -144,7 +153,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig));
+                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();

@@ -6,12 +6,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
     using Constants;
-    using Domain.Interfaces.Configuration;
     using Extensions;
     using FluentValidation.Mvc;
     using Mediators;

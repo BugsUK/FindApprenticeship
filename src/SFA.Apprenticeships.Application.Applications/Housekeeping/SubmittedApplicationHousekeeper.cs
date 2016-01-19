@@ -6,9 +6,8 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using Candidates.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
     using Strategies;
 
     public class SubmittedApplicationHousekeeper : ISubmittedApplicationHousekeeper

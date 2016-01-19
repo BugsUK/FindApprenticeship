@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.RabbitMq.Configuration
 {
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Logging.Configuration;
     using Logging.IoC;

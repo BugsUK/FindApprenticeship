@@ -53,6 +53,12 @@
             <div class="@(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                 <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
                 <label class="form-label">Apprenticeship type</label>
+
+                <p id="frameworks-standards-explained">
+                    <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
+                    <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+                </p>
+
                 @* ReSharper disable once Html.IdNotResolved *@
                 <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
                     @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
@@ -69,6 +75,12 @@
             <noscript>
                 <div class="form-group">
                     <h3 class="bold-small">Apprenticeship type</h3>
+
+                    <p id="frameworks-standards-explained">
+                        <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
+                        <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+                    </p>
+
                     @if (isFramework)
                     {
                         <label class="unselected-apprenticeship-type">Framework</label>
@@ -88,11 +100,6 @@
                     }
                 </div>
             </noscript>
-
-            <div id="frameworks-standards-explained">
-                <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
-                <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
-            </div>
 
             <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">

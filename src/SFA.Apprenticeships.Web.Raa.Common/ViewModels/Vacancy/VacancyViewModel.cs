@@ -51,6 +51,8 @@
 
         public int ApplicationCount { get; set; }
 
+        public int OfflineApplicationClickThroughCount { get; set; }
+
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
         public bool IsUnapprovedMultiLocationParentVacancy

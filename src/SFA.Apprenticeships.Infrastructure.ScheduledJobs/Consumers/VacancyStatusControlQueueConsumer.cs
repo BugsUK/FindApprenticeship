@@ -2,10 +2,10 @@
 {
     using System;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
     using Application.Vacancies;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;
+    using SFA.Infrastructure.Interfaces;
 
     public class VacancyStatusControlQueueConsumer : AzureControlQueueConsumer
     {

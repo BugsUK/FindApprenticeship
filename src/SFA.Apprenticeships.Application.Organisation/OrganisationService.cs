@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Application.Organisation
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
     using Interfaces.Generic;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
 
     public class OrganisationService : IOrganisationService

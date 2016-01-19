@@ -3,9 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Configuration;
     using Infrastructure.Postcode;
     using Infrastructure.Postcode.Configuration;
     using Infrastructure.Postcode.Entities;
@@ -13,6 +11,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RestSharp;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class PostalAddressLookupProviderTests

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Service.Vacancy
 {
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.VacancySearch.Configuration;
 
 

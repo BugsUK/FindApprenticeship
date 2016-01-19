@@ -4,7 +4,7 @@
     using System.Linq;
     using Application.Candidates;
     using Application.Candidates.Entities;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 

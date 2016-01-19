@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Azure.IoC
 {
     using StructureMap.Configuration.DSL;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class AzureCacheRegistry : Registry
     {

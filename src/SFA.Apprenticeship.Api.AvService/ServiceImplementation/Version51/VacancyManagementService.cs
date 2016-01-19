@@ -3,7 +3,7 @@
     using System;
     using System.Security;
     using System.ServiceModel;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using Infrastructure.Interfaces;
     using Mediators.Version51;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
@@ -15,11 +15,11 @@
     public class VacancyManagementService : IVacancyManagement
     {
         private readonly ILogService _logService;
-        private readonly IVacancyUploadMediator _vacancyUploadMediator;
+        private readonly IVacancyUploadServiceMediator _vacancyUploadMediator;
 
         public VacancyManagementService(
             ILogService logService,
-            IVacancyUploadMediator vacancyUploadMediator)
+            IVacancyUploadServiceMediator vacancyUploadMediator)
         {
             _logService = logService;
             _vacancyUploadMediator = vacancyUploadMediator;
@@ -35,17 +35,6 @@
 
             try
             {
-                if (request == null)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
-                // TODO: API: AG: remove test code.
-                if (request.MessageId == Guid.Empty)
-                {
-                    throw new SecurityException();
-                }
-
                 return _vacancyUploadMediator.UploadVacancies(request);
             }
             catch (Exception e)

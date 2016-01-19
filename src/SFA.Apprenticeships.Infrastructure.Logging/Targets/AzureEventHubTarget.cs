@@ -6,6 +6,7 @@
     using NLog.Config;
     using NLog.Targets;
     using StructureMap;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Common.Configuration;
 

@@ -1,21 +1,25 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
-    using Application.Interfaces.DateTime;
+    using SFA.Infrastructure.Interfaces;
     using Caching.Memory.IoC;
     using Configuration;
     using DateTime;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Azure.Configuration;
+    using SFA.Infrastructure.Configuration;
+    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
 
     public class CommonRegistry : Registry
     {
-        public CommonRegistry() : this(new CacheConfiguration()) { }
+        public CommonRegistry() : this(new CacheConfiguration(), string.Empty) { }
 
-        public CommonRegistry(CacheConfiguration cacheConfiguration)
+        public CommonRegistry(CacheConfiguration cacheConfiguration, string configurationStorageConnectionString)
         {
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
-            For<IConfigurationService>().Singleton().Use<AzureBlobConfigurationService>().Name = "ConfigurationService";
+            For<IConfigurationService>().Singleton()
+                .Use<AzureBlobConfigurationService>()
+                .Ctor<string>("configurationStorageConnectionString").Is(configurationStorageConnectionString)
+                .Name = "ConfigurationService";
             For<IDateTimeService>().Use<DateTimeService>();
 
             if (cacheConfiguration.UseCache)

@@ -173,6 +173,10 @@
       <Project>{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Repository\" />

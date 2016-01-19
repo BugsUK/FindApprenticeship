@@ -3,7 +3,7 @@
     using System;
     using System.Threading.Tasks;
     using System.Web.Mvc;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Providers;
 
     public class StatusController : CandidateControllerBase

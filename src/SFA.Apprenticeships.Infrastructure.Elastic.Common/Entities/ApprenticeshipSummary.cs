@@ -63,6 +63,9 @@
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string Wage { get; set; }
 
+        [ElasticProperty(Type = FieldType.String, Index = FieldIndexOption.NotAnalyzed)]
+        public WageUnit WageUnit { get; set; }
+
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
         public string WorkingWeek { get; set; }
     }
