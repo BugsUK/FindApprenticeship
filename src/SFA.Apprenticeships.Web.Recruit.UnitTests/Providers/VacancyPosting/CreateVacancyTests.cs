@@ -414,5 +414,19 @@
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.Status == ProviderVacancyStatuses.Draft)));
         }
+
+        [Test]
+        public void CreateVacancy_LocationSearchViewModel_SavesOnce()
+        {
+            //Arrange
+            var locationSearchViewModel = new LocationSearchViewModel();
+            var provider = GetVacancyPostingProvider();
+
+            //Act
+            provider.CreateVacancy(locationSearchViewModel);
+
+            //Assert
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
+        }
     }
 }
