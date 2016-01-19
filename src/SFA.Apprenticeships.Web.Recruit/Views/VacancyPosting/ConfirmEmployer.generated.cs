@@ -55,7 +55,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
     #line 6 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"

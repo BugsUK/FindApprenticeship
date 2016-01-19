@@ -36,20 +36,20 @@
             return commentViewModel;
         }
 
-        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyExpression)
         {
-            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
-            var commentText = html.ValueFor(propertyCommentExpression).ToString();
+            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
+            var commentText = html.ValueFor(propertyExpression).ToString();
 
             var commentViewModel = new CommentViewModel(vacancyViewModel.Status, commentText, string.Empty, commentLabelText);
 
             return commentViewModel;
         }
 
-        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertyCommentExpression)
+        public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertyExpression)
         {
-            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
-            var commentText = html.ValueFor(propertyCommentExpression).ToString();
+            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
+            var commentText = html.ValueFor(propertyExpression).ToString();
 
             var commentViewModel = new CommentViewModel(commentText, string.Empty, commentLabelText);
 

@@ -255,13 +255,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DateTime.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\DisplayTemplates\VacancyPreview1.generated.cs">
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancyPreview.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\EditorTemplates\Comment.generated.cs">
-      <DependentUpon>Comment.cshtml</DependentUpon>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.generated.cs">
+      <DependentUpon>BasicVacancyDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.generated.cs">
+      <DependentUpon>FurtherVacancyDetails.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -277,13 +282,17 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>DateTime.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml">
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>Comment.generated.cs</LastGenOutput>
+      <LastGenOutput>VacancyPreview.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\DisplayTemplates\VacancyPreview.cshtml">
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>VacancyPreview1.generated.cs</LastGenOutput>
+      <LastGenOutput>BasicVacancyDetails.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>FurtherVacancyDetails.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -318,6 +327,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="TypeConverters\" />
+    <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

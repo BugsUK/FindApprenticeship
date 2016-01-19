@@ -1,0 +1,11 @@
+﻿@model string
+
+@if (!string.IsNullOrWhiteSpace(Model))
+{
+    <details class="open" open>
+        <summary>@ViewData["Label"]</summary>
+        <div class="detail-content qa-comment">
+            <div class="blocklabel-single-container preserve-formatting">@Model</div>
+        </div>
+    </details>
+}
