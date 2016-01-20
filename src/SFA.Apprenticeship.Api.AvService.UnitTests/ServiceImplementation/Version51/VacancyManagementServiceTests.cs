@@ -2,10 +2,11 @@
 {
     using System;
     using System.Security;
+    using AvService.Mediators.Version51;
+    using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;
     using Infrastructure.Interfaces;
-    using Mediators.Version51;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
@@ -14,7 +15,7 @@
     [TestFixture]
     public class VacancyManagementServiceTests
     {
-        private Mock<IVacancyUploadMediator> _mockVacancyUploadProvider;
+        private Mock<IVacancyUploadServiceMediator> _mockVacancyUploadServiceMediator;
         private Mock<ILogService> _mockLogService;
 
         private IVacancyManagement _vacancyManagementService;
@@ -22,12 +23,12 @@
         [SetUp]
         public void SetUp()
         {
-            _mockVacancyUploadProvider = new Mock<IVacancyUploadMediator>();
+            _mockVacancyUploadServiceMediator = new Mock<IVacancyUploadServiceMediator>();
             _mockLogService = new Mock<ILogService>();
 
             _vacancyManagementService = new VacancyManagementService(
                 _mockLogService.Object,
-                _mockVacancyUploadProvider.Object);
+                _mockVacancyUploadServiceMediator.Object);
         }
 
         [Test]
@@ -41,7 +42,7 @@
 
             var expectedResponse = new VacancyUploadResponse();
 
-            _mockVacancyUploadProvider.Setup(mock =>
+            _mockVacancyUploadServiceMediator.Setup(mock =>
                 mock.UploadVacancies(request))
                 .Returns(expectedResponse);
 
@@ -50,33 +51,6 @@
 
             // Assert.
             actualResponse.Should().Be(expectedResponse);
-        }
-
-        [Test]
-        public void ShouldThrowIfVacancyUploadRequestIsNull()
-        {
-            // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(default(VacancyUploadRequest));
-
-            // Assert.
-            action.ShouldThrow<ArgumentNullException>();
-        }
-
-        [Test]
-        [Description("This is a temporary test and should be removed when API authentication is implemented.")]
-        public void ShouldThrowIfMessageIdIsEmptyGuid()
-        {
-            // Arrange.
-            var request = new VacancyUploadRequest
-            {
-                MessageId = Guid.Empty
-            };
-
-            // Act.
-            Action action = () => _vacancyManagementService.UploadVacancies(request);
-
-            // Assert.
-            action.ShouldThrow<SecurityException>();
         }
     }
 }

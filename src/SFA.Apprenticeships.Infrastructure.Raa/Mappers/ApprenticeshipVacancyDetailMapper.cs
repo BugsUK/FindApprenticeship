@@ -15,6 +15,7 @@
         public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(ApprenticeshipVacancy vacancy, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
+            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
@@ -29,7 +30,8 @@
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
                 Wage = vacancy.Wage ?? 0,
-                WageDescription = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit).GetDisplayText(vacancy.HoursPerWeek),
+                WageUnit = wage.GetWageUnit(),
+                WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = vacancy.WageType.GetLegacyWageType(),
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.ThingsToConsider,

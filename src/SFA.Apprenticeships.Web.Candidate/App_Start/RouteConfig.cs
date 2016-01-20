@@ -225,6 +225,12 @@
                 );
 
             routes.MapRoute(
+                name: CandidateRouteNames.RedirectToExternalWebsite,
+                url: "apprenticeship/redirecttoexternalwebsite/{id}",
+                defaults: new { controller = "ApprenticeshipSearch", action = "RedirectToExternalWebsite" }
+                );
+
+            routes.MapRoute(
                 name: CandidateRouteNames.ApprenticeshipSaveVacancy,
                 url: "apprenticeship/save",
                 defaults: new { controller = "ApprenticeshipApplication", action = "SaveVacancy" }

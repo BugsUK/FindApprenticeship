@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.Sql.Tests
 {
     using System;
+    using Domain.Entities.Organisations;
+    using Domain.Entities.Providers;
     using Mappers;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
@@ -17,14 +19,17 @@
         //private Container _container;
 
         protected static readonly Guid VacancyId_VacancyA = Guid.NewGuid();
+        protected static readonly Guid VacancyId_VacancyAParent = Guid.NewGuid();
         protected const int VacancyReferenceNumber_VacancyA = 1;
 
         protected const int VacancyPartyId_EmployerA = 3;
         protected const int VacancyPartyId_ProviderA = 4;
         protected const int FrameworkId_Framework1 = 1;
+        protected const int FrameworkId_Framework2 = 2;
         protected const int StandardId_Standard1 = 1;
         protected const string VacancyTypeCode_Apprenticeship = "A";
         protected const string VacancyStatusCode_Live = "LIV";
+        protected const string VacancyStatusCode_Parent = "PAR";
         protected const string VacancyLocationTypeCode_Specific = "S";
         protected const string TrainingTypeCode_Framework = "F";
         protected const string TrainingTypeCode_Standard = "S";
@@ -32,6 +37,9 @@
         protected const string WageTypeCode_Custom = "CUS";
         protected const string WageIntervalCode_Weekly = "W";
         protected const string DurationTypeCode_Years = "Y";
+        protected const string Ukprn = "Ukrpn provider 1";
+        protected const string EmployerErn = "Employer 1 ern";
+        protected const string ProviderSiteErn = "Provider 1 site ern";
 
         protected Vacancy CreateValidDatabaseVacancy()
         {

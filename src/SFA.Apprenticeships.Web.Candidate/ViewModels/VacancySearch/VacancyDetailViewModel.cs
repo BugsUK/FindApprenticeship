@@ -55,6 +55,8 @@
 
         public string Wage { get; set; }
 
+        public WageUnit WageUnit { get; set; }
+
         public string WorkingWeek { get; set; }
 
         #endregion

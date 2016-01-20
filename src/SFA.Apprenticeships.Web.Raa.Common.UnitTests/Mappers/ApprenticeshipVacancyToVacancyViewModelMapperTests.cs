@@ -86,5 +86,18 @@
             viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Month.Should().Be(null);
             viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Year.Should().Be(null);
         }
+
+        [Test]
+        public void OfflineApplicationClickThroughCount()
+        {
+            //Arrange
+            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.OfflineApplicationClickThroughCount, 3).Create();
+
+            //Act
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+
+            //Assert
+            viewModel.OfflineApplicationClickThroughCount.Should().Be(3);
+        }
     }
 }

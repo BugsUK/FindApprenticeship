@@ -165,18 +165,8 @@
                     @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
                     @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
                 </div>
-                <button type="submit" class="button" name="AddLocations" value="Locations">Save and continue</button>
-            }
-            @{
-                if (comeFromConfirmEmployer == true)
-                {
-                    var address = Request.UrlReferrer.PathAndQuery;
-                    <a href="@address" class="cancel-link">Cancel</a>
-                }
-                else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
-                {
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyReferenceNumber}, new {@class = "cancel-link"})
-                }
+                <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
+                @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
             }
         </div>
     </noscript>
@@ -249,16 +239,7 @@
                 @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
             </div>
             <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-            @Html.RouteLink("Use employer's address", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
-            @if (comeFromConfirmEmployer == true)
-            {
-                var address = Request.UrlReferrer.PathAndQuery;
-                <a href="@address" class="cancel-link">Cancel</a>
-            }
-            else if (Model.ComeFromPreview && Model.Addresses != null && Model.Addresses.Any())
-            {
-                @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "cancel-link" })
-            }
+            @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
         </div>
     </div>
 }

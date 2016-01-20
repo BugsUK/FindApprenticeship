@@ -526,7 +526,7 @@ WriteLiteral("\r\n                        </span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                        <span>\r\n                            Wage\r\n");
+WriteLiteral("                        <span>\r\n                            Weekly wage\r\n");
 
 WriteLiteral("                            ");
 
@@ -668,14 +668,14 @@ WriteLiteral(" for anyone aged 21 and over.<br />\r\n                        App
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8584), Tuple.Create("\"", 8610)
+WriteAttribute("class", Tuple.Create(" class=\"", 8591), Tuple.Create("\"", 8617)
             
             #line 138 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 8592), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 8599), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 8592), false)
+, 8599), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -719,14 +719,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9327), Tuple.Create("\"", 9353)
+WriteAttribute("class", Tuple.Create(" class=\"", 9334), Tuple.Create("\"", 9360)
             
             #line 147 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 9335), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 9342), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 9335), false)
+, 9342), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -772,14 +772,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 10257), Tuple.Create("\"", 10298)
+WriteAttribute("class", Tuple.Create(" class=\"", 10264), Tuple.Create("\"", 10305)
             
             #line 158 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 10265), Tuple.Create<System.Object, System.Int32>(editableApprenticeshipLevelClass
+, Tuple.Create(Tuple.Create("", 10272), Tuple.Create<System.Object, System.Int32>(editableApprenticeshipLevelClass
             
             #line default
             #line hidden
-, 10265), false)
+, 10272), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -907,14 +907,14 @@ WriteLiteral("\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 11787), Tuple.Create("\"", 11813)
+WriteAttribute("class", Tuple.Create(" class=\"", 11794), Tuple.Create("\"", 11820)
             
             #line 184 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 11795), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 11802), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 11795), false)
+, 11802), false)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -997,15 +997,15 @@ WriteLiteral(" class=\"grid grid-2-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 12758), Tuple.Create("\"", 12789)
-, Tuple.Create(Tuple.Create("", 12766), Tuple.Create("text", 12766), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 12765), Tuple.Create("\"", 12796)
+, Tuple.Create(Tuple.Create("", 12773), Tuple.Create("text", 12773), true)
             
             #line 201 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create(" ", 12770), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 12777), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 12771), false)
+, 12778), false)
 );
 
 WriteLiteral(" itemprop=\"responsibilities\"");
@@ -1091,14 +1091,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 13896), Tuple.Create("\"", 13922)
+WriteAttribute("class", Tuple.Create(" class=\"", 13903), Tuple.Create("\"", 13929)
             
             #line 218 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 13904), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 13911), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 13904), false)
+, 13911), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1169,14 +1169,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 15026), Tuple.Create("\"", 15052)
+WriteAttribute("class", Tuple.Create(" class=\"", 15033), Tuple.Create("\"", 15059)
             
             #line 230 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 15034), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 15041), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 15034), false)
+, 15041), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1247,14 +1247,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 16190), Tuple.Create("\"", 16216)
+WriteAttribute("class", Tuple.Create(" class=\"", 16197), Tuple.Create("\"", 16223)
             
             #line 242 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 16198), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 16205), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 16198), false)
+, 16205), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -1335,14 +1335,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 17444), Tuple.Create("\"", 17470)
+WriteAttribute("class", Tuple.Create(" class=\"", 17451), Tuple.Create("\"", 17477)
             
             #line 257 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 17452), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 17459), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 17452), false)
+, 17459), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -1413,14 +1413,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 18542), Tuple.Create("\"", 18568)
+WriteAttribute("class", Tuple.Create(" class=\"", 18549), Tuple.Create("\"", 18575)
             
             #line 269 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 18550), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 18557), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 18550), false)
+, 18557), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -1529,14 +1529,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 20107), Tuple.Create("\"", 20133)
+WriteAttribute("class", Tuple.Create(" class=\"", 20114), Tuple.Create("\"", 20140)
             
             #line 292 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 20115), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 20122), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 20115), false)
+, 20122), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -1599,14 +1599,14 @@ WriteLiteral("                    ");
             #line hidden
 WriteLiteral("                        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 21069), Tuple.Create("\"", 21095)
+WriteAttribute("class", Tuple.Create(" class=\"", 21076), Tuple.Create("\"", 21102)
             
             #line 303 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 21077), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 21084), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 21077), false)
+, 21084), false)
 );
 
 WriteLiteral(">\r\n                            <h3");
@@ -1692,14 +1692,14 @@ WriteLiteral(">Employer</h3>\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 22222), Tuple.Create("\"", 22349)
+WriteAttribute("class", Tuple.Create(" class=\"", 22229), Tuple.Create("\"", 22356)
             
             #line 322 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 22230), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+, Tuple.Create(Tuple.Create("", 22237), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
-, 22230), false)
+, 22237), false)
 );
 
 WriteLiteral(">");
@@ -1721,14 +1721,14 @@ WriteLiteral(" class=\"inner-block-padr\"");
 
 WriteLiteral(">\r\n                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 22539), Tuple.Create("\"", 22565)
+WriteAttribute("class", Tuple.Create(" class=\"", 22546), Tuple.Create("\"", 22572)
             
             #line 326 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 22547), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 22554), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 22547), false)
+, 22554), false)
 );
 
 WriteLiteral(">\r\n                    <h3");
@@ -1799,14 +1799,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 23615), Tuple.Create("\"", 23633)
+WriteAttribute("class", Tuple.Create(" class=\"", 23622), Tuple.Create("\"", 23640)
             
             #line 346 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 23623), Tuple.Create<System.Object, System.Int32>(gridClass
+, Tuple.Create(Tuple.Create("", 23630), Tuple.Create<System.Object, System.Int32>(gridClass
             
             #line default
             #line hidden
-, 23623), false)
+, 23630), false)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -1852,29 +1852,29 @@ WriteLiteral("\r\n                        </h3>\r\n                        <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 24258), Tuple.Create("\"", 24327)
+WriteAttribute("href", Tuple.Create(" href=\"", 24265), Tuple.Create("\"", 24334)
             
             #line 355 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 24265), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 24272), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
             
             #line default
             #line hidden
-, 24265), false)
+, 24272), false)
 );
 
 WriteLiteral("\r\n                           id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                           target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 24430), Tuple.Create("\"", 24539)
+WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 24437), Tuple.Create("\"", 24546)
             
             #line 358 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 24466), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 24473), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
             
             #line default
             #line hidden
-, 24466), false)
-, Tuple.Create(Tuple.Create(" ", 24531), Tuple.Create("Website", 24532), true)
+, 24473), false)
+, Tuple.Create(Tuple.Create(" ", 24538), Tuple.Create("Website", 24539), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -2467,16 +2467,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 34720), Tuple.Create("\"", 34922)
-, Tuple.Create(Tuple.Create("", 34726), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 34726), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 34727), Tuple.Create("\"", 34929)
+, Tuple.Create(Tuple.Create("", 34733), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 34733), true)
             
             #line 489 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 34771), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 34778), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
             
             #line default
             #line hidden
-, 34771), false)
-, Tuple.Create(Tuple.Create("", 34858), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 34858), true)
+, 34778), false)
+, Tuple.Create(Tuple.Create("", 34865), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 34865), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -2517,16 +2517,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 35485), Tuple.Create("\"", 35679)
-, Tuple.Create(Tuple.Create("", 35491), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 35491), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 35492), Tuple.Create("\"", 35686)
+, Tuple.Create(Tuple.Create("", 35498), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 35498), true)
             
             #line 497 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 35536), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 35543), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode)
             
             #line default
             #line hidden
-, 35536), false)
-, Tuple.Create(Tuple.Create("", 35615), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 35615), true)
+, 35543), false)
+, Tuple.Create(Tuple.Create("", 35622), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 35622), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -2563,14 +2563,14 @@ WriteLiteral(" style=\"\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 36021), Tuple.Create("\"", 36047)
+WriteAttribute("class", Tuple.Create(" class=\"", 36028), Tuple.Create("\"", 36054)
             
             #line 508 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 36029), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 36036), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 36029), false)
+, 36036), false)
 );
 
 WriteLiteral(">\r\n            <h2");
@@ -2616,14 +2616,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("\r\n        </div>\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 36791), Tuple.Create("\"", 36817)
+WriteAttribute("class", Tuple.Create(" class=\"", 36798), Tuple.Create("\"", 36824)
             
             #line 515 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 36799), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 36806), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 36799), false)
+, 36806), false)
 );
 
 WriteLiteral(">\r\n            <p");
@@ -2637,14 +2637,14 @@ WriteLiteral(" id=\"external-employer-website\"");
 
 WriteLiteral(" rel=\"external\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 36997), Tuple.Create("\"", 37052)
+WriteAttribute("href", Tuple.Create(" href=\"", 37004), Tuple.Create("\"", 37059)
             
             #line 517 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 37004), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
+, Tuple.Create(Tuple.Create("", 37011), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OfflineApplicationUrl
             
             #line default
             #line hidden
-, 37004), false)
+, 37011), false)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -2753,14 +2753,14 @@ WriteLiteral("</p>\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 38121), Tuple.Create("\"", 38147)
+WriteAttribute("class", Tuple.Create(" class=\"", 38128), Tuple.Create("\"", 38154)
             
             #line 533 "..\..\Views\Shared\DisplayTemplates\VacancyPreview.cshtml"
-, Tuple.Create(Tuple.Create("", 38129), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 38136), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 38129), false)
+, 38136), false)
 );
 
 WriteLiteral(">\r\n");

@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Infrastructure.Presentation;

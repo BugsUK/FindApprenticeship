@@ -21,7 +21,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Infrastructure.Interfaces;
     using Extensions;
-    using Infrastructure.Common.Configuration;
     using Infrastructure.VacancySearch.Configuration;
     using Providers;
     using Validators;
@@ -399,6 +398,30 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Details.Ok, vacancyDetailViewModel);
         }
 
+        public MediatorResponse<ApprenticeshipVacancyDetailViewModel> RedirectToExternalWebsite(string vacancyIdString)
+        {
+            int vacancyId;
+
+            if (!TryParseVacancyId(vacancyIdString, out vacancyId))
+            {
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
+            }
+
+            var vacancyDetailViewModel = _apprenticeshipVacancyProvider.IncrementClickThroughFor(vacancyId);
+
+            if (vacancyDetailViewModel == null)
+            {
+                return GetMediatorResponse<ApprenticeshipVacancyDetailViewModel>(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyNotFound);
+            }
+
+            if (vacancyDetailViewModel.HasError())
+            {
+                return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.VacancyHasError, vacancyDetailViewModel, vacancyDetailViewModel.ViewModelMessage, UserMessageLevel.Warning);
+            }
+
+            return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.RedirectToExternalWebsite.Ok, vacancyDetailViewModel);
+        }
+
         public MediatorResponse<SavedSearchViewModel> RunSavedSearch(Guid candidateId, ApprenticeshipSearchViewModel apprenticeshipSearchViewModel)
         {
             Guid savedSearchId;
@@ -428,6 +451,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.SavedSearch.Ok, savedSearchViewModel);
         }
+
+        
 
         #region Helpers
 

@@ -894,6 +894,7 @@
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Helpers\FullNameFormatter.cs" />
     <Compile Include="Extensions\UserDataProviderExtensions.cs" />
+    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancySummaryViewModelResolvers.cs" />
     <Compile Include="Mappers\SavedSearchViewModelMapper.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
     <Compile Include="Mediators\Home\IHomeMediator.cs" />
