@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
     using System.Threading;
+    using Domain.Entities.Locations;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Queries;
@@ -162,6 +163,28 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
             var mongoEntity = SaveEntity(entity);
 
             _logger.Debug("Shallow saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
+
+            return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
+        public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
+            int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
+            string additionalLocationInformation, string additionalLocationInformationComment)
+        {
+            _logger.Debug($"Calling Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
+
+            var vacancy = Get(vacancyReferenceNumber);
+
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation;
+            vacancy.NumberOfPositions = numberOfPositions;
+            vacancy.LocationAddressesComment = locationAddressesComment;
+            vacancy.AdditionalLocationInformation = additionalLocationInformation;
+            vacancy.AdditionalLocationInformationComment = additionalLocationInformationComment;
+            vacancy.LocationAddresses = vacancyLocationAddresses.ToList();
+
+            var mongoEntity = SaveEntity(vacancy);
+
+            _logger.Info($"Called Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
 
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }

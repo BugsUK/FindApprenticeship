@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
     using System.Web.Mvc;
@@ -958,47 +957,25 @@
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
-            if (vacancy != null)
+            var addresses = viewModel.Addresses.Select(a => new VacancyLocationAddress
             {
-                vacancy.NumberOfPositions = null;
-                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
-                viewModel.Addresses.ForEach(a => vacancy.LocationAddresses.Add(new VacancyLocationAddress
+                Address = new Address
                 {
-                    Address = new Address
-                    {
-                        AddressLine1 = a.Address.AddressLine1,
-                        AddressLine2 = a.Address.AddressLine2,
-                        AddressLine3 = a.Address.AddressLine3,
-                        AddressLine4 = a.Address.AddressLine4,
-                        Postcode = a.Address.Postcode,
-                        Uprn = a.Address.Uprn
-                    },
-                    NumberOfPositions = a.NumberOfPositions.Value
-                }));
+                    AddressLine1 = a.Address.AddressLine1,
+                    AddressLine2 = a.Address.AddressLine2,
+                    AddressLine3 = a.Address.AddressLine3,
+                    AddressLine4 = a.Address.AddressLine4,
+                    Postcode = a.Address.Postcode,
+                    Uprn = a.Address.Uprn
+                },
+                NumberOfPositions = a.NumberOfPositions.Value
+            });
 
-                vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
-                vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
-                vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
-                vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                    viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            }
-
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.ReplaceLocationInformation(viewModel.VacancyReferenceNumber, viewModel.IsEmployerLocationMainApprenticeshipLocation,
+                null, addresses, viewModel.LocationAddressesComment, viewModel.AdditionalLocationInformation,
+                viewModel.AdditionalLocationInformationComment);
 
             return viewModel;
-        }
-
-        public void RemoveLocationAddresses(Guid vacancyGuid)
-        {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
-            if (vacancy != null)
-            {
-                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
-                vacancy.AdditionalLocationInformation = null;
-
-                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
-            }
         }
 
         public void RemoveVacancyLocationInformation(Guid vacancyGuid)
@@ -1006,12 +983,19 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
-                vacancy.LocationAddresses = new List<VacancyLocationAddress>();
-                vacancy.NumberOfPositions = null;
-                vacancy.IsEmployerLocationMainApprenticeshipLocation = null;
-                vacancy.AdditionalLocationInformation = null;
+                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber, null, null,
+                    new List<VacancyLocationAddress>(), null, null, null);
+            }
+        }
 
-                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+        public void RemoveLocationAddresses(Guid vacancyGuid)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            if (vacancy != null)
+            {
+                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation, vacancy.NumberOfPositions, new List<VacancyLocationAddress>(), vacancy.LocationAddressesComment,
+                    null, vacancy.AdditionalLocationInformationComment);
             }
         }
 

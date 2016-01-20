@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
     using System.Collections.Generic;
+    using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
 
@@ -25,5 +26,9 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
 
         ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+
+        void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
+            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
+            string additionalLocationInformation, string additionalLocationInformationComment);
     }
 }

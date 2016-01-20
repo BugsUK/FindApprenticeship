@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories
 {
+    using Common.Configuration;
     using Common.IoC;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Applications.IoC;
@@ -21,9 +22,19 @@
         [SetUp]
         public void SetUpContainer()
         {
-            Container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationMgr = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationMgr.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            Container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();

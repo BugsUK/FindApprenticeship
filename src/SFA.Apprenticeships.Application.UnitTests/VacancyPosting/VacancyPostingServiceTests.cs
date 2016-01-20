@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
     using System.Security.Claims;
     using System.Security.Principal;
     using System.Threading;
     using Application.VacancyPosting;
     using Domain.Entities;
+    using Domain.Entities.Locations;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -132,6 +134,26 @@
             _vacancyPostingService.GetVacancy(vacancyGuid);
 
             _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyGuid));
+        }
+
+        [Test]
+        public void ReplaceLocationInformationShouldCallRepository()
+        {
+            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            int? numberOfPositions = null;
+            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new []{new VacancyLocationAddress(), new VacancyLocationAddress(), new VacancyLocationAddress()};
+            const string locationAddressesComment = "location addresses comment";
+            const string additionalLocationInformation = "additional location information";
+            const string additionalLocationInformationComment = "additional location information";
+            const long vacancyReferenceNumber = 1L;
+
+            _vacancyPostingService.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
+                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
+                additionalLocationInformationComment);
+
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
+                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
+                additionalLocationInformationComment));
         }
     }
 }

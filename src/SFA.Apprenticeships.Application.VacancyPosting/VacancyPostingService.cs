@@ -7,6 +7,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
@@ -128,6 +129,15 @@
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
             return _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+        }
+
+        public void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
+            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
+            string additionalLocationInformationComment)
+        {
+            _apprenticeshipVacancyWriteRepository.ReplaceLocationInformation(vacancyReferenceNumber,
+                isEmployerLocationMainApprenticeshipLocation, numberOfPositions, vacancyLocationAddresses,
+                locationAddressesComment, additionalLocationInformation, additionalLocationInformationComment);
         }
     }
 }
