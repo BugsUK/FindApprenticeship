@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using FluentAssertions;
@@ -23,9 +24,11 @@
         [SetUp]
         public void SetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();

@@ -1,12 +1,10 @@
-﻿using Moq;
-using NUnit.Framework;
-using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
+    using Moq;
+    using NUnit.Framework;
+    using Common.Providers;
     using SFA.Infrastructure.Interfaces;
 
     public class TestBase

@@ -9,6 +9,7 @@
     using Domain.Entities.Locations;
     using Entities;
     using Rest;
+    using RestSharp;
     using SFA.Infrastructure.Interfaces;
 
     public class PostalAddressLookupProvider : RestService, IPostalAddressLookupProvider
@@ -25,14 +26,30 @@
             BaseUrl = new Uri(Config.FindByPartsEndpoint);
         }
 
-        public IEnumerable<PostalAddress> GetPostalAddresses(string addressLine1, string postcode)
+        public IEnumerable<PostalAddress> GetValidatedPostalAddresses(string postcode)
+        {
+            Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
+
+            var restRequest = Create(GetFindByPartsServiceUrl()
+                , new[]
+                {
+                    new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),
+                    new KeyValuePair<string, string>("postcode", postcode)
+                }
+                );
+            restRequest.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+
+            return ValidatedPostalAddresses(restRequest);
+        }
+
+        public IEnumerable<PostalAddress> GetValidatedPostalAddresses(string addressLine1, string postcode)
         {
             Condition.Requires(addressLine1, "addressLine1").IsNotNullOrWhiteSpace();
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 
-            _logger.Debug("Calling GetPostalAddresses for an address with addressLine1={0} and postcode={1}", addressLine1, postcode);
+            _logger.Debug("Calling GetVerifiedPostalAddresses for an address with addressLine1={0} and postcode={1}", addressLine1, postcode);
 
-            var request = Create(GetFindByPartsServiceUrl()
+            var restRequest = Create(GetFindByPartsServiceUrl()
                 , new[]
                 {
                     new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),
@@ -40,7 +57,13 @@
                     new KeyValuePair<string, string>("postcode", postcode)
                 }
                 );
-            request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+            restRequest.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
+
+            return ValidatedPostalAddresses(restRequest);
+        }
+
+        private IEnumerable<PostalAddress> ValidatedPostalAddresses(IRestRequest request)
+        {
 
             var addresses = Execute<List<PcaServiceFindResult>>(request);
 
@@ -59,7 +82,7 @@
                 if (foundAddress.Id == null)
                     continue;
 
-                var retrievedResult = _postalAddressDetailsService.RetrieveAddress(foundAddress.Id);
+                var retrievedResult = _postalAddressDetailsService.RetrieveValidatedAddress(foundAddress.Id);
                 if (retrievedResult != null)
                     addressList.Add(retrievedResult);
             }

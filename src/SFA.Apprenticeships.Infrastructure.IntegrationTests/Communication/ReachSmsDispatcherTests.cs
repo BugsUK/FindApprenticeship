@@ -3,6 +3,7 @@
     using System;
     using Application.Interfaces.Communications;
     using Candidate;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Exceptions;
     using FluentAssertions;
@@ -23,9 +24,11 @@
         [SetUp]
         public void SetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<CommunicationRegistry>();
             });

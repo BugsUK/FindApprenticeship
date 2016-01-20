@@ -113,9 +113,19 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
-            var container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            var container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -124,7 +134,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
             _container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();

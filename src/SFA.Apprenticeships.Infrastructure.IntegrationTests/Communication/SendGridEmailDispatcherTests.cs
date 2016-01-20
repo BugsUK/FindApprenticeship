@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication
 {
     using Application.Interfaces.Communications;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Infrastructure.Communication.Email;
@@ -20,9 +21,11 @@
         [SetUp]
         public void SetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<CommunicationRegistry>();
             });
 

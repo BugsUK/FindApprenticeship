@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
     using System.Linq;
-    using Common.Configuration;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -11,6 +10,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Web.Common.Configuration;
 
     [TestFixture]
     public class GetNewVacancyTests : TestBase

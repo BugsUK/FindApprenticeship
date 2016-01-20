@@ -22,7 +22,7 @@
             BaseUrl = new Uri(Config.RetrieveByIdEndpoint);
         }
 
-        public PostalAddress RetrieveAddress(string addressId)
+        public PostalAddress RetrieveValidatedAddress(string addressId)
         {
             Condition.Requires(addressId, "addressId").IsNotNullOrWhiteSpace();
 
@@ -45,7 +45,7 @@
 
             var address = addresses.Data.Single();
 
-            return new PostalAddress
+            var result = new PostalAddress
             {
                 AddressLine1 = address.Line1,
                 AddressLine2 = address.Line2,
@@ -57,6 +57,8 @@
                 ValidationSourceKeyValue = address.Udprn,
                 ValidationSourceCode = "PCA"
             };
+
+            return result;
         }
 
         private static string GetRetrieveServiceUrl()

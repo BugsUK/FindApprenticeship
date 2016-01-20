@@ -109,6 +109,7 @@
         {
             const string providerSiteErn = "101282923";
             const string ern = "100608868";
+            // const string ukprn = 
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             var vacancyGuid = Guid.NewGuid();
             var viewModel = GetProviderSiteEmployerLinkViewModel(ern, isEmployerLocationMainApprenticeshipLocation, null, providerSiteErn, vacancyGuid);

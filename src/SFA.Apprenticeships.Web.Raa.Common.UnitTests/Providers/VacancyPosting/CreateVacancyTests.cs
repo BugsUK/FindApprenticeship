@@ -1,22 +1,22 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
-    using Common.ViewModels.Locations;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
+    using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.ViewModels.Provider;
-    using Raa.Common.ViewModels.Vacancy;
-    using System.Collections.Generic;
-    using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Ploeh.AutoFixture;
-    using Raa.Common.ViewModels.VacancyPosting;
+    using ViewModels.Provider;
+    using ViewModels.Vacancy;
+    using ViewModels.VacancyPosting;
+    using Web.Common.ViewModels.Locations;
 
     [TestFixture]
     public class CreateVacancyTests : TestBase
@@ -53,18 +53,6 @@
         [SetUp]
         public void SetUp()
         {
-            //MockConfigurationService
-            //    .Setup(mock => mock.Get<CommonWebConfiguration>())
-            //    .Returns(_webConfiguration);
-
-            //MockProviderService
-            //    .Setup(mock => mock.GetProviderSiteEmployerLink(ProviderSiteUrn, EmployerFilterViewModelMessages.Ern))
-            //    .Returns(ProviderSiteEmployerLink);
-
-            //MockReferenceDataService
-            //    .Setup(mock => mock.GetCategories())
-            //    .Returns(_categories);
-
             _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
             {
                 VacancyReferenceNumber = 1,
@@ -92,6 +80,8 @@
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);
             MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns<ApprenticeshipVacancy>(v => v);
+            MockVacancyPostingService.Setup(mock => mock.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
@@ -131,7 +121,7 @@
                 mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Never);
             MockVacancyPostingService.Verify(mock =>
-                mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
+                mock.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -305,10 +295,7 @@
             _validNewVacancyViewModelWithReferenceNumber.StandardId = standardId;
 
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() {ApprenticeshipLevel = av.ApprenticeshipLevel};
-                });
+                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() {ApprenticeshipLevel = av.ApprenticeshipLevel});
 
             var provider = GetVacancyPostingProvider();
 
@@ -357,10 +344,7 @@
             _validNewVacancyViewModelWithReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
 
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName };
-                });
+                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName });
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -429,6 +413,20 @@
 
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.Status == ProviderVacancyStatuses.Draft)));
+        }
+
+        [Test]
+        public void CreateVacancy_LocationSearchViewModel_SavesOnce()
+        {
+            //Arrange
+            var locationSearchViewModel = new LocationSearchViewModel();
+            var provider = GetVacancyPostingProvider();
+
+            //Act
+            provider.CreateVacancy(locationSearchViewModel);
+
+            //Assert
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
         }
     }
 }

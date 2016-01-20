@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderUser
 {
     using Application.Interfaces.Users;
     using Domain.Entities.Users;

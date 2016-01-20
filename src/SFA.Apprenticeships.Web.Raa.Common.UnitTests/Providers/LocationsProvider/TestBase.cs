@@ -1,16 +1,16 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
     using Application.Interfaces.Applications;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
-    using Common.Configuration;
     using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.Providers;
+    using Common.Providers;
+    using SFA.Infrastructure.Interfaces;
+    using Web.Common.Configuration;
 
     public abstract class TestBase
     {
