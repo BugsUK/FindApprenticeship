@@ -19,7 +19,7 @@
     using Web.Common.Configuration;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
-
+    using System.Text.RegularExpressions;
     [TestFixture]
     public class DatabaseTests : BaseTests
     {
@@ -108,7 +108,7 @@
             var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.VacancyReferenceNumber = newReferenceNumber;
-
+            vacancy.LocationAddresses = null; // TODO: Change to separate repo method
             writeRepository.Save(vacancy);
 
             vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
@@ -141,6 +141,7 @@
             // Assert
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
                 options => ExcludeHardOnes(options)
+                .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "LocationAddresses\\[[0-9]+\\].Address.Uprn")) //TODO
                 .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
                 .WhenTypeIs<DateTime>());
         }

@@ -134,7 +134,7 @@
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
                 .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Apprenticeship / Traineeship
-                .MapMemberFrom(v => v.VacancyLocationTypeCode, av => av.LocationAddresses != null && av.LocationAddresses.Count > 1 ? "M" : "S") // Multiple locations / Nationwide / Specific - not sure if used
+                .IgnoreMember(v => v.VacancyLocationTypeCode)
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate
@@ -203,7 +203,6 @@
                 // TODO: Hacks
                 .MapMemberFrom(a => a.AddressLine5, a => "")
                 .MapMemberFrom(a => a.PostTown, a => a.AddressLine3)
-                .MapMemberFrom(a => a.County, a => new Reference.County())
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .IgnoreMember(a => a.Easting)

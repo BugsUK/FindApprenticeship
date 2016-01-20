@@ -50,14 +50,5 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Address
         public decimal? Latitude { get; set; }
 
         public int? CountyId { get; set; }
-
-        public virtual Reference.County County { get; set; }
-
-        /*
-        public virtual ValidationSource ValidationSource { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy.VacancyParty> VacancyParties { get; set; }
-        */
     }
 }

@@ -112,11 +112,11 @@
         protected EquivalencyAssertionOptions<ApprenticeshipVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<ApprenticeshipVacancy> options)
         {
             return options
-                // TODO: Not in Domain object yet
+                // TODO: Not in database object yet
                 .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
 
                 // TODO: Rather hard / out of scope?
-                .Excluding(v => v.LocationAddresses)
+//                .Excluding(v => v.LocationAddresses)
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)

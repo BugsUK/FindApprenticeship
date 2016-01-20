@@ -12,10 +12,11 @@
     using System.Threading.Tasks;
 
     using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
+    using Address = SFA.Apprenticeships.NewDB.Domain.Entities.Address;
     using Reference = SFA.Apprenticeships.NewDB.Domain.Entities;
     using Domain.Interfaces.Queries;
     using System.Threading;    // TODO GenericSqlClient??
-
+    using Domain.Entities.Locations;
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
     {
         private IDictionary<string, WageType> _wageTypeMap = new Dictionary<string, WageType>();
@@ -76,7 +77,33 @@
 
             // Vacancy
 
+            var vacancyLocations = _getOpenConnection.Query<Vacancy.VacancyLocation>(@"
+SELECT *
+FROM   Vacancy.VacancyLocation
+WHERE  VacancyId = @VacancyId",
+new { VacancyId = dbVacancy.VacancyId });
+
+            // TODO: Would like to make addresses immutable to allow caching - they probably don't
+            // change that often. Also should have access methods that don't return the address as
+            // most screens don't need it
+            var addresses = _getOpenConnection.Query<Address.PostalAddress>(@"
+SELECT *
+FROM   Address.PostalAddress
+WHERE  PostalAddressId IN @PostalAddressIds",
+new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Union(dbVacancy.ManagerVacancyParty.PostalAddressId } */});
+
             var result = _mapper.Map<Vacancy.Vacancy, ApprenticeshipVacancy>(dbVacancy);
+
+            result.LocationAddresses = new List<VacancyLocationAddress>();
+            foreach (var dbLocation in vacancyLocations)
+            {
+                result.LocationAddresses.Add(new VacancyLocationAddress
+                {
+                    NumberOfPositions = dbLocation.NumberOfPositions,
+                    Address = _mapper.Map<Address.PostalAddress, SFA.Apprenticeships.Domain.Entities.Locations.Address>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId))
+                });
+            }
+
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             result.Ukprn = _getOpenConnection
@@ -88,6 +115,7 @@
             var employer = _getOpenConnection
                 .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
                 .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
+
 
             result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EDSURN.ToString(); // TODO: Verify. TODO: Case. TODO: Type?
             result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
@@ -237,17 +265,65 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy.Vacancy>(entity);
 
+            dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
+
             // TODO: This should be the other way around (to avoid a race condition)
             // and be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
-            if (!_getOpenConnection.UpdateSingle(dbVacancy))
+
+            try
+            {
                 _getOpenConnection.Insert(dbVacancy);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Detect key violation
 
-            /*
-            _getOpenConnection.UpdateSingle(address);
-            */
+                if (!_getOpenConnection.UpdateSingle(dbVacancy))
+                    throw new Exception("Failed to update record after failed insert", ex);
 
-            _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
+                if (entity.LocationAddresses != null)
+                {
+                    _getOpenConnection.MutatingQuery<int>(@"
+-- TODO: Could be optimised. Locking may possibly be an issue
+-- TODO: Should possibly split address into separate repo method
+    DELETE Address.PostalAddress
+    WHERE  PostalAddressId IN (
+        SELECT PostalAddressId
+        FROM   Vacancy.VacancyLocation
+        WHERE  VacancyId = @VacancyId
+    )
+
+    DELETE Vacancy.VacancyLocation
+    FROM   Vacancy.VacancyLocation
+    WHERE  VacancyId = @VacancyId
+");
+                }
+            }
+
+            if (entity.LocationAddresses != null) // TODO: Split into separate repository method
+            {
+                // TODO: Optimisation - insert several in one SQL round-trip
+                foreach (var location in entity.LocationAddresses)
+                {
+
+                    var dbLocation = new Vacancy.VacancyLocation()
+                    {
+                        VacancyId = dbVacancy.VacancyId,
+                        DirectApplicationUrl = "TODO",
+                        NumberOfPositions = location.NumberOfPositions
+                    };
+
+                    var dbAddress = _mapper.Map<Domain.Entities.Locations.Address, Address.PostalAddress>(location.Address);
+
+                    dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
+
+                    _getOpenConnection.Insert(dbLocation);
+                }
+            }
+
+
+            _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
             // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
             
