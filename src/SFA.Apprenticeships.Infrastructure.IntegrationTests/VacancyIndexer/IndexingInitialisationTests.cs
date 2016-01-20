@@ -28,11 +28,9 @@
         [SetUp]
         public void SetUp()
         {
-            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
-
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();

@@ -29,11 +29,9 @@
         [SetUp]
         public void FixtureSetUp()
         {
-            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();

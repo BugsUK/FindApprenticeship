@@ -28,21 +28,21 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
 
         public override bool OnStart()
         {
-            Initialise();
+            //Initialise();
 
             return base.OnStart();
         }
 
         public override void Run()
         {
-            StartLogEventHubProcessor();
-            _cancelSource.Token.WaitHandle.WaitOne();
+            //StartLogEventHubProcessor();
+            //_cancelSource.Token.WaitHandle.WaitOne();
         }
 
         public override void OnStop()
         {
-            StopLogEventHubProcessor();
-            _cancelSource.Cancel();
+            //StopLogEventHubProcessor();
+            //_cancelSource.Cancel();
 
             base.OnStop();
         }
@@ -73,19 +73,9 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
 
         private void InitializeIoC()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
 

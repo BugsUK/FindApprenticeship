@@ -22,11 +22,9 @@
         [SetUp]
         public void SetUpContainer()
         {
-            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
-
             Container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();

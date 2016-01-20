@@ -22,7 +22,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Processes.Configuration;
     using Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Candidates.IoC;
@@ -48,59 +47,59 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
         public override void Run()
         {
-            Initialise();
+            //Initialise();
 
-            while (true)
-            {
-                try
-                {
-                    var tasks = new List<Task>
-                    {
-                        _savedSearchControlQueueConsumer.CheckScheduleQueue(),
-                        _vacancyEtlControlQueueConsumer.CheckScheduleQueue(),
-                        _applicationEtlControlQueueConsumer.CheckScheduleQueue(),
-                        _housekeepingControlQueueConsumer.CheckScheduleQueue(),
-                        _vacancyStatusControlQueueConsumer.CheckScheduleQueue()
-                    };
+            //while (true)
+            //{
+            //    try
+            //    {
+            //        var tasks = new List<Task>
+            //        {
+            //            _savedSearchControlQueueConsumer.CheckScheduleQueue(),
+            //            _vacancyEtlControlQueueConsumer.CheckScheduleQueue(),
+            //            _applicationEtlControlQueueConsumer.CheckScheduleQueue(),
+            //            _housekeepingControlQueueConsumer.CheckScheduleQueue(),
+            //            _vacancyStatusControlQueueConsumer.CheckScheduleQueue()
+            //        };
 
-                    if (CommunicationsIsEnabled)
-                    {
-                        _logger.Debug("Communications job is enabled");
-                        tasks.Add(_dailyDigestControlQueueConsumer.CheckScheduleQueue());
-                    }
-                    else
-                    {
-                        _logger.Debug("Communications job is disabled");
-                    }
+            //        if (CommunicationsIsEnabled)
+            //        {
+            //            _logger.Debug("Communications job is enabled");
+            //            tasks.Add(_dailyDigestControlQueueConsumer.CheckScheduleQueue());
+            //        }
+            //        else
+            //        {
+            //            _logger.Debug("Communications job is disabled");
+            //        }
 
-                    Task.WaitAll(tasks.ToArray());
-                }
-                catch (FaultException fe)
-                {
-                    _logger.Error("FaultException from  " + ProcessName, fe);
-                }
-                catch (CommunicationException ce)
-                {
-                    _logger.Warn("CommunicationException from " + ProcessName, ce);
-                }
-                catch (TimeoutException te)
-                {
-                    _logger.Warn("TimeoutException from  " + ProcessName, te);
-                }
-                catch (Exception ex)
-                {
-                    _logger.Error("Exception from  " + ProcessName, ex);
-                }
+            //        Task.WaitAll(tasks.ToArray());
+            //    }
+            //    catch (FaultException fe)
+            //    {
+            //        _logger.Error("FaultException from  " + ProcessName, fe);
+            //    }
+            //    catch (CommunicationException ce)
+            //    {
+            //        _logger.Warn("CommunicationException from " + ProcessName, ce);
+            //    }
+            //    catch (TimeoutException te)
+            //    {
+            //        _logger.Warn("TimeoutException from  " + ProcessName, te);
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        _logger.Error("Exception from  " + ProcessName, ex);
+            //    }
 
-                Thread.Sleep(TimeSpan.FromMinutes(1));
-            }
+            //    Thread.Sleep(TimeSpan.FromMinutes(1));
+            //}
 
             // ReSharper disable once FunctionNeverReturns
         }
 
         public override bool OnStart()
         {
-            ServicePointManager.DefaultConnectionLimit = 12;
+            //ServicePointManager.DefaultConnectionLimit = 12;
 
             return base.OnStart();
         }
@@ -130,19 +129,9 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
         private void InitializeIoC()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -153,7 +142,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();

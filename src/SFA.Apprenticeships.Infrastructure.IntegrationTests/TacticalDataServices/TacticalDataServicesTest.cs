@@ -13,7 +13,6 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
     using Infrastructure.TacticalDataServices.IoC;
     using Logging.IoC;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
     using StructureMap;
 
     [TestFixture]
@@ -25,11 +24,9 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
         [SetUp]
         public void SetUp()
         {
-            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();

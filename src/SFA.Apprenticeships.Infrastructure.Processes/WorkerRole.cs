@@ -12,7 +12,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -21,7 +20,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using SFA.Apprenticeships.Infrastructure.Raa.IoC;
+    using Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
@@ -42,26 +41,26 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         public override void Run()
         {
-            Initialise();
+            //Initialise();
 
-            _cancelSource.Token.WaitHandle.WaitOne();
+            //_cancelSource.Token.WaitHandle.WaitOne();
         }
 
         public override bool OnStart()
         {
-            ServicePointManager.DefaultConnectionLimit = 12;
+            //ServicePointManager.DefaultConnectionLimit = 12;
 
             return base.OnStart();
         }
 
         public override void OnStop()
         {
-            UnsubscribeServiceBusMessageBrokers();
+            //UnsubscribeServiceBusMessageBrokers();
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
-            Thread.Sleep(TimeSpan.FromSeconds(5));
+            //Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            _cancelSource.Cancel();
+            //_cancelSource.Cancel();
 
             base.OnStop();
         }
@@ -85,19 +84,9 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         private void InitializeIoC()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration()));
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -108,7 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));

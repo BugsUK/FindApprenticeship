@@ -20,11 +20,9 @@
         [SetUp]
         public void SetUp()
         {
-            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<MemoryCacheRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));

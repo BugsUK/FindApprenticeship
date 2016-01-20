@@ -20,19 +20,9 @@
         [SetUp]
         public void SetUp()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
             });

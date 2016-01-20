@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Raa.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -76,7 +75,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
-            
+
             // ReSharper disable once FunctionNeverReturns
         }
 
@@ -113,19 +112,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -134,7 +123,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
