@@ -205,30 +205,6 @@
     @Html.HiddenFor(model => model.Ukprn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
     @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern)
-    ;
     @Html.HiddenFor(model => model.VacancyGuid)
     @Html.HiddenFor(model => model.Status)
 }
-
-@section scripts
-{
-    <script>
-        $("#@Html.NameFor(m => m.StandardId)").change(function () {
-            var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
-            if (apprenticeshipLevel === "@ApprenticeshipLevel.FoundationDegree.ToString()" || apprenticeshipLevel === "@ApprenticeshipLevel.Masters.ToString()") {
-                apprenticeshipLevel = "@ApprenticeshipLevel.Degree.ToString()";
-            }
-            $("#apprenticeship-level-name").text(apprenticeshipLevel);
-            $("#apprenticeship-level-container").show();
-        });
-
-        $("input[name='OfflineVacancy']").change(function () {
-            var selectedValue = $("input[name='OfflineVacancy']:checked").val();
-            if (selectedValue === "False") {
-                $("#apprenticeship-offline-application-url").val("");
-                $("#apprenticheship-offline-application-instructions").val("");
-            }
-        });
-    </script>
-}
-

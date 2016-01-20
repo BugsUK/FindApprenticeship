@@ -9,6 +9,8 @@
 
     public class LocationSearchViewModel
     {
+        public const string PartialView = "Vacancy/LocationSearch";
+
         public LocationSearchViewModel()
         {
             Addresses = new List<VacancyLocationAddressViewModel>();

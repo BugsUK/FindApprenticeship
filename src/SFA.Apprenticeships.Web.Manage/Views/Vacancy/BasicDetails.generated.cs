@@ -32,19 +32,25 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 3 "..\..\Views\Vacancy\BasicDetails.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Manage;
     
-    #line 3 "..\..\Views\Vacancy\BasicDetails.cshtml"
+    #line 4 "..\..\Views\Vacancy\BasicDetails.cshtml"
     using SFA.Apprenticeships.Web.Manage.Constants;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Vacancy\BasicDetails.cshtml"
+    #line 5 "..\..\Views\Vacancy\BasicDetails.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -63,7 +69,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
 WriteLiteral("\r\n");
 
             
-            #line 6 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 7 "..\..\Views\Vacancy\BasicDetails.cshtml"
  using (Html.BeginRouteForm(ManagementRouteNames.BasicDetails, FormMethod.Post))
 {
     
@@ -71,14 +77,14 @@ WriteLiteral("\r\n");
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
 Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 8 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 9 "..\..\Views\Vacancy\BasicDetails.cshtml"
                                                              
 
 
@@ -100,7 +106,7 @@ WriteLiteral(">Save</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 12 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 13 "..\..\Views\Vacancy\BasicDetails.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -109,11 +115,80 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 14 "..\..\Views\Vacancy\BasicDetails.cshtml"
+            #line 15 "..\..\Views\Vacancy\BasicDetails.cshtml"
 }
+
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n    <script>\r\n        $(\"#");
+
+            
+            #line 20 "..\..\Views\Vacancy\BasicDetails.cshtml"
+       Write(Html.NameFor(m => m.StandardId));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\").change(function () {\r\n            var apprenticeshipLevel = $(\"#");
+
+            
+            #line 21 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                     Write(Html.NameFor(m => m.StandardId));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" option:selected\").attr(\"data-apprenticeship-level\");\r\n            if (apprentice" +
+"shipLevel === \"");
+
+            
+            #line 22 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                    Write(ApprenticeshipLevel.FoundationDegree.ToString());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\" || apprenticeshipLevel === \"");
+
+            
+            #line 22 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                                                                                                  Write(ApprenticeshipLevel.Masters.ToString());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\") {\r\n                apprenticeshipLevel = \"");
+
+            
+            #line 23 "..\..\Views\Vacancy\BasicDetails.cshtml"
+                                  Write(ApprenticeshipLevel.Degree.ToString());
+
+            
+            #line default
+            #line hidden
+WriteLiteral(@""";
+            }
+            $(""#apprenticeship-level-name"").text(apprenticeshipLevel);
+            $(""#apprenticeship-level-container"").show();
+        });
+
+        $(""input[name='OfflineVacancy']"").change(function () {
+            var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
+            if (selectedValue === ""False"") {
+                $(""#apprenticeship-offline-application-url"").val("""");
+                $(""#apprenticheship-offline-application-instructions"").val("""");
+            }
+        });
+    </script>
+");
+
+});
+
         }
     }
 }

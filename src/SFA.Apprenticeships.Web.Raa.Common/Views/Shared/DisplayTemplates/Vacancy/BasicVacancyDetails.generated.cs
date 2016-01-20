@@ -1282,109 +1282,38 @@ Write(Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern));
             
             #line 207 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                                          
-    ;
     
             
             #line default
             #line hidden
             
-            #line 209 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 208 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyGuid));
 
             
             #line default
             #line hidden
             
-            #line 209 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 208 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                
     
             
             #line default
             #line hidden
             
-            #line 210 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 209 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Status));
 
             
             #line default
             #line hidden
             
-            #line 210 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 209 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                           
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n");
-
-DefineSection("scripts", () => {
-
-WriteLiteral("\r\n    <script>\r\n        $(\"#");
-
-            
-            #line 216 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-       Write(Html.NameFor(m => m.StandardId));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\").change(function () {\r\n            var apprenticeshipLevel = $(\"#");
-
-            
-            #line 217 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                     Write(Html.NameFor(m => m.StandardId));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" option:selected\").attr(\"data-apprenticeship-level\");\r\n            if (apprentice" +
-"shipLevel === \"");
-
-            
-            #line 218 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                    Write(ApprenticeshipLevel.FoundationDegree.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" || apprenticeshipLevel === \"");
-
-            
-            #line 218 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                                                                                                  Write(ApprenticeshipLevel.Masters.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\") {\r\n                apprenticeshipLevel = \"");
-
-            
-            #line 219 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                  Write(ApprenticeshipLevel.Degree.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@""";
-            }
-            $(""#apprenticeship-level-name"").text(apprenticeshipLevel);
-            $(""#apprenticeship-level-container"").show();
-        });
-
-        $(""input[name='OfflineVacancy']"").change(function () {
-            var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
-            if (selectedValue === ""False"") {
-                $(""#apprenticeship-offline-application-url"").val("""");
-                $(""#apprenticheship-offline-application-instructions"").val("""");
-            }
-        });
-    </script>
-");
-
-});
-
-WriteLiteral("\r\n");
-
         }
     }
 }

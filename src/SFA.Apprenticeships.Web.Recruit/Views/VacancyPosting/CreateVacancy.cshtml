@@ -1,6 +1,7 @@
 ﻿@model NewVacancyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
@@ -26,3 +27,26 @@
         }
     </div>
 }
+
+@section scripts
+{
+    <script>
+        $("#@Html.NameFor(m => m.StandardId)").change(function () {
+            var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
+            if (apprenticeshipLevel === "@ApprenticeshipLevel.FoundationDegree.ToString()" || apprenticeshipLevel === "@ApprenticeshipLevel.Masters.ToString()") {
+                apprenticeshipLevel = "@ApprenticeshipLevel.Degree.ToString()";
+            }
+            $("#apprenticeship-level-name").text(apprenticeshipLevel);
+            $("#apprenticeship-level-container").show();
+        });
+
+        $("input[name='OfflineVacancy']").change(function () {
+            var selectedValue = $("input[name='OfflineVacancy']:checked").val();
+            if (selectedValue === "False") {
+                $("#apprenticeship-offline-application-url").val("");
+                $("#apprenticheship-offline-application-instructions").val("");
+            }
+        });
+    </script>
+}
+
