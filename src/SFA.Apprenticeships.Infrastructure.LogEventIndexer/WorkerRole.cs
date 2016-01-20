@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
     using System.Diagnostics;
     using System.Net;
     using System.Threading;
+    using Common.Configuration;
     using Microsoft.ServiceBus.Messaging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Processors;
@@ -72,9 +73,19 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
 
         private void InitializeIoC()
         {
-            _container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            _container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
             });
 

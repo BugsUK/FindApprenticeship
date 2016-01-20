@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
     using System.Threading;
+    using Domain.Entities.Locations;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Queries;
@@ -148,17 +149,56 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
         {
             _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.EntityId);
 
-            UpdateEntityTimestamps(entity);
-
-            var mongoEntity = _mapper.Map<ApprenticeshipVacancy, MongoApprenticeshipVacancy>(entity);
-
-            Collection.Save(mongoEntity);
+            var mongoEntity = SaveEntity(entity);
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
 
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
+        public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
+        {
+            _logger.Debug("Called Mongodb to shallow save apprenticeship vacancy with id={0}", entity.EntityId);
+
+            var mongoEntity = SaveEntity(entity);
+
+            _logger.Debug("Shallow saved apprenticeship vacancy with to Mongodb with id={0}", entity.EntityId);
+
+            return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
+        public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
+            int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
+            string additionalLocationInformation, string additionalLocationInformationComment)
+        {
+            _logger.Debug($"Calling Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
+
+            var vacancy = Get(vacancyReferenceNumber);
+
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation;
+            vacancy.NumberOfPositions = numberOfPositions;
+            vacancy.LocationAddressesComment = locationAddressesComment;
+            vacancy.AdditionalLocationInformation = additionalLocationInformation;
+            vacancy.AdditionalLocationInformationComment = additionalLocationInformationComment;
+            vacancy.LocationAddresses = vacancyLocationAddresses.ToList();
+
+            var mongoEntity = SaveEntity(vacancy);
+
+            _logger.Info($"Called Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
+
+            return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+        }
+
+        private MongoApprenticeshipVacancy SaveEntity(ApprenticeshipVacancy entity)
+        {
+            UpdateEntityTimestamps(entity);
+
+            var mongoEntity = _mapper.Map<ApprenticeshipVacancy, MongoApprenticeshipVacancy>(entity);
+
+            Collection.Save(mongoEntity);
+            return mongoEntity;
+        }
+        
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
