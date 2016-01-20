@@ -506,7 +506,6 @@
     <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
-    <Content Include="Views\Vacancy\_comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -556,7 +556,6 @@
     <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
-    <Content Include="Views\VacancyPosting\_comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
