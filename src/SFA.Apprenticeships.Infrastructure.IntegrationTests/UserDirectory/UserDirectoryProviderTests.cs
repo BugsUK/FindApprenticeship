@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Authentication;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.Repositories.Authentication.IoC;
@@ -19,9 +20,11 @@
         [SetUp]
         public void Setup()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuthenticationRepositoryRegistry>();

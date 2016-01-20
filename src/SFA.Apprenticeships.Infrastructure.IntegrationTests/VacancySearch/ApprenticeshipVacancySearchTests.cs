@@ -3,6 +3,7 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -28,9 +29,11 @@
         [SetUp]
         public void FixtureSetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();

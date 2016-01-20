@@ -2,12 +2,14 @@
 {
     using System.Collections.Generic;
     using Application.Location;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using FluentAssertions;
     using Infrastructure.Postcode.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
     using StructureMap;
 
     [TestFixture]
@@ -18,9 +20,19 @@
         [SetUp]
         public void SetUp()
         {
-            _container = new Container(x =>
+            var tempContainer = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
+            var configurationStorageConnectionString =
+                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+            _container = new Container(x =>
+            {
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
             });

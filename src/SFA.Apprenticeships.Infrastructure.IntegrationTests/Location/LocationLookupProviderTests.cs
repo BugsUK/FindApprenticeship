@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Application.Location;
+    using Common.Configuration;
     using Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using LocationLookup.IoC;
@@ -16,9 +17,11 @@
         [SetUp]
         public void SetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             _container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

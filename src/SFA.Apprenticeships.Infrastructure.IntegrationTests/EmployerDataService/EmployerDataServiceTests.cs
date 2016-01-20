@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Application.Organisation;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.EmployerDataService.IoC;
@@ -17,9 +18,11 @@
         [SetUp]
         public void SetUp()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<EmployerDataServicesRegistry>();
             });

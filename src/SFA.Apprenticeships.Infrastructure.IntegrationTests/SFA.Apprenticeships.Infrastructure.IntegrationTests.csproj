@@ -181,6 +181,7 @@
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />
     <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
+    <Compile Include="Postcode\PostCodeBaseTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="RabbitMq\Configuration\RabbitConfigurationTests.cs" />
     <Compile Include="Repositories\Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Repositories\Users\UserRepositoryTests.cs" />
     <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyRepositoryTests.cs" />
     <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyWriteRepositoryTests.cs" />
+    <Compile Include="SettingsTestHelper.cs" />
     <Compile Include="TacticalDataServices\TacticalDataServicesTest.cs" />
     <Compile Include="UserDirectory\UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

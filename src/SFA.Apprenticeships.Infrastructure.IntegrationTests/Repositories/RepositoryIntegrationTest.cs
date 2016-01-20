@@ -22,15 +22,7 @@
         [SetUp]
         public void SetUpContainer()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationMgr = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationMgr.GetAppSetting<string>("ConfigurationStorageConnectionString");
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
 
             Container = new Container(x =>
             {

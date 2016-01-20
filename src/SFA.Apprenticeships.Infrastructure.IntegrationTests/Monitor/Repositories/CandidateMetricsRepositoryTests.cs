@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Monitor.Repositories
 {
     using System;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.Monitor.Repositories;
@@ -16,9 +17,11 @@
         [SetUp]
         public void SetUpContainer()
         {
+            var configurationStorageConnectionString = SettingsTestHelper.GetStorageConnectionString();
+
             Container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
                 x.AddRegistry<LoggingRegistry>();
                 x.For<ICandidateMetricsRepository>().Use<CandidateMetricsRepository>();
             });
