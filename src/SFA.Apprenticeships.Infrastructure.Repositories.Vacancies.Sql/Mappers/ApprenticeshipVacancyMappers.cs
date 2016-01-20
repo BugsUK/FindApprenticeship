@@ -14,7 +14,10 @@
     using System.Collections;
     using System.Linq.Expressions;
     using Domain.Entities.Providers;
-    using Domain.Entities.Locations;    // TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
+    using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
+
+// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
     // But don't want to move it to SFA.Infrastructure project because that would then depend on AutoMapper
     public abstract class MapperEngine : IMapper
     {

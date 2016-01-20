@@ -34,11 +34,8 @@
         public void SetUpFixture()
         {
             var configurationManager = new ConfigurationManager();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
 
-            var configurationService = new AzureBlobConfigurationService(configurationStorageConnectionString,
-                _logService.Object);
+            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
