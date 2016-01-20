@@ -33,14 +33,20 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Manage;
     
-    #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    #line 2 "..\..\Views\Vacancy\EmployerInformation.cshtml"
     using SFA.Apprenticeships.Web.Manage.Constants;
     
     #line default
     #line hidden
     
-    #line 4 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    #line 3 "..\..\Views\Vacancy\EmployerInformation.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.Extensions;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
     
     #line default
     #line hidden
@@ -48,7 +54,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/EmployerInformation.cshtml")]
-    public partial class EmployerInformation : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel>
+    public partial class EmployerInformation : System.Web.Mvc.WebViewPage<ProviderSiteEmployerLinkViewModel>
     {
         public EmployerInformation()
         {
@@ -80,335 +86,36 @@ WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n<di" +
-"v");
-
-WriteLiteral(" class=\"grid-wrapper\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
             #line 21 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+ using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+{   
     
             
             #line default
             #line hidden
             
-            #line 21 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-     using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
-    {   
-        
-            
-            #line default
-            #line hidden
-            
             #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+Write(Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView));
 
             
             #line default
             #line hidden
             
             #line 23 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                                               
-
-        
-            
-            #line default
-            #line hidden
-            
-            #line 25 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.HiddenFor(m => m.ProviderSiteErn));
-
-            
-            #line default
-            #line hidden
-            
-            #line 25 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                               
-        
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.HiddenFor(m => m.Employer.Ern));
-
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                            
-        
-            
-            #line default
-            #line hidden
-            
-            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.HiddenFor(m => m.VacancyGuid));
-
-            
-            #line default
-            #line hidden
-            
-            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                           
-        
-            
-            #line default
-            #line hidden
-            
-            #line 28 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
-
-            
-            #line default
-            #line hidden
-            
-            #line 28 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                                      
+                                                                           
 
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-2\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n                <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">Employer</h3>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 33 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Name);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">Address</h3>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 35 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Address.AddressLine1);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 36 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Address.AddressLine2);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 37 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Address.AddressLine3);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 38 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Address.AddressLine4);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 39 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                       Write(Model.Employer.Address.Postcode);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n            </div>\r\n        </div>\r\n");
-
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-2 hide-print\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"ad-details__map\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"map-overlay\"");
-
-WriteLiteral(" onClick=\"style.pointerEvents = \'none\'\"");
-
-WriteLiteral("></div>\r\n                <iframe");
-
-WriteLiteral(" width=\"700\"");
-
-WriteLiteral(" height=\"250\"");
-
-WriteLiteral(" frameborder=\"0\"");
-
-WriteLiteral(" style=\"border: 0\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2028), Tuple.Create("\"", 2171)
-, Tuple.Create(Tuple.Create("", 2034), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 2034), true)
-            
-            #line 45 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                                     , Tuple.Create(Tuple.Create("", 2079), Tuple.Create<System.Object, System.Int32>(Model.Employer.Address.Postcode
-            
-            #line default
-            #line hidden
-, 2079), false)
-, Tuple.Create(Tuple.Create("", 2111), Tuple.Create(",+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 2111), true)
-);
-
-WriteLiteral("></iframe>\r\n                <p");
-
-WriteLiteral(" class=\"nojs-notice\"");
-
-WriteLiteral(">You must have JavaScript enabled to view a map of the location</p>\r\n            " +
-"</div>\r\n        </div>\r\n");
-
-            
-            #line 49 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"grid grid-1-1\"");
 
-WriteLiteral(">\r\n");
-
-            
-            #line 51 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 51 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-              Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 52 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 52 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-              Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
-            
-            #line 54 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-1\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 56 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-       Write(Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 57 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-       Write(Html.EditorFor(m => m.WebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.WebsiteUrlComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 58 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-       Write(Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 59 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-       Write(Html.EditorFor(m => m.DescriptionComment, "Comment", Html.GetLabelFor(m => m.DescriptionComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            <button");
+WriteLiteral(">\r\n        <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -421,33 +128,33 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 60 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-                                                                                                  Write(saveButtonText);
+            #line 26 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+                                                                                              Write(saveButtonText);
 
             
             #line default
             #line hidden
 WriteLiteral("</button>\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 61 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-       Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
-            
-            #line 63 "..\..\Views\Vacancy\EmployerInformation.cshtml"
-   }
+            #line 27 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+   Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n");
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 29 "..\..\Views\Vacancy\EmployerInformation.cshtml"
+}
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 

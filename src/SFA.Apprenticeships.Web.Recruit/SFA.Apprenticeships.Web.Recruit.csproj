@@ -543,8 +543,6 @@
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
     <Content Include="Views\Application\VacancyApplications.cshtml" />
     <Content Include="Views\Application\_applicationStatus.cshtml" />
-    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
-    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />

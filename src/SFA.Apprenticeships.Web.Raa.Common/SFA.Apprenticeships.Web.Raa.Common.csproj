@@ -255,6 +255,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DateTime.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.generated.cs">
+      <DependentUpon>EmployerDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\LocationSearch.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -320,6 +325,10 @@
     <Content Include="Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>LocationSearch.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerDetails.generated.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>
