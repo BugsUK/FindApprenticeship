@@ -187,6 +187,8 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public int SubmissionCount { get; set; }
 
+        public int OfflineApplicationClickThroughCount { get; set; }
+
         /*
         public virtual Framework Framework { get; set; }
 

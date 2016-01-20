@@ -76,6 +76,9 @@
 	 
     [FirstSubmittedDateTime]               DATETIME2       NULL, -- TODO: Check name
     [SubmissionCount]                      INT             NOT NULL DEFAULT 0, -- TODO: Check name
+	
+	[OfflineApplicationClickThroughCount]      INT NOT NULL,  -- TODO: Check name
+    
 
 	PRIMARY KEY CLUSTERED ([VacancyId] ASC),
     CONSTRAINT [CK_FrameworkId_StandardId] CHECK ([TrainingTypeCode]='F' AND [FrameworkId] IS NOT NULL AND [StandardId] IS NULL OR [TrainingTypeCode]='S' AND [FrameworkId] IS NULL AND [StandardId] IS NOT NULL),
