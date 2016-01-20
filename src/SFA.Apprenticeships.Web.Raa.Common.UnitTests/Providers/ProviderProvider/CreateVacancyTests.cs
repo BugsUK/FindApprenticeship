@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Moq;
-using NUnit.Framework;
-using SFA.Apprenticeships.Domain.Entities.Locations;
-using SFA.Apprenticeships.Domain.Entities.Organisations;
-using SFA.Apprenticeships.Domain.Entities.Providers;
-using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
+    using System;
+    using Domain.Entities.Locations;
+    using Domain.Entities.Organisations;
+    using Domain.Entities.Providers;
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Moq;
+    using NUnit.Framework;
+    using ViewModels.Provider;
+    using ViewModels.Vacancy;
+    using Web.Common.ViewModels.Locations;
+
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {

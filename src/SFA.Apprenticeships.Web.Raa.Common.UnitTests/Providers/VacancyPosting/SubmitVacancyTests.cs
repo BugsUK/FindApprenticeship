@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
     using Domain.Entities.Locations;
@@ -48,7 +48,7 @@
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveApprenticeshipVacancy(
+                    ps.ShallowSaveApprenticeshipVacancy(
                         It.Is<ApprenticeshipVacancy>(v => v.Status == ProviderVacancyStatuses.PendingQA)));
         }
 
@@ -90,7 +90,7 @@
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveApprenticeshipVacancy(
+                    ps.ShallowSaveApprenticeshipVacancy(
                         It.Is<ApprenticeshipVacancy>(v => v.DateSubmitted == now)));
         }
 
@@ -130,7 +130,7 @@
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveApprenticeshipVacancy(
+                    ps.ShallowSaveApprenticeshipVacancy(
                         It.Is<ApprenticeshipVacancy>(v => v.SubmissionCount == 3)));
         }
     }

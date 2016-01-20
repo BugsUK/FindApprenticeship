@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Providers.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderUser
 {
     using Application.Interfaces.Users;
     using Moq;
+    using Common.Providers;
 
     public class ProviderUserProviderBuilder
     {

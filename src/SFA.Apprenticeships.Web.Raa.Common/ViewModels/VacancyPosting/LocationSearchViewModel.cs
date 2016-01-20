@@ -21,8 +21,6 @@
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
 
-        public List<VacancyLocationAddressViewModel> SearchAddresses { get; set; }
-
         public string ProviderSiteErn { get; set; }
 
         public string Ern { get; set; }
