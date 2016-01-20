@@ -357,8 +357,8 @@
                 FullName = "Employer A",
                 Description = "A",
                 WebsiteUrl = "URL",
-                EDSURN = 1,
-                UKPRN = null
+                EdsErn = 1,
+                UKPrn = null
             };
 
             var vacancyParty2 = new VacancyParty
@@ -367,8 +367,8 @@
                 FullName = "Provider A",
                 Description = "A",
                 WebsiteUrl = "URL",
-                EDSURN = null,
-                UKPRN = 1
+                EdsErn = null,
+                UKPrn = 1
             };
 
             var vacancyParty3 = new VacancyParty
@@ -377,8 +377,8 @@
                 FullName = "Provider B",
                 Description = "B",
                 WebsiteUrl = "URL",
-                EDSURN = 3,
-                UKPRN = 1
+                EdsErn = 3,
+                UKPrn = 1
             };
 
             var seedObjects = (new object[] {occupation, occupation2, framework1, framework2, vacancyParty1, vacancyParty2, vacancyParty3}).Union(vacancies);

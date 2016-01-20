@@ -112,7 +112,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
             result.Ukprn = _getOpenConnection
                 .QueryCached<Vacancy.VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
                 .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
-                .UKPRN.ToString(); // TODO: Casing. TODO: Type?
+                .UKPrn.ToString(); // TODO: Casing. TODO: Type?
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             var employer = _getOpenConnection
@@ -120,7 +120,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
                 .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
 
 
-            result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EDSURN.ToString(); // TODO: Verify. TODO: Case. TODO: Type?
+            result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
             result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
             {
                 Address = new Domain.Entities.Locations.Address()
@@ -130,7 +130,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
                 //DateCreated = employer.DateCreated, TODO
                 //DateUpdated = employer.DateUpdated, TODO
                 //EntityId = employer.VacancyPartyId, // TODO: Verify
-                Ern = employer.EDSURN.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
+                Ern = employer.EdsErn.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
                 Name = employer.FullName
             };
 
@@ -161,14 +161,14 @@ FROM   Vacancy.Vacancy
 WHERE  Vacancy.ManagerVacancyPartyId IN (
     SELECT VacancyPartyId
     FROM   Vacancy.VacancyParty p
-    WHERE  p.UKPRN = @UkPrn
-    AND    p.EDSURN = @ProviderSiteUrn
+    WHERE  p.UKPrn = @UkPrn
+    AND    p.EdsErn = @ProviderSiteErn
 )
 AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
                 new
                 {
                     UkPrn = ukPrn,
-                    ProviderSiteUrn = providerSiteErn,
+                    ProviderSiteErn = providerSiteErn,
                     VacancyStatusCodes = new [] {parentVacancyStatusCode}
                 });
 

@@ -37,9 +37,9 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public string WebsiteUrl { get; set; }
 
-        public int? EDSURN { get; set; }
+        public int? EdsErn { get; set; }
 
-        public int? UKPRN { get; set; }
+        public int? UKPrn { get; set; }
 
         public virtual Address.PostalAddress PostalAddress { get; set; }
 
