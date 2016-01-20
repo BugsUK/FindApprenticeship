@@ -41,7 +41,7 @@
             //Arrange
             string nullArgument = null;
             //Act
-            _serviceUnderTest.RetrieveAddress(nullArgument);
+            _serviceUnderTest.RetrieveValidatedAddress(nullArgument);
             //Assert
         }
 
@@ -55,7 +55,7 @@
             apiResult.ResponseStatus = ResponseStatus.Completed;
             _mockRestClient.Setup(m => m.Execute<List<PcaAddress>>(It.IsAny<IRestRequest>())).Returns(apiResult);
             //Act
-            var result = _serviceUnderTest.RetrieveAddress(_nonEmptyStringParam);
+            var result = _serviceUnderTest.RetrieveValidatedAddress(_nonEmptyStringParam);
             //Assert
             Assert.AreEqual(apiAddress.Single().Line1, result.AddressLine1);
             Assert.AreEqual(apiAddress.Single().Line2, result.AddressLine2);
@@ -88,7 +88,7 @@
             apiResult.ResponseStatus = ResponseStatus.Completed;
             _mockRestClient.Setup(m => m.Execute<List<PcaAddress>>(It.IsAny<IRestRequest>())).Returns(apiResult);
             //Act
-            var result = _serviceUnderTest.RetrieveAddress(_nonEmptyStringParam);
+            var result = _serviceUnderTest.RetrieveValidatedAddress(_nonEmptyStringParam);
             //Assert
             Assert.IsNull(result);
         }

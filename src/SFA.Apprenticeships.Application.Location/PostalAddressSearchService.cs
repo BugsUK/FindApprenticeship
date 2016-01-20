@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Location
 {
-    using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Locations;
     using Interfaces.Locations;
@@ -13,11 +13,18 @@
             _postalAddressLookupProvider = postalAddressLookupProvider;
         }
 
-        public PostalAddress GetAddress(string fullPostcode, string addressLine1)
+        public PostalAddress GetValidatedAddress(string fullPostcode, string addressLine1)
         {
-            var results = _postalAddressLookupProvider.GetPostalAddresses(addressLine1, fullPostcode);
+            var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(addressLine1, fullPostcode);
 
             return results?.Single();
+        }
+
+        public IEnumerable<PostalAddress> GetValidatedAddresses(string fullPostcode)
+        {
+            var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(null, fullPostcode);
+
+            return results;
         }
     }
 }
