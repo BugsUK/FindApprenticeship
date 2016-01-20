@@ -19,6 +19,6 @@
 
         public string WebSite { get; set; }
 
-        public Address Address { get; set; }
+        public PostalAddress Address { get; set; }
     }
 }

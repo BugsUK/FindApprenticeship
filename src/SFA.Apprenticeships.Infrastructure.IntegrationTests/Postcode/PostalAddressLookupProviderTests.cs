@@ -31,7 +31,7 @@
         {
             var service = _container.GetInstance<IPostalAddressLookupProvider>();
 
-            var location = service.GetPostalAddresses("115 Pemberton Road", "N4 1AY");
+            var location = service.GetValidatedPostalAddresses("115 Pemberton Road", "N4 1AY");
             location.Single().AddressLine1.Should().Be("115 Pemberton Road");
             location.Single().Postcode.Should().Be("N4 1AY");
         }
@@ -41,7 +41,7 @@
         {
             var service = _container.GetInstance<IPostalAddressLookupProvider>();
 
-            var location = service.GetPostalAddresses("324sdf", "N4 1AY");
+            var location = service.GetValidatedPostalAddresses("324sdf", "N4 1AY");
             location.Should().BeNull();
         }
     }

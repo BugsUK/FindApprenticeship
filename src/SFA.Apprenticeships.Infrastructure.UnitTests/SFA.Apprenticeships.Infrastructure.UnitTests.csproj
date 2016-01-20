@@ -178,6 +178,7 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
+    <Compile Include="EmployerDataService\EmployerDataServiceTests.cs" />
     <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
     <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
     <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
@@ -231,6 +232,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
@@ -295,6 +300,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
       <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.WebServices\SFA.Apprenticeships.Infrastructure.WebServices.csproj">
+      <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

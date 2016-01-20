@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Locations;
     using SFA.Infrastructure.Interfaces;
     using Application.Organisation;
     using Configuration;
@@ -11,6 +12,7 @@
     using EmployerDataService;
     using Mappers;
     using WebServices.Wcf;
+    using ErrorCodes = Infrastructure.EmployerDataService.ErrorCodes;
 
     public class EmployerDataProvider : IVerifiedOrganisationProvider
     {
@@ -18,6 +20,7 @@
 
         private readonly ILogService _logger;
         private readonly IConfigurationService _configurationService;
+        private readonly IPostalAddressSearchService _postalAddressSearchService;
         private readonly IWcfService<EmployerLookupSoap> _service;
 
         private string _credentials;
@@ -26,11 +29,13 @@
         public EmployerDataProvider(
             ILogService logger,
             IConfigurationService configurationService,
-            IWcfService<EmployerLookupSoap> service)
+            IWcfService<EmployerLookupSoap> service,
+            IPostalAddressSearchService postalAddressSearchService)
         {
             _logger = logger;
             _configurationService = configurationService;
             _service = service;
+            _postalAddressSearchService = postalAddressSearchService;
             _employerMapper = new EmployerMapper();
         }
 
@@ -62,10 +67,11 @@
                     _logger.Warn("EmployerDataService.ByUrn found multiple matches for reference number='{0}', will return first result", referenceNumber);
                 }
 
-                _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
+                var employerToMap = employers.First();
 
-                // TODO: AG: US814: include reference number aliases.
-                return _employerMapper.ToVerifiedOrganisationSummary(employers.First(), Enumerable.Empty<string>());
+                _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
+                
+                return ValidatedAddress(employerToMap);
             }
             catch (BoundaryException e)
             {
@@ -115,7 +121,9 @@
 
                 resultCount = employers.Length;
                 // TODO: AG: US814: include reference number aliases.
-                return employers.Select(employer => _employerMapper.ToVerifiedOrganisationSummary(employer, Enumerable.Empty<string>()));
+                var results = employers.Select(ValidatedAddress);
+
+                return results;
             }
             catch (BoundaryException e)
             {
@@ -127,6 +135,33 @@
                 _logger.Error(e, context);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// This is a public method so as to be testable.
+        /// The SOAP service result is not injectable, making this code impossible to reach if it were invoked
+        /// as part of the interface methods.
+        /// </summary>
+        /// <param name="employerToMap"></param>
+        /// <returns></returns>
+        public VerifiedOrganisationSummary ValidatedAddress(ConciseEmployerStructure employerToMap)
+        {
+            //OO 20/01/16: Employer Address validation
+            //Here, we are replicating what AVMS does for address verification
+            //get address by postcode and line 1
+            //if address not found, get address by postcode alone
+            //if address not found, just use the retrieved address
+            var postCodeToSearch = employerToMap.Address.PostCode;
+            var addressLine1 = employerToMap.Address.PAON?.Items.FirstOrDefault()?.ToString();
+            var verifiedAddress = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1) ??
+                                  _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch)?.FirstOrDefault();
+
+            // TODO: AG: US814: include reference number aliases.
+            var employerResult = _employerMapper.ToVerifiedOrganisationSummary(employerToMap, Enumerable.Empty<string>());
+
+            employerResult.Address = verifiedAddress ?? employerResult.Address;
+
+            return employerResult;
         }
 
         #region Helpers

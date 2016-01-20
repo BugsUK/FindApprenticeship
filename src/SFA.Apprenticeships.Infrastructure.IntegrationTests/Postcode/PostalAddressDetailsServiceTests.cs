@@ -31,7 +31,7 @@
             var service = _container.GetInstance<IPostalAddressDetailsService>();
 
             //Act
-            var location = service.RetrieveAddress("15499581");
+            var location = service.RetrieveValidatedAddress("15499581");
 
             //Assert
             location.AddressLine1.Should().Be("115 Pemberton Road");
@@ -45,7 +45,7 @@
             var service = _container.GetInstance<IPostalAddressDetailsService>();
 
             //Act
-            var location = service.RetrieveAddress("0wronginvalid99");
+            var location = service.RetrieveValidatedAddress("0wronginvalid99");
 
             //Assert
             location.Should().BeNull();
