@@ -33,32 +33,25 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.UI;
     using System.Web.WebPages;
     
-    #line 4 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+    #line 3 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
     using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
     
     #line default
     #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
-    
-    #line 3 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-    using SFA.Apprenticeships.Web.Common.Extensions;
-    
-    #line default
-    #line hidden
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     
-    #line 5 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-    using SFA.Apprenticeships.Web.Raa.Common.Extensions;
+    #line 4 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+    using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
     
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 6 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+    #line 5 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -66,7 +59,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/ConfirmEmployer.cshtml")]
-    public partial class ConfirmEmployer : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel>
+    public partial class ConfirmEmployer : System.Web.Mvc.WebViewPage<ProviderSiteEmployerLinkViewModel>
     {
         public ConfirmEmployer()
         {
@@ -76,11 +69,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
 WriteLiteral("\r\n");
 
             
-            #line 8 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 7 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) && 
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
         Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 
@@ -99,349 +92,36 @@ WriteLiteral(">\r\n        <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n<di" +
-"v");
-
-WriteLiteral(" class=\"grid-wrapper\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n    </div>\r\n</div>\r\n\r\n");
 
             
-            #line 24 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 23 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+ using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmEmployer, FormMethod.Post))
+{
     
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-     using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmEmployer, FormMethod.Post))
-    {   
-        
-            
-            #line default
-            #line hidden
-            
-            #line 26 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.Partial("ValidationSummary", ViewData.ModelState));
+            #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+Write(Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 26 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                               
-
-        
-            
-            #line default
-            #line hidden
-            
-            #line 28 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.HiddenFor(m => m.ProviderSiteErn));
-
-            
-            #line default
-            #line hidden
-            
-            #line 28 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                               
-        
-            
-            #line default
-            #line hidden
-            
-            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.HiddenFor(m => m.Employer.Ern));
-
-            
-            #line default
-            #line hidden
-            
-            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                            
-        
-            
-            #line default
-            #line hidden
-            
-            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.HiddenFor(m => m.VacancyGuid));
-
-            
-            #line default
-            #line hidden
-            
-            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                           
-        
-            
-            #line default
-            #line hidden
-            
-            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
-
-            
-            #line default
-            #line hidden
-            
-            #line 31 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                      
-        
-            
-            #line default
-            #line hidden
-            
-            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.HiddenFor(m => m.ComeFromPreview));
-
-            
-            #line default
-            #line hidden
-            
-            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                               
+            #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                           
 
 
             
             #line default
             #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-2\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"inner-block-padr\"");
-
-WriteLiteral(">\r\n                <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">Employer</h3>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 37 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Name);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">Address</h3>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 39 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Address.AddressLine1);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 40 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Address.AddressLine2);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 41 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Address.AddressLine3);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 42 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Address.AddressLine4);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n                <p");
-
-WriteLiteral(" class=\"small-btm-margin\"");
-
-WriteLiteral(">");
-
-            
-            #line 43 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                       Write(Model.Employer.Address.Postcode);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n            </div>\r\n        </div>\r\n");
-
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-2 hide-print\"");
-
-WriteLiteral(">\r\n            <div");
-
-WriteLiteral(" class=\"ad-details__map\"");
-
-WriteLiteral(">\r\n                <div");
-
-WriteLiteral(" class=\"map-overlay\"");
-
-WriteLiteral(" onClick=\"style.pointerEvents = \'none\'\"");
-
-WriteLiteral("></div>\r\n                <iframe");
-
-WriteLiteral(" width=\"700\"");
-
-WriteLiteral(" height=\"250\"");
-
-WriteLiteral(" frameborder=\"0\"");
-
-WriteLiteral(" style=\"border: 0\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 2338), Tuple.Create("\"", 2481)
-, Tuple.Create(Tuple.Create("", 2344), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 2344), true)
-            
-            #line 49 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                     , Tuple.Create(Tuple.Create("", 2389), Tuple.Create<System.Object, System.Int32>(Model.Employer.Address.Postcode
-            
-            #line default
-            #line hidden
-, 2389), false)
-, Tuple.Create(Tuple.Create("", 2421), Tuple.Create(",+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 2421), true)
-);
-
-WriteLiteral("></iframe>\r\n                <p");
-
-WriteLiteral(" class=\"nojs-notice\"");
-
-WriteLiteral(">You must have JavaScript enabled to view a map of the location</p>\r\n            " +
-"</div>\r\n        </div>\r\n");
-
-            
-            #line 53 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
+WriteLiteral("    <div");
 
 WriteLiteral(" class=\"grid grid-1-1\"");
 
-WriteLiteral(">\r\n");
-
-            
-            #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 55 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-              Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 56 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-            
-            
-            #line default
-            #line hidden
-            
-            #line 56 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-              Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n");
-
-            
-            #line 58 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-
-
-            
-            #line default
-            #line hidden
-WriteLiteral("        <div");
-
-WriteLiteral(" class=\"grid grid-1-1\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 60 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 61 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.Partial("_comment", Html.GetCommentViewModel(m => m.WebsiteUrlComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 62 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 63 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.Partial("_comment", Html.GetCommentViewModel(m => m.DescriptionComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n            <button");
+WriteLiteral(">\r\n        <button");
 
 WriteLiteral(" class=\"button\"");
 
@@ -454,19 +134,19 @@ WriteLiteral(" value=\"ConfirmEmployer\"");
 WriteLiteral(">");
 
             
-            #line 64 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                                                                  Write(saveButtonText);
+            #line 28 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                              Write(saveButtonText);
 
             
             #line default
             #line hidden
 WriteLiteral("</button>\r\n");
 
-WriteLiteral("            ");
+WriteLiteral("        ");
 
             
-            #line 65 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-       Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview}, new {@class = "button-link"}));
+            #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
 
             
             #line default
@@ -474,44 +154,44 @@ WriteLiteral("            ");
 WriteLiteral("\r\n");
 
             
-            #line 66 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+        
+            
+            #line default
+            #line hidden
+            
+            #line 30 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+         if (Model.ComeFromPreview)
+        {
             
             
             #line default
             #line hidden
             
-            #line 66 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-             if (Model.ComeFromPreview)
-            {
-                
-            
-            #line default
-            #line hidden
-            
-            #line 68 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-           Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
+            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+       Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
             
-            #line 68 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                                                                                                              
-            }
+            #line 32 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+                                                                                                                                          
+        }
 
             
             #line default
             #line hidden
-WriteLiteral("        </div>\r\n");
+WriteLiteral("    </div>\r\n");
 
             
-            #line 71 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   }
+            #line 35 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+}
 
             
             #line default
             #line hidden
-WriteLiteral("</div>\r\n\r\n");
+WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
@@ -522,7 +202,7 @@ WriteLiteral(" type=\"text/javascript\"");
 WriteLiteral(">\r\n        var comeFromPreview = \"");
 
             
-            #line 76 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
+            #line 39 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
                           Write(Model.ComeFromPreview.ToString());
 
             

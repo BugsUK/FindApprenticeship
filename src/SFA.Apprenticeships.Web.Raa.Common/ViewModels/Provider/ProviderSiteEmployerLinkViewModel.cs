@@ -11,6 +11,8 @@
     [Validator(typeof (ProviderSiteEmployerLinkViewModelValidator))]
     public class ProviderSiteEmployerLinkViewModel
     {
+        public const string PartialView = "Vacancy/EmployerDetails";
+
         public string ProviderSiteErn { get; set; }
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.Description.LabelText)]
