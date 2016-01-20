@@ -179,6 +179,9 @@
     <Compile Include="Location\LocationLookupProviderTests.cs" />
     <Compile Include="Monitor\Repositories\ApprenticeshipMetricsRepositoryTests.cs" />
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />
+    <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
+    <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
+    <Compile Include="Postcode\PostCodeBaseTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="RabbitMq\Configuration\RabbitConfigurationTests.cs" />
     <Compile Include="Repositories\Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
@@ -191,6 +194,7 @@
     <Compile Include="Repositories\Users\UserRepositoryTests.cs" />
     <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyRepositoryTests.cs" />
     <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyWriteRepositoryTests.cs" />
+    <Compile Include="SettingsTestHelper.cs" />
     <Compile Include="TacticalDataServices\TacticalDataServicesTest.cs" />
     <Compile Include="UserDirectory\UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -343,6 +347,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.WebServices\SFA.Apprenticeships.Infrastructure.WebServices.csproj">
       <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.WebServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure.Azure\SFA.Infrastructure.Azure.csproj">
+      <Project>{fe5b99f5-66d8-42fc-a8b3-6562837623a4}</Project>
+      <Name>SFA.Infrastructure.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

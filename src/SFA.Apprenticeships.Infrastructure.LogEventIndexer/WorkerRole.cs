@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
     using System.Diagnostics;
     using System.Net;
     using System.Threading;
+    using Common.Configuration;
     using Microsoft.ServiceBus.Messaging;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Processors;
@@ -27,21 +28,21 @@ namespace SFA.Apprenticeships.Infrastructure.LogEventIndexer
 
         public override bool OnStart()
         {
-            Initialise();
+            //Initialise();
 
             return base.OnStart();
         }
 
         public override void Run()
         {
-            StartLogEventHubProcessor();
-            _cancelSource.Token.WaitHandle.WaitOne();
+            //StartLogEventHubProcessor();
+            //_cancelSource.Token.WaitHandle.WaitOne();
         }
 
         public override void OnStop()
         {
-            StopLogEventHubProcessor();
-            _cancelSource.Cancel();
+            //StopLogEventHubProcessor();
+            //_cancelSource.Cancel();
 
             base.OnStop();
         }

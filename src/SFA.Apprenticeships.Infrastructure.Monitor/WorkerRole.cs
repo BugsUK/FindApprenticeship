@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Raa.IoC;
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -76,7 +75,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
-            
+
             // ReSharper disable once FunctionNeverReturns
         }
 

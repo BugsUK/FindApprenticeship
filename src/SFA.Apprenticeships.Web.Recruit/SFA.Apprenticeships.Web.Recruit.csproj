@@ -368,11 +368,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>_LoginPartial.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\VacancyPosting\_comment.generated.cs">
-      <DependentUpon>_comment.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Views\VacancyPosting\ConfirmEmployer.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -548,8 +543,6 @@
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
     <Content Include="Views\Application\VacancyApplications.cshtml" />
     <Content Include="Views\Application\_applicationStatus.cshtml" />
-    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorJS.cshtml" />
-    <Content Include="Views\VacancyPosting\_apprenticeshipLocationSelectorNonJS.cshtml" />
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
@@ -559,13 +552,10 @@
     <Content Include="Views\Shared\DisplayTemplates\AboutYou.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Education.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\ApplicantDetails.cshtml" />
-    <Content Include="Views\VacancyPosting\_comment.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_comment.generated.cs</LastGenOutput>
-    </Content>
     <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
     <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

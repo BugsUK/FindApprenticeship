@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Authentication;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.Repositories.Authentication.IoC;

@@ -1,0 +1,37 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
+}
+
+<h1 class="heading-xlarge">
+    Requirements and prospects
+</h1>
+
+@Html.AntiForgeryToken()
+@Html.Partial("ValidationSummary", ViewData.ModelState)
+
+@Html.HiddenFor(m => m.VacancyReferenceNumber)
+@Html.HiddenFor(m => m.Status)
+@Html.HiddenFor(m => m.ComeFromPreview)
+
+<section>
+    <div class="form-group">
+        @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.DesiredSkillsComment, "Comment", Html.GetLabelFor(m => m.DesiredSkillsComment))
+        @Html.ValidationMessageFor(m => m.DesiredSkillsComment)
+        @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.PersonalQualitiesComment, "Comment", Html.GetLabelFor(m => m.PersonalQualitiesComment))
+        @Html.ValidationMessageFor(m => m.PersonalQualitiesComment)
+        @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.DesiredQualificationsComment, "Comment", Html.GetLabelFor(m => m.DesiredQualificationsComment))
+        @Html.ValidationMessageFor(m => m.DesiredQualificationsComment)
+        @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.FutureProspectsComment, "Comment", Html.GetLabelFor(m => m.FutureProspectsComment))
+        @Html.ValidationMessageFor(m => m.FutureProspectsComment)
+        @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+        @Html.EditorFor(m => m.ThingsToConsiderComment, "Comment", Html.GetLabelFor(m => m.ThingsToConsiderComment))
+        @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
+    </div>
+</section>

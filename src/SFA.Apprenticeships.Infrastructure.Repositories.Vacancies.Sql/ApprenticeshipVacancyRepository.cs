@@ -18,6 +18,7 @@
     using System.Threading;
     using Domain.Entities.Locations;
     using Dapper;
+    using Domain.Entities.Locations;
 
 // TODO GenericSqlClient??
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
@@ -356,6 +357,18 @@ AND    @RowCount = 1
 
             // TODO: Mapping
             return null;
+        }
+
+        public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber,
+            bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
+            string locationAddressesComment, string additionalLocationInformation, string additionalLocationInformationComment)
+        {
+            throw new NotImplementedException();
         }
 
         private void UpdateEntityTimestamps(ApprenticeshipVacancy entity)

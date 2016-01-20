@@ -1,282 +1,52 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting.LocationSearchViewModel
+﻿@model LocationSearchViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@{
-    ViewBag.Title = "Recruit an Apprentice - Add locations";
-
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
-    var comeFromConfirmEmployer = Request.UrlReferrer.AbsolutePath.ToLowerInvariant().Contains("employer");
-}
-
-<h1 class="heading-xlarge">
-    Vacancy location(s)
-</h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
 {
-    @Html.HiddenFor(m => m.Ukprn);
-    @Html.HiddenFor(m => m.Ern);
-    @Html.HiddenFor(m => m.ProviderSiteErn);
-    @Html.HiddenFor(m => m.VacancyGuid);
-    @Html.HiddenFor(m => m.ComeFromPreview);
-    @Html.HiddenFor(m => m.VacancyReferenceNumber);
-    @Html.HiddenFor(m => m.IsEmployerLocationMainApprenticeshipLocation)
-    @Html.HiddenFor(m => m.CurrentPage)
     @Html.HiddenFor(m => m.LocationAddressesComment)
     @Html.HiddenFor(m => m.AdditionalLocationInformationComment)
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    <noscript>
-        <div>
-            <div class="form-group">
-                @{
-                    var className = "form-group";
-                    var addAnotherLocationStatus = "";
-                    if (ViewData.ModelState.Keys.Contains("PostcodeSearch"))
-                    {
-                        className += " input-validation-error";
-                        addAnotherLocationStatus = "open";
-                    }
-                }
+    @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
-                @if (Model.Addresses == null || !Model.Addresses.Any())
-                {
-                    <div class="@className">
-                        <a name="postcodesearch"></a>
-                        <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
-                        <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
-                        @Html.ValidationMessage("PostcodeSearch")
-                    </div>
-                    <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
-                }
-                else
-                {
-                    <details @addAnotherLocationStatus>
-                        <summary>Add another location</summary>
-                        <div class="@className">
-                            <label class="bold-small form-label" for="PostcodeSearch">Enter the vacancy postcode</label>
-                            <input class="form-control-medium form-control" id="PostcodeSearch" name="PostcodeSearch" size="40" type="text" value="">
-                            @Html.ValidationMessage("PostcodeSearch")
-                        </div>
-                        <button type="submit" class="button" name="AddLocations" value="SearchLocations">Find address</button>
-                    </details>
-                }
-            </div>
-
-            @if (Model.SearchResultAddresses != null && Model.SearchResultAddresses.Page != null && Model.SearchResultAddresses.Page.Any())
-            {
-                <div class="form-group grid grid-1-2 scrolling-panel max-height-15">
-                    <div class="tabbed-element tab1 active width-all-1-1">
-                        <table class="no-btm-margin">
-                            <colgroup>
-                                <col class="t70">
-                                <col class="t30">
-                            </colgroup>
-                            <tbody>
-                            @{
-                                var index = 0;
-                            }
-                            @foreach (var address in Model.SearchResultAddresses.Page)
-                            {
-                                <tr>
-                                    <td class="location-search-results">
-                                        @address.Address.AddressLine1
-                                        @if (!string.IsNullOrWhiteSpace(@address.Address.AddressLine2))
-                                        {
-                                            string.Format(", {0}", @address.Address.AddressLine2);
-                                        }
-                                        @string.Format(", {0} {1}", address.Address.AddressLine4, address.Address.Postcode)
-                                    </td>
-                                    <td class="location-search-results">
-                                        @{
-                                            var buttonName = "UseLocation-" + @index + "-" + @Model.PostcodeSearch;
-                                        }
-                                        <button id="useLocation" type="submit" class="button-link use-location-button-link add-location-link" name="AddLocations" value="@buttonName">add location</button>
-                                    </td>
-                                </tr>
-                                index = index+1;
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            }
-
-            @if (Model.Addresses != null && Model.Addresses.Any())
-            {
-                <div class="form-group">
-                    <a name="locationaddresses"></a>
-                    <div class="tabbed-element tab1 active width-all-1-1">
-                        <table class="no-btm-margin grid-3-4">
-                            <colgroup>
-                                <col class="t50">
-                                <col class="t30">
-                                <col class="t20">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>Address</th>
-                                <th>Number of positions</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            @for (var i = 0; i < Model.Addresses.Count; i++)
-                            {
-                                <tr>
-                                    <td>
-                                        @Model.Addresses.ToList()[i].Address.AddressLine1
-                                        @if (!string.IsNullOrWhiteSpace(@Model.Addresses.ToList()[i].Address.AddressLine2))
-                                        {
-                                            <br/>@Model.Addresses.ToList()[i].Address.AddressLine2
-                                        }
-                                        <br/>@Model.Addresses.ToList()[i].Address.AddressLine4 @Model.Addresses.ToList()[i].Address.Postcode
-
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Postcode, new {@id = "addresses_" + i + "address__Postcode", Name = "Addresses[" + i + "].Address.Postcode"})
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine1, new {@id = "addresses_" + i + "address__AddressLine1", Name = "Addresses[" + i + "].Address.AddressLine1"})
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine2, new {@id = "addresses_" + i + "address__AddressLine2", Name = "Addresses[" + i + "].Address.AddressLine2"})
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine3, new {@id = "addresses_" + i + "address__AddressLine3", Name = "Addresses[" + i + "].Address.AddressLine3"})
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.AddressLine4, new {@id = "addresses_" + i + "address__AddressLine4", Name = "Addresses[" + i + "].Address.AddressLine4"})
-                                        @Html.HiddenFor(m => Model.Addresses.ToList()[i].Address.Uprn, new {@id = "addresses_" + i + "address__Uprn", Name = "Addresses[" + i + "].Address.Uprn"})
-                                    </td>
-                                    <td>
-                                        @Html.TextBoxFor(m => Model.Addresses.ToList()[i].NumberOfPositions, new {@class = "form-control-small", @maxlength = "5", @id = "addresses_" + i + "__numberofpositions", Name = "Addresses[" + i + "].NumberOfPositions"})
-                                        @Html.ValidationMessage("Addresses[" + i + "].NumberOfPositions")
-                                    </td>
-                                    <td class="ta-center">
-                                        @{
-                                            var buttonName = "RemoveLocation-" + i;
-                                        }
-                                        <button id="removeLocation" type="submit" class="button-link remove-button-link" name="AddLocations" value="@buttonName">remove location</button>
-                                    </td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LocationAddressesComment))
-
-                <div class="form-group">
-                    @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-                    @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
-                </div>
-                <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-                @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
-            }
-        </div>
-    </noscript>
-
-    <div class="hide-nojs" id="locationAddressesTable">
-        <div id="address-lookup">
-            <div class="form-group form-group-compound" id="addressInputWrapper">
-                <label for="postcode-search" class="form-label bold-small">Enter the vacancy location or postcode</label>
-                <input id="postcode-search" type="text" class="form-control form-control-1-3" spellcheck="false" autocorrect="off" data-bind="style: {'display': addModeOn() }"/>
-                <a href="#" id="add-new-location" data-bind="style: {'display': addModeOff() }, click: addNewLocation">Add another location </a>
-                <span class="visuallyhidden" id="ariaAddressEntered" aria-live="polite"></span>
-            </div>
-            <div id="address-manual" class="form-group form-group-compound">
-                <a href="#" class="copy-19" id="enterAddressManually"></a><a href="#" class="copy-19" id="enterAddressManually"></a>
-                <span class="toggle-content hide-nojs loading-text" id="addressLoading">Loading address...</span>
-                <span class="toggle-content hide-nojs loading-text" id="noResults">No results match your search. You must enter a valid postcode</span>
-                <span style="color: red" id="postcodeServiceUnavailable" class="copy-19 toggle-content hide-nojs text">Service is currently unavailable, enter the full postcode</span>
-            </div>
-        </div>
-        <div>
-            <div data-bind="style: {'display': locationAddressesStatus() }">
-                <a name="locationaddresses"></a>
-                <table class="grid-3-4">
-                    <colgroup>
-                        <col class="t40">
-                        <col class="t25">
-                        <col class="t20">
-                        <col>
-                    </colgroup>
-
-                    <thead>
-                    <tr>
-                        <th>
-                            <span class="heading-span">Location</span>
-                        </th>
-                        <th>
-                            <span class="heading-span">Number of positions</span>
-                        </th>
-                        <th>
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody id="location-addresses" data-bind="foreach: locationAddresses">
-                    <tr>
-                        <td>
-                            <span data-bind="html: itemFriendlyAddress()" maxlength="50" />
-                        </td>
-                        <td>
-                            <span style="width: 20%; display: inline-block"></span>
-                            <input class="form-control-small qual-input-edit qual-year" maxlength="5" type="text" data-bind="value: itemNumberOfPositions, attr:{'name':'Addresses[' + $index() +'].NumberOfPositions', 'id':'addresses_'+ $index() + '__numberofpositions'}">
-                            <span class="field-validation-valid" aria-live="polite" data-valmsg-replace="true" data-bind="attr:{'id': 'Addresses[' + $index() +'].NumberOfPositions_Error', 'data-valmsg-for': 'Addresses[' + $index() +'].NumberOfPositions'}"></span>
-                            <input type="hidden" data-bind="value: itemAddressLine1, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine1', 'id':'addresses_'+ $index() + 'address__AddressLine1' }">
-                            <input type="hidden" data-bind="value: itemAddressLine2, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine2', 'id':'addresses_'+ $index() + 'address__AddressLine2' }">
-                            <input type="hidden" data-bind="value: itemAddressLine3, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine3', 'id':'addresses_'+ $index() + 'address__AddressLine3' }">
-                            <input type="hidden" data-bind="value: itemAddressLine4, attr:{'name':'Addresses[' + $index() +'].Address.AddressLine4', 'id':'addresses_'+ $index() + 'address__AddressLine4' }">
-                            <input type="hidden" data-bind="value: itemPostcode, attr:{'name':'Addresses[' + $index() +'].Address.Postcode', 'id':'addresses_'+ $index() + 'address__Postcode' }">
-                            <input type="hidden" data-bind="value: itemUprn, attr:{'name':'Addresses[' + $index() +'].Address.Uprn', 'id':'addresses_'+ $index() + 'address__Uprn' }">
-                        </td>
-                        <td class="ta-center">
-                            <a href="#" data-bind="click: $root.removeLocationAddress">remove location</a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.LocationAddressesComment))
-            </div>
-
-            <div class="form-group" data-bind="style: {'display': locationAddressesStatus() }">
-                @Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-                @Html.Partial("_comment", Html.GetCommentViewModel(m => m.AdditionalLocationInformationComment))
-            </div>
-            <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-            @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true})
-        </div>
-    </div>
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
+    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true })
 }
 
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
 
+    <script type="text/javascript">
+    ko.observable.fn.appendError = function (error) {
+        var thisError = this.error();
+        if (thisError) {
+            this.setError(thisError += '. ' + error);
+        }
+        else {
+            this.setError(error);
+        };
+    };
 
-            @section scripts {
-                @Scripts.Render("~/bundles/knockout")
+    var addressesData = null;
 
-                <script type="text/javascript">
-                ko.observable.fn.appendError = function (error) {
-                    var thisError = this.error();
-                    if (thisError) {
-                        this.setError(thisError += '. ' + error);
-                    }
-                    else {
-                        this.setError(error);
-                    };
-                };
+    addressesData = @Html.Raw(Json.Encode(Model.Addresses));
 
-                var addressesData = null;
+    if (!addressesData) addressesData = [];
 
-                addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+    function getLocationAddressesData() {
+        return addressesData;
+    }
 
-                if (!addressesData) addressesData = [];
+    var modelState = null;
+    modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
 
-                function getLocationAddressesData() {
-                    return addressesData;
-                }
+    function getModelState() {
+        return modelState;
+    }
+    </script>
 
-                var modelState = null;
-                modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
-
-                function getModelState() {
-                    return modelState;
-                }
-                </script>
-
-                @Scripts.Render("~/bundles/location")
-            }
+    @Scripts.Render("~/bundles/location")
+}

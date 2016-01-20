@@ -12,7 +12,7 @@
 
     public class VacancyViewModel
     {
-        public const string PartialView = "VacancyPreview";
+        public const string PartialView = "Vacancy/VacancyPreview";
 
         public long VacancyReferenceNumber { get; set; }
 

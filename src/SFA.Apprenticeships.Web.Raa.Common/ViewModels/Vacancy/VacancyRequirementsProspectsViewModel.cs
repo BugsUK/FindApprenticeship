@@ -9,6 +9,8 @@
     [Validator(typeof (VacancyRequirementsProspectsViewModelClientValidator))]
     public class VacancyRequirementsProspectsViewModel
     {
+        public const string PartialView = "Vacancy/RequirementsProspects";
+
         public long VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyViewModelMessages.DesiredSkills.LabelText)]
