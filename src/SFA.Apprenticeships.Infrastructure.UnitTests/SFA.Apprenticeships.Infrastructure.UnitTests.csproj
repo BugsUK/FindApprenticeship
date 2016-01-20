@@ -187,6 +187,8 @@
     <Compile Include="LegacyWebServices\GatewayTraineeshipVacancySummaryMapperTests.cs" />
     <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancySummaryMapperTests.cs" />
     <Compile Include="LegacyWebServices\Candidate\CreateCandidateTests.cs" />
+    <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
+    <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="Processes\ApplicationStatusChangedSubscriberTests.cs" />
     <Compile Include="Processes\Builders\ApplicationStatusChangedSubscriberBuilder.cs" />
