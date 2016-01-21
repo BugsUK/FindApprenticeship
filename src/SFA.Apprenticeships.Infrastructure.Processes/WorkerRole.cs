@@ -41,26 +41,26 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         public override void Run()
         {
-            //Initialise();
+            Initialise();
 
-            //_cancelSource.Token.WaitHandle.WaitOne();
+            _cancelSource.Token.WaitHandle.WaitOne();
         }
 
         public override bool OnStart()
         {
-            //ServicePointManager.DefaultConnectionLimit = 12;
+            ServicePointManager.DefaultConnectionLimit = 12;
 
             return base.OnStart();
         }
 
         public override void OnStop()
         {
-            //UnsubscribeServiceBusMessageBrokers();
+            UnsubscribeServiceBusMessageBrokers();
 
             // Give it 5 seconds to finish processing any in flight subscriptions.
-            //Thread.Sleep(TimeSpan.FromSeconds(5));
+            Thread.Sleep(TimeSpan.FromSeconds(5));
 
-            //_cancelSource.Cancel();
+            _cancelSource.Cancel();
 
             base.OnStop();
         }
