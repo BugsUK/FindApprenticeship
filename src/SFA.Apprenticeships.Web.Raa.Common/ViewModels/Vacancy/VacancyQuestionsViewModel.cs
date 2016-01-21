@@ -9,6 +9,8 @@
     [Validator(typeof (VacancyQuestionsViewModelClientValidator))]
     public class VacancyQuestionsViewModel
     {
+        public const string PartialView = "Vacancy/EmployerQuestions";
+
         public long VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyViewModelMessages.FirstQuestion.LabelText)]

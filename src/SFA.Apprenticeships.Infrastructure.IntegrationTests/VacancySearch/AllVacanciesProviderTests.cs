@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using FluentAssertions;

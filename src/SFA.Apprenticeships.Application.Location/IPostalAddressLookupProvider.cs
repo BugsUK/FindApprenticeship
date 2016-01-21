@@ -10,6 +10,6 @@ namespace SFA.Apprenticeships.Application.Location
 
     public interface IPostalAddressLookupProvider
     {
-        IEnumerable<PostalAddress> GetPostalAddresses(string addressLine1, string postcode);
+        IEnumerable<PostalAddress> GetValidatedPostalAddresses(string addressLine1, string postcode);
     }
 }

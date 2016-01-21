@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Vacancies.Entities;
+    using Common.Configuration;
     using Common.IoC;
     using SFA.Infrastructure.Interfaces;
     using FluentAssertions;

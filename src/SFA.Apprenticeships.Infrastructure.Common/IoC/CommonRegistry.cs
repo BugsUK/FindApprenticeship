@@ -11,15 +11,12 @@
 
     public class CommonRegistry : Registry
     {
-        public CommonRegistry() : this(new CacheConfiguration(), string.Empty) { }
+        public CommonRegistry() : this(new CacheConfiguration()) { }
 
-        public CommonRegistry(CacheConfiguration cacheConfiguration, string configurationStorageConnectionString)
+        public CommonRegistry(CacheConfiguration cacheConfiguration)
         {
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
-            For<IConfigurationService>().Singleton()
-                .Use<AzureBlobConfigurationService>()
-                .Ctor<string>("configurationStorageConnectionString").Is(configurationStorageConnectionString)
-                .Name = "ConfigurationService";
+            For<IConfigurationService>().Singleton().Use<AzureBlobConfigurationService>().Name = "ConfigurationService";
             For<IDateTimeService>().Use<DateTimeService>();
 
             if (cacheConfiguration.UseCache)

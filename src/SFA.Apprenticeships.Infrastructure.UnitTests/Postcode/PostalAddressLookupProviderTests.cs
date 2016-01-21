@@ -33,8 +33,8 @@
 
         private string _nonEmptyStringParam = "salty lassi";
 
-        private string _ErrorResult =
-            @"[{""Error"":""2"",""Description"":""Unknown key"",""Cause"":""The key you are using to access the service was not found."",""Resolution"":""Please check that the key is correct.It should be in the form AA11-AA11-AA11-AA11.""}]";
+        //private string _ErrorResult =
+        //    @"[{""Error"":""2"",""Description"":""Unknown key"",""Cause"":""The key you are using to access the service was not found."",""Resolution"":""Please check that the key is correct.It should be in the form AA11-AA11-AA11-AA11.""}]";
 
 
         [SetUp]
@@ -56,7 +56,7 @@
         {
             //Arrange
             //Act
-            _palp.GetPostalAddresses(null, "postcode");
+            _palp.GetValidatedPostalAddresses(null, "postcode");
             //Assert
         }
 
@@ -66,7 +66,17 @@
         {
             //Arrange
             //Act
-            _palp.GetPostalAddresses("Line 1", null);
+            _palp.GetValidatedPostalAddresses("Line 1", null);
+            //Assert
+        }
+
+        [Test]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldRequirePostcodeOnly()
+        {
+            //Arrange
+            //Act
+            _palp.GetValidatedPostalAddresses(null);
             //Assert
         }
 
@@ -76,34 +86,72 @@
         {
             //Arrange
             var findResult = new RestResponse<List<PcaServiceFindResult>>();
-            findResult.Content = json;
+            //findResult.Content = json;
             findResult.ResponseStatus = ResponseStatus.Completed;
             findResult.Data = SimpleJson.DeserializeObject<List<PcaServiceFindResult>>(json);
             _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
-            _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new PostalAddress());
+            _mockRetrieveAddressService.Setup(m => m.RetrieveValidatedAddress(It.IsAny<string>())).Returns(new PostalAddress());
 
             //Act
-            var result = _palp.GetPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
+            var result = _palp.GetValidatedPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
 
             //Assert
             Assert.AreEqual(count, result.Count());
         }
-        
+
+        [TestCase(1, _jsonSingleFindResult)]
+        [TestCase(3, _jsonMultiFindResult)]
+        public void GetPostalAddresses_PostcodeOnly_ReturnsMultipleAddresses(int count, string json)
+        {
+            //Arrange
+            var findResult = new RestResponse<List<PcaServiceFindResult>>();
+            findResult.ResponseStatus = ResponseStatus.Completed;
+            findResult.Data = SimpleJson.DeserializeObject<List<PcaServiceFindResult>>(json);
+            _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
+            _mockRetrieveAddressService.Setup(m => m.RetrieveValidatedAddress(It.IsAny<string>())).Returns(new PostalAddress());
+
+            //Act
+            var result = _palp.GetValidatedPostalAddresses(_nonEmptyStringParam);
+
+            //Assert
+            Assert.AreEqual(count, result.Count());
+        }
+
         [Test]
         public void GetPostalAddresses_ReturnsNull()
         {
             //Arrange
             var findResult = new RestResponse<List<PcaServiceFindResult>>();
-            findResult.Content = _ErrorResult;
+            //findResult.Content = _ErrorResult;
             findResult.ResponseStatus = ResponseStatus.Completed;
             findResult.Data = new Fixture().Build<PcaServiceFindResult>()
                 .With(x => x.Id, null)
                 .CreateMany(1).ToList();
             _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
-            _mockRetrieveAddressService.Setup(m => m.RetrieveAddress(It.IsAny<string>())).Returns(new PostalAddress());
+            _mockRetrieveAddressService.Setup(m => m.RetrieveValidatedAddress(It.IsAny<string>())).Returns(new PostalAddress());
 
             //Act
-            var result = _palp.GetPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
+            var result = _palp.GetValidatedPostalAddresses(_nonEmptyStringParam, _nonEmptyStringParam);
+
+            //Assert
+            Assert.IsNull(result);
+        }
+
+        [Test]
+        public void GetPostalAddresses_PostcodeOnly_ReturnsNull()
+        {
+            //Arrange
+            var findResult = new RestResponse<List<PcaServiceFindResult>>();
+            //findResult.Content = _ErrorResult;
+            findResult.ResponseStatus = ResponseStatus.Completed;
+            findResult.Data = new Fixture().Build<PcaServiceFindResult>()
+                .With(x => x.Id, null)
+                .CreateMany(1).ToList();
+            _mockClient.Setup(m => m.Execute<List<PcaServiceFindResult>>(It.IsAny<IRestRequest>())).Returns(findResult);
+            _mockRetrieveAddressService.Setup(m => m.RetrieveValidatedAddress(It.IsAny<string>())).Returns(new PostalAddress());
+
+            //Act
+            var result = _palp.GetValidatedPostalAddresses(_nonEmptyStringParam);
 
             //Assert
             Assert.IsNull(result);

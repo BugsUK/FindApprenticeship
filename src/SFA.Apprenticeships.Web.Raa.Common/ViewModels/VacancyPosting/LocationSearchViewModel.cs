@@ -9,6 +9,8 @@
 
     public class LocationSearchViewModel
     {
+        public const string PartialView = "Vacancy/LocationSearch";
+
         public LocationSearchViewModel()
         {
             Addresses = new List<VacancyLocationAddressViewModel>();
@@ -20,8 +22,6 @@
         public PageableViewModel<VacancyLocationAddressViewModel> SearchResultAddresses { get; set; }
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
-
-        public List<VacancyLocationAddressViewModel> SearchAddresses { get; set; }
 
         public string ProviderSiteErn { get; set; }
 

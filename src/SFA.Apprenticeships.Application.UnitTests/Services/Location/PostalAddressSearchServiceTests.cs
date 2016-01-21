@@ -28,14 +28,61 @@
         {
             //Arrange
             var singleResult = new List<PostalAddress> {new Fixture().Build<PostalAddress>().Create()};
-            _postalAddressLookupProvider.Setup(m => m.GetPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(singleResult);
             
             //Act
-            var result = _serviceUnderTest.GetAddress(It.IsAny<string>(), It.IsAny<string>());
+            var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
 
             //Assert
             Assert.IsNotNull(result);
+        }
+
+        [Test]
+        public void ShouldReturnNullIfNoAddressFound()
+        {
+            //Arrange
+            List<PostalAddress> findResult = null;
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(findResult);
+
+            //Act
+            var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
+
+            //Assert
+            Assert.IsNull(result);
+        }
+
+        [ExpectedException(typeof(InvalidOperationException))]
+        public void ShouldReturnExceptionIfMultipleAddressesFound()
+        {
+            //Arrange
+            var multipleResults = new Fixture().Build<PostalAddress>()
+                .CreateMany().ToList();
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(multipleResults);
+
+            //Act
+            var result = _serviceUnderTest.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>());
+
+            //Assert
+            //expected exception
+        }
+
+        [Test]
+        public void ShouldReturnMultipleAddresses()
+        {
+            //Arrange
+            var multipleResults = new Fixture().Build<PostalAddress>()
+                .CreateMany().ToList();
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns(multipleResults);
+
+            //Act
+            var result = _serviceUnderTest.GetValidatedAddresses(It.IsAny<string>());
+
+            //Assert
+            Assert.AreEqual(result.Count(), multipleResults.Count);
         }
 
         [Test]
@@ -43,31 +90,14 @@
         {
             //Arrange
             List<PostalAddress> findResult = null;
-            _postalAddressLookupProvider.Setup(m => m.GetPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(findResult);
 
             //Act
-            var result = _serviceUnderTest.GetAddress(It.IsAny<string>(), It.IsAny<string>());
+            var result = _serviceUnderTest.GetValidatedAddresses(It.IsAny<string>());
 
             //Assert
             Assert.IsNull(result);
-        }
-
-        [Test]
-        [ExpectedException(typeof(InvalidOperationException))]
-        public void ShouldReturnExceptionIfMultipleAddressesFound()
-        {
-            //Arrange
-            var multipleResults = new Fixture().Build<PostalAddress>()
-                .CreateMany().ToList();
-            _postalAddressLookupProvider.Setup(m => m.GetPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(multipleResults);
-
-            //Act
-            var result = _serviceUnderTest.GetAddress(It.IsAny<string>(), It.IsAny<string>());
-
-            //Assert
-            //expected exception
         }
     }
 }

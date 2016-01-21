@@ -7,7 +7,7 @@
 
     public class BsAddressMapper
     {
-        public Address ToAddress(BSaddressStructure fromAddress)
+        public PostalAddress ToAddress(BSaddressStructure fromAddress)
         {
             if (fromAddress == null)
             {
@@ -19,14 +19,15 @@
             //  SAON: Secondary Addressable Object Name
             var paon = fromAddress.PAON?.Items.FirstOrDefault()?.ToString();
 
-            return new Address
+            return new PostalAddress
             {
                 AddressLine1 = MapAddressComponent(paon),
                 AddressLine2 = MapAddressComponent(fromAddress.StreetDescription),
                 AddressLine3 = MapAddressComponent(fromAddress.PostTown),
                 AddressLine4 = null,
                 Postcode = MapAddressComponent(fromAddress.PostCode),
-                Uprn = null,
+                ValidationSourceCode = null,
+                ValidationSourceKeyValue = null,
                 GeoPoint = null
             };
         }

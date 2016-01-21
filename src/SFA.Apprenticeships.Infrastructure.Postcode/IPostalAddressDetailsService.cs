@@ -4,6 +4,6 @@
 
     public interface IPostalAddressDetailsService
     {
-        PostalAddress RetrieveAddress(string addressId);
+        PostalAddress RetrieveValidatedAddress(string addressId);
     }
 }

@@ -33,19 +33,9 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     {
         public static IContainer Initialize()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
             });
             var configurationService = container.GetInstance<IConfigurationService>();
@@ -55,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
 
             return new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
 
                 //// cache service - to allow web site to run without azure cache

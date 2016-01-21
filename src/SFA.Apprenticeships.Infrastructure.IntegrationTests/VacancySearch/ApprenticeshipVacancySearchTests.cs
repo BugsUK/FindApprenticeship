@@ -3,6 +3,7 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;

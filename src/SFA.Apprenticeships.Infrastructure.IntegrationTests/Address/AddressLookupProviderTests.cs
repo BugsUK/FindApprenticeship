@@ -2,12 +2,14 @@
 {
     using System.Collections.Generic;
     using Application.Location;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using FluentAssertions;
     using Infrastructure.Postcode.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
     using StructureMap;
 
     [TestFixture]

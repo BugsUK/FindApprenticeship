@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Application.Location;
+    using Common.Configuration;
     using Common.IoC;
     using Infrastructure.Elastic.Common.IoC;
     using LocationLookup.IoC;

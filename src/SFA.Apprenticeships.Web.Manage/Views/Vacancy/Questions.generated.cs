@@ -40,38 +40,25 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     #line hidden
     
     #line 3 "..\..\Views\Vacancy\Questions.cshtml"
-    using SFA.Apprenticeships.Web.Raa.Common.Extensions;
+    using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/Questions.cshtml")]
-    public partial class Questions : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel>
+    public partial class Questions : System.Web.Mvc.WebViewPage<VacancyQuestionsViewModel>
     {
         public Questions()
         {
         }
         public override void Execute()
         {
-            
-            #line 4 "..\..\Views\Vacancy\Questions.cshtml"
-  
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
+WriteLiteral("\r\n");
 
             
-            #line default
-            #line hidden
-WriteLiteral("\r\n\r\n<h1");
-
-WriteLiteral(" class=\"heading-xlarge\"");
-
-WriteLiteral(">\r\n    Questions for candidates\r\n</h1>\r\n\r\n");
-
-            
-            #line 12 "..\..\Views\Vacancy\Questions.cshtml"
+            #line 5 "..\..\Views\Vacancy\Questions.cshtml"
  using (Html.BeginRouteForm(ManagementRouteNames.Questions, FormMethod.Post))
 {
     
@@ -79,99 +66,20 @@ WriteLiteral(">\r\n    Questions for candidates\r\n</h1>\r\n\r\n");
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Vacancy\Questions.cshtml"
-Write(Html.AntiForgeryToken());
+            #line 7 "..\..\Views\Vacancy\Questions.cshtml"
+Write(Html.DisplayFor(m => m, VacancyQuestionsViewModel.PartialView));
 
             
             #line default
             #line hidden
             
-            #line 14 "..\..\Views\Vacancy\Questions.cshtml"
-                            
-    
-            
-            #line default
-            #line hidden
-            
-            #line 15 "..\..\Views\Vacancy\Questions.cshtml"
-Write(Html.Partial("ValidationSummary", ViewData.ModelState));
-
-            
-            #line default
-            #line hidden
-            
-            #line 15 "..\..\Views\Vacancy\Questions.cshtml"
-                                                           
-
-    
-            
-            #line default
-            #line hidden
-            
-            #line 17 "..\..\Views\Vacancy\Questions.cshtml"
-Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
-
-            
-            #line default
-            #line hidden
-            
-            #line 17 "..\..\Views\Vacancy\Questions.cshtml"
-                                                  
+            #line 7 "..\..\Views\Vacancy\Questions.cshtml"
+                                                                   
 
 
             
             #line default
             #line hidden
-WriteLiteral("    <section>\r\n        <div");
-
-WriteLiteral(" class=\"form-group\"");
-
-WriteLiteral(">\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 21 "..\..\Views\Vacancy\Questions.cshtml"
-       Write(Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 22 "..\..\Views\Vacancy\Questions.cshtml"
-       Write(Html.EditorFor(m => m.FirstQuestionComment, "Comment", Html.GetLabelFor(m => m.FirstQuestionComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 23 "..\..\Views\Vacancy\Questions.cshtml"
-       Write(Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("            ");
-
-            
-            #line 24 "..\..\Views\Vacancy\Questions.cshtml"
-       Write(Html.EditorFor(m => m.SecondQuestionComment, "Comment", Html.GetLabelFor(m => m.SecondQuestionComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n        </div>\r\n    </section>\r\n");
-
 WriteLiteral("    <div");
 
 WriteLiteral(" class=\"grid grid-1-2\"");
@@ -187,7 +95,7 @@ WriteLiteral(">Save</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 29 "..\..\Views\Vacancy\Questions.cshtml"
+            #line 11 "..\..\Views\Vacancy\Questions.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -196,7 +104,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 31 "..\..\Views\Vacancy\Questions.cshtml"
+            #line 13 "..\..\Views\Vacancy\Questions.cshtml"
 }
             
             #line default
