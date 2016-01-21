@@ -26,26 +26,7 @@
 
         public GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request)
         {
-            object context = new
-            {
-                request?.ExternalSystemId,
-                request?.MessageId
-            };
-
-            try
-            {
-                if (request == null)
-                {
-                    throw new ArgumentNullException(nameof(request));
-                }
-
-                return _mediator.GetErrorCodes(request);
-            }
-            catch (Exception e)
-            {
-                _logService.Error(e, context);
-                throw;
-            }
+            return GetMediatorResponse(req => _mediator.GetErrorCodes(req), request);
         }
 
         public GetApprenticeshipFrameworksResponse GetApprenticeshipFrameworks(GetApprenticeshipFrameworksRequest request)
@@ -60,12 +41,36 @@
 
         public GetCountiesResponse GetCounties(GetCountiesRequest request)
         {
-            throw new NotImplementedException();
+            return GetMediatorResponse(req => _mediator.GetCounties(req), request);
         }
 
         public GetLocalAuthoritiesResponse GetLocalAuthorities(GetLocalAuthoritiesRequest request)
         {
             throw new NotImplementedException();
+        }
+
+        private TResponse GetMediatorResponse<TRequest, TResponse>(Func<TRequest, TResponse> mediatorFunc, TRequest request) where TRequest : NavmsMessageHeader
+        {
+            object context = new
+            {
+                request?.ExternalSystemId,
+                request?.MessageId
+            };
+
+            try
+            {
+                if (request == null)
+                {
+                    throw new ArgumentNullException(nameof(request));
+                }
+
+                return mediatorFunc(request);
+            }
+            catch (Exception e)
+            {
+                _logService.Error(e, context);
+                throw;
+            }
         }
     }
 }

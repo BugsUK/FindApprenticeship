@@ -10,9 +10,11 @@
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Repositories.Providers.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Reference.IoC;
     using Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
     using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
+    using Infrastructure.Interfaces;
     using Mappers.Version51;
     using Mediators.Version51;
     using Providers;
@@ -36,6 +38,7 @@
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
+                x.AddRegistry<ReferenceRepositoryRegistry>();
 
                 // Services.
                 x.AddRegistry<EmployerDataServicesRegistry>();
@@ -52,6 +55,7 @@
                 // Web Service Providers.
                 x.For<IVacancyDetailsProvider>().Use<VacancyDetailsProvider>();
                 x.For<IWebServiceAuthenticationProvider>().Use<WebServiceAuthenticationProvider>();
+                x.For<IReferenceDataProvider>().Use<ReferenceDataProvider>();
 
                 // Web Service Services.
                 x.For<IWebServiceConsumerService>().Use<WebServiceConsumerService>();
@@ -66,6 +70,7 @@
                 x.For<IVacancyDurationMapper>().Use<VacancyDurationMapper>();
                 x.For<IVacancyUploadRequestMapper>().Use<VacancyUploadRequestMapper>();
                 x.For<IWageMapper>().Use<WageMapper>();
+                x.For<ICountyMapper>().Use<CountyMapper>();
             });
         }
 

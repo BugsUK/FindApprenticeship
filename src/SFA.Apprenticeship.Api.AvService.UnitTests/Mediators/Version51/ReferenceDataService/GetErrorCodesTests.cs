@@ -12,32 +12,13 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class ReferenceDataServiceMediatorTests
+    public class ReferenceDataServiceMediatorTests : ReferenceDataServiceMediatorTestsBase
     {
-        private Mock<IWebServiceAuthenticationProvider> _mockWebServiceAuthenticationProvider;
-
-        private ReferenceDataServiceMediator _referenceDataServiceMediator;
-
-        [SetUp]
-        public void SetUp()
-        {
-            // Providers.
-            _mockWebServiceAuthenticationProvider = new Mock<IWebServiceAuthenticationProvider>();
-
-            _mockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>(), WebServiceCategory.Reference))
-                .Returns(WebServiceAuthenticationResult.Authenticated);
-
-            // Mediator.
-            _referenceDataServiceMediator = new ReferenceDataServiceMediator(
-                _mockWebServiceAuthenticationProvider.Object);
-        }
-
         [Test]
         public void ShouldThrowIfRequestIsNull()
         {
             // Act.
-            Action action = () => _referenceDataServiceMediator.GetErrorCodes(default(GetErrorCodesRequest));
+            Action action = () => ReferenceDataServiceMediator.GetErrorCodes(default(GetErrorCodesRequest));
 
             // Assert.
             action.ShouldThrowExactly<ArgumentNullException>();
@@ -47,22 +28,20 @@
         public void ShouldAuthenticateRequest()
         {
             // Arrange.
-            _referenceDataServiceMediator = new ReferenceDataServiceMediator(_mockWebServiceAuthenticationProvider.Object);
-
             var request = new GetErrorCodesRequest
             {
                 ExternalSystemId = Guid.NewGuid(),
                 PublicKey = "dontletmein"
             };
 
-            _mockWebServiceAuthenticationProvider.Reset();
+            MockWebServiceAuthenticationProvider.Reset();
 
-            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+            MockWebServiceAuthenticationProvider.Setup(mock => mock
                 .Authenticate(request.ExternalSystemId, request.PublicKey, WebServiceCategory.Reference))
                 .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
 
             // Act.
-            Action action = () => _referenceDataServiceMediator.GetErrorCodes(request);
+            Action action = () => ReferenceDataServiceMediator.GetErrorCodes(request);
 
             // Assert.
             action.ShouldThrowExactly<SecurityException>();
@@ -77,7 +56,7 @@
                 MessageId = Guid.NewGuid()
             };
 
-            var response = _referenceDataServiceMediator.GetErrorCodes(request);
+            var response = ReferenceDataServiceMediator.GetErrorCodes(request);
 
             // Assert.
             response.Should().NotBeNull();
@@ -90,7 +69,7 @@
             // Act.
             var request = new GetErrorCodesRequest();
 
-            var response = _referenceDataServiceMediator.GetErrorCodes(request);
+            var response = ReferenceDataServiceMediator.GetErrorCodes(request);
 
             // Assert.
             response.Should().NotBeNull();
