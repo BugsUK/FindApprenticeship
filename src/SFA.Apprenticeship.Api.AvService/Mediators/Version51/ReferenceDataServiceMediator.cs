@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using Common;
     using DataContracts.Version51;
+    using Domain;
     using MessageContracts.Version51;
     using Providers;
 
     public class ReferenceDataServiceMediator : ServiceMediatorBase, IReferenceDataServiceMediator
     {
         public ReferenceDataServiceMediator(IWebServiceAuthenticationProvider webServiceAuthenticationProvider)
-            : base(webServiceAuthenticationProvider)
+            : base(webServiceAuthenticationProvider, WebServiceCategory.Reference)
         {
         }
 

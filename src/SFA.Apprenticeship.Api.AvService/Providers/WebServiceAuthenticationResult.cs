@@ -6,6 +6,7 @@
         Authenticated = 1,
         InvalidPublicKey = 2,
         AuthenticationFailed = 3,
-        InvalidExternalSystemId = 4
+        InvalidExternalSystemId = 4,
+        NotAllowed = 5
     }
 }

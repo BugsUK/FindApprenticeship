@@ -116,7 +116,7 @@
     <Compile Include="Mappers\Version51\VacancyUploadRequestMapperTests.cs" />
     <Compile Include="Mappers\Version51\WageMapperTests.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\ReferenceDataServiceMediatorTests.cs" />
-    <Compile Include="Providers\AuthenticationProviderTests.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationProviderTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\ExceptionHandlingTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />

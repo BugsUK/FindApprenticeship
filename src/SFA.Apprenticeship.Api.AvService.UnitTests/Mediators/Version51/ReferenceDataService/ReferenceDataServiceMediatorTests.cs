@@ -5,6 +5,7 @@
     using AvService.Mediators.Version51;
     using AvService.Providers;
     using Common;
+    using Domain;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
@@ -24,7 +25,7 @@
             _mockWebServiceAuthenticationProvider = new Mock<IWebServiceAuthenticationProvider>();
 
             _mockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>()))
+                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>(), WebServiceCategory.Reference))
                 .Returns(WebServiceAuthenticationResult.Authenticated);
 
             // Mediator.
@@ -40,6 +41,31 @@
 
             // Assert.
             action.ShouldThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ShouldAuthenticateRequest()
+        {
+            // Arrange.
+            _referenceDataServiceMediator = new ReferenceDataServiceMediator(_mockWebServiceAuthenticationProvider.Object);
+
+            var request = new GetErrorCodesRequest
+            {
+                ExternalSystemId = Guid.NewGuid(),
+                PublicKey = "dontletmein"
+            };
+
+            _mockWebServiceAuthenticationProvider.Reset();
+
+            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+                .Authenticate(request.ExternalSystemId, request.PublicKey, WebServiceCategory.Reference))
+                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
+
+            // Act.
+            Action action = () => _referenceDataServiceMediator.GetErrorCodes(request);
+
+            // Assert.
+            action.ShouldThrowExactly<SecurityException>();
         }
 
         [Test]
@@ -70,31 +96,6 @@
             response.Should().NotBeNull();
             response.ErrorCodes.Should().NotBeNull();
             response.ErrorCodes.ShouldBeEquivalentTo(ApiErrors.ErrorCodes);
-        }
-
-        [Test]
-        public void ShouldAuthenticateRequest()
-        {
-            // Arrange.
-            _referenceDataServiceMediator = new ReferenceDataServiceMediator(_mockWebServiceAuthenticationProvider.Object);
-
-            var request = new GetErrorCodesRequest
-            {
-                ExternalSystemId = Guid.NewGuid(),
-                PublicKey = "dontletmein"
-            };
-
-            _mockWebServiceAuthenticationProvider.Reset();
-
-            _mockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(request.ExternalSystemId, request.PublicKey))
-                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
-
-            // Act.
-            Action action = () => _referenceDataServiceMediator.GetErrorCodes(request);
-
-            // Assert.
-            action.ShouldThrowExactly<SecurityException>();
         }
     }
 }

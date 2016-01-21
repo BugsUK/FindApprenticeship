@@ -288,6 +288,7 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Domain\WebServiceCategory.cs" />
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
     <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
