@@ -12,7 +12,7 @@ Background:
 @US461 @PrimaryTransaction
 Scenario: Pre-populate my Education Qualifications Work Experience About You details
 	Given I have registered a new candidate
-	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" apprenticeship vacancy in location "Coventry" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
