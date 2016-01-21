@@ -5,6 +5,7 @@
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.EmployerDataService.IoC;
+    using Infrastructure.Postcode.IoC;
     using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
@@ -22,6 +23,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<EmployerDataServicesRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
             });
 
             _verifiedOrganisationProvider = container.GetInstance<IVerifiedOrganisationProvider>();
