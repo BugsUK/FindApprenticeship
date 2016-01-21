@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories
 {
+    using Common.Configuration;
     using Common.IoC;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Repositories.Applications.IoC;

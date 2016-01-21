@@ -1,7 +1,7 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
-
+﻿@model ProviderSiteEmployerLinkViewModel
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
@@ -17,51 +17,16 @@
         </h1>
     </div>
 </div>
-<div class="grid-wrapper">
-    @using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
-    {   
-        @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-        @Html.HiddenFor(m => m.ProviderSiteErn)
-        @Html.HiddenFor(m => m.Employer.Ern)
-        @Html.HiddenFor(m => m.VacancyGuid)
-        @Html.HiddenFor(m => m.VacancyReferenceNumber)
+@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+{   
+    @Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView)
 
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <h3 class="bold-small">Employer</h3>
-                <p class="small-btm-margin">@Model.Employer.Name</p>
-                <h3 class="bold-small">Address</h3>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
-                <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
-            </div>
-        </div>
-        <div class="grid grid-1-2 hide-print">
-            <div class="ad-details__map">
-                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-            </div>
-        </div>
-
-        <div class="grid grid-1-1">
-            @{Html.RenderPartial("_apprenticeshipLocationSelectorJS", Model);}
-            @{Html.RenderPartial("_apprenticeshipLocationSelectorNonJS", Model);}
-        </div>
-
-        <div class="grid grid-1-1">
-            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.EditorFor(m => m.WebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.WebsiteUrlComment))
-            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.EditorFor(m => m.DescriptionComment, "Comment", Html.GetLabelFor(m => m.DescriptionComment))
-            <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
-            @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
-        </div>
-   }
-</div>
+    <div class="grid grid-1-1">
+        <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+    </div>
+}
 
 @section scripts {
     <script type="text/javascript">

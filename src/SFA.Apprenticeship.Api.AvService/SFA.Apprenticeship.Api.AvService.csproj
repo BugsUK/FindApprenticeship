@@ -289,12 +289,13 @@
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
     <Compile Include="Mappers\Version51\ReferenceDataMappers.cs" />
+    <Compile Include="Domain\WebServiceCategory.cs" />
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
     <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
     <Compile Include="Providers\Version51\IReferenceDataProvider.cs" />
     <Compile Include="Providers\Version51\ReferenceDataProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
-    <Compile Include="Providers\AuthenticationResult.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationResult.cs" />
     <Compile Include="Domain\WebServiceConsumer.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandlerBehavior.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandler.cs" />

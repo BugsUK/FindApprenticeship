@@ -3,6 +3,7 @@
     using System;
     using System.Configuration;
     using System.Text;
+    using Common.Configuration;
     using Common.IoC;
     using Configuration;
     using SFA.Infrastructure.Interfaces;

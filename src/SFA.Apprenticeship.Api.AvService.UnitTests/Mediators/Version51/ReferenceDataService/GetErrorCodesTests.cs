@@ -2,24 +2,70 @@
 {
     using System;
     using System.Security;
+    using AvService.Mediators.Version51;
     using AvService.Providers;
     using Common;
+    using Domain;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
     using NUnit.Framework;
 
     [TestFixture]
-    public class GetErrorCodesTests : ReferenceDataServiceMediatorTestsBase
+    public class ReferenceDataServiceMediatorTests
     {
+        private Mock<IWebServiceAuthenticationProvider> _mockWebServiceAuthenticationProvider;
+
+        private ReferenceDataServiceMediator _referenceDataServiceMediator;
+
+        [SetUp]
+        public void SetUp()
+        {
+            // Providers.
+            _mockWebServiceAuthenticationProvider = new Mock<IWebServiceAuthenticationProvider>();
+
+            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>(), WebServiceCategory.Reference))
+                .Returns(WebServiceAuthenticationResult.Authenticated);
+
+            // Mediator.
+            _referenceDataServiceMediator = new ReferenceDataServiceMediator(
+                _mockWebServiceAuthenticationProvider.Object);
+        }
+
         [Test]
         public void ShouldThrowIfRequestIsNull()
         {
             // Act.
-            Action action = () => ReferenceDataServiceMediator.GetErrorCodes(default(GetErrorCodesRequest));
+            Action action = () => _referenceDataServiceMediator.GetErrorCodes(default(GetErrorCodesRequest));
 
             // Assert.
             action.ShouldThrowExactly<ArgumentNullException>();
+        }
+
+        [Test]
+        public void ShouldAuthenticateRequest()
+        {
+            // Arrange.
+            _referenceDataServiceMediator = new ReferenceDataServiceMediator(_mockWebServiceAuthenticationProvider.Object);
+
+            var request = new GetErrorCodesRequest
+            {
+                ExternalSystemId = Guid.NewGuid(),
+                PublicKey = "dontletmein"
+            };
+
+            _mockWebServiceAuthenticationProvider.Reset();
+
+            _mockWebServiceAuthenticationProvider.Setup(mock => mock
+                .Authenticate(request.ExternalSystemId, request.PublicKey, WebServiceCategory.Reference))
+                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
+
+            // Act.
+            Action action = () => _referenceDataServiceMediator.GetErrorCodes(request);
+
+            // Assert.
+            action.ShouldThrowExactly<SecurityException>();
         }
 
         [Test]
@@ -31,34 +77,11 @@
                 MessageId = Guid.NewGuid()
             };
 
-            var response = ReferenceDataServiceMediator.GetErrorCodes(request);
+            var response = _referenceDataServiceMediator.GetErrorCodes(request);
 
             // Assert.
             response.Should().NotBeNull();
             response.MessageId.Should().Be(request.MessageId);
-        }
-
-        [Test]
-        public void ShouldAuthenticateRequest()
-        {
-            // Arrange.
-            var request = new GetErrorCodesRequest
-            {
-                ExternalSystemId = Guid.NewGuid(),
-                PublicKey = "dontletmein"
-            };
-
-            MockWebServiceAuthenticationProvider.Reset();
-
-            MockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(request.ExternalSystemId, request.PublicKey))
-                .Returns(AuthenticationResult.AuthenticationFailed);
-
-            // Act.
-            Action action = () => ReferenceDataServiceMediator.GetErrorCodes(request);
-
-            // Assert.
-            action.ShouldThrowExactly<SecurityException>();
         }
 
         [Test]
@@ -67,7 +90,7 @@
             // Act.
             var request = new GetErrorCodesRequest();
 
-            var response = ReferenceDataServiceMediator.GetErrorCodes(request);
+            var response = _referenceDataServiceMediator.GetErrorCodes(request);
 
             // Assert.
             response.Should().NotBeNull();

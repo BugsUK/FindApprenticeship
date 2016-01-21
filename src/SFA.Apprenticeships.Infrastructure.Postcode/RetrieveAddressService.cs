@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
         {
             Condition.Requires(addressId, "addressId").IsNotNullOrWhiteSpace();
 
-            _logger.Debug("Calling RetrieveAddress for an address with Id={0}", addressId);
+            _logger.Debug("Calling RetrieveValidatedAddress for an address with Id={0}", addressId);
 
             var request = Create(GetRetrieveServiceUrl()
                 , new[]

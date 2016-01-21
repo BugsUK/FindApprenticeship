@@ -63,19 +63,9 @@
                 {
                     if (_configurationService == null)
                     {
-                        var tempContainer = new Container(x =>
-                        {
-                            x.AddRegistry<CommonRegistry>();
-                            x.AddRegistry<LoggingRegistry>();
-                        });
-
-                        var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-                        var configurationStorageConnectionString =
-                            configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
                         var uncachedContiner = new Container(x =>
                         {
-                            x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                            x.AddRegistry<CommonRegistry>();
                             x.AddRegistry<LoggingRegistry>();
                         });
 
@@ -85,7 +75,7 @@
                         var cachedContiner = new Container(x =>
                         {
                             x.AddRegistry<LoggingRegistry>();
-                            x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
+                            x.AddRegistry(new CommonRegistry(cacheConfig));
                             x.AddCachingRegistry(cacheConfig);
                         });
 

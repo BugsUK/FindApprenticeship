@@ -181,7 +181,7 @@
             viewResult.ViewData.ModelState.Should().HaveCount(2);
             viewResult.ViewData.ModelState.Keys.First().Should().Be("WorkingWeek");
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
-            viewResult.ViewData.ModelState.Keys.Last().Should().Be("ClosingDate");
+            viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
             viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
             var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
@@ -233,7 +233,7 @@
             viewResult.ViewData.ModelState.Should().HaveCount(2);
             viewResult.ViewData.ModelState.Keys.First().Should().Be("WorkingWeek");
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
-            viewResult.ViewData.ModelState.Keys.Last().Should().Be("ClosingDate");
+            viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
             viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
             var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;

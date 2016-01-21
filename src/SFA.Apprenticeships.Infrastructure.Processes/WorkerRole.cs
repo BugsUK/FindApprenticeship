@@ -12,7 +12,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -21,7 +20,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using SFA.Apprenticeships.Infrastructure.Raa.IoC;
+    using Raa.IoC;
     using Repositories.Applications.IoC;
     using Repositories.Audit.IoC;
     using Repositories.Authentication.IoC;
@@ -85,19 +84,9 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
         private void InitializeIoC()
         {
-            var tempContainer = new Container(x =>
-            {
-                x.AddRegistry<CommonRegistry>();
-                x.AddRegistry<LoggingRegistry>();
-            });
-
-            var configurationManager = tempContainer.GetInstance<IConfigurationManager>();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
-
             var container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(new CacheConfiguration(), configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration()));
                 x.AddRegistry<LoggingRegistry>();
             });
 
@@ -108,7 +97,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
 
             _container = new Container(x =>
             {
-                x.AddRegistry(new CommonRegistry(cacheConfig, configurationStorageConnectionString));
+                x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));

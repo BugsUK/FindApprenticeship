@@ -13,17 +13,17 @@
 
     public class AzureBlobConfigurationService : IConfigurationService
     {
-        private readonly string _configurationStorageConnectionString;
+        private readonly IConfigurationManager _configurationManager;
         private readonly ILogService _loggerService;
         private static readonly string FileVersion = FileVersionInfo.GetVersionInfo(Assembly.GetAssembly(typeof(AzureBlobConfigurationService)).Location).FileVersion;
-        private static readonly string CacheKey = $"Configuration_{FileVersion}";
-        private static readonly string BlobPath = $"faa/{FileVersion}/settings.json";
+        private static readonly string CacheKey = string.Format("Configuration_{0}", FileVersion);
+        private static readonly string BlobPath = string.Format("faa/{0}/settings.json", FileVersion);
         private readonly ObjectCache _cache;
         private readonly object _locker = new object();
 
-        public AzureBlobConfigurationService(string configurationStorageConnectionString, ILogService loggerService)
+        public AzureBlobConfigurationService(IConfigurationManager configurationManager, ILogService loggerService)
         {
-            _configurationStorageConnectionString = configurationStorageConnectionString;
+            _configurationManager = configurationManager;
             _loggerService = loggerService;
             _cache = MemoryCache.Default;
         }
@@ -32,14 +32,14 @@
         {
             var json = GetJson();
 
-            var settingName = typeof (TSettings).Name;
+            var settingName = typeof(TSettings).Name;
             string elementJson;
 
             try
             {
                 using (TextReader sr = new StringReader(json))
                 {
-                    var settingsObject = (JObject) JToken.ReadFrom(new JsonTextReader(sr));
+                    var settingsObject = (JObject)JToken.ReadFrom(new JsonTextReader(sr));
                     var settingsElement = settingsObject.GetValue(settingName);
                     elementJson = settingsElement.ToString();
                 }
@@ -59,18 +59,20 @@
             lock (_locker)
             {
                 var json = (string)_cache.Get(CacheKey);
-                
+
                 if (!string.IsNullOrEmpty(json)) return json;
-                
+
                 _loggerService.Debug("Loading configuration from Azure Blob Storage");
 
-                if (string.IsNullOrWhiteSpace(_configurationStorageConnectionString))
+                var storageConnectionString = _configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
+
+                if (string.IsNullOrWhiteSpace(storageConnectionString))
                 {
                     _loggerService.Warn("ConfigurationStorageConnectionString config setting null, can't load config");
                     return null;
                 }
 
-                var storageAccount = CloudStorageAccount.Parse(_configurationStorageConnectionString);
+                var storageAccount = CloudStorageAccount.Parse(storageConnectionString);
 
                 var blobClient = storageAccount.CreateCloudBlobClient();
 

@@ -3,6 +3,7 @@
     using System;
     using Application.Interfaces.Communications;
     using Candidate;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Exceptions;
     using FluentAssertions;

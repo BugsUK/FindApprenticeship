@@ -34,11 +34,8 @@
         public void SetUpFixture()
         {
             var configurationManager = new ConfigurationManager();
-            var configurationStorageConnectionString =
-                configurationManager.GetAppSetting<string>("ConfigurationStorageConnectionString");
 
-            var configurationService = new AzureBlobConfigurationService(configurationStorageConnectionString,
-                _logService.Object);
+            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
@@ -46,7 +43,14 @@
             _connectionString = $"Server=SQLSERVERTESTING;Database={databaseName};Trusted_Connection=True;";
 
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
-            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac");
+            var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
+            var dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            if (!File.Exists(dacpacFilePath))
+            {
+                //For NCrunch on Dave's machine
+                databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
+                dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            }
                 
             var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
 

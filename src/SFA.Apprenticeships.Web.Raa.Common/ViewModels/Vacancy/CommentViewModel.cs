@@ -4,7 +4,7 @@
 
     public class CommentViewModel
     {
-        public const string PartialView = "_CommentIcon";
+        public const string PartialIconView = "_CommentIcon";
 
         public CommentViewModel(string comment, string viewCommentUrl, string commentLabel)
         {

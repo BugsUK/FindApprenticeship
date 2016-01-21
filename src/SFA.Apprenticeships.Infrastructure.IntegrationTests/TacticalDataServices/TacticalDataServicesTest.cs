@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
     using System.Linq;
     using Application.Organisation;
     using Application.ReferenceData;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;

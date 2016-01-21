@@ -1,9 +1,10 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
+﻿nnamespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
 {
     using System;
     using System.Collections.Generic;
     using Common;
     using DataContracts.Version51;
+    using Domain;
     using MessageContracts.Version51;
     using Providers;
     using Providers.Version51;
@@ -13,7 +14,7 @@
         private readonly IReferenceDataProvider _referenceDataProvider;
 
         public ReferenceDataServiceMediator(IWebServiceAuthenticationProvider webServiceAuthenticationProvider, IReferenceDataProvider referenceDataProvider)
-            : base(webServiceAuthenticationProvider)
+            : base(webServiceAuthenticationProvider, WebServiceCategory.Reference)
         {
             _referenceDataProvider = referenceDataProvider;
         }

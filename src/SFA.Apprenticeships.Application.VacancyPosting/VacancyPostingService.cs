@@ -7,6 +7,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
@@ -74,6 +75,32 @@
             return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
         }
 
+        public ApprenticeshipVacancy ShallowSaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy)
+        {
+            Condition.Requires(vacancy);
+
+            // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
+            if (vacancy.Status == ProviderVacancyStatuses.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
+            if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
+            {
+                var username = Thread.CurrentPrincipal.Identity.Name;
+                var lastEditedBy = _providerUserReadRepository.Get(username);
+                if (lastEditedBy != null)
+                {
+                    vacancy.LastEditedById = lastEditedBy.EntityId;
+                }
+            }
+
+            _apprenticeshipVacancyWriteRepository.ShallowSave(vacancy);
+
+            return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
+        }
+
         public long GetNextVacancyReferenceNumber()
         {
             return _referenceNumberRepository.GetNextVacancyReferenceNumber();
@@ -102,6 +129,15 @@
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
         {
             return _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+        }
+
+        public void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
+            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
+            string additionalLocationInformationComment)
+        {
+            _apprenticeshipVacancyWriteRepository.ReplaceLocationInformation(vacancyReferenceNumber,
+                isEmployerLocationMainApprenticeshipLocation, numberOfPositions, vacancyLocationAddresses,
+                locationAddressesComment, additionalLocationInformation, additionalLocationInformationComment);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
     using System.Collections.Generic;
+    using Entities.Locations;
     using Entities.Vacancies.ProviderVacancies;
     using Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Queries;
@@ -19,5 +20,12 @@
     public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>
     {
         ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+
+        ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity);
+
+        ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
+            int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
+            string locationAddressesComment, string additionalLocationInformation,
+            string additionalLocationInformationComment);
     }
 }

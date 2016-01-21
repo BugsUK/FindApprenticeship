@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Communications;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Infrastructure.Communication.IoC;

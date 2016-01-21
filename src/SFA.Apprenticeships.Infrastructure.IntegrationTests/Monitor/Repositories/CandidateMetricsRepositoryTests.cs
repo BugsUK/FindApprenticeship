@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Monitor.Repositories
 {
     using System;
+    using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
     using Infrastructure.Monitor.Repositories;
