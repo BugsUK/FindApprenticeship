@@ -4,8 +4,8 @@
     using System.Linq;
     using System.Security;
     using AvService.Providers;
-    using Common;
     using DataContracts.Version51;
+    using Domain;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
@@ -54,8 +54,8 @@
             MockWebServiceAuthenticationProvider.Reset();
 
             MockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(request.ExternalSystemId, request.PublicKey))
-                .Returns(AuthenticationResult.AuthenticationFailed);
+                .Authenticate(request.ExternalSystemId, request.PublicKey, WebServiceCategory.Reference))
+                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
 
             // Act.
             Action action = () => ReferenceDataServiceMediator.GetCounties(request);

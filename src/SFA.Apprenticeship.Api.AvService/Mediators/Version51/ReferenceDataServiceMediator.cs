@@ -1,4 +1,4 @@
-﻿nnamespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
+﻿namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
 {
     using System;
     using System.Collections.Generic;

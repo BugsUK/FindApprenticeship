@@ -4,6 +4,7 @@
     using AvService.Mediators.Version51;
     using AvService.Providers;
     using AvService.Providers.Version51;
+    using Domain;
     using Moq;
     using NUnit.Framework;
 
@@ -22,8 +23,8 @@
             MockReferenceDataProvider = new Mock<IReferenceDataProvider>();
 
             MockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>()))
-                .Returns(AuthenticationResult.Authenticated);
+                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>(), WebServiceCategory.Reference))
+                .Returns(WebServiceAuthenticationResult.Authenticated);
 
             // Mediator.
             ReferenceDataServiceMediator = new ReferenceDataServiceMediator(
