@@ -46,7 +46,8 @@ USING (VALUES
   (43, N'WYK', N'WYK', N'West Yorkshire'),
   (44, N'WIL', N'WIL', N'Wiltshire'),
   (45, N'WOR', N'WOR', N'Worcestershire'),
-  (46, N'RUT', N'RUT', N'Rutland')
+  (46, N'RUT', N'RUT', N'Rutland'),
+  (47, N'IOS', N'IOS', N'Isles of Scilly')
 ) 
 AS Source (CountyId, CodeName, ShortName, FullName) 
 ON Target.CountyId = Source.CountyId 
