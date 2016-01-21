@@ -9,9 +9,9 @@
     using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
-    using Apprenticeships.Infrastructure.Repositories.Providers.IoC;
-    using Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC;
-    using Apprenticeships.Infrastructure.Repositories.Vacancies.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Mappers.Version51;
     using Mediators.Version51;

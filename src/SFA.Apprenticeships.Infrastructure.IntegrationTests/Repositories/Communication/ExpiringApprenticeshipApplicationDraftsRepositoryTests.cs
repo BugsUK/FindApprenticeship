@@ -6,8 +6,8 @@
     using Domain.Interfaces.Repositories;
     using FizzWare.NBuilder;
     using FluentAssertions;
-    using Infrastructure.IntegrationTests.Repositories;
-    using Infrastructure.Repositories.Communication.Entities;
+    using Repositories;
+    using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;

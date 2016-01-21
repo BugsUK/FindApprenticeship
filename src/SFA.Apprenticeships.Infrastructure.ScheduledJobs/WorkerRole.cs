@@ -23,11 +23,11 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
     using Raa.IoC;
-    using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
-    using Repositories.Communication.IoC;
-    using Repositories.Users.IoC;
-    using Repositories.Vacancies.IoC;
+    using Repositories.Mongo.Applications.IoC;
+    using Repositories.Mongo.Candidates.IoC;
+    using Repositories.Mongo.Communication.IoC;
+    using Repositories.Mongo.Users.IoC;
+    using Repositories.Mongo.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;

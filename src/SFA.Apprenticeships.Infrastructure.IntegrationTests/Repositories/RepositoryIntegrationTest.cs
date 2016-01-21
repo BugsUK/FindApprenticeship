@@ -1,15 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories
 {
-    using Common.Configuration;
     using Common.IoC;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Communication.IoC;
-    using Infrastructure.Repositories.Users.IoC;
-    using Infrastructure.Repositories.Vacancies.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Communication.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Logging.IoC;
-    using Mongo.Common.Configuration;
     using NUnit.Framework;
     using StructureMap;
 

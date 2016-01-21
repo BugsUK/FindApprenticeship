@@ -6,7 +6,7 @@
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Repositories;
-    using Infrastructure.Repositories.Applications.Entities;
+    using Infrastructure.Repositories.Mongo.Applications.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;

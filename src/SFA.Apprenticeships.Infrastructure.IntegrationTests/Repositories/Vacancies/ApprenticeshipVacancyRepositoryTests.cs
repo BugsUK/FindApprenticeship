@@ -7,7 +7,7 @@
     using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.Repositories.Vacancies.Entities;
+    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;

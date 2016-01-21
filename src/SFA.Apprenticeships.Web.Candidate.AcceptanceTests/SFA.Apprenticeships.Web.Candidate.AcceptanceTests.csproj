@@ -613,25 +613,9 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
-      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
-      <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Audit\SFA.Apprenticeships.Infrastructure.Repositories.Audit.csproj">
-      <Project>{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Audit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
-      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
-      <Project>{4696d786-2f3c-4a12-bd6b-38e2981d6df1}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>

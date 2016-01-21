@@ -8,8 +8,8 @@
     using Common.Providers;
     using Common.Services;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Mongo.Common.Configuration;
-    using Infrastructure.Repositories.Vacancies.Entities;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using IoC;
     using MongoDB.Driver;
     using Moq;

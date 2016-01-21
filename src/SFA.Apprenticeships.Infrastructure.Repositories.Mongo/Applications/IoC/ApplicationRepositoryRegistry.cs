@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Applications.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Applications.IoC
 {
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
-    using Mongo.Applications;
-    using Mongo.Applications.Mappers;
+    using Applications;
+    using Mappers;
+    using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
     public class ApplicationRepositoryRegistry : Registry
