@@ -22,7 +22,7 @@
 
         public IEnumerable<PostalAddress> GetValidatedAddresses(string fullPostcode)
         {
-            var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(null, fullPostcode);
+            var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(fullPostcode);
 
             return results;
         }
