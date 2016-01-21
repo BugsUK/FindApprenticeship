@@ -72,15 +72,15 @@
             writer.Save(expiredQaVacancy);
             writer.Save(futureLiveVacancy);
 
-            var now = DateTime.Now;
-            var startOfThisDay = new DateTime(now.Year, now.Month, now.Day, 0, 0, 0);
+            var yesterday = DateTime.UtcNow.AddDays(-1);
+            var endOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 23, 59, 59);
 
             var query = new ApprenticeshipVacancyQuery()
             {
                 CurrentPage = 1,
                 PageSize = 25,
                 DesiredStatuses = new List<ProviderVacancyStatuses> { ProviderVacancyStatuses.Live },
-                LatestClosingDate = startOfThisDay
+                LatestClosingDate = endOfDay
             };
 
             //Act
@@ -93,8 +93,8 @@
             vacanciesEligibleForClosure.Should().Contain(v => v.Status == ProviderVacancyStatuses.Live);
             vacanciesEligibleForClosure.Should().NotContain(v => !v.ClosingDate.HasValue);
             vacanciesEligibleForClosure.Should().Contain(v => v.ClosingDate.HasValue);
-            vacanciesEligibleForClosure.Should().NotContain(v => v.ClosingDate.Value.CompareTo(startOfThisDay) >= 0);
-            vacanciesEligibleForClosure.Should().Contain(v => v.ClosingDate.Value.CompareTo(startOfThisDay) < 0);
+            vacanciesEligibleForClosure.Should().NotContain(v => v.ClosingDate.Value.CompareTo(endOfDay) >= 0);
+            vacanciesEligibleForClosure.Should().Contain(v => v.ClosingDate.Value.CompareTo(endOfDay) < 0);
         }
     }
 }
