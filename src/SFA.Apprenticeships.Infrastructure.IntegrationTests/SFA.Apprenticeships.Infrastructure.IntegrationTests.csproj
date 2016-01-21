@@ -184,17 +184,6 @@
     <Compile Include="Postcode\PostCodeBaseTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="RabbitMq\Configuration\RabbitConfigurationTests.cs" />
-    <Compile Include="Repositories\Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
-    <Compile Include="Repositories\Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
-    <Compile Include="Repositories\Applications\TraineeshipApplicationReadRepositoryTests.cs" />
-    <Compile Include="Repositories\Candidates\CandidateRepositoryTests.cs" />
-    <Compile Include="Repositories\Communication\ContactMessageRepositoryTests.cs" />
-    <Compile Include="Repositories\Communication\ExpiringApprenticeshipApplicationDraftsRepositoryTests.cs" />
-    <Compile Include="Repositories\RepositoryIntegrationTest.cs" />
-    <Compile Include="Repositories\Users\UserRepositoryTests.cs" />
-    <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyRepositoryTests.cs" />
-    <Compile Include="Repositories\Vacancies\ApprenticeshipVacancyWriteRepositoryTests.cs" />
-    <Compile Include="SettingsTestHelper.cs" />
     <Compile Include="TacticalDataServices\TacticalDataServicesTest.cs" />
     <Compile Include="UserDirectory\UserDirectoryProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -205,7 +194,9 @@
     <Compile Include="VacancySearch\ApprenticeshipVacancySearchTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Configs\settings.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

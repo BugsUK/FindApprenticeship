@@ -1,11 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Applications
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Applications
 {
     using System;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Repositories;
     using Infrastructure.Repositories.Mongo.Applications.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

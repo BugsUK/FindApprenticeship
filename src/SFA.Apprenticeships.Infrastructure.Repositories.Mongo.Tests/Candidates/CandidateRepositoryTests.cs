@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Candidates
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Candidates
 {
     using System;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Repositories;
     using NUnit.Framework;
 
     [TestFixture]

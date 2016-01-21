@@ -1,11 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Communication
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Communication
 {
     using System;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Repositories;
-    using Infrastructure.Repositories.Mongo.Communication.Entities;
+    using Mongo.Communication.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;

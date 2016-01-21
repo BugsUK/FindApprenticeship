@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Applications
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Applications
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -7,7 +7,6 @@
     using Domain.Interfaces.Repositories;
     using FizzWare.NBuilder;
     using FluentAssertions;
-    using Repositories;
     using Infrastructure.Repositories.Mongo.Applications.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

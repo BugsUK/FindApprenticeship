@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Vacancies
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Vacancies
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +7,8 @@
     using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
+    using Tests;
+    using Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using NUnit.Framework;

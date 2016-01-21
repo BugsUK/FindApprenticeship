@@ -1,10 +1,9 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Repositories.Users
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Users
 {
     using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.IntegrationTests.Repositories;
     using NUnit.Framework;
 
     [TestFixture]
