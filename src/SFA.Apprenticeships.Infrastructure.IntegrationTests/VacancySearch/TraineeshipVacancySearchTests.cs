@@ -37,7 +37,7 @@
             _mapper = container.GetInstance<IMapper>();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
         public void ShouldSortByPostedDate()
         {
             var vacancySearchProvider = new TraineeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _logger.Object);
