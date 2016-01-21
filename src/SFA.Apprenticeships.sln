@@ -211,6 +211,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests", "SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.csproj", "{E7451275-D6E9-43CD-824D-324AB17FB2F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql", "SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj", "{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests", "SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests\SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.csproj", "{36E83135-5C14-4179-B4AD-3C120B05B73B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1484,6 +1488,38 @@ Global
 		{E7451275-D6E9-43CD-824D-324AB17FB2F0}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{E7451275-D6E9-43CD-824D-324AB17FB2F0}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{E7451275-D6E9-43CD-824D-324AB17FB2F0}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Local|Any CPU.Build.0 = Local|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Local|Any CPU.Build.0 = Local|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{36E83135-5C14-4179-B4AD-3C120B05B73B}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1580,9 +1616,11 @@ Global
 		{E3F2F285-16EB-49C5-9668-8D8E1DB6C610} = {9EB317AB-3B6E-4CEB-864B-B1D60B06A536}
 		{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
 		{E7451275-D6E9-43CD-824D-324AB17FB2F0} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
+		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
+		{36E83135-5C14-4179-B4AD-3C120B05B73B} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45
 	EndGlobalSection
 EndGlobal
