@@ -288,10 +288,15 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Mappers\Version51\ICountyMapper.cs" />
+    <Compile Include="Mappers\Version51\CountyMapper.cs" />
+    <Compile Include="Domain\WebServiceCategory.cs" />
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
     <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\Version51\IReferenceDataProvider.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
-    <Compile Include="Providers\AuthenticationResult.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationResult.cs" />
     <Compile Include="Domain\WebServiceConsumer.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandlerBehavior.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandler.cs" />
@@ -403,6 +408,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Reference\SFA.Apprenticeships.Infrastructure.Repositories.Reference.csproj">
+      <Project>{20ddead1-3417-4a18-8186-d9c8ca88b690}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Reference</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>

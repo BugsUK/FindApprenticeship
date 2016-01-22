@@ -10,5 +10,7 @@
         List<ApprenticeshipFrameworkAndOccupationData> GetApprenticeshipFrameworks();
 
         GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request);
+
+        GetCountiesResponse GetCounties(GetCountiesRequest request);
     }
 }

@@ -45,7 +45,7 @@ Scenario: Find apprenticeships and test ordering with keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Keywords            | Admin      |
+		 | Keywords            | Web        |
 		 | Location            | Coventry   |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |

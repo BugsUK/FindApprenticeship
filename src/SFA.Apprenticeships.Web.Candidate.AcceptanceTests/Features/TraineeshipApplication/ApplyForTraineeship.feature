@@ -17,10 +17,11 @@ Scenario: As a candidate I am taken to login or create an account when viewing t
 	And I choose ApplyButton
 	Then I am on the LoginPage page
 
-@PrimaryTransaction
+#TODO: Unignore once traineeships support is in RAA
+@PrimaryTransaction @Ignore
 Scenario: As a candidate I want to enter my qualifications and work experience in a traineeship application
 	Given I have registered a new candidate
-	When I select the "first" traineeship vacancy in location "N7 8LS" that can apply by this website
+	When I select the "first" traineeship vacancy in location "Coventry" that can apply by this website
 	Then I am on the TraineeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the TraineeshipApplicationPage page

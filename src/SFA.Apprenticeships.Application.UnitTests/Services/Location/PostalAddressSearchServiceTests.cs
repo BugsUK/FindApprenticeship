@@ -75,7 +75,7 @@
             //Arrange
             var multipleResults = new Fixture().Build<PostalAddress>()
                 .CreateMany().ToList();
-            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>()))
                 .Returns(multipleResults);
 
             //Act
@@ -90,7 +90,7 @@
         {
             //Arrange
             List<PostalAddress> findResult = null;
-            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>(), It.IsAny<string>()))
+            _postalAddressLookupProvider.Setup(m => m.GetValidatedPostalAddresses(It.IsAny<string>()))
                 .Returns(findResult);
 
             //Act
