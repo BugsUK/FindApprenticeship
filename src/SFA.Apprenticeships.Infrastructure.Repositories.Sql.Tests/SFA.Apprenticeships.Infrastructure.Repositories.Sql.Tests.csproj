@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />
+    <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepositoryTests.cs" />

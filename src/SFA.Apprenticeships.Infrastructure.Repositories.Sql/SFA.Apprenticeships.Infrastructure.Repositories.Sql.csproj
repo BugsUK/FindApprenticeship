@@ -130,7 +130,7 @@
     <Compile Include="Schemas\Reference\Entities\Sector.cs" />
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
-    <Compile Include="Schemas\Reference\SqlReferenceRepository.cs" />
+    <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\DurationType.cs" />
