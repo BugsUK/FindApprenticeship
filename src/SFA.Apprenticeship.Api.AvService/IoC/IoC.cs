@@ -11,9 +11,10 @@
     using Apprenticeships.Infrastructure.Logging.IoC;
     using Apprenticeships.Infrastructure.Postcode.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC;
-    using Apprenticeships.Infrastructure.Repositories.Reference.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
+    using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Infrastructure.Interfaces;
     using Mappers.Version51;
@@ -29,6 +30,15 @@
     {
         static IoC()
         {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
+
             Container = new Container(x =>
             {
                 // Core.
@@ -40,7 +50,7 @@
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
-                x.AddRegistry<ReferenceRepositoryRegistry>();
+                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
 
                 // Services.
                 x.AddRegistry<EmployerDataServicesRegistry>();

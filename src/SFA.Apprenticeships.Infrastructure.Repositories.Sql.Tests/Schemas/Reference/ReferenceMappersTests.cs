@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Repositories.Reference
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
     using Domain.Entities.Reference;
     using FluentAssertions;
-    using Infrastructure.Repositories.Reference.Mappers;
+    using Sql.Schemas.Reference;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
@@ -28,10 +28,10 @@
         public void ShouldMapCounty()
         {
             //Arrange
-            var source = new Fixture().Build<NewDB.Domain.Entities.Reference.County>().Without(c => c.PostalAddresses).Create();
+            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.County>().Without(c => c.PostalAddresses).Create();
 
             //Act
-            var viewModel = _mapper.Map<NewDB.Domain.Entities.Reference.County, County>(source);
+            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.County, County>(source);
 
             //Assert
             viewModel.Should().NotBeNull();
