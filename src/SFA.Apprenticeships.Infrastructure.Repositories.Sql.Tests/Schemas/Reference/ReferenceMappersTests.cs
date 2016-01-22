@@ -40,5 +40,39 @@
             viewModel.ShortName.Should().Be(source.ShortName);
             viewModel.FullName.Should().Be(source.FullName);
         }
+
+        [Test]
+        public void ShouldMapRegion()
+        {
+            //Arrange
+            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.Region>().Create();
+
+            //Act
+            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.Region, Region>(source);
+
+            //Assert
+            viewModel.Should().NotBeNull();
+            viewModel.RegionId.Should().Be(source.RegionId);
+            viewModel.CodeName.Should().Be(source.CodeName);
+            viewModel.ShortName.Should().Be(source.ShortName);
+            viewModel.FullName.Should().Be(source.FullName);
+        }
+
+        [Test]
+        public void ShouldMapLocalAuthority()
+        {
+            //Arrange
+            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.LocalAuthority>().Create();
+
+            //Act
+            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.LocalAuthority, LocalAuthority>(source);
+
+            //Assert
+            viewModel.Should().NotBeNull();
+            viewModel.LocalAuthorityId.Should().Be(source.LocalAuthorityId);
+            viewModel.CodeName.Should().Be(source.CodeName);
+            viewModel.ShortName.Should().Be(source.ShortName);
+            viewModel.FullName.Should().Be(source.FullName);
+        }
     }
 }
