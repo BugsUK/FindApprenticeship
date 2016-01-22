@@ -13,11 +13,11 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Common.IoC;
     using Consumers;
     using Elastic.Common.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Audit.IoC;
-    using Infrastructure.Repositories.Authentication.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Audit.IoC;
+    using Infrastructure.Repositories.Mongo.Authentication.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;

@@ -4,13 +4,14 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Users;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using SFA.Infrastructure.Interfaces;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
-    using MongoUser = Infrastructure.Repositories.Users.Entities.MongoUser;
+    using MongoUser = Infrastructure.Repositories.Mongo.Users.Entities.MongoUser;
+
 
     public class UserMetricsRepository : GenericMongoClient<MongoUser>, IUserMetricsRepository
     {

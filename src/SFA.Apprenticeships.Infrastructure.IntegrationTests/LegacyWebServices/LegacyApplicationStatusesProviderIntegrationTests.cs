@@ -15,7 +15,7 @@
     using FluentAssertions;
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;

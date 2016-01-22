@@ -82,7 +82,9 @@
             var domainVacancy2 = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy);
 
             // Assert
-            domainVacancy2.ShouldBeEquivalentTo(domainVacancy1, options => ExcludeHardOnes(options));
+            domainVacancy2.ShouldBeEquivalentTo(domainVacancy1, options =>
+                ExcludeHardOnes(options)
+                .Excluding(x => x.LocationAddresses)); // Manually mapped 
         }
 
         [Test]
@@ -115,7 +117,8 @@
             var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
 
             // Assert
-            databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options => ExcludeHardOnes(options));
+            databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options =>
+                ExcludeHardOnes(options));
         }
 
         [Test]

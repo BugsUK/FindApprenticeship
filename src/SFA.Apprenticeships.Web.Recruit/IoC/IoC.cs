@@ -20,11 +20,11 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Employers.IoC;
-    using Infrastructure.Repositories.Providers.IoC;
-    using Infrastructure.Repositories.UserProfiles.IoC;
-    using Infrastructure.Repositories.Vacancies.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Employers.IoC;
+    using Infrastructure.Repositories.Mongo.Providers.IoC;
+    using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
+    using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;

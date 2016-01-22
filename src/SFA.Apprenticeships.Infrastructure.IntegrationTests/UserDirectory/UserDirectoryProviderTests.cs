@@ -5,7 +5,7 @@
     using Common.Configuration;
     using Common.IoC;
     using FluentAssertions;
-    using Infrastructure.Repositories.Authentication.IoC;
+    using Infrastructure.Repositories.Mongo.Authentication.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Logging.IoC;
     using NUnit.Framework;

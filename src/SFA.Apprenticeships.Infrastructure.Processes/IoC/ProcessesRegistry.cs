@@ -29,7 +29,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
-    using Repositories.Audit;
+    using Repositories.Mongo.Audit;
     using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;
