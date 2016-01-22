@@ -2,10 +2,9 @@
 {
     using System;
     using System.Security;
-    using AvService.Mediators.Version51;
+    using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Providers;
     using Common;
-    using Domain;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;

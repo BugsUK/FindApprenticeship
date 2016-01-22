@@ -1,7 +1,7 @@
 namespace SFA.Apprenticeship.Api.AvService.Providers
 {
     using System;
-    using Domain;
+    using Apprenticeships.Domain.Entities.WebServices;
     using Services;
 
     // REF: Navms.Ms.ExternalInterfaces.ServiceImplementation.BulkVacancyUploadService

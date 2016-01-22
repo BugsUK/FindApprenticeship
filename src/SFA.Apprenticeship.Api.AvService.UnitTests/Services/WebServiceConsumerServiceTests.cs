@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Services
 {
     using System;
+    using Apprenticeships.Domain.Entities.WebServices;
+    using Apprenticeships.Domain.Interfaces.Repositories.SFA.Apprenticeship.Api.AvService.Repositories;
     using AvService.Services;
-    using Domain;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Repositories;
 
     [TestFixture]
     public class WebServiceConsumerServiceTests

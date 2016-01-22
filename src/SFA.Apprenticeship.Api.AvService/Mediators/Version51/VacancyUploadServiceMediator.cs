@@ -5,9 +5,9 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
     using System.Linq;
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
+    using Apprenticeships.Domain.Entities.WebServices;
     using Common;
     using DataContracts.Version51;
-    using Domain;
     using Mappers.Version51;
     using MessageContracts.Version51;
     using Providers;

@@ -7,13 +7,13 @@
     using Apprenticeships.Application.Interfaces.Providers;
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Mappers.Version51;
     using AvService.Mediators.Version51;
     using AvService.Providers;
     using AvService.Validators.Version51;
     using Builders.Version51;
     using DataContracts.Version51;
-    using Domain;
     using FluentAssertions;
     using FluentValidation.Results;
     using MessageContracts.Version51;

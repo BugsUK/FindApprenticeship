@@ -3,7 +3,7 @@
     namespace SFA.Apprenticeship.Api.AvService.Repositories
     {
         using System;
-        using Domain;
+        using Entities.WebServices;
 
         public interface IWebServiceConsumerReadRepository
         {

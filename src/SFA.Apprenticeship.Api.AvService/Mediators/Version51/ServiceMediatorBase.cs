@@ -2,7 +2,7 @@
 {
     using System;
     using System.Security;
-    using Domain;
+    using Apprenticeships.Domain.Entities.WebServices;
     using MessageContracts.Version51;
     using Providers;
 

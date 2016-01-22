@@ -21,7 +21,7 @@
 
             //Repositories
             For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
-            For<IWebServiceRepository>().Use<SqlWebServerRepository>().Ctor<IMapper>().Named("WebServiceMappers");
+            // For<IWebServiceRepository>().Use<SqlWebServerRepository>().Ctor<IMapper>().Named("WebServiceMappers");
         }
     }
 }

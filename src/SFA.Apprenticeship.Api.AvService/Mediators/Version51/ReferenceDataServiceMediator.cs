@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using Apprenticeships.Domain.Entities.WebServices;
     using Common;
     using DataContracts.Version51;
-    using Domain;
     using MessageContracts.Version51;
     using Providers;
     using Providers.Version51;
@@ -13,7 +13,9 @@
     {
         private readonly IReferenceDataProvider _referenceDataProvider;
 
-        public ReferenceDataServiceMediator(IWebServiceAuthenticationProvider webServiceAuthenticationProvider, IReferenceDataProvider referenceDataProvider)
+        public ReferenceDataServiceMediator(
+            IWebServiceAuthenticationProvider webServiceAuthenticationProvider,
+            IReferenceDataProvider referenceDataProvider)
             : base(webServiceAuthenticationProvider, WebServiceCategory.Reference)
         {
             _referenceDataProvider = referenceDataProvider;

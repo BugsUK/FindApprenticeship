@@ -2,7 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Domain;
+    using Apprenticeships.Domain.Entities.WebServices;
+    using Apprenticeships.Domain.Interfaces.Repositories.SFA.Apprenticeship.Api.AvService.Repositories;
+
+    // TODO: AG: US876: remove deadcode.
 
     public class FakeWebServiceConsumerRepository : IWebServiceConsumerReadRepository
     {

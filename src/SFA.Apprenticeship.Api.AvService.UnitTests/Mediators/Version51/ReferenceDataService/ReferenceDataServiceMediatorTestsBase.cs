@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Mediators.Version51.ReferenceDataService
 {
     using System;
+    using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Mediators.Version51;
     using AvService.Providers;
     using AvService.Providers.Version51;
-    using Domain;
     using Moq;
     using NUnit.Framework;
 

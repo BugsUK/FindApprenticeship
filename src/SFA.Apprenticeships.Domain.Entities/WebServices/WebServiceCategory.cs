@@ -1,7 +1,5 @@
-﻿namespace SFA.Apprenticeship.Api.AvService.Domain
+﻿namespace SFA.Apprenticeships.Domain.Entities.WebServices
 {
-    using System;
-
     public enum WebServiceCategory
     {
         Unknown,

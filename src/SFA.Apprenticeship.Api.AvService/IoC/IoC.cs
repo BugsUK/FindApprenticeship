@@ -6,6 +6,7 @@
     using Apprenticeships.Application.Organisation;
     using Apprenticeships.Application.Provider;
     using Apprenticeships.Application.VacancyPosting;
+    using Apprenticeships.Domain.Interfaces.Repositories.SFA.Apprenticeship.Api.AvService.Repositories;
     using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;

@@ -1,8 +1,8 @@
 namespace SFA.Apprenticeship.Api.AvService.Services
 {
     using System;
-    using Domain;
-    using Repositories;
+    using Apprenticeships.Domain.Entities.WebServices;
+    using Apprenticeships.Domain.Interfaces.Repositories.SFA.Apprenticeship.Api.AvService.Repositories;
 
     public class WebServiceConsumerService : IWebServiceConsumerService
     {

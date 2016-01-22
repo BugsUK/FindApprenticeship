@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
+    using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Providers;
     using AvService.Services;
-    using Domain;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
