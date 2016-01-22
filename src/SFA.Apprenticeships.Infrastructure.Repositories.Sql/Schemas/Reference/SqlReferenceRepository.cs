@@ -1,12 +1,10 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Reference
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
     using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlClient;
     using Domain.Entities.Reference;
     using Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
-    using SFA.Infrastructure.Sql;
+    using Common;
 
     public class SqlReferenceRepository : IReferenceRepository
     {
@@ -25,11 +23,11 @@
         {
             _logger.Debug("Calling database to get all counties");
 
-            var dbCounties = _getOpenConnection.Query<NewDB.Domain.Entities.Reference.County>(@"SELECT * FROM Reference.Counties ORDER BY FullName");
+            var dbCounties = _getOpenConnection.Query<Entities.County>(@"SELECT * FROM Reference.County WHERE CountyId <> 0 ORDER BY FullName");
 
             _logger.Debug($"Found {dbCounties.Count} counties");
 
-            var counties = _mapper.Map<IList<NewDB.Domain.Entities.Reference.County>, IList<County>>(dbCounties);
+            var counties = _mapper.Map<IList<Entities.County>, IList<County>>(dbCounties);
 
             return counties;
         }
