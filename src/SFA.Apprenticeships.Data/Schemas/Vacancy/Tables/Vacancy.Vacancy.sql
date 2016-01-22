@@ -69,6 +69,7 @@
     [SecondQuestionComment]                NVARCHAR (MAX)  NULL,
     [QAUserName]                           NVARCHAR (MAX)  NULL,
 	[LocationAddressesComment]             NVARCHAR (MAX)  NULL,
+	[TimeStartedToQA]					   DATETIME2 (7)   NULL,
     [NumberOfPositions]                    INT             NOT NULL,
     [NumberOfPositionsComment]             NVARCHAR (MAX)  NULL,
     [DateQAApproved]                       DATETIME2 (7)   NULL,

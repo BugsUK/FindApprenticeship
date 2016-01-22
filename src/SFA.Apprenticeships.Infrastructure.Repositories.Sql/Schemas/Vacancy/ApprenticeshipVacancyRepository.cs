@@ -35,7 +35,7 @@
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Id={0}", id);
 
-            var dbVacancy = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
+            var dbVacancy = _getOpenConnection.Query<Entities.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
             return MapVacancy(dbVacancy);
         }
@@ -44,7 +44,7 @@
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
-            var dbVacancy = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(
+            var dbVacancy = _getOpenConnection.Query<Entities.Vacancy>(
                 "SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
                 new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
 
@@ -53,7 +53,7 @@
             return MapVacancy(dbVacancy);
         }
 
-        private ApprenticeshipVacancy MapVacancy(Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
+        private ApprenticeshipVacancy MapVacancy(Entities.Vacancy dbVacancy)
         {
             if (dbVacancy == null)
                 return null;
@@ -191,7 +191,9 @@ WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
                     FrameworkCodeName = query.FrameworkCodeName,
                     LiveDate = query.LiveDate,
                     LatestClosingDate = query.LatestClosingDate,
-                    VacancyStatusCode = liveStatus
+                    VacancyStatusCode = liveStatus,
+                    CurrentPage = query.CurrentPage,
+                    PageSize = query.PageSize
                 };
 
             var coreQuery = @"
@@ -348,25 +350,23 @@ FETCH NEXT @PageSize ROWS ONLY
 
             // TODO: Add QAUserName / TimeStartedToQA. Perhaps a name without QA in would be better?
             // TODO: Possibly need MutatingQueryMulti to get address etc??? Or use join as only one record
-            var dbVacancy = _getOpenConnection.MutatingQuery<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
+            var dbVacancy = _getOpenConnection.MutatingQuery<Entities.Vacancy>(@"
 UPDATE Vacancy.Vacancy
 SET    QAUserName             = @UserName,
        TimeStartedToQA        = @TimeStartedToQA,
+       VacancyStatusCode      = 'RES'
 WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
-AND    (QAUserName IS NULL OR (QAUserName = @userName))
-AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
+AND    (QAUserName IS NULL OR (QAUserName = @UserName))
+-- AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
 
 DECLARE @RowCount INT = @@RowCount
 
-IF RowCount > 1
-    RAISERROR etc etc.
+-- IF RowCount > 1
+--     RAISERROR etc etc.
 
-SELECT *
-FROM   Vacancy.Vacancy
-JOIN   Address.Address etc. etc.
-WHERE  etc etc
-AND    @RowCount = 1
-", new { userName = userName, TimeStartedToQA = DateTime.UtcNow }).SingleOrDefault();
+SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+--AND    @RowCount = 1 -- what does it mean?
+", new { UserName = userName, TimeStartedToQA = DateTime.UtcNow, VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
 
             if (dbVacancy == null)
             {
@@ -378,7 +378,7 @@ AND    @RowCount = 1
             //_logger.Info($"Called Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
 
             // TODO: Mapping
-            return null;
+            return MapVacancy(dbVacancy);
         }
 
         public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber,

@@ -89,7 +89,7 @@
                 { "CLD", ProviderVacancyStatuses.Closed },
                 { "DFT", ProviderVacancyStatuses.Draft },
                 { "PQA", ProviderVacancyStatuses.PendingQA },
-                { "REJ", ProviderVacancyStatuses.RejectedByQA },
+                { "REF", ProviderVacancyStatuses.RejectedByQA },
                 { "RES", ProviderVacancyStatuses.ReservedForQA },
                 { "PAR", ProviderVacancyStatuses.ParentVacancy },
                 { "UNK", ProviderVacancyStatuses.Unknown} // TODO: review
@@ -144,6 +144,7 @@
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate
+                .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA)
 
                 .End();
 
@@ -184,7 +185,8 @@
                 .ForMember(av => av.ParentVacancyReferenceNumber, opt => opt.Ignore()) // TODO: Think
 
                 // TODO: Currently missing from Vacancy.Vacancy, but should be times
-                .ForMember(av => av.DateStartedToQA, opt => opt.Ignore()) // Locking field DateTime
+                // .ForMember(av => av.DateStartedToQA, opt => opt.Ignore()) // Locking field DateTime
+                .MapMemberFrom(av => av.DateStartedToQA, v => v.TimeStartedToQA)
                 .ForMember(av => av.DateCreated, opt => opt.Ignore()) // Yes, keep this DateTime
                 .ForMember(av => av.DateUpdated, opt => opt.Ignore()) // Yes, keep this DateTime
 

@@ -340,20 +340,33 @@
             totalResultsCount.Should().Be(9);
             vacancies.Should().HaveCount(pageSize);
         }
+        
+        [Test]
+        public void ReserveVacancyForQaTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
 
-        /*
-                            [Test]
-                            public void ReserveVacancyForQaTest()
-                            {
-                                IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
-                                var logger = new Mock<ILogService>();
-                                IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
-                                    logger.Object);
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
 
-                                repository.ReserveVacancyForQA(1);
+            const long vacancyReferenceNumber = 999;
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyReferenceNumber = vacancyReferenceNumber;
+            vacancy.DateSubmitted = null;
+            vacancy.Status = ProviderVacancyStatuses.PendingQA;
 
-                                var vacancy = GetVacancy(1L);
-                            }*/
+            writeRepository.Save(vacancy);
+
+            writeRepository.ReserveVacancyForQA(vacancyReferenceNumber);
+
+            var loadedVacancy = readRepository.Get(vacancyReferenceNumber);
+
+            loadedVacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
+            loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
+        }
 
         private static IEnumerable<object> GetSeedObjects()
         {

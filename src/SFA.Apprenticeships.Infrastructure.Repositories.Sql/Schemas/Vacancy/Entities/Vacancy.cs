@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     [Table("Vacancy.Vacancy")]
     public class Vacancy
     {
+        
         /*
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vacancy()
@@ -186,6 +187,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public int SubmissionCount { get; set; }
 
         public int OfflineApplicationClickThroughCount { get; set; }
+
+        [Column(TypeName = "datetime2")]
+        public DateTime? TimeStartedToQA { get; set; }
 
         /*
         public virtual Framework Framework { get; set; }
