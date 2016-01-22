@@ -4,6 +4,7 @@
     using Configuration;
     using Domain.Interfaces.Repositories;
     using Schemas.Reference;
+    using Schemas.WebService;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
@@ -16,9 +17,11 @@
 
             //Mappers
             For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
+            For<IMapper>().Use<WebServiceMappers>().Name = "WebServiceMappers";
 
             //Repositories
             For<IReferenceRepository>().Use<SqlReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
+            For<IWebServiceRepository>().Use<SqlWebServerRepository>().Ctor<IMapper>().Named("WebServiceMappers");
         }
     }
 }
