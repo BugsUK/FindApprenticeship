@@ -9,6 +9,7 @@
     using Apprenticeships.Infrastructure.Common.IoC;
     using Apprenticeships.Infrastructure.EmployerDataService.IoC;
     using Apprenticeships.Infrastructure.Logging.IoC;
+    using Apprenticeships.Infrastructure.Postcode.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC;
     using Apprenticeships.Infrastructure.Repositories.Reference.IoC;
     using Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC;
@@ -33,6 +34,7 @@
                 // Core.
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
 
                 // Repositories.
                 x.AddRegistry<VacancyRepositoryRegistry>();
