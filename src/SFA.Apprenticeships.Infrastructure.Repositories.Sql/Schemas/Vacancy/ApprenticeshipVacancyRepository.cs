@@ -185,9 +185,18 @@ WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
             _logger.Debug("Calling database to find apprenticeship vacancies");
             var liveStatus = _mapper.Map<ProviderVacancyStatuses, string>(ProviderVacancyStatuses.Live);
 
+            var paramObject =
+                new
+                {
+                    FrameworkCodeName = query.FrameworkCodeName,
+                    LiveDate = query.LiveDate,
+                    LatestClosingDate = query.LatestClosingDate,
+                    VacancyStatusCode = liveStatus
+                };
+
             var coreQuery = @"
 FROM   Vacancy.Vacancy
-WHERE  Vacancy.VacancyStatusCode = 'LIV' -- TODO: Probably would want to parameterise from constant
+WHERE  Vacancy.VacancyStatusCode = @VacancyStatusCode
 " + (string.IsNullOrWhiteSpace(query.FrameworkCodeName) ? "" : "AND Vacancy.FrameworkId = (SELECT FrameworkId FROM Reference.Framework where CodeName = @FrameworkCodeName) ") + @"
 " + (query.LiveDate.HasValue ? "AND Vacancy.PublishedDateTime >= @LiveDate" : "" ) + @" 
 " + (query.LatestClosingDate.HasValue ? "AND Vacancy.ClosingDate <= @LatestClosingDate" : "");   // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
@@ -202,7 +211,7 @@ SELECT *
 ORDER BY Vacancy.VacancyReferenceNumber
 OFFSET ((@CurrentPage - 1) * @PageSize) ROWS
 FETCH NEXT @PageSize ROWS ONLY
-", query);
+", paramObject);
 
             totalResultsCount = data.Item1.Single();
 
