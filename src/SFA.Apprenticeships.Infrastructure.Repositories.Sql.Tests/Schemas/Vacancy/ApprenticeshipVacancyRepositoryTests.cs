@@ -16,6 +16,7 @@
     using Sql.Schemas.Vacancy.Entities;
     using Common;
     using Domain.Entities.Locations;
+    using Domain.Interfaces.Queries;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
@@ -274,36 +275,85 @@
                 options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
         }
 
+        [Test]
+        public void FindByFrameworkCodeNameWithPaginationTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            int totalResultsCount;
+            const int pageSize = 2;
+            var query = new ApprenticeshipVacancyQuery
+            {
+                FrameworkCodeName = "F02",
+                PageSize = pageSize,
+                CurrentPage = 1
+            };
+
+            var vacancies = repository.Find(query, out totalResultsCount);
+            totalResultsCount.Should().Be(5);
+            vacancies.Should().HaveCount(pageSize);
+        }
+
+        [Test]
+        public void FindByLiveDateWithPaginationTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            int totalResultsCount;
+            const int pageSize = 2;
+            var query = new ApprenticeshipVacancyQuery
+            {
+                LiveDate = DateTime.UtcNow.AddDays(-2),
+                PageSize = pageSize,
+                CurrentPage = 1
+            };
+
+            var vacancies = repository.Find(query, out totalResultsCount);
+            totalResultsCount.Should().Be(3);
+            vacancies.Should().HaveCount(pageSize);
+        }
+
+        [Test]
+        public void FindByClosingDateWithPaginationTest()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+
+            int totalResultsCount;
+            const int pageSize = 2;
+            var query = new ApprenticeshipVacancyQuery
+            {
+                LatestClosingDate = DateTime.UtcNow.AddDays(-2),
+                PageSize = pageSize,
+                CurrentPage = 1
+            };
+
+            var vacancies = repository.Find(query, out totalResultsCount);
+            totalResultsCount.Should().Be(9);
+            vacancies.Should().HaveCount(pageSize);
+        }
+
         /*
-                public void FindTest()
-                {
-                    IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
-                    var logger = new Mock<ILogService>();
-                    IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
-                        logger.Object);
+                            [Test]
+                            public void ReserveVacancyForQaTest()
+                            {
+                                IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+                                var logger = new Mock<ILogService>();
+                                IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                                    logger.Object);
 
-                    int totalResultsCount;
-                    var query = new ApprenticeshipVacancyQuery
-                    {
+                                repository.ReserveVacancyForQA(1);
 
-                    };
-                    var vacancies = repository.Find(query, out totalResultsCount);
-
-                }
-
-
-                    [Test]
-                    public void ReserveVacancyForQaTest()
-                    {
-                        IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
-                        var logger = new Mock<ILogService>();
-                        IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
-                            logger.Object);
-
-                        repository.ReserveVacancyForQA(1);
-
-                        var vacancy = GetVacancy(1L);
-                    }*/
+                                var vacancy = GetVacancy(1L);
+                            }*/
 
         private static IEnumerable<object> GetSeedObjects()
         {

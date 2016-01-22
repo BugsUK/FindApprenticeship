@@ -188,9 +188,9 @@ WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
             var coreQuery = @"
 FROM   Vacancy.Vacancy
 WHERE  Vacancy.VacancyStatusCode = 'LIV' -- TODO: Probably would want to parameterise from constant
-" + (string.IsNullOrWhiteSpace(query.FrameworkCodeName) ? "" : "AND    Vacancy.FrameworkCodeName = @FrameworkCodeName") + @"
+" + (string.IsNullOrWhiteSpace(query.FrameworkCodeName) ? "" : "AND Vacancy.FrameworkId = (SELECT FrameworkId FROM Reference.Framework where CodeName = @FrameworkCodeName) ") + @"
 " + (query.LiveDate.HasValue ? "AND Vacancy.PublishedDateTime >= @LiveDate" : "" ) + @" 
-" + (query.LatestClosingDate.HasValue ? "AND Vacancy.ClosingDate <= @LiveDate" : "");   // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
+" + (query.LatestClosingDate.HasValue ? "AND Vacancy.ClosingDate <= @LatestClosingDate" : "");   // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 
             // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???
             var data = _getOpenConnection.QueryMultiple<int,Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
@@ -210,7 +210,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             _logger.Debug("Found {0} apprenticeship vacanc(ies)", dbVacancies.Count);
 
-            return new List<ApprenticeshipVacancy>();
+            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public void Delete(Guid id)
