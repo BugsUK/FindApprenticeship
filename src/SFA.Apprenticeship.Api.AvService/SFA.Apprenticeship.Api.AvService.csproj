@@ -363,6 +363,7 @@
     <Compile Include="Services\WebServiceConsumerService.cs" />
     <Compile Include="Validators\FluentValidationExtensions.cs" />
     <Compile Include="Validators\Version51\VacancyUploadRequestValidator.cs" />
+    <Compile Include="Validators\Version51\VacancySearchCriteriaValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

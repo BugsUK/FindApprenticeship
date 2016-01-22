@@ -137,6 +137,7 @@
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService\GetErrorCodesTests.cs" />
     <Compile Include="Services\WebServiceConsumerServiceTests.cs" />
     <Compile Include="Validators\Version51\EmployerDataValidatorTests.cs" />
+    <Compile Include="Validators\Version51\VacancySearchCriteriaValidatorTests.cs" />
     <Compile Include="Validators\Version51\VacancyUploadDataValidatorTests.cs" />
     <Compile Include="Mediators\Version51\VacancyUploadMediator\VacancyUploadMediatorTests.cs" />
     <Compile Include="Mediators\Version51\VacancyUploadMediator\Extensions\VacancyUploadResultDataExtensions.cs" />
