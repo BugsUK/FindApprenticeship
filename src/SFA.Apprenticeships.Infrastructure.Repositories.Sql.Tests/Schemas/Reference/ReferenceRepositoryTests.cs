@@ -44,5 +44,41 @@
             counties[0].ShortName.Should().Be("BED");
             counties[0].FullName.Should().Be("Bedfordshire");
         }
+
+        [Test]
+        public void GetRegions()
+        {
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var counties = repository.GetRegions();
+
+            //Assert
+            counties.Count.Should().Be(9);
+            counties[0].RegionId.Should().Be(1001);
+            counties[0].CodeName.Should().Be("EM");
+            counties[0].ShortName.Should().Be("EM");
+            counties[0].FullName.Should().Be("East Midlands");
+        }
+
+        [Test]
+        public void GetLocalAuthorities()
+        {
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var counties = repository.GetLocalAuthorities();
+
+            //Assert
+            counties.Count.Should().Be(326);
+            counties[0].LocalAuthorityId.Should().Be(1);
+            counties[0].CodeName.Should().Be("45UB");
+            counties[0].ShortName.Should().Be("45UB");
+            counties[0].FullName.Should().Be("Adur");
+        }
     }
 }

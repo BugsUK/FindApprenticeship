@@ -128,6 +128,8 @@
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
+    <Compile Include="Schemas\Reference\Entities\LocalAuthority.cs" />
+    <Compile Include="Schemas\Reference\Entities\Region.cs" />
     <Compile Include="Schemas\Reference\Entities\County.cs" />
     <Compile Include="Schemas\Reference\Entities\Framework.cs" />
     <Compile Include="Schemas\Reference\Entities\FrameworkStatus.cs" />
