@@ -172,6 +172,10 @@
     <Build Include="Schemas\WebService\Tables\WebService.WebServiceConsumer.sql" />
     <Build Include="Schemas\WebService\Schema\WebService.sql" />
     <None Include="Schemas\Reference\Scripts\Reference.County.Upsert.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.Region.sql" />
+    <Build Include="Schemas\Reference\Tables\Reference.LocalAuthority.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.Region.Upsert.sql" />
+    <None Include="Schemas\Reference\Scripts\Reference.LocalAuthority.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />

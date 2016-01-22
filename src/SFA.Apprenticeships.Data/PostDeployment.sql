@@ -17,7 +17,9 @@ Post-Deployment Script Template
 :r ".\Schemas\Reference\Scripts\Reference.County.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.FrameworkStatus.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.Level.Upsert.sql"
+:r ".\Schemas\Reference\Scripts\Reference.LocalAuthority.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.OccupationStatus.Upsert.sql"
+:r ".\Schemas\Reference\Scripts\Reference.Region.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.Sector.Upsert.sql"
 :r ".\Schemas\Reference\Scripts\Reference.Standard.Upsert.sql"
 
