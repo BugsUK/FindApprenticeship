@@ -4,6 +4,8 @@
     [FromVacancyPartyId] INT NOT NULL, 
     [ToVacancyPartyId] INT NOT NULL, 
     [VacancyPartyRelationshipTypeCode] CHAR(3) NULL, 
+    [DescriptionOfToPartyUsedByFromParty] NVARCHAR(MAX) NULL, 
+    [WebsiteUrlOfToPartyUsedByFromParty] NVARCHAR(MAX) NULL, 
     CONSTRAINT [PK_VacancyPartyRelationship] PRIMARY KEY ([VacancyPartyRelationshipId]), 
     CONSTRAINT [FK_VacancyPartyRelationship_FromVacancyPartyId] FOREIGN KEY ([FromVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty]([VacancyPartyId]), 
     CONSTRAINT [FK_VacancyPartyRelationship_ToVacancyPartyId] FOREIGN KEY ([ToVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty]([VacancyPartyId]), 

@@ -123,6 +123,7 @@
     <Compile Include="ReferenceData\Sector.cs" />
     <Compile Include="ReferenceData\Standard.cs" />
     <Compile Include="ReferenceNumber.cs" />
+    <Compile Include="Reference\County.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\Name.cs" />

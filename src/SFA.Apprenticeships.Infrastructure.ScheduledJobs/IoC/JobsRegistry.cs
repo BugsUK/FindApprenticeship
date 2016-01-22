@@ -16,7 +16,7 @@
     using Consumers;
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
-    using Repositories.Audit;
+    using Repositories.Mongo.Audit;
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 

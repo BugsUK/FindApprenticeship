@@ -3,10 +3,10 @@
     using System;
     using System.Linq;
     using Domain.Entities.Applications;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Communication.Entities;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Repositories.Communication.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class ApplicationStatusAlertsMetricsRepository : GenericMongoClient<MongoApplicationStatusAlert>, IApplicationStatusAlertsMetricsRepository

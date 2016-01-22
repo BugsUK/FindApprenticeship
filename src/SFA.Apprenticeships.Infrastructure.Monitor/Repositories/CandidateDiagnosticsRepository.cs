@@ -6,9 +6,9 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Repositories.Candidates.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Candidates.Entities;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
     public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository

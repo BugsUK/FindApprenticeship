@@ -288,9 +288,13 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Mappers\Version51\ICountyMapper.cs" />
+    <Compile Include="Mappers\Version51\CountyMapper.cs" />
     <Compile Include="Domain\WebServiceCategory.cs" />
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
     <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\Version51\IReferenceDataProvider.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
     <Compile Include="Providers\WebServiceAuthenticationResult.cs" />
     <Compile Include="Domain\WebServiceConsumer.cs" />
@@ -401,17 +405,13 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Providers\SFA.Apprenticeships.Infrastructure.Repositories.Providers.csproj">
-      <Project>{60B0072E-BC17-4D32-8331-A8A2C74B4500}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Providers</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.csproj">
-      <Project>{5C01B37D-8C9E-454F-864A-8861E051A170}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Reference\SFA.Apprenticeships.Infrastructure.Repositories.Reference.csproj">
+      <Project>{20ddead1-3417-4a18-8186-d9c8ca88b690}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Reference</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>

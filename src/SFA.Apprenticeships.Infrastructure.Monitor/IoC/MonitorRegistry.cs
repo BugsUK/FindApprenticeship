@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using Consumers;
-    using Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common;
     using Provider;
     using Repositories;
     using StructureMap.Configuration.DSL;

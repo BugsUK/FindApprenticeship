@@ -1628,33 +1628,9 @@
       <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
-      <Project>{91822365-711d-4976-ad7f-069063d8b487}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Audit\SFA.Apprenticeships.Infrastructure.Repositories.Audit.csproj">
-      <Project>{1CD7F494-A6BC-448A-AF1E-ECFAF03A66FC}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Audit</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Authentication\SFA.Apprenticeships.Infrastructure.Repositories.Authentication.csproj">
-      <Project>{2d21ea2d-ce77-4795-b2f0-a172e59ac491}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Authentication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
-      <Project>{aa87bd85-5a33-46b8-b26f-c6b680876486}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Communication\SFA.Apprenticeships.Infrastructure.Repositories.Communication.csproj">
-      <Project>{B1278CE6-5670-49F4-85DF-350294EC151A}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Communication</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
-      <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>

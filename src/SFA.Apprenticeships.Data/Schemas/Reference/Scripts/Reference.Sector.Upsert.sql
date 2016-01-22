@@ -1,261 +1,46 @@
-﻿MERGE Reference.Sector AS dest
-USING (SELECT '1', 'Actuarial') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
+﻿MERGE INTO [Reference].[Sector] AS Target 
+USING (VALUES 
+  (1, N'Actuarial'), 
+  (2, N'Aerospace'), 
+  (3, N'Automotive'), 
+  (4, N'Automotive retail'), 
+  (5, N'Butchery'), 
+  (6, N'Conveyancing and probate'), 
+  (7, N'Defence'),
+  (8, N'Dental health'),
+  (9, N'Digital Industries'),
+  (10, N'Electrotechnical'),
+  (11, N'Energy & Utilities'),
+  (12, N'Financial Services'),
+  (13, N'Food and Drink'),
+  (14, N'Horticulture'),
+  (15, N'Insurance'),
+  (16, N'Law'),
+  (17, N'Leadership & Management'),
+  (18, N'Life and Industrial Sciences'),
+  (19, N'Maritime'),
+  (20, N'Newspaper and Broadcast Media'),
+  (21, N'Nuclear'),
+  (22, N'Property services'),
+  (23, N'Public Service'),
+  (24, N'Rail Design'),
+  (25, N'Refrigeration Air Conditioning and Heat Pump (RACHP)'),
+  (26, N'Surveying'),
+  (27, N'Housing'),
+  (28, N'Non-destructive Testing'),
+  (29, N'Energy Management')
+) 
+AS Source (SectorId, FullName) 
+ON Target.SectorId = Source.SectorId 
+-- update matched rows 
 WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '2', 'Aerospace') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '3', 'Automotive') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '4', 'Automotive retail') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '5', 'Butchery') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '6', 'Conveyancing and probate') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '7', 'Defence') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '8', 'Dental health') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '9', 'Digital Industries') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '10', 'Electrotechnical') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '11', 'Energy & Utilities') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '12', 'Financial Services') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '13', 'Food and Drink') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '14', 'Golf Greenkeeping (horticulture)') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '15', 'Insurance') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '16', 'Law') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '17', 'Leadership & Management') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '18', 'Life and Industrial Sciences') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '19', 'Maritime') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '20', 'Media') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '21', 'Nuclear') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '22', 'Property services') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '23', 'Public Service') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '24', 'Rail Design') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '25', 'Refrigeration air') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
-
-MERGE Reference.Sector AS dest
-USING (SELECT '26', 'Surveying') AS src (SectorId, FullName)
-ON (dest.SectorId = src.SectorId)
-WHEN MATCHED THEN 
-	UPDATE SET FullName = src.FullName
-WHEN NOT MATCHED THEN
-	INSERT (SectorId, FullName)
-	VALUES (src.SectorId, src.FullName)
-;
+UPDATE SET FullName = Source.FullName 
+-- insert new rows 
+WHEN NOT MATCHED BY TARGET THEN 
+INSERT (SectorId, FullName) 
+VALUES (SectorId, FullName) 
+-- delete rows that are in the target but not the source 
+WHEN NOT MATCHED BY SOURCE THEN 
+DELETE;
 
 SELECT * FROM Reference.Sector

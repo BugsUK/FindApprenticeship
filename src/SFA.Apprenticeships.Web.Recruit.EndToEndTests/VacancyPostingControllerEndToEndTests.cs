@@ -12,8 +12,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
-    using Infrastructure.Repositories.Vacancies.Entities;
-    using MongoDB.Driver;
+    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;

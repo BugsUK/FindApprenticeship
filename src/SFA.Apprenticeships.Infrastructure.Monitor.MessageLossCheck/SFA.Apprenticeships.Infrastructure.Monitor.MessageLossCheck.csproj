@@ -184,25 +184,13 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
-      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Project>{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Applications\SFA.Apprenticeships.Infrastructure.Repositories.Applications.csproj">
-      <Project>{91822365-711D-4976-AD7F-069063D8B487}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Applications</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Candidates\SFA.Apprenticeships.Infrastructure.Repositories.Candidates.csproj">
-      <Project>{AA87BD85-5A33-46B8-B26F-C6B680876486}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Candidates</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Users\SFA.Apprenticeships.Infrastructure.Repositories.Users.csproj">
-      <Project>{4696D786-2F3C-4A12-BD6B-38E2981D6DF1}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Users</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancySearch\SFA.Apprenticeships.Infrastructure.VacancySearch.csproj">
       <Project>{913445EC-3175-4AFB-869C-F03B6FD2940A}</Project>

@@ -5,9 +5,9 @@
     using System.Linq;
     using Domain.Entities.Applications;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Repositories.Applications.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Applications.Entities;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;

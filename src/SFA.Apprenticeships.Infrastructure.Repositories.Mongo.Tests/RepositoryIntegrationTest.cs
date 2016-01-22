@@ -1,0 +1,39 @@
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests
+{
+    using NUnit.Framework;
+    using Infrastructure.Common.IoC;
+    using Logging.IoC;
+    using Common.Configuration;
+    using Mongo.Applications.IoC;
+    using Mongo.Candidates.IoC;
+    using Mongo.Communication.IoC;
+    using Mongo.Users.IoC;
+    using Mongo.Vacancies.IoC;
+    using SFA.Infrastructure.Interfaces;
+    using StructureMap;
+
+    [SetUpFixture]
+    public class RepositoryIntegrationTest
+    {
+        protected MongoConfiguration MongoConfiguration;
+        protected Container Container;
+
+        [SetUp]
+        public void SetUpContainer()
+        {
+            Container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+                x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry<CandidateRepositoryRegistry>();
+                x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<CommunicationRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
+            });
+
+            var configurationManager = Container.GetInstance<IConfigurationService>();
+            MongoConfiguration = configurationManager.Get<MongoConfiguration>();
+        }
+    }
+}

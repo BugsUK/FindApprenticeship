@@ -84,4 +84,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="AllowReferenceDataService" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="5833d2c4-9777-4714-8868-f3ddfc915c33" ChangeDateTime="01/20/2016 13:57:12">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyParty].[EDSURN]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyParty]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EdsErn" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="0d19f9d7-dfaf-43cb-b498-bcd505967a58" ChangeDateTime="01/20/2016 13:57:20">
+    <Property Name="ElementName" Value="[Vacancy].[VacancyParty].[UKPRN]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Vacancy].[VacancyParty]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UKPrn" />
+  </Operation>
 </Operations>

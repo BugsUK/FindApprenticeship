@@ -187,6 +187,8 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
 
         public int SubmissionCount { get; set; }
 
+        public int OfflineApplicationClickThroughCount { get; set; }
+
         /*
         public virtual Framework Framework { get; set; }
 
@@ -222,9 +224,6 @@ namespace SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy
         public virtual VacancyType VacancyType { get; set; }
 
         public virtual WageType WageType { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<VacancyLocation> VacancyLocations { get; set; }
         */
     }
 }
