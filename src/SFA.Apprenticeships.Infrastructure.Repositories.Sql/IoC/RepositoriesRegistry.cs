@@ -18,7 +18,7 @@
             For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
 
             //Repositories
-            For<IReferenceRepository>().Use<SqlReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
+            For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
         }
     }
 }

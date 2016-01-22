@@ -6,13 +6,13 @@
     using SFA.Infrastructure.Interfaces;
     using Common;
 
-    public class SqlReferenceRepository : IReferenceRepository
+    public class ReferenceRepository : IReferenceRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 
-        public SqlReferenceRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
+        public ReferenceRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;

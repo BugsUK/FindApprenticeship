@@ -10,15 +10,46 @@
     using System.Reflection;
     using System.Text;
     using Microsoft.SqlServer.Dac;
+    using Moq;
+    using SFA.Infrastructure.Azure.Configuration;
+    using SFA.Infrastructure.Configuration;
+    using SFA.Infrastructure.Interfaces;
+    using Sql.Common;
+    using Web.Common.Configuration;
 
     /// <summary>
     /// Class to initialise the database independant (as far as possible) of the database access method used to query data.
     /// </summary>
     public class DatabaseInitialiser
     {
+        private const string DatabaseProjectName = "SFA.Apprenticeships.Data";
+
+        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private readonly string _dacpacFilePath;
         private readonly string _targetConnectionString;
         private readonly string _databaseTargetName;
+
+        public DatabaseInitialiser()
+        {
+            var configurationManager = new ConfigurationManager();
+
+            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
+
+            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+
+            _databaseTargetName = $"RaaTest-{environment}";
+            _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
+
+            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
+            var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
+            _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            if (!File.Exists(_dacpacFilePath))
+            {
+                //For NCrunch on Dave's machine
+                databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
+                _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            }
+        }
 
         public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)
         {
@@ -77,6 +108,11 @@
 
                 ExecuteInsert(sqlBuilder.ToString());
             }
+        }
+
+        public IGetOpenConnection GetOpenConnection()
+        {
+            return new GetOpenConnectionFromConnectionString(_targetConnectionString);
         }
 
         private void ExecuteInsert(string sql)
