@@ -254,17 +254,17 @@ FETCH NEXT @PageSize ROWS ONLY
                     _getOpenConnection.MutatingQuery<int>(@"
 -- TODO: Could be optimised. Locking may possibly be an issue
 -- TODO: Should possibly split address into separate repo method
+    DELETE Vacancy.VacancyLocation
+    FROM   Vacancy.VacancyLocation
+    WHERE  VacancyId = @VacancyId
+
     DELETE Address.PostalAddress
     WHERE  PostalAddressId IN (
         SELECT PostalAddressId
         FROM   Vacancy.VacancyLocation
         WHERE  VacancyId = @VacancyId
     )
-
-    DELETE Vacancy.VacancyLocation
-    FROM   Vacancy.VacancyLocation
-    WHERE  VacancyId = @VacancyId
-");
+", new { VacancyId = dbVacancy.VacancyId });
                 }
             }
 
@@ -273,14 +273,12 @@ FETCH NEXT @PageSize ROWS ONLY
                 // TODO: Optimisation - insert several in one SQL round-trip
                 foreach (var location in entity.LocationAddresses)
                 {
-
                     var dbLocation = new VacancyLocation()
                     {
                         VacancyId = dbVacancy.VacancyId,
                         DirectApplicationUrl = "TODO",
                         NumberOfPositions = location.NumberOfPositions
                     };
-
                     
                     var dbAddress = _mapper.Map<Domain.Entities.Locations.Address, Schemas.Address.Entities.PostalAddress>(location.Address);
 
@@ -295,6 +293,41 @@ FETCH NEXT @PageSize ROWS ONLY
 
             // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
             
+            return entity;
+        }
+
+        public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
+        {
+            _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.EntityId);
+
+            UpdateEntityTimestamps(entity);
+
+            // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
+
+            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
+
+            dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
+
+            // TODO: This should be the other way around (to avoid a race condition)
+            // and be in a single call to the database (to avoid a double latency hit)
+            // This should be done as a single method in _getOpenConnection
+
+            try
+            {
+                _getOpenConnection.Insert(dbVacancy);
+            }
+            catch (Exception ex)
+            {
+                // TODO: Detect key violation
+
+                if (!_getOpenConnection.UpdateSingle(dbVacancy))
+                    throw new Exception("Failed to update record after failed insert", ex);
+            }
+
+            _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
+
+            // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
+
             return entity;
         }
 
@@ -337,11 +370,6 @@ AND    @RowCount = 1
 
             // TODO: Mapping
             return null;
-        }
-
-        public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
-        {
-            throw new NotImplementedException();
         }
 
         public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber,

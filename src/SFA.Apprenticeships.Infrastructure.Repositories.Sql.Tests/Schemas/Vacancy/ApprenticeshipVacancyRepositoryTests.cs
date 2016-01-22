@@ -15,6 +15,8 @@
     using Sql.Schemas.Vacancy;
     using Sql.Schemas.Vacancy.Entities;
     using Common;
+    using Domain.Entities.Locations;
+    using Ploeh.AutoFixture;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
     using SFA.Infrastructure.Interfaces;
@@ -185,36 +187,123 @@
             vacancies.Should().HaveCount(0);
         }
 
-/*
-        public void FindTest()
+        [Test]
+        public void SaveVacancyShouldSaveLocations()
         {
             IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
-            int totalResultsCount;
-            var query = new ApprenticeshipVacancyQuery
-            {
-                
-            };
-            var vacancies = repository.Find(query, out totalResultsCount);
+            const string title = "Vacancy title";
+            const int numberOfLocations = 5;
+            var vacancyGuid = Guid.NewGuid();
 
+            var locations = new Fixture()
+                .Build<VacancyLocationAddress>()
+                .WithAutoProperties()
+                .CreateMany(numberOfLocations)
+                .ToList();
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.EntityId = vacancyGuid;
+            vacancy.Title = title;
+            vacancy.LocationAddresses = locations;
+
+            writeRepository.Save(vacancy);
+
+            var loadedVacancy = readRepository.Get(vacancyGuid);
+
+            loadedVacancy.ShouldBeEquivalentTo(vacancy,
+                options => ExcludeHardOnes(options)
+                .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "LocationAddresses\\[[0-9]+\\].Address.Uprn")) //TODO
+                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                .WhenTypeIs<DateTime>());
         }
 
-        
-            [Test]
-            public void ReserveVacancyForQaTest()
-            {
-                IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
-                var logger = new Mock<ILogService>();
-                IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
-                    logger.Object);
+        [Test]
+        public void ShallowSaveVacancyShouldNotSaveLocations()
+        {
+            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                logger.Object);
 
-                repository.ReserveVacancyForQA(1);
+            const string title = "Vacancy title";
+            const string newTitle = "Vacancy title";
+            const int numberOfLocations = 5;
+            const int newNumberOfLocations = 15;
+            var vacancyGuid = Guid.NewGuid();
 
-                var vacancy = GetVacancy(1L);
-            }*/
+            var locations = new Fixture()
+                .Build<VacancyLocationAddress>()
+                .WithAutoProperties()
+                .CreateMany(numberOfLocations)
+                .ToList();
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.EntityId = vacancyGuid;
+            vacancy.Title = title;
+            vacancy.LocationAddresses = locations;
+
+            writeRepository.Save(vacancy);
+
+            var newLocations = new Fixture()
+                .Build<VacancyLocationAddress>()
+                .WithAutoProperties()
+                .CreateMany(newNumberOfLocations)
+                .ToList();
+            vacancy.LocationAddresses = newLocations;
+            vacancy.Title = newTitle;
+
+            writeRepository.ShallowSave(vacancy);
+
+            var loadedVacancy = readRepository.Get(vacancyGuid);
+
+            loadedVacancy.ShouldBeEquivalentTo(vacancy,
+                options => ExcludeHardOnes(options)
+                .Excluding(x => x.LocationAddresses)
+                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                .WhenTypeIs<DateTime>());
+
+            loadedVacancy.LocationAddresses.ShouldBeEquivalentTo(locations,
+                options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
+        }
+
+        /*
+                public void FindTest()
+                {
+                    IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+                    var logger = new Mock<ILogService>();
+                    IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                        logger.Object);
+
+                    int totalResultsCount;
+                    var query = new ApprenticeshipVacancyQuery
+                    {
+
+                    };
+                    var vacancies = repository.Find(query, out totalResultsCount);
+
+                }
+
+
+                    [Test]
+                    public void ReserveVacancyForQaTest()
+                    {
+                        IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
+                        var logger = new Mock<ILogService>();
+                        IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+                            logger.Object);
+
+                        repository.ReserveVacancyForQA(1);
+
+                        var vacancy = GetVacancy(1L);
+                    }*/
 
         private static IEnumerable<object> GetSeedObjects()
         {
