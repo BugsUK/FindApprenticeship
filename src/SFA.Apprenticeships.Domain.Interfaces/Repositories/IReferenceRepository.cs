@@ -6,5 +6,9 @@
     public interface IReferenceRepository
     {
         IList<County> GetCounties();
+
+        IList<Region> GetRegions();
+
+        IList<LocalAuthority> GetLocalAuthorities();
     }
 }

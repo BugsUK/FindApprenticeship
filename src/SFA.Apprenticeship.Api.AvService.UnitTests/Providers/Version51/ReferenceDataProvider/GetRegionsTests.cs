@@ -11,7 +11,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
-    public class GetCountiesTests
+    public class GetRegionsTests
     {
         private IReferenceDataProvider _referenceDataProvider;
 
@@ -29,26 +29,26 @@
         public void CallsRespositoryMethod()
         {
             //Act
-            _referenceDataProvider.GetCounties();
+            _referenceDataProvider.GetRegions();
 
             //Assert
-            _referenceRepository.Verify(r => r.GetCounties());
+            _referenceRepository.Verify(r => r.GetRegions());
         }
 
         [Test]
-        public void ReturnsCounties()
+        public void ReturnsRegions()
         {
-            var counties = new Fixture().CreateMany<County>(3).ToList();
-            _referenceRepository.Setup(r => r.GetCounties()).Returns(counties);
+            var regions = new Fixture().CreateMany<Region>(3).ToList();
+            _referenceRepository.Setup(r => r.GetRegions()).Returns(regions);
 
             //Act
-            var countiesList = _referenceDataProvider.GetCounties();
+            var regionsList = _referenceDataProvider.GetRegions();
 
             //Assert
-            countiesList.Count.Should().Be(counties.Count);
-            foreach (var county in counties)
+            regionsList.Count.Should().Be(regions.Count);
+            foreach (var region in regions)
             {
-                countiesList.Any(c => c.FullName == county.FullName).Should().BeTrue();
+                regionsList.Any(c => c.FullName == region.FullName).Should().BeTrue();
             }
         }
     }
