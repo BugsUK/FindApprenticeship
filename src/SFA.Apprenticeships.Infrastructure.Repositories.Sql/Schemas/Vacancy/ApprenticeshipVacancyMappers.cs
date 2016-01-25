@@ -125,14 +125,15 @@
                 .MapMemberFrom(v => v.DirectApplicationUrlComment, av => av.OfflineApplicationUrlComment)
                 .MapMemberFrom(v => v.IsDirectApplication, av => av.OfflineVacancy)
 
-                // Need to map the following via database lookups
-                .ForMember(v => v.ParentVacancyId, opt => opt.Ignore()) // ParentVacancyReferenceNumber
-                .ForMember(v => v.OriginalContractOwnerVacancyPartyId, opt => opt.Ignore())
+                // These are mapped via database lookups
+                .IgnoreMember(v => v.ParentVacancyId) // TODO ParentVacancyReferenceNumber
+                .IgnoreMember(v => v.OriginalContractOwnerVacancyPartyId) // TODO
+                .IgnoreMember(v => v.EmployerVacancyPartyId) // ProviderSiteEmployerLink.Employer.Ern
+
                 // Just been hacked so that updates don't fail
                 .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO: UKPRN
                 .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO: UKPRN
-                .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO: ProviderSiteEmployerLink.Employer.EntityId / ERN
                 .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO: UKPRN
                 .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO: UKPRN
 

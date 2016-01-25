@@ -234,14 +234,13 @@ FETCH NEXT @PageSize ROWS ONLY
 
             UpdateEntityTimestamps(entity);
 
-            // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
-
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
-            // TODO: This should be the other way around (to avoid a race condition)
-            // and be in a single call to the database (to avoid a double latency hit)
+            PopulateEmployerVacancyPartyId(entity, dbVacancy);
+
+            // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
             try
@@ -272,7 +271,6 @@ FETCH NEXT @PageSize ROWS ONLY
 ", new { VacancyId = dbVacancy.VacancyId });
             }
 
-            
             // TODO: Optimisation - insert several in one SQL round-trip
             foreach (var location in entity.LocationAddresses)
             {
@@ -290,10 +288,11 @@ FETCH NEXT @PageSize ROWS ONLY
                 _getOpenConnection.Insert(dbLocation);
             }
 
+
+           
+
             _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
-            // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
-            
             return entity;
         }
 
@@ -303,11 +302,11 @@ FETCH NEXT @PageSize ROWS ONLY
 
             UpdateEntityTimestamps(entity);
 
-            // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
-
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
+
+            PopulateEmployerVacancyPartyId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -326,9 +325,15 @@ FETCH NEXT @PageSize ROWS ONLY
 
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
-            // TODO: Mongo used to map dbVacancy back to entity, not sure what the point in that is.
-
             return entity;
+        }
+
+        private void PopulateEmployerVacancyPartyId(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
+        {
+            dbVacancy.EmployerVacancyPartyId = _getOpenConnection.Query<int>(@"
+SELECT VacancyPartyId
+FROM   Vacancy.VacancyParty
+WHERE  EdsErn = @EdsErn", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern }).Single();
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)

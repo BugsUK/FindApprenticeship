@@ -493,7 +493,7 @@
                 FullName = "Employer A",
                 Description = "A",
                 WebsiteUrl = "URL",
-                EdsErn = 1,
+                EdsErn = 101,
                 UKPrn = null,
                 PostalAddressId = 1
             };

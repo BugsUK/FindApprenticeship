@@ -64,7 +64,9 @@
 
         protected ApprenticeshipVacancy CreateValidDomainVacancy()
         {
-            var result = new Fixture().Build<ApprenticeshipVacancy>()
+            var fixture = new Fixture();
+
+            var result = fixture.Build<ApprenticeshipVacancy>()
                 .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
@@ -82,6 +84,8 @@
                 result.FrameworkCodeName = null;
                 result.StandardId = StandardId_Standard1;
             }
+
+            result.ProviderSiteEmployerLink.Employer.Ern = "101"; // fixture.Create<int>().ToString();
 
             return result;
         }
