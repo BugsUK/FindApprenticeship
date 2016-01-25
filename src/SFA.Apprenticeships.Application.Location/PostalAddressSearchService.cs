@@ -13,18 +13,23 @@
             _postalAddressLookupProvider = postalAddressLookupProvider;
         }
 
-        public PostalAddress GetValidatedAddress(string fullPostcode, string addressLine1)
+        public IEnumerable<PostalAddress> GetValidatedAddress(string fullPostcode, string addressLine1)
         {
             var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(addressLine1, fullPostcode);
 
-            return results?.Single();
+            if (results == null)
+                return null;
+            return !results.Any() ? null : results;
         }
 
         public IEnumerable<PostalAddress> GetValidatedAddresses(string fullPostcode)
         {
             var results = _postalAddressLookupProvider.GetValidatedPostalAddresses(fullPostcode);
 
-            return results;
+            if (results == null)
+                return null;
+
+            return !results.Any() ? null : results;
         }
     }
 }

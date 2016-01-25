@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Configuration;
     using System.Linq;
     using Domain.Entities.Locations;
     using Infrastructure.Postcode;
@@ -51,33 +52,33 @@
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentNullException))]
         public void ShouldRequireLine1()
         {
             //Arrange
             //Act
-            _palp.GetValidatedPostalAddresses(null, "postcode");
+            var result = _palp.GetValidatedPostalAddresses(null, "postcode");
             //Assert
+            Assert.IsNull(result);
         }
 
         [Test]
-        [ExpectedException(typeof (ArgumentNullException))]
         public void ShouldRequirePostcode()
         {
             //Arrange
             //Act
-            _palp.GetValidatedPostalAddresses("Line 1", null);
+            var result = _palp.GetValidatedPostalAddresses("Line 1", null);
             //Assert
+            Assert.IsNull(result);
         }
 
         [Test]
-        [ExpectedException(typeof(ArgumentNullException))]
         public void ShouldRequirePostcodeOnly()
         {
             //Arrange
             //Act
-            _palp.GetValidatedPostalAddresses(null);
+            var result = _palp.GetValidatedPostalAddresses(null);
             //Assert
+            Assert.IsNull(result);
         }
 
         [TestCase(1, _jsonSingleFindResult)]

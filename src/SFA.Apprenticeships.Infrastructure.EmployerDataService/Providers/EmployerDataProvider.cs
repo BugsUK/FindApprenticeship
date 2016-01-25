@@ -8,6 +8,7 @@
     using Application.Organisation;
     using Configuration;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using EmployerDataService;
     using Mappers;
@@ -141,6 +142,7 @@
         /// This is a public method so as to be testable.
         /// The SOAP service result is not injectable, making this code impossible to reach if it were invoked
         /// as part of the interface methods.
+        /// *This is a nasty piece of code to test, but there are some units around it.
         /// </summary>
         /// <param name="employerToMap"></param>
         /// <returns></returns>
@@ -153,8 +155,21 @@
             //if address not found, just use the retrieved address
             var postCodeToSearch = employerToMap.Address.PostCode;
             var addressLine1 = employerToMap.Address.PAON?.Items.FirstOrDefault()?.ToString();
-            var verifiedAddress = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1) ??
-                                  _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch)?.FirstOrDefault();
+            PostalAddress verifiedAddress = null;
+
+            if (!string.IsNullOrWhiteSpace(addressLine1))
+            {
+                var addresses = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1)?.ToList();
+                if (addresses != null && addresses.Count() == 1)
+                {
+                    verifiedAddress = addresses.Single();
+                }
+            }
+
+            if (verifiedAddress == null)
+            {
+                verifiedAddress = _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch)?.FirstOrDefault();
+            }
 
             // TODO: AG: US814: include reference number aliases.
             var employerResult = _employerMapper.ToVerifiedOrganisationSummary(employerToMap, Enumerable.Empty<string>());
