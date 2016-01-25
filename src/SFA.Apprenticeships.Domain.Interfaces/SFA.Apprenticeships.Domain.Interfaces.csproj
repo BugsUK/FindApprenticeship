@@ -101,6 +101,7 @@
     <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IProviderSiteRepository.cs" />
+    <Compile Include="Repositories\IReferenceRepository.cs" />
     <Compile Include="Repositories\ISavedSearchAlertRepository.cs" />
     <Compile Include="Repositories\IApplicationStatusAlertRepository.cs" />
     <Compile Include="Repositories\IContactMessageRepository.cs" />

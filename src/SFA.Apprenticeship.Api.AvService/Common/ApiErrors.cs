@@ -8,7 +8,7 @@
         public static ErrorCodesData Error10001 => new ErrorCodesData
         {
             InterfaceErrorCode = -10001,
-            InterfaceErrorDescription = "\"WorkingWeek\" must be 100 characters or less"
+            InterfaceErrorDescription = "\"WorkingWeek\" must be 100 characters or less "
         };
 
         public static ErrorCodesData Error10002 => new ErrorCodesData
@@ -38,7 +38,7 @@
         public static ErrorCodesData VacancyTitleIsTooLong => new ErrorCodesData
         {
             InterfaceErrorCode = -10006,
-            InterfaceErrorDescription = "\"Title\" must be 200 characters or less"
+            InterfaceErrorDescription = "\"Title\" must be 200 characters or less "
         };
 
         public static ErrorCodesData VacancyTitleIsMandatory => new ErrorCodesData
@@ -56,7 +56,7 @@
         public static ErrorCodesData VacancyShortDescriptionIsTooLong => new ErrorCodesData
         {
             InterfaceErrorCode = -10009,
-            InterfaceErrorDescription = "\"ShortDescription\" must be 512 characters or less"
+            InterfaceErrorDescription = "\"ShortDescription\" must be 512 characters or less "
         };
 
         public static ErrorCodesData VacancyShortDescriptionIsMandatory => new ErrorCodesData
@@ -68,7 +68,7 @@
         public static ErrorCodesData Error10011 => new ErrorCodesData
         {
             InterfaceErrorCode = -10011,
-            InterfaceErrorDescription = "\"NumberOfPositions\" is mandatory for standard vacancies"
+            InterfaceErrorDescription = "\"NumberOfPositions\"  is mandatory for standard vacancies"
         };
 
         public static ErrorCodesData Error10012 => new ErrorCodesData
@@ -86,7 +86,7 @@
         public static ErrorCodesData VacancyLongDescriptionIsMandatory => new ErrorCodesData
         {
             InterfaceErrorCode = -10014,
-            InterfaceErrorDescription = "\"LongDescription\" is mandatory"
+            InterfaceErrorDescription = "\"LongDescription\"  is mandatory"
         };
 
         public static ErrorCodesData Error10015 => new ErrorCodesData
@@ -152,7 +152,7 @@
         public static ErrorCodesData Error10025 => new ErrorCodesData
         {
             InterfaceErrorCode = -10025,
-            InterfaceErrorDescription = "\"NumberOfVacancies\" is mandatory for multi - site vacancies"
+            InterfaceErrorDescription = "\"NumberOfVacancies\"  is mandatory for multi-site vacancies"
         };
 
         public static ErrorCodesData Error10026 => new ErrorCodesData
@@ -331,7 +331,7 @@
         public static ErrorCodesData Error20004 => new ErrorCodesData
         {
             InterfaceErrorCode = -20004,
-            InterfaceErrorDescription = "You cannot record this number of candidates as successful as the total number of successes is greater than the number of vacancies available for this advert.Either the number of successful candidates reported is incorrect or the number of vacancies for this advert needs to be increased."
+            InterfaceErrorDescription = "You cannot record this number of candidates as successful as the total number of successes is greater than the number of vacancies available for this advert. Either the number of successful candidates reported is incorrect or the number of vacancies for this advert needs to be increased."
         };
 
         public static ErrorCodesData Error20005 => new ErrorCodesData
@@ -499,8 +499,8 @@
             Error10047,
             Error10048,
             Error10049,
-            Error1,
             Error10050,
+            Error1,
             Error20001,
             Error20002,
             Error20003,

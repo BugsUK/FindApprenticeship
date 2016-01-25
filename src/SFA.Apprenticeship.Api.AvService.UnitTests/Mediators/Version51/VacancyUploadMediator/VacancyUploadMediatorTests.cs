@@ -13,6 +13,7 @@
     using AvService.Validators.Version51;
     using Builders.Version51;
     using DataContracts.Version51;
+    using Domain;
     using FluentAssertions;
     using FluentValidation.Results;
     using MessageContracts.Version51;
@@ -46,8 +47,8 @@
             _mockWebServiceAuthenticationProvider = new Mock<IWebServiceAuthenticationProvider>();
 
             _mockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>()))
-                .Returns(AuthenticationResult.Authenticated);
+                .Authenticate(It.IsAny<Guid>(), It.IsAny<string>(), WebServiceCategory.VacancyUpload))
+                .Returns(WebServiceAuthenticationResult.Authenticated);
 
             // Services.
             _mockVacancyPostingService = new Mock<IVacancyPostingService>();
@@ -99,8 +100,8 @@
             _mockWebServiceAuthenticationProvider.Reset();
 
             _mockWebServiceAuthenticationProvider.Setup(mock => mock
-                .Authenticate(request.ExternalSystemId, request.PublicKey))
-                .Returns(AuthenticationResult.AuthenticationFailed);
+                .Authenticate(request.ExternalSystemId, request.PublicKey, WebServiceCategory.VacancyUpload))
+                .Returns(WebServiceAuthenticationResult.AuthenticationFailed);
 
             // Act.
             Action action = () => _vacancyUploadServiceMediator.UploadVacancies(request);

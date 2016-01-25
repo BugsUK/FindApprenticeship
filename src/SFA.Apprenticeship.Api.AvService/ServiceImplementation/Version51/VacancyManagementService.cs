@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
 {
     using System;
-    using System.Security;
     using System.ServiceModel;
     using Infrastructure.Interfaces;
     using Mediators.Version51;

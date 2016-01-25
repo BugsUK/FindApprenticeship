@@ -5,7 +5,7 @@
 
     public interface IPostalAddressSearchService
     {
-        PostalAddress GetValidatedAddress(string fullPostcode, string addressLine1);
+        IEnumerable<PostalAddress> GetValidatedAddress(string fullPostcode, string addressLine1);
 
         IEnumerable<PostalAddress> GetValidatedAddresses(string fullPostcode);
     }

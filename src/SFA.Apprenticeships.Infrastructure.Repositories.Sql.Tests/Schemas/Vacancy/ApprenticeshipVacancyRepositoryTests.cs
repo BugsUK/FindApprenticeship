@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Text.RegularExpressions;
     using Domain.Entities.Vacancies.ProviderVacancies;
@@ -18,10 +17,7 @@
     using Domain.Entities.Locations;
     using Domain.Interfaces.Queries;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Azure.Configuration;
-    using SFA.Infrastructure.Configuration;
     using SFA.Infrastructure.Interfaces;
-    using Web.Common.Configuration;
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
@@ -29,27 +25,13 @@
     [TestFixture(Category = "Integration")]
     public class ApprenticeshipVacancyRepositoryTests : TestBase
     {
-        private static string _connectionString = string.Empty;
         private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
-		private readonly Mock<ILogService> _logService = new Mock<ILogService>();
-        private const string DatabaseProjectName = "SFA.Apprenticeships.Data";
+        private IGetOpenConnection _connection;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            var configurationManager = new ConfigurationManager();
-
-            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
-
-            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
-
-            string databaseName = $"RaaTest-{environment}";
-            _connectionString = $"Server=SQLSERVERTESTING;Database={databaseName};Trusted_Connection=True;";
-
-            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
-            var dacpacFilePath = Path.Combine(databaseProjectPath + $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac");
-                
-            var dbInitialiser = new DatabaseInitialiser(dacpacFilePath, _connectionString, databaseName);
+            var dbInitialiser = new DatabaseInitialiser();
 
             dbInitialiser.Publish(true);
 
@@ -60,15 +42,16 @@
 
             dbInitialiser.Seed(seedScripts);
             dbInitialiser.Seed(seedObjects);
+
+            _connection = dbInitialiser.GetOpenConnection();
         }
 
         [Test]
         public void GetVacancyByVacancyReferenceNumberTest()
         {
             // configure _mapper
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = repository.Get(VacancyReferenceNumber_VacancyA);
@@ -83,9 +66,8 @@
         public void GetVacancyByGuidTest()
         {
             // configure _mapper
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = repository.Get(VacancyId_VacancyA);
@@ -100,12 +82,11 @@
         public void UpdateTest()
         {
             var newReferenceNumber = 3L;
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
 
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
-            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
@@ -130,9 +111,8 @@
         public void RoundTripTest()
         {
             // Arrange
-            var database = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            var repository = new ApprenticeshipVacancyRepository(database, _mapper, logger.Object);
+            var repository = new ApprenticeshipVacancyRepository(_connection, _mapper, logger.Object);
 
             var vacancy = CreateValidDomainVacancy();
 
@@ -152,9 +132,8 @@
         [Test]
         public void GetForProviderByUkprnAndProviderSiteErnTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancies = repository.GetForProvider("1", "3");
@@ -170,9 +149,8 @@
         [Test]
         public void GetWithStatusTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy, ProviderVacancyStatuses.Live);
@@ -197,7 +175,7 @@
                 logger.Object);
             IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
-
+/*
             const string title = "Vacancy title";
             const int numberOfLocations = 5;
             var vacancyGuid = Guid.NewGuid();
@@ -335,7 +313,6 @@
                 PageSize = pageSize,
                 CurrentPage = 1
             };
-
             var vacancies = repository.Find(query, out totalResultsCount);
             totalResultsCount.Should().Be(9);
             vacancies.Should().HaveCount(pageSize);
@@ -348,7 +325,7 @@
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
-
+                    logger.Object);
             IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
                 logger.Object);
 
@@ -357,13 +334,13 @@
             vacancy.VacancyReferenceNumber = vacancyReferenceNumber;
             vacancy.DateSubmitted = null;
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
-
+                repository.ReserveVacancyForQA(1);
             writeRepository.Save(vacancy);
 
             writeRepository.ReserveVacancyForQA(vacancyReferenceNumber);
-
+                var vacancy = GetVacancy(1L);
             var loadedVacancy = readRepository.Get(vacancyReferenceNumber);
-
+            }*/
             loadedVacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
             loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }

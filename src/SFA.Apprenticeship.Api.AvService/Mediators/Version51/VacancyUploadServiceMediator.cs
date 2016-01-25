@@ -7,6 +7,7 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
     using Apprenticeships.Application.Interfaces.VacancyPosting;
     using Common;
     using DataContracts.Version51;
+    using Domain;
     using Mappers.Version51;
     using MessageContracts.Version51;
     using Providers;
@@ -30,7 +31,7 @@ namespace SFA.Apprenticeship.Api.AvService.Mediators.Version51
             IWebServiceAuthenticationProvider webServiceAuthenticationProvider,
             IProviderService providerService,
             IVacancyPostingService vacancyPostingService) :
-            base(webServiceAuthenticationProvider)
+            base(webServiceAuthenticationProvider, WebServiceCategory.VacancyUpload)
         {
             _validator = validator;
             _vacancyUploadRequestMapper = vacancyUploadRequestMapper;

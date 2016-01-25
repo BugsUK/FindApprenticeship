@@ -121,6 +121,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />
+    <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepositoryTests.cs" />
@@ -139,10 +141,6 @@
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Data\SFA.Apprenticeships.Data.sqlproj">
-      <Project>{331ae27b-be3d-4833-94c7-7aa8e6fa97e6}</Project>
-      <Name>SFA.Apprenticeships.Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode.IoC
 {
+    using Application.Interfaces.Locations;
     using Application.Location;
     using StructureMap.Configuration.DSL;
 
@@ -13,6 +14,7 @@
             For<IRetrieveAddressService>().Use<RetrieveAddressService>();
             For<IPostalAddressDetailsService>().Use<PostalAddressDetailsService>();
             For<IPostalAddressLookupProvider>().Use<PostalAddressLookupProvider>();
+            For<IPostalAddressSearchService>().Use<PostalAddressSearchService>();
         }
     }
 }
