@@ -37,7 +37,7 @@
         {
             _logger.Debug("Calling database to get all regions");
 
-            var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region WHERE RegionId <> 0 ORDER BY FullName");
+            var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region ORDER BY RegionId");
 
             _logger.Debug($"Found {dbRegions.Count} regions");
 
