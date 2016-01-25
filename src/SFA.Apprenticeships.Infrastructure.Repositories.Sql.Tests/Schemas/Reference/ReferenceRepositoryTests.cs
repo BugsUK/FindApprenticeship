@@ -76,10 +76,10 @@
             counties[0].CodeName.Should().Be("45UB");
             counties[0].ShortName.Should().Be("45UB");
             counties[0].FullName.Should().Be("Adur");
-            counties[0].County.CountyId.Should().Be(1);
-            counties[0].County.CodeName.Should().Be("BED");
-            counties[0].County.ShortName.Should().Be("BED");
-            counties[0].County.FullName.Should().Be("Bedfordshire");
+            counties[0].County.CountyId.Should().Be(42);
+            counties[0].County.CodeName.Should().Be("WSX");
+            counties[0].County.ShortName.Should().Be("WSX");
+            counties[0].County.FullName.Should().Be("West Sussex");
         }
     }
 }

@@ -80,6 +80,50 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
         }
 
         /// <summary>
+        /// Execute a query. Very similar to Dapper's IDbConnection.Query except:
+        /// <list type="bullet">
+        ///     <item><description>It manages (obtains, opens, closes and returns) the database connection itself</description></item> 
+        ///     <item><description>The result is always entirely loaded and returned as an IList ("buffered" cannot be set to false)</description></item>
+        ///     <item><description>Transient errors are automatically retried</description></item> 
+        ///     <item><description>Transactions are not supported (in order to support retries)</description></item> 
+        /// </list>
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TReturn"></typeparam>
+        /// <param name="goc"></param>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitOn"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public static IList<TReturn> Query<TFirst, TSecond, TReturn>(this IGetOpenConnection goc, string sql, Func<TFirst, TSecond, TReturn> map, object param = null, string splitOn = "Id", int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
+        {
+            // TODO: Log that user did this query
+
+            return RetryPolicy.ExecuteAction<IList<TReturn>>(() =>
+            {
+                using (var conn = goc.GetOpenConnection())
+                {
+                    try
+                    {
+                        return
+                            (IList<TReturn>)
+                                conn.Query<TFirst, TSecond, TReturn>(sql, map, param, transaction: null, buffered: true,
+                                    commandTimeout: commandTimeout, commandType: commandType, splitOn: splitOn);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw ex;
+                    }
+                }
+            }
+            );
+        }
+
+        /// <summary>
         /// Execute a query and progressively load the data. Very similar to Dapper's IDbConnection.Query except:
         /// <list type="bullet">
         ///     <item><description>It manages (obtains, opens, closes and returns) the database connection itself</description></item> 
@@ -292,6 +336,37 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             // TODO: Implement caching. Consider using older values in case of error / slow response
 
             return goc.Query<T>(sql, param, commandTimeout, commandType);
+        }
+
+        /// <summary>
+        /// Return cached data for the query and associated parameters if available, otherwise query the data and add it to the cache. In the query case
+        /// it is very similar to Dapper's IDbConnection.Query except:
+        /// <list type="bullet">
+        ///     <item><description>It manages (obtains, opens, closes and returns) the database connection itself</description></item> 
+        ///     <item><description>The result is always entirely loaded and returned as an IList ("buffered" cannot be set to false)</description></item>
+        ///     <item><description>Transient errors are automatically retried</description></item> 
+        ///     <item><description>Transactions are not supported (in order to support retries)</description></item> 
+        /// </list>
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TReturn"></typeparam>
+        /// <param name="goc"></param>
+        /// <param name="cacheDuration">This is advisory only. It end up being cached for less time (perhaps due to memory limitations) or longer
+        /// (perhaps if the query fails, or is slow).</param>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitOn"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        /// <remarks>Once the first value has been returned any transient errors will not be retried. Ideally the caller would be carrying out an idempotent operation and would retry from the beginning.</remarks>
+        public static IList<TReturn> QueryCached<TFirst, TSecond, TReturn>(this IGetOpenConnection goc, TimeSpan cacheDuration, string sql, Func<TFirst, TSecond, TReturn> map, object param = null, string splitOn = "Id", int? commandTimeout = default(int?), CommandType? commandType = default(CommandType?))
+        {
+            // TODO: Implement caching. Consider using older values in case of error / slow response
+
+            return goc.Query<TFirst, TSecond, TReturn>(sql, map, param, splitOn, commandTimeout, commandType);
         }
     }
 
