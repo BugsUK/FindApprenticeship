@@ -106,7 +106,6 @@
                 .MapMemberFrom(v => v.DurationTypeCode, av => durationTypeMap.EnumToCode[av.DurationType])
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
                 .MapMemberFrom(v => v.AV_InterviewStartDate, av => av.InterviewStartDate)
-                .MapMemberFrom(v => v.PossibleStartDateDate, av => av.PossibleStartDate)
                 .MapMemberFrom(v => v.TrainingTypeCode, av => trainingTypeMap.EnumToCode[av.TrainingType])
                 .ForMember( v=> v.VacancyStatusCode, opt => opt.MapFrom(av => av.Status))
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
@@ -115,8 +114,9 @@
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
                 .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description)
-                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct
+                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct - no, wrong
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
+                .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Always Apprenticeship (mapping from ApprenticeshipVacancy!!)
 
                 // TODO: Change ApprenticeshipVacancy object in due course
                 .MapMemberFrom(v => v.DirectApplicationInstructions, av => av.OfflineApplicationInstructions)
@@ -126,24 +126,22 @@
                 .MapMemberFrom(v => v.IsDirectApplication, av => av.OfflineVacancy)
 
                 // Need to map the following via database lookups
-                .ForMember(v => v.ParentVacancyId, opt => opt.Ignore())
+                .ForMember(v => v.ParentVacancyId, opt => opt.Ignore()) // ParentVacancyReferenceNumber
                 .ForMember(v => v.OriginalContractOwnerVacancyPartyId, opt => opt.Ignore())
                 // Just been hacked so that updates don't fail
                 .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
+                .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO: UKPRN
+                .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO: UKPRN
+                .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO: ProviderSiteEmployerLink.Employer.EntityId / ERN
+                .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO: UKPRN
+                .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO: UKPRN
 
-                // TODO: Missing from ApprenticeshipVacancy
+                // TODO: Missing from ApprenticeshipVacancy - add as part of other refactoring
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
-                .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Apprenticeship / Traineeship
                 .IgnoreMember(v => v.VacancyLocationTypeCode)
 
                 // TODO: Remove from Vacancy.Vacancy?
-                .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate -> StartDate doesn't exist in the mongo entity
                 .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA) // -> we need that
 
                 .End();
@@ -156,7 +154,6 @@
                 .MapMemberFrom(av => av.DurationType, v => durationTypeMap.CodeToEnum[v.DurationTypeCode])
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .MapMemberFrom(av => av.InterviewStartDate, v => v.AV_InterviewStartDate)
-                .MapMemberFrom(av => av.PossibleStartDate, v => v.PossibleStartDateDate)
                 .MapMemberFrom(av => av.TrainingType, v => trainingTypeMap.CodeToEnum[v.TrainingTypeCode])
                 .ForMember(av => av.Status, opt => opt.MapFrom(v => v.VacancyStatusCode))
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
@@ -205,8 +202,8 @@
                 .End();
 
             Mapper.CreateMap<Address, Schemas.Address.Entities.PostalAddress>()
-                .MapMemberFrom(a => a.Latitude, a => (decimal?)a.GeoPoint.Latitude)
-                .MapMemberFrom(a => a.Longitude, a => (decimal?)a.GeoPoint.Longitude)
+                .MapMemberFrom(a => a.Latitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Latitude)
+                .MapMemberFrom(a => a.Longitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Longitude)
 
                 // TODO: Hacks
                 .MapMemberFrom(a => a.AddressLine5, a => "")
@@ -228,7 +225,7 @@
 
             Mapper.CreateMap<Schemas.Address.Entities.PostalAddress, Domain.Entities.Locations.Address>()
                 .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
-                .MapMemberFrom(a => a.GeoPoint, a => new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
+                .MapMemberFrom(a => a.GeoPoint, a => (a.Latitude == null || a.Longitude == null) ? null : new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
 
                 // TODO: Hacks
                 .MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())

@@ -105,7 +105,6 @@
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkId)
-                .Excluding(v => v.StartDate)
 
                 ;
         }

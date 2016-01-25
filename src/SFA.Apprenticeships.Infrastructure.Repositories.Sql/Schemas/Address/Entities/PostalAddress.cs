@@ -7,12 +7,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Address.En
     [Table("Address.PostalAddress")]
     public class PostalAddress
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public PostalAddress()
-        {
-            //VacancyParties = new HashSet<Vacancy.VacancyParty>();
-        }
-
         public int PostalAddressId { get; set; }
 
         [Required]

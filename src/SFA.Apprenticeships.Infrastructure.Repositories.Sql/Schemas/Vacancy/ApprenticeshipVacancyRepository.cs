@@ -14,6 +14,7 @@
     using Reference.Entities;
     using Entities;
     using SFA.Infrastructure.Interfaces;
+    using System.Diagnostics;
 
     // TODO GenericSqlClient??
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
@@ -65,6 +66,14 @@ FROM   Vacancy.VacancyLocation
 WHERE  VacancyId = @VacancyId",
 new { VacancyId = dbVacancy.VacancyId });
 
+            // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
+            var employer = _getOpenConnection
+                .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
+                .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
+
+            if (!employer.PostalAddressId.HasValue)
+                throw new InvalidOperationException("All employers should have addresses");
+
             // TODO: Would like to make addresses immutable to allow caching - they probably don't
             // change that often. Also should have access methods that don't return the address as
             // most screens don't need it
@@ -72,7 +81,7 @@ new { VacancyId = dbVacancy.VacancyId });
 SELECT *
 FROM   Address.PostalAddress
 WHERE  PostalAddressId IN @PostalAddressIds",
-new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Union(dbVacancy.ManagerVacancyParty.PostalAddressId } */});
+new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(new int[] { employer.PostalAddressId.Value }) });
 
             var result = _mapper.Map<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy, ApprenticeshipVacancy>(dbVacancy);
 
@@ -86,26 +95,20 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
                 });
             }
 
-
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             result.Ukprn = _getOpenConnection
                 .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
                 .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
-                .UKPrn.ToString(); // TODO: Casing. TODO: Type?
-
-            // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
-            var employer = _getOpenConnection
-                .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
-                .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
+                .UKPrn.ToString(); // TODO: Type?
 
 
             result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
+
+            var x = _mapper.Map<Schemas.Address.Entities.PostalAddress, Address>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId));
+
             result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
             {
-                Address = new Domain.Entities.Locations.Address()
-                {
-                    // TODO
-                },
+                Address = _mapper.Map<Schemas.Address.Entities.PostalAddress,Address>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId)),
                 //DateCreated = employer.DateCreated, TODO
                 //DateUpdated = employer.DateUpdated, TODO
                 //EntityId = employer.VacancyPartyId, // TODO: Verify
@@ -306,8 +309,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
-            // TODO: This should be the other way around (to avoid a race condition)
-            // and be in a single call to the database (to avoid a double latency hit)
+            // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
             try

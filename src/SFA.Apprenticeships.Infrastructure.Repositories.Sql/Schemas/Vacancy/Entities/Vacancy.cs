@@ -91,7 +91,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string WageComment { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? PossibleStartDateDate { get; set; }
+        public DateTime? PossibleStartDate { get; set; }
 
         public string PossibleStartDateComment { get; set; }
 
@@ -99,9 +99,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public DateTime? ClosingDate { get; set; }
 
         public string ClosingDateComment { get; set; }
-
-        [Column(TypeName = "datetime2")]
-        public DateTime? StartDate { get; set; }
 
         [Column(TypeName = "datetime2")]
         public DateTime? AV_InterviewStartDate { get; set; }

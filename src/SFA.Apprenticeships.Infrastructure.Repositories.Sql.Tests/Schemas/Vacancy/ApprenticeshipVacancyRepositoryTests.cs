@@ -20,6 +20,7 @@
     using SFA.Infrastructure.Interfaces;
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
+    using PostalAddress = Sql.Schemas.Address.Entities.PostalAddress;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
 
     [TestFixture(Category = "Integration")]
@@ -493,7 +494,8 @@
                 Description = "A",
                 WebsiteUrl = "URL",
                 EdsErn = 1,
-                UKPrn = null
+                UKPrn = null,
+                PostalAddressId = 1
             };
 
             var vacancyParty2 = new VacancyParty
@@ -503,7 +505,8 @@
                 Description = "A",
                 WebsiteUrl = "URL",
                 EdsErn = null,
-                UKPrn = 1
+                UKPrn = 1,
+                PostalAddressId = 2
             };
 
             var vacancyParty3 = new VacancyParty
@@ -513,10 +516,41 @@
                 Description = "B",
                 WebsiteUrl = "URL",
                 EdsErn = 3,
-                UKPrn = 1
+                UKPrn = 1,
+                PostalAddressId = 3
             };
 
-            var seedObjects = (new object[] {occupation, occupation2, framework1, framework2, vacancyParty1, vacancyParty2, vacancyParty3}).Union(vacancies);
+            var postalAddress1 = new PostalAddress
+            {
+                AddressLine1 = "AddressLine1 1",
+                AddressLine2 = "AddressLine2",
+                AddressLine3 = "AddressLine3",
+                AddressLine4 = "AddressLine4",
+                AddressLine5 = "AddressLine5",
+                Postcode = "PC1 1AA"
+            };
+
+            var postalAddress2 = new PostalAddress
+            {
+                AddressLine1 = "AddressLine1 2",
+                AddressLine2 = "AddressLine2",
+                AddressLine3 = "AddressLine3",
+                AddressLine4 = "AddressLine4",
+                AddressLine5 = "AddressLine5",
+                Postcode = "PC1 1AA"
+            };
+
+            var postalAddress3 = new PostalAddress
+            {
+                AddressLine1 = "AddressLine1 3",
+                AddressLine2 = "AddressLine2",
+                AddressLine3 = "AddressLine3",
+                AddressLine4 = "AddressLine4",
+                AddressLine5 = "AddressLine5",
+                Postcode = "PC1 1AA"
+            };
+
+            var seedObjects = (new object[] {occupation, occupation2, framework1, framework2, postalAddress1, postalAddress2, postalAddress3, vacancyParty1, vacancyParty2, vacancyParty3}).Union(vacancies);
             
             return seedObjects;
         }
