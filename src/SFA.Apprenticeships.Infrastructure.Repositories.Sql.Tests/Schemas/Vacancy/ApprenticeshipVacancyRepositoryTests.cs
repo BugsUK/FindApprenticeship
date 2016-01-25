@@ -78,6 +78,24 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
+        [Test, ExpectedException(typeof(ArgumentNullException))]
+        public void ShouldNotBeAbleToDeepSaveAVacancyWithLocationsAsNull()
+        {
+            var newReferenceNumber = 3L;
+            var logger = new Mock<ILogService>();
+
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+
+            var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
+
+            vacancy.VacancyReferenceNumber = newReferenceNumber;
+            vacancy.LocationAddresses = null;
+            writeRepository.DeepSave(vacancy);
+        }
+
         [Test]
         public void UpdateTest()
         {
@@ -92,7 +110,7 @@
             var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.VacancyReferenceNumber = newReferenceNumber;
-            vacancy.LocationAddresses = null; // TODO: Change to separate repo method
+            vacancy.LocationAddresses = new List<VacancyLocationAddress>();
             writeRepository.DeepSave(vacancy);
 
             vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);

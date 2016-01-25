@@ -135,15 +135,6 @@
             return vacancies;
         }
 
-        //public void Delete(Guid id)
-        //{
-        //    _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", id);
-
-        //    Collection.Remove(Query<MongoApprenticeshipVacancy>.EQ(o => o.Id, id));
-
-        //    _logger.Debug("Deleted apprenticeship vacancy with Id={0}", id);
-        //}
-
         public ApprenticeshipVacancy DeepSave(ApprenticeshipVacancy entity)
         {
             _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.EntityId);

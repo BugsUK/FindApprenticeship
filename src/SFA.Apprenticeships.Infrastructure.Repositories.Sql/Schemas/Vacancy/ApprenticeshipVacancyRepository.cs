@@ -10,6 +10,7 @@
     using Domain.Interfaces.Queries;
     using Domain.Interfaces.Repositories;
     using Common;
+    using CuttingEdge.Conditions;
     using Reference.Entities;
     using Entities;
     using SFA.Infrastructure.Interfaces;
@@ -226,6 +227,8 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.EntityId);
 
+            Condition.Requires(entity.LocationAddresses, "LocationAddresses").IsNotNull();
+
             UpdateEntityTimestamps(entity);
 
             // TODO: Map from ApprenticeshipVacancy to Apprenticeship ??
@@ -249,9 +252,8 @@ FETCH NEXT @PageSize ROWS ONLY
                 if (!_getOpenConnection.UpdateSingle(dbVacancy))
                     throw new Exception("Failed to update record after failed insert", ex);
 
-                if (entity.LocationAddresses != null)
-                {
-                    _getOpenConnection.MutatingQuery<int>(@"
+
+                _getOpenConnection.MutatingQuery<int>(@"
 -- TODO: Could be optimised. Locking may possibly be an issue
 -- TODO: Should possibly split address into separate repo method
     DELETE Vacancy.VacancyLocation
@@ -265,29 +267,25 @@ FETCH NEXT @PageSize ROWS ONLY
         WHERE  VacancyId = @VacancyId
     )
 ", new { VacancyId = dbVacancy.VacancyId });
-                }
             }
 
-            if (entity.LocationAddresses != null) // TODO: Split into separate repository method
+            
+            // TODO: Optimisation - insert several in one SQL round-trip
+            foreach (var location in entity.LocationAddresses)
             {
-                // TODO: Optimisation - insert several in one SQL round-trip
-                foreach (var location in entity.LocationAddresses)
+                var dbLocation = new VacancyLocation()
                 {
-                    var dbLocation = new VacancyLocation()
-                    {
-                        VacancyId = dbVacancy.VacancyId,
-                        DirectApplicationUrl = "TODO",
-                        NumberOfPositions = location.NumberOfPositions
-                    };
+                    VacancyId = dbVacancy.VacancyId,
+                    DirectApplicationUrl = "TODO",
+                    NumberOfPositions = location.NumberOfPositions
+                };
                     
-                    var dbAddress = _mapper.Map<Domain.Entities.Locations.Address, Schemas.Address.Entities.PostalAddress>(location.Address);
+                var dbAddress = _mapper.Map<Domain.Entities.Locations.Address, Schemas.Address.Entities.PostalAddress>(location.Address);
 
-                    dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
+                dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
 
-                    _getOpenConnection.Insert(dbLocation);
-                }
+                _getOpenConnection.Insert(dbLocation);
             }
-
 
             _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
@@ -359,14 +357,12 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
 
             if (dbVacancy == null)
             {
-                // TODO: Mongodb references
-                //_logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");
+                _logger.Warn($"Call to database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed");
                 return null;
             }
 
-            //_logger.Info($"Called Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
+            _logger.Info($"Called database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
 
-            // TODO: Mapping
             return MapVacancy(dbVacancy);
         }
 
