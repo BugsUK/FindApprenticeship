@@ -1,15 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
     using Common;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Reference;
-    using Sql.Schemas.Vacancy;
 
     [TestFixture(Category = "Integration")]
     public class ReferenceRepositoryTests
