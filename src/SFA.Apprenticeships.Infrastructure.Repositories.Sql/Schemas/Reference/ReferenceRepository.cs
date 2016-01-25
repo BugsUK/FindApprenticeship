@@ -50,7 +50,7 @@
         {
             _logger.Debug("Calling database to get all local authorities");
 
-            const string sql = @"SELECT * FROM Reference.LocalAuthority la JOIN Reference.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY la.FullName";
+            const string sql = @"SELECT * FROM Reference.LocalAuthority la JOIN Reference.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
             var dbLocalAuthorities =
                 _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
                     sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");
