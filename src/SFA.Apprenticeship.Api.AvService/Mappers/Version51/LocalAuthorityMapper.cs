@@ -12,8 +12,8 @@
             return new LocalAuthorityData
             {
                 ShortName = localAuthority.ShortName,
-                FullName = localAuthority.FullName
-                //TODO: County
+                FullName = localAuthority.FullName,
+                County = localAuthority.County.FullName
             };
         }
 
