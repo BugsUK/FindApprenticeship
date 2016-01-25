@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Reference;
     using Domain.Interfaces.Repositories;
@@ -23,7 +24,7 @@
         {
             _logger.Debug("Calling database to get all counties");
 
-            var dbCounties = _getOpenConnection.Query<Entities.County>(@"SELECT * FROM Reference.County WHERE CountyId <> 0 ORDER BY FullName");
+            var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.County WHERE CountyId <> 0 ORDER BY FullName");
 
             _logger.Debug($"Found {dbCounties.Count} counties");
 
@@ -36,7 +37,7 @@
         {
             _logger.Debug("Calling database to get all regions");
 
-            var dbRegions = _getOpenConnection.Query<Entities.Region>(@"SELECT * FROM Reference.Region WHERE RegionId <> 0 ORDER BY FullName");
+            var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region WHERE RegionId <> 0 ORDER BY FullName");
 
             _logger.Debug($"Found {dbRegions.Count} regions");
 
@@ -49,7 +50,10 @@
         {
             _logger.Debug("Calling database to get all local authorities");
 
-            var dbLocalAuthorities = _getOpenConnection.Query<Entities.LocalAuthority>(@"SELECT * FROM Reference.LocalAuthority WHERE LocalAuthorityId <> 0 ORDER BY FullName");
+            const string sql = @"SELECT * FROM Reference.LocalAuthority la JOIN Reference.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY la.FullName";
+            var dbLocalAuthorities =
+                _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
+                    sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");
 
             _logger.Debug($"Found {dbLocalAuthorities.Count} local authorities");
 
