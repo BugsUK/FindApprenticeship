@@ -113,8 +113,8 @@
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
-                .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl) // TODO: The reverse
-                .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // TODO: The reverse
+                .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl)
+                .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description)
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
 
@@ -143,8 +143,8 @@
                 .IgnoreMember(v => v.VacancyLocationTypeCode)
 
                 // TODO: Remove from Vacancy.Vacancy?
-                .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate
-                .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA)
+                .ForMember(v => v.StartDate, opt => opt.Ignore()) // There is already a PossibleStartDateDate -> StartDate doesn't exist in the mongo entity
+                .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA) // -> we need that
 
                 .End();
 
