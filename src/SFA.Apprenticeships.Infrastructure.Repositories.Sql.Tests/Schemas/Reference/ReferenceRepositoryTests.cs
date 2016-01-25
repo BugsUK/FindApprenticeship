@@ -53,11 +53,11 @@
             var counties = repository.GetRegions();
 
             //Assert
-            counties.Count.Should().Be(9);
-            counties[0].RegionId.Should().Be(1001);
-            counties[0].CodeName.Should().Be("EM");
-            counties[0].ShortName.Should().Be("EM");
-            counties[0].FullName.Should().Be("East Midlands");
+            counties.Count.Should().Be(10);
+            counties[0].RegionId.Should().Be(0);
+            counties[0].CodeName.Should().Be("NUL");
+            counties[0].ShortName.Should().Be("NUL");
+            counties[0].FullName.Should().Be("Unspecified");
         }
 
         [Test]
