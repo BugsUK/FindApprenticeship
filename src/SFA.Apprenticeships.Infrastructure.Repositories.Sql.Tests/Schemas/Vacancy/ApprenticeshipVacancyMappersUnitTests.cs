@@ -104,7 +104,16 @@
 
             // Assert
             databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options =>
-                ExcludeHardOnes(options));
+                ExcludeHardOnes(options)
+
+                // Requires a database lookup to roundtrip
+                .Excluding(v => v.EmployerVacancyPartyId)
+                .Excluding(v => v.OwnerVacancyPartyId)
+                .Excluding(v => v.ManagerVacancyPartyId)
+                .Excluding(v => v.DeliveryProviderVacancyPartyId)
+                .Excluding(v => v.ContractOwnerVacancyPartyId)
+                .Excluding(v => v.OriginalContractOwnerVacancyPartyId)
+            );
         }
 
         [Test]

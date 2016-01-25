@@ -238,7 +238,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
-            PopulateEmployerVacancyPartyId(entity, dbVacancy);
+            PopulateVacancyPartyIds(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -306,7 +306,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
-            PopulateEmployerVacancyPartyId(entity, dbVacancy);
+            PopulateVacancyPartyIds(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -328,12 +328,24 @@ FETCH NEXT @PageSize ROWS ONLY
             return entity;
         }
 
-        private void PopulateEmployerVacancyPartyId(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
+        private void PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
         {
-            dbVacancy.EmployerVacancyPartyId = _getOpenConnection.Query<int>(@"
+            var results = _getOpenConnection.QueryMultiple<int, int>(@"
 SELECT VacancyPartyId
 FROM   Vacancy.VacancyParty
-WHERE  EdsErn = @EdsErn", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern }).Single();
+WHERE  EdsErn = @EdsErn
+
+SELECT VacancyPartyId
+FROM   Vacancy.VacancyParty
+WHERE  UKPrn = @UKPrn
+", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern, UkPrn = vacancy.Ukprn });
+
+            dbVacancy.EmployerVacancyPartyId = results.Item1.Single();
+            dbVacancy.ContractOwnerVacancyPartyId = results.Item1.Single();
+            dbVacancy.DeliveryProviderVacancyPartyId = results.Item1.Single();
+            dbVacancy.ManagerVacancyPartyId = results.Item1.Single();
+            dbVacancy.OwnerVacancyPartyId = results.Item1.Single();
+            dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item1.Single(); // TODO: ???
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)

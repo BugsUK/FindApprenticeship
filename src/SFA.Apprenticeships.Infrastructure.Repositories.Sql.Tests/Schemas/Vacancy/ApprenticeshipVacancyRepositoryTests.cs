@@ -155,13 +155,13 @@
             IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
-            var vacancies = repository.GetForProvider("1", "3");
+            var vacancies = repository.GetForProvider("203", "103");
             vacancies.Should().HaveCount(12);
 
-            vacancies = repository.GetForProvider("2", "3");
+            vacancies = repository.GetForProvider("202", "103");
             vacancies.Should().HaveCount(0);
 
-            vacancies = repository.GetForProvider("1", "4");
+            vacancies = repository.GetForProvider("202", "101");
             vacancies.Should().HaveCount(0);
         }
 
@@ -505,7 +505,7 @@
                 Description = "A",
                 WebsiteUrl = "URL",
                 EdsErn = null,
-                UKPrn = 1,
+                UKPrn = 202,
                 PostalAddressId = 2
             };
 
@@ -515,8 +515,8 @@
                 FullName = "Provider B",
                 Description = "B",
                 WebsiteUrl = "URL",
-                EdsErn = 3,
-                UKPrn = 1,
+                EdsErn = 103,
+                UKPrn = 203,
                 PostalAddressId = 3
             };
 

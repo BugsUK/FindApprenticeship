@@ -86,6 +86,7 @@
             }
 
             result.ProviderSiteEmployerLink.Employer.Ern = "101"; // fixture.Create<int>().ToString();
+            result.Ukprn = "201";
 
             return result;
         }
@@ -100,12 +101,6 @@
 
                 // TODO: Rather hard / out of scope?
                 .Excluding(v => v.ParentVacancyId)
-                .Excluding(v => v.EmployerVacancyPartyId)
-                .Excluding(v => v.OwnerVacancyPartyId)
-                .Excluding(v => v.ManagerVacancyPartyId)
-                .Excluding(v => v.DeliveryProviderVacancyPartyId)
-                .Excluding(v => v.ContractOwnerVacancyPartyId)
-                .Excluding(v => v.OriginalContractOwnerVacancyPartyId)
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkId)
@@ -118,9 +113,6 @@
             return options
                 // TODO: Not in database object yet
                 .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
-
-                // TODO: Rather hard / out of scope?
-//                .Excluding(v => v.LocationAddresses)
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)

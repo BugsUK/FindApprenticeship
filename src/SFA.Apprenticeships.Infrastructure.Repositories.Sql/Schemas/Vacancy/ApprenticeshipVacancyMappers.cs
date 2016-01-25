@@ -129,13 +129,13 @@
                 .IgnoreMember(v => v.ParentVacancyId) // TODO ParentVacancyReferenceNumber
                 .IgnoreMember(v => v.OriginalContractOwnerVacancyPartyId) // TODO
                 .IgnoreMember(v => v.EmployerVacancyPartyId) // ProviderSiteEmployerLink.Employer.Ern
+                .IgnoreMember(v => v.ContractOwnerVacancyPartyId) // UKPrn
+                .IgnoreMember(v => v.DeliveryProviderVacancyPartyId) // UKPrn
+                .IgnoreMember(v => v.ManagerVacancyPartyId) // UKPrn
+                .IgnoreMember(v => v.OwnerVacancyPartyId) // UKPrn
 
                 // Just been hacked so that updates don't fail
                 .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO: UKPRN
-                .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO: UKPRN
-                .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO: UKPRN
-                .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO: UKPRN
 
                 // TODO: Missing from ApprenticeshipVacancy - add as part of other refactoring
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
