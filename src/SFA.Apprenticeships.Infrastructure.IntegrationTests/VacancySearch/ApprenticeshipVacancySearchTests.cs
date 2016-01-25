@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.VacancySearch
 {
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.IoC;
@@ -18,6 +17,7 @@
     using NUnit.Framework;
     using StructureMap;
 
+    //TODO: Create and delete test data directly in index
     [TestFixture]
     public class ApprenticeshipVacancySearchTests
     {
@@ -53,7 +53,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
         public void ShouldSearchBySector()
         {
 
@@ -67,7 +67,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
         public void ShouldSearchBySectorAndFramework()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
@@ -81,7 +81,7 @@
             vacancies.AggregationResults.Should().HaveCount(n => n > 1);
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
         public void ShouldSearchAllEngland()
         {
             //TODO: this test could be too fragile
@@ -94,7 +94,7 @@
             vacancies.Results.Where(r => r.Distance > 40).Should().NotBeEmpty();
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
         public void ShouldSortByPostedDate()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);

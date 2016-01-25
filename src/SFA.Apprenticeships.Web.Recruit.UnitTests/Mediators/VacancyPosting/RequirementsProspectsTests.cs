@@ -2,6 +2,7 @@
 {
     using Common.Mediators;
     using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
     using Raa.Common.ViewModels.Vacancy;
@@ -46,6 +47,10 @@
                     }
                 });
 
+            var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
+            VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
+                .Returns(vacancyRequirementsAndProspects);
+
             var mediator = GetMediator();
 
             var result = mediator.UpdateVacancy(_viewModel);
@@ -59,14 +64,20 @@
         [Test]
         public void ShouldReturnOnlineVacancyOkIfCalledFromTheSaveAndContinueActionAndTheVacancyIsAnOnlineOne()
         {
+            var newVacancyViewModel = new VacancyViewModel
+            {
+                NewVacancyViewModel = new NewVacancyViewModel
+                { 
+                    OfflineVacancy = false
+                }
+            };
+
+            var vacancyRequirementsAndProspects = new VacancyRequirementsProspectsViewModel();
+
             VacancyPostingProvider.Setup(p => p.GetVacancy(_viewModel.VacancyReferenceNumber))
-                .Returns(new VacancyViewModel
-                {
-                    NewVacancyViewModel = new NewVacancyViewModel
-                    { 
-                        OfflineVacancy = false
-                    }
-                });
+                .Returns(newVacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.UpdateVacancy(It.IsAny<VacancyRequirementsProspectsViewModel>()))
+                .Returns(vacancyRequirementsAndProspects);
 
             var mediator = GetMediator();
 

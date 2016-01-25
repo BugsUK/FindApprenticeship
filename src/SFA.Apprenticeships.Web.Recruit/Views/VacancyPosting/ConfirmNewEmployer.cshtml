@@ -1,49 +1,45 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+﻿@model ProviderSiteEmployerLinkViewModel
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 @using SFA.Apprenticeships.Web.Recruit.Constants
+
 @{
-    ViewBag.Title = "Recruit an Apprentice - Add employer description";
+    ViewBag.Title = "Recruit an Apprentice - Add employer information";
 }
 
 <div class="grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">
-            Add employer description
+            Add employer information
         </h1>
     </div>
 </div>
-<div class="grid-wrapper">
-    @using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmNewEmployer, FormMethod.Post))
-    {
-        @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-        @Html.HiddenFor(m => m.ProviderSiteErn)
-        @Html.HiddenFor(m => m.Employer.Ern)
-        @Html.HiddenFor(m => m.VacancyGuid)
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmNewEmployer, FormMethod.Post))
+{
+    @Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView)
 
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <h3 class="bold-small">Employer</h3>
-                <p class="small-btm-margin">@Model.Employer.Name</p>
-                <h3 class="bold-small">Address</h3>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
-                <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
-            </div>
-        </div>
-        <div class="grid grid-1-2 hide-print">
-            <div class="ad-details__map">
-                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-            </div>
-        </div>
-        <div class="grid grid-1-1">
-            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
-            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" })
-            <button class="button">Save description and link to employer</button>
-            <a href="@Request.UrlReferrer.PathAndQuery">Choose a different employer</a>
-        </div>
-    }
-</div>
+    <div class="grid grid-1-1">
+        <button class="button">Save description and link to employer</button>
+        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectNewEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Employer.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview })
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+        var comeFromPreview = "@Model.ComeFromPreview.ToString()";
+
+        $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#location-type-main-location").on('click', function () {
+            if (comeFromPreview === "True") {
+                $("#confirmEmployer").text("Save and return to Preview");
+            }
+        });
+
+        $("#location-type-different-location").on('click', function () {
+            $("#confirmEmployer").text("Save and continue");
+        });
+    </script>
+
+    @*Difficult to put in the partial view. See http://stackoverflow.com/questions/5981490/how-to-render-javascript-into-masterlayout-section-from-partial-view*@
+}

@@ -3,9 +3,10 @@
     using System;
     using System.Configuration;
     using System.Text;
+    using Common.Configuration;
     using Common.IoC;
     using Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using EasyNetQ;
     using EasyNetQ.Topology;
     using IoC;

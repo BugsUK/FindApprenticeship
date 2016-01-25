@@ -2,7 +2,7 @@
 {
     using Application.Provider;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Interfaces.Providers;
     using Moq;

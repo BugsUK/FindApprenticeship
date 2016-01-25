@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Mediators.Provider
 {
-    using Application.Organisation;
+    using Apprenticeships.Application.Organisation;
     using Common.Constants;
     using Constants.Messages;
     using Constants.Pages.Provider;

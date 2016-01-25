@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Processes.Vacancies
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
     using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Messaging;

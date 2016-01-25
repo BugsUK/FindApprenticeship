@@ -1,10 +1,10 @@
 namespace SFA.Apprenticeships.Web.Candidate.IoC {
 
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
+    using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
@@ -13,12 +13,14 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
     using Infrastructure.LocationLookup.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Audit.IoC;
-    using Infrastructure.Repositories.Authentication.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Communication.IoC;
-    using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Raa.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Audit.IoC;
+    using Infrastructure.Repositories.Mongo.Authentication.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Communication.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
     using StructureMap;
@@ -34,6 +36,8 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             return new Container(x =>
             {
@@ -46,9 +50,10 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
@@ -57,6 +62,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

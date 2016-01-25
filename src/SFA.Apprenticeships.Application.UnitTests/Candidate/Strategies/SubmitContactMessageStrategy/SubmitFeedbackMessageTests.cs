@@ -6,10 +6,9 @@
     using Application.Candidate.Strategies;
     using Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
 

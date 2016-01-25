@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.Consumers
 {
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies;
     using Azure.Common.Messaging;
     using Domain.Interfaces.Messaging;

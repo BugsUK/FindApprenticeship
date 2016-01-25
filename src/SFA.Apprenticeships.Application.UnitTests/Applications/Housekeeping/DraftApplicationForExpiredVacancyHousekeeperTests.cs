@@ -8,10 +8,9 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Interfaces.Logging;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

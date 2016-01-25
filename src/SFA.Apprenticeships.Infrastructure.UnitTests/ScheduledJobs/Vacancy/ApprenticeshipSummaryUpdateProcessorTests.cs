@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.ScheduledJobs.Vacancy
 {
     using System;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Interfaces.ReferenceData;
     using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Elastic.Common.Entities;
     using Infrastructure.Processes.Configuration;

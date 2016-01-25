@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.IoC
 {
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Mappers;
     using StructureMap.Configuration.DSL;
@@ -12,13 +12,18 @@
             // Apprenticeships.
             For<IMapper>().Use<ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
 
+            For<IApprenticeshipVacancyReadRepository>()
+                .Use<ApprenticeshipVacancyRepository>()
+                .Ctor<IMapper>()
+                .Named("ApprenticeshipVacancyMappers");
+
             For<IApprenticeshipVacancyWriteRepository>()
                 .Use<ApprenticeshipVacancyRepository>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
-            For<IApprenticeshipVacancyReadRepository>()
-                .Use<ApprenticeshipVacancyRepository>()
+            For<IOfflineApprenticeshipVacancyRepository>()
+                .Use<OfflineApprenticeshipVacancyRepository>()
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 

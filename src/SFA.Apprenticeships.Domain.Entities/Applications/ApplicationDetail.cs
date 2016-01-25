@@ -33,5 +33,9 @@
         public string AdditionalQuestion1Answer { get; set; }
 
         public string AdditionalQuestion2Answer { get; set; }
+
+        public DateTime? DateLastViewed { get; set; }
+
+        public string Notes { get; set; }
     }
 }

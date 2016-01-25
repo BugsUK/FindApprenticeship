@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.IoC
 {
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Mappers;
     using StructureMap.Configuration.DSL;

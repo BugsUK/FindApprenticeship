@@ -12,7 +12,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Helpers;
     using Providers;
     using Validators;

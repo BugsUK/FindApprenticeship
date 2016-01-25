@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication
 {
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using Common.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Infrastructure.Communication.Email;
     using Infrastructure.Communication.IoC;

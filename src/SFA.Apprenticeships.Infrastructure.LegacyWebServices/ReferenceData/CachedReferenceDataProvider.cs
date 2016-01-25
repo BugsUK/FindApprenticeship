@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.ReferenceData;
     using Domain.Entities.ReferenceData;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class CachedReferenceDataProvider : IReferenceDataProvider
     {

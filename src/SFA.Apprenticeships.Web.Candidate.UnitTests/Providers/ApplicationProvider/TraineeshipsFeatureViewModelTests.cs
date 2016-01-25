@@ -4,14 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Candidate.Providers;
     using Common.Configuration;
     using Common.Providers;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Domain.Interfaces.Configuration;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

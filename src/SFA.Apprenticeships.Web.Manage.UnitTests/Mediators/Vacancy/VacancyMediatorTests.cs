@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
     using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
 
     [TestFixture]

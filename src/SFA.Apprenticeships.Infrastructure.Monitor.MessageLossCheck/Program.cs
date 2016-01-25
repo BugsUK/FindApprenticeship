@@ -1,14 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.MessageLossCheck
 {
     using System;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Elastic.Common.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
@@ -28,20 +29,20 @@
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<MessageLogCheckRepository>();
                 x.AddRegistry<VacancySearchRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
             });
 
             var messageLossCheckTaskRunner = container.GetInstance<IMessageLossCheckTaskRunner>();

@@ -6,14 +6,14 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.Configuration;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -22,10 +22,12 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Repositories.Applications.IoC;
-    using Repositories.Candidates.IoC;
-    using Repositories.Communication.IoC;
-    using Repositories.Users.IoC;
+    using Raa.IoC;
+    using Repositories.Mongo.Applications.IoC;
+    using Repositories.Mongo.Candidates.IoC;
+    using Repositories.Mongo.Communication.IoC;
+    using Repositories.Mongo.Users.IoC;
+    using Repositories.Mongo.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -39,6 +41,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
         private ApplicationEtlControlQueueConsumer _applicationEtlControlQueueConsumer;
         private DailyDigestControlQueueConsumer _dailyDigestControlQueueConsumer;
         private HousekeepingControlQueueConsumer _housekeepingControlQueueConsumer;
+        private VacancyStatusControlQueueConsumer _vacancyStatusControlQueueConsumer;
         private IConfigurationService _configurationService;
         private IContainer _container;
 
@@ -55,7 +58,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                         _savedSearchControlQueueConsumer.CheckScheduleQueue(),
                         _vacancyEtlControlQueueConsumer.CheckScheduleQueue(),
                         _applicationEtlControlQueueConsumer.CheckScheduleQueue(),
-                        _housekeepingControlQueueConsumer.CheckScheduleQueue()
+                        _housekeepingControlQueueConsumer.CheckScheduleQueue(),
+                        _vacancyStatusControlQueueConsumer.CheckScheduleQueue()
                     };
 
                     if (CommunicationsIsEnabled)
@@ -133,6 +137,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             _container = new Container(x =>
             {
@@ -140,15 +146,17 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
                 x.AddRegistry<VacancyIndexerRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry<JobsRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();
@@ -161,6 +169,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             _applicationEtlControlQueueConsumer = _container.GetInstance<ApplicationEtlControlQueueConsumer>();
             _dailyDigestControlQueueConsumer = _container.GetInstance<DailyDigestControlQueueConsumer>();
             _housekeepingControlQueueConsumer = _container.GetInstance<HousekeepingControlQueueConsumer>();
+            _vacancyStatusControlQueueConsumer = _container.GetInstance<VacancyStatusControlQueueConsumer>();
             _configurationService = _container.GetInstance<IConfigurationService>();
         }
     }

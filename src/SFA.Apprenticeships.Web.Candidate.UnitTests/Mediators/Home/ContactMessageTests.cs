@@ -4,7 +4,7 @@ using SFA.Apprenticeships.Web.Common.UnitTests.Mediators;
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
 {
     using System;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Candidate.Mediators;
     using Candidate.Mediators.Home;
     using Candidate.Providers;

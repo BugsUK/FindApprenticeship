@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Candidates;
-    using Domain.Interfaces.Configuration;
-    using Infrastructure.Repositories.Candidates.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
+    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Repositories.Mongo.Candidates.Entities;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

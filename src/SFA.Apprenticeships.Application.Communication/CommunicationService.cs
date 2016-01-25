@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Interfaces.Communications;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Strategies;
 
     public class CommunicationService : ICommunicationService

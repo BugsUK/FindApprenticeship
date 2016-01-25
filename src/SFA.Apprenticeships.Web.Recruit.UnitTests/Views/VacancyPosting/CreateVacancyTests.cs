@@ -63,6 +63,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
                 .With(v => v.Status, ProviderVacancyStatuses.Draft)
+                .With(v => v.ComeFromPreview, false)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);

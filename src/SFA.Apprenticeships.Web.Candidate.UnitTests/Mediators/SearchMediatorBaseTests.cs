@@ -3,7 +3,7 @@
     using Candidate.Mediators.Search;
     using Common.Configuration;
     using Common.Providers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 
@@ -35,7 +35,6 @@
         [TestCase("VAC000547307", 0, false)]
         [TestCase("488832apprenticeships", 488832, true)]
         [TestCase("447888f", 447888, true)]
-        [TestCase("48830310 day weather forecast for lichfield", 48830310, true)]
         [TestCase("48830310 day weather forecast for lichfield", 48830310, true)]
         [TestCase("[[imgUrl]]", 0, false)]
         public void TryParseVacancyIdTests(string vacancyIdString, int expectedVacancyId, bool expectSuccess)

@@ -118,6 +118,7 @@
     <Compile Include="Entities\VacancyLevel.cs" />
     <Compile Include="Entities\IVacancySummary.cs" />
     <Compile Include="Entities\WageType.cs" />
+    <Compile Include="Entities\WageUnit.cs" />
     <Compile Include="IoC\ElasticsearchCommonRegistry.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -137,6 +138,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

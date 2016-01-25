@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -43,7 +44,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
@@ -200,6 +200,7 @@ WriteLiteral(">\r\n        <ul>\r\n");
             {
                 var modelState = Model[modelKey];
                 var elementId = ViewData.TemplateInfo.GetFullHtmlFieldId(modelKey);
+
                 var anyError = modelState.Errors.Any(modelError => modelError.GetType() == typeof (ModelError));
                 foreach (var modelError in modelState.Errors)
                 {
@@ -214,7 +215,7 @@ WriteLiteral(">\r\n        <ul>\r\n");
 WriteLiteral("                            <li>");
 
             
-            #line 50 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 51 "..\..\Views\Shared\ValidationSummary.cshtml"
                            Write(modelError.ErrorMessage);
 
             
@@ -223,7 +224,7 @@ WriteLiteral("                            <li>");
 WriteLiteral("</li>\r\n");
 
             
-            #line 51 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 52 "..\..\Views\Shared\ValidationSummary.cshtml"
                         }
                         else
                         {
@@ -233,21 +234,21 @@ WriteLiteral("</li>\r\n");
             #line hidden
 WriteLiteral("                            <li><a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2201), Tuple.Create("\"", 2232)
-, Tuple.Create(Tuple.Create("", 2208), Tuple.Create("#", 2208), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 2203), Tuple.Create("\"", 2234)
+, Tuple.Create(Tuple.Create("", 2210), Tuple.Create("#", 2210), true)
             
-            #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
-, Tuple.Create(Tuple.Create("", 2209), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+, Tuple.Create(Tuple.Create("", 2211), Tuple.Create<System.Object, System.Int32>(@elementId.ToLower()
             
             #line default
             #line hidden
-, 2209), false)
+, 2211), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 54 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
                                                               Write(modelError.ErrorMessage);
 
             
@@ -256,7 +257,7 @@ WriteLiteral(">");
 WriteLiteral("</a></li>\r\n");
 
             
-            #line 55 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 56 "..\..\Views\Shared\ValidationSummary.cshtml"
                         }
                     }
                 }
@@ -270,7 +271,7 @@ WriteLiteral("        </ul>\r\n");
 WriteLiteral("        ");
 
             
-            #line 60 "..\..\Views\Shared\ValidationSummary.cshtml"
+            #line 61 "..\..\Views\Shared\ValidationSummary.cshtml"
    Write(Html.Hidden("acceptWarnings", @hasWarnings));
 
             

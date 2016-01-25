@@ -4,8 +4,8 @@
     using Application.Applications;
     using Application.Applications.Entities;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Infrastructure.Processes.Configuration;

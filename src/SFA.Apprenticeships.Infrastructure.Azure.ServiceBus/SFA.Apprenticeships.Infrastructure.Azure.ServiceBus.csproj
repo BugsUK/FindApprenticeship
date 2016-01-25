@@ -108,11 +108,14 @@
     <Compile Include="Configuration\AzureServiceBusSubscriptionConfiguration.cs" />
     <Compile Include="Configuration\AzureServiceBusTopicConfiguration.cs" />
     <Compile Include="AzureServiceBus.cs" />
+    <Compile Include="DefaultTopicNameFormatter.cs" />
     <Compile Include="Factory\ClientFactory.cs" />
     <Compile Include="Factory\IClientFactory.cs" />
     <Compile Include="IoC\AzureServiceBusRegistry.cs" />
     <Compile Include="IServiceBusInitialiser.cs" />
     <Compile Include="IServiceBusMessageBroker.cs" />
+    <Compile Include="ITopicNameFormatter.cs" />
+    <Compile Include="MachineNameTopicNameFormatter.cs" />
     <Compile Include="Model\BrokeredMessageWrapper.cs" />
     <Compile Include="Model\IBrokeredMessage.cs" />
     <Compile Include="Model\ISubscriptionClient.cs" />
@@ -129,6 +132,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

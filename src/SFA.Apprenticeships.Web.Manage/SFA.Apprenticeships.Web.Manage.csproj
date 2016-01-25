@@ -299,7 +299,6 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
-    <Compile Include="Constants\Roles.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
@@ -342,6 +341,11 @@
     </Compile>
     <Compile Include="Views\Vacancy\BasicDetails.generated.cs">
       <DependentUpon>BasicDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Vacancy\EmployerInformation.generated.cs">
+      <DependentUpon>EmployerInformation.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -416,11 +420,13 @@
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
+    <Content Include="Content\_assets\js\locationAutocomplete.js" />
+    <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
-    <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
@@ -433,6 +439,10 @@
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.custom.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.unobtrusive.js" />
     <Content Include="Content\_assets\js\vendor\jstorage.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-2.7.1.js" />
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
@@ -486,6 +496,16 @@
     <Content Include="Views\Vacancy\_CommentIcon.cshtml" />
     <Content Include="Views\Vacancy\_EditLink.cshtml" />
     <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
+    <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\Vacancy\EmployerInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerInformation.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Vacancy\Locations.cshtml" />
+    <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -553,6 +573,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
@@ -564,6 +588,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
@@ -613,21 +641,17 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Employers\SFA.Apprenticeships.Infrastructure.Repositories.Employers.csproj">
-      <Project>{D87BF950-D9A8-4590-B868-DBB852E265D2}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Employers</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Providers\SFA.Apprenticeships.Infrastructure.Repositories.Providers.csproj">
-      <Project>{60B0072E-BC17-4D32-8331-A8A2C74B4500}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Providers</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.csproj">
-      <Project>{5C01B37D-8C9E-454F-864A-8861E051A170}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
@@ -640,6 +664,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
       <Project>{700d41dd-527a-42bd-94d2-fd49a5f00a18}</Project>
       <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

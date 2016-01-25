@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ApprenticeshipApplicationDetailHelper.cs" />
+    <Compile Include="Applications\TraineeshipApplicationDetailHelper.cs" />
     <Compile Include="Applications\TraineeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationSummary.cs" />
@@ -111,6 +112,8 @@
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="Locations\PostalAddress.cs" />
+    <Compile Include="Locations\VacancyLocationAddress.cs" />
     <Compile Include="Organisations\Employer.cs" />
     <Compile Include="Organisations\VerifiedOrganisationSummary.cs" />
     <Compile Include="Providers\Provider.cs" />
@@ -120,7 +123,10 @@
     <Compile Include="ReferenceData\Sector.cs" />
     <Compile Include="ReferenceData\Standard.cs" />
     <Compile Include="ReferenceNumber.cs" />
+    <Compile Include="Reference\County.cs" />
+    <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
+    <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\Role.cs" />
@@ -131,11 +137,14 @@
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Duration.cs" />
     <Compile Include="Vacancies\ProviderVacancies\DurationType.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Apprenticeship\ApprenticeshipExtensions.cs" />
     <Compile Include="Vacancies\ProviderVacancies\ProviderVacancyStatuses.cs" />
     <Compile Include="Vacancies\ProviderVacancies\TrainingType.cs" />
+    <Compile Include="Vacancies\ProviderVacancies\Wage.cs" />
     <Compile Include="Vacancies\ProviderVacancies\WageType.cs" />
-    <Compile Include="Vacancies\ProviderVacancies\WageUnit.cs" />
+    <Compile Include="Vacancies\WageUnit.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\ProviderVacancies\Vacancy.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />

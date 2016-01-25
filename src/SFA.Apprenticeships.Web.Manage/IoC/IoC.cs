@@ -1,10 +1,9 @@
-using SFA.Apprenticeships.Infrastructure.TacticalDataServices.IoC;
-
 namespace SFA.Apprenticeships.Web.Manage.IoC
 {
+    using Application.Application.IoC;
     using Application.Employer;
     using Application.Interfaces.Employers;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
     using Application.Provider;
@@ -14,16 +13,19 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
+    using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
     using Infrastructure.Logging.IoC;
-    using Infrastructure.Repositories.Employers.IoC;
-    using Infrastructure.Repositories.Providers.IoC;
-    using Infrastructure.Repositories.UserProfiles.IoC;
-    using Infrastructure.Repositories.Vacancies.IoC;
+    using Infrastructure.Postcode.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Employers.IoC;
+    using Infrastructure.Repositories.Mongo.Providers.IoC;
+    using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
+    using Infrastructure.Repositories.Mongo.Vacancies.IoC;
+    using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;
 
@@ -38,6 +40,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             return new Container(x =>
             {
@@ -51,10 +54,14 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
+                x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<PostcodeRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
+                x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<ApplicationServicesRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();

@@ -86,9 +86,13 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AddressSearchService.cs" />
+    <Compile Include="IAddressLookupProvider.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
+    <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />
     <Compile Include="LocationSearchService.cs" />
+    <Compile Include="PostalAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +107,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

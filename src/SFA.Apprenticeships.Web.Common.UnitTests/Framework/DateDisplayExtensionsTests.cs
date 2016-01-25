@@ -3,6 +3,7 @@
     using System;
     using Common.Framework;
     using FluentAssertions;
+    using Infrastructure.Presentation;
     using NUnit.Framework;
 
     [TestFixture]

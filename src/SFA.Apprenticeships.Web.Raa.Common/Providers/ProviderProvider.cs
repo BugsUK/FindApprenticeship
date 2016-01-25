@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Application.Interfaces.Employers;
 using SFA.Apprenticeships.Application.Interfaces.Providers;
 using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
 using SFA.Apprenticeships.Domain.Entities.Providers;
-using SFA.Apprenticeships.Domain.Interfaces.Configuration;
 using SFA.Apprenticeships.Web.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.Configuration;
 using SFA.Apprenticeships.Web.Raa.Common.Converters;
@@ -14,7 +14,9 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    public class ProviderProvider : IProviderProvider
+    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+
+    public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
@@ -72,22 +74,31 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
             providerSiteEmployerLink.WebsiteUrl = viewModel.WebsiteUrl;
             providerSiteEmployerLink.Description = viewModel.Description;
-            providerSiteEmployerLink.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            providerSiteEmployerLink.NumberOfPosition = viewModel.NumberOfPositions;
             providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid);
+            var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
                 vacancy.ProviderSiteEmployerLink = providerSiteEmployerLink;
+                if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation =
+                        viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
+                if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
+
                 _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             }
 
             var result = providerSiteEmployerLink.Convert();
-            result.VacancyGuid = viewModel.VacancyGuid;
-
+            
             return result;
+        }
+
+        private ApprenticeshipVacancy GetVacancy(ProviderSiteEmployerLinkViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
+                          _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            return vacancy;
         }
 
         public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)

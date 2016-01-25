@@ -1,40 +1,13 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyRequirementsProspectsViewModel
+﻿@model VacancyRequirementsProspectsViewModel
 @using SFA.Apprenticeships.Web.Manage.Constants
-@{
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy requirements and prospects";
-}
-
-<h1 class="heading-xlarge">
-    Requirements and prospects
-</h1>
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(ManagementRouteNames.RequirementsAndProspoects, FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-    <section>
-        <div class="form-group">
-            @Html.FormTextAreaFor(m => m.DesiredSkills, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.EditorFor(m => m.DesiredSkillsComment, "Comment")
-            @Html.ValidationMessageFor(m => m.DesiredSkillsComment)
-            @Html.FormTextAreaFor(m => m.PersonalQualities, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.EditorFor(m => m.PersonalQualitiesComment, "Comment")
-            @Html.ValidationMessageFor(m => m.PersonalQualitiesComment)
-            @Html.FormTextAreaFor(m => m.DesiredQualifications, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.EditorFor(m => m.DesiredQualificationsComment, "Comment")
-            @Html.ValidationMessageFor(m => m.DesiredQualificationsComment)
-            @Html.FormTextAreaFor(m => m.FutureProspects, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.EditorFor(m => m.FutureProspectsComment, "Comment")
-            @Html.ValidationMessageFor(m => m.FutureProspectsComment)
-            @Html.FormTextAreaFor(m => m.ThingsToConsider, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.EditorFor(m => m.ThingsToConsiderComment, "Comment")
-            @Html.ValidationMessageFor(m => m.ThingsToConsiderComment)
-        </div>
-    </section>
     <div class="grid grid-1-2">
         <button type="submit" class="button">Save</button>
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>
 }

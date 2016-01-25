@@ -2,10 +2,8 @@
 {
     using System;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Infrastructure.Common.IoC;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.Entities;

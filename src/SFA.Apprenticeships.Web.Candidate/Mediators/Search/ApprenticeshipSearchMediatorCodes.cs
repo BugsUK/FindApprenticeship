@@ -42,5 +42,12 @@
             public const string SavedSearchNotFound = "ApprenticeshipSearch.SavedSearch.SavedSearchNotFound";
             public const string RunSaveSearchFailed = "ApprenticeshipSearch.SavedSearch.RunSaveSearchFailed";
         }
+
+        public class RedirectToExternalWebsite
+        {
+            public const string VacancyNotFound = "ApprenticeshipSearch.RedirectToExternalWebsite.VacancyNotFound";
+            public const string VacancyHasError = "ApprenticeshipSearch.RedirectToExternalWebsite.VacancyHasError";
+            public const string Ok = "ApprenticeshipSearch.RedirectToExternalWebsite.Ok";
+        }
     }
 }

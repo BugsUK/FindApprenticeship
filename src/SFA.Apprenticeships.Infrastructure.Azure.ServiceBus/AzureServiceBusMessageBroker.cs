@@ -4,9 +4,8 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Factory;
     using Microsoft.ServiceBus.Messaging;
@@ -21,6 +20,7 @@
         private readonly ILogService _logService;
         private readonly IConfigurationService _configurationService;
         private readonly IClientFactory _clientFactory;
+        private readonly ITopicNameFormatter _topicNameFormatter;
 
         private readonly IList<IServiceBusSubscriber<TMessage>> _subscribers;
         private readonly IList<SubscriberInfo> _subscriptionInfos;
@@ -40,11 +40,13 @@
             ILogService logService,
             IConfigurationService configurationService,
             IEnumerable<IServiceBusSubscriber<TMessage>> subscribers,
-            IClientFactory clientFactory)
+            IClientFactory clientFactory,
+            ITopicNameFormatter topicNameFormatter)
         {
             _logService = logService;
             _configurationService = configurationService;
             _clientFactory = clientFactory;
+            _topicNameFormatter = topicNameFormatter;
             _subscribers = subscribers.ToList();
             _subscriptionInfos = new List<SubscriberInfo>();
         }
@@ -89,6 +91,9 @@
 
                 subscriptionConfiguration = new AzureServiceBusSubscriptionConfiguration();
             }
+
+            //Ensure topic name is correctly formatted after its configuration has been retrieved
+            topicName = _topicNameFormatter.GetTopicName(topicName);
 
             var subscriptionPath = string.Format("{0}/{1}", topicName, subscriptionConfiguration.SubscriptionName);
 

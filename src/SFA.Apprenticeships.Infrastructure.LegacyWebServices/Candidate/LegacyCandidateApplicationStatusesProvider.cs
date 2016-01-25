@@ -5,9 +5,8 @@
     using System.Linq;
     using Apprenticeships.Application.Applications;
     using Apprenticeships.Application.Applications.Entities;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Mapping;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
     using Wcf;

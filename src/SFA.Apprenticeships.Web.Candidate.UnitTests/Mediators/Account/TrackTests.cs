@@ -6,7 +6,7 @@
     using Candidate.Validators;
     using Candidate.ViewModels.Applications;
     using Common.Constants;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

@@ -6,23 +6,27 @@
     using Application.Employer;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
+    using Application.Location;
     using Application.Organisation;
     using Application.Provider;
     using Application.ReferenceData;
     using Application.UserAccount;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
+    using Mappers;
+    using Mediators.Application;
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
+    using Providers;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
     using StructureMap;
@@ -34,6 +38,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
+            For<IMapper>().Singleton().Use<RecruitMappers>().Name = "RecruitMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -52,9 +57,11 @@
         {
             For<IProviderProvider>().Use<ProviderProvider>();
             For<IEmployerProvider>().Use<EmployerProvider>();
-            For<IVacancyPostingProvider>().Use<VacancyProvider>();
+            For<IVacancyPostingProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderUserProvider>().Use<ProviderUserProvider>();
             For<IProviderMediator>().Use<ProviderMediator>();
+            For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
+            For<ILocationsProvider>().Use<LocationsProvider>();
         }
 
         private void RegisterServices()
@@ -64,6 +71,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
+            For<IAddressSearchService>().Use<AddressSearchService>();
         }
 
         private void RegisterStrategies()
@@ -88,6 +96,8 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IProviderUserMediator>().Use<ProviderUserMediator>();
             For<IVacancyPostingMediator>().Use<VacancyPostingMediator>();
+            For<IApplicationMediator>().Use<ApplicationMediator>();
+            For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[VacancyStatus]
 (
-	[VacancyStatusCode] CHAR(3) NOT NULL PRIMARY KEY, 
-    [FullName] VARCHAR(MAX) NOT NULL 
+	[VacancyStatusCode] CHAR(3) NOT NULL , 
+    [FullName] VARCHAR(MAX) NOT NULL, 
+    CONSTRAINT [PK_VacancyStatus] PRIMARY KEY ([VacancyStatusCode]) 
 )

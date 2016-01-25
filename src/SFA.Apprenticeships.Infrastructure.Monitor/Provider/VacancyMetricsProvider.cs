@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.Provider
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
 

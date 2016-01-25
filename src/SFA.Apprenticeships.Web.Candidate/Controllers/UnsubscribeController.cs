@@ -6,7 +6,7 @@
     using Application.Interfaces.Communications;
     using Common.Constants;
     using Constants;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Mediators.Unsubscribe;
 
     public class UnsubscribeController : CandidateControllerBase

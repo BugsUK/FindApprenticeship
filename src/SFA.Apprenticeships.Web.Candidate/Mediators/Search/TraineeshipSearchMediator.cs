@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Common.Providers;
     using Constants;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Extensions;
     using Providers;
     using Validators;

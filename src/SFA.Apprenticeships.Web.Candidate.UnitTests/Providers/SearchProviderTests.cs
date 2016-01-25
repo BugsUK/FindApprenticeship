@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Domain.Entities.Locations;

@@ -1,72 +1,54 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
-
+﻿@model ProviderSiteEmployerLinkViewModel
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Check employer description";
+    ViewBag.Title = "Recruit an Apprentice - Check employer information";
+
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) &&
+        Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 }
 
 <div class="grid-wrapper">
     <div class="hgroup">
         <h1 class="heading-xlarge">
-            Check employer description
+            Check employer information
         </h1>
     </div>
 </div>
-<div class="grid-wrapper">
-    @using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmEmployer, FormMethod.Post))
-    {   
-        @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-        @Html.HiddenFor(m => m.ProviderSiteErn)
-        @Html.HiddenFor(m => m.Employer.Ern)
-        @Html.HiddenFor(m => m.VacancyGuid)
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ComfirmEmployer, FormMethod.Post))
+{
+    @Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView)
 
-        <div class="grid grid-1-2">
-            <div class="inner-block-padr">
-                <h3 class="bold-small">Employer</h3>
-                <p class="small-btm-margin">@Model.Employer.Name</p>
-                <h3 class="bold-small">Address</h3>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine1</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine2</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine3</p>
-                <p class="small-btm-margin">@Model.Employer.Address.AddressLine4</p>
-                <p class="small-btm-margin">@Model.Employer.Address.Postcode</p>
-            </div>
-        </div>
-        <div class="grid grid-1-2 hide-print">
-            <div class="ad-details__map">
-                <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-                <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
-                <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
-            </div>
-        </div>
+    <div class="grid grid-1-1">
+        <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
+        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" })
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
+    </div>
+}
 
-        <div class="grid grid-1-1 visuallyhidden">
-            <div class="blocklabel-single-container">
-                <div class="form-group inline clearfix blocklabel-single hide-nojs">
-                    <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
-                    <h4 class="bold-small">Is this address the main apprenticeship location?</h4>
+@section scripts {
+    <script type="text/javascript">
+        var comeFromPreview = "@Model.ComeFromPreview.ToString()";
 
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
-                        No, I need to add a different location
-                    </label>
-                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
-                        Yes, this will be the main location
-                    </label>
-                </div>
-                <div id="location-type-main-location-panel" class="toggle-content blocklabel-content">
-                    @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new {type = "tel", @class = "form-control-small", size = 12 }, labelHtmlAttributes: new {@class = "bold-small"})
-                </div>
-            </div>
-        </div>
-        <div class="grid grid-1-1">
-            @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new {type = "text", @class = "form-control-1-1"}, labelHtmlAttributes: new {@class = "bold-small"})
-            @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-            <button class="button">Save description and continue</button>
-            @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid}, null)
-        </div>
-   }
-</div>
+        $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#location-type-main-location").on('click', function () {
+            if (comeFromPreview === "True") {
+                $("#confirmEmployer").text("Save and return to Preview");
+            }
+        });
+
+        $("#location-type-different-location").on('click', function () {
+            $("#confirmEmployer").text("Save and continue");
+        });
+    </script>
+
+    @*Difficult to put in the partial view. See http://stackoverflow.com/questions/5981490/how-to-render-javascript-into-masterlayout-section-from-partial-view*@
+}

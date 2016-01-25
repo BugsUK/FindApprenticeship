@@ -1,22 +1,46 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.SubmittedVacancyViewModel
+@using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
+
+    var vacancyText = Model.VacancyText;
 }
 
 <div class="success-banner">
-    <h1 class="heading-large no-btm-margin"><i class="fa fa-check"></i>Vacancy submitted for approval</h1>
-    <p>Reference number: @Model.VacancyReferenceNumber</p>
+    <h1 class="heading-large no-btm-margin">
+        <i class="fa fa-check"></i>
+        @if (Model.Resubmitted)
+        {
+            <span>@vacancyText resubmitted for approval</span>
+        }
+        else
+        {
+            <span>@vacancyText submitted for approval</span>
+        }
+    </h1>
 </div>
 <section>
     <hgroup class="hgroup-medium text">
         <h2 class="heading-medium">Next steps</h2>
     </hgroup>
-    <p>
-        Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.
-        You’ll be notified via your recruitment home page if any changes are
-        necessary before the advert goes live.
-    </p>
+    @if (Model.IsMultiLocationVacancy)
+    {
+        <p>
+            Once your vacancy has been reviewed and approved by a Skills Funding Agency adviser, it will be split into separate adverts for each location.
+        </p>
+        <p>
+            You'll be notified via your recruitment homepage if any changes are necessary before the adverts go live.
+        </p>
+    }
+    else
+    {
+        <p>
+            Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.
+            You’ll be notified via your recruitment home page if any changes are
+            necessary before the advert goes live.
+        </p>
+    }
 </section>
 <section class="section-border">
     <div class="hgroup-medium text">

@@ -6,12 +6,30 @@
   a {
     text-decoration: none;
   }
+  .subtitle{
+      font-weight: normal;
+  }
 }
 
 #employer-data-display {
 	display: none;
 }
 
+.cancel-link{
+    margin-left: 12px;
+}
+
+.locations-table {
+    .location-positions {
+        text-align: center;
+    }
+    .locations-positions-header{
+        text-align: center;
+    }
+    tbody tr{
+        height: 78px;
+    }
+}
 
 .editable-item {
     position: relative;
@@ -23,13 +41,14 @@
         margin-bottom: 0;
     }
     .edit-comment-link {
+        clear: both;
         @include copy-16;
         display: block;
         margin: .5rem 0;
     }
 }
 
-html:not(.touch) .editable-item {
+html:not(.touch).js .editable-item {
     border: 1px dotted #fff;
     .edit-comment-link {
         color: white;
@@ -58,7 +77,6 @@ html:not(.touch) .editable-item {
     @extend copy-19;
     font-size: 19px !important;    
     color: $turquoise;
-    cursor: help;
 }
 
 h2{
@@ -73,10 +91,17 @@ h2{
     white-space: pre-line;
 }
 
+.remove-button-link{
+    font-size: 14px;
+}
+
+.use-location-button-link{
+    font-size: 14px;
+}
 
 // Dashboard 
 
-.vacancies-summary {
+.vacancies-summary, .applications-summary {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -86,18 +111,6 @@ h2{
         padding: 0 10px;
         display: block;
         float: left;
-        @media screen and ( max-width: 640px ) {
-            padding: 0 10px;
-            width: ( 100% / 1 );
-        }
-        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
-            padding: 0 10px 0 0;
-            width: ( 100% / 3 );
-        }
-        @media screen and ( min-width: 769px ) {
-            padding: 0 10px 0 0;
-            width: ( 100% / 6 );
-        }
         a {
             text-decoration: none;
         }
@@ -137,6 +150,45 @@ h2{
                     }
                 }
             }
+            figcaption.underline {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.vacancies-summary {
+    li {
+        @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 3 );
+            margin-bottom: 10px;
+        }
+        @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 5 );
+            margin-bottom: 10px;
+        }
+    }
+}
+
+.applications-summary {
+    li {
+        @media screen and ( max-width: 640px ) {
+            padding: 0 10px;
+            width: ( 100% / 1 );
+        }
+        @media screen and ( min-width: 641px ) and ( max-width: 768px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 2 );
+        }
+        @media screen and ( min-width: 769px ) {
+            padding: 0 10px 0 0;
+            width: ( 100% / 4 );
         }
     }
 }
@@ -174,4 +226,54 @@ table#vacancies-table {
             }
         }
     }
+}
+
+table#rightLocationAddressesTable{
+    @media screen and ( max-width: 768px ) {
+        thead{
+            display: none;
+        }
+    }
+}
+
+.location-search-results{
+    padding: 0;
+    vertical-align: middle;
+}
+
+.add-location-link{
+    margin-top: 8px;
+}
+
+.unselected-apprenticeship-type {
+  @include core-19;
+  background: none;
+  border: none;
+  display: inline-block;
+  line-height: 1.4;
+  margin: 0 $gutter-half $gutter-half 0;
+  padding: 7px 10px 5px 0;
+  vertical-align: top;
+  -webkit-font-smoothing: antialiased;
+}
+
+.no-employers-found{
+    margin-bottom:20px;
+}
+
+.no-employers-optional-action{
+    margin-top:20px;
+}
+
+.vac-status{
+    text-align: center;
+}
+
+.vac-no-of-applications{
+    text-align: center;
+}
+
+.select-employer-link-to-new{
+    margin-bottom:15px;
+    display:block;
 }

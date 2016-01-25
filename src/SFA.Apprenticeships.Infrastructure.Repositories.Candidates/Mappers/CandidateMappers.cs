@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Candidates.Mappers
 {
     using System;
+    using SFA.Infrastructure.Interfaces;
     using Common.Mappers;
     using Domain.Entities.Candidates;
     using Entities;

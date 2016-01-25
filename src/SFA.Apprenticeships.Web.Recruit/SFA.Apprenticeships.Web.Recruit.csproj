@@ -300,10 +300,19 @@
     <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
-    <Compile Include="Constants\Roles.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
+    <Compile Include="Mappers\RecruitMappers.cs" />
+    <Compile Include="Mediators\Application\ApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\ApplicationMediatorCodes.cs" />
+    <Compile Include="Mediators\Application\ApprenticeshipApplicationMediatorCodes.cs" />
+    <Compile Include="Mediators\Application\IApplicationMediator.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -323,6 +332,24 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
+    <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\IApplicationProvider.cs" />
+    <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
+    <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\EducationViewModel.cs" />
+    <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
+    <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -384,9 +411,15 @@
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
+    <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
+    <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -430,7 +463,6 @@
     <Content Include="Content\_assets\img\screenshot-employer-notification.png" />
     <Content Include="Content\_assets\img\screenshot-idams.png" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
-    <Content Include="Content\_assets\js\vendor\chosen.jquery.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
@@ -509,6 +541,21 @@
     <Content Include="Views\VacancyPosting\_CommentIcon.cshtml" />
     <Content Include="Views\VacancyPosting\_ValidationResultIcons.cshtml" />
     <Content Include="Views\VacancyPosting\_EditLink.cshtml" />
+    <Content Include="Views\Application\VacancyApplications.cshtml" />
+    <Content Include="Views\Application\_applicationStatus.cshtml" />
+    <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\DisabilityStatus.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\TrainingCourses.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\WorkExperience.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\AboutYou.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\Education.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\ApplicantDetails.cshtml" />
+    <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
+    <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -541,6 +588,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Configuration\" />
+    <Folder Include="ViewModels\Vacancy\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -585,6 +633,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communication\SFA.Apprenticeships.Application.Communication.csproj">
       <Project>{C91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
@@ -596,6 +648,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
       <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
@@ -620,6 +676,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
@@ -649,21 +709,17 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Employers\SFA.Apprenticeships.Infrastructure.Repositories.Employers.csproj">
-      <Project>{D87BF950-D9A8-4590-B868-DBB852E265D2}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Employers</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-E1B7-46BD-945B-4CC3D0069B6E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Providers\SFA.Apprenticeships.Infrastructure.Repositories.Providers.csproj">
-      <Project>{60B0072E-BC17-4D32-8331-A8A2C74B4500}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Providers</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles\SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles.csproj">
-      <Project>{5C01B37D-8C9E-454F-864A-8861E051A170}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.UserProfiles</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
@@ -676,6 +732,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
       <Project>{700d41dd-527a-42bd-94d2-fd49a5f00a18}</Project>
       <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

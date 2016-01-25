@@ -3,10 +3,9 @@
     using System;
     using System.Linq;
     using Application.Applications.Entities;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Communication;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Extensions;

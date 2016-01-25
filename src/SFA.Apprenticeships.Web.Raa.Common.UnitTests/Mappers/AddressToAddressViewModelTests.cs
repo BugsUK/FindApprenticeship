@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Mappers
 {
+    using SFA.Infrastructure.Interfaces;
     using Common.Mappers;
     using Domain.Entities.Locations;
-    using Domain.Interfaces.Mapping;
     using FluentAssertions;
     using NUnit.Framework;
     using Web.Common.ViewModels.Locations;
@@ -16,6 +16,12 @@
         public void Setup()
         {
             mapper = new RaaCommonWebMappers();
+        }
+
+        [Test]
+        public void ShouldCreateMap()
+        {
+            new RaaCommonWebMappers().Mapper.AssertConfigurationIsValid();
         }
 
         [TestCase("add 1", "add 2", "add 3", "add 4", "uprn", "postcode")]

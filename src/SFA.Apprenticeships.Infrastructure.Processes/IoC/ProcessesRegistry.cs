@@ -25,12 +25,11 @@
     using Communication.Configuration;
     using Communications;
     using Communications.Commands;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Logging.IoC;
-    using Repositories.Audit;
+    using Repositories.Mongo.Audit;
     using SiteMap;
     using StructureMap;
     using StructureMap.Configuration.DSL;
@@ -74,6 +73,8 @@
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";//todo: remove
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
+
+            For<IVacancyStatusProcessor>().Use<VacancyStatusProcessor>();
 
             // site map
             For<ISiteMapVacancyProcessor>().Use<SiteMapVacancyProcessor>();
@@ -124,6 +125,7 @@
             RegisterServiceBusMessageBroker<CommunicationRequestSubscriber, CommunicationRequest>();
             RegisterServiceBusMessageBroker<CreateVacancySiteMapRequestSubscriber, CreateVacancySiteMapRequest>();
             RegisterServiceBusMessageBroker<VacancyStatusSummarySubscriber, VacancyStatusSummary>();
+            RegisterServiceBusMessageBroker<VacancyStatusProcessorSubscriber, VacancyEligibleForClosure>();
             RegisterServiceBusMessageBroker<VacancySummaryCompleteSubscriber, VacancySummaryUpdateComplete>();
         }
 

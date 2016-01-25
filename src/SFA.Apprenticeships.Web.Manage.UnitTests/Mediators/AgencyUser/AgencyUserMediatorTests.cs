@@ -9,11 +9,13 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
     using Common.UnitTests.Builders;
     using Common.UnitTests.Mediators;
     using Constants.Messages;
+    using Domain.Entities;
     using FluentAssertions;
     using Manage.Mediators.AgencyUser;
     using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
 
     [TestFixture]
@@ -46,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
         {
             var mediator = new AgencyUserMediatorBuilder().Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingRoleListClaim, AuthorizeMessages.MissingRoleListClaim, UserMessageLevel.Error);
@@ -61,7 +63,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 
             var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.ReturnUrl, false, true);
@@ -77,7 +79,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 
             var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
@@ -88,7 +90,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
         {
             var mediator = new AgencyUserMediatorBuilder().Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
@@ -99,7 +101,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
         {
             const string userName = "User001";
             const string roleList = "Agency";
-            var principal = new ClaimsPrincipalBuilder().WithName(userName).WithRole(Constants.Roles.Raa).WithRoleList(roleList).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName(userName).WithRole(Roles.Raa).WithRoleList(roleList).Build();
 
             var userProvider = new Mock<IAgencyUserProvider>();
             userProvider.Setup(up => up.GetAgencyUser(userName, roleList)).Returns(new AgencyUserViewModel
@@ -129,7 +131,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview()).Returns(vacancies);
             var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Constants.Roles.Raa).WithRoleList("Agency").Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
             var response = mediator.GetHomeViewModel(principal);
 

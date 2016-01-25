@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Constants;
     using Providers;
     using ViewModels.VacancySearch;

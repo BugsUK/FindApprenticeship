@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
     using System;
     using System.Globalization;
     using System.Linq;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Common.Configuration;
     using Common.Constants;
     using Common.Framework;
@@ -16,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
     using Domain.Entities.Applications;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies;
-    using Domain.Interfaces.Configuration;
     using Extensions;
     using Providers;
     using Validators;

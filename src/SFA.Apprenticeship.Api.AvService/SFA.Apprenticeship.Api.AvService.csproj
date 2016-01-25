@@ -91,6 +91,14 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -166,6 +174,14 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog.Contrib, Version=1.0.0.2, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.Contrib.1.0.0.2\lib\net45\NLog.Contrib.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
       <Private>True</Private>
@@ -232,6 +248,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ApiErrors.cs" />
     <Compile Include="Configuration\ApiConfiguration.cs" />
     <Compile Include="Common\ApplicationType.cs" />
     <Compile Include="Common\ExternalSystemType.cs" />
@@ -246,26 +263,6 @@
     <Compile Include="Common\VacancyType.cs" />
     <Compile Include="Common\VacancyUploadResult.cs" />
     <Compile Include="Common\WageType.cs" />
-    <Compile Include="DataContracts\Version50\AddressData.cs" />
-    <Compile Include="DataContracts\Version50\ApplicationTrackingData.cs" />
-    <Compile Include="DataContracts\Version50\ApplicationTrackingResultData.cs" />
-    <Compile Include="DataContracts\Version50\ApplicationTrackingVacancyReferenceData.cs" />
-    <Compile Include="DataContracts\Version50\ApprenticeshipFrameworkAndOccupationData.cs" />
-    <Compile Include="DataContracts\Version50\ApprenticeshipTypeData.cs" />
-    <Compile Include="DataContracts\Version50\CountyData.cs" />
-    <Compile Include="DataContracts\Version50\ElementErrorData.cs" />
-    <Compile Include="DataContracts\Version50\ErrorCodesData.cs" />
-    <Compile Include="DataContracts\Version50\MultisiteVacanciesData.cs" />
-    <Compile Include="DataContracts\Version50\RegionData.cs" />
-    <Compile Include="DataContracts\Version50\VacancyDetailResponseData.cs" />
-    <Compile Include="DataContracts\Version50\VacancyFullData.cs" />
-    <Compile Include="DataContracts\Version50\VacancySearchData.cs" />
-    <Compile Include="DataContracts\Version50\VacancySummaryData.cs" />
-    <Compile Include="DataContracts\Version50\VacancySummaryResponseData.cs" />
-    <Compile Include="DataContracts\Version50\VacancyTransferLogData.cs" />
-    <Compile Include="DataContracts\Version50\VacancyUploadData.cs" />
-    <Compile Include="DataContracts\Version50\VacancyUploadResultData.cs" />
-    <Compile Include="DataContracts\Version50\WebInterfaceGenericDetailsData.cs" />
     <Compile Include="DataContracts\Version51\AddressData.cs" />
     <Compile Include="DataContracts\Version51\ApplicationData.cs" />
     <Compile Include="DataContracts\Version51\ApplicationTrackingData.cs" />
@@ -291,10 +288,19 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Mappers\Version51\ICountyMapper.cs" />
+    <Compile Include="Mappers\Version51\CountyMapper.cs" />
+    <Compile Include="Domain\WebServiceCategory.cs" />
+    <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />
+    <Compile Include="Providers\IWebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\Version51\IReferenceDataProvider.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationProvider.cs" />
+    <Compile Include="Providers\WebServiceAuthenticationResult.cs" />
+    <Compile Include="Domain\WebServiceConsumer.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandlerBehavior.cs" />
     <Compile Include="ErrorHandlers\CustomErrorHandler.cs" />
     <Compile Include="ErrorHandlers\ErrorHandlerBase.cs" />
-    <Compile Include="FaultContracts\Version50\SystemFaultContract.cs" />
     <Compile Include="FaultContracts\Version51\SystemFaultContract.cs" />
     <Compile Include="IoC\StructureMapInstanceProvider.cs" />
     <Compile Include="IoC\IoC.cs" />
@@ -313,102 +319,71 @@
     <Compile Include="Mappers\Version51\VacancyDurationMapper.cs" />
     <Compile Include="Mappers\Version51\VacancyUploadRequestMapper.cs" />
     <Compile Include="Mappers\Version51\WageMapper.cs" />
-    <Compile Include="MessageContracts\Version50\BulkVacancyUploadRequest.cs" />
-    <Compile Include="MessageContracts\Version50\BulkVacancyUploadResponse.cs" />
-    <Compile Include="MessageContracts\Version50\GetApprenticeshipFrameworksRequest.cs" />
-    <Compile Include="MessageContracts\Version50\GetApprenticeshipFrameworksResponse.cs" />
-    <Compile Include="MessageContracts\Version50\GetApprenticeshipTypesRequest.cs" />
-    <Compile Include="MessageContracts\Version50\GetApprenticeshipTypesResponse.cs" />
-    <Compile Include="MessageContracts\Version50\GetCountiesRequest.cs" />
-    <Compile Include="MessageContracts\Version50\GetCountiesResponse.cs" />
-    <Compile Include="MessageContracts\Version50\GetErrorCodesRequest.cs" />
-    <Compile Include="MessageContracts\Version50\GetErrorCodesResponse.cs" />
-    <Compile Include="MessageContracts\Version50\GetRegionRequest.cs" />
-    <Compile Include="MessageContracts\Version50\GetRegionResponse.cs" />
-    <Compile Include="MessageContracts\Version50\NavmsInternalMessageHeader.cs" />
-    <Compile Include="MessageContracts\Version50\NavmsInternalResponseHeader.cs" />
-    <Compile Include="MessageContracts\Version50\NavmsMessageHeader.cs" />
-    <Compile Include="MessageContracts\Version50\NavmsResponseHeader.cs" />
-    <Compile Include="MessageContracts\Version50\SendMessageRequest.cs" />
-    <Compile Include="MessageContracts\Version50\SubmitApplicationTrackingRequest.cs" />
-    <Compile Include="MessageContracts\Version50\SubmitApplicationTrackingResponse.cs" />
-    <Compile Include="MessageContracts\Version50\VacancyDetailsRequest.cs" />
-    <Compile Include="MessageContracts\Version50\VacancyDetailsResponse.cs" />
-    <Compile Include="MessageContracts\Version50\VacancySummaryRequest.cs" />
-    <Compile Include="MessageContracts\Version50\VacancySummaryResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksInternalResponse.cs" />
+    <Compile Include="Mediators\Version51\ReferenceDataServiceMediator.cs" />
+    <Compile Include="Mediators\Version51\IReferenceDataServiceMediator.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetApprenticeshipFrameworksResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetApprenticeshipTypesInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetApprenticeshipTypesInternalResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetCountiesInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetCountiesInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetCountiesRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetCountiesResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetDivisionsRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetDivisionsResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetErrorCodesInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetErrorCodesInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetErrorCodesRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetErrorCodesResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetLocalAuthoritiesResponse.cs" />
-    <Compile Include="MessageContracts\Version51\GetRegionInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\GetRegionInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\GetRegionRequest.cs" />
     <Compile Include="MessageContracts\Version51\GetRegionResponse.cs" />
-    <Compile Include="MessageContracts\Version51\NavmsInternalMessageHeader.cs" />
-    <Compile Include="MessageContracts\Version51\NavmsInternalResponseHeader.cs" />
     <Compile Include="MessageContracts\Version51\NavmsMessageHeader.cs" />
     <Compile Include="MessageContracts\Version51\NavmsResponseHeader.cs" />
     <Compile Include="MessageContracts\Version51\SendMessageRequest.cs" />
-    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingRequest.cs" />
     <Compile Include="MessageContracts\Version51\SubmitApplicationTrackingResponse.cs" />
-    <Compile Include="MessageContracts\Version51\VacancyDetailsInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\VacancyDetailsInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\VacancyDetailsRequest.cs" />
     <Compile Include="MessageContracts\Version51\VacancyDetailsResponse.cs" />
-    <Compile Include="MessageContracts\Version51\VacancySummaryInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\VacancySummaryInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\VacancySummaryRequest.cs" />
     <Compile Include="MessageContracts\Version51\VacancySummaryResponse.cs" />
-    <Compile Include="MessageContracts\Version51\VacancyUploadInternalRequest.cs" />
-    <Compile Include="MessageContracts\Version51\VacancyUploadInternalResponse.cs" />
     <Compile Include="MessageContracts\Version51\VacancyUploadRequest.cs" />
     <Compile Include="MessageContracts\Version51\VacancyUploadResponse.cs" />
-    <Compile Include="Namespaces\Version50\Namespace.cs" />
     <Compile Include="Namespaces\Version51\Namespace.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\Version51\IVacancyDetailsProvider.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider.cs" />
-    <Compile Include="Providers\Version51\VacancyUploadProvider.cs" />
-    <Compile Include="ServiceContracts\Version50\IApplicationTracking.cs" />
-    <Compile Include="ServiceContracts\Version50\IBulkVacancyUpload.cs" />
-    <Compile Include="ServiceContracts\Version50\IReferenceData.cs" />
-    <Compile Include="ServiceContracts\Version50\IVacancyDetails.cs" />
-    <Compile Include="ServiceContracts\Version50\IVacancySummary.cs" />
+    <Compile Include="Mediators\Version51\VacancyUploadServiceMediator.cs" />
+    <Compile Include="Repositories\IWebServiceConsumerReadRepository.cs" />
+    <Compile Include="Repositories\FakeWebServiceConsumerRepository.cs" />
+    <Compile Include="Repositories\WebServiceConsumerRepository.cs" />
     <Compile Include="ServiceContracts\Version51\IReferenceData.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyDetails.cs" />
     <Compile Include="ServiceContracts\Version51\IVacancyManagement.cs" />
-    <Compile Include="ServiceImplementation\Version50\ReferenceDataService.cs" />
-    <Compile Include="Providers\Version51\IVacancyUploadProvider.cs" />
+    <Compile Include="Mediators\Version51\IVacancyUploadServiceMediator.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyDetailsService.cs" />
     <Compile Include="ServiceImplementation\Version51\VacancyManagementService.cs" />
+    <Compile Include="Services\IWebServiceConsumerService.cs" />
+    <Compile Include="Services\WebServiceConsumerService.cs" />
+    <Compile Include="Validators\FluentValidationExtensions.cs" />
+    <Compile Include="Validators\Version51\VacancyUploadRequestValidator.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1B92E84D-F15A-4521-BDB9-2BE321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920F5834-459D-4E20-9B17-AAD52D2CC8FE}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
@@ -422,13 +397,33 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
+      <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Postcode</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
+      <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

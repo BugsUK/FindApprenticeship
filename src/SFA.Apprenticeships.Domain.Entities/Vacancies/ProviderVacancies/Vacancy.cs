@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 {
     using System;
-    using Organisations;
     using Providers;
 
     public abstract class Vacancy : BaseEntity
@@ -20,6 +19,7 @@
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
+        public DateTime? InterviewStartDate { get; set; }
         public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }
         public string DesiredSkills { get; set; }
@@ -40,9 +40,16 @@
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
+        public int OfflineApplicationClickThroughCount { get; set; }
         public DateTime? DateSubmitted { get; set; }
+        public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
+        public int SubmissionCount { get; set; }
+        //Id if the Provider User who created the vacancy
+        public Guid VacancyManagerId { get; set; }
+        public Guid LastEditedById { get; set; }
+        public long ParentVacancyReferenceNumber { get; set; }
     }
 }

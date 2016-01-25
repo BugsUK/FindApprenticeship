@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Caching.Memory.IoC
 {
+    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
-    using Domain.Interfaces.Caching;
 
     public class MemoryCacheRegistry : Registry
     {

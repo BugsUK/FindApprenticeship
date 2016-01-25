@@ -3,6 +3,7 @@
     using Apprenticeships;
     using Common.Mappers;
     using Domain.Entities.Vacancies.Traineeships;
+    using Presentation;
 
     public class LegacyTraineeshipVacancyDetailMapper : MapperEngine
     {
@@ -14,7 +15,7 @@
                     opt => opt.MapFrom(src => src.VacancyId))
 
                 .ForMember(dest => dest.VacancyReference,
-                    opt => opt.MapFrom(src => "VAC" + src.VacancyReference.ToString("D9")))
+                    opt => opt.MapFrom(src => src.VacancyReference.GetVacancyReference()))
 
                 .ForMember(x => x.VacancyStatus, 
                     opt => opt.ResolveUsing<VacancyStatusResolver>().FromMember(src => src.Status))
@@ -155,6 +156,9 @@
 
                 .ForMember(dest => dest.Wage,
                     opt => opt.MapFrom(src => src.WeeklyWage))
+
+                .ForMember(dest => dest.WageUnit,
+                    opt => opt.Ignore())
 
                 .ForMember(dest => dest.WageDescription,
                     opt => opt.MapFrom(src => src.WageText))

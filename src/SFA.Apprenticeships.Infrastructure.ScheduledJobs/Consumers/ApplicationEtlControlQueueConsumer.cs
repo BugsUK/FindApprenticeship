@@ -2,9 +2,8 @@
 {
     using System.Threading.Tasks;
     using Application.Applications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.Messaging;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Processes.Configuration;
 

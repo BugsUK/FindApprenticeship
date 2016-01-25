@@ -3,11 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Entities;
     using Mongo.Common;
@@ -136,11 +134,26 @@
 
             var mongoEntities = Collection.Find(Query.EQ("Vacancy._id", vacancyId)).ToArray();
 
-            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Count(), vacancyId);
+            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
 
             var applicationSummaries =
                 _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
                     mongoEntities);
+
+            return applicationSummaries;
+        }
+
+        public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get submitted ApprenticeshipApplicationSummaries with VacancyId:{0}", vacancyId);
+
+            var mongoEntities = Collection.AsQueryable().Where(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId).OrderBy(a => a.Status).ThenByDescending(a => a.DateUpdated).ToArray();
+
+            _logger.Debug("Found {0} ApprenticeshipApplicationSummaries with VacancyId:{1}", mongoEntities.Length, vacancyId);
+
+            var applicationSummaries =
+                _mapper.Map<IEnumerable<MongoApprenticeshipApplicationDetail>, IEnumerable<ApprenticeshipApplicationSummary>>(
+                    mongoEntities).ToList();
 
             return applicationSummaries;
         }
@@ -171,6 +184,28 @@
             _logger.Debug("Called repository to get apprenticeship applications submitted on or before: {0}", dateApplied);
 
             return applicationIds;
+        }
+
+        public int GetApplicationCount(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with id: {0}", vacancyId);
+
+            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
+
+            _logger.Debug("Called repository to get apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
+
+            return count;
+        }
+
+        public int GetNewApplicationCount(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get new apprenticeship applications count for vacancy with id: {0}", vacancyId);
+
+            var count = Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
+
+            _logger.Debug("Called repository to get new apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
+
+            return count;
         }
 
         public ApprenticeshipApplicationDetail Get(Guid id)
@@ -205,6 +240,24 @@
             Save(applicationDetail);
 
             _logger.Debug("Saved expired or withdrawn apprenticeship application for candidate with Id={0} and VacancyId={1}", applicationDetail.CandidateId, vacancyId);
+        }
+
+        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        {
+            _logger.Debug("Calling repository to update apprenticeship application notes for application with Id={0}", applicationId);
+
+            var result = Collection.Update(Query<ApprenticeshipApplicationDetail>.EQ(e => e.EntityId, applicationId), Update<ApprenticeshipApplicationDetail>.Set(e => e.Notes, notes).Set(e => e.DateUpdated, DateTime.UtcNow));
+
+            if (result.Ok)
+            {
+                _logger.Debug("Called repository to update apprenticeship application notes for application with Id={0} successfully", applicationId);
+            }
+            else
+            {
+                var message = $"Call to repository to update apprenticeship application notes for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+                _logger.Error(message);
+                throw new Exception(message);
+            }
         }
     }
 }

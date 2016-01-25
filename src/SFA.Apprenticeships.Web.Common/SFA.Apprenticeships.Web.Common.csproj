@@ -235,7 +235,6 @@
     <Compile Include="Constants\YearRangeRegexGenerator.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\IUserController.cs" />
-    <Compile Include="Framework\DateDisplayExtensions.cs" />
     <Compile Include="Framework\SpanLabelExtensions.cs" />
     <Compile Include="Framework\RuntimeHelper.cs" />
     <Compile Include="Framework\HttpServerUtilityExtensions.cs" />
@@ -279,10 +278,19 @@
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
+      <DependentUpon>Date.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
+    </None>
+    <None Include="compilerconfig.json" />
+    <None Include="compilerconfig.json.defaults">
+      <DependentUpon>compilerconfig.json</DependentUpon>
     </None>
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff" />
     <None Include="Content\css\font-awesome\fonts\fontawesome-webfont.woff2" />
@@ -351,6 +359,17 @@
     <None Include="Content\scss\_ie8-hacks.scss" />
     <None Include="Content\scss\_modules.scss" />
     <None Include="packages.config" />
+    <Content Include="Content\scss\main.css">
+      <DependentUpon>main.scss</DependentUpon>
+    </Content>
+    <Content Include="Content\scss\main.min.css">
+      <DependentUpon>main.css</DependentUpon>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Date.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Date.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\razorgenerator.directives" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
@@ -368,6 +387,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
+      <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -415,9 +442,13 @@
     <Content Include="Content\js\inplaceediting.js" />
     <Content Include="Content\js\interactions.js" />
     <Content Include="Content\js\jquery.pwstrength.js" />
+    <Content Include="Content\js\locationAutocomplete.js" />
+    <Content Include="Content\js\lookupService.js" />
     <Content Include="Content\js\maps.js" />
     <Content Include="Content\js\old-browsers.js" />
+    <Content Include="Content\js\refineSearch.js" />
     <Content Include="Content\js\sticky.js" />
+    <Content Include="Content\js\vendor\jquery-ui-1.10.4.custom.min.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

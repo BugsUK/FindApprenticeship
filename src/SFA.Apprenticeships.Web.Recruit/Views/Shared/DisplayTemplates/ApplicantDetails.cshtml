@@ -1,0 +1,22 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Application.ApplicantDetailsViewModel
+
+<section class="inner-block-padr">
+    <div class="panel-indent">
+        <ul class="list-text">
+            <li>@Model.Name</li>
+        </ul>
+        <ul class="list-text">
+            <li>@Model.Address.AddressLine1</li>
+            <li>@Model.Address.AddressLine2</li>
+            <li>@Model.Address.AddressLine3</li>
+            <li>@Model.Address.AddressLine4</li>
+            <li>@Model.Address.Postcode</li>
+        </ul>
+        <ul class="list-text">
+            <li>@Model.PhoneNumber</li>
+            <li>
+                <a href="@Model.EmailAddress">@Model.EmailAddress</a>
+            </li>
+        </ul>
+    </div>
+</section>

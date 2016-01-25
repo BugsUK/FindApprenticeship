@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Vacancies
 {
     using System;
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Mongo.Common;
     using Mongo.Common.Configuration;

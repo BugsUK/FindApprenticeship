@@ -1,39 +1,46 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.ServiceImplementation.Version51
 {
     using System;
-    using System.Security;
     using System.ServiceModel;
+    using Infrastructure.Interfaces;
+    using Mediators.Version51;
     using MessageContracts.Version51;
     using Microsoft.Practices.EnterpriseLibrary.ExceptionHandling.WCF;
     using Namespaces.Version51;
-    using Providers.Version51;
     using ServiceContracts.Version51;
 
     [ExceptionShielding("Default Exception Policy")]
     [ServiceBehavior(Namespace = Namespace.Uri)]
     public class VacancyManagementService : IVacancyManagement
     {
-        private readonly IVacancyUploadProvider _vacancyUploadProvider;
+        private readonly ILogService _logService;
+        private readonly IVacancyUploadServiceMediator _vacancyUploadMediator;
 
-        public VacancyManagementService(IVacancyUploadProvider vacancyUploadProvider)
+        public VacancyManagementService(
+            ILogService logService,
+            IVacancyUploadServiceMediator vacancyUploadMediator)
         {
-            _vacancyUploadProvider = vacancyUploadProvider;
+            _logService = logService;
+            _vacancyUploadMediator = vacancyUploadMediator;
         }
 
         public VacancyUploadResponse UploadVacancies(VacancyUploadRequest request)
         {
-            if (request == null)
+            object context = new
             {
-                throw new ArgumentNullException(nameof(request));
-            }
+                request?.ExternalSystemId,
+                request?.MessageId
+            };
 
-            // TODO: API: AG: remove test code.
-            if (request.MessageId == Guid.Empty)
+            try
             {
-                throw new SecurityException();
+                return _vacancyUploadMediator.UploadVacancies(request);
             }
-
-            return _vacancyUploadProvider.UploadVacancies(request);
+            catch (Exception e)
+            {
+                _logService.Error(e, context);
+                throw;
+            }
         }
     }
 }

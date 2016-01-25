@@ -12,7 +12,7 @@
     using Common.IoC;
     using Common.Validations;
     using Controllers;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
     using FluentValidation.Validators;
     using Infrastructure.Common.Configuration;
@@ -65,8 +65,8 @@
                     {
                         var uncachedContiner = new Container(x =>
                         {
-                            x.AddRegistry<LoggingRegistry>();
                             x.AddRegistry<CommonRegistry>();
+                            x.AddRegistry<LoggingRegistry>();
                         });
 
                         var configurationService = uncachedContiner.GetInstance<IConfigurationService>();

@@ -95,8 +95,8 @@ this.FeatureBackground();
 #line 14
  testRunner.Given("I have registered a new candidate", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 15
- testRunner.When("I select the \"first\" apprenticeship vacancy in location \"N7 8LS\" that can apply b" +
-                    "y this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I select the \"first\" apprenticeship vacancy in location \"Coventry\" that can apply" +
+                    " by this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 16
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 17
@@ -206,8 +206,8 @@ this.FeatureBackground();
 #line 47
  testRunner.And("I see", ((string)(null)), table3, "And ");
 #line 50
- testRunner.When("I select the \"second\" apprenticeship vacancy in location \"N7 8LS\" that can apply " +
-                    "by this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I select the \"second\" apprenticeship vacancy in location \"Coventry\" that can appl" +
+                    "y by this website", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 51
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 52

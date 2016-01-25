@@ -3,7 +3,7 @@
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using Moq;
 

@@ -8,6 +8,9 @@
         Rejected,
         ClosingSoon,
         Closed,
-        Draft
+        Draft,
+        NewApplications,
+        Withdrawn,
+        Completed
     }
 }

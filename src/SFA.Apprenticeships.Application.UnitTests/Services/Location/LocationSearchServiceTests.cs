@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Application.Location;
@@ -14,12 +14,12 @@
         private readonly Mock<ILocationLookupProvider> _locationLookupProvider = new Mock<ILocationLookupProvider>();
         private readonly Mock<IPostcodeLookupProvider> _postcodeLookupProvider = new Mock<IPostcodeLookupProvider>();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
+        private readonly Mock<IAddressLookupProvider> _addressLookupProvider = new Mock<IAddressLookupProvider>();
 
         [Test]
         public void ShouldCallToPostcodeProviderIfTheInputIsAPostcode()
         {
-            var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object, _logger.Object);
+            var locationLookupService = GetLocationService();
 
             locationLookupService.FindLocation(ValidCompletePostcode);
 
@@ -29,8 +29,7 @@
         [Test]
         public void ShouldCallToPostcodeProviderIfTheInputIsAPartialPostcode()
         {
-            var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object, _logger.Object);
+            var locationLookupService = GetLocationService();
 
             locationLookupService.FindLocation(ValidPartialPostcode);
 
@@ -40,12 +39,17 @@
         [Test]
         public void ShouldCallToLocationProviderIfTheInputIsALocation()
         {
-            var locationLookupService = new LocationSearchService(_locationLookupProvider.Object,
-                _postcodeLookupProvider.Object, _logger.Object);
+            var locationLookupService = GetLocationService();
 
             locationLookupService.FindLocation(ALocation);
 
             _locationLookupProvider.Verify(llp => llp.FindLocation(ALocation, 50));
+        }
+
+        private LocationSearchService GetLocationService()
+        {
+            return new LocationSearchService(_locationLookupProvider.Object,
+                _postcodeLookupProvider.Object, _logger.Object);
         }
     }
 }

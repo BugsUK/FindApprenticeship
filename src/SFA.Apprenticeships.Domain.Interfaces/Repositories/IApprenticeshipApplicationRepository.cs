@@ -16,12 +16,19 @@
 
         IEnumerable<ApprenticeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
 
+        IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
+
         IEnumerable<Guid> GetDraftApplicationsForExpiredVacancies(DateTime vacancyExpiryDate);
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
+
+        int GetApplicationCount(int vacancyId);
+
+        int GetNewApplicationCount(int vacancyId);
     }
 
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
         void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
+        void UpdateApplicationNotes(Guid applicationId, string notes);
     }
 }

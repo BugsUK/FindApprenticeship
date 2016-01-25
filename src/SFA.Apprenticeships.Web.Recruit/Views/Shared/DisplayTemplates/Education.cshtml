@@ -1,0 +1,22 @@
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Application.EducationViewModel
+
+<fieldset class="fieldset-with-border">
+    <legend class="heading-large">
+        Education
+    </legend>
+    <div class="form-group">
+        <label for="school-name" class="form-label">Name of most recent school/college</label>
+        <span class="form-prepopped" id="school-name">@Model.Institution</span>
+    </div>
+    <div class="inline-fixed">
+        <p class="form-label">Years attended</p>
+        <div class="form-group">
+            <label for="school-from" class="form-label">From</label>
+            <span class="form-prepopped" id="school-from">@Model.FromYear</span>
+        </div>
+        <div class="form-group">
+            <label for="school-to" class="form-label">To</label>
+            <span class="form-prepopped" id="school-to">@Model.ToYear</span>
+        </div>
+    </div>
+</fieldset>

@@ -1,18 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using FluentValidation.Attributes;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
-    using Validators.Vacancy;
     using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using VacancyPosting;
 
-    [Validator(typeof(VacancyResubmissionValidator))]
     public class VacancyViewModel
     {
-        public const string PartialView = "VacancyPreview";
+        public const string PartialView = "Vacancy/VacancyPreview";
 
         public long VacancyReferenceNumber { get; set; }
 
@@ -35,7 +35,7 @@
         public ProviderVacancyStatuses Status { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ResubmitOptin.LabelText)]
-        public bool ResubmitOptin { get; set; }
+        public bool ResubmitOption { get; set; }
 
         public string BasicDetailsLink { get; set; }
 
@@ -44,5 +44,44 @@
         public string RequirementsProspectsLink { get; set; }
 
         public string QuestionsLink { get; set; }
+
+        public string EmployerLink { get; set; }
+        
+        public string LocationsLink { get; set; }
+
+        public int ApplicationCount { get; set; }
+
+        public int OfflineApplicationClickThroughCount { get; set; }
+
+        public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
+
+        public bool IsUnapprovedMultiLocationParentVacancy
+        {
+            get
+            {
+                return
+                    Status != ProviderVacancyStatuses.ParentVacancy
+                    && NewVacancyViewModel.LocationAddresses != null
+                    && NewVacancyViewModel.LocationAddresses.Count() > 1;
+            }
+        }
+
+        public bool IsApprovedMultiLocationChildVacancy
+        {
+            get
+            {
+                return Status == ProviderVacancyStatuses.Live
+                       && NewVacancyViewModel.LocationAddresses != null
+                       && NewVacancyViewModel.LocationAddresses.Count() == 1;
+            }
+        }
+
+        public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
+
+        public int NumberOfPositions { get; set; }
+
+        public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
+
+        public bool IsEditable { get; set; }
     }
 }

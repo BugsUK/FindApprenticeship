@@ -4,11 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Communication.Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Newtonsoft.Json;

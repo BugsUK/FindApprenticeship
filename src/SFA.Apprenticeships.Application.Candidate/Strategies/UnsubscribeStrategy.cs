@@ -4,7 +4,7 @@
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
 
     public class UnsubscribeStrategy : IUnsubscribeStrategy
     {

@@ -1,0 +1,40 @@
+﻿@using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Web.Common.Validators.Extensions
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyDatesViewModel
+    
+@{
+    ViewBag.Title = "Recruit an Apprentice - Manage vacancy dates";
+}
+
+<h1 class="heading-xlarge">
+    Manage vacancy dates
+</h1>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ManageDates, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    @Html.HiddenFor(m => m.WarningsHash)
+    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+
+
+    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))">
+        <a name="@Html.NameFor(m => m.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
+        <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
+        @Html.EditorFor(m => m.ClosingDate)
+        @Html.ValidationMessageWithSeverityFor(m => m.ClosingDate, Html.GetValidationType(m => m.ClosingDate))
+    </fieldset>
+
+    <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.PossibleStartDate))">
+        <a name="@Html.NameFor(m => m.PossibleStartDate).ToString().Replace(".", "_").ToLower()"></a>
+        <legend class="form-label">@Model.GetMetadata(m => m.PossibleStartDate).DisplayName</legend>
+        @Html.EditorFor(m => m.PossibleStartDate)
+        @Html.ValidationMessageWithSeverityFor(m => m.PossibleStartDate, Html.GetValidationType(m => m.PossibleStartDate))
+    </fieldset>
+
+    <div class="grid grid-1-2">
+        <button class="button" type="submit">Save and return</button>
+        @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+    </div>
+}

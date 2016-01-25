@@ -165,13 +165,17 @@
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
-      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Project>{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

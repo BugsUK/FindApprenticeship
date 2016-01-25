@@ -27,9 +27,7 @@
     public class MultipleFormActionsButtonWithParameterAttribute : ActionNameSelectorAttribute
     {
         public string SubmitButtonActionName { get; set; }
-
         
-
         public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
         {
             var value = controllerContext.Controller.ValueProvider.GetValue(SubmitButtonActionName);
@@ -52,20 +50,33 @@
         }
     }
 
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
     public class FillParamterFromActionName : ActionFilterAttribute
     {
-        public string ParameterName { get; set; }
+        public string[] ParameterNames { get; set; }
 
         public string SubmitButtonActionName { get; set; }
+
+        public TypeCode[] ParameterTypes { get; set; }
 
         public override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             var value = filterContext.HttpContext.Request.Params[SubmitButtonActionName];
-            var parameterValue = value.Split('-').Last();
+            var splittedParameterValue = value.Split('-');
+            if (splittedParameterValue.Length > 1)
+            {
+                for (var i = 1; i < splittedParameterValue.Length; i++)
+                {
+                    var parameterValue = splittedParameterValue[i];
+                    var realParameterValue = Convert.ChangeType(parameterValue, ParameterTypes[i - 1]);
+                    filterContext.ActionParameters[ParameterNames[i - 1]] = realParameterValue;
+                }
 
-            var realParameterValue = Convert.ChangeType(parameterValue, TypeCode.Int32);
-            filterContext.ActionParameters[ParameterName] = parameterValue;
-            //base.OnActionExecuting(filterContext);
+            }
+            else
+            {
+                filterContext.ActionParameters[ParameterNames[0]] = null;
+            }
         }
     }
 }

@@ -2,10 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Domain.Interfaces.Configuration;
-    using Infrastructure.Repositories.Communication.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
+    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Repositories.Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver.Linq;
 
     public class ContactMessagesMetricsRepository : GenericMongoClient<MongoContactMessage>, IContactMessagesMetricsRepository

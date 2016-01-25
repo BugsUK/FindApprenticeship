@@ -27,8 +27,8 @@
     using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;
@@ -104,6 +104,7 @@
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IOfflineVacancyService>().Use<OfflineVacancyService>();
         }
 
         private void RegisterStrategies()
@@ -131,8 +132,19 @@
             For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendPendingUsernameCodeStrategy>().Use<SendPendingUsernameCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
-            For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
-            For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
+
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
+                For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
+            }
+            else if(servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                For<ISubmitApprenticeshipApplicationStrategy>().Use<SubmitApprenticeshipApplicationStrategy>();
+                For<ISubmitTraineeshipApplicationStrategy>().Use<SubmitTraineeshipApplicationStrategy>();
+            }
+
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();
             For<IResendActivationCodeStrategy>().Use<ResendActivationCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);

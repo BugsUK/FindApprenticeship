@@ -6,10 +6,9 @@
     using System.Threading.Tasks;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Messaging;
     using Entities;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
 
     public class VacancySummaryProcessor : IVacancySummaryProcessor
     {

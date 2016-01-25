@@ -5,10 +5,11 @@ namespace SFA.Apprenticeships.Application.Organisation
     using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
     using Interfaces.Generic;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
 
     public class OrganisationService : IOrganisationService
@@ -171,7 +172,16 @@ namespace SFA.Apprenticeships.Application.Organisation
             {
                 Ern = summary.ReferenceNumber,
                 Name = summary.Name,
-                Address = summary.Address
+                Address = new Address()
+                {
+                    AddressLine1 = summary.Address.AddressLine1,
+                    AddressLine2 = summary.Address.AddressLine2,
+                    AddressLine3 = summary.Address.AddressLine3,
+                    AddressLine4 = summary.Address.AddressLine4,
+                    GeoPoint = summary.Address.GeoPoint,
+                    Postcode = summary.Address.Postcode,
+                    Uprn = summary.Address.ValidationSourceKeyValue
+                }
             };
         }
     }

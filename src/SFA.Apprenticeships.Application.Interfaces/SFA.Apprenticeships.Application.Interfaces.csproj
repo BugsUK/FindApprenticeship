@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
+    <Compile Include="Applications\IApprenticeshipApplicationService.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Communications\CommunicationChannels.cs" />
     <Compile Include="Communications\CommunicationRequestHelpers.cs" />
@@ -91,7 +92,8 @@
     <Compile Include="Employers\IEmployerService.cs" />
     <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
-    <Compile Include="Logging\ILogService.cs" />
+    <Compile Include="Locations\IAddressSearchService.cs" />
+    <Compile Include="Locations\IPostalAddressSearchService.cs" />
     <Compile Include="Messaging\BaseRequest.cs" />
     <Compile Include="Communications\CommunicationToken.cs" />
     <Compile Include="Messaging\ErrorCodes.cs" />
@@ -107,10 +109,10 @@
     <Compile Include="Providers\IProviderService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Search\AggregationResult.cs" />
-    <Compile Include="DateTime\IDateTimeService.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />
+    <Compile Include="Vacancies\IOfflineVacancyService.cs" />
     <Compile Include="Vacancies\VacancySearchParametersBase.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchParameters.cs" />
     <Compile Include="Search\SearchParametersBase.cs" />

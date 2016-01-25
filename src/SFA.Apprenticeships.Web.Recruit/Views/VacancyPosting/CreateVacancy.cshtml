@@ -1,174 +1,30 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.NewVacancyViewModel
+﻿@model NewVacancyViewModel
+@using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates
-@{
-    ViewBag.Title = "Recruit an Apprentice - Select framework and level";
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
-    const string selected = "selected";
-
-    var isApplicationThroughRAAYes = !Model.OfflineVacancy ? selected : null;
-    var isApplicationThroughRAANo = Model.OfflineVacancy ? selected : null;
-
-    var frameworksSelected = Model.TrainingType == TrainingType.Frameworks ? selected : null;
-    var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
+@using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
+{
+    @Html.DisplayFor(m => m, NewVacancyViewModel.PartialView)
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "CreateVacancyAndPreview";
     }
 
-}
-
-<h1 class="heading-xlarge">
-    Enter basic vacancy details
-</h1>
-
-@using (Html.BeginRouteForm(RecruitmentRouteNames.CreateVacancy, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
-
-    @Html.FormTextAreaFor(m => m.Title, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-small" })
-    @Html.DisplayFor(m => m.TitleComment, "Comment")
-    @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium" })
-    @Html.DisplayFor(m => m.ShortDescriptionComment, "Comment")
-
-    <div class="form-group">
-        <div class="blocklabel-single-container">
-            <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
-                <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                <label class="form-label">Apprenticeship type</label>
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
-                    @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
-                    Framework
-                </label>
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label @standardsSelected">
-                    @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
-                    Standard
-                </label>
-                @Html.ValidationMessageFor(m => m.TrainingType)
-            </div>
-
-            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content">
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
-                    <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
-                    <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
-                    @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
-                    @Html.DisplayFor(m => m.FrameworkCodeNameComment, "Comment")
-                    @Html.ValidationMessageFor(m => m.FrameworkCodeName)
-                </div>
-
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
-                    <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
-                    <label class="form-label">Apprenticeship level</label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-intermediate" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-advanced" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-higher" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-degree" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
-                    </label>
-                    @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
-                    @Html.DisplayFor(m => m.ApprenticeshipLevelComment, "Comment")
-                </div>
-            </div>
-
-            <div id="training-type-standards-panel" class="toggle-content blocklabel-content">
-                <div class="form-group @(HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
-                    <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
-                    <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
-                    <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
-                        <option value="">Choose from the list of standards</option>
-                        @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
-                        {
-                            <optgroup label="@standardGroup.Key">
-                                @foreach (var standard in standardGroup)
-                                {
-                                    <option value="@standard.Id" @(standard.Id == Model.StandardId ? "selected" : "") data-apprenticeship-level="@standard.ApprenticeshipLevel">
-                                        @standard.Name
-                                    </option>
-                                }
-                            </optgroup>
-                        }
-                    </select>
-
-                    @Html.ValidationMessageFor(m => m.StandardId)
-                    @Html.DisplayFor(m => m.StandardIdComment, "Comment")
-                </div>
-
-                @{
-                    var style = Model.StandardId.HasValue ? "" : "display: none";
-                }
-
-                <div class="form-group" id="apprenticeship-level-container" style="@style">
-                    <label class="form-label">Apprenticeship level</label>
-                    <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="blocklabel-single-container">
-            <div class="form-group inline clearfix blocklabel-single hide-nojs">
-                <h3 class="heading-small">Manage application method</h3>
-                <p>
-                    Will this vacancy be managed through the find an apprentice
-                    site?
-                </p>
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-online-vacancy" class="block-label" data-target="online-panel" @isApplicationThroughRAAYes>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, false, new { id = "apprenticeship-online-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label" }) Yes
-                </label>
-
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label for="apprenticeship-offline-vacancy" class="block-label" data-target="offline-panel" @isApplicationThroughRAANo>
-                    @Html.RadioButtonFor(model => model.OfflineVacancy, true, new { id = "apprenticeship-offline-vacancy", aria_labelledby = "apprenticeship-vacancy-management-type-label", aria_controls = "offline-panel" }) No
-                </label>
-            </div>
-            <div id="offline-panel" class="toggle-content panel-indent blocklabel-content">
-                <div class="form-group">
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextFor(m => m.OfflineApplicationUrl, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, id = "apprenticeship-offline-application-url" })
-                    @Html.DisplayFor(m => m.OfflineApplicationUrlComment, "Comment")
-                </div>
-                <div class="form-group">
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    @Html.FormTextAreaFor(m => m.OfflineApplicationInstructions, controlHtmlAttributes: new { type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium", id = "apprenticheship-offline-application-instructions" })
-                    @Html.DisplayFor(m => m.OfflineApplicationInstructionsComment, "Comment")
-                    <br />
-                </div>
-            </div>
-        </div>
-    </div>
-
-    @Html.HiddenFor(model => model.VacancyReferenceNumber)
-    @Html.HiddenFor(model => model.Ukprn)
-    @Html.HiddenFor(model => model.ProviderSiteEmployerLink.ProviderSiteErn)
-    @Html.HiddenFor(model => model.ProviderSiteEmployerLink.Employer.Ern);
-    @Html.HiddenFor(model => model.VacancyGuid)
-    @Html.HiddenFor(model => model.Status)
-
     <div class="form-group">
         <button id="createVacancyButton" type="submit" class="button" name="CreateVacancy" value="@saveButtonValue">@saveButtonText</button>
         <button id="createVacancyAndExit" type="submit" class="button-link" name="CreateVacancy" value="CreateVacancyAndExit">Save and exit</button>
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
     </div>
 }
 
@@ -182,6 +38,14 @@
             }
             $("#apprenticeship-level-name").text(apprenticeshipLevel);
             $("#apprenticeship-level-container").show();
+        });
+
+        $("input[name='OfflineVacancy']").change(function () {
+            var selectedValue = $("input[name='OfflineVacancy']:checked").val();
+            if (selectedValue === "False") {
+                $("#apprenticeship-offline-application-url").val("");
+                $("#apprenticheship-offline-application-instructions").val("");
+            }
         });
     </script>
 }

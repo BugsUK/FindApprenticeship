@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.Vacancy
 {
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class VacancyDataServiceCacheKeyEntry : BaseCacheKey
     {

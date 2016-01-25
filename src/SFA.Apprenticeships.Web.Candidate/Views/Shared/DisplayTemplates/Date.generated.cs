@@ -27,6 +27,12 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 1 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+    using SFA.Apprenticeships.Infrastructure.Presentation;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Candidate;
     using SFA.Apprenticeships.Web.Candidate.Constants;
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
@@ -40,6 +46,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Date.cshtml")]
@@ -51,19 +58,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates
         public override void Execute()
         {
             
-            #line 2 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-  
-    var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
-    var dataTimeByZoneId = TimeZoneInfo.ConvertTime(Model.ToUniversalTime(), timeZoneInfo);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-            
-            #line 6 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
-Write(dataTimeByZoneId.ToString("dd MMM yyyy"));
+            #line 3 "..\..\Views\Shared\DisplayTemplates\Date.cshtml"
+Write(Model.ToGmtDate());
 
             
             #line default

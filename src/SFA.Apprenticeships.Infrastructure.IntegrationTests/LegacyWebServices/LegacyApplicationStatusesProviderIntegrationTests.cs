@@ -7,6 +7,7 @@
     using Application.Applications;
     using Application.Applications.Entities;
     using Application.Candidate;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -14,7 +15,7 @@
     using FluentAssertions;
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
@@ -38,7 +39,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateReadRepositoryMock.Object);
             });

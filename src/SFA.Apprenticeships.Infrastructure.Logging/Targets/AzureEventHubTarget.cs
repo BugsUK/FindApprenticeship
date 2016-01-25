@@ -6,8 +6,10 @@
     using NLog.Config;
     using NLog.Targets;
     using StructureMap;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Common.Configuration;
+    using IoC;
 
     [Target("AzureEventHubTarget")]
     public class AzureEventHubTarget : TargetWithLayout
@@ -28,6 +30,7 @@
             var container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
             });
 
             _configManager = container.GetInstance<IConfigurationManager>();

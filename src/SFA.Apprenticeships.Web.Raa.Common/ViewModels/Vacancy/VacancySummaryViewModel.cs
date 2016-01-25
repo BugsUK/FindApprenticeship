@@ -5,26 +5,29 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
-    using Constants;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
+    using Infrastructure.Presentation;
     using Validators.Vacancy;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
     public class VacancySummaryViewModel
     {
+        public const string PartialView = "Vacancy/FurtherVacancyDetails";
+
         public long VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
-        public decimal? HoursPerWeek { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.WorkingWeekComment.LabelText)]
         public string WorkingWeekComment { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.HoursPerWeek.LabelText)]
+        public decimal? HoursPerWeek { get; set; }
+        
         //TODO: Probably create dedicated WageViewModel
         public WageType WageType { get; set; }
 
@@ -35,7 +38,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public List<SelectListItem> WageUnits { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.WageComment.LabelText)]
         public string WageComment { get; set; }
 
         public DurationType DurationType { get; set; }
@@ -45,25 +48,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.Duration.LabelText)]
         public decimal? Duration { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.ClosingDate.LabelText)]
-        public DateViewModel ClosingDate { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
-        public string ClosingDateComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.PossibleStartDate.LabelText)]
-        public DateViewModel PossibleStartDate { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
 
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
-        public string PossibleStartDateComment { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.Comment.LabelText)]
+        [Display(Name = VacancyViewModelMessages.LongDescriptionComment.LabelText)]
         public string LongDescriptionComment { get; set; }
 
         public int WarningsHash { get; set; }
@@ -72,73 +63,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public ProviderVacancyStatuses Status { get; set; }
 
-        public string WageUnitDisplayText
-        {
-            get
-            {
-                if (WageType != WageType.Custom) return "Weekly";
+        public string WageUnitDisplayText => new Wage(WageType, Wage, WageUnit).GetHeaderDisplayText();
 
-                switch (WageUnit)
-                {
-                    case WageUnit.Annually:
-                        return "Annual";
-                    case WageUnit.Monthly:
-                        return "Monthly";
-                    case WageUnit.Weekly:
-                        return "Weekly";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
-        public string DurationTypeDisplayText
-        {
-            get
-            {
-                switch (DurationType)
-                {
-                    case DurationType.Weeks:
-                        return "weeks";
-                    case DurationType.Months:
-                        return "months";
-                    case DurationType.Years:
-                        return "years";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
 
-        public string WageDisplayText
-        {
-            get
-            {
-                switch (WageType)
-                {
-                    case WageType.Custom:
-                        return string.Format("£{0}", Wage.HasValue ? Wage.Value.ToString() : "unknown");
-                    case WageType.ApprenticeshipMinimumWage:
-                        return HoursPerWeek.HasValue ? GetWeeklyApprenticeshipMinimumWage() : "unknown";
-                    case WageType.NationalMinimumWage:
-                        return HoursPerWeek.HasValue ? GetWeeklyNationalMinimumWage() : "unknown";
-                    default:
-                        return string.Empty;
-                }
-            }
-        }
+        public bool ComeFromPreview { get; set; }
 
-        private string GetWeeklyNationalMinimumWage()
-        {
-            var lowerRange = (Wages.Under18NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
-            var higherRange = (Wages.Over21NationalMinimumWage*HoursPerWeek.Value).ToString("N2");
-
-            return string.Format("£{0} - £{1}", lowerRange, higherRange);
-        }
-
-        private string GetWeeklyApprenticeshipMinimumWage()
-        {
-            return string.Format("£{0}", (Wages.ApprenticeMinimumWage*HoursPerWeek.Value).ToString("N2"));
-        }
+        public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
     }
 }

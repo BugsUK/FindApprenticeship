@@ -172,6 +172,7 @@
     <Compile Include="Services\Candidate\Strategies\QueuedLegacySaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Candidate\Strategies\SaveCandidateStrategyTests.cs" />
     <Compile Include="Services\Location\LocationSearchServiceTests.cs" />
+    <Compile Include="Services\Location\PostalAddressSearchServiceTests.cs" />
     <Compile Include="Services\Provider\GetProviderSiteEmployerLinksTests.cs" />
     <Compile Include="Services\Provider\ProviderServiceBuilder.cs" />
     <Compile Include="Services\Provider\GetProviderTests.cs" />
@@ -192,6 +193,9 @@
     <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SiteMapVacancyProcessorTests.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
+    <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
     <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +262,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

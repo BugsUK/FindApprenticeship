@@ -3,6 +3,7 @@
     using System.Linq;
     using Application.Vacancies;
     using Application.Vacancy;
+    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
@@ -21,7 +22,7 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
             });
 
             _vacancyDataProvider = container.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();

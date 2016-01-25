@@ -1,30 +1,20 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyQuestionsViewModel
+﻿@model VacancyQuestionsViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@{
-    ViewBag.Title = "Recruit an Apprentice - Enter vacancy question";
-}
-
-<h1 class="heading-xlarge">
-    Questions for candidates
-</h1>
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyQuestions, FormMethod.Post))
 {
-    @Html.AntiForgeryToken()
-    @Html.Partial("ValidationSummary", ViewData.ModelState)
+    @Html.DisplayFor(m => m, VacancyQuestionsViewModel.PartialView)
 
-    @Html.HiddenFor(m => m.VacancyReferenceNumber)
+    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and preview vacancy";
 
-    <section>
-        <div class="form-group">
-            @Html.FormTextAreaFor(m => m.FirstQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.FirstQuestionComment, "Comment")
-            @Html.FormTextAreaFor(m => m.SecondQuestion, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
-            @Html.DisplayFor(m => m.SecondQuestionComment, "Comment")
-        </div>
-    </section>
     <div class="grid grid-1-2">
-        <button type="submit" class="button" name="VacancyQuestions" value="VacancyQuestions">Save and preview vacancy</button>
+        <button type="submit" class="button" name="VacancyQuestions" value="VacancyQuestions">@saveButtonText</button>
         <button id="VacancyQuestionsAndExit" type="submit" class="button-link" name="VacancyQuestions" value="VacancyQuestionsAndExit">Save and exit</button>
+        @if (Model.ComeFromPreview)
+        {
+            @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+        }
     </div>
 }

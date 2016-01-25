@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.Communication
 {
     using System.Linq;
+    using Common.Configuration;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Communication.Configuration;
     using Infrastructure.Communication.IoC;
     using Logging.IoC;

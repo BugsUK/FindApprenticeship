@@ -1,13 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
 {
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Candidate.Mediators.Login;
     using Candidate.Providers;
     using Candidate.Validators;
     using Common.Configuration;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
     using Moq;
 
     public class LoginMediatorBuilder

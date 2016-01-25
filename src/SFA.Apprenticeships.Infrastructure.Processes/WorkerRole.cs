@@ -4,14 +4,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using System.Net;
     using System.Threading;
     using Application.Candidates;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
     using Azure.ServiceBus;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
     using Common.Configuration;
     using Common.IoC;
     using Communication.IoC;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
     using IoC;
     using LegacyWebServices.IoC;
@@ -20,12 +20,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
-    using Repositories.Applications.IoC;
-    using Repositories.Audit.IoC;
-    using Repositories.Authentication.IoC;
-    using Repositories.Candidates.IoC;
-    using Repositories.Communication.IoC;
-    using Repositories.Users.IoC;
+    using Raa.IoC;
+    using Repositories.Mongo.Applications.IoC;
+    using Repositories.Mongo.Audit.IoC;
+    using Repositories.Mongo.Authentication.IoC;
+    using Repositories.Mongo.Candidates.IoC;
+    using Repositories.Mongo.Communication.IoC;
+    using Repositories.Mongo.Users.IoC;
+    using Repositories.Mongo.Vacancies.IoC;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -84,19 +86,21 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
         {
             var container = new Container(x =>
             {
-                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry(new CommonRegistry(new CacheConfiguration()));
                 x.AddRegistry<LoggingRegistry>();
             });
 
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
             _container = new Container(x =>
             {
                 x.AddRegistry(new CommonRegistry(cacheConfig));
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<AzureCommonRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<CommunicationRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
@@ -104,8 +108,10 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
+                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig));
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<ProcessesRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

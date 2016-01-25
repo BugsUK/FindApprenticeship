@@ -1,11 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.IoC
 {
-    using Application.Interfaces.DateTime;
+    using SFA.Infrastructure.Interfaces;
     using Caching.Memory.IoC;
     using Configuration;
     using DateTime;
-    using Domain.Interfaces.Caching;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Azure.Configuration;
+    using SFA.Infrastructure.Configuration;
+    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
 
     public class CommonRegistry : Registry

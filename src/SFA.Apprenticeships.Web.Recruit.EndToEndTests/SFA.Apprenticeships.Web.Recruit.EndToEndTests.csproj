@@ -145,13 +145,9 @@
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Mongo.Common\SFA.Apprenticeships.Infrastructure.Mongo.Common.csproj">
-      <Project>{CE62BDE8-C127-4808-95F8-5F5E24485830}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Mongo.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies\SFA.Apprenticeships.Infrastructure.Repositories.Vacancies.csproj">
-      <Project>{A3B35EFD-CD80-4366-A857-788EADD145A9}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Vacancies</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
+      <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
@@ -164,6 +160,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Recruit\SFA.Apprenticeships.Web.Recruit.csproj">
       <Project>{AF7E6460-86F4-40D6-8C46-AB97C283479B}</Project>
       <Name>SFA.Apprenticeships.Web.Recruit</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
+      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
+      <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

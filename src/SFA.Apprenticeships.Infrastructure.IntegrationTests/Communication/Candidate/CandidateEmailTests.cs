@@ -2,7 +2,8 @@
 {
     using System;
     using Application.Interfaces.Communications;
-    using Application.Interfaces.Logging;
+    using Common.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Common.IoC;
     using Domain.Entities.Exceptions;
     using FluentAssertions;

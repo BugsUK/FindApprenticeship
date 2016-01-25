@@ -1,0 +1,48 @@
+﻿@model LocationSearchViewModel
+@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
+
+@using (Html.BeginRouteForm(ManagementRouteNames.AddLocations, FormMethod.Post, new { @id = "add-locations-form" }))
+{
+    @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
+
+    <button type="submit" class="button" name="AddLocations" value="Locations">Save</button>
+    @Html.RouteLink("Return to previous page", ManagementRouteNames.EmployerInformation, new { vacancyReferenceNumber = Model.VacancyReferenceNumber, useEmployerLocation = true })
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+
+    <script type="text/javascript">
+    ko.observable.fn.appendError = function (error) {
+        var thisError = this.error();
+        if (thisError) {
+            this.setError(thisError += '. ' + error);
+        }
+        else {
+            this.setError(error);
+        };
+    };
+
+    var addressesData = null;
+
+    addressesData = @Html.Raw(Json.Encode(Model.Addresses));
+
+    if (!addressesData) addressesData = [];
+
+    function getLocationAddressesData() {
+        return addressesData;
+    }
+
+    var modelState = null;
+    modelState = @Html.Raw(Json.Encode(ViewData.ModelState.Where(k => k.Value.Errors.Any()).Select(t => new { Key = t.Key, Value = t.Value.Errors.Select(e => e.ErrorMessage) })));
+
+    function getModelState() {
+        return modelState;
+    }
+    </script>
+
+    @Scripts.Render("~/bundles/location")
+}

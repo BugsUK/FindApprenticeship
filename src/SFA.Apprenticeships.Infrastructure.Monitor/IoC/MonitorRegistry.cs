@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Monitor.IoC
 {
     using Consumers;
-    using Mongo.Common;
+    using Infrastructure.Repositories.Mongo.Common;
     using Provider;
     using Repositories;
     using StructureMap.Configuration.DSL;
@@ -27,6 +27,7 @@
                     x.Type<CheckPostcodeService>();
                     x.Type<CheckUserDirectory>();
                     x.Type<CheckAzureServiceBus>();
+                    //TODO: remove once link with AV is broken
                     x.Type<CheckNasGateway>();
                     x.Type<CheckMongoReplicaSets>();
                     x.Type<CheckElasticsearchCluster>();

@@ -4,6 +4,7 @@
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
@@ -12,8 +13,7 @@
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Application.VacancyPosting;
     using Common.Configuration;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.TacticalDataServices;
@@ -24,6 +24,7 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
+    using Application.Location;
     using Application.ReferenceData;
     using Raa.Common.Providers;
 
@@ -53,6 +54,8 @@
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IProviderQAProvider>().Use<ProviderProvider>();
+            For<ILocationsProvider>().Use<LocationsProvider>();
         }
 
         private void RegisterServices()
@@ -61,6 +64,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
+            For<IAddressSearchService>().Use<AddressSearchService>();
         }
 
         private void RegisterStrategies()

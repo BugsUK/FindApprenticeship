@@ -27,11 +27,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared.EditorTemplates
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
@@ -68,6 +68,8 @@ Write(Html.FormTextFor(m => m.Year, containerHtmlAttributes: new { @class = "for
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
         }
     }
 }

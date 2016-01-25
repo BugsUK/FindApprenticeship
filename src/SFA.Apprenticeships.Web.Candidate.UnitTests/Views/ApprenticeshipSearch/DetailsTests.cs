@@ -11,6 +11,7 @@
     using Common.ViewModels.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
+    using Infrastructure.Presentation;
     using Moq;
     using NUnit.Framework;
     using RazorGenerator.Testing;

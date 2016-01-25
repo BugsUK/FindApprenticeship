@@ -1,11 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.AzureServiceBus
 {
     using System.Collections.Generic;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.ServiceBus;
     using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.Factory;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Messaging;
     using Moq;
 
@@ -46,7 +45,7 @@
 
         public AzureServiceBusMessageBroker<TMessage> Build()
         {
-            var broker = new AzureServiceBusMessageBroker<TMessage>(_logService.Object, _configurationService.Object, _subscribers, _clientFactory.Object);
+            var broker = new AzureServiceBusMessageBroker<TMessage>(_logService.Object, _configurationService.Object, _subscribers, _clientFactory.Object, new DefaultTopicNameFormatter());
             return broker;
         }
 

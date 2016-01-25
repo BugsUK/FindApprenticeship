@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Provider
 {
-    using System;
     using Constants.ViewModels;
     using FluentValidation;
     using ViewModels.Provider;
@@ -25,12 +24,16 @@
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.ErrorUriText)
                 .When(x => !string.IsNullOrEmpty(x.WebsiteUrl));
 
+            RuleFor(x => x.IsEmployerLocationMainApprenticeshipLocation)
+                .NotNull()
+                .WithMessage(ProviderSiteEmployerLinkViewModelMessages.IsEmployerLocationMainApprenticeshipLocation.RequiredErrorText);
+
             RuleFor(x => x.NumberOfPositions)
                 .NotEmpty()
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.RequiredErrorText)
-                .InclusiveBetween(1, 999)
+                .GreaterThanOrEqualTo(1)
                 .WithMessage(ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LengthErrorText)
-                .When(x => x.IsEmployerLocationMainApprenticeshipLocation);
+                .When(x => x.IsEmployerLocationMainApprenticeshipLocation.HasValue && x.IsEmployerLocationMainApprenticeshipLocation == true);
         }
     }
 }

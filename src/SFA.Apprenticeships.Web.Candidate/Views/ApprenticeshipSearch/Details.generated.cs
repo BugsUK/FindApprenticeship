@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Candidate;
     using SFA.Apprenticeships.Web.Candidate.Constants;
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
@@ -46,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/Details.cshtml")]
@@ -385,7 +387,16 @@ WriteLiteral(">\r\n                    <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">Weekly wage</h3>\r\n                    <p");
+WriteLiteral(">");
+
+            
+            #line 65 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
+                                      Write(Model.WageUnit.GetHeaderDisplayText());
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</h3>\r\n                    <p");
 
 WriteLiteral(" id=\"vacancy-wage\"");
 
@@ -956,14 +967,14 @@ WriteLiteral(" target=\"_blank\"");
 
 WriteLiteral(">\r\n                                <img");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 8080), Tuple.Create("\"", 8147)
+WriteAttribute("src", Tuple.Create(" src=\"", 8107), Tuple.Create("\"", 8147)
             
             #line 158 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 8086), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-2x.png")
+, Tuple.Create(Tuple.Create("", 8113), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-2x.png")
             
             #line default
             #line hidden
-, 8086), false)
+, 8113), false)
 );
 
 WriteLiteral(" height=\"120\"");

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Security;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using AvService.Providers.Version51;
     using AvService.ServiceImplementation.Version51;
     using FluentAssertions;

@@ -6,7 +6,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class LegacySubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy

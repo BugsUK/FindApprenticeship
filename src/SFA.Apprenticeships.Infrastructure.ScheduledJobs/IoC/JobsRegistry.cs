@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs.IoC
 {
+    using SFA.Infrastructure.Interfaces;
     using Application.Applications;
     using Application.Applications.Housekeeping;
     using Application.Applications.Strategies;
@@ -13,10 +14,9 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Consumers;
-    using Domain.Interfaces.Mapping;
     using Domain.Interfaces.Repositories;
     using Processes.Vacancies;
-    using Repositories.Audit;
+    using Repositories.Mongo.Audit;
     using StructureMap.Configuration.DSL;
     using VacancyEtlMapper = Mappers.VacancyEtlMapper;
 
@@ -41,6 +41,8 @@
 
             For<IMapper>().Singleton().Use<VacancyEtlMapper>().Name = "VacancyEtlMapper";
             For<IVacancySummaryProcessor>().Use<VacancySummaryProcessor>().Ctor<IMapper>().Named("VacancyEtlMapper");
+
+            For<IVacancyStatusProcessor>().Use<VacancyStatusProcessor>();
 
             //Communications
             For<DailyDigestControlQueueConsumer>().Use<DailyDigestControlQueueConsumer>();
@@ -68,6 +70,9 @@
             For<ISavedSearchAlertCommunicationHousekeeper>().Use<SavedSearchAlertCommunicationHousekeeper>();
 
             For<HousekeepingControlQueueConsumer>().Use<HousekeepingControlQueueConsumer>();
+
+            // Vacancy Housekeeping
+            For<VacancyStatusControlQueueConsumer>().Use<VacancyStatusControlQueueConsumer>();
         }
     }
 }

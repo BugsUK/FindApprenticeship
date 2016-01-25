@@ -1,6 +1,7 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.EditLinkViewModel
-    
-@{
+
+@if (Model.Status.IsStateEditable())
+{
     var linkText = Model.CommentViewModel.HasComment ? "Edit/View feedback" : "Edit";
+    <a href="@Model.EditUrl" class="edit-comment-link">@linkText</a>
 }
-<a href="@Model.EditUrl" class="edit-comment-link">@linkText</a>

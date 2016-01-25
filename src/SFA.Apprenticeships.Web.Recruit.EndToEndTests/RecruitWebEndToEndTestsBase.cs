@@ -7,9 +7,9 @@
     using System.Web;
     using Common.Providers;
     using Common.Services;
-    using Domain.Interfaces.Configuration;
-    using Infrastructure.Mongo.Common.Configuration;
-    using Infrastructure.Repositories.Vacancies.Entities;
+    using Infrastructure.Repositories.Mongo.Common.Configuration;
+    using Infrastructure.Repositories.Mongo.Vacancies.Entities;
+    using SFA.Infrastructure.Interfaces;
     using IoC;
     using MongoDB.Driver;
     using Moq;

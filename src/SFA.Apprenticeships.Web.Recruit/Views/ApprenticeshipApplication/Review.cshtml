@@ -1,0 +1,89 @@
+﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+@model SFA.Apprenticeships.Web.Recruit.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Review application";
+}
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ReviewApprenticeshipApplication, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Partial("ValidationSummary", ViewData.ModelState)
+
+    @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
+    @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
+    @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
+
+    <div>
+        <div class="hgroup">
+            <h1 class="heading-xlarge med-btm-margin">Vacancy application</h1>
+            <p class="subtitle">@Model.Vacancy.Title</p>
+            <!--<p>
+                <a href="live-apprenticeship-summary.html">Apprenticeship summary</a>
+            </p>-->
+        </div>
+        <div class="grid-wrapper">
+            <div class="grid grid-2-3">
+                @Html.DisplayFor(m => m.ApplicantDetails, "ApplicantDetails")
+            </div>
+            <div class="grid grid-1-3">
+                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">Appoint candidate</button>
+                <p class="med-btm-margin">
+                    <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
+                </p>
+            </div>
+        </div>
+        @Html.DisplayFor(m => m.AboutYou, "AboutYou")
+        @Html.DisplayFor(m => m.Education, "Education")
+        @Html.DisplayFor(m => m.Qualifications, "Qualifications")
+        @Html.DisplayFor(m => m.WorkExperience, "WorkExperience")
+        @Html.DisplayFor(m => m.TrainingCourses, "TrainingCourses")
+        <fieldset class="fieldset-with-border">
+            <legend class="heading-large">
+                Answers to employer questions
+            </legend>
+            @if (Model.Vacancy.HasQuestions)
+            {
+                if (Model.Vacancy.HasFirstQuestion)
+                {
+                    <div class="form-group">
+                        <label for="add-question1" class="form-label">@Model.Vacancy.FirstQuestion</label>
+                        <span class="form-prepopped" id="add-question1">@Model.VacancyQuestionAnswers.FirstQuestionAnswer</span>
+                    </div>
+                }
+                if (Model.Vacancy.HasSecondQuestion)
+                {
+                    <div class="form-group">
+                        <label for="add-question2" class="form-label">@Model.Vacancy.SecondQuestion</label>
+                        <span class="form-prepopped" id="add-question2">@Model.VacancyQuestionAnswers.SecondQuestionAnswer</span>
+                    </div>
+                }
+            }
+            @Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus)
+            @if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
+            {
+                <div class="form-group">
+                    <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
+                    <span class="form-prepopped" id="">@Model.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer</span>
+                </div>
+            }
+        </fieldset>
+        <section>
+            <div class="form-group">
+                <div class="detail-content qa-comment">
+                    <div class="blocklabel-single-container">
+                        @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">Appoint candidate</button>
+                <p class="med-btm-margin">
+                    <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
+                    <button type="submit" class="button-link" name="Review" value="ReviewSaveAndExit">Save and exit</button>
+                </p>
+            </div>
+        </section>
+    </div>
+}

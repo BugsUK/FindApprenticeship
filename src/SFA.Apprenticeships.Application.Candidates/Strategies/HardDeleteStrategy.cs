@@ -2,12 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
 
     public class HardDeleteStrategy : HousekeepingStrategy
     {

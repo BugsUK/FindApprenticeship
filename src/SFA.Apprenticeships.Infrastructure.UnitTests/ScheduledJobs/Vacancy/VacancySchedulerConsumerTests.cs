@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
-    using Apprenticeships.Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancies;
     using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;

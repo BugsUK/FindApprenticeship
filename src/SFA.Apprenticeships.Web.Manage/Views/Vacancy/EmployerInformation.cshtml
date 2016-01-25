@@ -1,0 +1,45 @@
+﻿@model ProviderSiteEmployerLinkViewModel
+@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
+
+@{
+    ViewBag.Title = "Recruit an Apprentice - Check employer information";
+
+    var saveButtonText = Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+        Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save" : "Save and continue";
+}
+
+<div class="grid-wrapper">
+    <div class="hgroup">
+        <h1 class="heading-xlarge">
+            Check employer information
+        </h1>
+    </div>
+</div>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.EmployerInformation, FormMethod.Post))
+{   
+    @Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView)
+
+    <div class="grid grid-1-1">
+        <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+    </div>
+}
+
+@section scripts {
+    <script type="text/javascript">
+
+        $("#NumberOfPositionsJS").attr("id", "NumberOfPositions").attr("Name", "NumberOfPositions");
+        $("#location-type-main-location").on('click', function () {
+                $("#confirmEmployer").text("Save");
+        });
+
+        $("#location-type-different-location").on('click', function () {
+            $("#confirmEmployer").text("Save and continue");
+        });
+    </script>
+
+    @*Difficult to put in the partial view. See http://stackoverflow.com/questions/5981490/how-to-render-javascript-into-masterlayout-section-from-partial-view*@
+}

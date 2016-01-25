@@ -2,8 +2,9 @@
 {
     using System;
     using Application.Vacancies.Entities;
+    using Common.Configuration;
     using Common.IoC;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Infrastructure.Elastic.Common.Configuration;
     using Infrastructure.Elastic.Common.Entities;
@@ -71,7 +72,7 @@
         public void ShouldCreateScheduledIndexAndMapping()
         {
             var scheduledDate = new DateTime(2000, 1, 1);
-            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH"));
+            var indexName = string.Format("{0}.{1}", _vacancyIndexAlias, scheduledDate.ToString("yyyy-MM-dd-HH-mm"));
 
             var vis = _container.GetInstance<IVacancyIndexerService<ApprenticeshipSummaryUpdate, ApprenticeshipSummary>>();
 

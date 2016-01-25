@@ -2,10 +2,10 @@
 {
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Audit.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Audit.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
     using Infrastructure.UserDirectory.IoC;
     using StructureMap;
     using TechTalk.SpecFlow;

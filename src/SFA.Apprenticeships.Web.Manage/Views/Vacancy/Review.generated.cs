@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -44,7 +45,6 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     #line default
     #line hidden
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
-    using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.EditorTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/Review.cshtml")]
@@ -72,16 +72,12 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n<div>\r\n    <h1");
-
-WriteLiteral(" class=\"heading-xlarge\"");
-
-WriteLiteral(">\r\n        Vacancy preview\r\n    </h1>\r\n\r\n");
+WriteLiteral("\r\n\r\n<div>\r\n");
 
 WriteLiteral("    ");
 
             
-            #line 15 "..\..\Views\Vacancy\Review.cshtml"
+            #line 11 "..\..\Views\Vacancy\Review.cshtml"
 Write(Html.DisplayFor(m => m, VacancyViewModel.PartialView));
 
             
@@ -90,13 +86,13 @@ Write(Html.DisplayFor(m => m, VacancyViewModel.PartialView));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 17 "..\..\Views\Vacancy\Review.cshtml"
+            #line 13 "..\..\Views\Vacancy\Review.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 17 "..\..\Views\Vacancy\Review.cshtml"
+            #line 13 "..\..\Views\Vacancy\Review.cshtml"
      using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))
     {
         
@@ -104,14 +100,14 @@ WriteLiteral("\r\n\r\n");
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Vacancy\Review.cshtml"
+            #line 15 "..\..\Views\Vacancy\Review.cshtml"
    Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Vacancy\Review.cshtml"
+            #line 15 "..\..\Views\Vacancy\Review.cshtml"
                                                       
 
 
@@ -134,7 +130,7 @@ WriteLiteral(" name=\"VacancyQAAction\"");
 
 WriteLiteral(" value=\"Approve\"");
 
-WriteLiteral(">Approve</button>\r\n                <button");
+WriteLiteral(">Approve and continue to next vacancy</button>\r\n                <button");
 
 WriteLiteral(" id=\"btnReject\"");
 
@@ -146,24 +142,24 @@ WriteLiteral(" name=\"VacancyQAAction\"");
 
 WriteLiteral(" value=\"Reject\"");
 
-WriteLiteral(">Reject</button>\r\n                <a");
+WriteLiteral(">Refer</button>\r\n                <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 899), Tuple.Create("\"", 951)
+WriteAttribute("href", Tuple.Create(" href=\"", 856), Tuple.Create("\"", 908)
             
-            #line 25 "..\..\Views\Vacancy\Review.cshtml"
-, Tuple.Create(Tuple.Create("", 906), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
+            #line 21 "..\..\Views\Vacancy\Review.cshtml"
+, Tuple.Create(Tuple.Create("", 863), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(ManagementRouteNames.Dashboard)
             
             #line default
             #line hidden
-, 906), false)
+, 863), false)
 );
 
-WriteLiteral(">Return to dashboard</a>\r\n            </div>\r\n        </section>\r\n");
+WriteLiteral(">Agency home</a>\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 28 "..\..\Views\Vacancy\Review.cshtml"
+            #line 24 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             

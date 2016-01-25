@@ -5,18 +5,19 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Azure.Common.IoC;
+    using Azure.ServiceBus.Configuration;
     using Azure.ServiceBus.IoC;
+    using Common.Configuration;
     using Common.IoC;
     using Consumers;
-    using Domain.Interfaces.Configuration;
     using Elastic.Common.IoC;
-    using Infrastructure.Repositories.Applications.IoC;
-    using Infrastructure.Repositories.Audit.IoC;
-    using Infrastructure.Repositories.Authentication.IoC;
-    using Infrastructure.Repositories.Candidates.IoC;
-    using Infrastructure.Repositories.Users.IoC;
+    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Infrastructure.Repositories.Mongo.Audit.IoC;
+    using Infrastructure.Repositories.Mongo.Authentication.IoC;
+    using Infrastructure.Repositories.Mongo.Candidates.IoC;
+    using Infrastructure.Repositories.Mongo.Users.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
@@ -74,7 +75,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
                 Thread.Sleep(TimeSpan.FromMinutes(1));
             }
-            
+
             // ReSharper disable once FunctionNeverReturns
         }
 
@@ -111,6 +112,15 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
 
         private void InitializeIoC()
         {
+            var container = new Container(x =>
+            {
+                x.AddRegistry<CommonRegistry>();
+                x.AddRegistry<LoggingRegistry>();
+            });
+
+            var configurationService = container.GetInstance<IConfigurationService>();
+            var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -125,8 +135,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<LocationLookupRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<UserDirectoryRegistry>();
-                x.AddRegistry<AzureServiceBusRegistry>();
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
+                //CheckNasGateway monitor task always uses legacy services
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
             });

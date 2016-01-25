@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Application.Provider
     using CuttingEdge.Conditions;
     using Domain.Entities.Providers;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Interfaces.Providers;
 

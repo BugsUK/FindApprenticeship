@@ -3,8 +3,8 @@
     using System;
     using System.Linq;
     using System.Runtime.Caching;
-    using Application.Interfaces.Logging;
-    using Domain.Interfaces.Caching;
+    using SFA.Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces.Caching;
 
     public class MemoryCacheService : ICacheService
     {

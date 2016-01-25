@@ -4,7 +4,7 @@ namespace SFA.Apprenticeships.Application.UserAccount.Strategies
     using Configuration;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
-    using Domain.Interfaces.Configuration;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
     public class RegisterUserStrategy : IRegisterUserStrategy

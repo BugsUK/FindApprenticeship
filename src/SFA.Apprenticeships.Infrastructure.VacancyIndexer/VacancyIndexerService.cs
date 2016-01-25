@@ -2,12 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
-    using Application.Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
-    using Domain.Interfaces.Configuration;
-    using Domain.Interfaces.Mapping;
+    using Common.Configuration;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
@@ -22,9 +20,6 @@
         private readonly IElasticsearchClientFactory _elasticsearchClientFactory;
 
         private const int PageSize = 5;
-        private const double LondonLatitude = 51.51713;
-        private const double LondonLongitude = -0.10619;
-        private const int SearchRadius = 30;
 
         public VacancyIndexerService(
             ILogService logger,
@@ -169,32 +164,35 @@
         {
             _logger.Debug("Checking if the index is correctly created.");
 
-            var indexAlias = GetIndexAlias();
-            var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
-            var client = _elasticsearchClientFactory.GetElasticClient();
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
-
-            var search = client.Search<TDestinationSummary>(s =>
+            var serviceImplementation = _configurationService.Get<ServicesConfiguration>().ServiceImplementation;
+            if (serviceImplementation == ServicesConfiguration.Legacy)
             {
-                s.Index(newIndexName);
-                s.Type(documentTypeName);
-                s.Take(PageSize);
+                var indexAlias = GetIndexAlias();
+                var newIndexName = GetIndexNameAndDateExtension(indexAlias, scheduledRefreshDateTime);
+                var client = _elasticsearchClientFactory.GetElasticClient();
+                var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (TDestinationSummary));
 
-                s.TrackScores();
+                var search = client.Search<TDestinationSummary>(s =>
+                {
+                    s.Index(newIndexName);
+                    s.Type(documentTypeName);
+                    s.Take(PageSize);
+                    return s;
+                });
 
-                s.Filter(f => f
-                    .GeoDistance(vs => vs
-                        .Location, descriptor => descriptor
-                            .Location(LondonLatitude, LondonLongitude)
-                            .Distance(SearchRadius, GeoUnit.Miles)));
+                var result = search.Documents.Any();
+                LogResult(result, newIndexName);
 
-                return s;
-            });
+                return result;
+            }
 
-            var result = search.Documents.Any();
-            LogResult(result, newIndexName);
+            if (serviceImplementation == ServicesConfiguration.Raa)
+            {
+                //RAA index creation talks directly to the repositories rather than a service boundary
+                return true;
+            }
 
-            return result;
+            throw new Exception("Service implementation " + serviceImplementation + " was not recognised. Please check ServicesConfiguration section");
         }
 
         private void LogResult(bool result, string newIndexName)
@@ -216,7 +214,7 @@
 
         private static string GetIndexNameAndDateExtension(string indexAlias, DateTime dateTime)
         {
-            return string.Format("{0}.{1}", indexAlias, dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH"));
+            return $"{indexAlias}.{dateTime.ToUniversalTime().ToString("yyyy-MM-dd-HH-mm")}";
         }
     }
 }

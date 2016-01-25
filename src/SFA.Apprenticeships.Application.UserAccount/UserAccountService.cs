@@ -6,7 +6,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using Interfaces.Logging;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using Strategies;
     using Web.Common.Constants;
