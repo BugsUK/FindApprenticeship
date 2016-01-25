@@ -30,6 +30,7 @@
             viewModel.Should().NotBeNull();
             viewModel.FullName.Should().Be(source.FullName);
             viewModel.ShortName.Should().Be(source.ShortName);
+            viewModel.County.Should().Be(source.County.FullName);
         }
     }
 }

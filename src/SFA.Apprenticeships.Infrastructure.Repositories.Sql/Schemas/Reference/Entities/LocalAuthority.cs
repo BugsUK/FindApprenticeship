@@ -19,5 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         public string ShortName { get; set; }
 
         public string FullName { get; set; }
+
+        public County County { get; set; }
     }
 }

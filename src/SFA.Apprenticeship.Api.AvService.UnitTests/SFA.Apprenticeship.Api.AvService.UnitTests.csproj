@@ -131,6 +131,8 @@
     <Compile Include="Mediators\Version51\ReferenceDataService\GetCountiesTests.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\ReferenceDataServiceMediatorTestsBase.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\GetErrorCodesTests.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider\GetLocalAuthoritiesTests.cs" />
+    <Compile Include="Providers\Version51\ReferenceDataProvider\GetRegionsTests.cs" />
     <Compile Include="Providers\WebServiceAuthenticationProviderTests.cs" />
     <Compile Include="Providers\Version51\ReferenceDataProvider\GetCountiesTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\ExceptionHandlingTests.cs" />

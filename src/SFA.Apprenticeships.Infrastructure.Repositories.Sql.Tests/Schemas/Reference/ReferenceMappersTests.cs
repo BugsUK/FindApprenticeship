@@ -73,6 +73,11 @@
             viewModel.CodeName.Should().Be(source.CodeName);
             viewModel.ShortName.Should().Be(source.ShortName);
             viewModel.FullName.Should().Be(source.FullName);
+            viewModel.County.Should().NotBeNull();
+            viewModel.County.CountyId.Should().Be(source.County.CountyId);
+            viewModel.County.CodeName.Should().Be(source.County.CodeName);
+            viewModel.County.ShortName.Should().Be(source.County.ShortName);
+            viewModel.County.FullName.Should().Be(source.County.FullName);
         }
     }
 }
