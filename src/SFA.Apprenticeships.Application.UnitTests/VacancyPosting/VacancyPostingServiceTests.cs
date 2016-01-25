@@ -60,7 +60,7 @@
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(vacancy));
         }
 
         [Test]
@@ -75,7 +75,7 @@
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<ApprenticeshipVacancy>(v => v.VacancyManagerId == _vacancyManager.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.VacancyManagerId == _vacancyManager.EntityId)));
         }
 
         [Test]
@@ -90,7 +90,7 @@
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(vacancy));
         }
 
         [Test]
@@ -105,7 +105,7 @@
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<ApprenticeshipVacancy>(v => v.LastEditedById == _lastEditedBy.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.LastEditedById == _lastEditedBy.EntityId)));
         }
 
         [Test]

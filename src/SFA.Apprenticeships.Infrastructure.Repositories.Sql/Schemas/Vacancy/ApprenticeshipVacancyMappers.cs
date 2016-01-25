@@ -163,7 +163,7 @@
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
                 .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
-                .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct
+                .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct -> I think it shou
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
 
                 // TODO: Change ApprenticeshipVacancy object in due course

@@ -93,7 +93,7 @@
 
             vacancy.VacancyReferenceNumber = newReferenceNumber;
             vacancy.LocationAddresses = null; // TODO: Change to separate repo method
-            writeRepository.Save(vacancy);
+            writeRepository.DeepSave(vacancy);
 
             vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
@@ -117,7 +117,7 @@
             var vacancy = CreateValidDomainVacancy();
 
             // Act
-            repository.Save(vacancy);
+            repository.DeepSave(vacancy);
 
             var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
 
@@ -190,7 +190,7 @@
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
 
-            writeRepository.Save(vacancy);
+            writeRepository.DeepSave(vacancy);
 
             var loadedVacancy = readRepository.Get(vacancyGuid);
 
@@ -227,7 +227,7 @@
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
 
-            writeRepository.Save(vacancy);
+            writeRepository.DeepSave(vacancy);
 
             var newLocations = new Fixture()
                 .Build<VacancyLocationAddress>()
@@ -328,7 +328,7 @@
             vacancy.DateSubmitted = null;
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
 
-            writeRepository.Save(vacancy);
+            writeRepository.DeepSave(vacancy);
 
             writeRepository.ReserveVacancyForQA(vacancyReferenceNumber);
             var loadedVacancy = readRepository.Get(vacancyReferenceNumber);

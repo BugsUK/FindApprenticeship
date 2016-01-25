@@ -17,8 +17,6 @@
     // TODO GenericSqlClient??
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
     {
-        private IDictionary<string, Domain.Entities.Vacancies.ProviderVacancies.WageType> _wageTypeMap = new Dictionary<string, Domain.Entities.Vacancies.ProviderVacancies.WageType>();
-
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
 
@@ -224,16 +222,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return dbVacancies.Select(MapVacancy).ToList();
         }
 
-        public void Delete(Guid id)
-        {
-            _logger.Debug("Calling database to delete apprenticeship vacancy with Id={0}", id);
-
-            throw new NotSupportedException("Don't really think vacancies are / should be ever deleted");
-
-            //_logger.Debug("Deleted apprenticeship vacancy with Id={0}", id);
-        }
-
-        public ApprenticeshipVacancy Save(ApprenticeshipVacancy entity)
+        public ApprenticeshipVacancy DeepSave(ApprenticeshipVacancy entity)
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.EntityId);
 

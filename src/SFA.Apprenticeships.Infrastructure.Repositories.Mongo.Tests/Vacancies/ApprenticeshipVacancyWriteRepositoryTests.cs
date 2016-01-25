@@ -34,7 +34,7 @@
             collection.Remove(Query.EQ("VacancyReferenceNumber", IntegrationTestVacancyReferenceNumber));
         }
 
-        [Test, Category("Integration")]
+        [Test, Category("Integration"), Ignore("Delete no longer available")]
         public void ShouldCreateAndDeleteVacancy()
         {
             //Arrange
@@ -48,15 +48,15 @@
                     .Create();
 
             //Act
-            writer.Save(vacancy);
+            writer.DeepSave(vacancy);
             var savedVacancy = reader.Get(IntegrationTestVacancyReferenceNumber);
-            writer.Delete(savedVacancy.EntityId);
-            var deletedApplication = reader.Get(IntegrationTestVacancyReferenceNumber);
+            //writer.Delete(savedVacancy.EntityId);
+            //var deletedApplication = reader.Get(IntegrationTestVacancyReferenceNumber);
 
             //Assert
             savedVacancy.Should().NotBeNull();
             savedVacancy.VacancyReferenceNumber.Should().Be(IntegrationTestVacancyReferenceNumber);
-            deletedApplication.Should().BeNull();
+            //deletedApplication.Should().BeNull();
         }
 
         [Test, Category("Integration")]
@@ -79,7 +79,7 @@
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(qaUserName), null);
 
             //Act
-            writer.Save(vacancy);
+            writer.DeepSave(vacancy);
             var savedVacancy = reader.Get(IntegrationTestVacancyReferenceNumber);
             var reservedVacancy = writer.ReserveVacancyForQA(IntegrationTestVacancyReferenceNumber);
 
@@ -114,7 +114,7 @@
                     .With(av => av.DateStartedToQA, null)
                     .Create();
             //Act
-            writer.Save(vacancy);
+            writer.DeepSave(vacancy);
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             int? numberOfPositions = null;
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new[]

@@ -79,7 +79,7 @@
             {
                 case ProviderVacancyStatuses.Live:
                     vacancy.Status = ProviderVacancyStatuses.Closed;
-                    _apprenticeshipVacancyWriteRepository.Save(vacancy);
+                    _apprenticeshipVacancyWriteRepository.DeepSave(vacancy);
                     break;
                 default:
                     return;

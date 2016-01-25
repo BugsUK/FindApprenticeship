@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
+    using AutoMapper;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;

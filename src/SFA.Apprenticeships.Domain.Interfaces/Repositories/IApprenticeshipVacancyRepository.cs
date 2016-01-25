@@ -17,11 +17,13 @@
         List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }
 
-    public interface IApprenticeshipVacancyWriteRepository : IWriteRepository<ApprenticeshipVacancy>
+    public interface IApprenticeshipVacancyWriteRepository
     {
         ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 
         ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity);
+
+        ApprenticeshipVacancy DeepSave(ApprenticeshipVacancy entity);
 
         ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
             int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
