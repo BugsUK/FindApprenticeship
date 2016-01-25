@@ -12,5 +12,9 @@
         GetErrorCodesResponse GetErrorCodes(GetErrorCodesRequest request);
 
         GetCountiesResponse GetCounties(GetCountiesRequest request);
+
+        GetRegionResponse GetRegions(GetRegionRequest request);
+
+        GetLocalAuthoritiesResponse GetLocalAuthorities(GetLocalAuthoritiesRequest request);
     }
 }

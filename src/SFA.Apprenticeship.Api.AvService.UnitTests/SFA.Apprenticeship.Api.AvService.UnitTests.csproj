@@ -119,11 +119,15 @@
     <Compile Include="Mappers\Version51\AddressMapperTests.cs" />
     <Compile Include="Mappers\Version51\ApprenticeshipVacancyQueryMapperTests.cs" />
     <Compile Include="Mappers\Version51\ApprenticeshipVacancyMapperTests.cs" />
+    <Compile Include="Mappers\Version51\LocalAuthorityMappersTests.cs" />
+    <Compile Include="Mappers\Version51\RegionMappersTests.cs" />
     <Compile Include="Mappers\Version51\EmployerDataMapperTests.cs" />
-    <Compile Include="Mappers\Version51\ReferenceDataMappersTests.cs" />
+    <Compile Include="Mappers\Version51\CountyMappersTests.cs" />
     <Compile Include="Mappers\Version51\VacancyDurationMapperTests.cs" />
     <Compile Include="Mappers\Version51\VacancyUploadRequestMapperTests.cs" />
     <Compile Include="Mappers\Version51\WageMapperTests.cs" />
+    <Compile Include="Mediators\Version51\ReferenceDataService\GetLocalAuthoritiesTests.cs" />
+    <Compile Include="Mediators\Version51\ReferenceDataService\GetRegionsTests.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\GetCountiesTests.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\ReferenceDataServiceMediatorTestsBase.cs" />
     <Compile Include="Mediators\Version51\ReferenceDataService\GetErrorCodesTests.cs" />
@@ -133,6 +137,8 @@
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByQueryTests.cs" />
     <Compile Include="Providers\Version51\VacancyDetailsProvider\GetVacancyDetailsByReferenceNumberTests.cs" />
     <Compile Include="Builders\Version51\VacancyUploadDataBuilder.cs" />
+    <Compile Include="ServiceImplementation\Version51\ReferenceDataService\GetLocalAuthorityTests.cs" />
+    <Compile Include="ServiceImplementation\Version51\ReferenceDataService\GetRegionsTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService\GetCountiesTests.cs" />
     <Compile Include="ServiceImplementation\Version51\ReferenceDataService\GetErrorCodesTests.cs" />
     <Compile Include="Services\WebServiceConsumerServiceTests.cs" />
