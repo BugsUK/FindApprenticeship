@@ -169,13 +169,12 @@
         [Test]
         public void SaveVacancyShouldSaveLocations()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
-            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
-/*
+
             const string title = "Vacancy title";
             const int numberOfLocations = 5;
             var vacancyGuid = Guid.NewGuid();
@@ -205,11 +204,10 @@
         [Test]
         public void ShallowSaveVacancyShouldNotSaveLocations()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
-            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             const string title = "Vacancy title";
@@ -256,9 +254,8 @@
         [Test]
         public void FindByFrameworkCodeNameWithPaginationTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             int totalResultsCount;
@@ -278,9 +275,8 @@
         [Test]
         public void FindByLiveDateWithPaginationTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             int totalResultsCount;
@@ -300,9 +296,8 @@
         [Test]
         public void FindByClosingDateWithPaginationTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             int totalResultsCount;
@@ -321,12 +316,10 @@
         [Test]
         public void ReserveVacancyForQaTest()
         {
-            IGetOpenConnection connection = new GetOpenConnectionFromConnectionString(_connectionString);
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
-                    logger.Object);
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(connection, _mapper,
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
             const long vacancyReferenceNumber = 999;
@@ -334,13 +327,12 @@
             vacancy.VacancyReferenceNumber = vacancyReferenceNumber;
             vacancy.DateSubmitted = null;
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
-                repository.ReserveVacancyForQA(1);
+
             writeRepository.Save(vacancy);
 
             writeRepository.ReserveVacancyForQA(vacancyReferenceNumber);
-                var vacancy = GetVacancy(1L);
             var loadedVacancy = readRepository.Get(vacancyReferenceNumber);
-            }*/
+            
             loadedVacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
             loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
