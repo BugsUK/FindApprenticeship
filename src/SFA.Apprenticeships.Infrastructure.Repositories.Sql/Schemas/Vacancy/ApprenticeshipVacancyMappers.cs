@@ -137,7 +137,7 @@
                 .IgnoreMember(v => v.OwnerVacancyPartyId) // UKPrn
 
                 // Just been hacked so that updates don't fail -> vacancy lookup?
-                .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
+                //.MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!! -> in sql
 
                 // TODO: Missing from ApprenticeshipVacancy - add as part of other refactoring
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
@@ -174,13 +174,12 @@
 
                 // Need to map the following separately
                 .ForMember(av => av.Ukprn, opt => opt.Ignore())
-                .ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
+                //.ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
                 .ForMember(av => av.LocationAddresses, opt => opt.Ignore())
 
                 // TODO: Currently missing from Vacancy.Vacancy
                 .ForMember(av => av.LastEditedById, opt => opt.Ignore()) // TODO: Provider User Guid
                 .ForMember(av => av.VacancyManagerId, opt => opt.Ignore()) // TODO: Think
-                //.ForMember(av => av.ParentVacancyId, opt => opt.Ignore()) // TODO: Think
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.ParentVacancyId)
 
                 // TODO: Currently missing from Vacancy.Vacancy, but should be times

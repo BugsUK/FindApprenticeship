@@ -249,6 +249,7 @@ FETCH NEXT @PageSize ROWS ONLY
             }
 
             int employerPostalAddressId = PopulateVacancyPartyIds(entity, dbVacancy);
+            PopulateFrameworkId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -302,6 +303,7 @@ FETCH NEXT @PageSize ROWS ONLY
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
             PopulateVacancyPartyIds(entity, dbVacancy);
+            PopulateFrameworkId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -343,6 +345,18 @@ WHERE  UKPrn = @UKPrn
             dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: ???
 
             return results.Item1.Single().PostalAddressId;
+        }
+
+        private void PopulateFrameworkId(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)
+        {
+            // TODO: use query cached?
+            var framework = _getOpenConnection.Query<int>(@"
+SELECT FrameworkId
+FROM Reference.Framework
+WHERE CodeName = @FrameworkCodeName
+", new {vacancy.FrameworkCodeName});
+
+            dbVacancy.FrameworkId = framework.FirstOrDefault();
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)

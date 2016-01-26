@@ -306,6 +306,48 @@
         }
 
         [Test]
+        public void ShallowSaveVacancyShouldSaveFrameworkId()
+        {
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.FrameworkCodeName = "F02";
+            vacancy.StandardId = null;
+            vacancy.TrainingType = TrainingType.Frameworks;
+            
+            writeRepository.ShallowSave(vacancy);
+
+            var loadedVacancy = readRepository.Get(vacancy.EntityId);
+
+            loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
+        }
+
+        [Test]
+        public void DeepSaveVacancyShouldSaveFrameworkId()
+        {
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.FrameworkCodeName = "F02";
+            vacancy.StandardId = null;
+            vacancy.TrainingType = TrainingType.Frameworks;
+
+            writeRepository.DeepSave(vacancy);
+
+            var loadedVacancy = readRepository.Get(vacancy.EntityId);
+
+            loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
+        }
+
+        [Test]
         public void FindByFrameworkCodeNameWithPaginationTest()
         {
             var logger = new Mock<ILogService>();
