@@ -129,7 +129,7 @@
                 .MapMemberFrom(v => v.ParentVacancyId, av => av.ParentVacancyId)
 
                 // These are mapped via database lookups -> no need to do anything here
-                .IgnoreMember(v => v.OriginalContractOwnerVacancyPartyId) // TODO
+                .IgnoreMember(v => v.OriginalContractOwnerVacancyPartyId) // TODO -> done in sql
                 .IgnoreMember(v => v.EmployerVacancyPartyId) // ProviderSiteEmployerLink.Employer.Ern
                 .IgnoreMember(v => v.ContractOwnerVacancyPartyId) // UKPrn
                 .IgnoreMember(v => v.DeliveryProviderVacancyPartyId) // UKPrn
