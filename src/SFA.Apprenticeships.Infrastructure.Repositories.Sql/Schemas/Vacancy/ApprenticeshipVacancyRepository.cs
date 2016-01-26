@@ -272,21 +272,8 @@ FETCH NEXT @PageSize ROWS ONLY
 
             // TODO: Optimisation - insert several in one SQL round-trip
 			// TODO: move to InsertVacancyLocationAddresses after Leo's push
-            foreach (var location in entity.LocationAddresses)
-            {
-                var dbLocation = new VacancyLocation()
-                {
-                    VacancyId = dbVacancy.VacancyId,
-                    DirectApplicationUrl = "TODO",
-                    NumberOfPositions = location.NumberOfPositions
-                };
-                    
-                var dbAddress = _mapper.Map<Address, Schemas.Address.Entities.PostalAddress>(location.Address);
 
-                dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
-
-                _getOpenConnection.Insert(dbLocation);
-            }
+            InsertVacancyLocationAddresses(entity.LocationAddresses, entity.EntityId);
 
             if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
             {
