@@ -133,7 +133,7 @@ USING (VALUES
   (145, N'30UG', N'30UG', N'Hyndburn', 22),
   (146, N'42UD', N'42UD', N'Ipswich', 37),
   (147, N'00MW', N'00MW', N'Isle of Wight', 20),
-  (148, N'00HF', N'00HF', N'Isles of Scilly', 6),
+  (148, N'00HF', N'00HF', N'Isles of Scilly', 47),
   (149, N'00AU', N'00AU', N'Islington', 25),
   (151, N'00AW', N'00AW', N'Kensington and Chelsea', 25),
   (153, N'34UE', N'34UE', N'Kettering', 29),
