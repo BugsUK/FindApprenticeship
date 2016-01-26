@@ -253,6 +253,8 @@ FETCH NEXT @PageSize ROWS ONLY
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
+            var vacancyId = dbVacancy.VacancyId;
+
             try
             {
                 _getOpenConnection.Insert(dbVacancy);
@@ -265,23 +267,11 @@ FETCH NEXT @PageSize ROWS ONLY
                     throw new Exception("Failed to update record after failed insert", ex);
 
 
-                _getOpenConnection.MutatingQuery<int>(@"
--- TODO: Could be optimised. Locking may possibly be an issue
--- TODO: Should possibly split address into separate repo method
-    DELETE Vacancy.VacancyLocation
-    FROM   Vacancy.VacancyLocation
-    WHERE  VacancyId = @VacancyId
-
-    DELETE Address.PostalAddress
-    WHERE  PostalAddressId IN (
-        SELECT PostalAddressId
-        FROM   Vacancy.VacancyLocation
-        WHERE  VacancyId = @VacancyId
-    )
-", new { VacancyId = dbVacancy.VacancyId });
+                RemoveVacancyLocationAddresses(vacancyId);
             }
 
             // TODO: Optimisation - insert several in one SQL round-trip
+			// TODO: move to InsertVacancyLocationAddresses after Leo's push
             foreach (var location in entity.LocationAddresses)
             {
                 var dbLocation = new VacancyLocation()
@@ -322,7 +312,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             UpdateEntityTimestamps(entity);
 
-            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
+            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Entities.Vacancy>(entity);
 
             dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
@@ -411,7 +401,47 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
             bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
             string locationAddressesComment, string additionalLocationInformation, string additionalLocationInformationComment)
         {
-            throw new NotImplementedException();
+            // TODO: isEmployerLocationMainApprenticeshipLocation -> VacancyLocationType => M -> Multiple locations, S -> Specific location
+
+            Condition.Requires(vacancyLocationAddresses, "vacancyLocationAddresses").IsNotNull();
+
+            var vacancyLocationTypeCode = isEmployerLocationMainApprenticeshipLocation != null &&
+                                      isEmployerLocationMainApprenticeshipLocation.Value
+                ? "S"
+                : "M"; //TODO: review. I don't think it's true. We should add a new property and update this one as well.
+
+            var dbVacancy = _getOpenConnection.MutatingQuery<Entities.Vacancy>(@"
+UPDATE Vacancy.Vacancy
+SET    NumberOfPositions                         = @NumberOfPositions,
+       LocationAddressesComment                  = @LocationAddressesComment,
+       AdditionalLocationInformation             = @AdditionalLocationInformation,
+       AdditionalLocationInformationComment      = @AdditionalLocationInformationComment,
+       VacancyLocationTypeCode                   = @VacancyLocationTypeCode
+WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
+
+DECLARE @RowCount INT = @@RowCount
+
+-- IF RowCount > 1
+--     RAISERROR etc etc.
+
+SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+--AND    @RowCount = 1 -- what does it mean?
+",
+                new
+                {
+                    NumberOfPositions = numberOfPositions,
+                    LocationAddressesComment = locationAddressesComment,
+                    VacancyReferenceNumber = vacancyReferenceNumber,
+                    AdditionalLocationInformation = additionalLocationInformation,
+                    AdditionalLocationInformationComment = additionalLocationInformationComment,
+                    VacancyLocationTypeCode = vacancyLocationTypeCode
+                }).SingleOrDefault();
+
+            RemoveVacancyLocationAddresses(vacancyReferenceNumber);
+
+            InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyReferenceNumber).EntityId); // TODO: can be done in another way?
+
+            return MapVacancy(dbVacancy);
         }
 
         private void UpdateEntityTimestamps(ApprenticeshipVacancy entity)
@@ -428,6 +458,55 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
                 entity.DateTimeUpdated = DateTime.UtcNow;
             }
             */
+        }
+
+        private void InsertVacancyLocationAddresses(IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, Guid vacancyId)
+        {
+            foreach (var location in vacancyLocationAddresses)
+            {
+                var dbLocation = new VacancyLocation()
+                {
+                    VacancyId = vacancyId,
+                    DirectApplicationUrl = "TODO",
+                    NumberOfPositions = location.NumberOfPositions
+                };
+
+                var dbAddress = _mapper.Map<Address, Schemas.Address.Entities.PostalAddress>(location.Address);
+
+                dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
+
+                _getOpenConnection.Insert(dbLocation);
+            }
+        }
+
+        private void RemoveVacancyLocationAddresses(Guid vacancyId)
+        {
+            var sql = GetRemoveVacancyLocationAddressesQuery("@VacancyId");
+            _getOpenConnection.MutatingQuery<int>(sql, new { VacancyId = vacancyId });
+        }
+
+        private void RemoveVacancyLocationAddresses(long vacancyReferenceNumber)
+        {
+            var sql = GetRemoveVacancyLocationAddressesQuery("(SELECT VacancyId FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber)");
+            _getOpenConnection.MutatingQuery<int>(sql, new { VacancyReferenceNumber = vacancyReferenceNumber });
+        }
+
+        private string GetRemoveVacancyLocationAddressesQuery(string selectVacancyIdQuery)
+        {
+            return
+                $@"
+-- TODO: Could be optimised. Locking may possibly be an issue
+-- TODO: Should possibly split address into separate repo method
+    DELETE Vacancy.VacancyLocation
+    FROM   Vacancy.VacancyLocation
+    WHERE  VacancyId = {selectVacancyIdQuery}
+
+    DELETE Address.PostalAddress
+    WHERE  PostalAddressId IN (
+        SELECT PostalAddressId
+        FROM   Vacancy.VacancyLocation
+        WHERE  VacancyId = {selectVacancyIdQuery}
+    )";
         }
     }
 }

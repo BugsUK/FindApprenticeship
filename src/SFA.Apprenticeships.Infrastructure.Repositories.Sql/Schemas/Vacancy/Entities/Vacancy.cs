@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public Guid VacancyId { get; set; }
 
-        public int? VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         [Required]
         [StringLength(1)]
@@ -170,7 +170,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string LocationAddressesComment { get; set; }
 
-        public int NumberOfPositions { get; set; }
+        public int? NumberOfPositions { get; set; }
 
         public string NumberOfPositionsComment { get; set; }
 

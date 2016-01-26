@@ -29,6 +29,7 @@
     {
         private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         private IGetOpenConnection _connection;
+        private int vacancyReferenceNumber = 10;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
@@ -83,7 +84,7 @@
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void ShouldNotBeAbleToDeepSaveAVacancyWithLocationsAsNull()
         {
-            var newReferenceNumber = 3L;
+            var newReferenceNumber = vacancyReferenceNumber++;
             var logger = new Mock<ILogService>();
 
             IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
@@ -101,7 +102,7 @@
         [Test]
         public void UpdateTest()
         {
-            var newReferenceNumber = 3L;
+            var newReferenceNumber = vacancyReferenceNumber++;
             var logger = new Mock<ILogService>();
 
             IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
@@ -206,6 +207,7 @@
                 .ToList();
 
             var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyReferenceNumber = vacancyReferenceNumber++;
             vacancy.EntityId = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
@@ -345,22 +347,69 @@
             IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
-            const long vacancyReferenceNumber = 999;
             var vacancy = CreateValidDomainVacancy();
-            vacancy.VacancyReferenceNumber = vacancyReferenceNumber;
+            vacancy.VacancyReferenceNumber = vacancyReferenceNumber++;
             vacancy.DateSubmitted = null;
             vacancy.Status = ProviderVacancyStatuses.PendingQA;
 
             writeRepository.DeepSave(vacancy);
 
-            writeRepository.ReserveVacancyForQA(vacancyReferenceNumber);
-            var loadedVacancy = readRepository.Get(vacancyReferenceNumber);
+            writeRepository.ReserveVacancyForQA(vacancy.VacancyReferenceNumber);
+            var loadedVacancy = readRepository.Get(vacancy.VacancyReferenceNumber);
             
             loadedVacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
             loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
 
-        private static IEnumerable<object> GetSeedObjects()
+        [Test]
+        public void ReplaceLocationInformationTest()
+        {
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyReferenceNumber = vacancyReferenceNumber++;
+            vacancy.DateSubmitted = null;
+            vacancy.Status = ProviderVacancyStatuses.PendingQA;
+
+            writeRepository.DeepSave(vacancy);
+
+            const int newNumberOfLocations = 13;
+
+            var newLocations = new Fixture()
+                .Build<VacancyLocationAddress>()
+                .WithAutoProperties()
+                .CreateMany(newNumberOfLocations)
+                .ToList();
+
+            const string aComment = "A comment";
+
+            bool? isEmployerLocationMainApprenticeshipLocation = false;
+            int? numberOfPositions = null;
+            const string locationAddressesComment = aComment;
+            const string additionalLocationInformation = "additional location information";
+            const string additionalLocationInformationComment = aComment;
+
+            writeRepository.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
+                isEmployerLocationMainApprenticeshipLocation, numberOfPositions, newLocations, locationAddressesComment,
+                additionalLocationInformation, additionalLocationInformationComment);
+
+            var dbVacancy = readRepository.Get(vacancy.VacancyReferenceNumber);
+
+            dbVacancy.NumberOfPositions.Should().Be(numberOfPositions);
+            dbVacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);
+            dbVacancy.AdditionalLocationInformationComment.Should().Be(additionalLocationInformationComment);
+            dbVacancy.LocationAddressesComment.Should().Be(locationAddressesComment);
+            dbVacancy.LocationAddresses.ShouldBeEquivalentTo(newLocations,
+                options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
+            //dbVacancy.IsEmployerLocationMainApprenticeshipLocation.Should()
+            //    .Be(isEmployerLocationMainApprenticeshipLocation);
+        }
+
+        private IEnumerable<object> GetSeedObjects()
         {
             var vacancies = new List<Vacancy>();
 
@@ -372,7 +421,7 @@
                 vacancies.Add(new Vacancy
                 {
                     VacancyId = Guid.NewGuid(),
-                    VacancyReferenceNumber = null,
+                    VacancyReferenceNumber = vacancyReferenceNumber++,
                     AV_ContactName = "av contact name",
                     VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                     VacancyStatusCode = VacancyStatusCode_Live,
@@ -401,7 +450,7 @@
             vacancies.Add(new Vacancy
             {
                 VacancyId = VacancyId_VacancyAParent,
-                VacancyReferenceNumber = null,
+                VacancyReferenceNumber = vacancyReferenceNumber++,
                 AV_ContactName = "av contact name",
                 VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                 VacancyStatusCode = VacancyStatusCode_Parent,

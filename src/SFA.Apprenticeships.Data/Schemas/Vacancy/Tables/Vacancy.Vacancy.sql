@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [Vacancy].[Vacancy] (
     [VacancyId]                          UNIQUEIDENTIFIER  NOT NULL,
-    [VacancyReferenceNumber]               INT             NULL,
+    [VacancyReferenceNumber]               INT             NOT NULL,
     [VacancyTypeCode]                      CHAR (1)        NOT NULL,
     [VacancyStatusCode]                    CHAR (3)        NOT NULL,
     [VacancyLocationTypeCode]              CHAR (1)        NOT NULL,
@@ -69,7 +69,7 @@
     [QAUserName]                           NVARCHAR (MAX)  NULL,
 	[LocationAddressesComment]             NVARCHAR (MAX)  NULL,
 	[TimeStartedToQA]					   DATETIME2 (7)   NULL,
-    [NumberOfPositions]                    INT             NOT NULL,
+    [NumberOfPositions]                    INT             NULL,
     [NumberOfPositionsComment]             NVARCHAR (MAX)  NULL,
     [DateQAApproved]                       DATETIME2 (7)   NULL,
     [PublishedDateTime]                    DATETIME2       NULL,
@@ -105,9 +105,9 @@
 
 GO
 
---CREATE UNIQUE INDEX [IX_Vacancy_VacancyReferenceNumber] ON [Vacancy].[Vacancy] ([VacancyReferenceNumber])
+CREATE UNIQUE INDEX [IX_Vacancy_VacancyReferenceNumber] ON [Vacancy].[Vacancy] ([VacancyReferenceNumber])
+GO
 
---GO
 EXEC sp_addextendedproperty @name = N'MS_Description',
     @value = N'The URL specific to this vacancy. May be the same as VacancyParty.WebsiteUrl or may have been overridden.',
     @level0type = N'SCHEMA',
