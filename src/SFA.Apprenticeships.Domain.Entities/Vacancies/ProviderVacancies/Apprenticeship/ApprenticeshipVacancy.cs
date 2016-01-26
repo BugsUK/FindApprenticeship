@@ -63,7 +63,7 @@
             SubmissionCount = previousVacancy.SubmissionCount;
             VacancyManagerId = previousVacancy.VacancyManagerId;
             LastEditedById = previousVacancy.LastEditedById;
-            ParentVacancyReferenceNumber = previousVacancy.ParentVacancyReferenceNumber;
+            ParentVacancyId = previousVacancy.ParentVacancyId;
             TrainingType = previousVacancy.TrainingType;
             ApprenticeshipLevel = previousVacancy.ApprenticeshipLevel;
             ApprenticeshipLevelComment = previousVacancy.ApprenticeshipLevelComment;

@@ -77,8 +77,10 @@
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
+                .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, vacancyReferenceNumber++)
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(av => av.ParentVacancyId, null)
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
@@ -102,6 +104,16 @@
             }
 
             return result;
+        }
+
+        protected Tuple<ApprenticeshipVacancy, ApprenticeshipVacancy> CreateValidParentChildDomainVacancies()
+        {
+            var parentVacancy = CreateValidDomainVacancy();
+
+            var childVacancy = CreateValidDomainVacancy();
+            childVacancy.ParentVacancyId = parentVacancy.EntityId;
+
+            return new Tuple<ApprenticeshipVacancy, ApprenticeshipVacancy>(parentVacancy, childVacancy);
         }
 
         protected EquivalencyAssertionOptions<Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Vacancy> options)
@@ -130,7 +142,7 @@
                 .Excluding(v => v.DateStartedToQA)
                 .Excluding(v => v.VacancyManagerId)
                 .Excluding(v => v.LastEditedById)
-                .Excluding(v => v.ParentVacancyReferenceNumber)
+                .Excluding(v => v.ParentVacancyId)
                 .Excluding(v => v.DateCreated)
                 .Excluding(v => v.DateUpdated)
 

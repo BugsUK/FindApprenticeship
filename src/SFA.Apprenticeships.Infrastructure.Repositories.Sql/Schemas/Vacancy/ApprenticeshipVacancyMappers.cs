@@ -47,12 +47,12 @@
             {
                 { "AMW", WageType.ApprenticeshipMinimumWage },
                 { "NMW", WageType.NationalMinimumWage },
-                { "CUS", WageType.Custom } // TODO: REVIEW. Why we map to strings?
+                { "CUS", WageType.Custom }
             };
 
             var wageUnitMap = new CodeEnumMap<WageUnit>
             {
-                { "N", WageUnit.NotApplicable }, // TODO: Revisit?
+                { "N", WageUnit.NotApplicable },
                 { "W", WageUnit.Weekly },
                 { "M", WageUnit.Monthly },
                 { "A", WageUnit.Annually },
@@ -63,7 +63,7 @@
                 { "U", DurationType.Unknown },
                 { "W", DurationType.Weeks },
                 { "M", DurationType.Months },
-                { "Y", DurationType.Years } // TODO: REVIEW. Why we map to strings?
+                { "Y", DurationType.Years }
             };
 
             var trainingTypeMap = new CodeEnumMap<TrainingType>
@@ -93,7 +93,7 @@
                 { "REF", ProviderVacancyStatuses.RejectedByQA },
                 { "RES", ProviderVacancyStatuses.ReservedForQA },
                 { "PAR", ProviderVacancyStatuses.ParentVacancy },
-                { "UNK", ProviderVacancyStatuses.Unknown} // TODO: review
+                { "UNK", ProviderVacancyStatuses.Unknown}
             };
 
             Mapper.CreateMap<string, ProviderVacancyStatuses>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
@@ -115,7 +115,7 @@
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
                 .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description)
-                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct - no, wrong
+                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateQAApproved) // TODO: Believed to be correct - no, wrong -> changed to DateQAApproved, believed to be correct
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Always Apprenticeship (mapping from ApprenticeshipVacancy!!)
                 .MapMemberFrom(v => v.VacancyLocationTypeCode, av => av.IsEmployerLocationMainApprenticeshipLocation.GetValueOrDefault() ? VacancyLocationType.Employer : VacancyLocationType.Specific)
@@ -126,9 +126,9 @@
                 .MapMemberFrom(v => v.DirectApplicationUrl, av => av.OfflineApplicationUrl)
                 .MapMemberFrom(v => v.DirectApplicationUrlComment, av => av.OfflineApplicationUrlComment)
                 .MapMemberFrom(v => v.IsDirectApplication, av => av.OfflineVacancy)
+                .MapMemberFrom(v => v.ParentVacancyId, av => av.ParentVacancyId)
 
-                // These are mapped via database lookups
-                .IgnoreMember(v => v.ParentVacancyId) // TODO ParentVacancyReferenceNumber
+                // These are mapped via database lookups -> no need to do anything here
                 .IgnoreMember(v => v.OriginalContractOwnerVacancyPartyId) // TODO
                 .IgnoreMember(v => v.EmployerVacancyPartyId) // ProviderSiteEmployerLink.Employer.Ern
                 .IgnoreMember(v => v.ContractOwnerVacancyPartyId) // UKPrn
@@ -136,15 +136,14 @@
                 .IgnoreMember(v => v.ManagerVacancyPartyId) // UKPrn
                 .IgnoreMember(v => v.OwnerVacancyPartyId) // UKPrn
 
-                // Just been hacked so that updates don't fail
+                // Just been hacked so that updates don't fail -> vacancy lookup?
                 .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
 
                 // TODO: Missing from ApprenticeshipVacancy - add as part of other refactoring
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
 
-                // TODO: Remove from Vacancy.Vacancy?
-                .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA) // -> we need that
+                .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA)
 
                 .End();
 
@@ -162,7 +161,7 @@
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
                 .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
-                .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct -> I think it shou
+                .MapMemberFrom(av => av.DateQAApproved, v => v.PublishedDateTime) // TODO: Believed to be correct -> I think it should be OK now (change dto DateQAApproved)
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.IsEmployerLocationMainApprenticeshipLocation, v => v.VacancyLocationTypeCode == VacancyLocationType.Employer)
 
@@ -181,11 +180,12 @@
                 // TODO: Currently missing from Vacancy.Vacancy
                 .ForMember(av => av.LastEditedById, opt => opt.Ignore()) // TODO: Provider User Guid
                 .ForMember(av => av.VacancyManagerId, opt => opt.Ignore()) // TODO: Think
-                .ForMember(av => av.ParentVacancyReferenceNumber, opt => opt.Ignore()) // TODO: Think
+                //.ForMember(av => av.ParentVacancyId, opt => opt.Ignore()) // TODO: Think
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.ParentVacancyId)
 
                 // TODO: Currently missing from Vacancy.Vacancy, but should be times
                 .MapMemberFrom(av => av.DateStartedToQA, v => v.TimeStartedToQA)
-                .ForMember(av => av.DateCreated, opt => opt.Ignore()) // Yes, keep this DateTime
+                .ForMember(av => av.DateCreated,  opt => opt.Ignore()) // Yes, keep this DateTime
                 .ForMember(av => av.DateUpdated, opt => opt.Ignore()) // Yes, keep this DateTime
 
                 // TODO: vacancy source

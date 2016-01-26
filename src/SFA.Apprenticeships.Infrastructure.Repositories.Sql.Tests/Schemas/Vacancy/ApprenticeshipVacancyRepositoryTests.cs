@@ -281,7 +281,6 @@
             vacancy.LocationAddresses = locations;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
 
-
             writeRepository.DeepSave(vacancy);
 
             var newLocations = new Fixture()

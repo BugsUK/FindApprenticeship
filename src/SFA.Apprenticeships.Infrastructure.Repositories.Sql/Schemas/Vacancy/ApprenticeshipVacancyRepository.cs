@@ -271,8 +271,6 @@ FETCH NEXT @PageSize ROWS ONLY
             }
 
             // TODO: Optimisation - insert several in one SQL round-trip
-			// TODO: move to InsertVacancyLocationAddresses after Leo's push
-
             InsertVacancyLocationAddresses(entity.LocationAddresses, entity.EntityId);
 
             if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
@@ -325,7 +323,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return entity;
         }
 
-        private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
+        private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)
         {
             var results = _getOpenConnection.QueryMultiple<dynamic, int>(@"
 SELECT VacancyPartyId, PostalAddressId

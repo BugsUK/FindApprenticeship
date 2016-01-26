@@ -50,6 +50,6 @@
         //Id if the Provider User who created the vacancy
         public Guid VacancyManagerId { get; set; }
         public Guid LastEditedById { get; set; }
-        public long ParentVacancyReferenceNumber { get; set; }
+        public Guid? ParentVacancyId { get; set; }
     }
 }
