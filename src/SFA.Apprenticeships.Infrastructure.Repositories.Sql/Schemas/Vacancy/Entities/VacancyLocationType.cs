@@ -7,6 +7,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     [Table("Vacancy.VacancyLocationType")]
     public class VacancyLocationType
     {
+        public const string Employer = "E";
+        public const string Specific = "S";
+        public const string Multiple = "M";
+        public const string Nationwide = "N";
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public VacancyLocationType()
         {

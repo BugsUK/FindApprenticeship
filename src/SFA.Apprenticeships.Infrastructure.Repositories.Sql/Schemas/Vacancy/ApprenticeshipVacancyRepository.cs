@@ -236,9 +236,19 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
 
-            dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
+            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            {
+                if (entity.LocationAddresses.Count != 0)
+                    throw new InvalidOperationException(entity.LocationAddresses.Count.ToString());
+            }
+            else if (entity.LocationAddresses.Count > 1)
+            {
+                if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Specific)
+                    throw new InvalidOperationException(dbVacancy.VacancyLocationTypeCode);
+                dbVacancy.VacancyLocationTypeCode = "M";
+            }
 
-            PopulateVacancyPartyIds(entity, dbVacancy);
+            int employerPostalAddressId = PopulateVacancyPartyIds(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -288,8 +298,18 @@ FETCH NEXT @PageSize ROWS ONLY
                 _getOpenConnection.Insert(dbLocation);
             }
 
+            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            {
+                var dbLocation = new VacancyLocation()
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    DirectApplicationUrl = "TODO",
+                    NumberOfPositions = entity.NumberOfPositions.Value,
+                    PostalAddressId = employerPostalAddressId
+                };
 
-           
+                _getOpenConnection.Insert(dbLocation);
+            }
 
             _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
@@ -328,10 +348,10 @@ FETCH NEXT @PageSize ROWS ONLY
             return entity;
         }
 
-        private void PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
+        private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy dbVacancy)
         {
-            var results = _getOpenConnection.QueryMultiple<int, int>(@"
-SELECT VacancyPartyId
+            var results = _getOpenConnection.QueryMultiple<dynamic, int>(@"
+SELECT VacancyPartyId, PostalAddressId
 FROM   Vacancy.VacancyParty
 WHERE  EdsErn = @EdsErn
 
@@ -340,12 +360,14 @@ FROM   Vacancy.VacancyParty
 WHERE  UKPrn = @UKPrn
 ", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern, UkPrn = vacancy.Ukprn });
 
-            dbVacancy.EmployerVacancyPartyId = results.Item1.Single();
-            dbVacancy.ContractOwnerVacancyPartyId = results.Item1.Single();
-            dbVacancy.DeliveryProviderVacancyPartyId = results.Item1.Single();
-            dbVacancy.ManagerVacancyPartyId = results.Item1.Single();
-            dbVacancy.OwnerVacancyPartyId = results.Item1.Single();
-            dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item1.Single(); // TODO: ???
+            dbVacancy.EmployerVacancyPartyId = results.Item1.Single().VacancyPartyId; 
+            dbVacancy.ContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: Test
+            dbVacancy.DeliveryProviderVacancyPartyId = results.Item2.Single();
+            dbVacancy.ManagerVacancyPartyId = results.Item2.Single();
+            dbVacancy.OwnerVacancyPartyId = results.Item2.Single();
+            dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: ???
+
+            return results.Item1.Single().PostalAddressId;
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)

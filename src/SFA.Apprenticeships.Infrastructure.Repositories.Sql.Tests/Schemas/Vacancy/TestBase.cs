@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
     using System;
+    using System.Linq;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions.Equivalency;
@@ -8,7 +9,8 @@
     using Ploeh.AutoFixture;
     using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
-
+    using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
+    using System.Collections.Generic;
     [TestFixture]
     public class TestBase
     {
@@ -23,7 +25,6 @@
         protected const string VacancyTypeCode_Apprenticeship = "A";
         protected const string VacancyStatusCode_Live = "LIV";
         protected const string VacancyStatusCode_Parent = "PAR";
-        protected const string VacancyLocationTypeCode_Specific = "S";
         protected const string TrainingTypeCode_Framework = "F";
         protected const string TrainingTypeCode_Standard = "S";
         protected const string LevelCode_Intermediate = "2";
@@ -36,7 +37,9 @@
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
-            var result = new Fixture().Build<Vacancy>()
+            var fixture = new Fixture();
+
+            var result = fixture.Build<Vacancy>()
                 .With(v => v.WageTypeCode, WageTypeCode_Custom)
                 .With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
                 .With(v => v.DurationTypeCode, DurationTypeCode_Years)
@@ -46,7 +49,7 @@
                 .With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
                 .Create();
 
-            if (result.FrameworkId.GetHashCode() % 2 == 1)
+            if (fixture.Create<bool>())
             {
                 result.TrainingTypeCode = TrainingTypeCode_Framework;
                 result.FrameworkId = FrameworkId_Framework1;
@@ -58,6 +61,8 @@
                 result.FrameworkId = null;
                 result.StandardId = StandardId_Standard1;
             }
+
+            result.VacancyLocationTypeCode = fixture.Create<bool>() ? VacancyLocationType.Employer : VacancyLocationType.Specific;
 
             return result;
         }
@@ -88,6 +93,11 @@
             result.ProviderSiteEmployerLink.Employer.Ern = "101"; // fixture.Create<int>().ToString();
             result.Ukprn = "201";
 
+            if (result.IsEmployerLocationMainApprenticeshipLocation.GetValueOrDefault())
+            {
+                result.LocationAddresses = new List<Domain.Entities.Locations.VacancyLocationAddress>();
+            }
+
             return result;
         }
 
@@ -95,7 +105,6 @@
         {
             return options
                 // TODO: Not in Domain object yet
-                .Excluding(v => v.VacancyLocationTypeCode)
                 .Excluding(v => v.AV_ContactName)
                 .Excluding(v => v.AV_WageText)
 
@@ -111,9 +120,6 @@
         protected EquivalencyAssertionOptions<ApprenticeshipVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<ApprenticeshipVacancy> options)
         {
             return options
-                // TODO: Not in database object yet
-                .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
-
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)
                 .Excluding(v => v.Ukprn)

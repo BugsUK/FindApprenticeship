@@ -22,6 +22,7 @@
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using PostalAddress = Sql.Schemas.Address.Entities.PostalAddress;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
+    using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
 
     [TestFixture(Category = "Integration")]
     public class ApprenticeshipVacancyRepositoryTests : TestBase
@@ -208,6 +209,7 @@
             vacancy.EntityId = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
 
             writeRepository.DeepSave(vacancy);
 
@@ -245,6 +247,8 @@
             vacancy.EntityId = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
+
 
             writeRepository.DeepSave(vacancy);
 
@@ -372,7 +376,7 @@
                     AV_ContactName = "av contact name",
                     VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                     VacancyStatusCode = VacancyStatusCode_Live,
-                    VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                    VacancyLocationTypeCode = VacancyLocationType.Specific,
                     Title = "Test vacancy",
                     TrainingTypeCode = TrainingTypeCode_Framework,
                     LevelCode = LevelCode_Intermediate,
@@ -401,7 +405,7 @@
                 AV_ContactName = "av contact name",
                 VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                 VacancyStatusCode = VacancyStatusCode_Parent,
-                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                VacancyLocationTypeCode = VacancyLocationType.Specific,
                 Title = "Test vacancy",
                 TrainingTypeCode = TrainingTypeCode_Framework,
                 LevelCode = LevelCode_Intermediate,
@@ -428,7 +432,7 @@
                 AV_ContactName = "av contact name",
                 VacancyTypeCode = VacancyTypeCode_Apprenticeship,
                 VacancyStatusCode = VacancyStatusCode_Live,
-                VacancyLocationTypeCode = VacancyLocationTypeCode_Specific,
+                VacancyLocationTypeCode = VacancyLocationType.Specific,
                 Title = "Test vacancy",
                 TrainingTypeCode = TrainingTypeCode_Framework,
                 LevelCode = LevelCode_Intermediate,

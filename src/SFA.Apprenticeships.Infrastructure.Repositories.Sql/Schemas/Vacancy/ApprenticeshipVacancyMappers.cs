@@ -12,6 +12,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using SFA.Infrastructure.Interfaces;
+    using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
 
     /// <summary>
     /// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
@@ -117,6 +118,7 @@
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct - no, wrong
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Always Apprenticeship (mapping from ApprenticeshipVacancy!!)
+                .MapMemberFrom(v => v.VacancyLocationTypeCode, av => av.IsEmployerLocationMainApprenticeshipLocation.GetValueOrDefault() ? VacancyLocationType.Employer : VacancyLocationType.Specific)
 
                 // TODO: Change ApprenticeshipVacancy object in due course
                 .MapMemberFrom(v => v.DirectApplicationInstructions, av => av.OfflineApplicationInstructions)
@@ -140,7 +142,6 @@
                 // TODO: Missing from ApprenticeshipVacancy - add as part of other refactoring
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
-                .IgnoreMember(v => v.VacancyLocationTypeCode)
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .MapMemberFrom(v => v.TimeStartedToQA, av => av.DateStartedToQA) // -> we need that
@@ -163,6 +164,7 @@
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
                 .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct -> I think it shou
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
+                .MapMemberFrom(av => av.IsEmployerLocationMainApprenticeshipLocation, v => v.VacancyLocationTypeCode == VacancyLocationType.Employer)
 
                 // TODO: Change ApprenticeshipVacancy object in due course
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.DirectApplicationInstructions)
@@ -177,7 +179,6 @@
                 .ForMember(av => av.LocationAddresses, opt => opt.Ignore())
 
                 // TODO: Currently missing from Vacancy.Vacancy
-                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(av => av.LastEditedById, opt => opt.Ignore()) // TODO: Provider User Guid
                 .ForMember(av => av.VacancyManagerId, opt => opt.Ignore()) // TODO: Think
                 .ForMember(av => av.ParentVacancyReferenceNumber, opt => opt.Ignore()) // TODO: Think
