@@ -29,8 +29,7 @@
     {
         private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         private IGetOpenConnection _connection;
-        private int vacancyReferenceNumber = 10;
-
+        
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
@@ -129,13 +128,44 @@
         }
 
         [Test]
-        public void RoundTripTest()
+        public void RoundTripWithLocationTypeEqualsEmployerTest()
         {
             // Arrange
             var logger = new Mock<ILogService>();
             var repository = new ApprenticeshipVacancyRepository(_connection, _mapper, logger.Object);
 
+            // By default the vacancy is a vacancy with location type = employer
             var vacancy = CreateValidDomainVacancy();
+            
+            // Act
+            repository.DeepSave(vacancy);
+
+            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
+
+            // Assert
+            loadedVacancy.ShouldBeEquivalentTo(vacancy,
+                options => ExcludeHardOnes(options)
+                .Excluding(x => x.LocationAddresses)
+                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                .WhenTypeIs<DateTime>());
+        }
+
+        [Test]
+        public void RoundTripWithLocationTypeEqualsMultipleTest()
+        {
+            // Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ApprenticeshipVacancyRepository(_connection, _mapper, logger.Object);
+
+            // By default the vacancy is a vacancy with location type = employer
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            var locations = new Fixture()
+                .Build<VacancyLocationAddress>()
+                .WithAutoProperties()
+                .CreateMany(6)
+                .ToList();
+            vacancy.LocationAddresses = locations;
 
             // Act
             repository.DeepSave(vacancy);
@@ -149,7 +179,7 @@
                 .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
                 .WhenTypeIs<DateTime>());
         }
-        
+
         [Test]
         public void GetForProviderByUkprnAndProviderSiteErnTest()
         {
@@ -405,8 +435,8 @@
             dbVacancy.LocationAddressesComment.Should().Be(locationAddressesComment);
             dbVacancy.LocationAddresses.ShouldBeEquivalentTo(newLocations,
                 options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
-            //dbVacancy.IsEmployerLocationMainApprenticeshipLocation.Should()
-            //    .Be(isEmployerLocationMainApprenticeshipLocation);
+            dbVacancy.IsEmployerLocationMainApprenticeshipLocation.Should()
+                .Be(isEmployerLocationMainApprenticeshipLocation);
         }
 
         private IEnumerable<object> GetSeedObjects()

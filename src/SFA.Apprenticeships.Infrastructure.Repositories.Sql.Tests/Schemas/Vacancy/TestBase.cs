@@ -34,6 +34,7 @@
         protected const string Ukprn = "Ukrpn provider 1";
         protected const string EmployerErn = "Employer 1 ern";
         protected const string ProviderSiteErn = "Provider 1 site ern";
+        protected int vacancyReferenceNumber = 10;
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
@@ -76,6 +77,8 @@
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
+                .With(av => av.VacancyReferenceNumber, vacancyReferenceNumber++)
+                .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
@@ -91,7 +94,7 @@
             }
 
             result.ProviderSiteEmployerLink.Employer.Ern = "101"; // fixture.Create<int>().ToString();
-            result.Ukprn = "201";
+            result.Ukprn = "202"; //TODO: check with database values.
 
             if (result.IsEmployerLocationMainApprenticeshipLocation.GetValueOrDefault())
             {

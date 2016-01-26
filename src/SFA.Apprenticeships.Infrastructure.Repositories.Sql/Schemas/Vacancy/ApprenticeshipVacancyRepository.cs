@@ -281,7 +281,7 @@ FETCH NEXT @PageSize ROWS ONLY
                     NumberOfPositions = location.NumberOfPositions
                 };
                     
-                var dbAddress = _mapper.Map<Domain.Entities.Locations.Address, Schemas.Address.Entities.PostalAddress>(location.Address);
+                var dbAddress = _mapper.Map<Address, Schemas.Address.Entities.PostalAddress>(location.Address);
 
                 dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
 
