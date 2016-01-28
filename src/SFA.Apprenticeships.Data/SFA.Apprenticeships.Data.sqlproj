@@ -127,6 +127,7 @@
     <Folder Include="Schemas\WebService" />
     <Folder Include="Schemas\WebService\Schema" />
     <Folder Include="Schemas\WebService\Tables" />
+    <Folder Include="Schemas\WebService\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -172,6 +173,7 @@
     <Build Include="Schemas\WebService\Tables\WebService.WebServiceConsumer.sql" />
     <Build Include="Schemas\WebService\Schema\WebService.sql" />
     <None Include="Schemas\Reference\Scripts\Reference.County.Upsert.sql" />
+    <None Include="Schemas\WebService\Scripts\WebService.WebServiceConsumer.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />

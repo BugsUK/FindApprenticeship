@@ -129,6 +129,8 @@
     <Compile Include="Common\Formatters.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappersUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Schemas\WebService\WebServiceConsumerRepositoryTests.cs" />
+    <Compile Include="Schemas\WebService\WebServiceMappersTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

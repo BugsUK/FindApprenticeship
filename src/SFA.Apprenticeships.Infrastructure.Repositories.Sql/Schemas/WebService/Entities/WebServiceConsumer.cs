@@ -1,18 +1,12 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.WebService.Entities
 {
-    using System.Collections.Generic;
+    using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Address.Entities;
 
     [Table("WebService.WebServiceConsumer")]
     public class WebServiceConsumer
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public WebServiceConsumer()
-        {
-        }
-
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int WebServiceConsumerId { get; set; }
 
@@ -20,5 +14,25 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.WebService
         [StringLength(1)]
         public string WebServiceConsumerTypeCode { get; set; }
 
+        [Required]
+        public Guid ExternalSystemId { get; set; }
+
+        [Required]
+        public string ExternalSystemName { get; set; }
+
+        [Required]
+        public string ExternalSystemPassword { get; set; }
+
+        [Required]
+        public bool AllowVacancySummaryService { get; set; }
+
+        [Required]
+        public bool AllowVacancyDetailService { get; set; }
+
+        [Required]
+        public bool AllowReferenceDataService { get; set; }
+
+        [Required]
+        public bool AllowVacancyUploadService { get; set; }
     }
 }
