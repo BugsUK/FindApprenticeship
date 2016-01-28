@@ -96,7 +96,11 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
             var homeViewModel = new HomeViewModel
             {
                 AgencyUser = userViewModel,
-                Vacancies = vacancies
+                VacancySummaries = new DashboardVacancySummariesViewModel
+                {
+                    SearchViewModel = new DashboardVacancySummariesSearchViewModel(),
+                    Vacancies = vacancies
+                }
             };
 
             return GetMediatorResponse(AgencyUserMediatorCodes.GetHomeViewModel.OK, homeViewModel);
