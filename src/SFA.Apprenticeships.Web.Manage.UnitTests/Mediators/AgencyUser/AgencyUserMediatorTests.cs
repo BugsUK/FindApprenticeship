@@ -137,7 +137,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
             vacancyProvider.Verify(vp => vp.GetPendingQAVacanciesOverview(), Times.Once);
-            response.ViewModel.Vacancies.ShouldBeEquivalentTo(vacancies);
+            response.ViewModel.VacancySummaries.Vacancies.ShouldBeEquivalentTo(vacancies);
         }
     }
 }
