@@ -46,11 +46,11 @@
             _repository = new ProviderRepository(_connection, _mapper, logger.Object);
         }
 
-        [TearDown]
-        public void Cleanup()
-        {
-            _repository.Delete(_providerId);
-        }
+        //[TearDown]
+        //public void Cleanup()
+        //{
+        //    _repository.Delete(_providerId);
+        //}
 
         [Test]
         public void GetByGuid()
@@ -106,6 +106,8 @@
             Assert.AreNotEqual(saveResult.EntityId, Guid.Empty);
             Assert.AreNotEqual(savedProvider.EntityId, Guid.Empty);
             Assert.AreEqual(savedProvider.EntityId, saveResult.EntityId);
+            Assert.AreEqual(savedProvider.Name, providerA.Name);
+            Assert.AreEqual(savedProvider.Ukprn, providerA.Ukprn);
         }
 
 
