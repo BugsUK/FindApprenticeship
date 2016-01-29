@@ -304,6 +304,39 @@
 
         #endregion
 
+        #region Training Details
+
+        [HttpGet]
+        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+
+            return View(response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            return View(viewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
+
         #region Vacancy Details
 
         [HttpGet]

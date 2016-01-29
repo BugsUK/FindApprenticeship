@@ -128,6 +128,18 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.TrainingDetails,
+               url: "vacancy/training",
+               defaults: new { controller = "VacancyPosting", action = "TrainingDetails" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewTrainingDetails,
+               url: "vacancy/training/review",
+               defaults: new { controller = "VacancyPosting", action = "ReviewTrainingDetails" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancySummary,
                url: "vacancy/summary",
                defaults: new { controller = "VacancyPosting", action = "VacancySummary" }

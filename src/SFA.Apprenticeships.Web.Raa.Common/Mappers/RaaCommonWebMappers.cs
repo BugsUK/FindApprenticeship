@@ -30,8 +30,7 @@
                 .ForMember(dest => dest.VacancyReferenceNumber, opt => opt.Ignore())
                 .ForMember(dest => dest.DescriptionComment, opt => opt.Ignore())
                 .ForMember(dest => dest.WebsiteUrlComment, opt => opt.Ignore())
-                .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
-                ;
+                .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore());
             Mapper.CreateMap<VacancyLocationAddress, VacancyLocationAddressViewModel>();
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
@@ -41,6 +40,11 @@
 
             Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>()
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
+                .ForMember(dest => dest.Standards, opt => opt.Ignore())
+                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
+
+            Mapper.CreateMap<ApprenticeshipVacancy, TrainingDetailsViewModel>()
                 .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
                 .ForMember(dest => dest.Standards, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
