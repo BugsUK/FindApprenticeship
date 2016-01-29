@@ -680,10 +680,10 @@
 
             var utcNow = _dateTimeService.UtcNow();
 
-            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date);
-            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1));
-            var submitted48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
-            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1);
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
+            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
+            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
+            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
 
             switch (searchViewModel.FilterType)
             {
@@ -694,7 +694,7 @@
                     vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
                     break;
                 case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
-                    vacancies = submitted48Hours;
+                    vacancies = submittedMoreThan48Hours;
                     break;
                 case DashboardVacancySummaryFilterTypes.Resubmitted:
                     vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
@@ -703,6 +703,11 @@
 
             var viewModel = new DashboardVacancySummariesViewModel
             {
+                SearchViewModel = searchViewModel,
+                SubmittedTodayCount = submittedToday.Count,
+                SubmittedYesterdayCount = submittedYesterday.Count,
+                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
+                ResubmittedCount = resubmitted.Count,
                 Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
             };
 

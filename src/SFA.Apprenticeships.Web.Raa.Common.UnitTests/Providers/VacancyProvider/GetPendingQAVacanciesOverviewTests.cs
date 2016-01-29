@@ -22,7 +22,7 @@
     {
         private const int ExpectedSubmittedTodayCount = 5;
         private const int ExpectedSubmittedYesterdayCount = 4;
-        private const int ExpectedSubmitted48HoursCount = 6;
+        private const int ExpectedSubmittedMoreThan48HoursCount = 6;
         private const int ExpectedResubmittedCount = 3;
 
         private Mock<IVacancyPostingService> _vacancyPostingService;
@@ -56,12 +56,12 @@
                 .With(v => v.SubmissionCount, 1)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
-            var submitted48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
-            var vacanciesSubmitted48Hours = new Fixture().Build<ApprenticeshipVacancy>()
+            var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
+            var vacanciesSubmittedMoreThan48Hours = new Fixture().Build<ApprenticeshipVacancy>()
                 .With(v => v.Status, ProviderVacancyStatuses.PendingQA)
-                .With(v => v.DateSubmitted, submitted48HoursDate)
+                .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
-                .CreateMany(ExpectedSubmitted48HoursCount).ToList();
+                .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
             var vacanciesResubmittedHours = new Fixture().Build<ApprenticeshipVacancy>()
@@ -73,7 +73,7 @@
             var vacancies = vacanciesSubmittedToday;
             vacancies.AddRange(vacanciesSubmittedYesterdayUpperBoundary);
             vacancies.AddRange(vacanciesSubmittedYesterdayLowerBoundary);
-            vacancies.AddRange(vacanciesSubmitted48Hours);
+            vacancies.AddRange(vacanciesSubmittedMoreThan48Hours);
             vacancies.AddRange(vacanciesResubmittedHours);
 
             _vacancyPostingService = new Mock<IVacancyPostingService>();
@@ -88,10 +88,31 @@
             _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_configurationService).With(_dateTimeService).Build();
         }
 
-        [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmitted48HoursCount + ExpectedResubmittedCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
         [TestCase(DashboardVacancySummaryFilterTypes.SubmittedToday, ExpectedSubmittedTodayCount)]
         [TestCase(DashboardVacancySummaryFilterTypes.SubmittedYesterday, ExpectedSubmittedYesterdayCount)]
-        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours, ExpectedSubmitted48HoursCount + ExpectedResubmittedCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours, ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.Resubmitted, ExpectedResubmittedCount)]
+        public void ReturnsCorrectSearchViewModel(DashboardVacancySummaryFilterTypes filterType, int expectedCount)
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = filterType
+            };
+
+            //Act
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacancySummariesViewModel.SearchViewModel.FilterType.Should().Be(filterType);
+            vacancySummariesViewModel.SearchViewModel.Should().Be(searchViewModel);
+        }
+
+        [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedToday, ExpectedSubmittedTodayCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedYesterday, ExpectedSubmittedYesterdayCount)]
+        [TestCase(DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours, ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]
         [TestCase(DashboardVacancySummaryFilterTypes.Resubmitted, ExpectedResubmittedCount)]
         public void BasicCountTests(DashboardVacancySummaryFilterTypes filterType, int expectedCount)
         {
@@ -107,6 +128,25 @@
             //Assert
             vacancySummariesViewModel.Vacancies.Should().NotBeNullOrEmpty();
             vacancySummariesViewModel.Vacancies.Count.Should().Be(expectedCount);
+        }
+
+        [Test]
+        public void GetAll_Counts()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.All
+            };
+
+            //Act
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacancySummariesViewModel.SubmittedTodayCount.Should().Be(ExpectedSubmittedTodayCount);
+            vacancySummariesViewModel.SubmittedYesterdayCount.Should().Be(ExpectedSubmittedYesterdayCount);
+            vacancySummariesViewModel.SubmittedMoreThan48HoursCount.Should().Be(ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount);
+            vacancySummariesViewModel.ResubmittedCount.Should().Be(ExpectedResubmittedCount);
         }
 
         [Test]
