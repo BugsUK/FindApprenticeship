@@ -243,7 +243,6 @@
 
             return vacancy;
         }
-
         
         private string GetFrameworkCodeName(NewVacancyViewModel newVacancyViewModel)
         {
@@ -291,6 +290,17 @@
         private static bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
         {
             return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
+        }
+
+        public TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
+            var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
+            viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
+            return viewModel;
         }
 
         public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)

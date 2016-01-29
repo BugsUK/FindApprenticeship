@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using FluentValidation.Results;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -15,6 +16,8 @@
         NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
+
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
 
         VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 

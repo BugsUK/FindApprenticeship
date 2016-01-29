@@ -31,6 +31,8 @@
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
         public const string ReviewCreateVacancy = "ReviewCreateVacancy";
+        public const string TrainingDetails = "TrainingDetails";
+        public const string ReviewTrainingDetails = "ReviewTrainingDetails";
         public const string VacancySummary = "VacancySummary";
         public const string ReviewVacancySummary = "ReviewVacancySummary";
         public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
