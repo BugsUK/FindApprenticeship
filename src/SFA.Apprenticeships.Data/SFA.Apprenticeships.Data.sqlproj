@@ -128,6 +128,9 @@
     <Folder Include="Schemas\WebService" />
     <Folder Include="Schemas\WebService\Schema" />
     <Folder Include="Schemas\WebService\Tables" />
+    <Folder Include="Schemas\Provider" />
+    <Folder Include="Schemas\Provider\Schema" />
+    <Folder Include="Schemas\Provider\Tables" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\Address\Tables\Address.PostalAddress.sql" />
@@ -173,6 +176,8 @@
     <Build Include="Schemas\WebService\Tables\WebService.WebServiceConsumer.sql" />
     <Build Include="Schemas\WebService\Schema\WebService.sql" />
     <None Include="Schemas\Reference\Scripts\Reference.County.Upsert.sql" />
+    <Build Include="Schemas\Provider\Schema\Provider.sql" />
+    <Build Include="Schemas\Provider\Tables\Provider.Provider.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.refactorlog" />

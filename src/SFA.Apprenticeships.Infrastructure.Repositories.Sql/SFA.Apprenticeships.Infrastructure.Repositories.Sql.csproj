@@ -125,6 +125,9 @@
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\Provider\Entities\Provider.cs" />
+    <Compile Include="Schemas\Provider\ProviderMappers.cs" />
+    <Compile Include="Schemas\Provider\ProviderRepository.cs" />
     <Compile Include="Schemas\Reference\Entities\County.cs" />
     <Compile Include="Schemas\Reference\Entities\Framework.cs" />
     <Compile Include="Schemas\Reference\Entities\FrameworkStatus.cs" />
