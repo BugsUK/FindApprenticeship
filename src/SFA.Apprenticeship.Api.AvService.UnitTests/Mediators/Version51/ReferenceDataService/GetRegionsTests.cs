@@ -3,9 +3,9 @@
     using System;
     using System.Linq;
     using System.Security;
+    using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Providers;
     using DataContracts.Version51;
-    using Domain;
     using FluentAssertions;
     using MessageContracts.Version51;
     using Moq;
