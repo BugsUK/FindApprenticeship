@@ -212,9 +212,6 @@
 
             vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy);
             vacancies.Should().HaveCount(1);
-
-            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.PendingQA);
-            vacancies.Should().HaveCount(0);
         }
 
         [Test]

@@ -356,7 +356,14 @@ FROM Reference.Framework
 WHERE CodeName = @FrameworkCodeName
 ", new {vacancy.FrameworkCodeName});
 
-            dbVacancy.FrameworkId = framework.FirstOrDefault();
+            if (framework.Any())
+            {
+                dbVacancy.FrameworkId = framework.First();
+            }
+            else
+            {
+                dbVacancy.FrameworkId = null;
+            }
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
@@ -445,18 +452,16 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
 
         private void UpdateEntityTimestamps(ApprenticeshipVacancy entity)
         {
-            /* TODO
             // determine whether this is a "new" entity being saved for the first time
-            if (entity.DateTimeCreated == DateTime.MinValue)
+            if (entity.DateCreated == DateTime.MinValue)
             {
-                entity.DateTimeCreated = DateTime.UtcNow;
-                entity.DateTimeUpdated = null;
+                entity.DateCreated = DateTime.UtcNow;
+                entity.DateUpdated = null;
             }
             else
             {
-                entity.DateTimeUpdated = DateTime.UtcNow;
+                entity.DateUpdated = DateTime.UtcNow;
             }
-            */
         }
 
         private void InsertVacancyLocationAddresses(IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, Guid vacancyId)

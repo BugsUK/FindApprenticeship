@@ -20,6 +20,7 @@
         protected const int VacancyPartyId_EmployerA = 3;
         protected const int VacancyPartyId_ProviderA = 4;
         protected const int FrameworkId_Framework1 = 1;
+        protected const string FramworkCodeName_Framework1 = "F01";
         protected const int FrameworkId_Framework2 = 2;
         protected const int StandardId_Standard1 = 1;
         protected const string VacancyTypeCode_Apprenticeship = "A";
@@ -86,6 +87,7 @@
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;
+                result.FrameworkCodeName = FramworkCodeName_Framework1;
                 result.StandardId = null;
             }
             else
@@ -121,15 +123,7 @@
             return options
                 // TODO: Not in Domain object yet
                 .Excluding(v => v.AV_ContactName)
-                .Excluding(v => v.AV_WageText)
-
-                // TODO: Rather hard / out of scope?
-                .Excluding(v => v.ParentVacancyId)
-
-                // TODO: Might be easier?
-                .Excluding(v => v.FrameworkId)
-
-                ;
+                .Excluding(v => v.AV_WageText);
         }
 
         protected EquivalencyAssertionOptions<ApprenticeshipVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<ApprenticeshipVacancy> options)
@@ -139,13 +133,8 @@
                 .Excluding(v => v.FrameworkCodeName)
                 .Excluding(v => v.Ukprn)
                 .Excluding(v => v.ProviderSiteEmployerLink)
-                .Excluding(v => v.DateStartedToQA)
-                .Excluding(v => v.VacancyManagerId)
-                .Excluding(v => v.LastEditedById)
-                .Excluding(v => v.ParentVacancyId)
-                .Excluding(v => v.DateCreated)
-                .Excluding(v => v.DateUpdated)
-
+                //.Excluding(v => v.VacancyManagerId)
+                //.Excluding(v => v.LastEditedById)
                 ;
         }
 

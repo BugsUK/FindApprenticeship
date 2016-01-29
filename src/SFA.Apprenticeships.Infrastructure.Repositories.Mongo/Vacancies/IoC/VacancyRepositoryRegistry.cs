@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.IoC
 {
     using Domain.Interfaces.Repositories;
-    using Mappers;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
@@ -10,7 +9,7 @@
         public VacancyRepositoryRegistry()
         {
             // Apprenticeships.
-            For<IMapper>().Use<ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
+            For<IMapper>().Use<Sql.Schemas.Vacancy.ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
 
             For<IApprenticeshipVacancyReadRepository>()
                 .Use<ApprenticeshipVacancyRepository>()

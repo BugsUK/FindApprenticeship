@@ -33,7 +33,6 @@
 
             var vacancy =
                 new Fixture().Build<ApprenticeshipVacancy>()
-                    //                    .With(av => av.EntityId, Guid.Empty)
                     .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
@@ -98,39 +97,22 @@
             var databaseVacancy1 = CreateValidDatabaseVacancy();
 
             // Act
-
             var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
             var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
 
             // Assert
             databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options =>
-                ExcludeHardOnes(options)
-
-                // Requires a database lookup to roundtrip
-                .Excluding(v => v.EmployerVacancyPartyId)
+                options.Excluding(v => v.EmployerVacancyPartyId)
+                // Mapped using database lookups
                 .Excluding(v => v.OwnerVacancyPartyId)
                 .Excluding(v => v.ManagerVacancyPartyId)
                 .Excluding(v => v.DeliveryProviderVacancyPartyId)
                 .Excluding(v => v.ContractOwnerVacancyPartyId)
                 .Excluding(v => v.OriginalContractOwnerVacancyPartyId)
-            );
-        }
-
-        [Test]
-        [Ignore("Not implemented yet")]
-        public void DoesApprenticeshipVacancyDomainObjectMappingRoundTripViaDatabaseObjectIncludingHardOnes()
-        {
-            // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
-            var databaseVacancy1 = CreateValidDatabaseVacancy();
-
-            // Act
-
-            var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
-            var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
-
-            // Assert
-            databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1);
+                .Excluding(v => v.FrameworkId)
+                // Not in Domain object yet
+                .Excluding(v => v.AV_ContactName)
+                .Excluding(v => v.AV_WageText));
         }
     }
 }

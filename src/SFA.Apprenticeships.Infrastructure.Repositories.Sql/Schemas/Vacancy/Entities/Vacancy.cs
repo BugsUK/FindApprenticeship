@@ -123,6 +123,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string EmployerDescriptionComment { get; set; }
 
         public string EmployerWebsiteUrl { get; set; }
+
         public string EmployerWebsiteUrlComment { get; set; }
 
         public bool? IsDirectApplication { get; set; }
@@ -136,6 +137,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string DirectApplicationInstructionsComment { get; set; }
 
         public string AdditionalLocationInformation { get; set; }
+
         public string AdditionalLocationInformationComment { get; set; }
 
         public string DesiredSkills { get; set; }
@@ -174,9 +176,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string NumberOfPositionsComment { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime? DateQAApproved { get; set; }
-
         public DateTime? PublishedDateTime { get; set; } // TODO: Check naming
 
         public DateTime? FirstSubmittedDateTime { get; set; } // TODO: Check naming
@@ -187,6 +186,16 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         [Column(TypeName = "datetime2")]
         public DateTime? TimeStartedToQA { get; set; }
+
+        public DateTime CreatedDateTime { get; set; }
+
+        public DateTime? UpdatedDateTime { get; set; }
+
+        public DateTime? SubmittedDateTime { get; set; }
+
+        public Guid LastEditedById { get; set; }
+
+        public Guid VacancyManagerId { get; set; }
 
         /*
         public virtual Framework Framework { get; set; }

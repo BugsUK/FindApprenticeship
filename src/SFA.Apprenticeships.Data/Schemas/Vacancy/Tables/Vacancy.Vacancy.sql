@@ -71,13 +71,18 @@
 	[TimeStartedToQA]					   DATETIME2 (7)   NULL,
     [NumberOfPositions]                    INT             NULL,
     [NumberOfPositionsComment]             NVARCHAR (MAX)  NULL,
-    [DateQAApproved]                       DATETIME2 (7)   NULL,
+    [DateQAApproved]                       DATETIME2 (7)   NULL, -- TODO: do we need that? Is not the same as publisheddatetime?
     [PublishedDateTime]                    DATETIME2       NULL,
 	 
     [FirstSubmittedDateTime]               DATETIME2       NULL, -- TODO: Check name
     [SubmissionCount]                      INT             NOT NULL DEFAULT 0, -- TODO: Check name
 	
 	[OfflineApplicationClickThroughCount]      INT NOT NULL,  -- TODO: Check name
+	[CreatedDateTime]					   DATETIME2	   NOT NULL,
+	[UpdatedDateTime]					   DATETIME2	   NULL,
+	[SubmittedDateTime]					   DATETIME2       NULL,
+	[LastEditedById]					  UNIQUEIDENTIFIER NOT NULL,
+	[VacancyManagerId]					  UNIQUEIDENTIFIER NOT NULL
     
 
 	PRIMARY KEY CLUSTERED ([VacancyId] ASC),
