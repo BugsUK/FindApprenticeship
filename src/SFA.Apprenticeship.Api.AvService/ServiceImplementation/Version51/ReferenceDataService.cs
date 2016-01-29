@@ -36,7 +36,7 @@
 
         public GetRegionResponse GetRegion(GetRegionRequest request)
         {
-            throw new NotImplementedException();
+            return GetMediatorResponse(req => _mediator.GetRegions(req), request);
         }
 
         public GetCountiesResponse GetCounties(GetCountiesRequest request)
@@ -46,7 +46,7 @@
 
         public GetLocalAuthoritiesResponse GetLocalAuthorities(GetLocalAuthoritiesRequest request)
         {
-            throw new NotImplementedException();
+            return GetMediatorResponse(req => _mediator.GetLocalAuthorities(req), request);
         }
 
         private TResponse GetMediatorResponse<TRequest, TResponse>(Func<TRequest, TResponse> mediatorFunc, TRequest request) where TRequest : NavmsMessageHeader

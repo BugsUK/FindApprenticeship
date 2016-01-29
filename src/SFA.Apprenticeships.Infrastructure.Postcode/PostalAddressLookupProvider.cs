@@ -28,7 +28,8 @@
 
         public IEnumerable<PostalAddress> GetValidatedPostalAddresses(string postcode)
         {
-            Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(postcode))
+                return null;
 
             var restRequest = Create(GetFindByPartsServiceUrl()
                 , new[]
@@ -44,8 +45,11 @@
 
         public IEnumerable<PostalAddress> GetValidatedPostalAddresses(string addressLine1, string postcode)
         {
-            Condition.Requires(addressLine1, "addressLine1").IsNotNullOrWhiteSpace();
-            Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
+            if (string.IsNullOrWhiteSpace(addressLine1))
+                return null;
+
+            if (string.IsNullOrWhiteSpace(postcode))
+                return null;
 
             _logger.Debug("Calling GetVerifiedPostalAddresses for an address with addressLine1={0} and postcode={1}", addressLine1, postcode);
 

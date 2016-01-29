@@ -64,7 +64,7 @@
             {
                 Routes = new List<Route>
                 {
-                    new Route(new Uri(_configuration.NasAvWebServiceRootUri, requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), !isCompatabilityWebServicePrimary),
+                    new Route(new Uri(_configuration.NasAvWebServiceRootUri.OriginalString + requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), !isCompatabilityWebServicePrimary),
                     new Route(GetCompatabilityWebServiceUrl(requestUri), new RouteIdentifier(routeIdentifier, "compatabilitywebservice"), isCompatabilityWebServicePrimary)
                 },
             };

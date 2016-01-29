@@ -288,6 +288,10 @@
     <Compile Include="DataContracts\Version51\VacancyUploadData.cs" />
     <Compile Include="DataContracts\Version51\VacancyUploadResultData.cs" />
     <Compile Include="DataContracts\Version51\WebInterfaceGenericDetailsData.cs" />
+    <Compile Include="Mappers\Version51\LocalAuthorityMapper.cs" />
+    <Compile Include="Mappers\Version51\RegionMapper.cs" />
+    <Compile Include="Mappers\Version51\ILocalAuthorityMapper.cs" />
+    <Compile Include="Mappers\Version51\IRegionMapper.cs" />
     <Compile Include="Mappers\Version51\ICountyMapper.cs" />
     <Compile Include="Mappers\Version51\CountyMapper.cs" />
     <Compile Include="Mediators\Version51\ServiceMediatorBase.cs" />

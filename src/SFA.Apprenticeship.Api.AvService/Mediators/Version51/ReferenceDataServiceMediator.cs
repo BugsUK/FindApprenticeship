@@ -49,5 +49,31 @@
                 Counties = counties
             };
         }
+
+        public GetRegionResponse GetRegions(GetRegionRequest request)
+        {
+            AuthenticateRequest(request);
+
+            var regions = _referenceDataProvider.GetRegions();
+
+            return new GetRegionResponse
+            {
+                MessageId = request.MessageId,
+                Regions = regions
+            };
+        }
+
+        public GetLocalAuthoritiesResponse GetLocalAuthorities(GetLocalAuthoritiesRequest request)
+        {
+            AuthenticateRequest(request);
+
+            var localAuthorities = _referenceDataProvider.GetLocalAuthorities();
+
+            return new GetLocalAuthoritiesResponse
+            {
+                MessageId = request.MessageId,
+                LocalAuthorities = localAuthorities
+            };
+        }
     }
 }
