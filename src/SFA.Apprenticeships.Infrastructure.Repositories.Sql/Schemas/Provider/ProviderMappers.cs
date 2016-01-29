@@ -43,27 +43,14 @@
         }
     }
 
-    public class GuidToIntResolver : ValueResolver<Guid, int>
-    {
-        protected override int ResolveCore(Guid source)
-        {
-            return source.ResolveToInt();
-        }
-    }
-
     public static class GuidToIntResolverHelper
     {
         public static int ResolveToInt(this Guid guid)
         {
-            return int.Parse(guid.ToString().Replace("-", ""));
-        }
-    }
-
-    public class IntToGuidResolver : ValueResolver<int, Guid>
-    {
-        protected override Guid ResolveCore(int source)
-        {
-            return source.ResolveToGuid();
+            //return int.Parse(guid.ToString().Replace("-", ""));
+            byte[] b = guid.ToByteArray();
+            int bint = BitConverter.ToInt32(b, 0);
+            return bint;
         }
     }
 
@@ -71,8 +58,11 @@
     {
         public static Guid ResolveToGuid(this int source)
         {
-            var stringValue = source.ToString("00000000-0000-0000-0000-000000000000");
-            return new Guid(stringValue);
+            //var stringValue = source.ToString("00000000-0000-0000-0000-000000000000");
+            //return new Guid(stringValue);
+            byte[] bytes = new byte[16];
+            BitConverter.GetBytes(source).CopyTo(bytes, 0);
+            return new Guid(bytes);
         }
     }
 }

@@ -27,7 +27,7 @@
         {
             var dbInitialiser = new DatabaseInitialiser();
 
-            _providerId = new Guid("00000000-0000-0000-0000-000000000001");
+            _providerId = 1.ResolveToGuid();
 
             _provider = new Provider()
             {
@@ -45,12 +45,6 @@
 
             _repository = new ProviderRepository(_connection, _mapper, logger.Object);
         }
-
-        //[TearDown]
-        //public void Cleanup()
-        //{
-        //    _repository.Delete(_providerId);
-        //}
 
         [Test]
         public void GetByGuid()
@@ -95,7 +89,7 @@
         {
             //Arrange
             var providerA = new Fixture().Build<DomainProvider>()
-                .With(x => x.EntityId, new Guid("00000000-0000-0000-0000-000000000000"))
+                .With(x => x.EntityId, 1.ResolveToGuid())
                 .With(x => x.Ukprn, "999").Create();
             
             //Act
