@@ -16,6 +16,7 @@
     using Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Apprenticeships.Infrastructure.Repositories.Sql.Configuration;
     using Apprenticeships.Infrastructure.Repositories.Sql.IoC;
+    using Apprenticeships.Infrastructure.Repositories.Sql.Schemas.WebService;
     using Apprenticeships.Infrastructure.TacticalDataServices.IoC;
     using Infrastructure.Interfaces;
     using Mappers.Version51;
@@ -74,7 +75,7 @@
                 x.For<IWebServiceConsumerService>().Use<WebServiceConsumerService>();
 
                 // Web Service Repositories.
-                x.For<IWebServiceConsumerReadRepository>().Use<FakeWebServiceConsumerRepository>();
+                x.For<IWebServiceConsumerReadRepository>().Use<WebServiceConsumerRepository>();
 
                 // Web Service Mappers.
                 x.For<IAddressMapper>().Use<AddressMapper>();

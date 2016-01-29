@@ -15,6 +15,7 @@
             {
                 ExternalSystemId = new Guid("bbd33d6d-fc94-4be3-9e52-282bf7293356"),
                 ExternalSystemPassword = "password",
+                WebServiceConsumerType = WebServiceConsumerType.Provider,
                 AllowReferenceDataService = true,
                 AllowVacancyUploadService = true,
                 AllowVacancySummaryService = true,
@@ -24,6 +25,7 @@
             {
                 ExternalSystemId = new Guid("63c545db-d08f-4a9b-b05b-33727432e987"),
                 ExternalSystemPassword = "letmein",
+                WebServiceConsumerType = WebServiceConsumerType.Employer,
                 AllowReferenceDataService = true
             }
         };

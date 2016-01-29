@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeship.Api.AvService.UnitTests.Providers
 {
     using System;
-    using System.Collections.Generic;
     using Apprenticeships.Domain.Entities.WebServices;
     using AvService.Providers;
     using AvService.Services;
@@ -20,42 +19,6 @@
 
         private Mock<IWebServiceConsumerService> _mockWebServiceConsumerService;
         private IWebServiceAuthenticationProvider _webServiceAuthenticationProvider;
-
-
-        public const string NoWebServiceCategories = "NoWebServiceCategories";
-        public const string AllWebServiceCategories = "AllWebServiceCategories";
-        public const string ReferenceWebServiceCategory = "ReferenceWebServiceCategory";
-        public const string VacancyWebServiceCategories = "VacancyWebServiceCategories";
-
-        private readonly Dictionary<string, List<WebServiceCategory>> _allowedWebCategories = new Dictionary<string, List<WebServiceCategory>>
-        {
-            {
-                NoWebServiceCategories, new List<WebServiceCategory>()
-            },
-            {
-                AllWebServiceCategories, new List<WebServiceCategory>
-                {
-                    WebServiceCategory.Reference,
-                    WebServiceCategory.VacancyUpload,
-                    WebServiceCategory.VacancySummary,
-                    WebServiceCategory.VacancyDetail
-                }
-            },
-            {
-                ReferenceWebServiceCategory, new List<WebServiceCategory>
-                {
-                    WebServiceCategory.Reference
-                }
-            },
-            {
-                VacancyWebServiceCategories, new List<WebServiceCategory>
-                {
-                    WebServiceCategory.VacancyUpload,
-                    WebServiceCategory.VacancySummary,
-                    WebServiceCategory.VacancyDetail
-                }
-            }
-        };
 
         [SetUp]
         public void SetUp()
@@ -102,29 +65,31 @@
             result.Should().Be(expectedWebServiceAuthenticationResult);
         }
 
-        [TestCase(WebServiceAuthenticationResult.NotAllowed, WebServiceCategory.Reference, NoWebServiceCategories)]
-        [TestCase(WebServiceAuthenticationResult.NotAllowed, WebServiceCategory.Reference, VacancyWebServiceCategories)]
-        [TestCase(WebServiceAuthenticationResult.NotAllowed, WebServiceCategory.VacancySummary, ReferenceWebServiceCategory)]
-        [TestCase(WebServiceAuthenticationResult.Authenticated, WebServiceCategory.Reference, ReferenceWebServiceCategory)]
-        [TestCase(WebServiceAuthenticationResult.Authenticated, WebServiceCategory.VacancyDetail, VacancyWebServiceCategories)]
-        public void ShouldAllowWebServiceCategory(
-            WebServiceAuthenticationResult expectedWebServiceAuthenticationResult,
-            WebServiceCategory webServiceCategory,
-            string allowedWebServiceCategoriesName)
+        [TestCase(WebServiceCategory.Reference, false, WebServiceAuthenticationResult.NotAllowed)]
+        [TestCase(WebServiceCategory.Reference, true, WebServiceAuthenticationResult.Authenticated)]
+
+        [TestCase(WebServiceCategory.VacancyUpload, false, WebServiceAuthenticationResult.NotAllowed)]
+        [TestCase(WebServiceCategory.VacancyUpload, true, WebServiceAuthenticationResult.Authenticated)]
+
+        [TestCase(WebServiceCategory.VacancyDetail, false, WebServiceAuthenticationResult.NotAllowed)]
+        [TestCase(WebServiceCategory.VacancyDetail, true, WebServiceAuthenticationResult.Authenticated)]
+
+        [TestCase(WebServiceCategory.VacancySummary, false, WebServiceAuthenticationResult.NotAllowed)]
+        [TestCase(WebServiceCategory.VacancySummary, true, WebServiceAuthenticationResult.Authenticated)]
+        public void ShouldAuthoriseWebServiceAccess(
+            WebServiceCategory webServiceCategory, bool allow, WebServiceAuthenticationResult expectedWebServiceAuthenticationResult)
         {
             // Arrange.
             var webServiceConsumer = new WebServiceConsumer
             {
                 ExternalSystemId = new Guid(ValidExternalSystemId),
-                ExternalSystemPassword = ValidExternalSystemPassword
+                ExternalSystemPassword = ValidExternalSystemPassword,
+                WebServiceConsumerType = WebServiceConsumerType.Provider,
+                AllowReferenceDataService = webServiceCategory == WebServiceCategory.Reference && allow,
+                AllowVacancyUploadService = webServiceCategory == WebServiceCategory.VacancyUpload && allow,
+                AllowVacancySummaryService = webServiceCategory == WebServiceCategory.VacancySummary && allow,
+                AllowVacancyDetailService = webServiceCategory == WebServiceCategory.VacancyDetail && allow
             };
-
-            var allowedWebServiceCategories = _allowedWebCategories[allowedWebServiceCategoriesName];
-
-            webServiceConsumer.AllowReferenceDataService = allowedWebServiceCategories.Contains(WebServiceCategory.Reference);
-            webServiceConsumer.AllowVacancyUploadService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancyUpload);
-            webServiceConsumer.AllowVacancySummaryService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancySummary);
-            webServiceConsumer.AllowVacancyDetailService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancyDetail);
 
             _mockWebServiceConsumerService.Setup(mock => mock
                 .Get(new Guid(ValidExternalSystemId)))
@@ -133,6 +98,34 @@
             // Act.
             var result = _webServiceAuthenticationProvider.Authenticate(
                 new Guid(ValidExternalSystemId), ValidExternalSystemPassword, webServiceCategory);
+
+            // Assert.
+            result.Should().Be(expectedWebServiceAuthenticationResult);
+        }
+
+        [TestCase(WebServiceConsumerType.Provider, WebServiceAuthenticationResult.Authenticated)]
+        [TestCase(WebServiceConsumerType.Employer, WebServiceAuthenticationResult.Authenticated)]
+        [TestCase(WebServiceConsumerType.ThirdParty, WebServiceAuthenticationResult.NotAllowed)]
+        [TestCase(WebServiceConsumerType.Unknown, WebServiceAuthenticationResult.NotAllowed)]
+        public void ShouldAuthoriseVacancyUploadWebServiceAccessByConsumerType(
+            WebServiceConsumerType webServiceConsumerType, WebServiceAuthenticationResult expectedWebServiceAuthenticationResult)
+        {
+            // Arrange.
+            var webServiceConsumer = new WebServiceConsumer
+            {
+                ExternalSystemId = new Guid(ValidExternalSystemId),
+                ExternalSystemPassword = ValidExternalSystemPassword,
+                WebServiceConsumerType = webServiceConsumerType,
+                AllowVacancyUploadService = true
+            };
+
+            _mockWebServiceConsumerService.Setup(mock => mock
+                .Get(new Guid(ValidExternalSystemId)))
+                .Returns(webServiceConsumer);
+
+            // Act.
+            var result = _webServiceAuthenticationProvider.Authenticate(
+                new Guid(ValidExternalSystemId), ValidExternalSystemPassword, WebServiceCategory.VacancyUpload);
 
             // Assert.
             result.Should().Be(expectedWebServiceAuthenticationResult);

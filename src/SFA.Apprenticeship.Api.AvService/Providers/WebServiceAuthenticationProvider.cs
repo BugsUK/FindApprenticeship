@@ -38,14 +38,30 @@ namespace SFA.Apprenticeship.Api.AvService.Providers
                 return WebServiceAuthenticationResult.AuthenticationFailed;
             }
 
-            // TODO: AG: FIXUP.
-
-            /*
-            if (!webServiceConsumer.AllowedWebServiceCategories.Contains(webServiceCategory))
+            if (webServiceCategory == WebServiceCategory.Reference && !webServiceConsumer.AllowReferenceDataService)
             {
                 return WebServiceAuthenticationResult.NotAllowed;
             }
-            */
+
+            if (webServiceCategory == WebServiceCategory.VacancyUpload)
+            {
+                if (!webServiceConsumer.AllowVacancyUploadService ||
+                    !(webServiceConsumer.WebServiceConsumerType == WebServiceConsumerType.Provider ||
+                    webServiceConsumer.WebServiceConsumerType == WebServiceConsumerType.Employer))
+                {
+                    return WebServiceAuthenticationResult.NotAllowed;
+                }
+            }
+
+            if (webServiceCategory == WebServiceCategory.VacancyDetail && !webServiceConsumer.AllowVacancyDetailService)
+            {
+                return WebServiceAuthenticationResult.NotAllowed;
+            }
+
+            if (webServiceCategory == WebServiceCategory.VacancySummary && !webServiceConsumer.AllowVacancySummaryService)
+            {
+                return WebServiceAuthenticationResult.NotAllowed;
+            }
 
             return WebServiceAuthenticationResult.Authenticated;
         }
