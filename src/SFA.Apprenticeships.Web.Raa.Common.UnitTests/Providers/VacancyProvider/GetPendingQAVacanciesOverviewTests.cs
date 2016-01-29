@@ -108,5 +108,85 @@
             vacanciesOverview.Should().NotBeNullOrEmpty();
             vacanciesOverview.Count.Should().Be(expectedCount);
         }
+
+        [Test]
+        public void GetAll_OrderedByDateSubmitted()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.All
+            };
+
+            //Act
+            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateSubmitted);
+        }
+
+        [Test]
+        public void GetSubmittedToday_OrderedByDateFirstSubmitted()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
+            };
+
+            //Act
+            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+        }
+
+        [Test]
+        public void GetSubmittedYesterday_OrderedByDateFirstSubmitted()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
+            };
+
+            //Act
+            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+        }
+
+        [Test]
+        public void GetSubmittedMoreThan48Hours_OrderedByDateSubmitted()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
+            };
+
+            //Act
+            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateSubmitted);
+        }
+
+        [Test]
+        public void GetResubmitted_OrderedByDateFirstSubmitted()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
+            };
+
+            //Act
+            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+        }
     }
 }
