@@ -8,7 +8,7 @@
 
     public interface IVacancyQAProvider
     {
-        List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel);
+        DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel);
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 

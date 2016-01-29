@@ -128,7 +128,7 @@
                 }
             };
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview(searchViewModel)).Returns(vacancies);
+            vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview(searchViewModel)).Returns(new DashboardVacancySummariesViewModel {Vacancies = vacancies});
             var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
