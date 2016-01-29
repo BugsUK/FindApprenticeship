@@ -147,6 +147,8 @@
     <Compile Include="Schemas\Vacancy\Entities\WageInterval.cs" />
     <Compile Include="Schemas\Vacancy\Entities\WageType.cs" />
     <Compile Include="Schemas\WebService\Entities\WebServiceConsumer.cs" />
+    <Compile Include="Schemas\WebService\WebServiceConsumerRepository.cs" />
+    <Compile Include="Schemas\WebService\WebServiceConsumerTypeResolver.cs" />
     <Compile Include="Schemas\WebService\WebServiceMappers.cs" />
   </ItemGroup>
   <ItemGroup>

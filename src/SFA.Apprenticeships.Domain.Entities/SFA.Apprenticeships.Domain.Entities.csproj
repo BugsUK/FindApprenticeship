@@ -177,6 +177,7 @@
     <Compile Include="Vacancies\LegacyWageType.cs" />
     <Compile Include="WebServices\WebServiceCategory.cs" />
     <Compile Include="WebServices\WebServiceConsumer.cs" />
+    <Compile Include="WebServices\WebServiceConsumerType.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

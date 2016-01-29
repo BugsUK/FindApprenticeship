@@ -12,11 +12,11 @@
     [TestFixture]
     public class WebServiceAuthenticationProviderTests
     {
-        private const string ValidPublicKey = "letmein";
+        private const string ValidExternalSystemPassword = "letmein";
         private const string ValidExternalSystemId = "bbd33d6d-fc94-4be3-9e52-282bf7293356";
 
         private const string InvalidExternalSystemId = "63c545db-d08f-4a9b-b05b-33727432e987";
-        private const string InvalidPublicKey = "dontletmein";
+        private const string InvalidExternalSystemPassword = "dontletmein";
 
         private Mock<IWebServiceConsumerService> _mockWebServiceConsumerService;
         private IWebServiceAuthenticationProvider _webServiceAuthenticationProvider;
@@ -68,25 +68,22 @@
                 _mockWebServiceConsumerService.Object);
         }
 
-        [TestCase(WebServiceAuthenticationResult.Authenticated, ValidExternalSystemId, ValidPublicKey)]
-        [TestCase(WebServiceAuthenticationResult.AuthenticationFailed, ValidExternalSystemId, InvalidPublicKey)]
-        [TestCase(WebServiceAuthenticationResult.InvalidPublicKey, ValidExternalSystemId, "")]
-        [TestCase(WebServiceAuthenticationResult.InvalidPublicKey, ValidExternalSystemId, " ")]
-        [TestCase(WebServiceAuthenticationResult.InvalidExternalSystemId, InvalidExternalSystemId, ValidPublicKey)]
+        [TestCase(WebServiceAuthenticationResult.Authenticated, ValidExternalSystemId, ValidExternalSystemPassword)]
+        [TestCase(WebServiceAuthenticationResult.AuthenticationFailed, ValidExternalSystemId, InvalidExternalSystemPassword)]
+        [TestCase(WebServiceAuthenticationResult.InvalidExternalSystemPassword, ValidExternalSystemId, "")]
+        [TestCase(WebServiceAuthenticationResult.InvalidExternalSystemPassword, ValidExternalSystemId, " ")]
+        [TestCase(WebServiceAuthenticationResult.InvalidExternalSystemId, InvalidExternalSystemId, ValidExternalSystemPassword)]
         public void ShouldAuthenticateWebServiceConsumer(
             WebServiceAuthenticationResult expectedWebServiceAuthenticationResult,
             string externalSystemId,
-            string publicKey)
+            string externalSystemPassword)
         {
             // Arrange.
             var validWebServiceConsumer = new WebServiceConsumer
             {
                 ExternalSystemId = new Guid(ValidExternalSystemId),
-                PublicKey = ValidPublicKey,
-                AllowedWebServiceCategories =
-                {
-                    WebServiceCategory.Reference
-                }
+                ExternalSystemPassword = ValidExternalSystemPassword,
+                AllowReferenceDataService = true
             };
 
             _mockWebServiceConsumerService.Setup(mock => mock
@@ -99,7 +96,7 @@
 
             // Act.
             var result = _webServiceAuthenticationProvider.Authenticate(
-                new Guid(externalSystemId), publicKey, WebServiceCategory.Reference);
+                new Guid(externalSystemId), externalSystemPassword, WebServiceCategory.Reference);
 
             // Assert.
             result.Should().Be(expectedWebServiceAuthenticationResult);
@@ -119,12 +116,15 @@
             var webServiceConsumer = new WebServiceConsumer
             {
                 ExternalSystemId = new Guid(ValidExternalSystemId),
-                PublicKey = ValidPublicKey
+                ExternalSystemPassword = ValidExternalSystemPassword
             };
 
             var allowedWebServiceCategories = _allowedWebCategories[allowedWebServiceCategoriesName];
 
-            webServiceConsumer.AllowedWebServiceCategories.AddRange(allowedWebServiceCategories);
+            webServiceConsumer.AllowReferenceDataService = allowedWebServiceCategories.Contains(WebServiceCategory.Reference);
+            webServiceConsumer.AllowVacancyUploadService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancyUpload);
+            webServiceConsumer.AllowVacancySummaryService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancySummary);
+            webServiceConsumer.AllowVacancyDetailService = allowedWebServiceCategories.Contains(WebServiceCategory.VacancyDetail);
 
             _mockWebServiceConsumerService.Setup(mock => mock
                 .Get(new Guid(ValidExternalSystemId)))
@@ -132,7 +132,7 @@
 
             // Act.
             var result = _webServiceAuthenticationProvider.Authenticate(
-                new Guid(ValidExternalSystemId), ValidPublicKey, webServiceCategory);
+                new Guid(ValidExternalSystemId), ValidExternalSystemPassword, webServiceCategory);
 
             // Assert.
             result.Should().Be(expectedWebServiceAuthenticationResult);

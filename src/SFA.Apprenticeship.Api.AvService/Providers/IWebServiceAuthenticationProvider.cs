@@ -6,6 +6,6 @@
     public interface IWebServiceAuthenticationProvider
     {
         WebServiceAuthenticationResult Authenticate(
-            Guid externalSystemId, string publicKey, WebServiceCategory webServiceCategory);
+            Guid externalSystemId, string externalSystemPassword, WebServiceCategory webServiceCategory);
     }
 }

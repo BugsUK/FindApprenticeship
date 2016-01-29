@@ -19,11 +19,11 @@ namespace SFA.Apprenticeship.Api.AvService.Providers
         }
 
         public WebServiceAuthenticationResult Authenticate(
-            Guid externalSystemId, string publicKey, WebServiceCategory webServiceCategory)
+            Guid externalSystemId, string externalSystemPassword, WebServiceCategory webServiceCategory)
         {
-            if (string.IsNullOrWhiteSpace(publicKey))
+            if (string.IsNullOrWhiteSpace(externalSystemPassword))
             {
-                return WebServiceAuthenticationResult.InvalidPublicKey;
+                return WebServiceAuthenticationResult.InvalidExternalSystemPassword;
             }
 
             var webServiceConsumer = _webServiceConsumerService.Get(externalSystemId);
@@ -33,15 +33,19 @@ namespace SFA.Apprenticeship.Api.AvService.Providers
                 return WebServiceAuthenticationResult.InvalidExternalSystemId;
             }
 
-            if (webServiceConsumer.PublicKey != publicKey)
+            if (webServiceConsumer.ExternalSystemPassword != externalSystemPassword)
             {
                 return WebServiceAuthenticationResult.AuthenticationFailed;
             }
 
+            // TODO: AG: FIXUP.
+
+            /*
             if (!webServiceConsumer.AllowedWebServiceCategories.Contains(webServiceCategory))
             {
                 return WebServiceAuthenticationResult.NotAllowed;
             }
+            */
 
             return WebServiceAuthenticationResult.Authenticated;
         }

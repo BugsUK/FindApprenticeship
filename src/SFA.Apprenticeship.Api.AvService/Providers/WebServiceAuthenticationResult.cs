@@ -4,7 +4,7 @@
     {
         Unknown = 0,
         Authenticated = 1,
-        InvalidPublicKey = 2,
+        InvalidExternalSystemPassword = 2,
         AuthenticationFailed = 3,
         InvalidExternalSystemId = 4,
         NotAllowed = 5
