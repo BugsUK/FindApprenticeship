@@ -92,16 +92,12 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
             var username = principal.Identity.Name;
             var roleList = principal.GetRoleList();
             var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-            var vacancies = _vacancyQaProvider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _vacancyQaProvider.GetPendingQAVacanciesOverview(searchViewModel);
             
             var homeViewModel = new HomeViewModel
             {
                 AgencyUser = userViewModel,
-                VacancySummaries = new DashboardVacancySummariesViewModel
-                {
-                    SearchViewModel = new DashboardVacancySummariesSearchViewModel(),
-                    Vacancies = vacancies
-                }
+                VacancySummaries = vacancySummariesViewModel
             };
 
             return GetMediatorResponse(AgencyUserMediatorCodes.GetHomeViewModel.OK, homeViewModel);

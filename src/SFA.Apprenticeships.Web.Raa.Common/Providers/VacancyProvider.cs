@@ -681,7 +681,7 @@
             return result;
         }
 
-        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
+        public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
             var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
@@ -708,7 +708,12 @@
                     break;
             }
 
-            return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
+            var viewModel = new DashboardVacancySummariesViewModel
+            {
+                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
+            };
+
+            return viewModel;
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
@@ -769,7 +774,7 @@
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
-            return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+            return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
         private void CreateChildVacancy(ApprenticeshipVacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)

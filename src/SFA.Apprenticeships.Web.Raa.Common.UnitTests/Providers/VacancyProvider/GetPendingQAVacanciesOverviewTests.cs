@@ -102,11 +102,11 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().NotBeNullOrEmpty();
-            vacanciesOverview.Count.Should().Be(expectedCount);
+            vacancySummariesViewModel.Vacancies.Should().NotBeNullOrEmpty();
+            vacancySummariesViewModel.Vacancies.Count.Should().Be(expectedCount);
         }
 
         [Test]
@@ -119,10 +119,10 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateSubmitted);
+            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateSubmitted);
         }
 
         [Test]
@@ -135,10 +135,10 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
         }
 
         [Test]
@@ -151,10 +151,10 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
         }
 
         [Test]
@@ -167,10 +167,10 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateSubmitted);
+            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateSubmitted);
         }
 
         [Test]
@@ -183,10 +183,10 @@
             };
 
             //Act
-            var vacanciesOverview = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
 
             //Assert
-            vacanciesOverview.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+            vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
         }
     }
 }
