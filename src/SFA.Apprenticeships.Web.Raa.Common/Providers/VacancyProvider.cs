@@ -683,28 +683,28 @@
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
             var utcNow = _dateTimeService.UtcNow();
 
-            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
-            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date);
+            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1));
             var submitted48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
-            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1);
 
             switch (searchViewModel.FilterType)
             {
                 case DashboardVacancySummaryFilterTypes.SubmittedToday:
-                    vacancies = submittedToday;
+                    vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
                     break;
                 case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
-                    vacancies = submittedYesterday;
+                    vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
                     break;
                 case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
                     vacancies = submitted48Hours;
                     break;
                 case DashboardVacancySummaryFilterTypes.Resubmitted:
-                    vacancies = resubmitted;
+                    vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
                     break;
             }
 
@@ -719,6 +719,7 @@
             {
                 ClosingDate = apprenticeshipVacancy.ClosingDate,
                 DateSubmitted = apprenticeshipVacancy.DateSubmitted,
+                DateFirstSubmitted = apprenticeshipVacancy.DateFirstSubmitted,
                 ProviderName = provider.Name,
                 Status = apprenticeshipVacancy.Status,
                 Title = apprenticeshipVacancy.Title,
