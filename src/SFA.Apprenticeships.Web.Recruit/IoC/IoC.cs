@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.Mongo.Providers.IoC;
     using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Infrastructure.Repositories.Mongo.Vacancies.IoC;
+    using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;
@@ -42,6 +43,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
             return new Container(x =>
             {
@@ -55,13 +57,14 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
-                x.AddRegistry<ApplicationRepositoryRegistry>();
+                x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp
                 x.AddRegistry<UserProfileRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<ApplicationServicesRegistry>();
+                x.AddRegistry<ApplicationRepositoryRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

@@ -45,6 +45,7 @@
         {
             var wageTypeMap = new CodeEnumMap<WageType>
             {
+                { "NAP", 0},
                 { "AMW", WageType.ApprenticeshipMinimumWage },
                 { "NMW", WageType.NationalMinimumWage },
                 { "CUS", WageType.Custom }
@@ -88,7 +89,7 @@
             {
                 { "LIV", ProviderVacancyStatuses.Live },
                 { "CLD", ProviderVacancyStatuses.Closed },
-                { "DFT", ProviderVacancyStatuses.Draft },
+                { "DRA", ProviderVacancyStatuses.Draft },
                 { "PQA", ProviderVacancyStatuses.PendingQA },
                 { "REF", ProviderVacancyStatuses.RejectedByQA },
                 { "RES", ProviderVacancyStatuses.ReservedForQA },

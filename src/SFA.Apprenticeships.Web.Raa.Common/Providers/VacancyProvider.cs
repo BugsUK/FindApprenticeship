@@ -19,6 +19,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
     using ViewModels.Provider;
@@ -238,7 +239,9 @@
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0
+                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
+                LocationAddresses = new List<VacancyLocationAddress>(),
+                WageUnit = WageUnit.NotApplicable
             });
 
             return vacancy;

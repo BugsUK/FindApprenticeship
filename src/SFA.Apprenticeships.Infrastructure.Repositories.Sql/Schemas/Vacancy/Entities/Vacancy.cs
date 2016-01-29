@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public Guid VacancyId { get; set; }
 
-        public int VacancyReferenceNumber { get; set; }
+        public long VacancyReferenceNumber { get; set; }
 
         [Required]
         [StringLength(1)]
@@ -103,7 +103,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         [Column(TypeName = "datetime2")]
         public DateTime? AV_InterviewStartDate { get; set; }
 
-        public short? DurationValue { get; set; }
+        public int? DurationValue { get; set; } //Was short
 
         [StringLength(1)]
         public string DurationTypeCode { get; set; }
