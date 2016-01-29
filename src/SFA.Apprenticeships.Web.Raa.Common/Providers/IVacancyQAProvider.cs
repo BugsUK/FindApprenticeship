@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using FluentValidation.Results;
-    using ViewModels;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public interface IVacancyQAProvider
     {
-        List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
+        List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel);
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 

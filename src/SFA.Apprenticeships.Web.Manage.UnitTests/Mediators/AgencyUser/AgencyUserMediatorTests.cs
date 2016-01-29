@@ -1,7 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-
-namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
+﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 {
     using System.Collections.Generic;
     using Common.Constants;
@@ -15,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
     using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
 
@@ -111,7 +109,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
 
             var mediator = new AgencyUserMediatorBuilder().With(userProvider).Build();
 
-            var response = mediator.GetHomeViewModel(principal);
+            var response = mediator.GetHomeViewModel(principal, new DashboardVacancySummariesSearchViewModel());
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
             response.ViewModel.AgencyUser.RoleId.Should().Be(roleList);
@@ -121,6 +119,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
         [Test]
         public void GetHomeViewModelShouldGetVacancies()
         {
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel();
             var vacancies = new List<DashboardVacancySummaryViewModel>
             {
                 new DashboardVacancySummaryViewModel
@@ -129,14 +128,14 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.AgencyUser
                 }
             };
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview()).Returns(vacancies);
+            vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview(searchViewModel)).Returns(vacancies);
             var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
             var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
 
-            var response = mediator.GetHomeViewModel(principal);
+            var response = mediator.GetHomeViewModel(principal, searchViewModel);
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
-            vacancyProvider.Verify(vp => vp.GetPendingQAVacanciesOverview(), Times.Once);
+            vacancyProvider.Verify(vp => vp.GetPendingQAVacanciesOverview(searchViewModel), Times.Once);
             response.ViewModel.VacancySummaries.Vacancies.ShouldBeEquivalentTo(vacancies);
         }
     }

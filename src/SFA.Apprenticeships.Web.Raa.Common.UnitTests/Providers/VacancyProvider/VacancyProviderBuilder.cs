@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
 {
+    using System;
     using Application.Interfaces.Applications;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
@@ -22,6 +23,11 @@
         private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
         private Mock<IMapper> _mapper = new Mock<IMapper>();
+
+        public VacancyProviderBuilder()
+        {
+            _dateTimeService.Setup(s => s.UtcNow()).Returns(DateTime.UtcNow);
+        }
 
         public IVacancyQAProvider Build()
         {

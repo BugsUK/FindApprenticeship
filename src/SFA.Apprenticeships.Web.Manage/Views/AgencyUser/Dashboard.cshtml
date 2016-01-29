@@ -1,6 +1,7 @@
 ﻿@using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Manage.ViewModels
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 @{
@@ -108,7 +109,7 @@
                     {
                         <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
                             <p class="count">@Model.VacancySummaries.ResubmittedCount</p>
-                            <figcaption><h2>Closing soon</h2></figcaption>
+                            <figcaption><h2>Resubmitted vacancies</h2></figcaption>
                         </a>
                     }
                 </figure>
