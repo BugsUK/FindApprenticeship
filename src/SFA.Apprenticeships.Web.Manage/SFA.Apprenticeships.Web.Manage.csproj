@@ -323,9 +323,6 @@
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\DashboardVacancySummaryFilterTypes.cs" />
-    <Compile Include="ViewModels\DashboardVacancySummariesSearchViewModel.cs" />
-    <Compile Include="ViewModels\DashboardVacancySummariesViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>

@@ -148,6 +148,7 @@
     <Compile Include="Providers\VacancyPosting\ManageDatesTests.cs" />
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
+    <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderTests.cs" />
   </ItemGroup>

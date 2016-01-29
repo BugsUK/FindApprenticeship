@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     public enum DashboardVacancySummaryFilterTypes
     {

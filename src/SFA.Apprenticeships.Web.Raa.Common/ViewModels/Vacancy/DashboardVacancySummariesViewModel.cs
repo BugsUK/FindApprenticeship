@@ -1,7 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System.Collections.Generic;
-    using Raa.Common.ViewModels.Vacancy;
 
     public class DashboardVacancySummariesViewModel
     {

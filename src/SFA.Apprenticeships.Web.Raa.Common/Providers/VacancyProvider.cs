@@ -674,10 +674,32 @@
             return result;
         }
 
-        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
+        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+
+            var utcNow = _dateTimeService.UtcNow();
+
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
+            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
+            var submitted48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
+            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            switch (searchViewModel.FilterType)
+            {
+                case DashboardVacancySummaryFilterTypes.SubmittedToday:
+                    vacancies = submittedToday;
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
+                    vacancies = submittedYesterday;
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
+                    vacancies = submitted48Hours;
+                    break;
+                case DashboardVacancySummaryFilterTypes.Resubmitted:
+                    vacancies = resubmitted;
+                    break;
+            }
 
             return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
         }
@@ -739,7 +761,7 @@
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
-            return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+            return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
         private void CreateChildVacancy(ApprenticeshipVacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)
