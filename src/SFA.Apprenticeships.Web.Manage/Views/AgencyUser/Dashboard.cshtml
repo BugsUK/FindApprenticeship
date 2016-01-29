@@ -43,7 +43,7 @@
             var filterType = Model.VacancySummaries.SearchViewModel.FilterType;
         }
         <h2 class="heading-medium">
-            Your vacancies
+            Vacancies to review
             @if (filterType != DashboardVacancySummaryFilterTypes.All)
             {
                 <span>&nbsp;<a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
@@ -121,7 +121,6 @@
         <div class="grid grid-1-1">
             <div class="inner-block-padr">
                 <section>
-                    <h2 class="heading-medium">Your vacancies</h2>
                     <div class="tabbed-element tab1 active width-all-1-1">
                         <table class="no-btm-margin">
                             <colgroup>
