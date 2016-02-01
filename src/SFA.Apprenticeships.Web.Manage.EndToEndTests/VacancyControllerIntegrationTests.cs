@@ -692,13 +692,10 @@
         {
             var vacancyViewModel = new NewVacancyViewModel
             {
-                ApprenticeshipLevel = ApprenticeshipLevel.Intermediate,
-                FrameworkCodeName = "framework code name",
                 OfflineVacancy = false,
                 ShortDescription = "short description",
                 Ukprn = "ukprn",
                 Title = title + "modified",
-                TrainingType = TrainingType.Frameworks,
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
             return vacancyViewModel;

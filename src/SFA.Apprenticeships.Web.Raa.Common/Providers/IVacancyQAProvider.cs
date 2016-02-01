@@ -30,6 +30,8 @@
 
         NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
+        TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
+
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
         VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);

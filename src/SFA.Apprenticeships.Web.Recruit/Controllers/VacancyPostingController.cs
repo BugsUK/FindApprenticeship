@@ -280,7 +280,7 @@
             }
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
         {
@@ -291,7 +291,7 @@
             return View("TrainingDetails", response.ViewModel);
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
         {

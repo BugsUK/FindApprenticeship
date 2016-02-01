@@ -27,6 +27,7 @@
         private readonly VacancyViewModelValidator _vacancyViewModelValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
+        private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator;
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
@@ -39,7 +40,7 @@
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator, 
             ProviderSiteEmployerLinkViewModelValidator providerSiteEmployerLinkViewModelValidator, 
-            IProviderQAProvider providerQaProvider, LocationSearchViewModelValidator locationSearchViewModelValidator, ILocationsProvider locationsProvider)
+            IProviderQAProvider providerQaProvider, LocationSearchViewModelValidator locationSearchViewModelValidator, ILocationsProvider locationsProvider, TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
@@ -51,6 +52,7 @@
             _providerQaProvider = providerQaProvider;
             _locationSearchViewModelValidator = locationSearchViewModelValidator;
             _locationsProvider = locationsProvider;
+            _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
         }
 
         public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
@@ -154,7 +156,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel)
+        public MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
@@ -165,7 +167,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.SelectFrameworkAsTrainingType.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel)
+        public MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
@@ -251,6 +253,20 @@
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+            }
+
+            var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
+
+            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+        }
+
+        public MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)
+        {
+            var validationResult = _trainingDetailsViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {

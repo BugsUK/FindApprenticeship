@@ -411,13 +411,6 @@
 
         private void UpdateReferenceDataFor(NewVacancyViewModel newVacancyViewModel)
         {
-            newVacancyViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
-            newVacancyViewModel.Standards = _vacancyPostingProvider.GetStandards();
-            if (newVacancyViewModel.TrainingType == TrainingType.Standards && newVacancyViewModel.StandardId.HasValue)
-            {
-                var standard = _vacancyPostingProvider.GetStandard(newVacancyViewModel.StandardId);
-                newVacancyViewModel.ApprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
-            }
             newVacancyViewModel.ProviderSiteEmployerLink =
                 _providerProvider.GetProviderSiteEmployerLinkViewModel(
                     newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
@@ -429,16 +422,8 @@
             var storedVacancy = GetStoredVacancy(newVacancyViewModel);
             if (storedVacancy != null && storedVacancy.NewVacancyViewModel != null)
             {
-                newVacancyViewModel.ApprenticeshipLevelComment =
-                    storedVacancy.NewVacancyViewModel.ApprenticeshipLevelComment;
-                newVacancyViewModel.FrameworkCodeNameComment =
-                    storedVacancy.NewVacancyViewModel.FrameworkCodeNameComment;
-                newVacancyViewModel.OfflineApplicationInstructionsComment =
-                    storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
-                newVacancyViewModel.StandardIdComment =
-                    storedVacancy.NewVacancyViewModel.StandardIdComment;
-                newVacancyViewModel.OfflineApplicationUrlComment =
-                    storedVacancy.NewVacancyViewModel.OfflineApplicationUrlComment;
+                newVacancyViewModel.OfflineApplicationInstructionsComment = storedVacancy.NewVacancyViewModel.OfflineApplicationInstructionsComment;
+                newVacancyViewModel.OfflineApplicationUrlComment = storedVacancy.NewVacancyViewModel.OfflineApplicationUrlComment;
                 newVacancyViewModel.ShortDescriptionComment = storedVacancy.NewVacancyViewModel.ShortDescriptionComment;
                 newVacancyViewModel.TitleComment = storedVacancy.NewVacancyViewModel.TitleComment;
             }
@@ -446,11 +431,16 @@
 
         private VacancyViewModel GetStoredVacancy(NewVacancyViewModel newVacancyViewModel)
         {
+            return GetStoredVacancy(newVacancyViewModel.VacancyReferenceNumber);
+        }
+
+        private VacancyViewModel GetStoredVacancy(long? vacancyReferenceNumber)
+        {
             VacancyViewModel storedVacancy = null;
 
-            if (newVacancyViewModel.VacancyReferenceNumber.HasValue)
+            if (vacancyReferenceNumber.HasValue)
             {
-                storedVacancy = _vacancyPostingProvider.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
+                storedVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber.Value);
             }
 
             return storedVacancy;
@@ -472,6 +462,11 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
+        private VacancyViewModel GetStoredVacancy(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            return GetStoredVacancy(trainingDetailsViewModel.VacancyReferenceNumber);
+        }
+
         public MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)
         {
             var validationResult = _trainingDetailsViewModelServerValidator.Validate(viewModel);
@@ -484,6 +479,25 @@
             var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+        }
+
+        private void UpdateReferenceDataFor(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            trainingDetailsViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            trainingDetailsViewModel.Standards = _vacancyPostingProvider.GetStandards();
+            if (trainingDetailsViewModel.TrainingType == TrainingType.Standards && trainingDetailsViewModel.StandardId.HasValue)
+            {
+                var standard = _vacancyPostingProvider.GetStandard(trainingDetailsViewModel.StandardId);
+                trainingDetailsViewModel.ApprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
+            }
+        }
+
+        private void UpdateCommentsFor(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            var storedVacancy = GetStoredVacancy(trainingDetailsViewModel);
+            trainingDetailsViewModel.ApprenticeshipLevelComment = storedVacancy.TrainingDetailsViewModel.ApprenticeshipLevelComment;
+            trainingDetailsViewModel.FrameworkCodeNameComment = storedVacancy.TrainingDetailsViewModel.FrameworkCodeNameComment;
+            trainingDetailsViewModel.StandardIdComment = storedVacancy.TrainingDetailsViewModel.StandardIdComment;
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
