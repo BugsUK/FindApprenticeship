@@ -1,18 +1,18 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Validators.VacancyPosting
 {
-    using Common.UnitTests.Validators;
-    using Common.Validators;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Raa.Common.UnitTests.Builders;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.ViewModels.Vacancy;
+    using Builders;
+    using Common.Validators.Vacancy;
+    using ViewModels.Vacancy;
+    using Web.Common.UnitTests.Validators;
+    using Web.Common.Validators;
 
     [TestFixture]
-    public class NewVacancyViewModelServerValidatorTests
+    public class TrainingDetailsViewModelServerValidatorTests
     {
         private NewVacancyViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;

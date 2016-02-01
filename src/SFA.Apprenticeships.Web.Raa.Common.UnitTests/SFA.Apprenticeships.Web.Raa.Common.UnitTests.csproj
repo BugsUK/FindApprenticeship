@@ -82,6 +82,14 @@
       <HintPath>..\packages\FluentAssertions.4.0.1\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FluentValidation.Mvc, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
       <Private>True</Private>
@@ -130,6 +138,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
@@ -151,6 +160,7 @@
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderTests.cs" />
+    <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -175,6 +185,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Common.UnitTests\SFA.Apprenticeships.Web.Common.UnitTests.csproj">
+      <Project>{3ca36139-bbdd-4305-b15a-e9500606b672}</Project>
+      <Name>SFA.Apprenticeships.Web.Common.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
