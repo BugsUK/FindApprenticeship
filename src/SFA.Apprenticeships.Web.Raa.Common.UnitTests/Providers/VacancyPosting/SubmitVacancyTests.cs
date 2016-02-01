@@ -28,7 +28,7 @@
                     Description = "Description",
                     Employer = new Employer
                     {
-                        Address = new Address()
+                        Address = new PostalAddress()
                     },
                     EntityId = Guid.NewGuid(),
                     ProviderSiteErn = string.Empty,
@@ -69,7 +69,7 @@
                     Description = "Description",
                     Employer = new Employer
                     {
-                        Address = new Address()
+                        Address = new PostalAddress()
                     },
                     EntityId = Guid.NewGuid(),
                     ProviderSiteErn = string.Empty,
@@ -109,7 +109,7 @@
                     Description = "Description",
                     Employer = new Employer
                     {
-                        Address = new Address()
+                        Address = new PostalAddress()
                     },
                     EntityId = Guid.NewGuid(),
                     ProviderSiteErn = string.Empty,

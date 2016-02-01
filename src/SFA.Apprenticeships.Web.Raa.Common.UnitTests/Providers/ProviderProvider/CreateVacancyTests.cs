@@ -29,7 +29,7 @@
                 Employer = new Employer
                 {
                     Ern = ern,
-                    Address = new Address()
+                    Address = new PostalAddress()
                 },
                 Description = "Description",
                 EntityId = Guid.NewGuid(),
@@ -85,7 +85,7 @@
                 Employer = new Employer
                 {
                     Ern = ern,
-                    Address = new Address()
+                    Address = new PostalAddress()
                 },
                 Description = "Description",
                 EntityId = Guid.NewGuid(),

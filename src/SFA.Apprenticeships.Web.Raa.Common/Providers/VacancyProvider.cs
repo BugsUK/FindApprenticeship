@@ -112,19 +112,20 @@
                 Status = ProviderVacancyStatuses.Draft,
                 AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                LocationAddresses = new List<VacancyLocationAddress>()
+                LocationAddresses = new List<VacancyLocationAddress>(),
+                WageUnit = WageUnit.NotApplicable
             };
 
             locationSearchViewModel.Addresses.ForEach(a => apprenticeshipVacancy.LocationAddresses.Add(new VacancyLocationAddress
             {
-                Address = new Address
+                Address = new PostalAddress
                 {
                     AddressLine1 = a.Address.AddressLine1,
                     AddressLine2 = a.Address.AddressLine2,
                     AddressLine3 = a.Address.AddressLine3,
                     AddressLine4 = a.Address.AddressLine4,
                     Postcode = a.Address.Postcode,
-                    Uprn = a.Address.Uprn
+                    ValidationSourceKeyValue = a.Address.Uprn // VGA_Address
                 },
                 NumberOfPositions = a.NumberOfPositions.Value
             }));
@@ -164,7 +165,7 @@
                         AddressLine3 = v.Address.AddressLine3,
                         AddressLine4 = v.Address.AddressLine4,
                         Postcode = v.Address.Postcode,
-                        Uprn = v.Address.Uprn
+                        Uprn = v.Address.ValidationSourceKeyValue //VGA_Address
                     },
                     NumberOfPositions = v.NumberOfPositions
                 }));
@@ -962,19 +963,22 @@
         {
             var addresses = viewModel.Addresses.Select(a => new VacancyLocationAddress
             {
-                Address = new Address
+                Address = new PostalAddress
                 {
                     AddressLine1 = a.Address.AddressLine1,
                     AddressLine2 = a.Address.AddressLine2,
                     AddressLine3 = a.Address.AddressLine3,
                     AddressLine4 = a.Address.AddressLine4,
+                    AddressLine5 = a.Address.AddressLine5,
                     Postcode = a.Address.Postcode,
-                    Uprn = a.Address.Uprn
+                    Town = a.Address.Town,
+                    ValidationSourceCode = "PCA", //TODO: review.
+                    ValidationSourceKeyValue = a.Address.Uprn
                 },
                 NumberOfPositions = a.NumberOfPositions.Value
             });
 
-            _vacancyPostingService.ReplaceLocationInformation(viewModel.VacancyReferenceNumber, viewModel.IsEmployerLocationMainApprenticeshipLocation,
+            _vacancyPostingService.ReplaceLocationInformation(viewModel.VacancyGuid, viewModel.IsEmployerLocationMainApprenticeshipLocation,
                 null, addresses, viewModel.LocationAddressesComment, viewModel.AdditionalLocationInformation,
                 viewModel.AdditionalLocationInformationComment);
 
@@ -983,12 +987,8 @@
 
         public void RemoveVacancyLocationInformation(Guid vacancyGuid)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
-            if (vacancy != null)
-            {
-                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber, null, null,
+            _vacancyPostingService.ReplaceLocationInformation(vacancyGuid, null, null,
                     new List<VacancyLocationAddress>(), null, null, null);
-            }
         }
 
         public void RemoveLocationAddresses(Guid vacancyGuid)
@@ -996,7 +996,7 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
-                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
+                _vacancyPostingService.ReplaceLocationInformation(vacancyGuid,
                     vacancy.IsEmployerLocationMainApprenticeshipLocation, vacancy.NumberOfPositions, new List<VacancyLocationAddress>(), vacancy.LocationAddressesComment,
                     null, vacancy.AdditionalLocationInformationComment);
             }

@@ -22,7 +22,7 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
             BaseUrl = new Uri(Config.RetrieveServiceEndpoint);
         }
 
-        public Address RetrieveAddress(string addressId)
+        public PostalAddress RetrieveAddress(string addressId)
         {
             Condition.Requires(addressId, "addressId").IsNotNullOrWhiteSpace();
 
@@ -42,14 +42,17 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
 
             var address = addresses.Data.Items.First();
 
-            return new Address
+            return new PostalAddress
             {
                 AddressLine1 = address.Line1,
                 AddressLine2 = address.Line2,
                 AddressLine3 = address.Line3,
-                AddressLine4 = address.City,
+                AddressLine4 = address.Line4,
+                AddressLine5 = address.Line5,
+                Town = address.City,
                 Postcode = address.PostalCode,
-                Uprn = address.DomesticId
+                ValidationSourceKeyValue = address.DomesticId,
+                ValidationSourceCode = "PCA"
             };
         }
 

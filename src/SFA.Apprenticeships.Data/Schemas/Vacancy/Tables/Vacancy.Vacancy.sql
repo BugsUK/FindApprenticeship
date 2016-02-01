@@ -11,7 +11,7 @@
     [DeliveryProviderVacancyPartyId]       INT             NOT NULL,
     [ContractOwnerVacancyPartyId]          INT             NOT NULL,
     [OriginalContractOwnerVacancyPartyId]  INT             NULL,
-    [Title]                                NVARCHAR (MAX)  NOT NULL,
+    [Title]                                NVARCHAR (MAX)  NULL,
     [TitleComment]                         NVARCHAR (MAX)  NULL,
     [ShortDescription]                     NVARCHAR (MAX)  NULL,
     [ShortDescriptionComment]              NVARCHAR (MAX)  NULL,
@@ -86,9 +86,11 @@
     
 
 	PRIMARY KEY CLUSTERED ([VacancyId] ASC),
-    CONSTRAINT [CK_FrameworkId_StandardId] CHECK ([TrainingTypeCode]='F' AND [FrameworkId] IS NOT NULL AND [StandardId] IS NULL OR [TrainingTypeCode]='S' AND [FrameworkId] IS NULL AND [StandardId] IS NOT NULL),
+	-- When we create a multilocation vacancy we need to insert a vacancy without framework and standard information
+    -- CONSTRAINT [CK_FrameworkId_StandardId] CHECK ([TrainingTypeCode]='F' AND [FrameworkId] IS NOT NULL AND [StandardId] IS NULL OR [TrainingTypeCode]='S' AND [FrameworkId] IS NULL AND [StandardId] IS NOT NULL),
     CONSTRAINT [CK_PublishedDateTime_VacancyStatusCode] CHECK (([PublishedDateTime] IS NULL AND [VacancyStatusCode] <> 'LIV') OR ([PublishedDateTime] IS NOT NULL AND [VacancyStatusCode] = 'LIV')),
-    CONSTRAINT [CK_TrainingTypeCode] CHECK ([TrainingTypeCode]='S' OR [TrainingTypeCode]='F'),
+	-- When we create a multilocation vacancy we need to insert a vacancy without this information
+    -- CONSTRAINT [CK_TrainingTypeCode] CHECK ([TrainingTypeCode]='S' OR [TrainingTypeCode]='F'),
     CONSTRAINT [FK_Vacancy_ContractedProviderVacancyPartyId] FOREIGN KEY ([ContractOwnerVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty] ([VacancyPartyId]),
     CONSTRAINT [FK_Vacancy_DeliveryProviderVacancyPartyId] FOREIGN KEY ([DeliveryProviderVacancyPartyId]) REFERENCES [Vacancy].[VacancyParty] ([VacancyPartyId]),
     CONSTRAINT [FK_Vacancy_DurationTypeCode] FOREIGN KEY ([DurationTypeCode]) REFERENCES [Vacancy].[DurationType] ([DurationTypeCode]),

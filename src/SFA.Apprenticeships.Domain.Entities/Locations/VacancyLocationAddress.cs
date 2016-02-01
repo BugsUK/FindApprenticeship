@@ -2,7 +2,7 @@
 {
     public class VacancyLocationAddress
     {
-        public Address Address { get; set; }
+        public PostalAddress Address { get; set; }
 
         public int NumberOfPositions { get; set; }
     }

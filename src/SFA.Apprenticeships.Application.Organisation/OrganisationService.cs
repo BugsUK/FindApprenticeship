@@ -172,16 +172,7 @@ namespace SFA.Apprenticeships.Application.Organisation
             {
                 Ern = summary.ReferenceNumber,
                 Name = summary.Name,
-                Address = new Address()
-                {
-                    AddressLine1 = summary.Address.AddressLine1,
-                    AddressLine2 = summary.Address.AddressLine2,
-                    AddressLine3 = summary.Address.AddressLine3,
-                    AddressLine4 = summary.Address.AddressLine4,
-                    GeoPoint = summary.Address.GeoPoint,
-                    Postcode = summary.Address.Postcode,
-                    Uprn = summary.Address.ValidationSourceKeyValue
-                }
+                Address = summary.Address
             };
         }
     }

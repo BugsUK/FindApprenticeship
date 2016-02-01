@@ -56,7 +56,7 @@
                         DateCreated = DateTime.UtcNow,
                         Ern = ern,
                         Name = providerSiteEmployerLink?.Employer?.Name,
-                        Address = new Address
+                        Address = new PostalAddress // VGA_Address
                         {
                             AddressLine1  = firstLocationDetails.AddressDetails.AddressLine1,
                             AddressLine2 = firstLocationDetails.AddressDetails.AddressLine2,

@@ -24,7 +24,7 @@
         private static readonly Employer Employer = new Employer
         {
             Ern = Ern,
-            Address = new Address
+            Address = new PostalAddress
             {
                 GeoPoint = new GeoPoint()
             }

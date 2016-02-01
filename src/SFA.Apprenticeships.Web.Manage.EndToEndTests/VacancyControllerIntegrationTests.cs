@@ -642,14 +642,15 @@
                     {
                         Ern = "100608868",
                         Name = "Employer name",
-                        Address = new Address
+                        Address = new PostalAddress
                         {
                             AddressLine1 = "address line 1",
                             AddressLine2 = "address line 2",
                             AddressLine3 = "address line 3",
                             AddressLine4 = "address line 4",
+                            AddressLine5 = "address line 5",
                             Postcode = "postcode",
-                            Uprn = null,
+                            ValidationSourceCode = null,
                             GeoPoint = new GeoPoint
                             {
                                 Latitude = 0.0,

@@ -131,11 +131,11 @@
             return _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
         }
 
-        public void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
+        public void ReplaceLocationInformation(Guid vacancyGuid, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
             string additionalLocationInformationComment)
         {
-            _apprenticeshipVacancyWriteRepository.ReplaceLocationInformation(vacancyReferenceNumber,
+            _apprenticeshipVacancyWriteRepository.ReplaceLocationInformation(vacancyGuid,
                 isEmployerLocationMainApprenticeshipLocation, numberOfPositions, vacancyLocationAddresses,
                 locationAddressesComment, additionalLocationInformation, additionalLocationInformationComment);
         }

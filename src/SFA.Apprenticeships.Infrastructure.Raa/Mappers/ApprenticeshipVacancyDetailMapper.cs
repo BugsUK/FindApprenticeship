@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Domain.Entities.Locations;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -58,7 +59,7 @@
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
-                VacancyAddress = vacancy.ProviderSiteEmployerLink.Employer.Address,
+                VacancyAddress = GetAddressFrom(vacancy.ProviderSiteEmployerLink.Employer.Address), 
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
                 //TODO: How is this captured in RAA?
@@ -120,6 +121,48 @@
             }
 
             return detail;
+        }
+
+        private static Address GetAddressFrom(PostalAddress postalAddress)
+        {
+            var address = new Address
+            {
+                GeoPoint = new GeoPoint()
+            };
+
+            if (postalAddress != null)
+            {
+                var addressLine2 =
+                    AddAddressLine(
+                        AddAddressLine(
+                            AddAddressLine(
+                                AddAddressLine(null, postalAddress.AddressLine2), postalAddress.AddressLine3), postalAddress.AddressLine4), postalAddress.AddressLine5);
+
+                address.AddressLine1 = postalAddress.AddressLine1;
+                address.AddressLine2 = addressLine2;
+                address.AddressLine3 = postalAddress.Town;
+                address.AddressLine4 = postalAddress.County;
+                address.Postcode = postalAddress.Postcode;
+                address.GeoPoint = postalAddress.GeoPoint;
+            }
+
+            return address;
+        }
+        private static string AddAddressLine(string addressLine, string addressLineToAdd)
+        {
+            if (!string.IsNullOrWhiteSpace(addressLineToAdd))
+            {
+                if (!string.IsNullOrWhiteSpace(addressLine))
+                {
+                    addressLine += ", " + addressLineToAdd;
+                }
+                else
+                {
+                    addressLine += addressLineToAdd;
+                }
+            }
+
+            return addressLine;
         }
     }
 }

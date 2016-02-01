@@ -461,7 +461,7 @@
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = aComment;
 
-            writeRepository.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
+            writeRepository.ReplaceLocationInformation(vacancy.EntityId,
                 isEmployerLocationMainApprenticeshipLocation, numberOfPositions, newLocations, locationAddressesComment,
                 additionalLocationInformation, additionalLocationInformationComment);
 

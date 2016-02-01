@@ -5,14 +5,14 @@
 
     public class AddressMapper : IAddressMapper
     {
-        public AddressData MapToAddressData(Address address)
+        public AddressData MapToAddressData(PostalAddress address)
         {
             if (address == null)
             {
                 return null;
             }
 
-            return new AddressData
+            return new AddressData //VGA_Address
             {
                 AddressLine1 = address.AddressLine1 ?? string.Empty,
                 PostCode = address.Postcode ?? string.Empty

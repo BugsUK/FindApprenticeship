@@ -37,6 +37,14 @@
             public const string WhiteListErrorText = "Fourth line of address " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
+        public static class AddressLine5
+        {
+            public const string LabelText = "Fifth line (optional)";
+            public const string TooLongErrorText = "Fifth line of address must not be more than {0} characters";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Fifth line of address " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
         public static class Postcode
         {
             public const string LabelText = "Postcode";

@@ -222,12 +222,14 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = vacancyOwnerRelationship.Employer.AddressLine1,
                 AddressLine2 = vacancyOwnerRelationship.Employer.AddressLine2,
                 AddressLine3 = vacancyOwnerRelationship.Employer.AddressLine3,
-                AddressLine4 = vacancyOwnerRelationship.Employer.Town,
+                AddressLine4 = vacancyOwnerRelationship.Employer.AddressLine4,
+                AddressLine5 = vacancyOwnerRelationship.Employer.AddressLine5, // VGA_Address
+                Town = vacancyOwnerRelationship.Employer.Town,
                 Postcode = vacancyOwnerRelationship.Employer.PostCode,
                 GeoPoint = new GeoPoint
                 {

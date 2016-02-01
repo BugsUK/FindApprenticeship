@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 
         ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 
-        void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
+        void ReplaceLocationInformation(Guid vacancyGuid, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
             string additionalLocationInformation, string additionalLocationInformationComment);
     }

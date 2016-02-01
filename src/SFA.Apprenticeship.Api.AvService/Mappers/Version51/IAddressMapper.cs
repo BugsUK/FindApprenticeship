@@ -5,6 +5,6 @@
 
     public interface IAddressMapper
     {
-        AddressData MapToAddressData(Address address);
+        AddressData MapToAddressData(PostalAddress address);
     }
 }

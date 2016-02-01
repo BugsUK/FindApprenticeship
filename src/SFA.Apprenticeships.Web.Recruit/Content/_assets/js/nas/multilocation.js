@@ -8,7 +8,7 @@
 
     ko.validation.registerExtenders();
 
-    var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemPostcode, itemNumberOfPositions, itemUprn) {
+    var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemAddressLine5, town, itemPostcode, itemNumberOfPositions, itemUprn) {
 
         var self = this;
 
@@ -25,6 +25,8 @@
         self.itemAddressLine2 = ko.observable(itemAddressLine2);
         self.itemAddressLine3 = ko.observable(itemAddressLine3);
         self.itemAddressLine4 = ko.observable(itemAddressLine4);
+        self.itemAddressLine5 = ko.observable(itemAddressLine5);
+        self.town = ko.observable(town);
         
         self.itemPostcode = ko.observable(itemPostcode);
         self.itemUprn = ko.observable(itemUprn);
@@ -63,8 +65,8 @@
             self.showLocationAddresses(true);
         };
 
-        self.addLocationAddressByField = function (addressLine1, addressLine2, addressLine3, addressLine4, postcode, numberOfPositions, uprn) {
-            var locationAddressItem = new locationAddressItemModel(addressLine1, addressLine2, addressLine3, addressLine4, postcode, numberOfPositions, uprn);
+        self.addLocationAddressByField = function (addressLine1, addressLine2, addressLine3, addressLine4, addressLine5, town, postcode, numberOfPositions, uprn) {
+            var locationAddressItem = new locationAddressItemModel(addressLine1, addressLine2, addressLine3, addressLine4, addressLine5, town, postcode, numberOfPositions, uprn);
 
             var found = self.locationAddresses().some(function (el) {
                 return el.itemFriendlyAddress() === locationAddressItem.itemFriendlyAddress();
@@ -85,7 +87,7 @@
         
         self.getLocationAddresses = function (data) {
             $(data).each(function (index, item) {
-                var locationAddressItem = new locationAddressItemModel(item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.Postcode, item.NumberOfPositions, item.Address.Uprn);
+                var locationAddressItem = new locationAddressItemModel(item.Address.AddressLine1, item.Address.AddressLine2, item.Address.AddressLine3, item.Address.AddressLine4, item.Address.AddressLine5, item.Address.Town, item.Address.Postcode, item.NumberOfPositions, item.Address.Uprn);
                 self.addLocationAddress(locationAddressItem);
             });
         };

@@ -33,7 +33,7 @@
         {
             var service = _container.GetInstance<IAddressLookupProvider>();
 
-            IEnumerable<Address> addresses = service.GetPossibleAddresses("SW12 9SX");
+            IEnumerable<PostalAddress> addresses = service.GetPossibleAddresses("SW12 9SX");
 
             addresses.Should().HaveCount(49);
         }

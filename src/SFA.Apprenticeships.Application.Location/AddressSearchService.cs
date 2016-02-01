@@ -17,7 +17,7 @@
             _addressLookupProvider = addressLookupProvider;
         }
 
-        public Pageable<Address> GetAddressesFor(string fullPostcode, int currentPage, int pageSize)
+        public Pageable<PostalAddress> GetAddressesFor(string fullPostcode, int currentPage, int pageSize)
         {
             Condition.Requires(fullPostcode, "placeNameOrPostcode").IsNotNullOrWhiteSpace();
 
@@ -29,7 +29,7 @@
 
             var addresses = _addressLookupProvider.GetPossibleAddresses(fullPostcode);
 
-            var addressesPage = new Pageable<Address>
+            var addressesPage = new Pageable<PostalAddress>
             {
                 Page = addresses.Skip((currentPage - 1) * pageSize).Take(pageSize),
                 ResultsCount = addresses.Count(),

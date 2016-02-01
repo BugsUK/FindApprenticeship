@@ -6,6 +6,6 @@
     {
         public string Ern { get; set; }
         public string Name { get; set; }
-        public Address Address { get; set; }
+        public PostalAddress Address { get; set; }
     }
 }

@@ -91,7 +91,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(n
                 result.LocationAddresses.Add(new VacancyLocationAddress
                 {
                     NumberOfPositions = dbLocation.NumberOfPositions,
-                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, SFA.Apprenticeships.Domain.Entities.Locations.Address>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId))
+                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId)) //VGA_Address
                 });
             }
 
@@ -104,11 +104,11 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(n
 
             result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
 
-            var x = _mapper.Map<Schemas.Address.Entities.PostalAddress, Address>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId));
+            //var x = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId));
 
-            result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
+            result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer
             {
-                Address = _mapper.Map<Schemas.Address.Entities.PostalAddress,Address>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId)),
+                Address = _mapper.Map<Schemas.Address.Entities.PostalAddress,PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId)),
                 //DateCreated = employer.DateCreated, TODO
                 //DateUpdated = employer.DateUpdated, TODO
                 //EntityId = employer.VacancyPartyId, // TODO: Verify
@@ -403,7 +403,7 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
             return MapVacancy(dbVacancy);
         }
 
-        public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber,
+        public ApprenticeshipVacancy ReplaceLocationInformation(Guid vacancyGuid,
             bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
             string locationAddressesComment, string additionalLocationInformation, string additionalLocationInformationComment)
         {
@@ -423,29 +423,29 @@ SET    NumberOfPositions                         = @NumberOfPositions,
        AdditionalLocationInformation             = @AdditionalLocationInformation,
        AdditionalLocationInformationComment      = @AdditionalLocationInformationComment,
        VacancyLocationTypeCode                   = @VacancyLocationTypeCode
-WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
+WHERE  VacancyId = @VacancyId
 
 DECLARE @RowCount INT = @@RowCount
 
 -- IF RowCount > 1
 --     RAISERROR etc etc.
 
-SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyId
 --AND    @RowCount = 1 -- what does it mean?
 ",
                 new
                 {
                     NumberOfPositions = numberOfPositions,
                     LocationAddressesComment = locationAddressesComment,
-                    VacancyReferenceNumber = vacancyReferenceNumber,
+                    VacancyId = vacancyGuid,
                     AdditionalLocationInformation = additionalLocationInformation,
                     AdditionalLocationInformationComment = additionalLocationInformationComment,
                     VacancyLocationTypeCode = vacancyLocationTypeCode
                 }).SingleOrDefault();
 
-            RemoveVacancyLocationAddresses(vacancyReferenceNumber);
+            RemoveVacancyLocationAddresses(vacancyGuid);
 
-            InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyReferenceNumber).EntityId); // TODO: can be done in another way?
+            InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyGuid).EntityId); // TODO: can be done in another way?
 
             return MapVacancy(dbVacancy);
         }
@@ -475,7 +475,7 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
                     NumberOfPositions = location.NumberOfPositions
                 };
 
-                var dbAddress = _mapper.Map<Address, Schemas.Address.Entities.PostalAddress>(location.Address);
+                var dbAddress = _mapper.Map<PostalAddress, Schemas.Address.Entities.PostalAddress>(location.Address); //VGA_Address
 
                 dbLocation.PostalAddressId = (int)_getOpenConnection.Insert(dbAddress);
 

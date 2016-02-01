@@ -36,6 +36,9 @@
         [Display(Name = AddressViewModelMessages.AddressLine4.LabelText)]
         public string AddressLine4 { get; set; }
 
+        [Display(Name = AddressViewModelMessages.AddressLine5.LabelText)]
+        public string AddressLine5 { get; set; }
+
         [Display(Name = AddressViewModelMessages.Postcode.LabelText)]
         public string Postcode
         {
@@ -44,6 +47,8 @@
         }
 
         public string Uprn { get; set; }
+
+        public string Town { get; set; }
 
         public GeoPointViewModel GeoPoint { get; set; }
 

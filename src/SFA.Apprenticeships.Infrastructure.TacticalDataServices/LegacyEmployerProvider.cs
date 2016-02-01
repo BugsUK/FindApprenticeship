@@ -41,12 +41,14 @@
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = legacyEmployer.AddressLine1,
                 AddressLine2 = legacyEmployer.AddressLine2,
                 AddressLine3 = legacyEmployer.AddressLine3,
-                AddressLine4 = legacyEmployer.Town,
+                AddressLine4 = legacyEmployer.AddressLine4,
+                AddressLine5 = legacyEmployer.AddressLine5,
+                Town = legacyEmployer.Town,
                 Postcode = legacyEmployer.PostCode,
                 GeoPoint = new GeoPoint
                 {

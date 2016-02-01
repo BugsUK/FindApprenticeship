@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
     using Domain.Entities.Locations;
@@ -32,7 +31,7 @@
             return string.IsNullOrWhiteSpace(addressLine) ? null : addressLine;
         }
 
-        private VacancyLocationAddressViewModel ConvertToViewModel(Address address)
+        private VacancyLocationAddressViewModel ConvertToViewModel(PostalAddress address)
         {
             return new VacancyLocationAddressViewModel
             {
@@ -42,8 +41,10 @@
                     AddressLine2 = GetAddressLineValue(address.AddressLine2),
                     AddressLine3 = GetAddressLineValue(address.AddressLine3),
                     AddressLine4 = GetAddressLineValue(address.AddressLine4),
+                    AddressLine5 = GetAddressLineValue(address.AddressLine5),
                     Postcode = address.Postcode,
-                    Uprn = address.Uprn
+                    Town = address.Town,
+                    Uprn = address.ValidationSourceKeyValue
                 }
             };
         }

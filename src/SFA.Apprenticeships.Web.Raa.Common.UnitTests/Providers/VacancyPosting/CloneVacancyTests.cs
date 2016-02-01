@@ -100,13 +100,14 @@
                     DateUpdated = DateTime.UtcNow.AddDays(-5),
                     Employer = new Employer
                     {
-                        Address = new Address
+                        Address = new PostalAddress
                         {
                             AddressLine1 = "address line 1",
                             AddressLine2 = "address line 2",
                             AddressLine3 = "address line 3",
                             AddressLine4 = "address line 4",
-                            Uprn = "uprn",
+                            AddressLine5 = "address line 5",
+                            ValidationSourceCode = "uprn",
                             GeoPoint = new GeoPoint(),
                             Postcode = "postcode"
                         },

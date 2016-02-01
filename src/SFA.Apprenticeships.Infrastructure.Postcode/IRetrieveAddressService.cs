@@ -4,6 +4,6 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
     public interface IRetrieveAddressService
     {
-        Address RetrieveAddress(string addressId);
+        PostalAddress RetrieveAddress(string addressId);
     }
 }

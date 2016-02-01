@@ -145,13 +145,13 @@
             const string locationAddressesComment = "location addresses comment";
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = "additional location information";
-            const long vacancyReferenceNumber = 1L;
+            var vacancyGuid = Guid.NewGuid();
 
-            _vacancyPostingService.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
+            _vacancyPostingService.ReplaceLocationInformation(vacancyGuid, isEmployerLocationMainApprenticeshipLocation,
                 numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
                 additionalLocationInformationComment);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.ReplaceLocationInformation(vacancyGuid, isEmployerLocationMainApprenticeshipLocation,
                 numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
                 additionalLocationInformationComment));
         }

@@ -157,13 +157,13 @@
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
-        public ApprenticeshipVacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
+        public ApprenticeshipVacancy ReplaceLocationInformation(Guid vacancyGuid, bool? isEmployerLocationMainApprenticeshipLocation,
             int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
             string additionalLocationInformation, string additionalLocationInformationComment)
         {
-            _logger.Debug($"Calling Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
+            _logger.Debug($"Calling Mongodb to replace location information of the vacancy with Id: {vacancyGuid}");
 
-            var vacancy = Get(vacancyReferenceNumber);
+            var vacancy = Get(vacancyGuid);
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = numberOfPositions;
@@ -174,7 +174,7 @@
 
             var mongoEntity = SaveEntity(vacancy);
 
-            _logger.Info($"Called Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
+            _logger.Info($"Called Mongodb to replace location information of the vacancy with Id: {vacancyGuid}");
 
             return _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }

@@ -37,7 +37,7 @@
         public void ShouldMapAddressLine1(string originalAddressLine1, string expectedAddressLine1)
         {
             // Arrange.
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = originalAddressLine1
             };
@@ -56,7 +56,7 @@
         public void ShouldMapPostcode(string originalPostcode, string expectedPostcode)
         {
             // Arrange.
-            var address = new Address
+            var address = new PostalAddress
             {
                 Postcode = originalPostcode
             };

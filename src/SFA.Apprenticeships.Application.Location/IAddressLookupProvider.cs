@@ -5,6 +5,6 @@
 
     public interface IAddressLookupProvider
     {
-        IEnumerable<Address> GetPossibleAddresses(string postcode);
+        IEnumerable<PostalAddress> GetPossibleAddresses(string postcode);
     }
 }

@@ -22,7 +22,7 @@
             _retrieveAddressService = retrieveAddressService;
         }
 
-        public IEnumerable<Address> GetPossibleAddresses(string postcode)
+        public IEnumerable<PostalAddress> GetPossibleAddresses(string postcode)
         {
             Condition.Requires(postcode, "postcode").IsNotNullOrWhiteSpace();
 

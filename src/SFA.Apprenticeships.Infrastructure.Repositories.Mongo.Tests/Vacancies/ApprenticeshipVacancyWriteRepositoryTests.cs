@@ -114,47 +114,47 @@
                     .With(av => av.DateStartedToQA, null)
                     .Create();
             //Act
-            writer.DeepSave(vacancy);
+            var vacancySaved = writer.DeepSave(vacancy);
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             int? numberOfPositions = null;
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new[]
             {
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 1",
                         AddressLine3 = "address line 3 - 1",
                         AddressLine2 = "address line 2 - 1",
                         AddressLine1 = "address line 1 - 1",
                         Postcode = "postcode",
-                        Uprn = "uprn"
+                        ValidationSourceKeyValue = "uprn"        //VGA_Address
                     },
                     NumberOfPositions = 1
                 },
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 2",
                         AddressLine3 = "address line 3 - 2",
                         AddressLine2 = "address line 2 - 2",
                         AddressLine1 = "address line 1 - 2",
                         Postcode = "postcode",
-                        Uprn = "uprn"
+                        ValidationSourceKeyValue = "uprn"       //VGA_Address
                     },
                     NumberOfPositions = 1
                 },
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 3",
                         AddressLine3 = "address line 3 - 3",
                         AddressLine2 = "address line 2 - 3",
                         AddressLine1 = "address line 1 - 3",
                         Postcode = "postcode",
-                        Uprn = "uprn"
+                        ValidationSourceKeyValue = "uprn"       //VGA_Address
                     },
                     NumberOfPositions = 1
                 }
@@ -162,7 +162,7 @@
             const string locationAddressesComment = "location addresses comment";
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = "additional location information comment";
-            var savedVacancy = writer.ReplaceLocationInformation(IntegrationTestVacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
+            var savedVacancy = writer.ReplaceLocationInformation(vacancySaved.EntityId, isEmployerLocationMainApprenticeshipLocation,
                 numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
                 additionalLocationInformationComment);
 

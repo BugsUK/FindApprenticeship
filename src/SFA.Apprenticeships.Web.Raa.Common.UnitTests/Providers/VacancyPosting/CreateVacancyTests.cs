@@ -34,7 +34,7 @@
             {
                 Employer = new Employer()
                 {
-                    Address = new Address()
+                    Address = new PostalAddress()
                 }
             }
         };
@@ -45,7 +45,7 @@
             Description = "description",
             Employer = new Employer
             {
-                Address = new Address()
+                Address = new PostalAddress()
             }
         };
 
@@ -220,7 +220,7 @@
                 {
                     Employer = new Employer
                     {
-                        Address = new Address()
+                        Address = new PostalAddress()
                     }
                 }
             };

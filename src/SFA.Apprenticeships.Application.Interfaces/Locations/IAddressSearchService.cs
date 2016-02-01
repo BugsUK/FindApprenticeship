@@ -5,6 +5,6 @@
 
     public interface IAddressSearchService
     {
-        Pageable<Address> GetAddressesFor(string fullPostcode, int currentPage, int pageSize);
+        Pageable<PostalAddress> GetAddressesFor(string fullPostcode, int currentPage, int pageSize);
     }
 }

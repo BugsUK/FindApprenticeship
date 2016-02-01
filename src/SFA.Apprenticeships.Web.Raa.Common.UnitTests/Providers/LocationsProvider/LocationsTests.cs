@@ -73,7 +73,7 @@
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
+                    s.ReplaceLocationInformation(vacancy.EntityId, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
                         null, It.Is<IEnumerable<VacancyLocationAddress>>(l => l.Count() == 3), aNewLocationAddressesComment,
                         aNewAdditionalLocationInformation, aNewAdditionalLocationInformationComment ));
         }
@@ -92,7 +92,7 @@
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, null, null,
+                    s.ReplaceLocationInformation(vacancyGuid, null, null,
                         It.Is<IEnumerable<VacancyLocationAddress>>(l => !l.Any()), null, null, null));
         }
 
@@ -114,7 +114,7 @@
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation, numberOfPositions,
+                    s.ReplaceLocationInformation(vacancyGuid, isEmployerLocationMainApprenticeshipLocation, numberOfPositions,
                         It.Is<IEnumerable<VacancyLocationAddress>>(l => !l.Any()), aComment, null, aComment));
         }
 
@@ -195,27 +195,27 @@
             {
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 1",
                         AddressLine3 = "address line 3 - 1",
                         AddressLine2 = "address line 2 - 1",
                         AddressLine1 = "address line 1 - 1",
                         Postcode = "postcode",
-                        Uprn = "uprn"
+                        ValidationSourceKeyValue = "uprn"   //VGA_Address
                     },
                     NumberOfPositions = 2
                 },
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 1",
                         AddressLine3 = "address line 3 - 1",
                         AddressLine2 = "address line 2 - 1",
                         AddressLine1 = "address line 1 - 1",
                         Postcode = "postcode",
-                        Uprn = "uprn"
+                        ValidationSourceKeyValue = "uprn"   //VGA_Address
                     },
                     NumberOfPositions = 2
                 }

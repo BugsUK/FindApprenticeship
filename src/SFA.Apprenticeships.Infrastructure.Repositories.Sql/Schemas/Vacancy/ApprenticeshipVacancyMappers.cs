@@ -205,13 +205,11 @@
 
                 .End();
 
-            Mapper.CreateMap<Address, Schemas.Address.Entities.PostalAddress>()
+            Mapper.CreateMap<PostalAddress, Schemas.Address.Entities.PostalAddress>()
                 .MapMemberFrom(a => a.Latitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Latitude)
                 .MapMemberFrom(a => a.Longitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Longitude)
 
-                // TODO: Hacks
-                .MapMemberFrom(a => a.AddressLine5, a => "")
-                .MapMemberFrom(a => a.PostTown, a => a.AddressLine3)
+                .MapMemberFrom(a => a.PostTown, a => a.Town)
 
                 // TODO: Remove from Vacancy.Vacancy?
                 .IgnoreMember(a => a.Easting)
@@ -219,20 +217,18 @@
 
                 // TODO: Not in model and may not need to be
                 .IgnoreMember(a => a.PostalAddressId) // TODO: Need to add to round-trip...?
-                .MapMemberFrom(a => a.ValidationSourceCode, a => "MAV")
-                .MapMemberFrom(a => a.ValidationSourceKeyValue, a => (string)null) // TODO: Parent entity id?
                 .MapMemberFrom(a => a.DateValidated, a => (DateTime?)null)
                 .MapMemberFrom(a => a.CountyId, a => (int?)null)
 
                 //        .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO
                 ;
 
-            Mapper.CreateMap<Schemas.Address.Entities.PostalAddress, Domain.Entities.Locations.Address>()
-                .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
+            Mapper.CreateMap<Schemas.Address.Entities.PostalAddress, PostalAddress>()
+                //.ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
                 .MapMemberFrom(a => a.GeoPoint, a => (a.Latitude == null || a.Longitude == null) ? null : new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
-
+                .MapMemberFrom(a => a.Town, a => a.PostTown)
                 // TODO: Hacks
-                .MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
+                //.MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
                 ;
         }
     }

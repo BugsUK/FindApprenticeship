@@ -131,7 +131,7 @@
         public void ShouldMapEmployerAddress()
         {
             // Arrange.
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = "14 Acacia Avenue",
                 Postcode = "AC14 4AA"
