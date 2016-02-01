@@ -331,7 +331,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel)
+        public MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
@@ -339,10 +339,10 @@
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel)
+        public MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
@@ -350,7 +350,7 @@
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
 
-            return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
+            return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
 
         public MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(long vacancyReferenceNumber)

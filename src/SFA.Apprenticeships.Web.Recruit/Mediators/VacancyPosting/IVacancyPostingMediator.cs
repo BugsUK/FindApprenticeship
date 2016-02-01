@@ -70,11 +70,11 @@
 
         MediatorResponse<LocationSearchViewModel> RemoveLocation(LocationSearchViewModel viewModel, int locationIndex);
 
-        MediatorResponse<NewVacancyViewModel> SelectFrameworkAsTrainingType(NewVacancyViewModel viewModel);
+        MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
 		
         MediatorResponse ClearLocationInformation(Guid vacancyGuid);
 		
-        MediatorResponse<NewVacancyViewModel> SelectStandardAsTrainingType(NewVacancyViewModel viewModel);
+        MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
         MediatorResponse<VacancyDatesViewModel> GetVacancyDatesViewModel(long vacancyReferenceNumber);
 
