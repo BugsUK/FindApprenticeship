@@ -44,6 +44,7 @@
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator;
         private readonly EmployerSearchViewModelServerValidator _employerSearchViewModelServerValidator;
         private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator;
+        private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator;
 
         public VacancyPostingMediator(
             IVacancyPostingProvider vacancyPostingProvider,
@@ -63,7 +64,7 @@
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
             LocationSearchViewModelValidator locationSearchViewModelValidator, 
             IAddressLookupProvider addressLookupProvider, 
-            ILocationsProvider locationsProvider)
+            ILocationsProvider locationsProvider, TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
@@ -74,6 +75,7 @@
             _employerSearchViewModelServerValidator = employerSearchViewModelServerValidator;
             _locationSearchViewModelValidator = locationSearchViewModelValidator;
             _locationsProvider = locationsProvider;
+            _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
@@ -468,6 +470,20 @@
             var viewModel = _vacancyPostingProvider.GetTrainingDetailsViewModel(vacancyReferenceNumber);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
+        }
+
+        public MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)
+        {
+            var validationResult = _trainingDetailsViewModelServerValidator.Validate(viewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
+            }
+
+            var updatedViewModel = _vacancyPostingProvider.UpdateVacancy(viewModel);
+
+            return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)

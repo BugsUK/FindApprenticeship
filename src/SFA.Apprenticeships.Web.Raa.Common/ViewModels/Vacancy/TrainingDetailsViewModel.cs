@@ -6,7 +6,10 @@
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using FluentValidation.Attributes;
+    using Validators.Vacancy;
 
+    [Validator(typeof(TrainingDetailsViewModelClientValidator))]
     public class TrainingDetailsViewModel
     {
         public const string PartialView = "Vacancy/TrainingDetails";

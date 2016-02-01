@@ -310,6 +310,11 @@
             return viewModel;
         }
 
+        public TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);

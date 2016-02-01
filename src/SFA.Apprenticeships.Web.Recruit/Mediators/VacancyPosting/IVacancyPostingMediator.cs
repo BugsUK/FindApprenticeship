@@ -29,6 +29,8 @@
 
         MediatorResponse<TrainingDetailsViewModel> GetTrainingDetailsViewModel(long vacancyReferenceNumber);
 
+        MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel);
+
         MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview);
 
         MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel, bool acceptWarnings);

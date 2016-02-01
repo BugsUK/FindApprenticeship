@@ -318,6 +318,8 @@
         [HttpPost]
         public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
         {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
             return View(viewModel);
         }
 
