@@ -249,7 +249,7 @@
         {
             var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
-            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.VacancySummary, 
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.TrainingDetails, 
                 new
                 {
                     vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
@@ -282,24 +282,24 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
-        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("CreateVacancy", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
         [HttpPost]
-        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("CreateVacancy", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
         #endregion
