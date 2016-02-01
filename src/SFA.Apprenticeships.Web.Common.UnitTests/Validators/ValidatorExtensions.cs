@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Validators
 {
     using System;
     using System.Linq;

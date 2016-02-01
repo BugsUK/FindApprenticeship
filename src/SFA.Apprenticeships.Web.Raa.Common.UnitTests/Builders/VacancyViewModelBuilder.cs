@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Builders
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Builders
 {
     using System;
-    using Common.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Ploeh.AutoFixture;
     using Raa.Common.ViewModels.Vacancy;
+    using Web.Common.ViewModels;
 
     public class VacancyViewModelBuilder
     {
