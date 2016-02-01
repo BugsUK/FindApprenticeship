@@ -1,12 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
-    using Builders;
+    using Common.UnitTests.Validators;
     using Common.Validators;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
+    using Raa.Common.UnitTests.Builders;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
 

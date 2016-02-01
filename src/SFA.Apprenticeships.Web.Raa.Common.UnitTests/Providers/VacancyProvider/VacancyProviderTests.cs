@@ -574,7 +574,7 @@
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
 
             //Act
-            var vacancies = vacancyProvider.GetPendingQAVacanciesOverview();
+            var vacancies = vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies;
 
             //Assert
             vacancies.Should().HaveCount(2);

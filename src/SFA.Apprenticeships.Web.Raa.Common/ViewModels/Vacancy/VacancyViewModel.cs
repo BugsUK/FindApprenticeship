@@ -18,6 +18,8 @@
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 
+        public TrainingDetailsViewModel TrainingDetailsViewModel { get; set; }
+
         public VacancySummaryViewModel VacancySummaryViewModel { get; set; }
 
         public VacancyRequirementsProspectsViewModel VacancyRequirementsProspectsViewModel { get; set; }

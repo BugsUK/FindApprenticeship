@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
     using Constants.Messages;
     using Domain.Entities;
     using Providers;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
 
     public class AgencyUserMediator : MediatorBase, IAgencyUserMediator
@@ -86,17 +87,17 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
         }
 
-        public MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal)
+        public MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal, DashboardVacancySummariesSearchViewModel searchViewModel)
         {
             var username = principal.Identity.Name;
             var roleList = principal.GetRoleList();
             var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-            var vacancies = _vacancyQaProvider.GetPendingQAVacanciesOverview();
+            var vacancySummariesViewModel = _vacancyQaProvider.GetPendingQAVacanciesOverview(searchViewModel);
             
             var homeViewModel = new HomeViewModel
             {
                 AgencyUser = userViewModel,
-                Vacancies = vacancies
+                VacancySummaries = vacancySummariesViewModel
             };
 
             return GetMediatorResponse(AgencyUserMediatorCodes.GetHomeViewModel.OK, homeViewModel);

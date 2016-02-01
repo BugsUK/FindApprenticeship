@@ -6199,6 +6199,111 @@ h2 a i.raa-icon-comment {
       font-size: 16px;
       line-height: 1.25; } }
 
+.vacancies-summary {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: block; }
+  .vacancies-summary li {
+    margin: 0;
+    padding: 0 10px;
+    display: block;
+    float: left; }
+    .vacancies-summary li a {
+      text-decoration: none; }
+    .vacancies-summary li figure.data .count {
+      font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
+      font-size: 48px;
+      line-height: 1.04167;
+      font-weight: 400;
+      text-transform: none;
+      font-weight: 700;
+      margin-bottom: 0; }
+      @media (max-width: 640px) {
+        .vacancies-summary li figure.data .count {
+          font-size: 32px;
+          line-height: 1.09375; } }
+      @media screen and (max-width: 640px) {
+        .vacancies-summary li figure.data .count {
+          padding: .25em 0;
+          font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
+          font-size: 48px;
+          line-height: 1.04167;
+          font-weight: 400;
+          text-transform: none;
+          font-weight: 700; } }
+  @media screen and (max-width: 640px) and (max-width: 640px) {
+    .vacancies-summary li figure.data .count {
+      font-size: 32px;
+      line-height: 1.09375; } }
+      @media screen and (max-width: 768px) {
+        .vacancies-summary li figure.data .count {
+          font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
+          font-size: 48px;
+          line-height: 1.04167;
+          font-weight: 400;
+          text-transform: none;
+          font-weight: 700;
+          vertical-align: middle;
+          display: inline-block;
+          margin-right: 10px; } }
+  @media screen and (max-width: 768px) and (max-width: 640px) {
+    .vacancies-summary li figure.data .count {
+      font-size: 32px;
+      line-height: 1.09375; } }
+      @media screen and (min-width: 769px) {
+        .vacancies-summary li figure.data .count {
+          text-align: center; } }
+    .vacancies-summary li figure.data figcaption {
+      display: block; }
+      @media screen and (max-width: 768px) {
+        .vacancies-summary li figure.data figcaption {
+          vertical-align: middle;
+          display: inline-block;
+          margin-right: 10px; } }
+      .vacancies-summary li figure.data figcaption h2 {
+        font-family: "nta", Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.25;
+        font-weight: 300;
+        text-transform: none;
+        font-weight: 700;
+        margin-bottom: 0; }
+        @media (max-width: 640px) {
+          .vacancies-summary li figure.data figcaption h2 {
+            font-size: 14px; } }
+        @media screen and (max-width: 640px) {
+          .vacancies-summary li figure.data figcaption h2 {
+            font-family: "nta", Arial, sans-serif;
+            font-size: 16px;
+            line-height: 1.25;
+            font-weight: 300;
+            text-transform: none;
+            font-weight: 700; } }
+  @media screen and (max-width: 640px) and (max-width: 640px) {
+    .vacancies-summary li figure.data figcaption h2 {
+      font-size: 14px; } }
+        @media screen and (min-width: 769px) {
+          .vacancies-summary li figure.data figcaption h2 {
+            text-align: center; } }
+    .vacancies-summary li figure.data figcaption.underline {
+      text-decoration: underline; }
+
+@media screen and (max-width: 640px) {
+  .vacancies-summary li {
+    padding: 0 10px;
+    width: 100%; } }
+
+@media screen and (min-width: 641px) and (max-width: 768px) {
+  .vacancies-summary li {
+    padding: 0 10px 0 0;
+    width: 50%; } }
+
+@media screen and (min-width: 769px) {
+  .vacancies-summary li {
+    padding: 0 10px 0 0;
+    width: 25%; } }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

@@ -243,7 +243,6 @@
 
             return vacancy;
         }
-
         
         private string GetFrameworkCodeName(NewVacancyViewModel newVacancyViewModel)
         {
@@ -291,6 +290,22 @@
         private static bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
         {
             return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
+        }
+
+        public TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
+            var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
+            viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
+            return viewModel;
+        }
+
+        public TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
         }
 
         public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
@@ -674,12 +689,44 @@
             return result;
         }
 
-        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
+        public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
-            return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
+            var utcNow = _dateTimeService.UtcNow();
+
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
+            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
+            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
+            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            switch (searchViewModel.FilterType)
+            {
+                case DashboardVacancySummaryFilterTypes.SubmittedToday:
+                    vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
+                    vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
+                    vacancies = submittedMoreThan48Hours;
+                    break;
+                case DashboardVacancySummaryFilterTypes.Resubmitted:
+                    vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+            }
+
+            var viewModel = new DashboardVacancySummariesViewModel
+            {
+                SearchViewModel = searchViewModel,
+                SubmittedTodayCount = submittedToday.Count,
+                SubmittedYesterdayCount = submittedYesterday.Count,
+                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
+                ResubmittedCount = resubmitted.Count,
+                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
+            };
+
+            return viewModel;
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
@@ -690,6 +737,7 @@
             {
                 ClosingDate = apprenticeshipVacancy.ClosingDate,
                 DateSubmitted = apprenticeshipVacancy.DateSubmitted,
+                DateFirstSubmitted = apprenticeshipVacancy.DateFirstSubmitted,
                 ProviderName = provider.Name,
                 Status = apprenticeshipVacancy.Status,
                 Title = apprenticeshipVacancy.Title,
@@ -739,7 +787,7 @@
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
-            return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+            return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
         private void CreateChildVacancy(ApprenticeshipVacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)

@@ -48,6 +48,12 @@
             public const string FailedValidation = "VacancyPosting.GetPreviewVacancyViewModel.FailedValidation";
         }
 
+        public static class GetTrainingDetailsViewModel
+        {
+            public const string Ok = "VacancyPosting.GetTrainingDetailsViewModel.Ok";
+            public const string FailedValidation = "VacancyPosting.GetTrainingDetailsViewModel.FailedValidation";
+        }
+
         public static class GetVacancySummaryViewModel
         {
             public const string Ok = "VacancyPosting.GetVacancySummaryViewModel.Ok";
