@@ -40,8 +40,6 @@
 
             Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>()
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
-                .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
-                .ForMember(dest => dest.Standards, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipVacancy, TrainingDetailsViewModel>()

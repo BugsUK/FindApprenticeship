@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Web.Mvc;
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
@@ -49,20 +48,17 @@
             }
         };
 
-
         [SetUp]
         public void SetUp()
         {
             _validNewVacancyViewModelWithReferenceNumber = new NewVacancyViewModel()
             {
                 VacancyReferenceNumber = 1,
-                ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
                 OfflineVacancy = false,
             };
 
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
             {
-                SectorsAndFrameworks = new List<SelectListItem>(),
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
                 {
                     ProviderSiteErn = ProviderSiteErn,
@@ -169,7 +165,6 @@
                 OfflineVacancy = offlineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = offlineApplicationInstructions,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher
             });
 
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.OfflineVacancy == offlineVacancy 
@@ -229,12 +224,9 @@
             {
                 Title = av.Title,
                 ShortDescription = av.ShortDescription,
-                FrameworkCodeName = av.FrameworkCodeName,
-                StandardId = av.StandardId,
                 OfflineVacancy = av.OfflineVacancy,
                 OfflineApplicationInstructions = av.OfflineApplicationInstructions,
-                OfflineApplicationUrl = av.OfflineApplicationUrl,
-                ApprenticeshipLevel = av.ApprenticeshipLevel
+                OfflineApplicationUrl = av.OfflineApplicationUrl
             };
 
             MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(vvm);
@@ -252,9 +244,7 @@
                 .Match<NewVacancyViewModel>(
                     r =>
                         r.Title == av.Title && r.ShortDescription == av.ShortDescription &&
-                        r.FrameworkCodeName == av.FrameworkCodeName && r.StandardId == av.StandardId && r.OfflineVacancy == av.OfflineVacancy &&
-                        r.OfflineApplicationInstructions == av.OfflineApplicationInstructions &&
-                        r.OfflineApplicationUrl == av.OfflineApplicationUrl && r.ApprenticeshipLevel == av.ApprenticeshipLevel);
+                        r.OfflineApplicationInstructions == av.OfflineApplicationInstructions);
         }
 
         [Test]
@@ -276,129 +266,8 @@
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.Ukprn == Ukprn && r.ApprenticeshipLevel == ApprenticeshipLevel.Unknown &&
                         r.ProviderSiteEmployerLink.Description == _providerSiteEmployerLink.Description &&
                         r.ProviderSiteEmployerLink.ProviderSiteErn == ProviderSiteErn);
-        }
-
-        [TestCase(1, ApprenticeshipLevel.Intermediate)]
-        [TestCase(2, ApprenticeshipLevel.Advanced)]
-        [TestCase(3, ApprenticeshipLevel.Higher)]
-        [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
-        [TestCase(5, ApprenticeshipLevel.Degree)]
-        [TestCase(6, ApprenticeshipLevel.Masters)]
-        public void ShouldUpdateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
-        {
-            // Arrange.
-            _validNewVacancyViewModelWithReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
-            _validNewVacancyViewModelWithReferenceNumber.TrainingType = TrainingType.Standards;
-            _validNewVacancyViewModelWithReferenceNumber.StandardId = standardId;
-
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() {ApprenticeshipLevel = av.ApprenticeshipLevel});
-
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
-
-            // Assert.
-            viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
-        }
-
-        [TestCase(1, ApprenticeshipLevel.Intermediate)]
-        [TestCase(2, ApprenticeshipLevel.Advanced)]
-        [TestCase(3, ApprenticeshipLevel.Higher)]
-        [TestCase(4, ApprenticeshipLevel.FoundationDegree)]
-        [TestCase(5, ApprenticeshipLevel.Degree)]
-        [TestCase(6, ApprenticeshipLevel.Masters)]
-        public void ShouldCreateApprenticeshipLevelIfTrainingTypeStandard(int standardId, ApprenticeshipLevel expectedApprenticeshipLevel)
-        {
-            // Arrange.
-            _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
-            _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
-            _validNewVacancyViewModelSansReferenceNumber.StandardId = standardId;
-
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() { ApprenticeshipLevel = av.ApprenticeshipLevel };
-                });
-
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
-
-            // Assert.
-            viewModel.ApprenticeshipLevel.Should().Be(expectedApprenticeshipLevel);
-        }
-
-        [Test]
-        public void ShouldUpdateNullFrameworkCodeIfTrainingTypeStandard()
-        {
-            // Arrange.
-            _validNewVacancyViewModelWithReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
-            _validNewVacancyViewModelWithReferenceNumber.TrainingType = TrainingType.Standards;
-            _validNewVacancyViewModelWithReferenceNumber.StandardId = 1;
-            _validNewVacancyViewModelWithReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
-
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName });
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
-
-            // Assert.
-            viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
-        }
-
-        [Test]
-        public void ShouldCreateNullFrameworkCodeIfTrainingTypeStandard()
-        {
-            // Arrange.
-            _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
-            _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
-            _validNewVacancyViewModelSansReferenceNumber.StandardId = 1;
-            _validNewVacancyViewModelSansReferenceNumber.FrameworkCodeName = "ShouldBeNulled";
-
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName };
-                });
-
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
-
-            // Assert.
-            viewModel.FrameworkCodeName.Should().BeNullOrEmpty();
-        }
-
-        [Test]
-        public void ShouldFillApprenticeshipLevelIfTrainingTypeIsStandardAndApprenticeshipLevelIsUnknown()
-        {
-            // Arrange.
-            _validNewVacancyViewModelSansReferenceNumber.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
-            _validNewVacancyViewModelSansReferenceNumber.TrainingType = TrainingType.Standards;
-            _validNewVacancyViewModelSansReferenceNumber.StandardId = 1;
-
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
-                {
-                    return new NewVacancyViewModel() { FrameworkCodeName = av.FrameworkCodeName, ApprenticeshipLevel = av.ApprenticeshipLevel};
-                });
-
-            var provider = GetVacancyPostingProvider();
-
-            // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
-
-            // Assert.
-            viewModel.ApprenticeshipLevel.Should().NotBe(ApprenticeshipLevel.Unknown);
         }
 
         [Test]

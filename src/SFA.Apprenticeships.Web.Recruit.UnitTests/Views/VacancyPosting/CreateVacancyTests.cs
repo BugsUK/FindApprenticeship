@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using FluentAssertions;
-using NUnit.Framework;
-using RazorGenerator.Testing;
-using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
-    using System.Web.Mvc;
-    using Domain.Entities.Providers;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Ploeh.AutoFixture;
+    using FluentAssertions;
+    using NUnit.Framework;
+    using RazorGenerator.Testing;
+    using Common.ViewModels.Locations;
+    using Raa.Common.ViewModels.Provider;
+    using Raa.Common.ViewModels.Vacancy;
+    using Recruit.Views.VacancyPosting;
 
     [TestFixture]
     public class CreateVacancyTests : ViewUnitTest
@@ -24,8 +20,6 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 
             var viewModel = new NewVacancyViewModel
             {
-                SectorsAndFrameworks = new List<SelectListItem>(),
-                Standards = new List<StandardViewModel>(),
                 ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
                 {
                     Employer = new EmployerViewModel()

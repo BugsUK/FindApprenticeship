@@ -117,26 +117,26 @@
             }
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.SelectFrameworkAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.SelectStandardAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
         [HttpGet]

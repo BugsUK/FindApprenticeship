@@ -9,21 +9,21 @@
 
     public class VacancyMediatorBuilder
     {
-        private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator =
-            new NewVacancyViewModelServerValidator();
+        private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator = new NewVacancyViewModelServerValidator();
 
         private Mock<IVacancyQAProvider> _vacancyProvider = new Mock<IVacancyQAProvider>();
 
-        private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator =
-            new VacancySummaryViewModelServerValidator();
-        private VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator = new VacancyRequirementsProspectsViewModelServerValidator();
+        private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator = new VacancySummaryViewModelServerValidator();
+        private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator = new VacancyRequirementsProspectsViewModelServerValidator();
 
         private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
-        private Mock<IProviderQAProvider> _providerQaProvider = new Mock<IProviderQAProvider>();
+        private readonly Mock<IProviderQAProvider> _providerQaProvider = new Mock<IProviderQAProvider>();
         private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator = new LocationSearchViewModelValidator();
-        private Mock<ILocationsProvider> _locationsProvider = new Mock<ILocationsProvider>();
+        private readonly Mock<ILocationsProvider> _locationsProvider = new Mock<ILocationsProvider>();
         private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator = new ProviderSiteEmployerLinkViewModelValidator();
+
+        private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator = new TrainingDetailsViewModelServerValidator();
 
         public IVacancyMediator Build()
         {   
@@ -31,7 +31,7 @@
                 _vacancySummaryViewModelServerValidator,
                 _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator,
                 _vacancyRequirementsProspectsViewModelServerValidator, _providerSiteEmployerLinkViewModelValidator,
-                _providerQaProvider.Object, _locationSearchViewModelValidator, _locationsProvider.Object);
+                _providerQaProvider.Object, _locationSearchViewModelValidator, _locationsProvider.Object, _trainingDetailsViewModelServerValidator);
         }
 
         public VacancyMediatorBuilder With(Mock<IVacancyQAProvider> provider)

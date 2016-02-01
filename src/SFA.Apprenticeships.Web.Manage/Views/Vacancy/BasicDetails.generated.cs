@@ -125,58 +125,8 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
-WriteLiteral("\r\n    <script>\r\n        $(\"#");
-
-            
-            #line 20 "..\..\Views\Vacancy\BasicDetails.cshtml"
-       Write(Html.NameFor(m => m.StandardId));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\").change(function () {\r\n            var apprenticeshipLevel = $(\"#");
-
-            
-            #line 21 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                     Write(Html.NameFor(m => m.StandardId));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" option:selected\").attr(\"data-apprenticeship-level\");\r\n            if (apprentice" +
-"shipLevel === \"");
-
-            
-            #line 22 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                    Write(ApprenticeshipLevel.FoundationDegree.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\" || apprenticeshipLevel === \"");
-
-            
-            #line 22 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                                                                                                  Write(ApprenticeshipLevel.Masters.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\") {\r\n                apprenticeshipLevel = \"");
-
-            
-            #line 23 "..\..\Views\Vacancy\BasicDetails.cshtml"
-                                  Write(ApprenticeshipLevel.Degree.ToString());
-
-            
-            #line default
-            #line hidden
-WriteLiteral(@""";
-            }
-            $(""#apprenticeship-level-name"").text(apprenticeshipLevel);
-            $(""#apprenticeship-level-container"").show();
-        });
-
+WriteLiteral(@"
+    <script>
         $(""input[name='OfflineVacancy']"").change(function () {
             var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
             if (selectedValue === ""False"") {
