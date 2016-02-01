@@ -207,6 +207,7 @@
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\LocationSearchViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
+    <Compile Include="Validators\Vacancy\TrainingDetailsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyDatesViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancyDatesViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\NewVacancyViewModelValidator.cs" />

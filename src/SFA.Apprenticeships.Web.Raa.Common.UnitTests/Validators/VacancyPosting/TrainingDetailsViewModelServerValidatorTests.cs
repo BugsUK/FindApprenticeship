@@ -14,13 +14,13 @@
     [TestFixture]
     public class TrainingDetailsViewModelServerValidatorTests
     {
-        private NewVacancyViewModelServerValidator _validator;
+        private TrainingDetailsViewModelServerValidator _validator;
         private VacancyViewModelValidator _aggregateValidator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new NewVacancyViewModelServerValidator();
+            _validator = new TrainingDetailsViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
         }
 
@@ -54,7 +54,7 @@
         public void ShouldRequireApprenticeshipLevel(ApprenticeshipLevel apprenticeshipLevel, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
-            var viewModel = new NewVacancyViewModel
+            var viewModel = new TrainingDetailsViewModel
             {
                 TrainingType = trainingType,
                 ApprenticeshipLevel = apprenticeshipLevel
@@ -72,18 +72,18 @@
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(m => m.ApprenticeshipLevel, viewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(m => m.ApprenticeshipLevel, viewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ApprenticeshipLevel, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 
@@ -94,7 +94,7 @@
         public void ShouldRequireTrainingType(TrainingType trainingType, bool expectValid)
         {
             // Arrange.
-            var viewModel = new NewVacancyViewModel
+            var viewModel = new TrainingDetailsViewModel
             {
                 TrainingType = trainingType
             };
@@ -111,18 +111,18 @@
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(m => m.TrainingType, viewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(m => m.TrainingType, viewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.TrainingType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 
@@ -135,7 +135,7 @@
         public void ShouldRequireFrameworkCodeName(string frameworkCodeName, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
-            var viewModel = new NewVacancyViewModel
+            var viewModel = new TrainingDetailsViewModel
             {
                 TrainingType = trainingType,
                 FrameworkCodeName = frameworkCodeName
@@ -153,18 +153,18 @@
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(m => m.FrameworkCodeName, viewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(m => m.FrameworkCodeName, viewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.FrameworkCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 
@@ -183,7 +183,7 @@
             {
                 standardId = parsedStandardId;
             }
-            var viewModel = new NewVacancyViewModel
+            var viewModel = new TrainingDetailsViewModel
             {
                 TrainingType = trainingType,
                 StandardId = standardId
@@ -201,73 +201,18 @@
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(m => m.StandardId, viewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(m => m.StandardId, viewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-            }
-        }
-
-        [TestCase("http://www.google.com", true)]
-        [TestCase("asdf", false)]
-        [TestCase("asdf.asdflkjasdfl", true)]
-        [TestCase(null, false)]
-        [TestCase("", false)]
-        [TestCase("http://www.google.com/", true)]
-        [TestCase("http://www.google.com/someFolder", true)]
-        [TestCase("http://www.google.com/someFolder/index.html", true)]
-        [TestCase("http://www.google.com/someFolder/index.html?id=445667", true)]
-        [TestCase("https://www.google.com/", true)]
-        [TestCase("https://www.google.com/someFolder", true)]
-        [TestCase("https://www.google.com/someFolder/index.html", true)]
-        [TestCase("https://www.google.com/someFolder/index.html?id=445667", true)]
-        [TestCase("www.google.com", true)]
-        [TestCase("www.google.com/someFolder", true)]
-        [TestCase("www.google.com/someFolder/index.html", true)]
-        [TestCase("www.google.com/someFolder/index.html?id=445667", true)]
-        [TestCase("asdf://asdf.com", false)]
-        public void ShouldHaveAValidUrlIfTheVacancyIsOffline(string url, bool expectValid)
-        {
-            var viewModel = new NewVacancyViewModel
-            {
-                ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
-                FrameworkCodeName = "some framework code name",
-                OfflineVacancy = true,
-                OfflineApplicationUrl = url
-            };
-            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-
-            // Act.
-            _validator.Validate(viewModel);
-            _aggregateValidator.Validate(vacancyViewModel);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
-            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            // Assert.
-            if (expectValid)
-            {
-                _validator.ShouldNotHaveValidationErrorFor(m => m.OfflineApplicationUrl, viewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.ErrorsAndWarnings);
-            }
-            else
-            {
-                _validator.ShouldHaveValidationErrorFor(m => m.OfflineApplicationUrl, viewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.Errors);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.Warnings);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.OfflineApplicationUrl, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
     }

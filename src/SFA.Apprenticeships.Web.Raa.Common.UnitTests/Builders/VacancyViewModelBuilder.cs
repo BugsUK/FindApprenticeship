@@ -4,12 +4,13 @@
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Ploeh.AutoFixture;
-    using Raa.Common.ViewModels.Vacancy;
+    using ViewModels.Vacancy;
     using Web.Common.ViewModels;
 
     public class VacancyViewModelBuilder
     {
         private NewVacancyViewModel _newVacancyViewModel = new NewVacancyViewModel();
+        private TrainingDetailsViewModel _trainingDetailsViewModel = new TrainingDetailsViewModel();
         private VacancyRequirementsProspectsViewModel _vacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel();
         private VacancyQuestionsViewModel _vacancyQuestionsViewModel = new VacancyQuestionsViewModel();
         private VacancySummaryViewModel _vacancySummaryViewModel = new VacancySummaryViewModel
@@ -22,6 +23,7 @@
             var viewModel = new VacancyViewModel
             {
                 NewVacancyViewModel = _newVacancyViewModel,
+                TrainingDetailsViewModel = _trainingDetailsViewModel,
                 VacancySummaryViewModel = _vacancySummaryViewModel,
                 VacancyRequirementsProspectsViewModel = _vacancyRequirementsProspectsViewModel,
                 VacancyQuestionsViewModel = _vacancyQuestionsViewModel
@@ -37,6 +39,8 @@
             viewModel.NewVacancyViewModel.OfflineApplicationUrl = null;
             viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;
             viewModel.NewVacancyViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
+            viewModel.TrainingDetailsViewModel.TrainingType = TrainingType.Frameworks;
+            viewModel.TrainingDetailsViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
             viewModel.VacancySummaryViewModel.Status = status;
             viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
             viewModel.VacancySummaryViewModel.Duration = 12;
@@ -54,6 +58,12 @@
         public VacancyViewModelBuilder With(NewVacancyViewModel newVacancyViewModel)
         {
             _newVacancyViewModel = newVacancyViewModel;
+            return this;
+        }
+
+        public VacancyViewModelBuilder With(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            _trainingDetailsViewModel = trainingDetailsViewModel;
             return this;
         }
 
