@@ -287,9 +287,17 @@
         [HttpGet]
         public ActionResult TrainingDetails(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
+            var viewModel = response.ViewModel;
 
-            return View(response.ViewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok:
+                    return View(viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
@@ -308,6 +316,28 @@
 
                 case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancySummary, new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ReviewTrainingDetails(long vacancyReferenceNumber, bool? comeFromPreview)
+        {
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("TrainingDetails", viewModel);
+
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok:
+                    return View("TrainingDetails", viewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
