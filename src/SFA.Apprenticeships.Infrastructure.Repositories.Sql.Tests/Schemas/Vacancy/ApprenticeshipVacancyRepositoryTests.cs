@@ -165,6 +165,7 @@
                 .WithAutoProperties()
                 .CreateMany(6)
                 .ToList();
+            locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
             vacancy.LocationAddresses = locations;
 
             // Act
@@ -175,9 +176,11 @@
             // Assert
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
                 options => ExcludeHardOnes(options)
-                .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "LocationAddresses\\[[0-9]+\\].Address.Uprn")) //TODO
-                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
-                .WhenTypeIs<DateTime>());
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.DateValidated"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.County"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.PostalAddressId"))
+                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                    .WhenTypeIs<DateTime>());
         }
 
         [Test]
@@ -232,6 +235,7 @@
                 .WithAutoProperties()
                 .CreateMany(numberOfLocations)
                 .ToList();
+            locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
 
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyReferenceNumber = vacancyReferenceNumber++;
@@ -246,9 +250,11 @@
 
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
                 options => ExcludeHardOnes(options)
-                .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "LocationAddresses\\[[0-9]+\\].Address.Uprn")) //TODO
-                .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
-                .WhenTypeIs<DateTime>());
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.DateValidated"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.County"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.PostalAddressId"))
+                    .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
+                    .WhenTypeIs<DateTime>());
         }
 
         [Test]
@@ -271,6 +277,7 @@
                 .WithAutoProperties()
                 .CreateMany(numberOfLocations)
                 .ToList();
+            locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
 
             var vacancy = CreateValidDomainVacancy();
             vacancy.EntityId = vacancyGuid;
@@ -285,6 +292,8 @@
                 .WithAutoProperties()
                 .CreateMany(newNumberOfLocations)
                 .ToList();
+            newLocations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
+
             vacancy.LocationAddresses = newLocations;
             vacancy.Title = newTitle;
 
@@ -299,7 +308,11 @@
                 .WhenTypeIs<DateTime>());
 
             loadedVacancy.LocationAddresses.ShouldBeEquivalentTo(locations,
-                options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
+                options => options
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.DateValidated"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.County"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.PostalAddressId"))
+                );
         }
 
         [Test]
@@ -452,6 +465,7 @@
                 .WithAutoProperties()
                 .CreateMany(newNumberOfLocations)
                 .ToList();
+            newLocations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
 
             const string aComment = "A comment";
 
@@ -472,7 +486,10 @@
             dbVacancy.AdditionalLocationInformationComment.Should().Be(additionalLocationInformationComment);
             dbVacancy.LocationAddressesComment.Should().Be(locationAddressesComment);
             dbVacancy.LocationAddresses.ShouldBeEquivalentTo(newLocations,
-                options => options.Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.Uprn")));
+                options => options
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.DateValidated"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.County"))
+                    .Excluding(x => Regex.IsMatch(x.SelectedMemberPath, "[[0-9]+\\].Address.PostalAddressId")));
             dbVacancy.IsEmployerLocationMainApprenticeshipLocation.Should()
                 .Be(isEmployerLocationMainApprenticeshipLocation);
         }

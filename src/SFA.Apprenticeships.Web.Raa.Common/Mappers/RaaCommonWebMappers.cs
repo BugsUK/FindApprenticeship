@@ -18,7 +18,8 @@
         public override void Initialise()
         {
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
-            Mapper.CreateMap<PostalAddress, AddressViewModel>();
+            Mapper.CreateMap<PostalAddress, AddressViewModel>()
+                .ForMember(dest => dest.Uprn, opt => opt.MapFrom(s => s.ValidationSourceKeyValue)); //TODO: review
             Mapper.CreateMap<Employer, EmployerViewModel>();
             Mapper.CreateMap<ProviderSiteEmployerLink, ProviderSiteEmployerLinkViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())

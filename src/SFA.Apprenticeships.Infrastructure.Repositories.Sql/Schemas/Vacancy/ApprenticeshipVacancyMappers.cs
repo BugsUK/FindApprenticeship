@@ -217,8 +217,8 @@
 
                 // TODO: Not in model and may not need to be
                 .IgnoreMember(a => a.PostalAddressId) // TODO: Need to add to round-trip...?
-                .MapMemberFrom(a => a.DateValidated, a => (DateTime?)null)
-                .MapMemberFrom(a => a.CountyId, a => (int?)null)
+                .MapMemberFrom(a => a.DateValidated, a => (DateTime?)null) // Why?
+                .MapMemberFrom(a => a.CountyId, a => (int?)null) // done via database lookup -> TODO
 
                 //        .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO
                 ;
@@ -227,6 +227,7 @@
                 //.ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
                 .MapMemberFrom(a => a.GeoPoint, a => (a.Latitude == null || a.Longitude == null) ? null : new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
                 .MapMemberFrom(a => a.Town, a => a.PostTown)
+                .IgnoreMember(a => a.County) // Done by database lookup -> TODO
                 // TODO: Hacks
                 //.MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
                 ;

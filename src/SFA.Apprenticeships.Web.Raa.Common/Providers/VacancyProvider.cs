@@ -966,7 +966,7 @@
         {
             var addresses = viewModel.Addresses.Select(a => new VacancyLocationAddress
             {
-                /*Address = new PostalAddress
+                Address = new PostalAddress
                 {
                     AddressLine1 = a.Address.AddressLine1,
                     AddressLine2 = a.Address.AddressLine2,
@@ -977,8 +977,7 @@
                     Town = a.Address.Town,
                     ValidationSourceCode = "PCA", //TODO: review.
                     ValidationSourceKeyValue = a.Address.Uprn
-                },*/
-                Address = _mapper.Map<AddressViewModel, PostalAddress>(a.Address),
+                }, // TODO: use mapping?
                 NumberOfPositions = a.NumberOfPositions.Value
             });
 
