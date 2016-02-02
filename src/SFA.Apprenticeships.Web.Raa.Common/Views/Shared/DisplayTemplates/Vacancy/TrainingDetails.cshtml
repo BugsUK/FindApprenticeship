@@ -155,5 +155,17 @@
 
     <div class="form-group">
         <h3 class="heading-small">Contact details for candidate</h3>
+
+        @Html.FormTextFor(
+            m => m.ContactName,
+            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
+
+        @Html.FormTextFor(
+            m => m.ContactNumber,
+            controlHtmlAttributes: new { @class = "form-label", type = "tel", spellcheck = "false" })
+
+        @Html.FormTextFor(
+            m => m.ContactEmail,
+            controlHtmlAttributes: new { type = "email", spellcheck = "false" })
     </div>
 }

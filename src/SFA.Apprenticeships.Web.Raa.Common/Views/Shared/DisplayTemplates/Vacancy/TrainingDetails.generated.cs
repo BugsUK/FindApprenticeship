@@ -961,10 +961,49 @@ WriteLiteral(">\r\n        <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Contact details for candidate</h3>\r\n    </div>\r\n");
+WriteLiteral(">Contact details for candidate</h3>\r\n\r\n");
+
+WriteLiteral("        ");
 
             
             #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.FormTextFor(
+            m => m.ContactName,
+            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 163 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.FormTextFor(
+            m => m.ContactNumber,
+            controlHtmlAttributes: new { @class = "form-label", type = "tel", spellcheck = "false" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 167 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.FormTextFor(
+            m => m.ContactEmail,
+            controlHtmlAttributes: new { type = "email", spellcheck = "false" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
             
             #line default

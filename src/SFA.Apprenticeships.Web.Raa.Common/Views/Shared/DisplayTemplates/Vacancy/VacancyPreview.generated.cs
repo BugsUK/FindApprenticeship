@@ -2938,29 +2938,86 @@ WriteLiteral("</p>\r\n        </div>\r\n\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteLiteral(" class=\"text\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 40329), Tuple.Create("\"", 40360)
+, Tuple.Create(Tuple.Create("", 40337), Tuple.Create("text", 40337), true)
+            
+            #line 564 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+, Tuple.Create(Tuple.Create(" ", 40341), Tuple.Create<System.Object, System.Int32>(editableItemClass
+            
+            #line default
+            #line hidden
+, 40342), false)
+);
 
 WriteLiteral(">\r\n                <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">Contact</h3>\r\n                <p");
+WriteLiteral(">\r\n                    Contact\r\n");
 
-WriteLiteral(" id=\"vacancy-provider-contact\"");
-
-WriteLiteral(">");
+WriteLiteral("                    ");
 
             
-            #line 566 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-                                            Write(Model.ProviderSite.ContactDetailsForCandidate);
+            #line 567 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+               Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink)));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n            </div>\r\n");
+WriteLiteral("\r\n                </h3>\r\n                <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">");
 
             
-            #line 568 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+            #line 569 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                       Write(Model.TrainingDetailsViewModel.ContactName);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n                <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">");
+
+            
+            #line 570 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                       Write(Model.TrainingDetailsViewModel.ContactNumber);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n                <p");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">");
+
+            
+            #line 571 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+                                       Write(Model.TrainingDetailsViewModel.ContactEmail);
+
+            
+            #line default
+            #line hidden
+WriteLiteral("</p>\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 572 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
+           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n            </div>\r\n");
+
+            
+            #line 574 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
         }
 
             
