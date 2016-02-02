@@ -89,6 +89,10 @@
             LocationAddressesComment = previousVacancy.LocationAddressesComment;
             NumberOfPositionsComment = previousVacancy.NumberOfPositionsComment;
             AdditionalLocationInformationComment = previousVacancy.AdditionalLocationInformationComment;
+            ContactName = previousVacancy.ContactName;
+            ContactNumber = previousVacancy.ContactNumber;
+            ContactEmail = previousVacancy.ContactEmail;
+            ContactDetailsComment = previousVacancy.ContactDetailsComment;
         }
 
         public TrainingType TrainingType { get; set; }
@@ -116,5 +120,9 @@
         public string LocationAddressesComment { get; set; }
         public string NumberOfPositionsComment { get; set; }
         public string AdditionalLocationInformationComment { get; set; }
+        public string ContactName { get; set; }
+        public string ContactNumber { get; set; }
+        public string ContactEmail { get; set; }
+        public string ContactDetailsComment { get; set; }
     }
 }

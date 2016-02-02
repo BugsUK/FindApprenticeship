@@ -39,6 +39,9 @@
             viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;
             viewModel.TrainingDetailsViewModel.TrainingType = TrainingType.Frameworks;
             viewModel.TrainingDetailsViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
+            viewModel.TrainingDetailsViewModel.ContactName = null;
+            viewModel.TrainingDetailsViewModel.ContactNumber = null;
+            viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.VacancySummaryViewModel.Status = status;
             viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
             viewModel.VacancySummaryViewModel.Duration = 12;

@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public Guid VacancyId { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int? VacancyReferenceNumber { get; set; }
 
         [Required]
         [StringLength(1)]
@@ -196,6 +196,14 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public Guid LastEditedById { get; set; }
 
         public Guid VacancyManagerId { get; set; }
+
+        public string ContactName { get; set; }
+
+        public string ContactNumber { get; set; }
+
+        public string ContactEmail { get; set; }
+
+        public string ContactDetailsComment { get; set; }
 
         /*
         public virtual Framework Framework { get; set; }
