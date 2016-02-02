@@ -113,6 +113,7 @@
                     LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
@@ -158,6 +159,7 @@
                     LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
                 Status = ProviderVacancyStatuses.Draft
