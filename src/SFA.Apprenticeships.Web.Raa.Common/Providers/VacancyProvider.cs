@@ -291,6 +291,9 @@
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
             vacancy.StandardId = viewModel.StandardId;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.ContactName = viewModel.ContactName;
+            vacancy.ContactNumber = viewModel.ContactNumber;
+            vacancy.ContactEmail = viewModel.ContactEmail;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
@@ -669,6 +672,7 @@
             vacancy.WorkingWeekComment = null;
             vacancy.FirstQuestionComment = null;
             vacancy.SecondQuestionComment = null;
+            vacancy.ContactDetailsComment = null;
 
             vacancy.EntityId = Guid.NewGuid();
 
@@ -925,6 +929,10 @@
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
             vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
+            vacancy.ContactName = viewModel.ContactName;
+            vacancy.ContactNumber = viewModel.ContactNumber;
+            vacancy.ContactEmail = viewModel.ContactEmail;
+            vacancy.ContactDetailsComment = viewModel.ContactDetailsComment;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 

@@ -215,5 +215,83 @@
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
+
+        [Test]
+        public void EmptyContactDetailsShouldBeValid()
+        {
+            var viewModel = new TrainingDetailsViewModel();
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactName, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactName, vacancyViewModel);
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactNumber, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactNumber, vacancyViewModel);
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactEmail, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactEmail, vacancyViewModel);
+        }
+
+        [TestCase("asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf asdf asdf asdf asdf asdf asf asdf asdf ", "emailemailemailemailemailemailemailemailemailemailemailemail@emailemailemailemailemailemailemaill.com", "123654987456654234")]
+        [TestCase("asdf@asdf.com", "123654987456654234", "firstname lastname")]
+        public void ContactDetailsShouldFailValidation(string fullName, string email, string phoneNumber)
+        {
+            // Arrange.
+            var viewModel = new TrainingDetailsViewModel
+            {
+                ContactName = fullName,
+                ContactEmail = email,
+                ContactNumber = phoneNumber
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            // Act.
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            // Assert.
+            _validator.ShouldHaveValidationErrorFor(m => m.ContactName, viewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactName, vacancyViewModel);
+            _validator.ShouldHaveValidationErrorFor(m => m.ContactNumber, viewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactNumber, vacancyViewModel);
+            _validator.ShouldHaveValidationErrorFor(m => m.ContactEmail, viewModel);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactEmail, vacancyViewModel);
+        }
+
+        [TestCase(null, null, null)]
+        [TestCase("firstname lastname", "asdf@asdf.com", "03213465454")]
+        public void ContactDetailsShouldPassValidation(string fullName, string email, string phoneNumber)
+        {
+            // Arrange.
+            var viewModel = new TrainingDetailsViewModel
+            {
+                ContactName = fullName,
+                ContactEmail = email,
+                ContactNumber = phoneNumber
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            // Act.
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            // Assert.
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactName, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactName, vacancyViewModel);
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactNumber, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactNumber, vacancyViewModel);
+            _validator.ShouldNotHaveValidationErrorFor(m => m.ContactEmail, viewModel);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactEmail, vacancyViewModel);
+        }
     }
 }
