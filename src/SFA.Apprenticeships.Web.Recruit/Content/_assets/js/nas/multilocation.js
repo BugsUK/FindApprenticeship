@@ -8,7 +8,7 @@
 
     ko.validation.registerExtenders();
 
-    var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemAddressLine5, town, itemPostcode, itemNumberOfPositions, itemUprn) {
+    var locationAddressItemModel = function (itemAddressLine1, itemAddressLine2, itemAddressLine3, itemAddressLine4, itemAddressLine5, itemTown, itemPostcode, itemNumberOfPositions, itemUprn) {
 
         var self = this;
 
@@ -17,7 +17,11 @@
             if (itemAddressLine2) {
                 address += "<br />" + itemAddressLine2;
             }
-            address += "<br />" + itemAddressLine4 + " " + itemPostcode;
+            if (itemAddressLine4) {
+                address += "<br />" + itemAddressLine4 + " " + itemPostcode;
+            } else {
+                address += "<br />" + itemPostcode;
+            }
             return address;
         }, self);
 
@@ -26,7 +30,7 @@
         self.itemAddressLine3 = ko.observable(itemAddressLine3);
         self.itemAddressLine4 = ko.observable(itemAddressLine4);
         self.itemAddressLine5 = ko.observable(itemAddressLine5);
-        self.town = ko.observable(town);
+        self.itemTown = ko.observable(itemTown);
         
         self.itemPostcode = ko.observable(itemPostcode);
         self.itemUprn = ko.observable(itemUprn);

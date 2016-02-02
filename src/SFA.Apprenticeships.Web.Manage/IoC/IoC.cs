@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Repositories.Mongo.Providers.IoC;
     using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Infrastructure.Repositories.Mongo.Vacancies.IoC;
+    using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;
@@ -41,6 +42,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
             return new Container(x =>
             {
@@ -56,7 +58,8 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserProfileRepositoryRegistry>();
-                x.AddRegistry<VacancyRepositoryRegistry>();
+                // x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));

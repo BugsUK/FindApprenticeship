@@ -158,15 +158,18 @@
 
                 vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
                 {
-                    Address = new AddressViewModel
+                    /*Address = new AddressViewModel
                     {
                         AddressLine1 = v.Address.AddressLine1,
                         AddressLine2 = v.Address.AddressLine2,
                         AddressLine3 = v.Address.AddressLine3,
                         AddressLine4 = v.Address.AddressLine4,
+                        AddressLine5 = v.Address.AddressLine5,
+                        Town = v.Address.Town,
                         Postcode = v.Address.Postcode,
                         Uprn = v.Address.ValidationSourceKeyValue //VGA_Address
-                    },
+                    },*/
+                    Address = _mapper.Map<PostalAddress, AddressViewModel>(v.Address),
                     NumberOfPositions = v.NumberOfPositions
                 }));
 
@@ -963,7 +966,7 @@
         {
             var addresses = viewModel.Addresses.Select(a => new VacancyLocationAddress
             {
-                Address = new PostalAddress
+                /*Address = new PostalAddress
                 {
                     AddressLine1 = a.Address.AddressLine1,
                     AddressLine2 = a.Address.AddressLine2,
@@ -974,7 +977,8 @@
                     Town = a.Address.Town,
                     ValidationSourceCode = "PCA", //TODO: review.
                     ValidationSourceKeyValue = a.Address.Uprn
-                },
+                },*/
+                Address = _mapper.Map<AddressViewModel, PostalAddress>(a.Address),
                 NumberOfPositions = a.NumberOfPositions.Value
             });
 

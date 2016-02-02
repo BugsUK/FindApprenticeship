@@ -163,7 +163,7 @@ AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
         public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
         {
             Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
-            _logger.Debug("Called database to get apprenticeship vacancies in status {1}", string.Join(",", desiredStatuses));
+            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
             var statuses = desiredStatuses.Select(_mapper.Map<ProviderVacancyStatuses, string>).ToList();
             
@@ -489,27 +489,27 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyId
             _getOpenConnection.MutatingQuery<int>(sql, new { VacancyId = vacancyId });
         }
 
-        private void RemoveVacancyLocationAddresses(long vacancyReferenceNumber)
-        {
-            var sql = GetRemoveVacancyLocationAddressesQuery("(SELECT VacancyId FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber)");
-            _getOpenConnection.MutatingQuery<int>(sql, new { VacancyReferenceNumber = vacancyReferenceNumber });
-        }
-
         private string GetRemoveVacancyLocationAddressesQuery(string selectVacancyIdQuery)
         {
             return
                 $@"
 -- TODO: Could be optimised. Locking may possibly be an issue
 -- TODO: Should possibly split address into separate repo method
+
+    DECLARE @PostalAddressIdToRemove TABLE (PostalAddressId INT);
+
+    INSERT INTO @PostalAddressIdToRemove
+        SELECT PostalAddressId
+        FROM   Vacancy.VacancyLocation
+        WHERE  VacancyId = {selectVacancyIdQuery}
+
     DELETE Vacancy.VacancyLocation
     FROM   Vacancy.VacancyLocation
     WHERE  VacancyId = {selectVacancyIdQuery}
 
     DELETE Address.PostalAddress
     WHERE  PostalAddressId IN (
-        SELECT PostalAddressId
-        FROM   Vacancy.VacancyLocation
-        WHERE  VacancyId = {selectVacancyIdQuery}
+        SELECT PostalAddressId FROM @PostalAddressIdToRemove
     )";
         }
     }
