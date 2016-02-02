@@ -321,7 +321,6 @@
             Assert.That(!viewModel.SectorsAndFrameworks.Any(sector => blackListCodes.Any(bc => sector.Value != string.Empty && bc.StartsWith(sector.Value))));
         }
 
-
         [Test]
         public void ShouldDefaultApprenticeshipLevel()
         {

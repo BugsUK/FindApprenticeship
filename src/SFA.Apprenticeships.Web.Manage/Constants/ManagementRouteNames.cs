@@ -18,6 +18,7 @@
         public const string ReviewVacancy = "ReviewVacancy";
         public const string ApproveVacancy = "ApproveVacancy";
         public const string BasicDetails = "BasicDetails";
+        public const string TrainingDetails = "TrainingDetails";
         public const string Summary = "VacancySummary";
         public const string RequirementsAndProspoects = "RequirementsAndProspoects";
         public const string Questions = "Questions";

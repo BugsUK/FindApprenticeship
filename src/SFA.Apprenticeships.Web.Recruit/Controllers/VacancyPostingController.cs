@@ -280,6 +280,54 @@
             }
         }
 
+        #endregion
+
+        #region Training Details
+
+        [HttpGet]
+        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        {
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+
+            return View(response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancySummary, new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
+        {
+            throw new NotImplementedException();
+        }
+
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
@@ -300,41 +348,6 @@
             ModelState.Clear();
 
             return View("TrainingDetails", response.ViewModel);
-        }
-
-        #endregion
-
-        #region Training Details
-
-        [HttpGet]
-        public ActionResult TrainingDetails(long vacancyReferenceNumber)
-        {
-            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber);
-
-            return View(response.ViewModel);
-        }
-
-        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
-        [HttpPost]
-        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
-        {
-            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
-
-            return View(viewModel);
-        }
-
-        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
-        [HttpPost]
-        public ActionResult TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
-        {
-            throw new NotImplementedException();
-        }
-
-        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
-        [HttpPost]
-        public ActionResult TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
-        {
-            throw new NotImplementedException();
         }
 
         #endregion
@@ -626,6 +639,7 @@
             var vacancyViewModel = response.ViewModel;
 
             vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewCreateVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewTrainingDetails, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });

@@ -41,6 +41,8 @@
 
         public string BasicDetailsLink { get; set; }
 
+        public string TrainingDetailsLink { get; set; }
+
         public string SummaryLink { get; set; }
 
         public string RequirementsProspectsLink { get; set; }
