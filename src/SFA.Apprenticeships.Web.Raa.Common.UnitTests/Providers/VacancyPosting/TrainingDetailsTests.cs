@@ -158,6 +158,7 @@
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
                 TrainingType = TrainingType.Standards,
                 StandardId = standardId
@@ -186,6 +187,7 @@
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
                 TrainingType = TrainingType.Standards,
                 StandardId = standardId
@@ -212,6 +214,7 @@
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
@@ -235,6 +238,7 @@
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
@@ -262,6 +266,7 @@
             // Arrange.
             var trainingDetailsViewModel = new TrainingDetailsViewModel
             {
+                VacancyReferenceNumber = VacancyReferenceNumber,
                 ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1
@@ -286,6 +291,7 @@
         public void ShouldGetSectorsAndFrameworks()
         {
             // Arrange.
+            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -301,6 +307,7 @@
         public void ShouldNotGetBlacklistedSectorsAndFrameworks()
         {
             // Arrange.
+            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
             var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
@@ -319,6 +326,7 @@
         public void ShouldDefaultApprenticeshipLevel()
         {
             // Arrange.
+            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
