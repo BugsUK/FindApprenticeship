@@ -473,6 +473,7 @@
 
             if (!validationResult.IsValid)
             {
+                UpdateReferenceDataFor(viewModel);
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }
 

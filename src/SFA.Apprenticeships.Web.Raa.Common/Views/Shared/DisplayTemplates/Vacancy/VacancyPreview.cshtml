@@ -158,14 +158,14 @@
             <div class="@editableApprenticeshipLevelClass">
                 <h3 class="bold-small">
                     Apprenticeship level
-                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment, Model.BasicDetailsLink))
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment, Model.TrainingDetailsLink))
                 </h3>
                 <p id="vacancy-type" itemprop="employmentType">
                     @Html.DisplayFor(m => m.TrainingDetailsViewModel.ApprenticeshipLevel) Level Apprenticeship
                 </p>
                 @if (editableApprenticeshipLevel)
                 {
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.BasicDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
                 }
             </div>
 
@@ -535,19 +535,19 @@
                     {
                         <h3 class="heading-small">
                             Apprenticeship framework
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.BasicDetailsLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.TrainingDetailsLink))
                         </h3>
                         <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.BasicDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
                     }
                     @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Standards)
                     {
                         <h3 class="heading-small">
                             Apprenticeship standard
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.BasicDetailsLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.TrainingDetailsLink))
                         </h3>
                         <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.BasicDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
                     }
                 </div>
             </div>

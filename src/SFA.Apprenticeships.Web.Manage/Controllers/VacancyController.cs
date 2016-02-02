@@ -39,6 +39,8 @@
 
             vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails,
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(ManagementRouteNames.TrainingDetails,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary,
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects,
