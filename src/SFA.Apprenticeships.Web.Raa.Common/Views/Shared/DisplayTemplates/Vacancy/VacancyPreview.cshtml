@@ -561,9 +561,15 @@
 
         @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
         {
-            <div class="text">
-                <h3 class="bold-small">Contact</h3>
-                <p id="vacancy-provider-contact">@Model.ProviderSite.ContactDetailsForCandidate</p>
+            <div class="text @editableItemClass">
+                <h3 class="bold-small">
+                    Contact
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
+                </h3>
+                <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
             </div>
         }
     </div>

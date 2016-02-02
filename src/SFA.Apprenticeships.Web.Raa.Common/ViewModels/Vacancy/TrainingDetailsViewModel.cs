@@ -41,10 +41,13 @@
         [Display(Name = VacancyViewModelMessages.ApprenticeshipLevelComment.LabelText)]
         public string ApprenticeshipLevelComment { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.ContactNameMessages.LabelText)]
         public string ContactName { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.ContactNumberMessages.LabelText)]
         public string ContactNumber { get; set; }
 
+        [Display(Name = VacancyViewModelMessages.ContactEmailMessages.LabelText)]
         public string ContactEmail { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ContactDetailsComment.LabelText)]
