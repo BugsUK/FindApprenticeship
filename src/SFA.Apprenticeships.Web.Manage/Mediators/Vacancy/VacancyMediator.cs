@@ -156,6 +156,20 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
 
+        public MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(long vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyQaProvider.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+
+            var validationResult = _trainingDetailsViewModelServerValidator.Validate(vacancyViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.GetTrainingDetails.FailedValidation, vacancyViewModel, validationResult);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.GetTrainingDetails.Ok, vacancyViewModel);
+        }
+
         public MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel)
         {
             viewModel.TrainingType = TrainingType.Frameworks;

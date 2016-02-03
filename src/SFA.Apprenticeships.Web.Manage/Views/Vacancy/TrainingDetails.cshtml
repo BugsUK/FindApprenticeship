@@ -1,0 +1,29 @@
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
+@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model TrainingDetailsViewModel
+
+@using (Html.BeginRouteForm(ManagementRouteNames.TrainingDetails, FormMethod.Post))
+{
+    @Html.DisplayFor(m => m, TrainingDetailsViewModel.PartialView)
+
+    <div class="form-group">
+        <button type="submit" class="button">Save</button>
+        @Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
+    </div>
+}
+
+@section scripts
+{
+    <script>
+        $("#@Html.NameFor(m => m.StandardId)").change(function () {
+            var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
+            if (apprenticeshipLevel === "@ApprenticeshipLevel.FoundationDegree.ToString()" || apprenticeshipLevel === "@ApprenticeshipLevel.Masters.ToString()") {
+                apprenticeshipLevel = "@ApprenticeshipLevel.Degree.ToString()";
+            }
+            $("#apprenticeship-level-name").text(apprenticeshipLevel);
+            $("#apprenticeship-level-container").show();
+        });
+    </script>
+}

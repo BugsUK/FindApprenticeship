@@ -119,6 +119,54 @@
             }
         }
 
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
+        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        {
+            var response = _vacancyMediator.GetTrainingDetails(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetTrainingDetails.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetTrainingDetails.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
