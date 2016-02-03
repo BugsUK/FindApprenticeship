@@ -9,7 +9,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ReferenceNumberRepository : GenericMongoClient<MongoReferenceNumber>, IReferenceNumberRepository
+    public class ReferenceNumberRepository : GenericMongoClient<MongoReferenceNumber, Guid>, IReferenceNumberRepository
     {
         private readonly ILogService _logger;
 

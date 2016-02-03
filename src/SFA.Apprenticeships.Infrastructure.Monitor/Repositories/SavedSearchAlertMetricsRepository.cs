@@ -8,7 +8,7 @@
     using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver.Linq;
 
-    public class SavedSearchAlertMetricsRepository : GenericMongoClient<MongoSavedSearchAlert>, ISavedSearchAlertMetricsRepository
+    public class SavedSearchAlertMetricsRepository : GenericMongoClient<MongoSavedSearchAlert, Guid>, ISavedSearchAlertMetricsRepository
     {
         public SavedSearchAlertMetricsRepository(IConfigurationService configurationService)
         {

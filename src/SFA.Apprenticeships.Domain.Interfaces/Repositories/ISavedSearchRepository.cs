@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using Entities.Candidates;
 
-    public interface ISavedSearchReadRepository : IReadRepository<SavedSearch> {
+    public interface ISavedSearchReadRepository : IReadRepository<SavedSearch, Guid> {
         IList<SavedSearch> GetForCandidate(Guid candidateId);
 
         IEnumerable<Guid> GetCandidateIds();
     }
 
-    public interface ISavedSearchWriteRepository : IWriteRepository<SavedSearch> {}
+    public interface ISavedSearchWriteRepository : IWriteRepository<SavedSearch, Guid> {}
 }

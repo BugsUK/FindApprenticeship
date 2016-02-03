@@ -6,7 +6,7 @@
     using Mongo.Communication.Entities;
     using SFA.Infrastructure.Interfaces;
 
-    public class ContactMessageRepository : CommunicationRepository<ContactMessage>, IContactMessageRepository
+    public class ContactMessageRepository : CommunicationRepository<ContactMessage, Guid>, IContactMessageRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

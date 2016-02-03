@@ -1,10 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Providers
 {
+    using System;
     using System.Collections.Generic;
     using Organisations;
 
     //TODO: Perhaps rename to Relationship?
-    public class ProviderSiteEmployerLink : BaseEntity
+    public class ProviderSiteEmployerLink : BaseEntity<Guid>
     {
         public string ProviderSiteErn { get; set; }
         public string Description { get; set; }

@@ -3,7 +3,7 @@
     using System;
     using Vacancies.Apprenticeships;
 
-    public class SavedSearch : BaseEntity
+    public class SavedSearch : BaseEntity<Guid>
     {
         public SavedSearch()
         {

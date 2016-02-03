@@ -16,7 +16,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy>, IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
+    public class ApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy, Guid>, IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

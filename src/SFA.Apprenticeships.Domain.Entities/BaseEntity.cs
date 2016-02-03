@@ -5,9 +5,9 @@
     /// <summary>
     /// Base type for persistent domain entities
     /// </summary>
-    public abstract class BaseEntity
+    public abstract class BaseEntity<TKey>
     {
-        public Guid EntityId { get; set; }
+        public TKey EntityId { get; set; }
 
         public DateTime DateCreated { get; set; }
 

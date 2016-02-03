@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Entities.Applications;
 
-    public interface ITraineeshipApplicationReadRepository : IReadRepository<TraineeshipApplicationDetail>
+    public interface ITraineeshipApplicationReadRepository : IReadRepository<TraineeshipApplicationDetail, Guid>
     {
         TraineeshipApplicationDetail Get(Guid id, bool errorIfNotFound);
 
@@ -19,7 +19,7 @@
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
     }
 
-    public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>
+    public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail, Guid>
     {
     }
 }

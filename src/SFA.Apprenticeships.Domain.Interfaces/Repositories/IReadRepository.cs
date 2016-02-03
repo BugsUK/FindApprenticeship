@@ -3,8 +3,8 @@
     using System;
     using Entities;
 
-    public interface IReadRepository<T> where T : BaseEntity
+    public interface IReadRepository<T,TKey> where T : BaseEntity<TKey>
     {
-        T Get(Guid id);
+        T Get(TKey id);
     }
 }

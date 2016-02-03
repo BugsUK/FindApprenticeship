@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
+    using System;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
     using Common;
@@ -9,7 +10,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class OfflineApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy>, IOfflineApprenticeshipVacancyRepository
+    public class OfflineApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy, Guid>, IOfflineApprenticeshipVacancyRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

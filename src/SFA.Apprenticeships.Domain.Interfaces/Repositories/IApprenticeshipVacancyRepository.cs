@@ -7,7 +7,7 @@
     using Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Queries;
 
-    public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy>
+    public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy, Guid>
     {
         ApprenticeshipVacancy Get(long vacancyReferenceNumber);
 

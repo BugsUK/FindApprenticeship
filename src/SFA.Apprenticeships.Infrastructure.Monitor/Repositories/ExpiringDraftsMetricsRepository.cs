@@ -8,7 +8,7 @@
     using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver.Linq;
 
-    public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft>, IExpiringDraftsMetricsRepository
+    public class ExpiringDraftsMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationExpiringDraft, Guid>, IExpiringDraftsMetricsRepository
     {
         public ExpiringDraftsMetricsRepository(IConfigurationService configurationService)
         {

@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Providers
 {
-    public class Provider : BaseEntity
+    using System;
+
+    public class Provider : BaseEntity<Guid>
     {
         public string Ukprn { get; set; }
 

@@ -13,7 +13,7 @@
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
-    public class CandidateMetricsRepository : GenericMongoClient<MongoCandidate>, ICandidateMetricsRepository
+    public class CandidateMetricsRepository : GenericMongoClient<MongoCandidate, Guid>, ICandidateMetricsRepository
     {
         public CandidateMetricsRepository(IConfigurationService configurationService)
         {

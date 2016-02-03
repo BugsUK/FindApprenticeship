@@ -3,7 +3,7 @@
     using System;
     using Providers;
 
-    public abstract class Vacancy : BaseEntity
+    public abstract class Vacancy : BaseEntity<Guid>
     {
         public long VacancyReferenceNumber { get; set; }
         public string Ukprn { get; set; }

@@ -13,7 +13,7 @@
     using SFA.Infrastructure.Interfaces;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
-    public class CandidateRepository : GenericMongoClient<MongoCandidate>, ICandidateReadRepository,
+    public class CandidateRepository : GenericMongoClient<MongoCandidate, Guid>, ICandidateReadRepository,
         ICandidateWriteRepository
     {
         private readonly ILogService _logger;

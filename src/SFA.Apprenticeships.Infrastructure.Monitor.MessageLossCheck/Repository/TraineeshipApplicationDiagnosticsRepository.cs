@@ -15,7 +15,7 @@
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
-    public class TraineeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationDiagnosticsRepository
+    public class TraineeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoTraineeshipApplicationDetail, Guid>, ITraineeshipApplicationDiagnosticsRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

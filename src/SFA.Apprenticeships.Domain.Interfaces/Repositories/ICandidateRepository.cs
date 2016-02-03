@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Entities.Candidates;
 
-    public interface ICandidateReadRepository : IReadRepository<Candidate>
+    public interface ICandidateReadRepository : IReadRepository<Candidate, Guid>
     {
         Candidate Get(Guid id, bool errorIfNotFound);
 
@@ -19,7 +19,7 @@
         Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true);
     }
 
-    public interface ICandidateWriteRepository : IWriteRepository<Candidate>
+    public interface ICandidateWriteRepository : IWriteRepository<Candidate, Guid>
     {
     }
 }

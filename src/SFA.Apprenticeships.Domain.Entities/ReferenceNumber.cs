@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities
 {
-    public class ReferenceNumber : BaseEntity
+    using System;
+
+    public class ReferenceNumber : BaseEntity<Guid>
     {
         public int LastReferenceNumber { get; set; }
     }

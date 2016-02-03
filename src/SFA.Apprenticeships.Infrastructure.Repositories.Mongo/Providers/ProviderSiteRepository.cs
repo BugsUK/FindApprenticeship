@@ -11,7 +11,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ProviderSiteRepository : GenericMongoClient<MongoProviderSite>, IProviderSiteReadRepository, IProviderSiteWriteRepository
+    public class ProviderSiteRepository : GenericMongoClient<MongoProviderSite, Guid>, IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

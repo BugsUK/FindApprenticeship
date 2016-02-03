@@ -9,7 +9,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class AgencyUserRepository : GenericMongoClient<MongoAgencyUser>, IAgencyUserReadRepository, IAgencyUserWriteRepository
+    public class AgencyUserRepository : GenericMongoClient<MongoAgencyUser, Guid>, IAgencyUserReadRepository, IAgencyUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

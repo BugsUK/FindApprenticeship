@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class ExpiringApprenticeshipApplicationDraft : BaseEntity
+    public class ExpiringApprenticeshipApplicationDraft : BaseEntity<Guid>
     {
         public Guid CandidateId { get; set; }
         
