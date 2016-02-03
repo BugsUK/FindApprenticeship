@@ -1,18 +1,16 @@
 ﻿CREATE TABLE [dbo].[EducationResult] (
     [EducationResultId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]       INT            NOT NULL,
-    [Subject]           NVARCHAR (50)  COLLATE Latin1_General_CI_AS NOT NULL,
+    [Subject]           NVARCHAR (50)  NOT NULL,
     [Level]             INT            NOT NULL,
-    [LevelOther]        NVARCHAR (100) COLLATE Latin1_General_CI_AS NULL,
-    [Grade]             NVARCHAR (20)  COLLATE Latin1_General_CI_AS NULL,
+    [LevelOther]        NVARCHAR (100) NULL,
+    [Grade]             NVARCHAR (20)  NULL,
     [DateAchieved]      DATETIME       NULL,
     [ApplicationId]     INT            NULL,
-    CONSTRAINT [PK_EducationResult] PRIMARY KEY CLUSTERED ([EducationResultId] ASC),
-    CONSTRAINT [FK_EducationResult_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]) NOT FOR REPLICATION,
-    CONSTRAINT [FK_EducationResult_EducationResultLevel1] FOREIGN KEY ([Level]) REFERENCES [dbo].[EducationResultLevel] ([EducationResultLevelId]) NOT FOR REPLICATION
+    CONSTRAINT [PK_EducationResult] PRIMARY KEY CLUSTERED ([EducationResultId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [FK_EducationResult_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
+    CONSTRAINT [FK_EducationResult_EducationResultLevel1] FOREIGN KEY ([Level]) REFERENCES [dbo].[EducationResultLevel] ([EducationResultLevelId])
 );
-
-
 
 
 GO

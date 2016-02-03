@@ -6,22 +6,21 @@
     [RecipientType]     INT             NOT NULL,
     [MessageDate]       DATETIME        NOT NULL,
     [MessageEventId]    INT             NOT NULL,
-    [Text]              NVARCHAR (MAX)  COLLATE Latin1_General_CI_AS NULL,
-    [Title]             NVARCHAR (1000) COLLATE Latin1_General_CI_AS NULL,
+    [Text]              NVARCHAR (MAX)  NULL,
+    [Title]             NVARCHAR (1000) NULL,
     [IsRead]            BIT             CONSTRAINT [DF_Message_Read] DEFAULT ((0)) NOT NULL,
     [IsDeleted]         BIT             CONSTRAINT [DF_Message_Deleted] DEFAULT ((0)) NOT NULL,
     [MessageCategoryID] INT             NULL,
     [ReadDate]          DATETIME        NULL,
-    [DeletedBy]         NVARCHAR (250)  COLLATE Latin1_General_CI_AS NULL,
-    [ReadByFirst]       NVARCHAR (250)  COLLATE Latin1_General_CI_AS NULL,
+    [DeletedBy]         NVARCHAR (250)  NULL,
+    [ReadByFirst]       NVARCHAR (250)  NULL,
     [DeletedDate]       DATETIME        NULL,
-    CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED ([MessageId] ASC),
-    CONSTRAINT [FK_Message_MessageEvent1] FOREIGN KEY ([MessageEventId]) REFERENCES [dbo].[MessageEvent] ([MessageEventId]) NOT FOR REPLICATION,
-    CONSTRAINT [FK_Message_UserTypeRecipient] FOREIGN KEY ([RecipientType]) REFERENCES [dbo].[UserType] ([UserTypeId]) NOT FOR REPLICATION,
-    CONSTRAINT [FK_Message_UserTypeSender] FOREIGN KEY ([SenderType]) REFERENCES [dbo].[UserType] ([UserTypeId]) NOT FOR REPLICATION
-);
-
-
+    CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED ([MessageId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [FK_Message_MessageCategory] FOREIGN KEY ([MessageCategoryID]) REFERENCES [dbo].[MessageCategory] ([MessageCategoryId]),
+    CONSTRAINT [FK_Message_MessageEvent1] FOREIGN KEY ([MessageEventId]) REFERENCES [dbo].[MessageEvent] ([MessageEventId]),
+    CONSTRAINT [FK_Message_UserTypeRecipient] FOREIGN KEY ([RecipientType]) REFERENCES [dbo].[UserType] ([UserTypeId]),
+    CONSTRAINT [FK_Message_UserTypeSender] FOREIGN KEY ([SenderType]) REFERENCES [dbo].[UserType] ([UserTypeId])
+) TEXTIMAGE_ON [PRIMARY];
 
 
 GO

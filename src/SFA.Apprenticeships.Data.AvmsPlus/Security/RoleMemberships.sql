@@ -1,22 +1,18 @@
-﻿
+﻿EXECUTE sp_addrolemember @rolename = N'db_owner', @membername = N'sfasql2008\svc-AVMSLogReaderAge';
 
 
 GO
-
-
-
-GO
-
+EXECUTE sp_addrolemember @rolename = N'db_owner', @membername = N'sfasql2008\svc-AVMSReportsSnaps';
 
 
 GO
-
-
-
-GO
-EXECUTE sp_addrolemember @rolename = N'db_owner', @membername = N'NASPRODSQLL-1\svcNASDistAgentAzure';
+EXECUTE sp_addrolemember @rolename = N'db_owner', @membername = N'sfasql2008\svc-AVMSSandboxSnaps';
 
 
 GO
-EXECUTE sp_addrolemember @rolename = N'db_owner', @membername = N'NASPRODSQLL-1\nasadmin';
+EXECUTE sp_addrolemember @rolename = N'db_datareader', @membername = N'sfasql2008\svc-appvacapppool';
+
+
+GO
+EXECUTE sp_addrolemember @rolename = N'db_datawriter', @membername = N'sfasql2008\svc-appvacapppool';
 

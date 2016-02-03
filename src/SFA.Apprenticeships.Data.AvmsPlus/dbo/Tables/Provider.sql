@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[Provider] (
-    [ProviderID]           INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ProviderID]           INT            IDENTITY (1, 1) NOT NULL,
     [UPIN]                 INT            NOT NULL,
     [UKPRN]                INT            NOT NULL,
-    [FullName]             NVARCHAR (255) COLLATE Latin1_General_CI_AS NULL,
-    [TradingName]          NVARCHAR (255) COLLATE Latin1_General_CI_AS NULL,
+    [FullName]             NVARCHAR (255) NULL,
+    [TradingName]          NVARCHAR (255) NULL,
     [IsContracted]         BIT            CONSTRAINT [DFT_Provider_IsContracted] DEFAULT ((0)) NOT NULL,
     [ContractedFrom]       DATETIME       NULL,
     [ContractedTo]         DATETIME       NULL,
@@ -11,9 +11,7 @@
     [IsNASProvider]        BIT            CONSTRAINT [DF_Provider_IsNASProvider] DEFAULT ((0)) NOT NULL,
     [OriginalUPIN]         INT            NULL,
     CONSTRAINT [PK_Provider] PRIMARY KEY CLUSTERED ([ProviderID] ASC),
-    CONSTRAINT [FK_TrainingProvider_ProviderStatusTypeID] FOREIGN KEY ([ProviderStatusTypeID]) REFERENCES [dbo].[EmployerTrainingProviderStatus] ([EmployerTrainingProviderStatusId]) NOT FOR REPLICATION,
+    CONSTRAINT [FK_TrainingProvider_ProviderStatusTypeID] FOREIGN KEY ([ProviderStatusTypeID]) REFERENCES [dbo].[EmployerTrainingProviderStatus] ([EmployerTrainingProviderStatusId]),
     CONSTRAINT [UQ_Provider_UKPRN] UNIQUE NONCLUSTERED ([UKPRN] ASC, [ProviderStatusTypeID] ASC)
 );
-
-
 

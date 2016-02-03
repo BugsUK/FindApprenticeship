@@ -1,17 +1,15 @@
 ﻿CREATE TABLE [dbo].[VacancyHistory] (
     [VacancyHistoryId]             INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]                    INT             NOT NULL,
-    [UserName]                     NVARCHAR (50)   COLLATE Latin1_General_CI_AS NOT NULL,
+    [UserName]                     NVARCHAR (50)   NOT NULL,
     [VacancyHistoryEventTypeId]    INT             NOT NULL,
     [VacancyHistoryEventSubTypeId] INT             NULL,
     [HistoryDate]                  DATETIME        NOT NULL,
-    [Comment]                      NVARCHAR (4000) COLLATE Latin1_General_CI_AS NULL,
-    CONSTRAINT [PK_Vacancy_History] PRIMARY KEY CLUSTERED ([VacancyHistoryId] ASC),
-    CONSTRAINT [FK_VacancyHistory_Vacancy] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]) NOT FOR REPLICATION,
-    CONSTRAINT [FK_VacancyHistory_VacancyHistoryEvent] FOREIGN KEY ([VacancyHistoryEventTypeId]) REFERENCES [dbo].[VacancyHistoryEventType] ([VacancyHistoryEventTypeId]) NOT FOR REPLICATION
+    [Comment]                      NVARCHAR (4000) NULL,
+    CONSTRAINT [PK_Vacancy_History] PRIMARY KEY CLUSTERED ([VacancyHistoryId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [FK_VacancyHistory_Vacancy] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]),
+    CONSTRAINT [FK_VacancyHistory_VacancyHistoryEvent] FOREIGN KEY ([VacancyHistoryEventTypeId]) REFERENCES [dbo].[VacancyHistoryEventType] ([VacancyHistoryEventTypeId])
 );
-
-
 
 
 GO

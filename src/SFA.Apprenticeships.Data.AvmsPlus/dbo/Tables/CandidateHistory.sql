@@ -4,14 +4,12 @@
     [CandidateHistoryEventTypeId]    INT             NOT NULL,
     [CandidateHistorySubEventTypeId] INT             NULL,
     [EventDate]                      DATETIME        NOT NULL,
-    [Comment]                        NVARCHAR (4000) COLLATE Latin1_General_CI_AS NULL,
-    [UserName]                       NVARCHAR (50)   COLLATE Latin1_General_CI_AS NULL,
-    CONSTRAINT [PK_CandidateHistory] PRIMARY KEY CLUSTERED ([CandidateHistoryId] ASC),
-    CONSTRAINT [FK_CandidateHistory_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]) NOT FOR REPLICATION,
-    CONSTRAINT [FK_CandidateHistory_CandidateHistoryEvent] FOREIGN KEY ([CandidateHistoryEventTypeId]) REFERENCES [dbo].[CandidateHistoryEvent] ([CandidateHistoryEventId]) NOT FOR REPLICATION
+    [Comment]                        NVARCHAR (4000) NULL,
+    [UserName]                       NVARCHAR (50)   NULL,
+    CONSTRAINT [PK_CandidateHistory] PRIMARY KEY CLUSTERED ([CandidateHistoryId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [FK_CandidateHistory_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
+    CONSTRAINT [FK_CandidateHistory_CandidateHistoryEvent] FOREIGN KEY ([CandidateHistoryEventTypeId]) REFERENCES [dbo].[CandidateHistoryEvent] ([CandidateHistoryEventId])
 );
-
-
 
 
 GO

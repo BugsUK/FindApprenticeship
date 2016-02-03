@@ -1,2 +1,0 @@
-﻿CREATE USER [NASPRODSQLL-1\svcNASDistAgentAzure] FOR LOGIN [NASPRODSQLL-1\svcNASDistAgentAzure];
-
