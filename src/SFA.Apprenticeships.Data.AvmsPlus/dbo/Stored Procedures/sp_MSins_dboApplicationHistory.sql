@@ -1,0 +1,27 @@
+﻿create procedure [sp_MSins_dboApplicationHistory]
+    @c1 int,
+    @c2 int,
+    @c3 nvarchar(50),
+    @c4 datetime,
+    @c5 int,
+    @c6 int,
+    @c7 nvarchar(4000)
+as
+begin  
+	insert into [dbo].[ApplicationHistory](
+		[ApplicationHistoryId],
+		[ApplicationId],
+		[UserName],
+		[ApplicationHistoryEventDate],
+		[ApplicationHistoryEventTypeId],
+		[ApplicationHistoryEventSubTypeId],
+		[Comment]
+	) values (
+    @c1,
+    @c2,
+    @c3,
+    @c4,
+    @c5,
+    @c6,
+    @c7	) 
+end

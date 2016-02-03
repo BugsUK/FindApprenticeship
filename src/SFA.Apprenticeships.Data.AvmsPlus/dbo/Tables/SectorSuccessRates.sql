@@ -4,7 +4,9 @@
     [PassRate]   SMALLINT NOT NULL,
     [New]        BIT      NOT NULL,
     CONSTRAINT [PK_SectorSuccessRates] PRIMARY KEY CLUSTERED ([ProviderID] ASC, [SectorID] ASC),
-    CONSTRAINT [FK_SectorSuccessRates_ApprenticeshipOccupation] FOREIGN KEY ([SectorID]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
-    CONSTRAINT [FK_SectorSuccessRates_Provider] FOREIGN KEY ([ProviderID]) REFERENCES [dbo].[Provider] ([ProviderID])
+    CONSTRAINT [FK_SectorSuccessRates_ApprenticeshipOccupation] FOREIGN KEY ([SectorID]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]) NOT FOR REPLICATION,
+    CONSTRAINT [FK_SectorSuccessRates_Provider] FOREIGN KEY ([ProviderID]) REFERENCES [dbo].[Provider] ([ProviderID]) NOT FOR REPLICATION
 );
+
+
 

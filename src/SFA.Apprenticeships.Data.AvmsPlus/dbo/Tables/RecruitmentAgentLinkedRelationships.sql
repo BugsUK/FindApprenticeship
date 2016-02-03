@@ -2,7 +2,9 @@
     [ProviderSiteRelationshipID] INT NOT NULL,
     [VacancyOwnerRelationshipID] INT NOT NULL,
     CONSTRAINT [PK_RecruitmentAgentLinkedRelationships] PRIMARY KEY CLUSTERED ([ProviderSiteRelationshipID] ASC, [VacancyOwnerRelationshipID] ASC),
-    CONSTRAINT [FK_RALR_PSR] FOREIGN KEY ([ProviderSiteRelationshipID]) REFERENCES [dbo].[ProviderSiteRelationship] ([ProviderSiteRelationshipID]),
-    CONSTRAINT [FK_RALR_VOR] FOREIGN KEY ([VacancyOwnerRelationshipID]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId])
+    CONSTRAINT [FK_RALR_PSR] FOREIGN KEY ([ProviderSiteRelationshipID]) REFERENCES [dbo].[ProviderSiteRelationship] ([ProviderSiteRelationshipID]) NOT FOR REPLICATION,
+    CONSTRAINT [FK_RALR_VOR] FOREIGN KEY ([VacancyOwnerRelationshipID]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]) NOT FOR REPLICATION
 );
+
+
 

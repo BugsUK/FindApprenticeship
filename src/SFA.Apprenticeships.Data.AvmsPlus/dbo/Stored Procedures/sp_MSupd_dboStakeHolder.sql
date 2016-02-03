@@ -1,0 +1,60 @@
+﻿create procedure [sp_MSupd_dboStakeHolder]
+		@c1 int = NULL,
+		@c2 int = NULL,
+		@c3 int = NULL,
+		@c4 nvarchar(50) = NULL,
+		@c5 nvarchar(50) = NULL,
+		@c6 nvarchar(50) = NULL,
+		@c7 nvarchar(50) = NULL,
+		@c8 nvarchar(50) = NULL,
+		@c9 nvarchar(50) = NULL,
+		@c10 int = NULL,
+		@c11 nvarchar(100) = NULL,
+		@c12 nvarchar(8) = NULL,
+		@c13 int = NULL,
+		@c14 nvarchar(50) = NULL,
+		@c15 decimal(13,10) = NULL,
+		@c16 decimal(13,10) = NULL,
+		@c17 int = NULL,
+		@c18 int = NULL,
+		@c19 datetime = NULL,
+		@c20 bit = NULL,
+		@c21 bit = NULL,
+		@c22 bit = NULL,
+		@c23 nvarchar(50) = NULL,
+		@c24 datetime = NULL,
+		@c25 int = NULL,
+		@pkc1 int = NULL,
+		@bitmap binary(4)
+as
+begin  
+update [dbo].[StakeHolder] set
+		[PersonId] = case substring(@bitmap,1,1) & 2 when 2 then @c2 else [PersonId] end,
+		[StakeHolderStatusId] = case substring(@bitmap,1,1) & 4 when 4 then @c3 else [StakeHolderStatusId] end,
+		[AddressLine1] = case substring(@bitmap,1,1) & 8 when 8 then @c4 else [AddressLine1] end,
+		[AddressLine2] = case substring(@bitmap,1,1) & 16 when 16 then @c5 else [AddressLine2] end,
+		[AddressLine3] = case substring(@bitmap,1,1) & 32 when 32 then @c6 else [AddressLine3] end,
+		[AddressLine4] = case substring(@bitmap,1,1) & 64 when 64 then @c7 else [AddressLine4] end,
+		[AddressLine5] = case substring(@bitmap,1,1) & 128 when 128 then @c8 else [AddressLine5] end,
+		[Town] = case substring(@bitmap,2,1) & 1 when 1 then @c9 else [Town] end,
+		[CountyId] = case substring(@bitmap,2,1) & 2 when 2 then @c10 else [CountyId] end,
+		[UnconfirmedEmailAddress] = case substring(@bitmap,2,1) & 4 when 4 then @c11 else [UnconfirmedEmailAddress] end,
+		[Postcode] = case substring(@bitmap,2,1) & 8 when 8 then @c12 else [Postcode] end,
+		[OrganisationId] = case substring(@bitmap,2,1) & 16 when 16 then @c13 else [OrganisationId] end,
+		[OrganisationOther] = case substring(@bitmap,2,1) & 32 when 32 then @c14 else [OrganisationOther] end,
+		[Longitude] = case substring(@bitmap,2,1) & 64 when 64 then @c15 else [Longitude] end,
+		[Latitude] = case substring(@bitmap,2,1) & 128 when 128 then @c16 else [Latitude] end,
+		[GeocodeEasting] = case substring(@bitmap,3,1) & 1 when 1 then @c17 else [GeocodeEasting] end,
+		[GeocodeNorthing] = case substring(@bitmap,3,1) & 2 when 2 then @c18 else [GeocodeNorthing] end,
+		[LastAccessedDate] = case substring(@bitmap,3,1) & 4 when 4 then @c19 else [LastAccessedDate] end,
+		[ForgottenUsernameRequested] = case substring(@bitmap,3,1) & 8 when 8 then @c20 else [ForgottenUsernameRequested] end,
+		[ForgottenPasswordRequested] = case substring(@bitmap,3,1) & 16 when 16 then @c21 else [ForgottenPasswordRequested] end,
+		[EmailAlertSent] = case substring(@bitmap,3,1) & 32 when 32 then @c22 else [EmailAlertSent] end,
+		[BeingSupportedBy] = case substring(@bitmap,3,1) & 64 when 64 then @c23 else [BeingSupportedBy] end,
+		[LockedForSupportUntil] = case substring(@bitmap,3,1) & 128 when 128 then @c24 else [LockedForSupportUntil] end,
+		[LocalAuthorityId] = case substring(@bitmap,4,1) & 1 when 1 then @c25 else [LocalAuthorityId] end
+where [StakeHolderID] = @pkc1
+if @@rowcount = 0
+    if @@microsoftversion>0x07320000
+        exec sp_MSreplraiserror 20598
+end

@@ -3,10 +3,12 @@
     [VacancyId]              INT        NOT NULL,
     [AllocatedApplicationId] INT        NULL,
     [StartDate]              DATETIME   NULL,
-    [ILRNumber]              NCHAR (12) NULL,
-    CONSTRAINT [PK_SubVacancy] PRIMARY KEY CLUSTERED ([SubVacancyId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [FK_SubVacancy_Application] FOREIGN KEY ([AllocatedApplicationId]) REFERENCES [dbo].[Application] ([ApplicationId]),
-    CONSTRAINT [FK_SubVacancy_Vacancy] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]),
-    CONSTRAINT [uq_idx_subVacancy] UNIQUE NONCLUSTERED ([VacancyId] ASC, [AllocatedApplicationId] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    [ILRNumber]              NCHAR (12) COLLATE Latin1_General_CI_AS NULL,
+    CONSTRAINT [PK_SubVacancy] PRIMARY KEY CLUSTERED ([SubVacancyId] ASC),
+    CONSTRAINT [FK_SubVacancy_Application] FOREIGN KEY ([AllocatedApplicationId]) REFERENCES [dbo].[Application] ([ApplicationId]) NOT FOR REPLICATION,
+    CONSTRAINT [FK_SubVacancy_Vacancy] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]) NOT FOR REPLICATION,
+    CONSTRAINT [uq_idx_subVacancy] UNIQUE NONCLUSTERED ([VacancyId] ASC, [AllocatedApplicationId] ASC)
 );
+
+
 
