@@ -958,6 +958,52 @@ WriteLiteral("    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
+WriteLiteral(">\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 158 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.EditorFor(m => m.TrainingProvidedComment, "Comment", Html.GetLabelFor(m => m.TrainingProvidedComment)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.ValidationMessageFor(m => m.TrainingProvidedComment));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("    <div");
+
+WriteLiteral(" class=\"form-group\"");
+
 WriteLiteral(">\r\n        <h3");
 
 WriteLiteral(" class=\"heading-small\"");
@@ -967,7 +1013,7 @@ WriteLiteral(">Contact details for candidate</h3>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 165 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactName,
             controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" }));
@@ -980,7 +1026,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 163 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 169 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactNumber,
             controlHtmlAttributes: new { @class = "form-label", type = "tel", spellcheck = "false" }));
@@ -993,7 +1039,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 167 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 173 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactEmail,
             controlHtmlAttributes: new { type = "email", spellcheck = "false" }));
@@ -1006,7 +1052,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.EditorFor(m => m.ContactDetailsComment, "Comment", Html.GetLabelFor(m => m.ContactDetailsComment)));
 
             
@@ -1017,7 +1063,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 172 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 178 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.ValidationMessageFor(m => m.ContactDetailsComment));
 
             
@@ -1026,7 +1072,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 174 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
             
             #line default

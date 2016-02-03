@@ -293,5 +293,42 @@
             _validator.ShouldNotHaveValidationErrorFor(m => m.ContactEmail, viewModel);
             _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.ContactEmail, vacancyViewModel);
         }
+
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        [TestCase(" ", false)]
+        [TestCase("<script>", false)]
+        [TestCase("Desired Skill", true)]
+        public void TrainingProvidedRequired(string trainingProvided, bool expectValid)
+        {
+            var viewModel = new TrainingDetailsViewModel
+            {
+                TrainingProvided = trainingProvided
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingProvided, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.TrainingProvided, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.TrainingProvided, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
     }
 }

@@ -526,10 +526,14 @@
     <div class="grid grid-2-3">
         <div class="inner-block-padr">
             <div class="text">
-                @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.CandidateDescription))
-                {
-                    <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Html.Raw(Model.ProviderSite.CandidateDescription)</p>
-                }
+                <div class="@editableItemClass">
+                    <h3 class="heading-small">
+                        Training to be provided
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+                </div>
                 <div class="@editableItemClass">
                     @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Frameworks)
                     {
