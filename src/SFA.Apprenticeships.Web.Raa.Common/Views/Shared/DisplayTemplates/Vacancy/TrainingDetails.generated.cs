@@ -1001,10 +1001,32 @@ WriteLiteral("        ");
             
             #line default
             #line hidden
-WriteLiteral("\r\n    </div>\r\n");
+WriteLiteral("\r\n\r\n");
+
+WriteLiteral("        ");
 
             
             #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.EditorFor(m => m.ContactDetailsComment, "Comment", Html.GetLabelFor(m => m.ContactDetailsComment)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("        ");
+
+            
+            #line 172 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+   Write(Html.ValidationMessageFor(m => m.ContactDetailsComment));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n    </div>\r\n");
+
+            
+            #line 174 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
             
             #line default

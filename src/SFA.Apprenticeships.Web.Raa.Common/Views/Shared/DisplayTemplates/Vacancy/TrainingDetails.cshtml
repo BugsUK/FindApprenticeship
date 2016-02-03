@@ -167,5 +167,8 @@
         @Html.FormTextFor(
             m => m.ContactEmail,
             controlHtmlAttributes: new { type = "email", spellcheck = "false" })
+
+        @Html.EditorFor(m => m.ContactDetailsComment, "Comment", Html.GetLabelFor(m => m.ContactDetailsComment))
+        @Html.ValidationMessageFor(m => m.ContactDetailsComment)
     </div>
 }

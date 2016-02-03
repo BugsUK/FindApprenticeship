@@ -20,6 +20,10 @@
 
         MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber);
 
+        MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(long vacancyReferenceNumber);
+
+        MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel);
+
         MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(

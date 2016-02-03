@@ -20,6 +20,8 @@
 
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+
         VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
