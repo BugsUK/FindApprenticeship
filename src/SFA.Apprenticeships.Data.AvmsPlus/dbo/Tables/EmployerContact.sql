@@ -1,0 +1,26 @@
+﻿CREATE TABLE [dbo].[EmployerContact] (
+    [EmployerContactId]       INT           IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [PersonId]                INT           NOT NULL,
+    [AddressLine1]            NVARCHAR (50) NULL,
+    [AddressLine2]            NVARCHAR (50) NULL,
+    [AddressLine3]            NVARCHAR (50) NULL,
+    [AddressLine4]            NVARCHAR (50) NULL,
+    [AddressLine5]            NVARCHAR (50) NULL,
+    [Town]                    NVARCHAR (50) NULL,
+    [CountyId]                INT           NULL,
+    [PostCode]                NVARCHAR (8)  NULL,
+    [LocalAuthorityId]        INT           NULL,
+    [JobTitle]                NVARCHAR (50) NULL,
+    [Department]              NVARCHAR (50) NULL,
+    [FaxNumber]               NVARCHAR (16) NULL,
+    [AlternatePhoneNumber]    NVARCHAR (16) NULL,
+    [ContactPreferenceTypeId] INT           NOT NULL,
+    [Availability]            NVARCHAR (50) NULL,
+    CONSTRAINT [PK_EmployerContact] PRIMARY KEY CLUSTERED ([EmployerContactId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [FK_Employer_Contact_Person] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person] ([PersonId]),
+    CONSTRAINT [FK_EmployerContact_ContactPreferenceType] FOREIGN KEY ([ContactPreferenceTypeId]) REFERENCES [dbo].[ContactPreferenceType] ([ContactPreferenceTypeId]),
+    CONSTRAINT [FK_EmployerContact_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
+    CONSTRAINT [FK_EmployerContact_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
+    CONSTRAINT [uq_idx_employerContact] UNIQUE NONCLUSTERED ([PersonId] ASC) WITH (FILLFACTOR = 90) ON [Index]
+);
+

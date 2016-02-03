@@ -1,0 +1,3 @@
+﻿ALTER DATABASE [$(DatabaseName)]
+    ADD FILEGROUP [ftfg_NAVMS_FTI_CATALOG];
+
