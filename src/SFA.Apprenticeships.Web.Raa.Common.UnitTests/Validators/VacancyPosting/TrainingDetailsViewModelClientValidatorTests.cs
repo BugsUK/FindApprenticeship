@@ -31,6 +31,29 @@
         [TestCase("", false)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
+        public void TrainingProvidedInvalidCharacters(string trainingProvided, bool expectValid)
+        {
+            var viewModel = new TrainingDetailsViewModel
+            {
+                TrainingProvided = trainingProvided
+            };
+
+            _validator.Validate(viewModel);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingProvided, viewModel);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.TrainingProvided, viewModel);
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", false)]
+        [TestCase(" ", true)]
+        [TestCase("<script>", false)]
         public void ContactNameInvalidCharacters(string contactName, bool expectValid)
         {
             var viewModel = new TrainingDetailsViewModel

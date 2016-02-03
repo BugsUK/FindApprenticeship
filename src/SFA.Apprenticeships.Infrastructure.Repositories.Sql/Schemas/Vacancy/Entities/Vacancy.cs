@@ -197,6 +197,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public Guid VacancyManagerId { get; set; }
 
+        public string TrainingProvided { get; set; }
+
+        public string TrainingProvidedComment { get; set; }
+
         public string ContactName { get; set; }
 
         public string ContactNumber { get; set; }

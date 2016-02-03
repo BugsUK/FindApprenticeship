@@ -308,6 +308,19 @@
             public const string LabelText = "Apprenticeship standard comment";
         }
 
+        public static class TrainingProvidedMessages
+        {
+            public const string LabelText = "Training to be provided";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Training to be provided " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string RequiredErrorText = "Enter the training to be provided";
+        }
+
+        public static class TrainingProvidedComment
+        {
+            public const string LabelText = "Training to be provided comment";
+        }
+
         public static class ContactNameMessages
         {
             public const string LabelText = "Contact name (optional)";
