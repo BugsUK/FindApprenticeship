@@ -5,7 +5,7 @@
     using Users;
     using Vacancies;
 
-    public abstract class ApplicationDetail : BaseEntity
+    public abstract class ApplicationDetail : BaseEntity<Guid>
     {
         protected ApplicationDetail()
         {

@@ -3,7 +3,7 @@
     using System;
     using Users;
 
-    public class Candidate : BaseEntity
+    public class Candidate : BaseEntity<Guid>
     {
         public Candidate()
         {

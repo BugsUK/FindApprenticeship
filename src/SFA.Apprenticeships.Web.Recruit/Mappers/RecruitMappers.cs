@@ -16,7 +16,7 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<Address, AddressViewModel>();
+            // Mapper.CreateMap<Address, AddressViewModel>(); // No longer used int recruit website
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
 
             Mapper.CreateMap<ApprenticeshipVacancy, VacancyApplicationsViewModel>()

@@ -14,7 +14,7 @@
     using SFA.Infrastructure.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
-    public class TraineeshipApplicationRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository
+    public class TraineeshipApplicationRepository : GenericMongoClient<MongoTraineeshipApplicationDetail, Guid>, ITraineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository
     {
         private readonly ILogService _logger;
 

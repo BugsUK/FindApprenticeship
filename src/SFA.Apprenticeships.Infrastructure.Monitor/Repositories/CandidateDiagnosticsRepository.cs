@@ -11,7 +11,7 @@
     using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver.Linq;
 
-    public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate>, ICandidateDiagnosticsRepository
+    public class CandidateDiagnosticsRepository : GenericMongoClient<MongoCandidate, Guid>, ICandidateDiagnosticsRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

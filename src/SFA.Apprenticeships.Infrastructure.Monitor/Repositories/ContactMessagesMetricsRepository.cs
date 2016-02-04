@@ -8,7 +8,7 @@
     using Infrastructure.Repositories.Mongo.Communication.Entities;
     using MongoDB.Driver.Linq;
 
-    public class ContactMessagesMetricsRepository : GenericMongoClient<MongoContactMessage>, IContactMessagesMetricsRepository
+    public class ContactMessagesMetricsRepository : GenericMongoClient<MongoContactMessage, Guid>, IContactMessagesMetricsRepository
     {
         public ContactMessagesMetricsRepository(IConfigurationService configurationService)
         {

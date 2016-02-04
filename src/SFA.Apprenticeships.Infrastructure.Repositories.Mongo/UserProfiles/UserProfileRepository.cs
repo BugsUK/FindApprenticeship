@@ -11,7 +11,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class UserProfileRepository : GenericMongoClient<MongoProviderUser>, IProviderUserReadRepository, IProviderUserWriteRepository
+    public class UserProfileRepository : GenericMongoClient<MongoProviderUser, Guid>, IProviderUserReadRepository, IProviderUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

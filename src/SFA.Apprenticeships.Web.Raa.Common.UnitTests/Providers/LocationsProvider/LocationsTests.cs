@@ -66,7 +66,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
             var provider = GetVacancyPostingProvider();
 
-            var locationSearchViewModel = GetLocationSearchViewModel(aNewAdditionalLocationInformation,
+            var locationSearchViewModel = GetLocationSearchViewModel(vacancy.EntityId, aNewAdditionalLocationInformation,
                 aNewAdditionalLocationInformationComment, vacancyReferenceNumber, aNewLocationAddressesComment);
 
             provider.AddLocations(locationSearchViewModel);
@@ -118,7 +118,7 @@
                         It.Is<IEnumerable<VacancyLocationAddress>>(l => !l.Any()), aComment, null, aComment));
         }
 
-        private static LocationSearchViewModel GetLocationSearchViewModel(string aNewAdditionalLocationInformation,
+        private static LocationSearchViewModel GetLocationSearchViewModel(Guid vacancyGuid, string aNewAdditionalLocationInformation,
             string aNewAdditionalLocationInformationComment, long vacancyReferenceNumber, string aNewLocationAddressesComment)
         {
             var locationSearchViewModel = new LocationSearchViewModel
@@ -169,7 +169,8 @@
                         NumberOfPositions = 1
                     }
                 },
-                LocationAddressesComment = aNewLocationAddressesComment
+                LocationAddressesComment = aNewLocationAddressesComment,
+                VacancyGuid = vacancyGuid
             };
             return locationSearchViewModel;
         }

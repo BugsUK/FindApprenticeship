@@ -12,7 +12,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class SavedSearchRepository : GenericMongoClient<MongoSavedSearch>, ISavedSearchReadRepository, ISavedSearchWriteRepository
+    public class SavedSearchRepository : GenericMongoClient<MongoSavedSearch, Guid>, ISavedSearchReadRepository, ISavedSearchWriteRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

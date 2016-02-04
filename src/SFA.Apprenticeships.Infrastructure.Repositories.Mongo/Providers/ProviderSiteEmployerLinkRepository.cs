@@ -12,7 +12,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class ProviderSiteEmployerLinkRepository : GenericMongoClient<MongoProviderSiteEmployerLink>, IProviderSiteEmployerLinkReadRepository, IProviderSiteEmployerLinkWriteRepository
+    public class ProviderSiteEmployerLinkRepository : GenericMongoClient<MongoProviderSiteEmployerLink, Guid>, IProviderSiteEmployerLinkReadRepository, IProviderSiteEmployerLinkWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

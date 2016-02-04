@@ -5,7 +5,7 @@
     using Candidates;
     using Vacancies.Apprenticeships;
 
-    public class SavedSearchAlert : BaseEntity
+    public class SavedSearchAlert : BaseEntity<Guid>
     {
         public SavedSearch Parameters { get; set; }
 

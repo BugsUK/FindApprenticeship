@@ -13,7 +13,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class UserRepository : GenericMongoClient<MongoUser>, IUserReadRepository, IUserWriteRepository
+    public class UserRepository : GenericMongoClient<MongoUser, Guid>, IUserReadRepository, IUserWriteRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

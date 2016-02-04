@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Entities.Users;
 
-    public interface IUserReadRepository : IReadRepository<User>
+    public interface IUserReadRepository : IReadRepository<User, Guid>
     {
         User Get(string username, bool errorIfNotFound = true);
 
@@ -15,5 +15,5 @@
         IEnumerable<Guid> GetDormantUsersPotentiallyEligibleForSoftDelete(DateTime dormantAfterDateTime);
     }
 
-    public interface IUserWriteRepository : IWriteRepository<User> {}
+    public interface IUserWriteRepository : IWriteRepository<User, Guid> {}
 }

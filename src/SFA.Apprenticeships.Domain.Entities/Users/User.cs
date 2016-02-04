@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class User : BaseEntity
+    public class User : BaseEntity<Guid>
     {
         public User()
         {

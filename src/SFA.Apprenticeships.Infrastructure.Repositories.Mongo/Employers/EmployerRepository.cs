@@ -11,7 +11,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class EmployerRepository : GenericMongoClient<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
+    public class EmployerRepository : GenericMongoClient<MongoEmployer, Guid>, IEmployerReadRepository, IEmployerWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

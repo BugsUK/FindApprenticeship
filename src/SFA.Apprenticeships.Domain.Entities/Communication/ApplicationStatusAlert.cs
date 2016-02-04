@@ -3,7 +3,7 @@
     using System;
     using Applications;
 
-    public class ApplicationStatusAlert : BaseEntity
+    public class ApplicationStatusAlert : BaseEntity<Guid>
     {
         public Guid CandidateId { get; set; }
 

@@ -11,7 +11,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class ApplicationStatusAlertRepository : CommunicationRepository<ApplicationStatusAlert>, IApplicationStatusAlertRepository
+    public class ApplicationStatusAlertRepository : CommunicationRepository<ApplicationStatusAlert, Guid>, IApplicationStatusAlertRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

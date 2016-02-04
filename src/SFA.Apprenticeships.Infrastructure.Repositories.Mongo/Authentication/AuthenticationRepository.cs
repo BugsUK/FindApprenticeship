@@ -11,7 +11,7 @@
     using SFA.Infrastructure.Interfaces;
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
-    public class AuthenticationRepository : GenericMongoClient<MongoUserCredentials>, IAuthenticationRepository
+    public class AuthenticationRepository : GenericMongoClient<MongoUserCredentials, Guid>, IAuthenticationRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

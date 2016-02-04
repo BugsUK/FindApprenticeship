@@ -12,7 +12,7 @@
     using MongoDB.Driver;
     using MongoDB.Driver.Linq;
 
-    public class ApprenticeshipMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipMetricsRepository
+    public class ApprenticeshipMetricsRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail, Guid>, IApprenticeshipMetricsRepository
     {
         public ApprenticeshipMetricsRepository(IConfigurationService configurationService)
         {

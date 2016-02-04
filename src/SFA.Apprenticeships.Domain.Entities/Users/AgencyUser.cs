@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Users
 {
-    public class AgencyUser : BaseEntity
+    using System;
+
+    public class AgencyUser : BaseEntity<Guid>
     {
         public string Username { get; set; }
         public Team Team { get; set; }

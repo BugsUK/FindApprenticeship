@@ -3,9 +3,9 @@
     using System;
     using Entities;
 
-    public interface IWriteRepository<T> where T : BaseEntity
+    public interface IWriteRepository<T, TKey> where T : BaseEntity<TKey>
     {
-        void Delete(Guid id);
+        void Delete(TKey id);
         T Save(T entity);
     }
 }

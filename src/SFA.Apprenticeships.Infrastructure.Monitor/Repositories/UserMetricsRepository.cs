@@ -13,7 +13,7 @@
     using MongoUser = Infrastructure.Repositories.Mongo.Users.Entities.MongoUser;
 
 
-    public class UserMetricsRepository : GenericMongoClient<MongoUser>, IUserMetricsRepository
+    public class UserMetricsRepository : GenericMongoClient<MongoUser, Guid>, IUserMetricsRepository
     {
         public UserMetricsRepository(IConfigurationService configurationService)
         {

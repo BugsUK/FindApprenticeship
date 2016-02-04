@@ -12,7 +12,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class SavedSearchAlertRepository : CommunicationRepository<SavedSearchAlert>, ISavedSearchAlertRepository
+    public class SavedSearchAlertRepository : CommunicationRepository<SavedSearchAlert, Guid>, ISavedSearchAlertRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class ContactMessage : BaseEntity
+    public class ContactMessage : BaseEntity<Guid>
     {
         public ContactMessageTypes Type { get; set; }
 

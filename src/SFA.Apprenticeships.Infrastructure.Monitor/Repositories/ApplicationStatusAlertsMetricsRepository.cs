@@ -9,7 +9,7 @@
     using SFA.Infrastructure.Interfaces;
     using MongoDB.Driver.Linq;
 
-    public class ApplicationStatusAlertsMetricsRepository : GenericMongoClient<MongoApplicationStatusAlert>, IApplicationStatusAlertsMetricsRepository
+    public class ApplicationStatusAlertsMetricsRepository : GenericMongoClient<MongoApplicationStatusAlert, Guid>, IApplicationStatusAlertsMetricsRepository
     {
         public ApplicationStatusAlertsMetricsRepository(IConfigurationService configurationService)
         {

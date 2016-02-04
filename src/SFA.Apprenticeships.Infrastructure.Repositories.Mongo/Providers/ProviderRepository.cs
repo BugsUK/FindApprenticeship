@@ -9,7 +9,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ProviderRepository : GenericMongoClient<MongoProvider>, IProviderReadRepository, IProviderWriteRepository
+    public class ProviderRepository : GenericMongoClient<MongoProvider, Guid>, IProviderReadRepository, IProviderWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

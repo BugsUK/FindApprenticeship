@@ -15,6 +15,7 @@
     using Entities;
     using SFA.Infrastructure.Interfaces;
     using System.Diagnostics;
+    using Vacancy = Entities.Vacancy;
 
     // TODO GenericSqlClient??
     public class ApprenticeshipVacancyRepository : IApprenticeshipVacancyReadRepository, IApprenticeshipVacancyWriteRepository
@@ -267,8 +268,10 @@ FETCH NEXT @PageSize ROWS ONLY
                 if (!_getOpenConnection.UpdateSingle(dbVacancy))
                     throw new Exception("Failed to update record after failed insert", ex);
 
-
-                RemoveVacancyLocationAddresses(vacancyId);
+                if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Employer)
+                {
+                    RemoveVacancyLocationAddresses(vacancyId);
+                }
             }
 
             // TODO: Optimisation - insert several in one SQL round-trip
@@ -276,20 +279,26 @@ FETCH NEXT @PageSize ROWS ONLY
 
             if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
             {
-                var dbLocation = new VacancyLocation()
-                {
-                    VacancyId = dbVacancy.VacancyId,
-                    DirectApplicationUrl = "TODO",
-                    NumberOfPositions = entity.NumberOfPositions.Value,
-                    PostalAddressId = employerPostalAddressId
-                };
-
-                _getOpenConnection.Insert(dbLocation);
+                InsertEmployerLocationAddressAsVacancyLocationAddress(entity.NumberOfPositions.Value, dbVacancy, employerPostalAddressId);
             }
 
             _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
             return entity;
+        }
+
+        private void InsertEmployerLocationAddressAsVacancyLocationAddress(int numberOfPositions, Vacancy dbVacancy,
+            int employerPostalAddressId)
+        {
+            var dbLocation = new VacancyLocation()
+            {
+                VacancyId = dbVacancy.VacancyId,
+                DirectApplicationUrl = "TODO",
+                NumberOfPositions = numberOfPositions,
+                PostalAddressId = employerPostalAddressId
+            };
+
+            _getOpenConnection.Insert(dbLocation);
         }
 
         public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
@@ -416,7 +425,7 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
                 ? "S"
                 : "M"; //TODO: review. I don't think it's true. We should add a new property and update this one as well.
 
-            var dbVacancy = _getOpenConnection.MutatingQuery<Entities.Vacancy>(@"
+            var dbVacancy = _getOpenConnection.MutatingQuery<Vacancy>(@"
 UPDATE Vacancy.Vacancy
 SET    NumberOfPositions                         = @NumberOfPositions,
        LocationAddressesComment                  = @LocationAddressesComment,
@@ -443,9 +452,23 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyId
                     VacancyLocationTypeCode = vacancyLocationTypeCode
                 }).SingleOrDefault();
 
-            RemoveVacancyLocationAddresses(vacancyGuid);
+            var employerPostalAddressId = _getOpenConnection.Query<int>(@"
+SELECT PostalAddressId
+FROM   Vacancy.VacancyParty
+WHERE  VacancyPartyId = @VacancyPartyId",
+                new
+                {
+                    VacancyPartyId = dbVacancy.EmployerVacancyPartyId
+                }).Single();
+
+            RemoveVacancyLocationAddresses(vacancyGuid); // Only if is not the same as the employer
 
             InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyGuid).EntityId); // TODO: can be done in another way?
+
+            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            {
+                InsertEmployerLocationAddressAsVacancyLocationAddress(numberOfPositions.Value, dbVacancy, employerPostalAddressId);
+            }
 
             return MapVacancy(dbVacancy);
         }
@@ -491,6 +514,7 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyId
 
         private string GetRemoveVacancyLocationAddressesQuery(string selectVacancyIdQuery)
         {
+            // Should remove all the addresses unless the ones that are the address of an employer.
             return
                 $@"
 -- TODO: Could be optimised. Locking may possibly be an issue
@@ -502,6 +526,7 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyId
         SELECT PostalAddressId
         FROM   Vacancy.VacancyLocation
         WHERE  VacancyId = {selectVacancyIdQuery}
+        AND PostalAddressId NOT IN ( SELECT PostalAddressId FROM Vacancy.VacancyParty )
 
     DELETE Vacancy.VacancyLocation
     FROM   Vacancy.VacancyLocation

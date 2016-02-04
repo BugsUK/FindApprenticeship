@@ -11,7 +11,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class ExpiringApprenticeshipApplicationDraftRepository : CommunicationRepository<ExpiringApprenticeshipApplicationDraft>, IExpiringApprenticeshipApplicationDraftRepository
+    public class ExpiringApprenticeshipApplicationDraftRepository : CommunicationRepository<ExpiringApprenticeshipApplicationDraft, Guid>, IExpiringApprenticeshipApplicationDraftRepository
     {
         private readonly ILogService _logger;
         private readonly IMapper _mapper;

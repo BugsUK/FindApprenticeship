@@ -5,7 +5,7 @@
     using Domain.Entities;
     using MongoDB.Driver;
 
-    public class GenericMongoClient<T> where T : BaseEntity
+    public class GenericMongoClient<T, TKey> where T : BaseEntity<TKey>
     {
         private MongoCollection<T> _collection;
         private MongoDatabase _database;
@@ -33,7 +33,7 @@
             }
         }
 
-        protected void UpdateEntityTimestamps(BaseEntity entity)
+        protected void UpdateEntityTimestamps(BaseEntity<TKey> entity)
         {
             // determine whether this is a "new" entity being saved for the first time
             if (entity.DateCreated == DateTime.MinValue)

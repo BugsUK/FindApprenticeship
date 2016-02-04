@@ -3,7 +3,7 @@
     using System;
     using Entities.Users;
 
-    public interface IAuthenticationRepository : IReadRepository<UserCredentials>, IWriteRepository<UserCredentials>
+    public interface IAuthenticationRepository : IReadRepository<UserCredentials, Guid>, IWriteRepository<UserCredentials, Guid>
     {
         UserCredentials Get(Guid id, bool errorIfNotFound);
     }
