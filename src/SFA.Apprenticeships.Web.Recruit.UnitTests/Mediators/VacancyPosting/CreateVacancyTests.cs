@@ -34,12 +34,8 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
-                TrainingType = TrainingType.Frameworks,
-                FrameworkCodeName = AString,
-                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher,
                 VacancyReferenceNumber = ALong
             });
 
@@ -63,12 +59,8 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
-                TrainingType = TrainingType.Frameworks,
-                FrameworkCodeName = AString,
-                StandardId = AnInt,
                 Title = AString,
                 ShortDescription = AString,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher,
                 VacancyReferenceNumber = ALong
             });
 
@@ -92,10 +84,8 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
-                FrameworkCodeName = AString,
                 Title = AString,
                 ShortDescription = AString,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher,
                 VacancyReferenceNumber = ALong
             });
 
@@ -118,10 +108,8 @@
                 OfflineVacancy = true,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
-                FrameworkCodeName = AString,
                 Title = AString,
                 ShortDescription = AString,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher,
                 VacancyReferenceNumber = ALong
             });
 
@@ -144,10 +132,8 @@
                 OfflineVacancy = false,
                 OfflineApplicationUrl = AWebPage,
                 OfflineApplicationInstructions = AString,
-                FrameworkCodeName = AString,
                 Title = AString,
                 ShortDescription = AString,
-                ApprenticeshipLevel = ApprenticeshipLevel.Higher,
                 VacancyReferenceNumber = ALong
             });
 

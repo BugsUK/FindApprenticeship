@@ -39,6 +39,8 @@
 
             vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails,
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(ManagementRouteNames.TrainingDetails,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary,
                 new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects,
@@ -117,26 +119,74 @@
             }
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
+        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        {
+            var response = _vacancyMediator.GetTrainingDetails(vacancyReferenceNumber);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.GetTrainingDetails.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.GetTrainingDetails.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
+        public ActionResult TrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyMediator.UpdateVacancy(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyMediatorCodes.UpdateVacancy.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.SelectFrameworkAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "BasicDetails")]
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
-        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
+        public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.SelectStandardAsTrainingType(viewModel);
 
             ModelState.Clear();
 
-            return View("BasicDetails", response.ViewModel);
+            return View("TrainingDetails", response.ViewModel);
         }
 
         [HttpGet]

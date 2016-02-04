@@ -187,6 +187,18 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int OfflineApplicationClickThroughCount { get; set; }
 
+        public string TrainingProvided { get; set; }
+
+        public string TrainingProvidedComment { get; set; }
+
+        public string ContactName { get; set; }
+
+        public string ContactNumber { get; set; }
+
+        public string ContactEmail { get; set; }
+
+        public string ContactDetailsComment { get; set; }
+
         /*
         public virtual Framework Framework { get; set; }
 

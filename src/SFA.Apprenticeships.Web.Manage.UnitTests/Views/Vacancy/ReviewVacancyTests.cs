@@ -195,6 +195,7 @@
                     LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
                 Status = ProviderVacancyStatuses.ReservedForQA
@@ -241,6 +242,7 @@
                     LocationAddresses = new List<VacancyLocationAddressViewModel>(),
                     OfflineVacancy = false
                 },
+                TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
                 Status = ProviderVacancyStatuses.ReservedForQA

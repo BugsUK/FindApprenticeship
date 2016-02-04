@@ -34,13 +34,14 @@
         public VacancyViewModel BuildValid(ProviderVacancyStatuses status)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
-            viewModel.NewVacancyViewModel.TrainingType = TrainingType.Frameworks;
             viewModel.NewVacancyViewModel.OfflineVacancy = false;
             viewModel.NewVacancyViewModel.OfflineApplicationUrl = null;
             viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;
-            viewModel.NewVacancyViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
             viewModel.TrainingDetailsViewModel.TrainingType = TrainingType.Frameworks;
             viewModel.TrainingDetailsViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
+            viewModel.TrainingDetailsViewModel.ContactName = null;
+            viewModel.TrainingDetailsViewModel.ContactNumber = null;
+            viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.VacancySummaryViewModel.Status = status;
             viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
             viewModel.VacancySummaryViewModel.Duration = 12;

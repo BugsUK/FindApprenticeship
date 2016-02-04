@@ -42,11 +42,41 @@
             validator.RuleFor(m => m.FrameworkCodeNameComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.TrainingProvided)
+                .Matches(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListErrorText);
+
+            validator.RuleFor(m => m.TrainingProvidedComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ContactName)
+                .Length(0, 100)
+                .WithMessage(VacancyViewModelMessages.ContactNameMessages.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.ContactNameMessages.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ContactNameMessages.WhiteListErrorText);
+
+            validator.RuleFor(x => x.ContactNumber)
+                .Length(8, 16)
+                .WithMessage(VacancyViewModelMessages.ContactNumberMessages.LengthErrorText)
+                .Matches(VacancyViewModelMessages.ContactNumberMessages.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ContactNumberMessages.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ContactEmail)
+                .Length(0, 100)
+                .WithMessage(VacancyViewModelMessages.ContactEmailMessages.TooLongErrorText)
+                .Matches(VacancyViewModelMessages.ContactEmailMessages.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ContactEmailMessages.WhiteListErrorText);
+
+            validator.RuleFor(m => m.ContactDetailsComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }
 
         internal static void AddClientRules(this AbstractValidator<TrainingDetailsViewModel> validator)
         {
-
+            
         }
 
         internal static void AddServerRules(this AbstractValidator<TrainingDetailsViewModel> validator)
@@ -72,6 +102,10 @@
                 .NotEqual((int)ApprenticeshipLevel.FoundationDegree)
                 .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
                 .When(m => m.TrainingType == TrainingType.Frameworks);
+
+            validator.RuleFor(x => x.TrainingProvided)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.RequiredErrorText);
         }
     }
 }

@@ -38,6 +38,12 @@
             public const string Ok = "VacancyMediatorCodes.GetBasicVacancyDetails.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.GetBasicVacancyDetails.FailedValidation";
         }
+        
+        public class GetTrainingDetails
+        {
+            public const string Ok = "VacancyMediatorCodes.GetTrainingDetails.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.GetTrainingDetails.FailedValidation";
+        }
 
         public class GetVacancyRequirementsProspectsViewModel
         {

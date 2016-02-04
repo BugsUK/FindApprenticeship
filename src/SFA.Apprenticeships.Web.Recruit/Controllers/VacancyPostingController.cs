@@ -249,7 +249,7 @@
         {
             var response = _vacancyPostingMediator.CreateVacancy(viewModel);
 
-            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.VacancySummary, 
+            Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.TrainingDetails, 
                 new
                 {
                     vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
@@ -280,28 +280,6 @@
             }
         }
 
-        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
-        [HttpPost]
-        public ActionResult SelectFramework(NewVacancyViewModel viewModel)
-        {
-            var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
-
-            ModelState.Clear();
-
-            return View("CreateVacancy", response.ViewModel);
-        }
-
-        [MultipleFormActionsButton(SubmitButtonActionName = "CreateVacancy")]
-        [HttpPost]
-        public ActionResult SelectStandard(NewVacancyViewModel viewModel)
-        {
-            var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
-
-            ModelState.Clear();
-
-            return View("CreateVacancy", response.ViewModel);
-        }
-
         #endregion
 
         #region Training Details
@@ -309,9 +287,17 @@
         [HttpGet]
         public ActionResult TrainingDetails(long vacancyReferenceNumber)
         {
-            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber);
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
+            var viewModel = response.ViewModel;
 
-            return View(response.ViewModel);
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok:
+                    return View(viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
@@ -320,21 +306,97 @@
         {
             var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
 
-            return View(viewModel);
+            return HandleTrainingDetails(response,
+                () => RedirectToRoute(RecruitmentRouteNames.VacancySummary,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    }));
+        }
+
+        [HttpGet]
+        public ActionResult ReviewTrainingDetails(long vacancyReferenceNumber, bool? comeFromPreview)
+        {
+            var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
+            var viewModel = response.ViewModel;
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("TrainingDetails", viewModel);
+
+                case VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok:
+                    return View("TrainingDetails", viewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult TrainingDetailsAndExit(TrainingDetailsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
+
+            return HandleTrainingDetails(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
         }
 
         [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
         [HttpPost]
         public ActionResult TrainingDetailsAndPreview(TrainingDetailsViewModel viewModel)
         {
-            throw new NotImplementedException();
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            return HandleTrainingDetails(response,
+                () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
+                    new
+                    {
+                        vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                    }));
+        }
+
+        private ActionResult HandleTrainingDetails(MediatorResponse<TrainingDetailsViewModel> response, Func<ActionResult> okAction)
+        {
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                    response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(response.ViewModel);
+
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    return okAction();
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult SelectFramework(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectFrameworkAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("TrainingDetails", response.ViewModel);
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "TrainingDetails")]
+        [HttpPost]
+        public ActionResult SelectStandard(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.SelectStandardAsTrainingType(viewModel);
+
+            ModelState.Clear();
+
+            return View("TrainingDetails", response.ViewModel);
         }
 
         #endregion
@@ -626,6 +688,7 @@
             var vacancyViewModel = response.ViewModel;
 
             vacancyViewModel.BasicDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewCreateVacancy, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewTrainingDetails, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });

@@ -157,10 +157,12 @@
     <Compile Include="Providers\VacancyPosting\ManageDatesTests.cs" />
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
+    <Compile Include="Providers\VacancyPosting\TrainingDetailsTests.cs" />
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

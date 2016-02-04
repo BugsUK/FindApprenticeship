@@ -83,18 +83,6 @@
             validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
-
-            validator.RuleFor(m => m.StandardIdComment)
-                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
-
-            validator.RuleFor(m => m.ApprenticeshipLevelComment)
-                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
-
-            validator.RuleFor(m => m.FrameworkCodeNameComment)
-                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
         }
 
         internal static void AddClientRules(this AbstractValidator<NewVacancyViewModel> validator)
@@ -111,28 +99,6 @@
             validator.RuleFor(x => x.ShortDescription)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.ShortDescription.RequiredErrorText);
-
-            validator.RuleFor(viewModel => (int)viewModel.TrainingType)
-                .InclusiveBetween((int)TrainingType.Frameworks, (int)TrainingType.Standards)
-                .WithMessage(NewVacancyViewModelMessages.TrainingType.RequiredErrorText);
-
-            validator.RuleFor(m => m.FrameworkCodeName)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.FrameworkCodeName.RequiredErrorText)
-                .When(m => m.TrainingType == TrainingType.Frameworks);
-
-            validator.RuleFor(m => m.StandardId)
-                .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.StandardId.RequiredErrorText)
-                .When(m => m.TrainingType == TrainingType.Standards);
-
-            validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
-                .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Degree)
-                .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
-                .When(m => m.TrainingType == TrainingType.Frameworks)
-                .NotEqual((int)ApprenticeshipLevel.FoundationDegree)
-                .WithMessage(NewVacancyViewModelMessages.ApprenticeshipLevel.RequiredErrorText)
-                .When(m => m.TrainingType == TrainingType.Frameworks);
 
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
