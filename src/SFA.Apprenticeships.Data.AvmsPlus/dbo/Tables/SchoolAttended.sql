@@ -7,9 +7,9 @@
     [StartDate]        DATETIME       NOT NULL,
     [EndDate]          DATETIME       NULL,
     [ApplicationId]    INT            NULL,
-    CONSTRAINT [PK_SchoolAttended] PRIMARY KEY CLUSTERED ([SchoolAttendedId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_SchoolAttended] PRIMARY KEY CLUSTERED ([SchoolAttendedId] ASC),
     CONSTRAINT [FK_SchoolAttended_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
     CONSTRAINT [FK_SchoolAttended_School] FOREIGN KEY ([SchoolId]) REFERENCES [dbo].[School] ([SchoolId]),
-    CONSTRAINT [uq_idx_schoolAttended] UNIQUE NONCLUSTERED ([CandidateId] ASC, [ApplicationId] ASC) ON [PRIMARY]
+    CONSTRAINT [uq_idx_schoolAttended] UNIQUE NONCLUSTERED ([CandidateId] ASC, [ApplicationId] ASC)
 );
 

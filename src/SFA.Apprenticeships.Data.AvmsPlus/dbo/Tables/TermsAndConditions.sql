@@ -3,7 +3,7 @@
     [UserTypeId]           INT            NOT NULL,
     [Fullname]             NVARCHAR (200) NULL,
     [Content]              NTEXT          NULL,
-    CONSTRAINT [PK_TermsAndConditions] PRIMARY KEY CLUSTERED ([TermsAndConditionsId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_TermsAndConditions] PRIMARY KEY CLUSTERED ([TermsAndConditionsId] ASC),
     CONSTRAINT [FK_TermsAndConditions_UserType] FOREIGN KEY ([UserTypeId]) REFERENCES [dbo].[UserType] ([UserTypeId])
-) TEXTIMAGE_ON [PRIMARY];
+);
 

@@ -22,10 +22,10 @@
     [CountBackgroundMatches] INT              NULL,
     [VacancyPostedSince]     INT              CONSTRAINT [DF_SavedSearchCriteria_VacancyPostedSince] DEFAULT ((0)) NOT NULL,
     [ApprenticeshipTypeId]   INT              NULL,
-    CONSTRAINT [PK_SavedSearchCriteria] PRIMARY KEY CLUSTERED ([SavedSearchCriteriaId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_SavedSearchCriteria] PRIMARY KEY CLUSTERED ([SavedSearchCriteriaId] ASC),
     CONSTRAINT [FK_SavedSearchCriteria_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
     CONSTRAINT [FK_SavedSearchCriteria_SavedSearchCriteriaSearchType] FOREIGN KEY ([SearchType]) REFERENCES [dbo].[SavedSearchCriteriaSearchType] ([SavedSearchCriteriaSearchTypeId]),
     CONSTRAINT [FK_SavedSearchCriteria_SavedSearchCriteriaVacancyPostedSince] FOREIGN KEY ([VacancyPostedSince]) REFERENCES [dbo].[SavedSearchCriteriaVacancyPostedSince] ([SavedSearchCriteriaVacancyPostedSince]),
-    CONSTRAINT [uq_idx_savedSearchCriteria] UNIQUE NONCLUSTERED ([CandidateId] ASC, [Name] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_savedSearchCriteria] UNIQUE NONCLUSTERED ([CandidateId] ASC, [Name] ASC)
 );
 

@@ -9,7 +9,7 @@
     [MobileNumber]   NVARCHAR (16)  NULL,
     [Email]          NVARCHAR (100) NULL,
     [PersonTypeId]   INT            NOT NULL,
-    CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED ([PersonId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Person] PRIMARY KEY CLUSTERED ([PersonId] ASC),
     CONSTRAINT [FK_Person_PersonTitleType] FOREIGN KEY ([Title]) REFERENCES [dbo].[PersonTitleType] ([PersonTitleTypeId]),
     CONSTRAINT [FK_Person_PersonType] FOREIGN KEY ([PersonTypeId]) REFERENCES [dbo].[PersonType] ([PersonTypeId])
 );

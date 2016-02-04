@@ -5,6 +5,6 @@
     [SearchCriteria]      NVARCHAR (500) NULL,
     [RunTime]             DATETIME       NULL,
     [RecordCount]         INT            NULL,
-    CONSTRAINT [PK_SearchAuditRecord_1] PRIMARY KEY CLUSTERED ([SearchAuditRecordId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    CONSTRAINT [PK_SearchAuditRecord_1] PRIMARY KEY CLUSTERED ([SearchAuditRecordId] ASC)
 );
 

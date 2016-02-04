@@ -7,7 +7,7 @@
     [CandidateDisplayText]                NVARCHAR (900) NOT NULL,
     [CandidateFullName]                   NVARCHAR (100) NULL,
     [Withdrawn]                           BIT            NULL,
-    CONSTRAINT [PK_ApplicationUnsuccessfulReasonType] PRIMARY KEY CLUSTERED ([ApplicationUnsuccessfulReasonTypeId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [uq_idx_ApplicationUnsuccessfulReasonType] UNIQUE NONCLUSTERED ([FullName] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [PK_ApplicationUnsuccessfulReasonType] PRIMARY KEY CLUSTERED ([ApplicationUnsuccessfulReasonTypeId] ASC),
+    CONSTRAINT [uq_idx_ApplicationUnsuccessfulReasonType] UNIQUE NONCLUSTERED ([FullName] ASC)
 );
 

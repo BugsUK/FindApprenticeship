@@ -5,6 +5,6 @@
     [isDeleteFromAOL]                  BIT NULL,
     [roleId]                           INT CONSTRAINT [DFT_Candidate_RoleID] DEFAULT ((0)) NOT NULL,
     [isHardDelete]                     BIT NULL,
-    CONSTRAINT [PK_CandidateDeRegistrationControl] PRIMARY KEY CLUSTERED ([CandidateDeRegistrationControlId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    CONSTRAINT [PK_CandidateDeRegistrationControl] PRIMARY KEY CLUSTERED ([CandidateDeRegistrationControlId] ASC)
 );
 

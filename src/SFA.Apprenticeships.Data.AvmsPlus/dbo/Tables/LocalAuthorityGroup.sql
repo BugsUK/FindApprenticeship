@@ -17,6 +17,5 @@
 GO
 CREATE NONCLUSTERED INDEX [idx_LocalAuthorityGroup_LocalAuthorityGroupTypeID]
     ON [dbo].[LocalAuthorityGroup]([LocalAuthorityGroupTypeID] ASC)
-    INCLUDE([ParentLocalAuthorityGroupID]) WITH (FILLFACTOR = 90)
-    ON [Index];
+    INCLUDE([ParentLocalAuthorityGroupID]);
 

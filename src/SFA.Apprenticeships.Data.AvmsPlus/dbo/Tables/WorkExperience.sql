@@ -8,13 +8,12 @@
     [PartialCompletion]   BIT            CONSTRAINT [DF_WorkExperience_PartialCompletion] DEFAULT ((0)) NOT NULL,
     [VoluntaryExperience] BIT            CONSTRAINT [DF_WorkExperience_VoluntaryExperience] DEFAULT ((0)) NOT NULL,
     [ApplicationId]       INT            NULL,
-    CONSTRAINT [PK_WorkExperience] PRIMARY KEY CLUSTERED ([WorkExperienceId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_WorkExperience] PRIMARY KEY CLUSTERED ([WorkExperienceId] ASC),
     CONSTRAINT [FK_WorkExperience_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId])
 );
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_WorkExperience_CandidateId_ApplicationId]
-    ON [dbo].[WorkExperience]([CandidateId] ASC, [ApplicationId] ASC) WITH (FILLFACTOR = 90)
-    ON [Index];
+    ON [dbo].[WorkExperience]([CandidateId] ASC, [ApplicationId] ASC);
 

@@ -4,8 +4,8 @@
     [EShotJobItemStatusId] INT            NOT NULL,
     [Email]                NVARCHAR (200) NOT NULL,
     [Error]                NVARCHAR (MAX) NULL,
-    CONSTRAINT [PK_EShotJobItem] PRIMARY KEY CLUSTERED ([EShotJobItemId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_EShotJobItem] PRIMARY KEY CLUSTERED ([EShotJobItemId] ASC),
     CONSTRAINT [FK_EShotJobItem_EShotJob] FOREIGN KEY ([EShotJobId]) REFERENCES [dbo].[EShotJob] ([EShotJobId]),
     CONSTRAINT [FK_EShotJobItem_EShotJobItemStatusType] FOREIGN KEY ([EShotJobItemStatusId]) REFERENCES [dbo].[EShotJobItemStatusType] ([EShotJobItemStatusTypeId])
-) TEXTIMAGE_ON [PRIMARY];
+);
 

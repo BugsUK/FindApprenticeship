@@ -47,7 +47,7 @@
     [NewVacancyAlertSMS]             BIT              NULL,
     [AllowMarketingMessages]         BIT              NULL,
     [ReminderMessageSent]            BIT              DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [PK_Candidate] PRIMARY KEY CLUSTERED ([CandidateId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Candidate] PRIMARY KEY CLUSTERED ([CandidateId] ASC),
     CONSTRAINT [FK_Candidate_CandidateDisability] FOREIGN KEY ([Disability]) REFERENCES [dbo].[CandidateDisability] ([CandidateDisabilityId]),
     CONSTRAINT [FK_Candidate_CandidateEthnicOrigin] FOREIGN KEY ([EthnicOrigin]) REFERENCES [dbo].[CandidateEthnicOrigin] ([CandidateEthnicOriginId]),
     CONSTRAINT [FK_Candidate_CandidateGender] FOREIGN KEY ([Gender]) REFERENCES [dbo].[CandidateGender] ([CandidateGenderId]),
@@ -56,13 +56,12 @@
     CONSTRAINT [FK_Candidate_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_Candidate_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
     CONSTRAINT [FK_Candidate_Person] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person] ([PersonId]),
-    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_candidate_person] UNIQUE NONCLUSTERED ([PersonId] ASC)
 );
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Candidate_CandidateStatusTypeID]
     ON [dbo].[Candidate]([CandidateStatusTypeId] ASC)
-    INCLUDE([CandidateId], [Postcode])
-    ON [Index];
+    INCLUDE([CandidateId], [Postcode]);
 

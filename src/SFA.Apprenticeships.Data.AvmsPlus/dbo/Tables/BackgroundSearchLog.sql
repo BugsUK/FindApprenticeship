@@ -4,6 +4,6 @@
     [NumberOfVacancies]           INT      NOT NULL,
     [NumberOfCandidatesProcessed] INT      NOT NULL,
     [NumberOfFailures]            INT      NOT NULL,
-    CONSTRAINT [PK_BackgroundSearchLog] PRIMARY KEY CLUSTERED ([BackgroundSearchLogId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    CONSTRAINT [PK_BackgroundSearchLog] PRIMARY KEY CLUSTERED ([BackgroundSearchLogId] ASC)
 );
 

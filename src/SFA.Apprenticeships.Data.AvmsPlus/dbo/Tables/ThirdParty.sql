@@ -14,7 +14,7 @@
     [Latitude]        DECIMAL (18)   NULL,
     [GeocodeEasting]  INT            NULL,
     [GeocodeNorthing] INT            NULL,
-    CONSTRAINT [PK_ThirdParty] PRIMARY KEY CLUSTERED ([ID] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [uq_idx_thirdparty] UNIQUE NONCLUSTERED ([EDSURN] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [PK_ThirdParty] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [uq_idx_thirdparty] UNIQUE NONCLUSTERED ([EDSURN] ASC)
 );
 

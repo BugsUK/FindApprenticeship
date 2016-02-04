@@ -6,7 +6,7 @@
     [DateCreated]      DATETIME       NOT NULL,
     [DateUpdated]      DATETIME       NOT NULL,
     [User]             NVARCHAR (400) NOT NULL,
-    CONSTRAINT [PK_EShotJob] PRIMARY KEY CLUSTERED ([EShotJobId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_EShotJob] PRIMARY KEY CLUSTERED ([EShotJobId] ASC),
     CONSTRAINT [FK_EShotJob_EShotJobStatusType] FOREIGN KEY ([EShotJobStatusId]) REFERENCES [dbo].[EShotJobStatusType] ([EShotJobStatusTypeId])
-) TEXTIMAGE_ON [PRIMARY];
+);
 

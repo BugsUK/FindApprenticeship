@@ -4,7 +4,7 @@
     [ChangeDate]         DATETIME      NOT NULL,
     [AttachedtoItem]     INT           NOT NULL,
     [AttachedtoItemType] INT           NOT NULL,
-    CONSTRAINT [PK_AuditRecord] PRIMARY KEY CLUSTERED ([AuditRecordId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_AuditRecord] PRIMARY KEY CLUSTERED ([AuditRecordId] ASC),
     CONSTRAINT [FK_AuditRecord_AttachedtoItemType] FOREIGN KEY ([AttachedtoItemType]) REFERENCES [dbo].[AttachedtoItemType] ([AttachedtoItemTypeId])
 );
 

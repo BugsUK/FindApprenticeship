@@ -14,7 +14,7 @@ BEGIN
  UPDATE [dbo].[Vacancy]         
  SET         
          
-  [NoOfOfflineApplicants ] = @NoOfOfflineApplicants      
+  [NoOfOfflineApplicants] = @NoOfOfflineApplicants      
      
 
  WHERE [VacancyId]=@VacancyId        

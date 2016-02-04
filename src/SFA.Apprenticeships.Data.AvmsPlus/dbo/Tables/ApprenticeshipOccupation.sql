@@ -5,9 +5,9 @@
     [FullName]                             NVARCHAR (100) NOT NULL,
     [ApprenticeshipOccupationStatusTypeId] INT            NOT NULL,
     [ClosedDate]                           DATETIME       NULL,
-    CONSTRAINT [PK_ApprenticeshipOccupation_1] PRIMARY KEY CLUSTERED ([ApprenticeshipOccupationId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_ApprenticeshipOccupation_1] PRIMARY KEY CLUSTERED ([ApprenticeshipOccupationId] ASC),
     CONSTRAINT [FK_ApprenticeshipOccupation_ApprenticeshipOccupationStatusType] FOREIGN KEY ([ApprenticeshipOccupationStatusTypeId]) REFERENCES [dbo].[ApprenticeshipOccupationStatusType] ([ApprenticeshipOccupationStatusTypeId]),
     CONSTRAINT [FK_ApprenticeshipOccupationStatusType_ApprenticeshipOccupationStatusTypeID] FOREIGN KEY ([ApprenticeshipOccupationStatusTypeId]) REFERENCES [dbo].[ApprenticeshipOccupationStatusType] ([ApprenticeshipOccupationStatusTypeId]),
-    CONSTRAINT [uq_idx_ApprenticeshipOccupation] UNIQUE NONCLUSTERED ([FullName] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_ApprenticeshipOccupation] UNIQUE NONCLUSTERED ([FullName] ASC)
 );
 

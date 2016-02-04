@@ -15,17 +15,16 @@
     [DeletedBy]         NVARCHAR (250)  NULL,
     [ReadByFirst]       NVARCHAR (250)  NULL,
     [DeletedDate]       DATETIME        NULL,
-    CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED ([MessageId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Message] PRIMARY KEY CLUSTERED ([MessageId] ASC),
     CONSTRAINT [FK_Message_MessageCategory] FOREIGN KEY ([MessageCategoryID]) REFERENCES [dbo].[MessageCategory] ([MessageCategoryId]),
     CONSTRAINT [FK_Message_MessageEvent1] FOREIGN KEY ([MessageEventId]) REFERENCES [dbo].[MessageEvent] ([MessageEventId]),
     CONSTRAINT [FK_Message_UserTypeRecipient] FOREIGN KEY ([RecipientType]) REFERENCES [dbo].[UserType] ([UserTypeId]),
     CONSTRAINT [FK_Message_UserTypeSender] FOREIGN KEY ([SenderType]) REFERENCES [dbo].[UserType] ([UserTypeId])
-) TEXTIMAGE_ON [PRIMARY];
+);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Message_Recipient_RecipientType_IsDeleted]
     ON [dbo].[Message]([Recipient] ASC, [RecipientType] ASC, [IsDeleted] ASC)
-    INCLUDE([IsRead], [MessageId]) WITH (FILLFACTOR = 90)
-    ON [Index];
+    INCLUDE([IsRead], [MessageId]);
 

@@ -5,6 +5,6 @@
     [OldAuthorityId]        INT          NULL,
     [NewAuthorityId]        INT          NULL,
     [TransactionType]       VARCHAR (50) NULL,
-    CONSTRAINT [PK_LocalAuthorityAudit] PRIMARY KEY CLUSTERED ([LocalAuthorityAuditId] ASC) WITH (FILLFACTOR = 90)
+    CONSTRAINT [PK_LocalAuthorityAudit] PRIMARY KEY CLUSTERED ([LocalAuthorityAuditId] ASC)
 );
 

@@ -3,6 +3,6 @@
     [CodeName]                             NVARCHAR (100) NOT NULL,
     [ShortName]                            NVARCHAR (100) NOT NULL,
     [FullName]                             NVARCHAR (200) NOT NULL,
-    CONSTRAINT [pk_ApprenticeshipOccupationStatusType] PRIMARY KEY CLUSTERED ([ApprenticeshipOccupationStatusTypeId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    CONSTRAINT [pk_ApprenticeshipOccupationStatusType] PRIMARY KEY CLUSTERED ([ApprenticeshipOccupationStatusTypeId] ASC)
 );
 

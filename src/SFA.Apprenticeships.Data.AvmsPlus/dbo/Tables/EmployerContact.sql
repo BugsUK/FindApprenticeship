@@ -16,11 +16,11 @@
     [AlternatePhoneNumber]    NVARCHAR (16) NULL,
     [ContactPreferenceTypeId] INT           NOT NULL,
     [Availability]            NVARCHAR (50) NULL,
-    CONSTRAINT [PK_EmployerContact] PRIMARY KEY CLUSTERED ([EmployerContactId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_EmployerContact] PRIMARY KEY CLUSTERED ([EmployerContactId] ASC),
     CONSTRAINT [FK_Employer_Contact_Person] FOREIGN KEY ([PersonId]) REFERENCES [dbo].[Person] ([PersonId]),
     CONSTRAINT [FK_EmployerContact_ContactPreferenceType] FOREIGN KEY ([ContactPreferenceTypeId]) REFERENCES [dbo].[ContactPreferenceType] ([ContactPreferenceTypeId]),
     CONSTRAINT [FK_EmployerContact_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_EmployerContact_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
-    CONSTRAINT [uq_idx_employerContact] UNIQUE NONCLUSTERED ([PersonId] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_employerContact] UNIQUE NONCLUSTERED ([PersonId] ASC)
 );
 

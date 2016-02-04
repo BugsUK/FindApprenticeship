@@ -24,7 +24,7 @@
     [BeingSupportedBy]           NVARCHAR (50)    NULL,
     [LockedForSupportUntil]      DATETIME         NULL,
     [LocalAuthorityId]           INT              NULL,
-    PRIMARY KEY CLUSTERED ([StakeHolderID] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    PRIMARY KEY CLUSTERED ([StakeHolderID] ASC),
     CONSTRAINT [FK_StakeHolder_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_StakeHolder_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
     CONSTRAINT [FK_StakeHolder_OrganisationId] FOREIGN KEY ([OrganisationId]) REFERENCES [dbo].[Organisation] ([OrganisationId]),

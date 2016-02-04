@@ -16,7 +16,7 @@
     [Longitude]         DECIMAL (13, 10) NULL,
     [Latitude]          DECIMAL (13, 10) NULL,
     [EmployersWebsite]  NVARCHAR (256)   NULL,
-    CONSTRAINT [PK_VacancyLocation_VacancyLocationId] PRIMARY KEY CLUSTERED ([VacancyLocationId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_VacancyLocation_VacancyLocationId] PRIMARY KEY CLUSTERED ([VacancyLocationId] ASC),
     CONSTRAINT [FK_VacancyLocation_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_VacancyLocation_VacancyId] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId])
 );
