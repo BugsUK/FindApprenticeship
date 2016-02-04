@@ -75,7 +75,7 @@
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,
-                //TrainingToBeProvided = vacancy.,
+                TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
                 //DeliveryOrganisation = vacancy.,
