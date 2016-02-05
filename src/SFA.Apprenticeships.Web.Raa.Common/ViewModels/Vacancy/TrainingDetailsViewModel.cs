@@ -44,6 +44,13 @@
         [Display(Name = VacancyViewModelMessages.ApprenticeshipLevelComment.LabelText)]
         public string ApprenticeshipLevelComment { get; set; }
 
+        public string SectorCodeName { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.SectorCodeNameComment.LabelText)]
+        public string SectorCodeNameComment { get; set; }
+
+        public List<SelectListItem> Sectors { get; set; }
+
         [Display(Name = VacancyViewModelMessages.TrainingProvidedMessages.LabelText)]
         public string TrainingProvided { get; set; }
 

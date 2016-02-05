@@ -105,6 +105,7 @@
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkId)
+                .Excluding(v => v.SectorId)
                 .Excluding(v => v.StartDate)
 
                 ;
@@ -121,6 +122,7 @@
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)
+                .Excluding(v => v.SectorCodeName)
                 .Excluding(v => v.Ukprn)
                 .Excluding(v => v.ProviderSiteEmployerLink)
                 .Excluding(v => v.DateStartedToQA)

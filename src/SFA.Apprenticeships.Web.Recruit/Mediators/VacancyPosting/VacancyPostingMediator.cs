@@ -340,8 +340,10 @@
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.FrameworkCodeName = null;
+            viewModel.SectorCodeName = null;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
@@ -350,9 +352,11 @@
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
+            viewModel.SectorCodeName = null;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
@@ -516,6 +520,7 @@
         {
             trainingDetailsViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
             trainingDetailsViewModel.Standards = _vacancyPostingProvider.GetStandards();
+            trainingDetailsViewModel.Sectors = _vacancyPostingProvider.GetSectors();
             if (trainingDetailsViewModel.TrainingType == TrainingType.Standards && trainingDetailsViewModel.StandardId.HasValue)
             {
                 var standard = _vacancyPostingProvider.GetStandard(trainingDetailsViewModel.StandardId);
@@ -529,6 +534,7 @@
             trainingDetailsViewModel.ApprenticeshipLevelComment = storedVacancy.TrainingDetailsViewModel.ApprenticeshipLevelComment;
             trainingDetailsViewModel.FrameworkCodeNameComment = storedVacancy.TrainingDetailsViewModel.FrameworkCodeNameComment;
             trainingDetailsViewModel.StandardIdComment = storedVacancy.TrainingDetailsViewModel.StandardIdComment;
+            trainingDetailsViewModel.SectorCodeNameComment = storedVacancy.TrainingDetailsViewModel.SectorCodeNameComment;
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)

@@ -120,6 +120,7 @@
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
                 .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
+                .MapMemberFrom(v => v.SectorIdComment, av => av.SectorCodeNameComment)
                 .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl) // TODO: The reverse
                 .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // TODO: The reverse
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct
@@ -138,6 +139,7 @@
                 .ForMember(v => v.OriginalContractOwnerVacancyPartyId, opt => opt.Ignore())
                 // Just been hacked so that updates don't fail
                 .MapMemberFrom(v => v.FrameworkId, av => av.FrameworkCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
+                .MapMemberFrom(v => v.SectorId, av => av.SectorCodeName == null ? (int?)null : 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.ContractOwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
@@ -169,6 +171,7 @@
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
                 .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
+                .MapMemberFrom(av => av.SectorCodeNameComment, v => v.SectorIdComment)
                 .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.VacancyType, v => vacancyTypeMap.CodeToEnum[v.VacancyTypeCode])
@@ -183,6 +186,7 @@
                 // Need to map the following separately
                 .ForMember(av => av.Ukprn, opt => opt.Ignore())
                 .ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
+                .ForMember(av => av.SectorCodeName, opt => opt.Ignore()) // To FrameworkId
                 .ForMember(av => av.LocationAddresses, opt => opt.Ignore())
 
                 // TODO: Currently missing from Vacancy.Vacancy

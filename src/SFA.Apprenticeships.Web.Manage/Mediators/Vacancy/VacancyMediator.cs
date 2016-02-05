@@ -175,8 +175,10 @@
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.FrameworkCodeName = null;
+            viewModel.SectorCodeName = null;
             viewModel.Standards = _vacancyQaProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyQaProvider.GetSectors();
 
             return GetMediatorResponse(VacancyMediatorCodes.SelectFrameworkAsTrainingType.Ok, viewModel);
         }
@@ -185,9 +187,11 @@
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
+            viewModel.SectorCodeName = null;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.Standards = _vacancyQaProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyQaProvider.GetSectors();
 
             return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
         }
@@ -284,10 +288,12 @@
 
             if (!validationResult.IsValid)
             {
-                var sectors = _vacancyQaProvider.GetSectorsAndFrameworks();
+                var sectorsAndFrameworks = _vacancyQaProvider.GetSectorsAndFrameworks();
                 var standards = _vacancyQaProvider.GetStandards();
-                viewModel.SectorsAndFrameworks = sectors;
+                var sectors = _vacancyQaProvider.GetSectors();
+                viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
                 viewModel.Standards = standards;
+                viewModel.Sectors = sectors;
 
                 return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
             }

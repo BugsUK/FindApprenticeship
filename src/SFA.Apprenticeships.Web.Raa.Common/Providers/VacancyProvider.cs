@@ -19,6 +19,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
     using ViewModels.Provider;
@@ -229,20 +230,30 @@
             return vacancy;
         }
         
-        private string GetFrameworkCodeName(TrainingDetailsViewModel newVacancyViewModel)
+        private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            return newVacancyViewModel.TrainingType == TrainingType.Standards ? null : newVacancyViewModel.FrameworkCodeName;
+            return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : trainingDetailsViewModel.FrameworkCodeName;
+        }
+        
+        private int? GetStandardId(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            return trainingDetailsViewModel.TrainingType == TrainingType.Frameworks ? null : trainingDetailsViewModel.StandardId;
         }
 
-        private ApprenticeshipLevel GetApprenticeshipLevel(TrainingDetailsViewModel newVacancyViewModel)
+        private ApprenticeshipLevel GetApprenticeshipLevel(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            var apprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
-            if (newVacancyViewModel.TrainingType == TrainingType.Standards)
+            var apprenticeshipLevel = trainingDetailsViewModel.ApprenticeshipLevel;
+            if (trainingDetailsViewModel.TrainingType == TrainingType.Standards)
             {
-                var standard = GetStandard(newVacancyViewModel.StandardId);
+                var standard = GetStandard(trainingDetailsViewModel.StandardId);
                 apprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
             }
             return apprenticeshipLevel;
+        }
+
+        private string GetSectorCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            return trainingDetailsViewModel.VacancyType == VacancyType.Traineeship ? trainingDetailsViewModel.SectorCodeName : null;
         }
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -277,10 +288,16 @@
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
-            var sectors = GetSectorsAndFrameworks();
+            if (viewModel.VacancyType == VacancyType.Traineeship)
+            {
+                viewModel.TrainingType = TrainingType.Sectors;
+            }
+            var sectorsAndFrameworks = GetSectorsAndFrameworks();
             var standards = GetStandards();
-            viewModel.SectorsAndFrameworks = sectors;
+            var sectors = GetSectors();
+            viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
+            viewModel.Sectors = sectors;
             return viewModel;
         }
 
@@ -290,8 +307,9 @@
 
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
-            vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardId = GetStandardId(viewModel);
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.SectorCodeName = GetSectorCodeName(viewModel);
             vacancy.TrainingProvided = viewModel.TrainingProvided;
             vacancy.ContactName = viewModel.ContactName;
             vacancy.ContactNumber = viewModel.ContactNumber;
@@ -508,6 +526,29 @@
             return (from sector in sectors
                 from standard in sector.Standards
                 select standard.Convert(sector)).ToList();
+        }
+
+        public List<SelectListItem> GetSectors()
+        {
+            var categories = _referenceDataService.GetCategories();
+
+            var sectorItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = string.Empty, Text = "Choose from the list of sectors"}
+            };
+
+            var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
+
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
+            {
+                sectorItems.Add(new SelectListItem
+                {
+                    Value = sector.CodeName,
+                    Text = sector.FullName
+                });
+            }
+
+            return sectorItems;
         }
 
         public StandardViewModel GetStandard(int? standardId)
@@ -928,10 +969,12 @@
             //update properties
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
-            vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardId = GetStandardId(viewModel);
             vacancy.StandardIdComment = viewModel.StandardIdComment;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
+            vacancy.SectorCodeName = GetSectorCodeName(viewModel);
+            vacancy.SectorCodeNameComment = viewModel.SectorCodeNameComment;
             vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
             vacancy.TrainingProvided = viewModel.TrainingProvided;
             vacancy.TrainingProvidedComment = viewModel.TrainingProvidedComment;
@@ -943,10 +986,12 @@
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
-            var sectors = GetSectorsAndFrameworks();
+            var sectorsAndFrameworks = GetSectorsAndFrameworks();
             var standards = GetStandards();
-            viewModel.SectorsAndFrameworks = sectors;
+            var sectors = GetSectors();
+            viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
+            viewModel.Sectors = sectors;
             return viewModel;
         }
 

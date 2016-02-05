@@ -314,6 +314,16 @@
             public const string LabelText = "Apprenticeship standard comment";
         }
 
+        public static class SectorCodeName
+        {
+            public const string RequiredErrorText = "Select the traineeship sector";
+        }
+
+        public static class SectorCodeNameComment
+        {
+            public const string LabelText = "Traineeship sector comment";
+        }
+
         public static class TrainingProvidedMessages
         {
             public const string LabelText = "Training to be provided";
