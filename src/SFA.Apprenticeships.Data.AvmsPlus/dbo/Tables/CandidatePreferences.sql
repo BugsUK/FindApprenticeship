@@ -5,7 +5,7 @@
     [FirstOccupationId]     INT NULL,
     [SecondFrameworkId]     INT NULL,
     [SecondOccupationId]    INT NULL,
-    CONSTRAINT [PK_CandidatePreference] PRIMARY KEY CLUSTERED ([CandidatePreferenceId] ASC) ON [PRIMARY],
+    CONSTRAINT [PK_CandidatePreference] PRIMARY KEY CLUSTERED ([CandidatePreferenceId] ASC),
     CONSTRAINT [FK_CandidatePreferences_ApprenticeshipFrameworkId] FOREIGN KEY ([FirstFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
     CONSTRAINT [FK_CandidatePreferences_ApprenticeshipOccupationId] FOREIGN KEY ([FirstOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
     CONSTRAINT [FK_CandidatePreferences_CandidateId] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),

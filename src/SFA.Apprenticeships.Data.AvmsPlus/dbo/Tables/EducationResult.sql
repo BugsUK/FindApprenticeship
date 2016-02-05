@@ -7,7 +7,7 @@
     [Grade]             NVARCHAR (20)  NULL,
     [DateAchieved]      DATETIME       NULL,
     [ApplicationId]     INT            NULL,
-    CONSTRAINT [PK_EducationResult] PRIMARY KEY CLUSTERED ([EducationResultId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_EducationResult] PRIMARY KEY CLUSTERED ([EducationResultId] ASC),
     CONSTRAINT [FK_EducationResult_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
     CONSTRAINT [FK_EducationResult_EducationResultLevel1] FOREIGN KEY ([Level]) REFERENCES [dbo].[EducationResultLevel] ([EducationResultLevelId])
 );
@@ -15,6 +15,5 @@
 
 GO
 CREATE NONCLUSTERED INDEX [idx_EducationResult_CandidateId_ApplicationId]
-    ON [dbo].[EducationResult]([CandidateId] ASC, [ApplicationId] ASC) WITH (FILLFACTOR = 90)
-    ON [Index];
+    ON [dbo].[EducationResult]([CandidateId] ASC, [ApplicationId] ASC);
 

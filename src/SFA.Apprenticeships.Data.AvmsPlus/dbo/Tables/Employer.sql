@@ -27,18 +27,17 @@
     [EmployerStatusTypeId]      INT              NULL,
     [DisableAllowed]            BIT              CONSTRAINT [DFT_Employer_DisableAllowed] DEFAULT ((0)) NOT NULL,
     [TrackingAllowed]           BIT              CONSTRAINT [DFT_Employer_TrackingAllowed] DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [PK_Employer] PRIMARY KEY CLUSTERED ([EmployerId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Employer] PRIMARY KEY CLUSTERED ([EmployerId] ASC),
     CONSTRAINT [FK_Employer_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_Employer_EmployerContact] FOREIGN KEY ([PrimaryContact]) REFERENCES [dbo].[EmployerContact] ([EmployerContactId]),
     CONSTRAINT [FK_Employer_EmployerTrainingProviderStatus] FOREIGN KEY ([EmployerStatusTypeId]) REFERENCES [dbo].[EmployerTrainingProviderStatus] ([EmployerTrainingProviderStatusId]),
     CONSTRAINT [FK_Employer_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
-    CONSTRAINT [uq_idx_employer] UNIQUE NONCLUSTERED ([EdsUrn] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_employer] UNIQUE NONCLUSTERED ([EdsUrn] ASC)
 );
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Employer_EmployerStatusTypeId]
     ON [dbo].[Employer]([EmployerStatusTypeId] ASC)
-    INCLUDE([EmployerId], [LocalAuthorityId])
-    ON [Index];
+    INCLUDE([EmployerId], [LocalAuthorityId]);
 

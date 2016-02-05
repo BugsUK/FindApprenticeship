@@ -28,10 +28,10 @@
     [TrainingProviderStatusTypeId]       INT              NULL,
     [IsRecruitmentAgency]                BIT              CONSTRAINT [SiteProvider_IsRecruitmentAgency] DEFAULT ((0)) NOT NULL,
     [ContactDetailsAsARecruitmentAgency] NVARCHAR (1000)  NULL,
-    CONSTRAINT [PK_Training_Provider] PRIMARY KEY CLUSTERED ([ProviderSiteID] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Training_Provider] PRIMARY KEY CLUSTERED ([ProviderSiteID] ASC),
     CONSTRAINT [FK_TrainingProvider_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
     CONSTRAINT [FK_TrainingProvider_EmployerTrainingProviderStatus] FOREIGN KEY ([TrainingProviderStatusTypeId]) REFERENCES [dbo].[EmployerTrainingProviderStatus] ([EmployerTrainingProviderStatusId]),
     CONSTRAINT [FK_TrainingProvider_LocalAuthority] FOREIGN KEY ([LocalAuthorityId]) REFERENCES [dbo].[LocalAuthority] ([LocalAuthorityId]),
-    CONSTRAINT [uq_idx_trainingProvider] UNIQUE NONCLUSTERED ([EDSURN] ASC) WITH (FILLFACTOR = 90) ON [Index]
-) TEXTIMAGE_ON [PRIMARY];
+    CONSTRAINT [uq_idx_trainingProvider] UNIQUE NONCLUSTERED ([EDSURN] ASC)
+);
 

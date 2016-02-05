@@ -10,12 +10,11 @@
     [County]              NVARCHAR (100)  NULL,
     [Postcode]            NVARCHAR (10)   NULL,
     [SchoolNameForSearch] NVARCHAR (120)  NULL,
-    CONSTRAINT [PK_School] PRIMARY KEY CLUSTERED ([SchoolId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    CONSTRAINT [PK_School] PRIMARY KEY CLUSTERED ([SchoolId] ASC)
 );
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_School_URN]
-    ON [dbo].[School]([URN] ASC)
-    ON [Index];
+    ON [dbo].[School]([URN] ASC);
 

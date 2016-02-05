@@ -3,7 +3,7 @@
     [CodeName]          NVARCHAR (3)   NOT NULL,
     [ShortName]         NVARCHAR (100) NOT NULL,
     [FullName]          NVARCHAR (200) NOT NULL,
-    CONSTRAINT [PK_PersonTitleType] PRIMARY KEY CLUSTERED ([PersonTitleTypeId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [uq_idx_PersonTitleType] UNIQUE NONCLUSTERED ([FullName] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [PK_PersonTitleType] PRIMARY KEY CLUSTERED ([PersonTitleTypeId] ASC),
+    CONSTRAINT [uq_idx_PersonTitleType] UNIQUE NONCLUSTERED ([FullName] ASC)
 );
 

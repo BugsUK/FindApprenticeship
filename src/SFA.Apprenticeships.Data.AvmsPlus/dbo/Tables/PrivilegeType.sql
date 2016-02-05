@@ -3,6 +3,6 @@
     [CodeName]        NVARCHAR (3)   NOT NULL,
     [ShortName]       NVARCHAR (100) NOT NULL,
     [FullName]        NVARCHAR (200) NOT NULL,
-    PRIMARY KEY CLUSTERED ([PrivilegeTypeId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY]
+    PRIMARY KEY CLUSTERED ([PrivilegeTypeId] ASC)
 );
 

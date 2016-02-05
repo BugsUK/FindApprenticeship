@@ -7,7 +7,7 @@
     [LowerLimit]         INT            NULL,
     [UpperLimit]         INT            NULL,
     [Description]        NVARCHAR (600) NULL,
-    CONSTRAINT [PK_SystemParameters] PRIMARY KEY CLUSTERED ([SystemParametersId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [uq_idx_SystemParameters] UNIQUE NONCLUSTERED ([ParameterName] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [PK_SystemParameters] PRIMARY KEY CLUSTERED ([SystemParametersId] ASC),
+    CONSTRAINT [uq_idx_SystemParameters] UNIQUE NONCLUSTERED ([ParameterName] ASC)
 );
 

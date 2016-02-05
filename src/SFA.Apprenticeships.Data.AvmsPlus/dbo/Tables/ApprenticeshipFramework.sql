@@ -7,10 +7,10 @@
     [ApprenticeshipFrameworkStatusTypeId] INT            NOT NULL,
     [ClosedDate]                          DATETIME       NULL,
     [PreviousApprenticeshipOccupationId]  INT            NULL,
-    CONSTRAINT [PK_Apprenticeship_Framework] PRIMARY KEY CLUSTERED ([ApprenticeshipFrameworkId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Apprenticeship_Framework] PRIMARY KEY CLUSTERED ([ApprenticeshipFrameworkId] ASC),
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipFrameworkStatusType] FOREIGN KEY ([ApprenticeshipFrameworkStatusTypeId]) REFERENCES [dbo].[ApprenticeshipFrameworkStatusType] ([ApprenticeshipFrameworkStatusTypeId]),
     CONSTRAINT [FK_ApprenticeshipFramework_ApprenticeshipOccupation] FOREIGN KEY ([ApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
     CONSTRAINT [FK_ApprenticeshipFramework_PreviousApprenticeshipOccupation] FOREIGN KEY ([PreviousApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId]),
-    CONSTRAINT [uq_idx_ApprenticeshipFramework] UNIQUE NONCLUSTERED ([FullName] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [uq_idx_ApprenticeshipFramework] UNIQUE NONCLUSTERED ([FullName] ASC)
 );
 

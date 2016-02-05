@@ -6,7 +6,7 @@
     [ApplicationHistoryEventTypeId]    INT             NOT NULL,
     [ApplicationHistoryEventSubTypeId] INT             NULL,
     [Comment]                          NVARCHAR (4000) NULL,
-    CONSTRAINT [PK_ApplicationHistory] PRIMARY KEY CLUSTERED ([ApplicationHistoryId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_ApplicationHistory] PRIMARY KEY CLUSTERED ([ApplicationHistoryId] ASC),
     CONSTRAINT [FK_ApplicationHistory_Application] FOREIGN KEY ([ApplicationId]) REFERENCES [dbo].[Application] ([ApplicationId]),
     CONSTRAINT [FK_ApplicationHistory_ApplicationHistoryEvent] FOREIGN KEY ([ApplicationHistoryEventTypeId]) REFERENCES [dbo].[ApplicationHistoryEvent] ([ApplicationHistoryEventId])
 );
@@ -15,13 +15,11 @@
 GO
 CREATE NONCLUSTERED INDEX [idx_ApplicationHistory_ApplicationHistoryEventDate]
     ON [dbo].[ApplicationHistory]([ApplicationHistoryEventDate] ASC)
-    INCLUDE([ApplicationId], [ApplicationHistoryEventSubTypeId])
-    ON [Index];
+    INCLUDE([ApplicationId], [ApplicationHistoryEventSubTypeId]);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_ApplicationHistory_ApplicationId_ApplicationHistoryEventSubTypeId]
     ON [dbo].[ApplicationHistory]([ApplicationId] ASC, [ApplicationHistoryEventSubTypeId] ASC)
-    INCLUDE([ApplicationHistoryEventTypeId], [ApplicationHistoryId], [ApplicationHistoryEventDate]) WITH (FILLFACTOR = 90)
-    ON [Index];
+    INCLUDE([ApplicationHistoryEventTypeId], [ApplicationHistoryId], [ApplicationHistoryEventDate]);
 

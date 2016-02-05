@@ -21,6 +21,6 @@
     [TotalPositions]           INT             NULL,
     [SearchDate]               DATETIME        NOT NULL,
     [ApprenticeshipTypeId]     INT             NULL,
-    CONSTRAINT [PK_VacancySearchAudit] PRIMARY KEY CLUSTERED ([VacancySearchAuditId] ASC) ON [PRIMARY]
+    CONSTRAINT [PK_VacancySearchAudit] PRIMARY KEY CLUSTERED ([VacancySearchAuditId] ASC)
 );
 

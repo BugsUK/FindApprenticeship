@@ -3,7 +3,7 @@
     [Type]          NVARCHAR (250) NOT NULL,
     [Id]            INT            NOT NULL,
     [StandardText]  NVARCHAR (250) NOT NULL,
-    CONSTRAINT [PK_BoilerplateText] PRIMARY KEY CLUSTERED ([DisplayTextId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
-    CONSTRAINT [uq_idx_DisplayText] UNIQUE NONCLUSTERED ([Type] ASC) WITH (FILLFACTOR = 90) ON [Index]
+    CONSTRAINT [PK_BoilerplateText] PRIMARY KEY CLUSTERED ([DisplayTextId] ASC),
+    CONSTRAINT [uq_idx_DisplayText] UNIQUE NONCLUSTERED ([Type] ASC)
 );
 

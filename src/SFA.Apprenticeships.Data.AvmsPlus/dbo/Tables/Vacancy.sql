@@ -51,7 +51,7 @@
     [SmallEmployerWageIncentive]       BIT              CONSTRAINT [DF_Vacancy_SmallEmployerWageIncentive] DEFAULT ((0)) NOT NULL,
     [OriginalContractOwnerId]          INT              NULL,
     [VacancyManagerAnonymous]          BIT              CONSTRAINT [DFT_VacancyManagerAnonymous] DEFAULT ((0)) NOT NULL,
-    CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC) WITH (FILLFACTOR = 90) ON [PRIMARY],
+    CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
     CONSTRAINT [FK_Vacancy_ApprenticeshipFramework] FOREIGN KEY ([ApprenticeshipFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
     CONSTRAINT [FK_Vacancy_ApprenticeshipType] FOREIGN KEY ([ApprenticeshipType]) REFERENCES [dbo].[ApprenticeshipType] ([ApprenticeshipTypeId]),
     CONSTRAINT [FK_Vacancy_County] FOREIGN KEY ([CountyId]) REFERENCES [dbo].[County] ([CountyId]),
@@ -62,40 +62,35 @@
     CONSTRAINT [FK_Vacancy_ProviderSite_As_VacancyManager] FOREIGN KEY ([VacancyManagerID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
     CONSTRAINT [FK_Vacancy_VacancyOwnerRelationship] FOREIGN KEY ([VacancyOwnerRelationshipId]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]),
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
-    CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC) WITH (FILLFACTOR = 90) ON [Index]
-) TEXTIMAGE_ON [PRIMARY];
+    CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
+);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_ApprenticeshipFrameworkId]
     ON [dbo].[Vacancy]([ApprenticeshipFrameworkId] ASC)
-    INCLUDE([VacancyId], [VacancyStatusId])
-    ON [Index];
+    INCLUDE([VacancyId], [VacancyStatusId]);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_ContractOwnerID]
-    ON [dbo].[Vacancy]([ContractOwnerID] ASC)
-    ON [Index];
+    ON [dbo].[Vacancy]([ContractOwnerID] ASC);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_DeliveryOrganisationID]
-    ON [dbo].[Vacancy]([DeliveryOrganisationID] ASC)
-    ON [Index];
+    ON [dbo].[Vacancy]([DeliveryOrganisationID] ASC);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyManagerID]
-    ON [dbo].[Vacancy]([VacancyManagerID] ASC)
-    ON [Index];
+    ON [dbo].[Vacancy]([VacancyManagerID] ASC);
 
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyOwnerRelationshipId]
     ON [dbo].[Vacancy]([VacancyOwnerRelationshipId] ASC)
-    INCLUDE([ApprenticeshipFrameworkId], [Title], [VacancyManagerID], [ApplicationClosingDate], [VacancyStatusId], [NumberofPositions], [ApplyOutsideNAVMS]) WITH (FILLFACTOR = 90)
-    ON [Index];
+    INCLUDE([ApprenticeshipFrameworkId], [Title], [VacancyManagerID], [ApplicationClosingDate], [VacancyStatusId], [NumberofPositions], [ApplyOutsideNAVMS]);
 
 
 GO
