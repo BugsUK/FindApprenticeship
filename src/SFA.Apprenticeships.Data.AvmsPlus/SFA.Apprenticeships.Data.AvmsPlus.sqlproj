@@ -66,6 +66,10 @@
     <Folder Include="Security\" />
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Provider" />
+    <Folder Include="Provider\Tables" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\TestData" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -792,5 +796,7 @@
     <Build Include="dbo\Stored Procedures\uspEShotJobDeleteOldJobs.sql" />
     <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectAlertSummary.sql" />
     <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectSectors.sql" />
+    <Build Include="Provider\Tables\Provider.ProviderUser.sql" />
+    <None Include="Scripts\TestData\dbo.TestProvider.Upsert.sql" />
   </ItemGroup>
 </Project>

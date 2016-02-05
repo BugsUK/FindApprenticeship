@@ -123,6 +123,7 @@
   <ItemGroup>
     <Compile Include="Schemas\Provider\ProviderMappersTests.cs" />
     <Compile Include="Schemas\Provider\ProviderRepositoryTests.cs" />
+    <Compile Include="Schemas\Provider\ProviderUserMappersTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\Vacancy\TestBase.cs" />

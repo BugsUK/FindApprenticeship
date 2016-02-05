@@ -2,6 +2,7 @@
 {
     using System;
 
+    // TODO: SQL: AG: should be BaseEntity<int>.
     public class ProviderUser : BaseEntity<Guid>
     {
         public ProviderUser()
@@ -9,7 +10,14 @@
             Status = ProviderUserStatuses.Registered;
         }
 
+        // TODO: SQL: AG: following field is temporary ahead of migrating to BaseEntity<int>.
+        public int ProviderUserId { get; set; }
+
+        public Guid ProviderUserGuid { get; set; }
+
         public string Username { get; set; }
+
+        public int ProviderId { get; set; }
 
         public string Ukprn { get; set; }
 
