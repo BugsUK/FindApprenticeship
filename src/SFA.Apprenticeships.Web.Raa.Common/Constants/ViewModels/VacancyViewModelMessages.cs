@@ -48,6 +48,10 @@
             public const string TooLongErrorText = "The working week must not be more than 256 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The working week " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TraineeshipLabelText = "Weekly hours";
+            public const string TraineeshipRequiredErrorText = "Enter the weekly hours";
+            public const string TraineeshipTooLongErrorText = "The weekly hours must not be more than 256 characters";
+            public const string TraineeshipWhiteListErrorText = "The weekly hours " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class WorkingWeekComment
@@ -90,6 +94,7 @@
             public const string RequiredErrorText = "Enter the apprenticeship duration";
             public const string RangeErrorText = "The apprenticeship duration must be a whole number";
             public const string DurationCantBeLessThan12Months = "The duration must be at least 12 months (52 weeks)";
+            public const string DurationMustBeBetweenSixWeeksAndSixMonths = "The duration must be between six weeks and six months";
             public const string DurationWarning16Hours =
                 "The minimum apprenticeship duration is 23 months based on the hours per week selected";
             public const string DurationWarning18Hours =

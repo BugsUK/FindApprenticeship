@@ -14,6 +14,7 @@
     {
         // TODO: we are using these constants in the decimal extension methods class. Maybe we should move it to a common place?
         private const int AYearInWeeks = 52;
+        private const int SixMonthsInWeeks = 26;
         private const int AYearInMonths = 12;
 
         private static readonly List<MinimumDurationForHoursPerWeek> HoursAndMinDurationLookup = new List
@@ -55,6 +56,19 @@
                     return viewModel.Duration >= AYearInMonths;
                 case DurationType.Years:
                     return viewModel.Duration >= 1;
+                default:
+                    return false;
+            }
+        }
+
+        public static bool DurationBetweenSixWeeksAndSixMonths(this VacancySummaryViewModel viewModel)
+        {
+            switch (viewModel.DurationType)
+            {
+                case DurationType.Weeks:
+                    return viewModel.Duration >= 6 && viewModel.Duration <= SixMonthsInWeeks;
+                case DurationType.Months:
+                    return viewModel.Duration >= 2 && viewModel.Duration <= 6;
                 default:
                     return false;
             }

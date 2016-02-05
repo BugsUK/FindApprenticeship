@@ -39,12 +39,14 @@
             viewModel.NewVacancyViewModel.OfflineVacancy = false;
             viewModel.NewVacancyViewModel.OfflineApplicationUrl = null;
             viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;
+            viewModel.TrainingDetailsViewModel.VacancyType = VacancyType.Apprenticeship;
             viewModel.TrainingDetailsViewModel.TrainingType = TrainingType.Frameworks;
             viewModel.TrainingDetailsViewModel.ApprenticeshipLevel = ApprenticeshipLevel.Higher;
             viewModel.TrainingDetailsViewModel.ContactName = null;
             viewModel.TrainingDetailsViewModel.ContactNumber = null;
             viewModel.TrainingDetailsViewModel.ContactEmail = null;
             viewModel.VacancySummaryViewModel.Status = status;
+            viewModel.VacancySummaryViewModel.VacancyType = VacancyType.Apprenticeship;
             viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
             viewModel.VacancySummaryViewModel.Duration = 12;
             viewModel.VacancySummaryViewModel.DurationType = DurationType.Months;

@@ -95,7 +95,7 @@
         [TestCase("-1", false)]
         [TestCase("0", false)]
         [TestCase("1", false)]
-        public void HoursPerWeekRequired(string hoursPerWeekString, bool expectValid)
+        public void HoursPerWeekRequiredIfApprenticeship(string hoursPerWeekString, bool expectValid)
         {
             decimal? hoursPerWeek = null;
             decimal parsedHoursPerWeek;
@@ -106,6 +106,56 @@
             var viewModel = new VacancySummaryViewModel
             {
                 HoursPerWeek = hoursPerWeek
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", true)]
+        [TestCase("15", false)]
+        [TestCase("16", true)]
+        [TestCase("30", true)]
+        [TestCase("37.5", true)]
+        [TestCase("40", true)]
+        [TestCase("41", true)]
+        [TestCase("-1", false)]
+        [TestCase("0", false)]
+        [TestCase("1", false)]
+        public void HoursPerWeekNotRequiredIfTraineeship(string hoursPerWeekString, bool expectValid)
+        {
+            decimal? hoursPerWeek = null;
+            decimal parsedHoursPerWeek;
+            if (decimal.TryParse(hoursPerWeekString, out parsedHoursPerWeek))
+            {
+                hoursPerWeek = parsedHoursPerWeek;
+            }
+            var viewModel = new VacancySummaryViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
@@ -169,6 +219,43 @@
             }
         }
 
+        [TestCase(0, true)]
+        [TestCase(WageType.Custom, true)]
+        [TestCase(WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase(WageType.NationalMinimumWage, true)]
+        public void WageTypeNotRequiredIfTraineeship(WageType wageType, bool expectValid)
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                WageType = wageType,
+                VacancyType = VacancyType.Traineeship
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.WageType, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.WageType, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.WageType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
         [TestCase(null, WageType.Custom, false)]
         [TestCase(null, WageType.ApprenticeshipMinimumWage, true)]
         [TestCase(null, WageType.NationalMinimumWage, true)]
@@ -199,6 +286,64 @@
                 Wage = wage,
                 WageType = wageType,
                 WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(null, WageType.Custom, true)]
+        [TestCase(null, WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase(null, WageType.NationalMinimumWage, true)]
+        [TestCase("", WageType.Custom, true)]
+        [TestCase("", WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase("", WageType.NationalMinimumWage, true)]
+        [TestCase(" ", WageType.Custom, true)]
+        [TestCase(" ", WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase(" ", WageType.NationalMinimumWage, true)]
+        [TestCase("Seven pounds an hour", WageType.Custom, true)]
+        [TestCase("Seven pounds an hour", WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase("Seven pounds an hour", WageType.NationalMinimumWage, true)]
+        [TestCase("<script>", WageType.Custom, true)]
+        [TestCase("500", WageType.Custom, true)]
+        [TestCase("500", WageType.ApprenticeshipMinimumWage, true)]
+        [TestCase("500", WageType.NationalMinimumWage, true)]
+        public void WageNotRequiredIfTraineeship(string wageString, WageType wageType, bool expectValid)
+        {
+            decimal? wage = null;
+            decimal parsedWage;
+            if (decimal.TryParse(wageString, out parsedWage))
+            {
+                wage = parsedWage;
+            }
+            var viewModel = new VacancySummaryViewModel
+            {
+                HoursPerWeek = 37.5m,
+                Wage = wage,
+                WageType = wageType,
+                WageUnit = wageType == WageType.Custom ? WageUnit.Weekly : WageUnit.NotApplicable,
+                VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 
