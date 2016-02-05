@@ -1,13 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Validators.VacancyPosting
 {
-    using Common.UnitTests.Validators;
-    using Common.Validators;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Raa.Common.UnitTests.Builders;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.ViewModels.Vacancy;
+    using Builders;
+    using Common.Validators.Vacancy;
+    using Domain.Entities.Vacancies;
+    using ViewModels.Vacancy;
+    using Web.Common.UnitTests.Validators;
+    using Web.Common.Validators;
 
     [TestFixture]
     public class NewVacancyViewModelServerValidatorTests
@@ -20,6 +21,41 @@
         {
             _validator = new NewVacancyViewModelServerValidator();
             _aggregateValidator = new VacancyViewModelValidator();
+        }
+
+        [TestCase(VacancyType.Unknown, false)]
+        [TestCase(VacancyType.Apprenticeship, true)]
+        [TestCase(VacancyType.Traineeship, true)]
+        public void VacancyTypeRequired(VacancyType vacancyType, bool expectValid)
+        {
+            var viewModel = new NewVacancyViewModel
+            {
+                VacancyType = vacancyType
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyType, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.VacancyType, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.NewVacancyViewModel, vm => vm.NewVacancyViewModel.VacancyType, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
         }
 
         [TestCase("http://www.google.com", true)]

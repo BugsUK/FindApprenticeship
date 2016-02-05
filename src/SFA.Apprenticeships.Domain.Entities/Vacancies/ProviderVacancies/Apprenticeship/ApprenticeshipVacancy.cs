@@ -128,5 +128,6 @@
         public string ContactNumber { get; set; }
         public string ContactEmail { get; set; }
         public string ContactDetailsComment { get; set; }
+        public VacancyType VacancyType { get; set; }
     }
 }

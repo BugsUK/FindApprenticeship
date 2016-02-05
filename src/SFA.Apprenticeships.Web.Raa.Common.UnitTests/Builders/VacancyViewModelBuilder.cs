@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Builders
 {
     using System;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Ploeh.AutoFixture;
@@ -34,6 +35,7 @@
         public VacancyViewModel BuildValid(ProviderVacancyStatuses status)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
+            viewModel.NewVacancyViewModel.VacancyType = VacancyType.Apprenticeship;
             viewModel.NewVacancyViewModel.OfflineVacancy = false;
             viewModel.NewVacancyViewModel.OfflineApplicationUrl = null;
             viewModel.NewVacancyViewModel.OfflineApplicationInstructions = null;

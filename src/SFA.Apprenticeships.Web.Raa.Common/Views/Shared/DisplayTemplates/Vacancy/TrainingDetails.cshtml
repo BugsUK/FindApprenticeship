@@ -21,6 +21,7 @@
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.VacancyType)
     @Html.HiddenFor(m => m.ComeFromPreview)
 
     var isAnyTrainingTypeSelected = Model.TrainingType != TrainingType.Unknown;

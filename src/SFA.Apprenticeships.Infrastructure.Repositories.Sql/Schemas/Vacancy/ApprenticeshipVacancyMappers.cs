@@ -95,6 +95,13 @@
                 { "UNK", ProviderVacancyStatuses.Unknown} // TODO: review
             };
 
+            var vacancyTypeMap = new CodeEnumMap<VacancyType>
+            {
+                { "", VacancyType.Unknown },
+                { "A", VacancyType.Apprenticeship },
+                { "T", VacancyType.Traineeship }
+            };
+
             Mapper.CreateMap<string, ProviderVacancyStatuses>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
             Mapper.CreateMap<ProviderVacancyStatuses, string>().ConvertUsing(status => vacancyStatusMap.EnumToCode[status]);
             
@@ -117,6 +124,7 @@
                 .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // TODO: The reverse
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
+                .MapMemberFrom(v => v.VacancyTypeCode, av => vacancyTypeMap.EnumToCode[av.VacancyType]) // Apprenticeship / Traineeship
 
                 // TODO: Change ApprenticeshipVacancy object in due course
                 .MapMemberFrom(v => v.DirectApplicationInstructions, av => av.OfflineApplicationInstructions)
@@ -139,7 +147,6 @@
                 // TODO: Missing from ApprenticeshipVacancy
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
-                .MapMemberFrom(v => v.VacancyTypeCode, av => "A") // Apprenticeship / Traineeship
                 .IgnoreMember(v => v.VacancyLocationTypeCode)
 
                 // TODO: Remove from Vacancy.Vacancy?
@@ -164,6 +171,7 @@
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
                 .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
+                .MapMemberFrom(av => av.VacancyType, v => vacancyTypeMap.CodeToEnum[v.VacancyTypeCode])
 
                 // TODO: Change ApprenticeshipVacancy object in due course
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.DirectApplicationInstructions)

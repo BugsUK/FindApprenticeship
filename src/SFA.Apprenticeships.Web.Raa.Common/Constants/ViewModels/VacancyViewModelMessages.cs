@@ -35,6 +35,12 @@
             public const string LabelText = "Summary comment";
         }
 
+        public static class VacancyType
+        {
+            public const string LabelText = "Vacancy type";
+            public const string RequiredErrorText = "Select a vacancy type";
+        }
+
         public static class WorkingWeek
         {
             public const string LabelText = "Working week";

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
@@ -34,6 +35,7 @@
                 new Fixture().Build<ApprenticeshipVacancy>()
                     //                    .With(av => av.EntityId, Guid.Empty)
                     .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
+                    .With(av => av.VacancyType, VacancyType.Apprenticeship)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
                     .Create();

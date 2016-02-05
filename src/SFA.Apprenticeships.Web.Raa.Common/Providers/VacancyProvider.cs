@@ -222,7 +222,8 @@
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0
+                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
+                VacancyType = newVacancyViewModel.VacancyType
             });
 
             return vacancy;
@@ -256,9 +257,9 @@
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
+            vacancy.VacancyType = newVacancyViewModel.VacancyType;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
@@ -909,6 +910,7 @@
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
+            vacancy.VacancyType = viewModel.VacancyType;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
