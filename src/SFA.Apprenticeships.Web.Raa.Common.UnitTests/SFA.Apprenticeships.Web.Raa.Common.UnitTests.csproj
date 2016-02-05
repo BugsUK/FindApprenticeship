@@ -152,6 +152,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Builders\VacancyViewModelBuilder.cs" />
+    <Compile Include="Converters\ApprenticeshipVacancyConverterTests.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetailsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\TrainingDetailsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetailsTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />

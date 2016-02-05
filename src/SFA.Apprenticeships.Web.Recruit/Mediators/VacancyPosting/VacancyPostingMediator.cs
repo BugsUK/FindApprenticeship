@@ -565,7 +565,7 @@
             if (!validationResult.IsValid && !warningsAccepted)
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
-                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
                 viewModel.WarningsHash = validationResult.GetWarningsHash();
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);

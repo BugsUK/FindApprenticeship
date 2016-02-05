@@ -707,6 +707,7 @@
             vacancy.ApprenticeshipLevelComment = null;
             vacancy.FrameworkCodeNameComment = null;
             vacancy.StandardIdComment = null;
+            vacancy.SectorCodeNameComment = null;
             vacancy.WageComment = null;
             vacancy.ClosingDateComment = null;
             vacancy.DurationComment = null;

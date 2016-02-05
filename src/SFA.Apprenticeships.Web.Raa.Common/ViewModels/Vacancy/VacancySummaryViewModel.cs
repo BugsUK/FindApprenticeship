@@ -72,5 +72,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public bool ComeFromPreview { get; set; }
 
         public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
+
+        public VacancyType VacancyType { get; set; }
     }
 }

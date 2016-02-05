@@ -37,8 +37,11 @@
             {
                 @Html.HiddenFor(m => m.TrainingType)
                 @Html.HiddenFor(m => m.FrameworkCodeName)
+                @Html.HiddenFor(m => m.FrameworkCodeNameComment)
                 @Html.HiddenFor(m => m.StandardId)
+                @Html.HiddenFor(m => m.StandardIdComment)
                 @Html.HiddenFor(m => m.ApprenticeshipLevel)
+                @Html.HiddenFor(m => m.ApprenticeshipLevelComment)
 
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.SectorCodeName)))">
                     <a name="@Html.NameFor(m => m.SectorCodeName).ToString().ToLower()"></a>
