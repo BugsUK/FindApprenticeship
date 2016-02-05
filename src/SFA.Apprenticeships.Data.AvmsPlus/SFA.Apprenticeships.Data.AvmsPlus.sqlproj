@@ -24,7 +24,7 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultCollation>Latin1_General_CI_AS</DefaultCollation>
-    <DefaultFilegroup>Data</DefaultFilegroup>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -210,24 +210,6 @@
     <Build Include="Storage\NAVMS_FTI_CATALOG.sql" />
     <Build Include="Storage\NAVMS_FTI_SchoolSearchCATALOG.sql" />
     <Build Include="FullTextIndexes.sql" />
-    <Build Include="Storage\Audit.sql" />
-    <Build Include="Storage\Data.sql" />
-    <Build Include="Storage\ftfg_NAVMS_FTI_CATALOG.sql" />
-    <Build Include="Storage\Index.sql" />
-    <Build Include="Security\db_executor.sql" />
-    <Build Include="Security\sfasql2008_svc-appvacapppool.sql" />
-    <Build Include="Security\sfasql2008_svc-appvacapppool_1.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSLogReaderAge.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSLogReaderAge_1.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSReportsDistr.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSReportsDistr_1.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSReportsSnaps.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSReportsSnaps_1.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSSandboxDistr.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSSandboxDistr_1.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSSandboxSnaps.sql" />
-    <Build Include="Security\sfasql2008_svc-AVMSSandboxSnaps_1.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
     <Build Include="dbo\Functions\fnx_CalcDistance.sql" />
     <Build Include="dbo\Functions\fnx_GetCategory.sql" />
     <Build Include="dbo\Functions\fnx_GetOrganisationCode.sql" />
