@@ -198,7 +198,8 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = ProviderVacancyStatuses.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -245,7 +246,8 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = ProviderVacancyStatuses.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
             };
 
             var view = details.RenderAsHtml(_context, viewModel);

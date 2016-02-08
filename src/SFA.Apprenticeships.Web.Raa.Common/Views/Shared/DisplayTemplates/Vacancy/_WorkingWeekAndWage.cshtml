@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -14,54 +15,60 @@
         @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="preserve-formatting">@Model.VacancySummaryViewModel.WorkingWeek</p>
-    <p>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
-    @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+    @if (Model.VacancyType == VacancyType.Apprenticeship)
     {
-        <p>(the hours are based on the candidate being over 18)</p>
+        <p>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
+        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+        {
+            <p>(the hours are based on the candidate being over 18)</p>
+        }
     }
     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
 </div>
 
-<div class="@editableItemClass">
-    <h3 class="bold-small">
-        @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
-        {
-            <span>
-                @Model.VacancySummaryViewModel.WageUnitDisplayText
-                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-            </span>
-        }
-        else
-        {
-            <span>
-                Weekly wage
-                @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-            </span>
-        }
-    </h3>
-    <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WageType, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-</div>
-
-@if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+@if (Model.VacancyType == VacancyType.Apprenticeship)
 {
-    <details>
-        <summary>Wages explained</summary>
-        <div class="detail-content">
-            The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-            This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-            Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-        </div>
-    </details>
-}
+    <div class="@editableItemClass">
+        <h3 class="bold-small">
+            @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
+            {
+                <span>
+                    @Model.VacancySummaryViewModel.WageUnitDisplayText
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
+                </span>
+            }
+            else
+            {
+                <span>
+                    Weekly wage
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
+                </span>
+            }
+        </h3>
+        <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
+        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WageType, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
+    </div>
 
-@if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
-{
-    <details>
-        <summary>Wages explained</summary>
-        <div class="detail-content">
-            The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-            Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-        </div>
-    </details>
+    @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+    {
+        <details>
+            <summary>Wages explained</summary>
+            <div class="detail-content">
+                The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
+                This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
+                Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
+            </div>
+        </details>
+    }
+
+    @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
+    {
+        <details>
+            <summary>Wages explained</summary>
+            <div class="detail-content">
+                The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
+                Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
+            </div>
+        </details>
+    }
 }

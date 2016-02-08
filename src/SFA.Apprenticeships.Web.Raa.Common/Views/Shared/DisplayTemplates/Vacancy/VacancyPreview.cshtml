@@ -114,7 +114,14 @@
 
             <div class="@editableItemClass">
                 <h3 class="bold-small">
-                    Expected apprenticeship duration
+                    @if (Model.VacancyType == VacancyType.Traineeship)
+                    {
+                        <span>Expected duration</span>
+                    }
+                    else
+                    {
+                        <span>Expected apprenticeship duration</span>
+                    }
                     @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
                 </h3>
                 <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
@@ -132,19 +139,22 @@
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDateComment))
             </div>
 
-            <div class="@editableApprenticeshipLevelClass">
-                <h3 class="bold-small">
-                    Apprenticeship level
-                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment, Model.TrainingDetailsLink))
-                </h3>
-                <p id="vacancy-type" itemprop="employmentType">
-                    @Html.DisplayFor(m => m.TrainingDetailsViewModel.ApprenticeshipLevel) Level Apprenticeship
-                </p>
-                @if (editableApprenticeshipLevel)
-                {
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
-                }
-            </div>
+            @if (Model.VacancyType == VacancyType.Apprenticeship)
+            {
+                <div class="@editableApprenticeshipLevelClass">
+                    <h3 class="bold-small">
+                        Apprenticeship level
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="vacancy-type" itemprop="employmentType">
+                        @Html.DisplayFor(m => m.TrainingDetailsViewModel.ApprenticeshipLevel) Level Apprenticeship
+                    </p>
+                    @if (editableApprenticeshipLevel)
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
+                    }
+                </div>
+            }
 
             @if (Model.Status.CanShowVacancyReferencenumber())
             {
