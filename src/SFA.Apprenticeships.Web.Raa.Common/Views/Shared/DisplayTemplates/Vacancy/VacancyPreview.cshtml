@@ -9,9 +9,9 @@
 
 }
 
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
-@using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
@@ -24,8 +24,15 @@
 <section>
     <div class="grid-wrapper">
         <div class="grid grid-2-3">
-            <h1 class="heading-xlarge">
-                Vacancy preview
+            <h1 id="heading" class="heading-xlarge">
+                @if (Model.VacancyType == VacancyType.Traineeship)
+                {
+                    <span>Opportunity preview</span>
+                }
+                else
+                {
+                    <span>Vacancy preview</span>
+                }
             </h1>
         </div>
         <div class="grid grid-1-3" style="float: right">
@@ -51,7 +58,14 @@
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
-                        Brief overview of the role
+                        @if (Model.VacancyType == VacancyType.Traineeship)
+                        {
+                            <span>Summary</span>
+                        }
+                        else
+                        {
+                            <span>Brief overview of the role</span>
+                        }
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
                     </h3>
                     <div class="text" itemprop="description">
@@ -75,66 +89,29 @@
     </div>
 </section>
 <section class="section-border grid-wrapper" id="vacancy-info">
-    <h2 class="heading-large">Apprenticeship summary</h2>
+    <h2 class="heading-large">
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <span>Traineeship details</span>
+        }
+        else
+        {
+            <span>Apprenticeship summary</span>
+        }
+    </h2>
     <div class="grid grid-1-3">
         <div class="inner-block-padr">
-            <div class="@editableItemClass">
-                <h3 class="bold-small">
-                    Working week
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
-                </h3>
-                <p id="vacancy-working-week" itemprop="workHours" class="preserve-formatting">@Model.VacancySummaryViewModel.WorkingWeek</p>
-                <p>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
-                @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
-                {
-                    <p>(the hours are based on the candidate being over 18)</p>
-                }
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
-            </div>
 
-            <div class="@editableItemClass">
-                <h3 class="bold-small">
-                    @if (Model.VacancySummaryViewModel.WageType == WageType.Custom)
-                    {
-                        <span>
-                            @Model.VacancySummaryViewModel.WageUnitDisplayText
-                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-                        </span>
-                    }
-                    else
-                    {
-                        <span>
-                            Weekly wage
-                            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WageType, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-                        </span>
-                    }
-                </h3>
-                <p id="vacancy-wage">@Model.VacancySummaryViewModel.WageDisplayText</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WageType, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
-            </div>
-
-            @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+            @if (Model.VacancyType == VacancyType.Traineeship)
             {
-                <details>
-                    <summary>Wages explained</summary>
-                    <div class="detail-content">
-                        The current National Minimum Wage (NMW) for apprentices is £@Wages.ApprenticeMinimumWage per hour.<br />
-                        This rate applies to apprentices aged 16 to 18 and those aged 19 or over who are in their first year.<br />
-                        Apprentices must be paid at least the NMW for their age if they're aged 19 or over and have completed their first year.
-                    </div>
-                </details>
+                <div class="text">
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
+                </div>
             }
 
-            @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
-            {
-                <details>
-                    <summary>Wages explained</summary>
-                    <div class="detail-content">
-                        The current National Minimum Wage rates are £@Wages.Between18And20NationalMinimumWage for 18 to 20 year-olds and £@Wages.Over21NationalMinimumWage for anyone aged 21 and over.<br />
-                        Apprentices are paid for their normal working hours and training that’s part of their apprenticeship (usually one day per week).
-                    </div>
-                </details>
-            }
+            @Html.Partial("DisplayTemplates/Vacancy/_WorkingWeekAndWage", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+
             <div class="@editableItemClass">
                 <h3 class="bold-small">
                     Expected apprenticeship duration
@@ -199,13 +176,41 @@
     </div>
     <div class="grid grid-2-3">
         <div class="text @editableItemClass" itemprop="responsibilities">
-            <h3 class="bold-small">
-                Vacancy description
+            <h3 class="bold-small" id="long-description-header">
+                @if (Model.VacancyType == VacancyType.Traineeship)
+                {
+                    <span>Work placement</span>
+                }
+                else
+                {
+                    <span>Vacancy description</span>
+                }
                 @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink))
             </h3>
             <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
         </div>
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <div class="@editableItemClass">
+                <h3 class="heading-small">
+                    Training to be provided
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
+                </h3>
+                <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+            </div>
+            <div class="@editableItemClass">
+                <div class="text">
+                    <h3 class="heading-small">
+                        Future prospects
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
+                    </h3>
+                    <p id="vacancy-future-prospects" itemprop="incentives" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+                </div>
+            </div>
+        }
     </div>
 </section>
 <section class="section-border" id="course-info">
@@ -252,7 +257,7 @@
             </div>
         </div>
         <div class="grid grid-1-2">
-            @if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+            @if (Model.VacancyType == VacancyType.Apprenticeship && !string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
             {
                 <div class="@editableItemClass">
                     <div class="text">
@@ -521,67 +526,97 @@
     </section>
 }
 
-<section class="section-border grid-wrapper" id="provider-info">
-    <h2 class="heading-large">Training provider</h2>
-    <div class="grid grid-2-3">
-        <div class="inner-block-padr">
+@if (Model.VacancyType == VacancyType.Apprenticeship)
+{
+    <section class="section-border grid-wrapper" id="provider-info">
+        <h2 class="heading-large">Training provider</h2>
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <div class="text">
+                    <div class="@editableItemClass">
+                        <h3 class="heading-small">
+                            Training to be provided
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
+                        </h3>
+                        <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+                    </div>
+                    <div class="@editableItemClass">
+                        @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Frameworks)
+                        {
+                            <h3 class="heading-small">
+                                Apprenticeship framework
+                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.TrainingDetailsLink))
+                            </h3>
+                            <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
+                        }
+                        @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Standards)
+                        {
+                            <h3 class="heading-small">
+                                Apprenticeship standard
+                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.TrainingDetailsLink))
+                            </h3>
+                            <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-1-3">
             <div class="text">
-                <div class="@editableItemClass">
-                    <h3 class="heading-small">
-                        Training to be provided
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
-                    </h3>
-                    <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
-                </div>
-                <div class="@editableItemClass">
-                    @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Frameworks)
-                    {
-                        <h3 class="heading-small">
-                            Apprenticeship framework
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsViewModel.FrameworkCodeNameComment, Model.TrainingDetailsLink))
-                        </h3>
-                        <p id="vacancy-framework">@Html.Raw(Model.FrameworkName)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.FrameworkCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.FrameworkCodeNameComment))
-                    }
-                    @if (Model.TrainingDetailsViewModel.TrainingType == TrainingType.Standards)
-                    {
-                        <h3 class="heading-small">
-                            Apprenticeship standard
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsViewModel.StandardIdComment, Model.TrainingDetailsLink))
-                        </h3>
-                        <p id="vacancy-standard">@Html.Raw(Model.StandardName)</p>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.StandardId, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.StandardIdComment))
-                    }
-                </div>
+                <h3 class="bold-small">Training provider</h3>
+                <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
             </div>
-        </div>
-    </div>
-    <div class="grid grid-1-3">
-        <div class="text">
-            <h3 class="bold-small">Training provider</h3>
-            <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
-        </div>
 
-        @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
-        {
-            <div class="text @editableItemClass">
-                <h3 class="bold-small">
-                    Contact
-                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
-                </h3>
-                @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
-                {
-                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                }
-                else
-                {
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
-                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
-                }
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
+            @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
+            {
+                <div class="text @editableItemClass">
+                    <h3 class="bold-small">
+                        Contact
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
+                    </h3>
+                    @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
+                    {
+                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                    }
+                    else
+                    {
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
+                </div>
+            }
+        </div>
+    </section>
+}
+
+@if (Model.VacancyType == VacancyType.Traineeship)
+{
+    <section class="section-border grid-wrapper" id="about-traineeships">
+        <h2 class="heading-large">About traineeships</h2>
+        <div class="grid grid-2-3">
+            <div class="inner-block-padr">
+                <p>
+                    This Traineeship work experience is part of an education and training programme that is focussed on giving young people the skills and experience that employers are looking for. At its core is Work Preparation training, English and Maths for those who need it, and a high quality work experience placement.
+                </p>
+                <p>
+                    Traineeships help unlock your great potential and give you the work preparation training, Maths and English and work experience needed to get an Apprenticeship or other job.
+                </p>
+                <p>
+                    This Traineeship Opportunity is unwaged.
+                </p>
+                <p>
+                    Are you eligible?<br />
+                    1. Are you currently NOT in a job? Do you have little or no Work Experience?<br />
+                    2. Are you aged 16 to 24 and qualified below Level 3 ( A levels)<br />
+                    3. Are you motivated and think you could be ready for employment or an apprenticeship within 6 months?<br />
+                    Look no further than a Traineeship Position
+                </p>
             </div>
-        }
-    </div>
-</section>
+        </div>
+    </section>
+}

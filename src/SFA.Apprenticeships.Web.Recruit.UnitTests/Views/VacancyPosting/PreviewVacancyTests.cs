@@ -83,7 +83,7 @@
         [TestCase(WageType.ApprenticeshipMinimumWage, 37.5, "&#163;123.75")]
         public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
         {
-            var details = new VacancyPreview();
+            var details = new WorkingWeekAndWage();
 
             var viewModel = new VacancyViewModel
             {
@@ -128,7 +128,7 @@
         [TestCase(100, WageUnit.Annually, @"&#163;100")]
         public void ShouldShowCustomWageAmount(decimal wage, WageUnit wageUnit, string expectedDisplayText)
         {
-            var details = new VacancyPreview();
+            var details = new WorkingWeekAndWage();
 
             var viewModel = new VacancyViewModel()
             {

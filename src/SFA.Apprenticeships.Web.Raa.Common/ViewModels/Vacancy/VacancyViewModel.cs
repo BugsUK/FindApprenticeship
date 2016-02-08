@@ -8,6 +8,7 @@
     using Provider;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using Domain.Entities.Vacancies;
     using VacancyPosting;
 
     public class VacancyViewModel
@@ -87,5 +88,7 @@
         public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
 
         public bool IsEditable { get; set; }
+
+        public VacancyType VacancyType { get; set; }
     }
 }
