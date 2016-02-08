@@ -112,6 +112,7 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="Provider" />
+    <Folder Include="dbo\Schemas" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\TestData" />
     <Folder Include="Scripts\Data" />
@@ -843,6 +844,10 @@
     <Build Include="Schemas\Provider.sql" />
     <PostDeploy Include="PostDeployment.sql" />
     <None Include="Scripts\Data\dbo.County.Upsert.sql" />
+    <Build Include="dbo\Tables\Team.sql" />
+    <Build Include="dbo\Schemas\UserProfile.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\AgencyUser.sql" />
     <None Include="Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />

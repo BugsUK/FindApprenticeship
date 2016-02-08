@@ -3,10 +3,17 @@
     using System;
     using Entities.Users;
 
-    public interface IAgencyUserReadRepository : IReadRepository<AgencyUser, Guid>
+    public interface IAgencyUserReadRepository
     {
+        AgencyUser Get(int id);
+
         AgencyUser Get(string username);
     }
 
-    public interface IAgencyUserWriteRepository : IWriteRepository<AgencyUser, Guid> { }
+    public interface IAgencyUserWriteRepository
+    {
+        void Delete(int id);
+
+        AgencyUser Save(AgencyUser entity);
+    }
 }
