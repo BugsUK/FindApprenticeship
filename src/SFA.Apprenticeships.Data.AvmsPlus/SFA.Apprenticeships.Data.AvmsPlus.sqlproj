@@ -66,6 +66,12 @@
     <Folder Include="Security\" />
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Provider" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\TestData" />
+    <Folder Include="Scripts\Data" />
+    <Folder Include="Schemas" />
+    <Folder Include="Publish" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -788,5 +794,16 @@
     <Build Include="dbo\Stored Procedures\uspEShotJobDeleteOldJobs.sql" />
     <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectAlertSummary.sql" />
     <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectSectors.sql" />
+    <Build Include="Provider\Provider.ProviderUser.sql" />
+    <Build Include="Schemas\Provider.sql" />
+    <PostDeploy Include="PostDeployment.sql" />
+    <None Include="Scripts\Data\dbo.County.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\TestData\dbo.TestProvider.Upsert.sql" />
+    <None Include="Publish\localhost.sqlexpress.publish.xml" />
   </ItemGroup>
 </Project>
