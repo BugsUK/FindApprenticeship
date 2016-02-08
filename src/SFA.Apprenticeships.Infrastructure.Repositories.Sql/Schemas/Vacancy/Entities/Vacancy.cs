@@ -7,243 +7,244 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     [Table("Vacancy.Vacancy")]
     public class Vacancy
     {
-        
-        /*
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Vacancy()
-        {
-            Vacancy1 = new HashSet<Vacancy>();
-            VacancyLocations = new HashSet<VacancyLocation>();
-        }
-        */
+        public int VacancyId { get; set; }
 
-        public Guid VacancyId { get; set; }
+        public int VacancyOwnerRelationshipId { get; set; }
 
         public int? VacancyReferenceNumber { get; set; }
 
-        [Required]
-        [StringLength(1)]
-        public string VacancyTypeCode { get; set; }
+        public string ContactName { get; set; }
 
-        [Required]
-        [StringLength(3)]
-        public string VacancyStatusCode { get; set; }
+        public int VacancyStatusId { get; set; }
 
-        [Required]
-        [StringLength(1)]
-        public string VacancyLocationTypeCode { get; set; }
+        public string AddressLine1 { get; set; }
 
-        public Guid? ParentVacancyId { get; set; }
+        public string AddressLine2 { get; set; }
 
-        public int EmployerVacancyPartyId { get; set; }
+        public string AddressLine3 { get; set; }
 
-        public int OwnerVacancyPartyId { get; set; }
+        public string AddressLine4 { get; set; }
 
-        public int ManagerVacancyPartyId { get; set; }
+        public string AddressLine5 { get; set; }
 
-        public int DeliveryProviderVacancyPartyId { get; set; }
+        public string Town { get; set; }
 
-        public int ContractOwnerVacancyPartyId { get; set; }
+        public int CountyId { get; set; }
 
-        public int? OriginalContractOwnerVacancyPartyId { get; set; }
+        public string PostCode { get; set; }
+
+        public int? LocalAuthorityId { get; set; }
+
+        public int? GeocodeEasting { get; set; }
+
+        public int? GeocodeNorthing { get; set; }
+
+        public decimal? Longitude { get; set; }
+
+        public decimal? Latitude { get; set; }
+
+        public int? FrameworkId { get; set; }
+
+        //public string FrameworkIdComment { get; set; }
+
+        //public int? StandardId { get; set; }
+
+        //public string StandardIdComment { get; set; }
 
         [Required]
         public string Title { get; set; }
 
-        public string TitleComment { get; set; }
+        //public string TitleComment { get; set; }
 
+        public int ApprenticeshipType { get; set; } // equivalent to LevelCode (old-new schema)
+
+        //public string LevelCodeComment { get; set; }
+        
         public string ShortDescription { get; set; }
 
-        public string ShortDescriptionComment { get; set; }
+        // public string ShortDescriptionComment { get; set; }
 
-        public string LongDescription { get; set; }
+        public string Description { get; set; } // equivalent to LongDescription (old-new schema)
 
-        public string LongDescriptionComment { get; set; }
+        //public string LongDescriptionComment { get; set; }
 
-        [Required]
-        [StringLength(1)]
-        public string TrainingTypeCode { get; set; }
-
-        public int? FrameworkId { get; set; }
-
-        public string FrameworkIdComment { get; set; }
-
-        public int? StandardId { get; set; }
-
-        public string StandardIdComment { get; set; }
-
-        [Required]
-        [StringLength(1)]
-        public string LevelCode { get; set; }
-
-        public string LevelCodeComment { get; set; }
 
         [Column(TypeName = "money")]
-        public decimal? WageValue { get; set; }
+        public decimal? WeeklyWage { get; set; } // equivalent (more or less) to WageValue
 
-        [StringLength(3)]
-        public string WageTypeCode { get; set; }
+        public int WageType { get; set; } // equivalent to WageTypeCode
 
-        public string WageIntervalCode { get; set; }
+        public string WageText { get; set; }
 
-        public string AV_WageText { get; set; }
+        // public string WageIntervalCode { get; set; }
 
-        public string WageComment { get; set; }
+        // public string WageComment { get; set; }
 
-        [Column(TypeName = "datetime2")]
-        public DateTime? PossibleStartDate { get; set; }
+        public short? NumberOfPositions { get; set; } // was int
 
-        public string PossibleStartDateComment { get; set; }
+        // public string NumberOfPositionsComment { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? ClosingDate { get; set; }
+        public DateTime? ApplicationClosingDate { get; set; } // was ClosingDate
 
-        public string ClosingDateComment { get; set; }
+        // public string ClosingDateComment { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? AV_InterviewStartDate { get; set; }
+        public DateTime? InterviewsFromDate { get; set; } // was AV_InterviewStartDate
 
-        public int? DurationValue { get; set; } //Was short
+        [Column(TypeName = "datetime2")]
+        public DateTime? ExpectedStartDate { get; set; } // was PossibleStartDate
 
-        [StringLength(1)]
-        public string DurationTypeCode { get; set; }
+        // public string PossibleStartDateComment { get; set; }
 
-        public string DurationComment { get; set; }
+        //public int? DurationValue { get; set; } //Was short
 
-        public string WorkingWeekText { get; set; }
+        public string ExpectedDuration { get; set; }
 
-        public string WorkingWeekComment { get; set; }
+        //[StringLength(1)]
+        //public string DurationTypeCode { get; set; }
 
-        public decimal? HoursPerWeek { get; set; }
+        //public string DurationComment { get; set; }
 
-        public string AV_ContactName { get; set; }
+        public string WorkingWeek { get; set; } // was WorkingWeekText
+
+        //public string WorkingWeekComment { get; set; }
+
+        public int? NumberOfViews { get; set; }
+
+        public string EmployerAnonymousName { get; set; }
 
         public string EmployerDescription { get; set; }
 
-        public string EmployerDescriptionComment { get; set; }
+        //public string EmployerDescriptionComment { get; set; }
 
-        public string EmployerWebsiteUrl { get; set; }
+        public string EmployerWebsite { get; set; } // was EmployerWebsite
 
-        public string EmployerWebsiteUrlComment { get; set; }
+        public int? MaxNumberofApplications { get; set; }
 
-        public bool? IsDirectApplication { get; set; }
+        public bool? ApplyOutsideNAVMS { get; set; }        // Equivalent to IsDirectApplication
 
-        public string DirectApplicationUrl { get; set; }
+        public string EmployersApplicationInstructions { get; set; } // Equivalent to DirectApplicationInstructions
 
-        public string DirectApplicationUrlComment { get; set; }
+        // public string DirectApplicationInstructionsComment { get; set; }
 
-        public string DirectApplicationInstructions { get; set; }
+        public string EmployersRecruitmentWebsite { get; set; } // equivalent to DirectApplicationUrl
 
-        public string DirectApplicationInstructionsComment { get; set; }
+        // public string DirectApplicationUrlComment { get; set; }
 
-        public string AdditionalLocationInformation { get; set; }
+        // public string EmployerWebsiteUrlComment { get; set; }
 
-        public string AdditionalLocationInformationComment { get; set; }
+        public string BeingSupportedBy { get; set; }
 
-        public string DesiredSkills { get; set; }
+        public DateTime? LockedForSupportUntil { get; set; }
 
-        public string DesiredSkillsComment { get; set; }
+        public int? NoOfOfflineApplicants { get; set; }
 
-        public string FutureProspects { get; set; }
+        public int? MasterVacancyId { get; set; }   // equivalent to ParentVacancyId
 
-        public string FutureProspectsComment { get; set; }
+        public int? VacancyLocationTypeId { get; set; } // equivalent to VacancyLocationTypeCode
 
-        public string PersonalQualities { get; set; }
+        public int? NoOfOfflineSystemApplicants { get; set; } // equivalent to OfflineApplicationClickThroughCount
 
-        public string PersonalQualitiesComment { get; set; }
+        public int VacancyManagerID { get; set; } // Probably equivalent to ManagerVacancyPartyId, or VacancyManagerID
 
-        public string ThingsToConsider { get; set; }
+        public int? DeliveryOrganisationID { get; set; } // Probably equivalent to DeliveryProviderVacancyPartyId
 
-        public string ThingsToConsiderComment { get; set; }
+        public int? ContractOwnerID { get; set; } // Probably equivalent to OwnerVacancyPartyId
 
-        public string DesiredQualifications { get; set; }
+        public bool SmallEmployerWageIncentive { get; set; }
 
-        public string DesiredQualificationsComment { get; set; }
+        public int? OriginalContractOwnerId { get; set; } //Probably equivalent to OriginalContractOwnerVacancyPartyId
 
-        public string FirstQuestion { get; set; }
+        public bool VacancyManagerAnonymous { get; set; }
 
-        public string FirstQuestionComment { get; set; }
+        //[Required]
+        //[StringLength(1)]
+        //public string VacancyTypeCode { get; set; }  // In AVMS this is merged with apprenticeship type
 
-        public string SecondQuestion { get; set; }
 
-        public string SecondQuestionComment { get; set; }
+        // public int EmployerVacancyPartyId { get; set; }
+
+        // public int OwnerVacancyPartyId { get; set; } -> probably goes to ContractOwnerID
+
+        // public int ManagerVacancyPartyId { get; set; } -> probably goes to VacancyManagerID
+
+        // public int DeliveryProviderVacancyPartyId { get; set; } -> probably goes to DeliveryOrganisationID
+
+        // public int ContractOwnerVacancyPartyId { get; set; } -> probably goes to ContractOwnerID
+
+        // public int? OriginalContractOwnerVacancyPartyId { get; set; } -> probably goes to OriginalContractOwnerId
+
+            
+        //[Required]
+        //[StringLength(1)]
+        //public string TrainingTypeCode { get; set; } // Framework or standard. Not considered in AVMS
+        
+        // public decimal? HoursPerWeek { get; set; } // Not considered in AVMS
+
+        // public string AdditionalLocationInformation { get; set; } // Not considered in AVMS
+
+        // public string AdditionalLocationInformationComment { get; set; }
+
+        public string DesiredSkills { get; set; } // Get from VacancyTextField table
+
+        // public string DesiredSkillsComment { get; set; }
+
+        public string FutureProspects { get; set; }  // Get from VacancyTextField table
+
+        // public string FutureProspectsComment { get; set; }
+
+        public string PersonalQualities { get; set; }  // Get from VacancyTextField table
+
+        // public string PersonalQualitiesComment { get; set; }
+
+        public string ThingsToConsider { get; set; }  // Get from VacancyTextField table
+
+        // public string ThingsToConsiderComment { get; set; }
+
+        public string DesiredQualifications { get; set; }  // Get from VacancyTextField table
+
+        // public string DesiredQualificationsComment { get; set; }
+
+        public string FirstQuestion { get; set; } // Get from AdditionalQuestion table
+
+        // public string FirstQuestionComment { get; set; }
+
+        public string SecondQuestion { get; set; } // Get from AdditionalQuestion table
+
+        // public string SecondQuestionComment { get; set; }
 
         public string QAUserName { get; set; }
 
-        public string LocationAddressesComment { get; set; }
+        // public string LocationAddressesComment { get; set; }
 
-        public int? NumberOfPositions { get; set; }
+        // public DateTime? PublishedDateTime { get; set; } // Not considered in AVMS
 
-        public string NumberOfPositionsComment { get; set; }
+        // public DateTime? FirstSubmittedDateTime { get; set; } // Not considered in AVMS
 
-        public DateTime? PublishedDateTime { get; set; } // TODO: Check naming
+        // public int SubmissionCount { get; set; } // Not considered in AVMS
 
-        public DateTime? FirstSubmittedDateTime { get; set; } // TODO: Check naming
+        // [Column(TypeName = "datetime2")]
+        // public DateTime? TimeStartedToQA { get; set; }  // Not considered in AVMS
 
-        public int SubmissionCount { get; set; }
+        // public DateTime CreatedDateTime { get; set; } // Not considered in AVMS
 
-        public int OfflineApplicationClickThroughCount { get; set; }
+        // public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
 
-        [Column(TypeName = "datetime2")]
-        public DateTime? TimeStartedToQA { get; set; }
+        public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 
-        public DateTime CreatedDateTime { get; set; }
+        public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
 
-        public DateTime? UpdatedDateTime { get; set; }
+        // public Guid VacancyManagerId { get; set; } -> probably goes to VacancyManagerID
 
-        public DateTime? SubmittedDateTime { get; set; }
+        public string TrainingProvided { get; set; } // Get from VacancyTextField table
 
-        public Guid LastEditedById { get; set; }
+        // public string TrainingProvidedComment { get; set; }
 
-        public Guid VacancyManagerId { get; set; }
+        // public string ContactNumber { get; set; } // Not considered in AVMS
 
-        public string TrainingProvided { get; set; }
+        // public string ContactEmail { get; set; } // Not considered in AVMS
 
-        public string TrainingProvidedComment { get; set; }
-
-        public string ContactName { get; set; }
-
-        public string ContactNumber { get; set; }
-
-        public string ContactEmail { get; set; }
-
-        public string ContactDetailsComment { get; set; }
-
-        /*
-        public virtual Framework Framework { get; set; }
-
-        public virtual Level Level { get; set; }
-
-        public virtual Standard Standard { get; set; }
-
-        public virtual DurationType DurationType { get; set; }
-
-        public virtual TrainingType TrainingType { get; set; }
-
-        public virtual VacancyParty VacancyParty { get; set; }
-
-        public virtual VacancyParty VacancyParty1 { get; set; }
-
-        public virtual VacancyParty VacancyParty2 { get; set; }
-
-        public virtual VacancyParty VacancyParty3 { get; set; }
-
-        public virtual VacancyParty VacancyParty4 { get; set; }
-
-        public virtual VacancyParty VacancyParty5 { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy> Vacancy1 { get; set; }
-
-        public virtual Vacancy Vacancy2 { get; set; }
-
-        public virtual VacancyLocationType VacancyLocationType { get; set; }
-
-        public virtual VacancyStatus VacancyStatus { get; set; }
-
-        public virtual VacancyType VacancyType { get; set; }
-
-        public virtual WageType WageType { get; set; }
-        */
+        // public string ContactDetailsComment { get; set; } // Not considered in AVMS
     }
 }

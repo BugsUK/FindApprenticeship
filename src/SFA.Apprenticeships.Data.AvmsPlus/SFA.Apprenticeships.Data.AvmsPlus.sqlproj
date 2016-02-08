@@ -211,16 +211,12 @@
     <Build Include="dbo\Views\vwRegions.sql" />
     <Build Include="dbo\Views\vwRegionsAndLocalAuthority.sql" />
     <Build Include="dbo\Views\vwSubContractors.sql" />
-    <Build Include="Storage\NAVMS_FTI_CATALOG.sql" />
-    <Build Include="Storage\NAVMS_FTI_SchoolSearchCATALOG.sql" />
-    <Build Include="FullTextIndexes.sql" />
     <Build Include="dbo\Functions\fnx_CalcDistance.sql" />
     <Build Include="dbo\Functions\fnx_GetCategory.sql" />
     <Build Include="dbo\Functions\fnx_GetOrganisationCode.sql" />
     <Build Include="dbo\Functions\fnx_GetSICCodes.sql" />
     <Build Include="dbo\Functions\fnx_RemoveTime.sql" />
     <Build Include="dbo\Functions\replaceHTMLTags.sql" />
-    <Build Include="dbo\Functions\fnx_ConditionalFreeText.sql" />
     <Build Include="dbo\Functions\fnx_ConvertToArrayTable.sql" />
     <Build Include="dbo\Functions\fnx_SplitListToTable.sql" />
     <Build Include="dbo\Functions\fnx_Numbers.sql" />

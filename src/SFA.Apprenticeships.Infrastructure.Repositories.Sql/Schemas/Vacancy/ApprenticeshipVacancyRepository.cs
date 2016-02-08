@@ -68,69 +68,71 @@ WHERE  VacancyId = @VacancyId",
 new { VacancyId = dbVacancy.VacancyId });
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
-            var employer = _getOpenConnection
-                .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
-                .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
+            //var employer = _getOpenConnection
+            //    .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
+            //    .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
 
-            if (!employer.PostalAddressId.HasValue)
-                throw new InvalidOperationException("All employers should have addresses");
+            //if (!employer.PostalAddressId.HasValue)
+            //    throw new InvalidOperationException("All employers should have addresses");
 
             // TODO: Would like to make addresses immutable to allow caching - they probably don't
             // change that often. Also should have access methods that don't return the address as
             // most screens don't need it
-            var addresses = _getOpenConnection.Query<Schemas.Address.Entities.PostalAddress>(@"
-SELECT *
-FROM   Address.PostalAddress
-WHERE  PostalAddressId IN @PostalAddressIds",
-new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(new int[] { employer.PostalAddressId.Value }) });
+//            var addresses = _getOpenConnection.Query<Schemas.Address.Entities.PostalAddress>(@"
+//SELECT *
+//FROM   Address.PostalAddress
+//WHERE  PostalAddressId IN @PostalAddressIds",
+//new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(new int[] { employer.PostalAddressId.Value }) });
 
-            var result = _mapper.Map<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy, ApprenticeshipVacancy>(dbVacancy);
+//            var result = _mapper.Map<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy, ApprenticeshipVacancy>(dbVacancy);
 
-            result.LocationAddresses = new List<VacancyLocationAddress>();
-            foreach (var dbLocation in vacancyLocations)
-            {
-                result.LocationAddresses.Add(new VacancyLocationAddress
-                {
-                    NumberOfPositions = dbLocation.NumberOfPositions,
-                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId)) //VGA_Address
-                });
-            }
+//            result.LocationAddresses = new List<VacancyLocationAddress>();
+//            foreach (var dbLocation in vacancyLocations)
+//            {
+//                result.LocationAddresses.Add(new VacancyLocationAddress
+//                {
+//                    NumberOfPositions = dbLocation.NumberOfPositions,
+//                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId)) //VGA_Address
+//                });
+//            }
 
-            // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
-            result.Ukprn = _getOpenConnection
-                .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
-                .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
-                .UKPrn.ToString(); // TODO: Type?
+            //// TODO: Method which looks up in cache and if not found refreshes cache / loads new record
+            //result.Ukprn = _getOpenConnection
+            //    .QueryCached<VacancyParty>(TimeSpan.FromHours(1), "SELECT * FROM Vacancy.VacancyParty")
+            //    .Single(p => p.VacancyPartyId == dbVacancy.ManagerVacancyPartyId) // TODO: Verify
+            //    .UKPrn.ToString(); // TODO: Type?
 
 
-            result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
+            //result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
 
-            //var x = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId));
+            ////var x = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId));
 
-            result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer
-            {
-                Address = _mapper.Map<Schemas.Address.Entities.PostalAddress,PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId)),
-                //DateCreated = employer.DateCreated, TODO
-                //DateUpdated = employer.DateUpdated, TODO
-                //EntityId = employer.VacancyPartyId, // TODO: Verify
-                Ern = employer.EdsErn.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
-                Name = employer.FullName
-            };
+            //result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer
+            //{
+            //    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress,PostalAddress>(addresses.Single(a => a.PostalAddressId == employer.PostalAddressId)),
+            //    //DateCreated = employer.DateCreated, TODO
+            //    //DateUpdated = employer.DateUpdated, TODO
+            //    //EntityId = employer.VacancyPartyId, // TODO: Verify
+            //    Ern = employer.EdsErn.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
+            //    Name = employer.FullName
+            //};
 
-            // ApprenticeshipVacancy
+            //// ApprenticeshipVacancy
 
-            if (dbVacancy.FrameworkId != null)
-            {
-                // TODO: QueryCachedDictionary
-                result.FrameworkCodeName = _getOpenConnection
-                    .QueryCached<Framework>(TimeSpan.FromHours(1), "SELECT * FROM Reference.Framework")
-                    .Single(f => f.FrameworkId == dbVacancy.FrameworkId)
-                    .CodeName;
-            }
+            //if (dbVacancy.FrameworkId != null)
+            //{
+            //    // TODO: QueryCachedDictionary
+            //    result.FrameworkCodeName = _getOpenConnection
+            //        .QueryCached<Framework>(TimeSpan.FromHours(1), "SELECT * FROM Reference.Framework")
+            //        .Single(f => f.FrameworkId == dbVacancy.FrameworkId)
+            //        .CodeName;
+            //}
 
-            // TODO: Inconsistency of location of comment fields Vacancy vs ApprenticeshipVacancy
+            //// TODO: Inconsistency of location of comment fields Vacancy vs ApprenticeshipVacancy
 
-            return result;
+            //return result;
+
+            return new ApprenticeshipVacancy();
         }
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
@@ -237,17 +239,17 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(entity);
 
-            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
-            {
-                if (entity.LocationAddresses.Count != 0)
-                    throw new InvalidOperationException(entity.LocationAddresses.Count.ToString());
-            }
-            else if (entity.LocationAddresses.Count > 1)
-            {
-                if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Specific)
-                    throw new InvalidOperationException(dbVacancy.VacancyLocationTypeCode);
-                dbVacancy.VacancyLocationTypeCode = "M";
-            }
+            //if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            //{
+            //    if (entity.LocationAddresses.Count != 0)
+            //        throw new InvalidOperationException(entity.LocationAddresses.Count.ToString());
+            //}
+            //else if (entity.LocationAddresses.Count > 1)
+            //{
+            //    if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Specific)
+            //        throw new InvalidOperationException(dbVacancy.VacancyLocationTypeCode);
+            //    dbVacancy.VacancyLocationTypeCode = "M";
+            //}
 
             int employerPostalAddressId = PopulateVacancyPartyIds(entity, dbVacancy);
             PopulateFrameworkId(entity, dbVacancy);
@@ -268,19 +270,19 @@ FETCH NEXT @PageSize ROWS ONLY
                 if (!_getOpenConnection.UpdateSingle(dbVacancy))
                     throw new Exception("Failed to update record after failed insert", ex);
 
-                if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Employer)
-                {
-                    RemoveVacancyLocationAddresses(vacancyId);
-                }
+                //if (dbVacancy.VacancyLocationTypeCode != VacancyLocationType.Employer)
+                //{
+                //    RemoveVacancyLocationAddresses(vacancyId);
+                //}
             }
 
             // TODO: Optimisation - insert several in one SQL round-trip
             InsertVacancyLocationAddresses(entity.LocationAddresses, entity.EntityId);
 
-            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
-            {
-                InsertEmployerLocationAddressAsVacancyLocationAddress(entity.NumberOfPositions.Value, dbVacancy, employerPostalAddressId);
-            }
+            //if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            //{
+            //    InsertEmployerLocationAddressAsVacancyLocationAddress(entity.NumberOfPositions.Value, dbVacancy, employerPostalAddressId);
+            //}
 
             _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
@@ -292,7 +294,7 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             var dbLocation = new VacancyLocation()
             {
-                VacancyId = dbVacancy.VacancyId,
+                // VacancyId = dbVacancy.VacancyId,
                 DirectApplicationUrl = "TODO",
                 NumberOfPositions = numberOfPositions,
                 PostalAddressId = employerPostalAddressId
@@ -309,7 +311,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Entities.Vacancy>(entity);
 
-            dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
+            //dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
             PopulateVacancyPartyIds(entity, dbVacancy);
             PopulateFrameworkId(entity, dbVacancy);
@@ -346,12 +348,12 @@ FROM   Vacancy.VacancyParty
 WHERE  UKPrn = @UKPrn
 ", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern, UkPrn = vacancy.Ukprn });
 
-            dbVacancy.EmployerVacancyPartyId = results.Item1.Single().VacancyPartyId; 
-            dbVacancy.ContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: Test
-            dbVacancy.DeliveryProviderVacancyPartyId = results.Item2.Single();
-            dbVacancy.ManagerVacancyPartyId = results.Item2.Single();
-            dbVacancy.OwnerVacancyPartyId = results.Item2.Single();
-            dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: ???
+            //dbVacancy.EmployerVacancyPartyId = results.Item1.Single().VacancyPartyId; 
+            //dbVacancy.ContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: Test
+            //dbVacancy.DeliveryProviderVacancyPartyId = results.Item2.Single();
+            //dbVacancy.ManagerVacancyPartyId = results.Item2.Single();
+            //dbVacancy.OwnerVacancyPartyId = results.Item2.Single();
+            //dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: ???
 
             return results.Item1.Single().PostalAddressId;
         }
@@ -458,17 +460,17 @@ FROM   Vacancy.VacancyParty
 WHERE  VacancyPartyId = @VacancyPartyId",
                 new
                 {
-                    VacancyPartyId = dbVacancy.EmployerVacancyPartyId
+                    // VacancyPartyId = dbVacancy.EmployerVacancyPartyId
                 }).Single();
 
             RemoveVacancyLocationAddresses(vacancyGuid); // Only if is not the same as the employer
 
             InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyGuid).EntityId); // TODO: can be done in another way?
 
-            if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
-            {
-                InsertEmployerLocationAddressAsVacancyLocationAddress(numberOfPositions.Value, dbVacancy, employerPostalAddressId);
-            }
+            //if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
+            //{
+            //    InsertEmployerLocationAddressAsVacancyLocationAddress(numberOfPositions.Value, dbVacancy, employerPostalAddressId);
+            //}
 
             return MapVacancy(dbVacancy);
         }
