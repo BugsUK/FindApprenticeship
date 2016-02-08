@@ -178,6 +178,9 @@
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\TrainingDetailsViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\RequirementsProspectsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\FurtherVacancyDetailsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\TrainingDetailsTests.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetailsTests.cs" />

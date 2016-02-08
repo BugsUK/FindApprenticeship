@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -65,7 +66,8 @@
 
             validator.RuleFor(x => x.DesiredQualifications)
                 .NotEmpty()
-                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredQualifications.RequiredErrorText)
+                .When(x => x.VacancyType != VacancyType.Traineeship);
         }
     }
 }

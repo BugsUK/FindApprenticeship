@@ -2,6 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
@@ -45,5 +46,6 @@
 
         public ProviderVacancyStatuses Status { get; set; }
         public bool ComeFromPreview { get; set; }
+        public VacancyType VacancyType { get; set; }
     }
 }

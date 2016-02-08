@@ -1,13 +1,14 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Validators.VacancyPosting
 {
-    using Common.UnitTests.Validators;
-    using Common.Validators;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Raa.Common.UnitTests.Builders;
-    using Raa.Common.Validators.Vacancy;
-    using Raa.Common.ViewModels.Vacancy;
+    using Builders;
+    using Common.Validators.Vacancy;
+    using Domain.Entities.Vacancies;
+    using ViewModels.Vacancy;
+    using Web.Common.UnitTests.Validators;
+    using Web.Common.Validators;
 
     [TestFixture]
     public class VacancyRequirementsProspectsViewModelServerValidatorTests
@@ -175,11 +176,50 @@
         [TestCase(" ", false)]
         [TestCase("<script>", false)]
         [TestCase("Desired Qualifications", true)]
-        public void DesiredQualificationsRequired(string desiredQualifications, bool expectValid)
+        public void ApprenticeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
-                DesiredQualifications = desiredQualifications
+                DesiredQualifications = desiredQualifications,
+                VacancyType = VacancyType.Apprenticeship
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.DesiredQualifications, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.DesiredQualifications, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancyRequirementsProspectsViewModel, vm => vm.VacancyRequirementsProspectsViewModel.DesiredQualifications, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(null, true)]
+        [TestCase("", false)]
+        [TestCase(" ", true)]
+        [TestCase("<script>", false)]
+        [TestCase("Desired Qualifications", true)]
+        public void TraineeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
+        {
+            var viewModel = new VacancyRequirementsProspectsViewModel
+            {
+                DesiredQualifications = desiredQualifications,
+                VacancyType = VacancyType.Traineeship
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
 

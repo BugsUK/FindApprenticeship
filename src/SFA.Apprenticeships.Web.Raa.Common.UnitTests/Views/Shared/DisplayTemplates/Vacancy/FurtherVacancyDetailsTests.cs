@@ -3,7 +3,6 @@
     using Common.Views.Shared.DisplayTemplates.Vacancy;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
-    using HtmlAgilityPack;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RazorGenerator.Testing;

@@ -83,7 +83,8 @@
                 ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
                 DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
                 DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment,
-                Status = apprenticeshipVacancy.Status
+                Status = apprenticeshipVacancy.Status,
+                VacancyType = apprenticeshipVacancy.VacancyType
             };
 
             return vacancyViewModel;
