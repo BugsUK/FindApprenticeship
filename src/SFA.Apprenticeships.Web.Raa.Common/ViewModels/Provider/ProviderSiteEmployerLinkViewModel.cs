@@ -34,7 +34,7 @@
 
         public ProviderVacancyStatuses Status { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.DescriptionComment.LabelText)]
         public string DescriptionComment { get; set; }

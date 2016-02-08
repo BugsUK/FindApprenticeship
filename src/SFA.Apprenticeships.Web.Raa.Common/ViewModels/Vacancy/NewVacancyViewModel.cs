@@ -3,7 +3,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentValidation.Attributes;
@@ -16,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     {
         public const string PartialView = "Vacancy/BasicVacancyDetails";
 
-        public long? VacancyReferenceNumber { get; set; }
+        public int? VacancyReferenceNumber { get; set; }
 
         public string Ukprn { get; set; }
 

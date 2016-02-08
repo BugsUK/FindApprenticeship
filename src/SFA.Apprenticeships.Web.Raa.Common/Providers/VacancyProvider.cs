@@ -77,7 +77,7 @@
             };
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber)
+        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
@@ -138,7 +138,7 @@
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     Status = vacancy.Status,
-                    VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                    VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value,
                     IsEmployerLocationMainApprenticeshipLocation = false,
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
@@ -279,7 +279,7 @@
             return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
         }
 
-        public TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber)
+        public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
@@ -310,7 +310,7 @@
             return viewModel;
         }
 
-        public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        public VacancySummaryViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
@@ -346,7 +346,7 @@
             return viewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
+        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
@@ -369,7 +369,7 @@
             return viewModel;
         }
 
-        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
@@ -415,7 +415,7 @@
             return result;
         }
 
-        public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
+        public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
@@ -456,7 +456,7 @@
             return viewModel;
         }
 
-        public VacancyViewModel SubmitVacancy(long vacancyReferenceNumber)
+        public VacancyViewModel SubmitVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
@@ -640,7 +640,7 @@
             return vacanciesSummary; 
         }
 
-        public ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber)
+        public ProviderSiteEmployerLinkViewModel CloneVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
@@ -745,7 +745,7 @@
                 ProviderName = provider.Name,
                 Status = apprenticeshipVacancy.Status,
                 Title = apprenticeshipVacancy.Title,
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber.Value,
                 DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
                 QAUserName = apprenticeshipVacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy),
@@ -808,7 +808,7 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public void ApproveVacancy(long vacancyReferenceNumber)
+        public void ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow();
             var submittedVacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
@@ -832,7 +832,7 @@
             _vacancyPostingService.ShallowSaveApprenticeshipVacancy(submittedVacancy);
         }
 
-        public void RejectVacancy(long vacancyReferenceNumber)
+        public void RejectVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             vacancy.Status = ProviderVacancyStatuses.RejectedByQA;
@@ -840,8 +840,8 @@
 
             _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
         }
-
-        public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
+        
+        public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
@@ -1071,7 +1071,7 @@
             }
         }
 
-        public VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber)
+        public VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 

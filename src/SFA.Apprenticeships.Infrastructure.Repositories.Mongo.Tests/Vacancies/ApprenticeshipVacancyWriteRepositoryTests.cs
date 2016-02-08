@@ -18,7 +18,7 @@
 
     public class ApprenticeshipVacancyWriteRepositoryTests : RepositoryIntegrationTest
     {
-        private const long IntegrationTestVacancyReferenceNumber = long.MaxValue;
+        private const int IntegrationTestVacancyReferenceNumber = int.MaxValue;
 
         [TearDown]
         public void TearDown()

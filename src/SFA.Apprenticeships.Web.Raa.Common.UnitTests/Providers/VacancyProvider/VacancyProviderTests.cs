@@ -300,7 +300,7 @@
         public void ApproveVacancy()
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            var vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<ApprenticeshipVacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
                 .With(x => x.LocationAddresses, null)
@@ -338,7 +338,7 @@
         public void ApproveMultilocationVacancy(int locationAddressCount)
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            var vacancyReferenceNumber = 1;
             var locationAddresses = new Fixture().Build<VacancyLocationAddress>()
                 .CreateMany(locationAddressCount).ToList();
 
@@ -354,7 +354,7 @@
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
             var fixture = new Fixture {RepeatCount = locationAddressCount};
-            var vacancyNumbers = fixture.Create<List<long>>();
+            var vacancyNumbers = fixture.Create<List<int>>();
             vacancyPostingService.Setup(r => r.GetNextVacancyReferenceNumber()).ReturnsInOrder(vacancyNumbers.ToArray());
 
             var vacancyProvider =
@@ -412,7 +412,7 @@
         public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            int vacancyReferenceNumber = 1;
             var vacancy = new ApprenticeshipVacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber
@@ -722,7 +722,7 @@
         public void ReserveForQA_UsernameIsSavedFromCurrentPrinciple()
         {
             //Arrange
-            const long vacancyReferenceNumber = 123456L;
+            const int vacancyReferenceNumber = 123456;
             const string username = "qa@test.com";
             var reservedVacancy =
                 new Fixture().Build<ApprenticeshipVacancy>()

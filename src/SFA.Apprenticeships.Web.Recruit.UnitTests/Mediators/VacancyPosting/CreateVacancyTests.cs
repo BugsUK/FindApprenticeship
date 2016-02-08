@@ -17,12 +17,11 @@
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
         private const int AnInt = 1234;
-        private const long ALong = 1234;
 
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithQuestionOneFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionOneFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -36,7 +35,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -47,7 +46,7 @@
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithQuestionTwoFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionTwoFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -61,7 +60,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -72,7 +71,7 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithNoQuestionsFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithNoQuestionsFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -86,7 +85,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -96,7 +95,7 @@
         [Test]
         public void ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AnOfflineVacancy());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -110,7 +109,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -120,7 +119,7 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AnOfflineVacancy);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy);
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
@@ -134,7 +133,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()

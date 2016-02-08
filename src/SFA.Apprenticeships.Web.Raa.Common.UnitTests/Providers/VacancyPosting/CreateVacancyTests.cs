@@ -135,7 +135,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
-                mock.GetVacancy(It.IsAny<long>()), Times.Never);
+                mock.GetVacancy(It.IsAny<int>()), Times.Never);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Once);
             MockVacancyPostingService.Verify(mock =>
                 mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);

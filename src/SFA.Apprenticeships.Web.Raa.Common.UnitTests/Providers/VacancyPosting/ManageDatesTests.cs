@@ -13,7 +13,7 @@
         [Test]
         public void ShouldUpdateClosingDate()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
@@ -42,7 +42,7 @@
         [Test]
         public void ShouldUpdatePossibleStartDate()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 

@@ -2,6 +2,6 @@
 {
     public interface IReferenceNumberRepository
     {
-        long GetNextVacancyReferenceNumber();
+        int GetNextVacancyReferenceNumber();
     }
 }

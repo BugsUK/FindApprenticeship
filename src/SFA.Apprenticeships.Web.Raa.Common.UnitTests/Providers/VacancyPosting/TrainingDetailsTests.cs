@@ -19,7 +19,7 @@
     {
         private const string Ern = "ern";
         private const string ProviderSiteErn = "providerSiteErn";
-        private const long VacancyReferenceNumber = 1;
+        private const int VacancyReferenceNumber = 1;
 
         private readonly ApprenticeshipVacancy _existingApprenticeshipVacancy = new ApprenticeshipVacancy()
         {
@@ -109,7 +109,7 @@
         [SetUp]
         public void SetUp()
         {
-            MockVacancyPostingService.Setup(mock => mock.GetVacancy(It.IsAny<long>()))
+            MockVacancyPostingService.Setup(mock => mock.GetVacancy(It.IsAny<int>()))
                 .Returns(_existingApprenticeshipVacancy);
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
                 .Returns<ApprenticeshipVacancy>(v => v);

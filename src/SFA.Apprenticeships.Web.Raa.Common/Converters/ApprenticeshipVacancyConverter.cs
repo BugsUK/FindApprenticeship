@@ -16,7 +16,7 @@
         {
             var vacancyViewModel = new VacancySummaryViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber.Value,
                 WorkingWeek = apprenticeshipVacancy.WorkingWeek,
                 HoursPerWeek = apprenticeshipVacancy.HoursPerWeek,
                 WageType = apprenticeshipVacancy.WageType,
@@ -71,7 +71,7 @@
         {
             var vacancyViewModel = new VacancyRequirementsProspectsViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber.Value,
                 DesiredSkills = apprenticeshipVacancy.DesiredSkills,
                 DesiredSkillsComment = apprenticeshipVacancy.DesiredSkillsComment,
                 FutureProspects = apprenticeshipVacancy.FutureProspects,
@@ -92,7 +92,7 @@
         {
             var vacancyViewModel = new VacancyQuestionsViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
+                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber.Value,
                 FirstQuestion = apprenticeshipVacancy.FirstQuestion,
                 SecondQuestion = apprenticeshipVacancy.SecondQuestion,
                 FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,

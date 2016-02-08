@@ -140,7 +140,7 @@
         [Test]
         public void GetVacancyQuestionsViewModelShouldGetViewmodelFromProvider()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();
@@ -155,7 +155,7 @@
         [Test]
         public void UpdateVacancyShouldCallProvider()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
             var viewModel = new VacancyQuestionsViewModel();

@@ -138,7 +138,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public DateTime? LockedForSupportUntil { get; set; }
 
-        public int? NoOfOfflineApplicants { get; set; }
+        public int? NoOfOfflineApplicants { get; set; } // What's the difference with NoOfOfflineSystemApplicants?
 
         public int? MasterVacancyId { get; set; }   // equivalent to ParentVacancyId
 
@@ -186,35 +186,35 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string AdditionalLocationInformationComment { get; set; }
 
-        public string DesiredSkills { get; set; } // Get from VacancyTextField table
+        // public string DesiredSkills { get; set; } // Get from VacancyTextField table
 
         // public string DesiredSkillsComment { get; set; }
 
-        public string FutureProspects { get; set; }  // Get from VacancyTextField table
+        // public string FutureProspects { get; set; }  // Get from VacancyTextField table
 
         // public string FutureProspectsComment { get; set; }
 
-        public string PersonalQualities { get; set; }  // Get from VacancyTextField table
+        // public string PersonalQualities { get; set; }  // Get from VacancyTextField table
 
         // public string PersonalQualitiesComment { get; set; }
 
-        public string ThingsToConsider { get; set; }  // Get from VacancyTextField table
+        // public string ThingsToConsider { get; set; }  // Get from VacancyTextField table
 
         // public string ThingsToConsiderComment { get; set; }
 
-        public string DesiredQualifications { get; set; }  // Get from VacancyTextField table
+        // public string DesiredQualifications { get; set; }  // Get from VacancyTextField table
 
         // public string DesiredQualificationsComment { get; set; }
 
-        public string FirstQuestion { get; set; } // Get from AdditionalQuestion table
+        // public string FirstQuestion { get; set; } // Get from AdditionalQuestion table
 
         // public string FirstQuestionComment { get; set; }
 
-        public string SecondQuestion { get; set; } // Get from AdditionalQuestion table
+        // public string SecondQuestion { get; set; } // Get from AdditionalQuestion table
 
         // public string SecondQuestionComment { get; set; }
 
-        public string QAUserName { get; set; }
+        // public string QAUserName { get; set; } // Not considered in AVMS
 
         // public string LocationAddressesComment { get; set; }
 
@@ -231,13 +231,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
 
-        public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
+        // public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 
-        public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
+        // public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
 
         // public Guid VacancyManagerId { get; set; } -> probably goes to VacancyManagerID
 
-        public string TrainingProvided { get; set; } // Get from VacancyTextField table
+        // public string TrainingProvided { get; set; } // Get from VacancyTextField table
 
         // public string TrainingProvidedComment { get; set; }
 

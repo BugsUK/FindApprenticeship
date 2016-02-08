@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
@@ -14,7 +13,7 @@
     {
         public const string PartialView = "Vacancy/VacancyPreview";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 

@@ -2,7 +2,7 @@
 {
     public class SubmittedVacancyViewModel
     {
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
         public string ProviderSiteErn { get; set; }
         public bool Resubmitted { get; set; }
         public string VacancyText { get; set; }

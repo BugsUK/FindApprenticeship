@@ -2,6 +2,6 @@
 {
     public interface IOfflineVacancyService
     {
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
     }
 }

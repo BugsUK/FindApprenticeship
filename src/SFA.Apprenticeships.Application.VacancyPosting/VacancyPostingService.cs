@@ -101,12 +101,12 @@
             return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
         }
 
-        public long GetNextVacancyReferenceNumber()
+        public int GetNextVacancyReferenceNumber()
         {
             return _referenceNumberRepository.GetNextVacancyReferenceNumber();
         }
 
-        public ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy GetVacancy(int vacancyReferenceNumber)
         {
             return _apprenticeshipVacancyReadRepository.Get(vacancyReferenceNumber);
         }
@@ -126,7 +126,7 @@
             return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
         }
 
-        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             return _apprenticeshipVacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
         }

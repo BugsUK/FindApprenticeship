@@ -39,7 +39,7 @@
 
         [TestCase(1)]
         [TestCase(42)]
-        public void ShouldNotSetVacancyReferenceNumber(long vacancyReferenceNumber)
+        public void ShouldNotSetVacancyReferenceNumber(int vacancyReferenceNumber)
         {
             // Arrange.
             var vacancyUploadData = _vacancyUploadDataBuilder

@@ -6,13 +6,13 @@
     {
         public const string PartialView = "DisplayTemplates/_VacancyLinks";
 
-        public VacancyLinksViewModel(long vacancyReferenceNumber, ProviderVacancyStatuses status)
+        public VacancyLinksViewModel(int vacancyReferenceNumber, ProviderVacancyStatuses status)
         {
             VacancyReferenceNumber = vacancyReferenceNumber;
             Status = status;
         }
 
-        public long VacancyReferenceNumber { get; private set; }
+        public int VacancyReferenceNumber { get; private set; }
         public ProviderVacancyStatuses Status { get; private set; }
     }
 }

@@ -41,7 +41,7 @@
             return MapVacancy(dbVacancy);
         }
 
-        public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy Get(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
@@ -357,7 +357,7 @@ WHERE  UKPrn = @UKPrn
 
             return results.Item1.Single().PostalAddressId;
         }
-
+        
         private void PopulateFrameworkId(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)
         {
             // TODO: use query cached?
@@ -377,7 +377,7 @@ WHERE CodeName = @FrameworkCodeName
             }
         }
 
-        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug($"Calling database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 

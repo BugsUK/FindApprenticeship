@@ -12,7 +12,7 @@
             _offlineApprenticeshipVacancyRepository = offlineApprenticeshipVacancyRepository;
         }
 
-        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
             _offlineApprenticeshipVacancyRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
         }

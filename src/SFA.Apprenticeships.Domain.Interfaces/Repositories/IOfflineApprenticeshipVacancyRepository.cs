@@ -2,6 +2,6 @@
 {
     public interface IOfflineApprenticeshipVacancyRepository
     {
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
     }
 }

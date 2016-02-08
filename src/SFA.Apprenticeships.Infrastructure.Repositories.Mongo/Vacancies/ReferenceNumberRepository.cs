@@ -26,7 +26,7 @@
             _logger = logger;
         }
 
-        public long GetNextVacancyReferenceNumber()
+        public int GetNextVacancyReferenceNumber()
         {
             _logger.Debug($"Called Mongodb to get next vacancy reference number with Id={VacancyReferenceNumberId}");
 

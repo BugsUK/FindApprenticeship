@@ -15,9 +15,9 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 
         ApprenticeshipVacancy ShallowSaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
 
-        long GetNextVacancyReferenceNumber();
+        int GetNextVacancyReferenceNumber();
 
-        ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber);
+        ApprenticeshipVacancy GetVacancy(int vacancyReferenceNumber);
 
         ApprenticeshipVacancy GetVacancy(Guid vacancyGuid);
 
@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
 
-        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
         void ReplaceLocationInformation(Guid vacancyGuid, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,

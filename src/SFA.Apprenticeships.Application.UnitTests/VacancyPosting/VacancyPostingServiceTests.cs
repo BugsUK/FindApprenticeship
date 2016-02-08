@@ -119,7 +119,7 @@
         [Test]
         public void GetVacancyByReferenceNumberShouldCallRepository()
         {
-            const long vacancyId = 1;
+            const int vacancyId = 1;
 
             _vacancyPostingService.GetVacancy(vacancyId);
 

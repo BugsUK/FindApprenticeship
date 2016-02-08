@@ -21,7 +21,7 @@
             var source = (ApprenticeshipVacancy)context.SourceValue;
             var destination = new VacancyViewModel
             {
-                VacancyReferenceNumber = source.VacancyReferenceNumber,
+                VacancyReferenceNumber = source.VacancyReferenceNumber.Value,
                 Status = source.Status,
                 NewVacancyViewModel = context.Engine.Map<ApprenticeshipVacancy, NewVacancyViewModel>(source),
                 TrainingDetailsViewModel = context.Engine.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(source),

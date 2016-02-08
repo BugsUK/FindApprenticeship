@@ -12,21 +12,21 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(long vacancyReferenceNumber);
+        void ApproveVacancy(int vacancyReferenceNumber);
 
-        void RejectVacancy(long vacancyReferenceNumber);
+        void RejectVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber);
+        VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        VacancySummaryViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
         VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel);
 

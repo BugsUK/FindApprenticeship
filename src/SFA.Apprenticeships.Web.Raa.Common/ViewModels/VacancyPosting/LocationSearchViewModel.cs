@@ -38,7 +38,7 @@
 
         public ProviderVacancyStatuses Status { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 		

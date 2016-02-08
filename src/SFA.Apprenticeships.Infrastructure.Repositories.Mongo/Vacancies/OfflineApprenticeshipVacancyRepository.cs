@@ -25,7 +25,7 @@
             _logger = logger;
         }
 
-        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
 

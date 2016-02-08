@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     {
         public const string PartialView = "Vacancy/FurtherVacancyDetails";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyViewModelMessages.WorkingWeek.LabelText)]
         public string WorkingWeek { get; set; }

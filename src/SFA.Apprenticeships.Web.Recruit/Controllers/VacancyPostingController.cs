@@ -196,7 +196,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewCreateVacancy(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewCreateVacancy(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -285,7 +285,7 @@
         #region Training Details
 
         [HttpGet]
-        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        public ActionResult TrainingDetails(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
@@ -315,7 +315,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewTrainingDetails(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewTrainingDetails(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -404,7 +404,7 @@
         #region Vacancy Details
 
         [HttpGet]
-        public ActionResult VacancySummary(long vacancyReferenceNumber)
+        public ActionResult VacancySummary(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
@@ -420,7 +420,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancySummary(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewVacancySummary(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -502,7 +502,7 @@
         #region Requirements and Prospects
 
         [HttpGet]
-        public ActionResult VacancyRequirementsProspects(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult VacancyRequirementsProspects(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -518,7 +518,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancyRequirementsProspects(long vacancyReferenceNumber)
+        public ActionResult ReviewVacancyRequirementsProspects(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true, true);
             var viewModel = response.ViewModel;
@@ -597,7 +597,7 @@
         #region Vacancy Questions
 
         [HttpGet]
-        public ActionResult VacancyQuestions(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult VacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -612,7 +612,7 @@
             }
         }
 
-        public ActionResult ReviewVacancyQuestions(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewVacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -681,7 +681,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0)]
-        public ActionResult PreviewVacancy(long vacancyReferenceNumber)
+        public ActionResult PreviewVacancy(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
@@ -719,7 +719,7 @@
         }
         
         [HttpPost]
-        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoption)
+        public ActionResult SubmitVacancy(int vacancyReferenceNumber, bool resubmitoption)
         {
             var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
             var vacancyViewModel = response.ViewModel;
@@ -749,7 +749,7 @@
         }
 
         [HttpGet]
-        public ActionResult VacancySubmitted(long vacancyReferenceNumber, bool resubmitted)
+        public ActionResult VacancySubmitted(int vacancyReferenceNumber, bool resubmitted)
         {
             var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber, resubmitted);
             var viewModel = response.ViewModel;
@@ -963,7 +963,7 @@
         }
 
         [HttpGet]
-        public ActionResult ManageDates(long vacancyReferenceNumber)
+        public ActionResult ManageDates(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancyDatesViewModel(vacancyReferenceNumber);
 

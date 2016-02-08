@@ -55,7 +55,7 @@
         [Test]
         public void AddLocationsShouldCallReplaceLocationInformation()
         {
-            var vacancyReferenceNumber = 1L;
+            var vacancyReferenceNumber = 1;
             const string additionalLocationInformation = "additional location information";
             const string aNewAdditionalLocationInformation = "a new additional location information";
             const string aNewAdditionalLocationInformationComment = "a new additional location information comment";
@@ -81,7 +81,7 @@
         [Test]
         public void RemoveVacancyLocationInformationShouldCallReplaceLocationInformation()
         {
-            var vacancyReferenceNumber = 1L;
+            var vacancyReferenceNumber = 1;
             var vacancyGuid = Guid.NewGuid();
             var vacancy = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber);
 
@@ -99,7 +99,7 @@
         [Test]
         public void RemoveLocationAddressesShouldCallReplaceLocationInformation()
         {
-            var vacancyReferenceNumber = 1L;
+            var vacancyReferenceNumber = 1;
             var vacancyGuid = Guid.NewGuid();
             const string aComment = "a comment";
             const int numberOfPositions = 2;
@@ -119,7 +119,7 @@
         }
 
         private static LocationSearchViewModel GetLocationSearchViewModel(Guid vacancyGuid, string aNewAdditionalLocationInformation,
-            string aNewAdditionalLocationInformationComment, long vacancyReferenceNumber, string aNewLocationAddressesComment)
+            string aNewAdditionalLocationInformationComment, int vacancyReferenceNumber, string aNewLocationAddressesComment)
         {
             var locationSearchViewModel = new LocationSearchViewModel
             {
@@ -177,20 +177,20 @@
 
         private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(string additionalLocationInformation)
         {
-            return GetVacancyWithLocationAddresses(Guid.NewGuid(), 1L, additionalLocationInformation);
+            return GetVacancyWithLocationAddresses(Guid.NewGuid(), 1, additionalLocationInformation);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber)
+        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, string.Empty);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, string additionalLocationInformation)
+        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, string additionalLocationInformation)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, null, null, null, null, additionalLocationInformation);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
+        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
         {
             var addresses = new List<VacancyLocationAddress>
             {

@@ -43,7 +43,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
         }
 
-        public ApprenticeshipVacancy Get(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy Get(int vacancyReferenceNumber)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
@@ -189,7 +189,7 @@
             return mongoEntity;
         }
         
-        public ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 

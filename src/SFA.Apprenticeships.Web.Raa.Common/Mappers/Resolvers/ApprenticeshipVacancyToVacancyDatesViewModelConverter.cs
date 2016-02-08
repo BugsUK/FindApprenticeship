@@ -19,7 +19,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 PossibleStartDate = context.Engine.Map<DateTime?, DateViewModel>(source.PossibleStartDate),
                 ClosingDateComment = source.ClosingDateComment,
                 PossibleStartDateComment = source.PossibleStartDateComment,
-                VacancyReferenceNumber = source.VacancyReferenceNumber
+                VacancyReferenceNumber = source.VacancyReferenceNumber.Value
             };
 
 

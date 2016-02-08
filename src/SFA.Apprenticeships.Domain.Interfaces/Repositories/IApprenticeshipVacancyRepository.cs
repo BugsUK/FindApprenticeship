@@ -9,7 +9,7 @@
 
     public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy, Guid>
     {
-        ApprenticeshipVacancy Get(long vacancyReferenceNumber);
+        ApprenticeshipVacancy Get(int vacancyReferenceNumber);
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
 
@@ -20,7 +20,7 @@
 
     public interface IApprenticeshipVacancyWriteRepository
     {
-        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
         ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity);
 

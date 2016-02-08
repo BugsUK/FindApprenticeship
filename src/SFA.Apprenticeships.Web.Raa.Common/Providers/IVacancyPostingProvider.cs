@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using FluentValidation.Results;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -11,21 +10,21 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        VacancySummaryViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
         VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
@@ -33,9 +32,9 @@
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
-        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
+        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel SubmitVacancy(long vacancyReferenceNumber);
+        VacancyViewModel SubmitVacancy(int vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -45,7 +44,7 @@
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
+        ProviderSiteEmployerLinkViewModel CloneVacancy(int vacancyReferenceNumber);
 
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
@@ -59,7 +58,7 @@
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
-        VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber);
+        VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber);
 
         VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
     }

@@ -16,9 +16,9 @@
         [Test]
         public void CloneVacancyShouldSaveTheClonedVacancy()
         {
-            const long initialVacancyReferenceNumber = 1;
+            const int initialVacancyReferenceNumber = 1;
             const string initialVacancyTitle = "title";
-            const long newVacancyReferenceNumber = 2;
+            const int newVacancyReferenceNumber = 2;
             var dateTimeNow = DateTime.UtcNow;
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(initialVacancyReferenceNumber))
@@ -33,7 +33,7 @@
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => CheckClonedVacancy(v, newVacancyReferenceNumber, dateTimeNow))));
         }
 
-        private bool CheckClonedVacancy(ApprenticeshipVacancy clonedVacancy, long newVacancyReferenceNumber, DateTime dateTimeNow)
+        private bool CheckClonedVacancy(ApprenticeshipVacancy clonedVacancy, int newVacancyReferenceNumber, DateTime dateTimeNow)
         {
             clonedVacancy.Title.Should().StartWith("(Copy of) ");
             clonedVacancy.DateCreated.Should().Be(dateTimeNow);
@@ -66,7 +66,7 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private ApprenticeshipVacancy GetLiveVacancyWithComments(long initialVacancyReferenceNumber, string initialVacancyTitle)
+        private ApprenticeshipVacancy GetLiveVacancyWithComments(int initialVacancyReferenceNumber, string initialVacancyTitle)
         {
             return new ApprenticeshipVacancy
             {

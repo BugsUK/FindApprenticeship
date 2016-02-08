@@ -5,8 +5,8 @@
 
     public abstract class Vacancy : BaseEntity<Guid>
     {
-        public long VacancyReferenceNumber { get; set; }
-        public string Ukprn { get; set; }
+        public int? VacancyReferenceNumber { get; set; }
+        public string Ukprn { get; set; } // TODO: do we need to store UKPRN here
         public string Title { get; set; }
         public string TitleComment { get; set; }
         public string ShortDescription { get; set; }

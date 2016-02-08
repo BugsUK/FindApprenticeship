@@ -14,7 +14,7 @@
     {
         public const string PartialView = "Vacancy/TrainingDetails";
 
-        public long? VacancyReferenceNumber { get; set; }
+        public int? VacancyReferenceNumber { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }
 

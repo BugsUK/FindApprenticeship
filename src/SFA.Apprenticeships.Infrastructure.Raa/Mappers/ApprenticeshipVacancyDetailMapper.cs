@@ -20,8 +20,8 @@
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
             var detail = new ApprenticeshipVacancyDetail
             {
-                Id = (int)vacancy.VacancyReferenceNumber,
-                VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
+                Id = vacancy.VacancyReferenceNumber.Value,
+                VacancyReference = vacancy.VacancyReferenceNumber.Value.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
                 FullDescription = vacancy.LongDescription,

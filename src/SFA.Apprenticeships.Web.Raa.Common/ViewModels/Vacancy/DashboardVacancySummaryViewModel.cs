@@ -5,7 +5,7 @@
 
     public class DashboardVacancySummaryViewModel
     {
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public string Title { get; set; }
 

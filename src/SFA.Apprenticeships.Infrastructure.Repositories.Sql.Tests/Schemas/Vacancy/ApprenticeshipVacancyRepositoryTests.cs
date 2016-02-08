@@ -140,7 +140,7 @@
             // Act
             repository.DeepSave(vacancy);
 
-            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
+            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber.Value);
 
             // Assert
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
@@ -171,7 +171,7 @@
             // Act
             repository.DeepSave(vacancy);
 
-            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
+            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber.Value);
 
             // Assert
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
@@ -435,8 +435,8 @@
 
             writeRepository.DeepSave(vacancy);
 
-            writeRepository.ReserveVacancyForQA(vacancy.VacancyReferenceNumber);
-            var loadedVacancy = readRepository.Get(vacancy.VacancyReferenceNumber);
+            writeRepository.ReserveVacancyForQA(vacancy.VacancyReferenceNumber.Value);
+            var loadedVacancy = readRepository.Get(vacancy.VacancyReferenceNumber.Value);
             
             loadedVacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
             loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
@@ -479,7 +479,7 @@
                 isEmployerLocationMainApprenticeshipLocation, numberOfPositions, newLocations, locationAddressesComment,
                 additionalLocationInformation, additionalLocationInformationComment);
 
-            var dbVacancy = readRepository.Get(vacancy.VacancyReferenceNumber);
+            var dbVacancy = readRepository.Get(vacancy.VacancyReferenceNumber.Value);
 
             dbVacancy.NumberOfPositions.Should().Be(numberOfPositions);
             dbVacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);
