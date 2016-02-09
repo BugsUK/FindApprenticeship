@@ -150,6 +150,10 @@
             public const string TooLongErrorText = "The long description must not be more than 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The long description " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TraineeshipLabelText = "Work placement description";
+            public const string TraineeshipRequiredErrorText = "Enter the work placement description";
+            public const string TraineeshipTooLongErrorText = "The work placement description must not be more than 4000 characters";
+            public const string TraineeshipWhiteListErrorText = "The work placement description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class LongDescriptionComment

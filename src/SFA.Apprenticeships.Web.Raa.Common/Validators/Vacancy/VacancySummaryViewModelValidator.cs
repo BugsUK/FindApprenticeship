@@ -152,8 +152,18 @@
             validator.RuleFor(x => x.LongDescription)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.LongDescription.RequiredErrorText)
+                .When(x => x.VacancyType != VacancyType.Traineeship)
                 .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText);
+                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
+                .When(x => x.VacancyType != VacancyType.Traineeship);
+
+            validator.RuleFor(x => x.LongDescription)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.LongDescription.TraineeshipRequiredErrorText)
+                .When(x => x.VacancyType == VacancyType.Traineeship)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText)
+                .When(x => x.VacancyType == VacancyType.Traineeship);
         }
 
         internal static void AddVacancySummaryViewModelServerWarningRules(this AbstractValidator<VacancySummaryViewModel> validator, string parentPropertyName)
