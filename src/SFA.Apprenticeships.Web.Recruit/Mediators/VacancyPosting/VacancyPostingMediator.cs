@@ -12,6 +12,7 @@
     using Common.Validators.Extensions;
     using Common.ViewModels;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -817,9 +818,18 @@
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
                 Resubmitted = resubmitted,
-                VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location vacancy" : "Vacancy",
-                IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy
+                IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy,
+                VacancyType = vacancyViewModel.VacancyType
             };
+
+            if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
+            {
+                viewModel.VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location traineeship opportunity" : "Traineeship opportunity";
+            }
+            else
+            {
+                viewModel.VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location vacancy" : "Vacancy";
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
         }

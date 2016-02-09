@@ -458,6 +458,9 @@
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName)
                 ? vacancy.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName)
+                ? vacancy.SectorCodeName
+                : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
@@ -888,6 +891,7 @@
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName) ? vacancy.SectorCodeName : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider, vacancyManager, vacancy);

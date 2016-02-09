@@ -199,6 +199,7 @@
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />
+    <Compile Include="Views\VacancyPosting\VacancySubmittedTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancySummaryTests.cs" />
     <Compile Include="Views\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />

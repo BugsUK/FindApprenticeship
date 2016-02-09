@@ -33,6 +33,8 @@
 
         public string StandardName { get; set; }
 
+        public string SectorName { get; set; }
+
         public ProviderSiteViewModel ProviderSite { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }

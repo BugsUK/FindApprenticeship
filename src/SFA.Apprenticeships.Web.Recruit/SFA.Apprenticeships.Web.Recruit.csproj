@@ -393,6 +393,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>VacancyRequirementsProspects.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\VacancyPosting\VacancySubmitted.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VacancySubmitted.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VacancyPosting\VacancySummary.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -493,7 +498,10 @@
       <LastGenOutput>CreateVacancy.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\VacancyPosting\SubmitVacancy.cshtml" />
-    <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml" />
+    <Content Include="Views\VacancyPosting\VacancySubmitted.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancySubmitted.generated.cs</LastGenOutput>
+    </Content>
     <Content Include="Views\VacancyPosting\SelectEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\AddEmployer.cshtml" />
     <Content Include="Views\VacancyPosting\ConfirmEmployer.cshtml">

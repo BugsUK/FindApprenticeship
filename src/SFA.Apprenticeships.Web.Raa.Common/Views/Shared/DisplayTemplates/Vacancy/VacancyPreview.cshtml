@@ -42,7 +42,7 @@
         <div class="grid grid-2-3" style="clear: left">
             <div class="hgroup text @editableItemClass">
                 <h1 class="heading-xlarge" id="vacancy-title" itemprop="title">
-                    @Model.NewVacancyViewModel.Title
+                    @Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
                 </h1>
                 <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
@@ -104,9 +104,18 @@
 
             @if (Model.VacancyType == VacancyType.Traineeship)
             {
-                <div class="text">
+                <div>
                     <h3 class="bold-small">Training provider</h3>
                     <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
+                </div>
+
+                <div class="@editableItemClass">
+                    <h3 class="bold-small">
+                        Traineeship sector
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.SectorCodeName, Model.TrainingDetailsViewModel.SectorCodeNameComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="traineeship-sector">@Html.DisplayFor(m => m.SectorName)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.SectorCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.SectorCodeNameComment))
                 </div>
             }
 
@@ -180,6 +189,27 @@
                     {
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.LocationsLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
                     }
+                </div>
+            }
+
+            @if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                <div class="text @editableItemClass">
+                    <h3 class="bold-small">
+                        Contact details for candidate
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
+                    </h3>
+                    @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
+                    {
+                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                    }
+                    else
+                    {
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
                 </div>
             }
         </div>
@@ -580,26 +610,23 @@
                 <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
             </div>
 
-            @if (!string.IsNullOrWhiteSpace(Model.ProviderSite.ContactDetailsForCandidate))
-            {
-                <div class="text @editableItemClass">
-                    <h3 class="bold-small">
-                        Contact
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
-                    </h3>
-                    @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
-                    {
-                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
-                    }
-                    else
-                    {
-                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
-                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
-                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
-                    }
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
-                </div>
-            }
+            <div class="text @editableItemClass">
+                <h3 class="bold-small">
+                    Contact
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
+                </h3>
+                @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
+                {
+                    <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                }
+                else
+                {
+                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                    <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                }
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
+            </div>
         </div>
     </section>
 }

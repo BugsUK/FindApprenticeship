@@ -11,7 +11,14 @@
 
 <div class="@editableItemClass">
     <h3 class="bold-small">
-        Working week
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <span>Weekly hours</span>
+        }
+        else
+        {
+            <span>Working week</span>
+        }
         @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="preserve-formatting">@Model.VacancySummaryViewModel.WorkingWeek</p>
