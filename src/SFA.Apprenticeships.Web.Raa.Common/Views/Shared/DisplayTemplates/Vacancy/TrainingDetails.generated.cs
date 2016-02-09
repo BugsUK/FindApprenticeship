@@ -1282,7 +1282,7 @@ WriteLiteral("        ");
             #line 189 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactName,
-            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" }));
+            controlHtmlAttributes: new { type = "text", spellcheck = "false" }));
 
             
             #line default
