@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Attributes;
     using Provider;
     using VacancyPosting;
@@ -21,16 +20,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public string Ukprn { get; set; }
 
-        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.ApprenticeshipLevelComment.LabelText)]
-        public string ApprenticeshipLevelComment { get; set; }
-
-        public string FrameworkCodeName { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.FrameworkCodeNameComment.LabelText)]
-        public string FrameworkCodeNameComment { get; set; }
-
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
 
@@ -42,8 +31,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
-
-        public List<SelectListItem> SectorsAndFrameworks { get; set; }
 
         public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
 
@@ -63,16 +50,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public Guid VacancyGuid { get; set; }
 
-        public TrainingType TrainingType { get; set; }
-
-        public int? StandardId { get; set; }
-
-        [Display(Name = VacancyViewModelMessages.StandardIdComment.LabelText)]
-        public string StandardIdComment { get; set; }
-
         public ProviderVacancyStatuses Status { get; set; }
-
-        public List<StandardViewModel> Standards { get; set; }
 
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 

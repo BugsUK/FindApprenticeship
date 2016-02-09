@@ -308,6 +308,48 @@
             public const string LabelText = "Apprenticeship standard comment";
         }
 
+        public static class TrainingProvidedMessages
+        {
+            public const string LabelText = "Training to be provided";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Training to be provided " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string RequiredErrorText = "Enter the training to be provided";
+        }
+
+        public static class TrainingProvidedComment
+        {
+            public const string LabelText = "Training to be provided comment";
+        }
+
+        public static class ContactNameMessages
+        {
+            public const string LabelText = "Contact name (optional)";
+            public const string TooLongErrorText = "Contact name must not be more than 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact name " + Whitelists.FreetextWhitelist.ErrorText;
+        }
+
+        public static class ContactNumberMessages
+        {
+            public const string LabelText = "Contact number (optional)";
+            public const string LengthErrorText = "Contact number must be between 8 and 16 digits or not specified";
+            public const string WhiteListRegularExpression = Whitelists.PhoneNumberWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Contact number " + Whitelists.PhoneNumberWhitelist.ErrorText;
+        }
+
+        public static class ContactEmailMessages
+        {
+            public const string LabelText = "Email (optional)";
+            public const string TooLongErrorText = "Email address must not be more than 100 characters";
+            public const string WhiteListRegularExpression = Whitelists.EmailAddressWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "Email address " + Whitelists.EmailAddressWhitelist.ErrorText;
+        }
+
+        public static class ContactDetailsComment
+        {
+            public const string LabelText = "Contact details comment";
+        }
+
         public static class Comment
         {
             public const string LabelText = "QA Comment";

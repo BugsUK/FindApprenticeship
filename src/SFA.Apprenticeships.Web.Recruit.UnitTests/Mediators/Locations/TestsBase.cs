@@ -44,7 +44,9 @@
                 new EmployerSearchViewModelServerValidator(),
                 new LocationSearchViewModelValidator(),
                 new Mock<IAddressLookupProvider>().Object,
-                new Mock<ILocationsProvider>().Object);
+                new Mock<ILocationsProvider>().Object,
+                new TrainingDetailsViewModelServerValidator(),
+                new TrainingDetailsViewModelClientValidator());
         }
     }
 }

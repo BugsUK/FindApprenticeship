@@ -58,14 +58,10 @@
         public NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
-            var sectors = GetSectorsAndFrameworks();
-            var standards = GetStandards();
 
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(existingVacancy);
-                vacancyViewModel.SectorsAndFrameworks = sectors;
-                vacancyViewModel.Standards = standards;
                 return vacancyViewModel;
             }
 
@@ -74,10 +70,6 @@
             return new NewVacancyViewModel
             {
                 Ukprn = ukprn,
-                ApprenticeshipLevel = ApprenticeshipLevel.Unknown, //Force a selection
-                TrainingType = TrainingType.Unknown, //Force a selection
-                SectorsAndFrameworks = sectors,
-                Standards = standards,
                 ProviderSiteEmployerLink = providerSiteEmployerLink.Convert(),
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
@@ -88,10 +80,6 @@
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
-            var sectors = GetSectorsAndFrameworks();
-            var standards = GetStandards();
-            viewModel.SectorsAndFrameworks = sectors;
-            viewModel.Standards = standards;
             viewModel.VacancyGuid = vacancy.EntityId;
             return viewModel;
         }
@@ -228,10 +216,6 @@
                 Ukprn = newVacancyViewModel.Ukprn,
                 Title = newVacancyViewModel.Title,
                 ShortDescription = newVacancyViewModel.ShortDescription,
-                TrainingType = newVacancyViewModel.TrainingType,
-                FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel),
-                StandardId = newVacancyViewModel.StandardId,
-                ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel),
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
                 OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value, //At this point we will always have a value
@@ -243,14 +227,13 @@
 
             return vacancy;
         }
-
         
-        private string GetFrameworkCodeName(NewVacancyViewModel newVacancyViewModel)
+        private string GetFrameworkCodeName(TrainingDetailsViewModel newVacancyViewModel)
         {
             return newVacancyViewModel.TrainingType == TrainingType.Standards ? null : newVacancyViewModel.FrameworkCodeName;
         }
 
-        private ApprenticeshipLevel GetApprenticeshipLevel(NewVacancyViewModel newVacancyViewModel)
+        private ApprenticeshipLevel GetApprenticeshipLevel(TrainingDetailsViewModel newVacancyViewModel)
         {
             var apprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
             if (newVacancyViewModel.TrainingType == TrainingType.Standards)
@@ -270,10 +253,6 @@
             vacancy.Ukprn = newVacancyViewModel.Ukprn;
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
-            vacancy.TrainingType = newVacancyViewModel.TrainingType;
-            vacancy.FrameworkCodeName = GetFrameworkCodeName(newVacancyViewModel);
-            vacancy.StandardId = newVacancyViewModel.StandardId;
-            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(newVacancyViewModel);
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
@@ -291,6 +270,37 @@
         private static bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
         {
             return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
+        }
+
+        public TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
+            var sectors = GetSectorsAndFrameworks();
+            var standards = GetStandards();
+            viewModel.SectorsAndFrameworks = sectors;
+            viewModel.Standards = standards;
+            return viewModel;
+        }
+
+        public TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+
+            vacancy.TrainingType = viewModel.TrainingType;
+            vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
+            vacancy.StandardId = viewModel.StandardId;
+            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.TrainingProvided = viewModel.TrainingProvided;
+            vacancy.ContactName = viewModel.ContactName;
+            vacancy.ContactNumber = viewModel.ContactNumber;
+            vacancy.ContactEmail = viewModel.ContactEmail;
+
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+
+            viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
+
+            return viewModel;
         }
 
         public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
@@ -663,6 +673,8 @@
             vacancy.WorkingWeekComment = null;
             vacancy.FirstQuestionComment = null;
             vacancy.SecondQuestionComment = null;
+            vacancy.TrainingProvidedComment = null;
+            vacancy.ContactDetailsComment = null;
 
             vacancy.EntityId = Guid.NewGuid();
 
@@ -674,12 +686,44 @@
             return result;
         }
 
-        public List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview()
+        public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA);
+            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
-            return vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList();
+            var utcNow = _dateTimeService.UtcNow();
+
+            var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
+            var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
+            var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
+            var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            switch (searchViewModel.FilterType)
+            {
+                case DashboardVacancySummaryFilterTypes.SubmittedToday:
+                    vacancies = submittedToday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedYesterday:
+                    vacancies = submittedYesterday.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+                case DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours:
+                    vacancies = submittedMoreThan48Hours;
+                    break;
+                case DashboardVacancySummaryFilterTypes.Resubmitted:
+                    vacancies = resubmitted.OrderBy(v => v.DateFirstSubmitted).ToList();
+                    break;
+            }
+
+            var viewModel = new DashboardVacancySummariesViewModel
+            {
+                SearchViewModel = searchViewModel,
+                SubmittedTodayCount = submittedToday.Count,
+                SubmittedYesterdayCount = submittedYesterday.Count,
+                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
+                ResubmittedCount = resubmitted.Count,
+                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
+            };
+
+            return viewModel;
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(ApprenticeshipVacancy apprenticeshipVacancy)
@@ -690,6 +734,7 @@
             {
                 ClosingDate = apprenticeshipVacancy.ClosingDate,
                 DateSubmitted = apprenticeshipVacancy.DateSubmitted,
+                DateFirstSubmitted = apprenticeshipVacancy.DateFirstSubmitted,
                 ProviderName = provider.Name,
                 Status = apprenticeshipVacancy.Status,
                 Title = apprenticeshipVacancy.Title,
@@ -739,7 +784,7 @@
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
-            return GetPendingQAVacanciesOverview().Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
+            return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
         private void CreateChildVacancy(ApprenticeshipVacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)
@@ -857,16 +902,9 @@
             vacancy.Ukprn = viewModel.Ukprn;
             vacancy.Title = viewModel.Title;
             vacancy.ShortDescription = viewModel.ShortDescription;
-            vacancy.TrainingType = viewModel.TrainingType;
-            vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
-            vacancy.StandardId = viewModel.StandardId;
-            vacancy.StandardIdComment = viewModel.StandardIdComment;
-            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
             vacancy.OfflineVacancy = viewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = viewModel.OfflineApplicationInstructions;
-            vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
-            vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
             vacancy.OfflineApplicationInstructionsComment = viewModel.OfflineApplicationInstructionsComment;
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
@@ -875,6 +913,34 @@
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
+            return viewModel;
+        }
+
+        public TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
+        {
+            if (!viewModel.VacancyReferenceNumber.HasValue)
+                throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+
+            //update properties
+            vacancy.TrainingType = viewModel.TrainingType;
+            vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
+            vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardIdComment = viewModel.StandardIdComment;
+            vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
+            vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
+            vacancy.TrainingProvided = viewModel.TrainingProvided;
+            vacancy.TrainingProvidedComment = viewModel.TrainingProvidedComment;
+            vacancy.ContactName = viewModel.ContactName;
+            vacancy.ContactNumber = viewModel.ContactNumber;
+            vacancy.ContactEmail = viewModel.ContactEmail;
+            vacancy.ContactDetailsComment = viewModel.ContactDetailsComment;
+
+            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+
+            viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
             var sectors = GetSectorsAndFrameworks();
             var standards = GetStandards();
             viewModel.SectorsAndFrameworks = sectors;

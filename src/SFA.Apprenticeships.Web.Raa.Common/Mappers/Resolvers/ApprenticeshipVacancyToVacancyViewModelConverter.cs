@@ -24,9 +24,9 @@
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
                 Status = source.Status,
                 NewVacancyViewModel = context.Engine.Map<ApprenticeshipVacancy, NewVacancyViewModel>(source),
+                TrainingDetailsViewModel = context.Engine.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(source),
                 VacancySummaryViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancySummaryViewModel>(source),
-                VacancyRequirementsProspectsViewModel =
-                    context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
+                VacancyRequirementsProspectsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount
             };

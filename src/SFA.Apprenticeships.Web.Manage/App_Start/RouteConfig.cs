@@ -104,6 +104,12 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.TrainingDetails,
+                url: "vacancy/training",
+                defaults: new { controller = "Vacancy", action = "TrainingDetails" }
+                );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.RequirementsAndProspoects,
                 url: "vacancy/requirementsprospects",
                 defaults: new { controller = "Vacancy", action = "RequirementsAndProspects" }

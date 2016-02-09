@@ -22,7 +22,7 @@
         {
             _referenceRepository = new Mock<IReferenceRepository>();
 
-            _referenceDataProvider = new ReferenceDataProvider(_referenceRepository.Object, new CountyMapper());
+            _referenceDataProvider = new ReferenceDataProvider(_referenceRepository.Object, new CountyMapper(), new RegionMapper(), new LocalAuthorityMapper());
         }
 
         [Test]

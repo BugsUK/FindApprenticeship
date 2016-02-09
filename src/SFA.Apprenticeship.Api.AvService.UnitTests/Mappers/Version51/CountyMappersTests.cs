@@ -7,7 +7,7 @@
     using Ploeh.AutoFixture;
 
     [TestFixture]
-    public class ReferenceDataMappersTests
+    public class CountyMappersTests
     {
         private ICountyMapper _mapper;
 

@@ -15,6 +15,7 @@
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
+    using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
 
     public class AgencyUserController : ManagementControllerBase
@@ -93,10 +94,10 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         [OwinSessionTimeout]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult Dashboard()
+        public ActionResult Dashboard(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
-            var response = _agencyUserMediator.GetHomeViewModel(claimsPrincipal);
+            var response = _agencyUserMediator.GetHomeViewModel(claimsPrincipal, searchViewModel);
 
             return View(response.ViewModel);
         }

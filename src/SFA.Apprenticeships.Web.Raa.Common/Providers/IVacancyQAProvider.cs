@@ -3,14 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using FluentValidation.Results;
-    using ViewModels;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public interface IVacancyQAProvider
     {
-        List<DashboardVacancySummaryViewModel> GetPendingQAVacanciesOverview();
+        DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel);
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
@@ -22,6 +20,8 @@
 
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+
         VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
@@ -31,6 +31,8 @@
         VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel);
 
         NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
+
+        TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 

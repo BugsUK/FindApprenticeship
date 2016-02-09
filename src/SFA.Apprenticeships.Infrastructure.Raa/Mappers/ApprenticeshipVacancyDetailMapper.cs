@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -71,9 +72,9 @@
                 //ProviderName = vacancy.ProviderSiteEmployerLink.,
                 //TradingName = vacancy.,
                 //ProviderDescription = vacancy.,
-                //Contact = vacancy.,
+                Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,
-                //TrainingToBeProvided = vacancy.,
+                TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
                 //DeliveryOrganisation = vacancy.,
@@ -120,6 +121,33 @@
             }
 
             return detail;
+        }
+
+        private static string GetContactInformation(ApprenticeshipVacancy vacancy)
+        {
+            var sb = new StringBuilder();
+            if (!string.IsNullOrEmpty(vacancy.ContactName))
+            {
+                sb.Append(vacancy.ContactName);
+            }
+            if (!string.IsNullOrEmpty(vacancy.ContactNumber))
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(" ");
+                }
+                sb.Append(vacancy.ContactNumber);
+            }
+            if (!string.IsNullOrEmpty(vacancy.ContactEmail))
+            {
+                if (sb.Length > 0)
+                {
+                    sb.Append(" ");
+                }
+                sb.Append(vacancy.ContactEmail);
+            }
+
+            return sb.ToString();
         }
     }
 }

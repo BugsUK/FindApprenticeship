@@ -18,6 +18,8 @@
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 
+        public TrainingDetailsViewModel TrainingDetailsViewModel { get; set; }
+
         public VacancySummaryViewModel VacancySummaryViewModel { get; set; }
 
         public VacancyRequirementsProspectsViewModel VacancyRequirementsProspectsViewModel { get; set; }
@@ -38,6 +40,8 @@
         public bool ResubmitOption { get; set; }
 
         public string BasicDetailsLink { get; set; }
+
+        public string TrainingDetailsLink { get; set; }
 
         public string SummaryLink { get; set; }
 

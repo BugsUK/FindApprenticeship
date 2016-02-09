@@ -6,5 +6,9 @@
     public interface IReferenceDataProvider
     {
         List<CountyData> GetCounties();
+
+        List<RegionData> GetRegions();
+
+        List<LocalAuthorityData> GetLocalAuthorities();
     }
 }

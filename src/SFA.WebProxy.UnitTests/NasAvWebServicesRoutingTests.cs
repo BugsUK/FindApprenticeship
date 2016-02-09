@@ -105,6 +105,22 @@
             routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/VacancyDetails51.svc");
         }
 
+        [Test]
+        public void ReferenceDataPage_LiveServiceOnly()
+        {
+            //Arrange
+            _configuration.Setup(c => c.NasAvWebServiceRootUri).Returns(new Uri(NasAvWebServiceRootUriString + "/Services"));
+            var uri = new Uri("http://localhost:23791/ReferenceData/ReferenceData51.svc");
+
+            //Act
+            var routing = _proxyRouting.GetRouting(uri, HttpMethod.Get, null, null, new RouteIdentifier());
+
+            //Assert
+            routing.Routes.Count.Should().Be(2);
+            routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + "/Services/ReferenceData/ReferenceData51.svc");
+            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/ReferenceData51.svc");
+        }
+
         [TestCase("https://apprenticeshipvacancymatchingservice.lsc.gov.uk/Sandbox/ApplicationTracking/ApplicationTracking51.svc", false)]
         [TestCase("https://apprenticeshipvacancymatchingservice.lsc.gov.uk/Services/ApplicationTracking/ApplicationTracking51.svc", false)]
         [TestCase("https://apprenticeshipvacancymatchingservice.lsc.gov.uk/Services/ReferenceData/ReferenceData51.svc", true)]

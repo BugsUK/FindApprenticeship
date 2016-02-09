@@ -61,15 +61,11 @@
                 {
                     return new Fixture().Build<ApprenticeshipVacancy>()
                         .With(av => av.VacancyReferenceNumber, newVacancyVM.VacancyReferenceNumber.Value)
-                        .With(av => av.ApprenticeshipLevelComment, Guid.NewGuid().ToString())
-                        .With(av => av.FrameworkCodeNameComment, Guid.NewGuid().ToString())
                         .With(av => av.OfflineApplicationInstructionsComment, Guid.NewGuid().ToString())
                         .With(av => av.OfflineApplicationUrlComment, Guid.NewGuid().ToString())
                         .With(av => av.ShortDescriptionComment, Guid.NewGuid().ToString())
                         .With(av => av.TitleComment, Guid.NewGuid().ToString())
-                        .With(av => av.ApprenticeshipLevel, newVacancyVM.ApprenticeshipLevel)
-                        .With(av => av.FrameworkCodeName, Guid.NewGuid().ToString())
-                        .With(av => av.OfflineApplicationUrl, string.Format("http://www.google.com/{0}", Guid.NewGuid().ToString()))
+                        .With(av => av.OfflineApplicationUrl, string.Format("http://www.google.com/{0}", Guid.NewGuid()))
                         .With(av => av.OfflineApplicationInstructions, Guid.NewGuid().ToString())
                         .With(av => av.ShortDescription, Guid.NewGuid().ToString())
                         .With(av => av.Title, Guid.NewGuid().ToString())
@@ -97,15 +93,10 @@
             vacancyPostingService.Verify(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
             vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
             result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
-            result.ApprenticeshipLevelComment.Should().Be(newVacancyVM.ApprenticeshipLevelComment);
-            result.FrameworkCodeNameComment.Should().Be(newVacancyVM.FrameworkCodeNameComment);
             result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
             result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
-            result.StandardIdComment.Should().Be(newVacancyVM.StandardIdComment);
             result.TitleComment.Should().Be(newVacancyVM.TitleComment);
-            result.ApprenticeshipLevel.Should().Be(newVacancyVM.ApprenticeshipLevel);
-            result.FrameworkCodeName.Should().Be(newVacancyVM.FrameworkCodeName);
             result.OfflineApplicationInstructions.Should().Be(newVacancyVM.OfflineApplicationInstructions);
             result.OfflineApplicationUrl.Should().Be(newVacancyVM.OfflineApplicationUrl);
             result.ShortDescription.Should().Be(newVacancyVM.ShortDescription);
@@ -139,6 +130,74 @@
 
             //Assert
             action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void UpdateTrainingDetailsWithComments()
+        {
+            //Arrange
+            const string ukprn = "ukprn";
+
+            var trainingDetailsViewModel = new Fixture().Build<TrainingDetailsViewModel>().Create();
+
+            var sectorList = new List<Sector>()
+            {
+                new Fixture().Build<Sector>().Create()
+            };
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+            var referenceDataService = new Mock<IReferenceDataService>();
+            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
+            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+
+            //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
+            vacancyPostingService.Setup(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value)).Returns(
+                (long refNo) =>
+                {
+                    return new Fixture().Build<ApprenticeshipVacancy>()
+                        .With(av => av.VacancyReferenceNumber, trainingDetailsViewModel.VacancyReferenceNumber.Value)
+                        .With(av => av.ApprenticeshipLevelComment, Guid.NewGuid().ToString())
+                        .With(av => av.FrameworkCodeNameComment, Guid.NewGuid().ToString())
+                        .With(av => av.ApprenticeshipLevel, trainingDetailsViewModel.ApprenticeshipLevel)
+                        .With(av => av.FrameworkCodeName, Guid.NewGuid().ToString())
+                        .With(av => av.StandardIdComment, Guid.NewGuid().ToString())
+                        .With(av => av.StandardId, null)
+                        .Create();
+                });
+
+            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns((ApprenticeshipVacancy av) => av);
+
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
+                .Returns((ApprenticeshipVacancy av) => trainingDetailsViewModel);
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .With(referenceDataService)
+                    .With(mapper)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancyWithComments(trainingDetailsViewModel);
+
+            //Assert
+            vacancyPostingService.Verify(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value), Times.Once);
+            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
+            result.VacancyReferenceNumber.Should().Be(trainingDetailsViewModel.VacancyReferenceNumber);
+            result.ApprenticeshipLevelComment.Should().Be(trainingDetailsViewModel.ApprenticeshipLevelComment);
+            result.FrameworkCodeNameComment.Should().Be(trainingDetailsViewModel.FrameworkCodeNameComment);
+            result.StandardIdComment.Should().Be(trainingDetailsViewModel.StandardIdComment);
+            result.StandardId.Should().Be(trainingDetailsViewModel.StandardId);
+            result.ApprenticeshipLevel.Should().Be(trainingDetailsViewModel.ApprenticeshipLevel);
+            result.FrameworkCodeName.Should().Be(trainingDetailsViewModel.FrameworkCodeName);
         }
 
         [Test]
@@ -574,7 +633,7 @@
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
 
             //Act
-            var vacancies = vacancyProvider.GetPendingQAVacanciesOverview();
+            var vacancies = vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies;
 
             //Assert
             vacancies.Should().HaveCount(2);

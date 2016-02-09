@@ -83,6 +83,8 @@
                 x.For<IVacancyUploadRequestMapper>().Use<VacancyUploadRequestMapper>();
                 x.For<IWageMapper>().Use<WageMapper>();
                 x.For<ICountyMapper>().Use<CountyMapper>();
+                x.For<IRegionMapper>().Use<RegionMapper>();
+                x.For<ILocalAuthorityMapper>().Use<LocalAuthorityMapper>();
             });
         }
 
