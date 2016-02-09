@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using Builders;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
@@ -11,7 +12,6 @@
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
-    using Raa.Common.UnitTests.Builders;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
 

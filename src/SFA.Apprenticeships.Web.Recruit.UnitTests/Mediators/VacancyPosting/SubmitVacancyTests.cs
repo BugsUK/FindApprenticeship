@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using Builders;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.UnitTests.Builders;
     using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
