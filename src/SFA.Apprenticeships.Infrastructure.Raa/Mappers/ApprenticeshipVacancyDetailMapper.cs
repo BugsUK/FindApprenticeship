@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using Domain.Entities.Locations;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -96,6 +97,12 @@
                 //Location = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }, //Coventry
                 //SubCategoryCode = vacancy.FrameworkCodeName
             };
+
+            if (detail.VacancyAddress.GeoPoint == null)
+            {
+                //TODO: Store geopoints for employers
+                detail.VacancyAddress.GeoPoint = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }; //Coventry
+            }
 
             var frameworkCodeName = vacancy.FrameworkCodeName;
             if (!string.IsNullOrEmpty(frameworkCodeName))
