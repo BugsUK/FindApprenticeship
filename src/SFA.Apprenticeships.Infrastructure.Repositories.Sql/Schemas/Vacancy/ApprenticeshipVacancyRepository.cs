@@ -11,10 +11,8 @@
     using Domain.Interfaces.Repositories;
     using Common;
     using CuttingEdge.Conditions;
-    using Reference.Entities;
     using Entities;
     using SFA.Infrastructure.Interfaces;
-    using System.Diagnostics;
     using Vacancy = Entities.Vacancy;
 
     // TODO GenericSqlClient??
@@ -307,14 +305,14 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.EntityId);
 
-            UpdateEntityTimestamps(entity);
+            // UpdateEntityTimestamps(entity); // Do we need this?
 
-            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Entities.Vacancy>(entity);
+            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy>(entity);
 
             //dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
 
-            PopulateVacancyPartyIds(entity, dbVacancy);
-            PopulateFrameworkId(entity, dbVacancy);
+            //PopulateVacancyPartyIds(entity, dbVacancy);
+            //PopulateFrameworkId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -367,14 +365,14 @@ FROM Reference.Framework
 WHERE CodeName = @FrameworkCodeName
 ", new {vacancy.FrameworkCodeName});
 
-            if (framework.Any())
-            {
-                dbVacancy.FrameworkId = framework.First();
-            }
-            else
-            {
-                dbVacancy.FrameworkId = null;
-            }
+            //if (framework.Any())
+            //{
+            //    dbVacancy.FrameworkId = framework.First();
+            //}
+            //else
+            //{
+            //    dbVacancy.FrameworkId = null;
+            //}
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)

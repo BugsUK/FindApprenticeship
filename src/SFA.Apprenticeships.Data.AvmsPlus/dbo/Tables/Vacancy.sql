@@ -1,5 +1,6 @@
 ﻿CREATE TABLE [dbo].[Vacancy] (
     [VacancyId]                        INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+	[VacancyGuid]					   UNIQUEIDENTIFIER NOT NULL,
     [VacancyOwnerRelationshipId]       INT              NOT NULL,
     [VacancyReferenceNumber]           INT              NULL,
     [ContactName]                      NVARCHAR (100)   NULL,

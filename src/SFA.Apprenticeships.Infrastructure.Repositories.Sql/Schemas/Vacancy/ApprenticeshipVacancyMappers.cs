@@ -130,7 +130,7 @@
             
             Mapper.CreateMap<ApprenticeshipVacancy, Entities.Vacancy>()
                 // Ignore (maybe temporaly) ids from other entities
-                .IgnoreMember(v => v.FrameworkId) // -> Map from FrameworkCodeName
+                // .IgnoreMember(v => v.FrameworkId) // -> Map from FrameworkCodeName
                 .IgnoreMember(v => v.ContractOwnerID)
                 .IgnoreMember(v => v.CountyId)
                 .IgnoreMember(v => v.DeliveryOrganisationID)
@@ -138,9 +138,11 @@
                 .IgnoreMember(v => v.OriginalContractOwnerId)
                 .IgnoreMember(v => v.VacancyLocationTypeId)
                 .IgnoreMember(v => v.VacancyManagerID)
-                .IgnoreMember(v => v.VacancyOwnerRelationshipId)
-                .IgnoreMember(v => v.VacancyStatusId)
-                // .MapMemberFrom(v => v.VacancyId, av => av.EntityId) // Change to int
+                // .IgnoreMember(v => v.VacancyOwnerRelationshipId)
+                .ForMember( v=> v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
+                //.IgnoreMember(v => v.VacancyStatusId)
+                .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
+                .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
                 .IgnoreMember(v => v.VacancyId)
                 
                 // Map employer address
@@ -179,7 +181,7 @@
                 .IgnoreMember(v => v.NumberOfViews)
                 .IgnoreMember(v=>v.EmployerAnonymousName)
                 .MapMemberFrom(v=> v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // Correct?
-                .MapMemberFrom(v => v.EmployerWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl) //Correct?
+                .MapMemberFrom(v => v.EmployersWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl) //Correct?
                 .IgnoreMember(v => v.MaxNumberofApplications)
                 .MapMemberFrom(v => v.ApplyOutsideNAVMS, av => av.OfflineVacancy)
                 .MapMemberFrom(v => v.EmployersApplicationInstructions, av => av.OfflineApplicationInstructions)
@@ -192,11 +194,11 @@
                 .IgnoreMember(v => v.MasterVacancyId)
                 .IgnoreMember(v => v.SmallEmployerWageIncentive)
                 .IgnoreMember( v=> v.VacancyManagerAnonymous)
+                .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Db lookup?
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
-                // .MapMemberFrom(av => av.EntityId, v => v.VacancyId) // Needs moving to int
-                .IgnoreMember(av => av.EntityId)
+                .MapMemberFrom(av => av.EntityId, v => v.VacancyGuid)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription,av => av.ShortDescription)

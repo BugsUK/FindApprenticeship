@@ -4,10 +4,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("Vacancy.Vacancy")]
+    [Table("dbo.Vacancy")]
     public class Vacancy
     {
         public int VacancyId { get; set; }
+
+        public Guid VacancyGuid { get; set; }
 
         public int VacancyOwnerRelationshipId { get; set; }
 
@@ -43,7 +45,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public decimal? Latitude { get; set; }
 
-        public int? FrameworkId { get; set; }
+        public int? ApprenticeshipFrameworkId { get; set; }
 
         //public string FrameworkIdComment { get; set; }
 
@@ -56,7 +58,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         //public string TitleComment { get; set; }
 
-        public int ApprenticeshipType { get; set; } // equivalent to LevelCode (old-new schema)
+        public int? ApprenticeshipType { get; set; } // equivalent to LevelCode (old-new schema)
 
         //public string LevelCodeComment { get; set; }
         
@@ -80,6 +82,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string WageComment { get; set; }
 
+        [Column(TypeName = "smallint")]
         public short? NumberOfPositions { get; set; } // was int
 
         // public string NumberOfPositionsComment { get; set; }
@@ -118,7 +121,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         //public string EmployerDescriptionComment { get; set; }
 
-        public string EmployerWebsite { get; set; } // was EmployerWebsite
+        public string EmployersWebsite { get; set; } // was EmployerWebsite -> change to employerwebsite?
 
         public int? MaxNumberofApplications { get; set; }
 
@@ -146,7 +149,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int? NoOfOfflineSystemApplicants { get; set; } // equivalent to OfflineApplicationClickThroughCount
 
-        public int VacancyManagerID { get; set; } // Probably equivalent to ManagerVacancyPartyId, or VacancyManagerID
+        public int? VacancyManagerID { get; set; } // Probably equivalent to ManagerVacancyPartyId, or VacancyManagerID
 
         public int? DeliveryOrganisationID { get; set; } // Probably equivalent to DeliveryProviderVacancyPartyId
 

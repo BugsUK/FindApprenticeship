@@ -73,6 +73,10 @@
         {
             var fixture = new Fixture();
 
+            fixture.Customizations.Add(
+                new StringGenerator(() =>
+                    Guid.NewGuid().ToString().Substring(0, 10)));
+
             var result = fixture.Build<ApprenticeshipVacancy>()
                 .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
                 .With(av => av.DateSubmitted, null)
@@ -97,7 +101,8 @@
                 result.StandardId = StandardId_Standard1;
             }
 
-            result.ProviderSiteEmployerLink.Employer.Ern = "101"; // fixture.Create<int>().ToString();
+            result.ProviderSiteEmployerLink.Employer.Ern = "101";
+            result.ProviderSiteEmployerLink.Employer.Address.Postcode = "CV1 2WT";
             result.Ukprn = "202"; //TODO: check with database values.
 
             if (result.IsEmployerLocationMainApprenticeshipLocation.GetValueOrDefault())

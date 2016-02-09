@@ -850,5 +850,14 @@
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProvider.Upsert.sql" />
     <None Include="Publish\localhost.sqlexpress.publish.xml" />
+    <None Include="Scripts\TestData\dbo.PersonTitleType.sql" />
+    <None Include="Scripts\TestData\dbo.PersonType.sql" />
+    <None Include="Scripts\TestData\dbo.Person.sql" />
+    <None Include="Scripts\TestData\dbo.ContactPreferenctType.sql" />
+    <None Include="Scripts\TestData\dbo.EmployerContact.sql" />
+    <None Include="Scripts\TestData\dbo.Employer.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
   </ItemGroup>
 </Project>
