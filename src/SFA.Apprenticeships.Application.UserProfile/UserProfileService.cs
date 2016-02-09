@@ -22,7 +22,7 @@
             _agencyUserWriteRepository = agencyUserWriteRepository;
         }
 
-        public ProviderUser GetProviderUser(Guid id)
+        public ProviderUser GetProviderUser(int id)
         {
             return _providerUserReadRepository.Get(id);
         }

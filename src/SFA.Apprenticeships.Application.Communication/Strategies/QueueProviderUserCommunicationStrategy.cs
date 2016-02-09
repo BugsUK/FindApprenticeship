@@ -31,7 +31,8 @@
 
             var request = new CommunicationRequest
             {
-                EntityId = providerUser.EntityId,
+                // TODO: SQL: AG: unit test.
+                EntityId = providerUser.ProviderUserGuid,
                 MessageType = messageType,
                 Tokens = tokens
             };

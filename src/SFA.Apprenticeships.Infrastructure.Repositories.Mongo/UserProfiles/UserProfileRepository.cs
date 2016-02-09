@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
+﻿// TODO: SQL: AG: remove dead code.
+
+/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
 {
     using System;
     using System.Collections.Generic;
@@ -81,3 +84,4 @@
         }
     }
 }
+*/

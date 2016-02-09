@@ -112,6 +112,8 @@
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="ICreatableEntity.cs" />
+    <Compile Include="IUpdatableEntity.cs" />
     <Compile Include="Locations\PostalAddress.cs" />
     <Compile Include="Locations\VacancyLocationAddress.cs" />
     <Compile Include="Organisations\Employer.cs" />

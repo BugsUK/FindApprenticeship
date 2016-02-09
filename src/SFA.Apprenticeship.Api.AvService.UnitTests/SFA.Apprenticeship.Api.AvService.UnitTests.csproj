@@ -159,10 +159,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeship.Api.AvService\SFA.Apprenticeship.Api.AvService.csproj">
-      <Project>{F5CE7351-7509-4E21-A74C-16C5EC81BAF8}</Project>
-      <Name>SFA.Apprenticeship.Api.AvService</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2c577447-2405-46b3-8065-613a19a58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>

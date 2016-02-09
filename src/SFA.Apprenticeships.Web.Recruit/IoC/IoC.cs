@@ -23,7 +23,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Infrastructure.Repositories.Mongo.Employers.IoC;
     using Infrastructure.Repositories.Mongo.Providers.IoC;
-    using Infrastructure.Repositories.Mongo.UserProfiles.IoC;
     using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.TacticalDataServices.IoC;
@@ -58,7 +57,10 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp
-                x.AddRegistry<UserProfileRepositoryRegistry>();
+
+                // TODO: SQL: AG: fix.
+                // x.AddRegistry<UserProfileRepositoryRegistry>();
+
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<TacticalDataServicesRegistry>();

@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC
+﻿// TODO: SQL: AG: remove dead code.
+
+/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.IoC
 {
     using Domain.Interfaces.Repositories;
     using Mappers;
@@ -17,3 +20,4 @@
         }
     }
 }
+*/
