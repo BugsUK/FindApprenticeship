@@ -1,12 +1,23 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.UserProfile.Entities
 {
+    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
     [Table("UserProfile.Role")]
     public class Role
     {
-        public string Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public int Id { get; set; }
+
+        [Required]
+        [StringLength(3)]
+        public string CodeName { get; set; }
+
+        [Required]
         public string Name { get; set; }
+
+        [Required]
         public bool IsDefault { get; set; }
     }
 }
