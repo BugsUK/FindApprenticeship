@@ -22,7 +22,7 @@
     /// </summary>
     public class DatabaseInitialiser
     {
-        private const string DatabaseProjectName = "SFA.Apprenticeships.Data";
+        private const string DatabaseProjectName = "SFA.Apprenticeships.Data.AvmsPlus";
 
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private readonly string _dacpacFilePath;
@@ -47,7 +47,7 @@
             //if (!File.Exists(_dacpacFilePath))
             //{
             //    //For NCrunch on Dave's machine
-            //    databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
+                databaseProjectPath = $"C:\\Code\\Beta\\src\\{DatabaseProjectName}";
             //    _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
             //}
         }

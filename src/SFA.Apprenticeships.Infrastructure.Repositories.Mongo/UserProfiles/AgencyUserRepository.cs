@@ -3,13 +3,13 @@
     using System;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
-    using Mongo.UserProfiles.Entities;
+    using Common;
+    using Common.Configuration;
+    using Entities;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class AgencyUserRepository : GenericMongoClient<MongoAgencyUser, Guid>, IAgencyUserReadRepository, IAgencyUserWriteRepository
+    public class AgencyUserRepository : GenericMongoClient<MongoAgencyUser, int>, IAgencyUserReadRepository, IAgencyUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -24,11 +24,18 @@
 
         public AgencyUser Get(Guid id)
         {
-            _logger.Debug("Called Mongodb to get agency user with Id={0}", id);
+            //_logger.Debug("Called Mongodb to get agency user with Id={0}", id);
 
-            var mongoEntity = Collection.FindOneById(id);
+            //var mongoEntity = Collection.FindOneById(id);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoAgencyUser, AgencyUser>(mongoEntity);
+            //return mongoEntity == null ? null : _mapper.Map<MongoAgencyUser, AgencyUser>(mongoEntity);
+
+            throw new NotImplementedException();
+        }
+
+        public AgencyUser Get(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public AgencyUser Get(string username)
@@ -42,11 +49,18 @@
 
         public void Delete(Guid id)
         {
-            _logger.Debug("Calling repository to delete agency user with Id={0}", id);
+            //_logger.Debug("Calling repository to delete agency user with Id={0}", id);
 
-            Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.Id, id));
+            //Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.Id, id));
 
-            _logger.Debug("Deleted agency user with Id={0}", id);
+            //_logger.Debug("Deleted agency user with Id={0}", id);
+
+            throw new NotImplementedException();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public AgencyUser Save(AgencyUser entity)

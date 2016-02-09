@@ -2,9 +2,11 @@
 {
     using System;
 
-    public class AgencyUser : BaseEntity<Guid>
+    public class AgencyUser : BaseEntity<int>
     {
         public string Username { get; set; }
+
+        // TODO: SQL: OO: consider 
         public Team Team { get; set; }
         public Role Role { get; set; }
     }

@@ -21,7 +21,6 @@
             {
                 Id = id,
                 Name = name,
-                AllowTeamSelection = true,
                 IsDefault = isDefault
             };
         }

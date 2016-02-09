@@ -100,6 +100,9 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
+    <OutputPath>bin\Local\</OutputPath>
+  </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
@@ -112,6 +115,7 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="Provider" />
+    <Folder Include="dbo\Schemas" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\TestData" />
     <Folder Include="Scripts\Data" />
@@ -843,6 +847,10 @@
     <Build Include="Schemas\Provider.sql" />
     <PostDeploy Include="PostDeployment.sql" />
     <None Include="Scripts\Data\dbo.County.Upsert.sql" />
+    <Build Include="dbo\Tables\Team.sql" />
+    <Build Include="dbo\Schemas\UserProfile.sql" />
+    <Build Include="dbo\Tables\Role.sql" />
+    <Build Include="dbo\Tables\AgencyUser.sql" />
     <None Include="Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />
@@ -859,5 +867,8 @@
     <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
     <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
     <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
   </ItemGroup>
 </Project>
