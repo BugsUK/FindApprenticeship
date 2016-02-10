@@ -32,7 +32,7 @@
             set
             {
                 _role = value;
-                RoleId = value.AgencyUserRoleId;
+                RoleId = value?.AgencyUserRoleId;
             }
         }
 
@@ -47,7 +47,7 @@
             set
             {
                 _team = value;
-                TeamId = value.AgencyUserTeamId;
+                TeamId = value?.AgencyUserTeamId;
             }
         }
     }

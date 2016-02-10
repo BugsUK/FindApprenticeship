@@ -32,6 +32,9 @@
     {
         public AgencyUserRole Convert(ResolutionContext context)
         {
+            if (context.SourceValue == null)
+                return null;
+
             var source = (Role)context.SourceValue;
             var result = new AgencyUserRole()
             {
@@ -50,6 +53,9 @@
     {
         public Role Convert(ResolutionContext context)
         {
+            if (context.SourceValue == null)
+                return null;
+
             var source = (AgencyUserRole)context.SourceValue;
             var result = new Role()
             {
@@ -68,6 +74,9 @@
     {
         public AgencyUserTeam Convert(ResolutionContext context)
         {
+            if (context.SourceValue == null)
+                return null;
+
             var source = (Team)context.SourceValue;
             var result = new AgencyUserTeam()
             {
@@ -86,6 +95,9 @@
     {
         public Team Convert(ResolutionContext context)
         {
+            if (context.SourceValue == null)
+                return null;
+
             var source = (AgencyUserTeam)context.SourceValue;
             var result = new Team()
             {

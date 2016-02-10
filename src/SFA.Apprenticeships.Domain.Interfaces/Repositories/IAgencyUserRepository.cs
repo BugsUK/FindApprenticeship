@@ -5,15 +5,11 @@
 
     public interface IAgencyUserReadRepository
     {
-        AgencyUser Get(int id);
-
         AgencyUser Get(string username);
     }
 
     public interface IAgencyUserWriteRepository
     {
-        void Delete(int id);
-
         AgencyUser Save(AgencyUser entity);
     }
 }

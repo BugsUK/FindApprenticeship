@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.UserProfile
 {
-    using System.Runtime.Remoting.Metadata.W3cXsd2001;
+    using System;
     using Common;
+    using FluentAssertions;
+    using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
@@ -11,15 +13,14 @@
     [TestFixture(Category = "Integration")]
     public class AgencyUserRepositoryTests
     {
+        private AgencyUserRepository _repoUnderTest;
         private readonly IMapper _mapper = new AgencyUserMappers();
         private IGetOpenConnection _connection;
+        private Mock<ILogService> _logger;
         private AgencyUserTeam _agencyUserTeamA;
         private AgencyUserTeam _agencyUserTeamB;
         private AgencyUserRole _agencyUserRoleA;
         private AgencyUserRole _agencyUserRoleB;
-        private AgencyUser userWithNeitherRoleNorTeam;
-        private AgencyUser userWithRole;
-        private AgencyUser userWithTeam;
         private AgencyUser userWithBothRoleAndTeam;
 
 
@@ -30,9 +31,6 @@
             _agencyUserTeamB = new AgencyUserTeam() { AgencyUserTeamId = 2, IsDefault = 0, CodeName = "B", Name = "Team B" };
             _agencyUserRoleA = new AgencyUserRole() { AgencyUserRoleId = 1, IsDefault = 0, CodeName = "A", Name = "Role A" };
             _agencyUserRoleB = new AgencyUserRole() { AgencyUserRoleId = 2, IsDefault = 0, CodeName = "B", Name = "Role B" };
-            userWithNeitherRoleNorTeam = new AgencyUser() { Username = "user" };
-            userWithRole = new AgencyUser() { Username = "userWithRole", Role = _agencyUserRoleA };
-            userWithTeam = new AgencyUser() { Username = "userTeam", Team = _agencyUserTeamA };
             userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam", Role = _agencyUserRoleB, Team = _agencyUserTeamB };
 
             var dbInitialiser = new DatabaseInitialiser();
@@ -48,11 +46,15 @@
             dbInitialiser.Seed(seedObjects);
 
             _connection = dbInitialiser.GetOpenConnection();
+
+            _logger = new Mock<ILogService>();
+
+            _repoUnderTest = new AgencyUserRepository(_connection, _mapper, _logger.Object);
         }
 
         private object[] GetSeedObjects()
         {
-            var seedObjects = new object[] {_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, userWithBothRoleAndTeam, userWithNeitherRoleNorTeam, userWithRole, userWithTeam};
+            var seedObjects = new object[] {_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, userWithBothRoleAndTeam};
 
             return seedObjects;
         }
@@ -61,45 +63,87 @@
         /// Ensure it gets the user along with role and team
         /// </summary>
         [Test]
-        public void DoGetById()
-        {
-            Assert.Inconclusive();
-        }
-
-        /// <summary>
-        /// Ensure it gets the user along with role and team
-        /// </summary>
-        [Test]
         public void DoGetByUsername()
         {
-            Assert.Inconclusive();
-        }
+            //Arrange
 
-        /// <summary>
-        /// Ensure it deletes the user, not the role or team
-        /// </summary>
-        [Test]
-        public void DoDeleteById()
-        {
-            Assert.Inconclusive();
+            //Act
+            var result = _repoUnderTest.Get(userWithBothRoleAndTeam.Username);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Role.Should().NotBeNull();
+            result.Team.Should().NotBeNull();
         }
 
         [Test]
         public void DoSaveWithoutRoleOrTeam()
         {
-            Assert.Inconclusive();
+            //Arrange
+            var newAgencyUser = new Domain.Entities.Users.AgencyUser();
+            newAgencyUser.Username = Guid.NewGuid().ToString();
+            newAgencyUser.Role = null;
+            newAgencyUser.Team = null;
+
+            //Act
+            var result = _repoUnderTest.Save(newAgencyUser);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Role.Should().BeNull();
+            result.Team.Should().BeNull();
         }
 
         [Test]
         public void DoSaveWithRole()
         {
-            Assert.Inconclusive();
+            //Arrange
+            var newAgencyUser = new Domain.Entities.Users.AgencyUser();
+            newAgencyUser.Username = Guid.NewGuid().ToString();
+            newAgencyUser.Role = new Domain.Entities.Users.Role()
+            {
+                CodeName = "B",
+                Id = _agencyUserRoleB.AgencyUserRoleId.ToString(),
+                IsDefault = false,
+                Name = "Anything you like"
+            };
+            newAgencyUser.Team = null;
+
+            //Act
+            var result = _repoUnderTest.Save(newAgencyUser);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Role.Should().NotBeNull();
+            result.Team.Should().BeNull();
+            result.Role.CodeName.Should().Be("B");
+            result.Role.Id.Should().Be(_agencyUserRoleB.AgencyUserRoleId.ToString());
         }
 
         [Test]
         public void DoSaveWithTeam()
         {
-            Assert.Inconclusive();
+            //Arrange
+            var newAgencyUser = new Domain.Entities.Users.AgencyUser();
+            newAgencyUser.Username = Guid.NewGuid().ToString();
+            newAgencyUser.Team = new Domain.Entities.Users.Team()
+            {
+                CodeName = "B",
+                Id = _agencyUserTeamB.AgencyUserTeamId.ToString(),
+                IsDefault = false,
+                Name = "Anything you like"
+            };
+            newAgencyUser.Role = null;
+
+            //Act
+            var result = _repoUnderTest.Save(newAgencyUser);
+
+            //Assert
+            result.Should().NotBeNull();
+            result.Team.Should().NotBeNull();
+            result.Role.Should().BeNull();
+            result.Team.CodeName.Should().Be("B");
+            result.Team.Id.Should().Be(_agencyUserTeamB.AgencyUserTeamId.ToString());
         }
     }
 }
