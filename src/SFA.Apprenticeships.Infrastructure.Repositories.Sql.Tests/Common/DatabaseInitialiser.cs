@@ -47,7 +47,7 @@
             //if (!File.Exists(_dacpacFilePath))
             //{
             //    //For NCrunch on Dave's machine
-                //databaseProjectPath = $"C:\\Code\\Beta\\src\\{DatabaseProjectName}";
+                //databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
             //    _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
             //}
         }
@@ -146,8 +146,9 @@
                 var propValue = prop.GetValue(vacancy, null);
 
                 var name = prop.Name;
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
 
-                if (name != typeIdProperty)
+                if (name != typeIdProperty && attributeMapped)
                 {
                     if (propValue == null)
                     {
@@ -162,6 +163,7 @@
                 }
                 else
                 {
+                    sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
                     sqlBuilder.Append(i != props.Count - 1 ? "" : ")");
                 }
             }
@@ -175,9 +177,19 @@
 
                 var name = prop.Name;
 
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
+
                 if (name != typeIdProperty)
                 {
-                    sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    if (attributeMapped)
+                    {
+                        sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    }
+                    else if (i == props.Count - 1)
+                    {
+                        sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
+                        sqlBuilder.Append(") VALUES (");
+                    }
                 }
             }
         }

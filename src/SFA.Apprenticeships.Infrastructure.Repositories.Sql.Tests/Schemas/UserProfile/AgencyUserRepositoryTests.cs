@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.UserProfile
 {
+    using System.Runtime.Remoting.Metadata.W3cXsd2001;
     using Common;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
@@ -12,10 +13,10 @@
     {
         private readonly IMapper _mapper = new AgencyUserMappers();
         private IGetOpenConnection _connection;
-        private Team teamA;
-        private Team teamB;
-        private Role roleA;
-        private Role roleB;
+        private AgencyUserTeam _agencyUserTeamA;
+        private AgencyUserTeam _agencyUserTeamB;
+        private AgencyUserRole _agencyUserRoleA;
+        private AgencyUserRole _agencyUserRoleB;
         private AgencyUser userWithNeitherRoleNorTeam;
         private AgencyUser userWithRole;
         private AgencyUser userWithTeam;
@@ -25,14 +26,14 @@
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            teamA = new Team() {Id = 1, IsDefault = false, CodeName = "A", Name = "Team A"};
-            teamB = new Team() {Id = 2, IsDefault = false, CodeName = "B", Name = "Team B"};
-            roleA = new Role() {Id = 1, IsDefault = false, CodeName = "A", Name = "Role A"};
-            roleB = new Role() {Id = 2, IsDefault = false, CodeName = "B", Name = "Role B"};
-            userWithNeitherRoleNorTeam = new AgencyUser() {Username = "user"};
-            userWithRole = new AgencyUser() {Username = "userWithRole", RoleId = roleA.Id};
-            userWithTeam = new AgencyUser() {Username = "userTeam", TeamId = teamA.Id};
-            userWithBothRoleAndTeam = new AgencyUser() {Username = "userRoleTeam", RoleId = roleB.Id, TeamId = teamB.Id};
+            _agencyUserTeamA = new AgencyUserTeam() { AgencyUserTeamId = 1, IsDefault = 0, CodeName = "A", Name = "Team A" };
+            _agencyUserTeamB = new AgencyUserTeam() { AgencyUserTeamId = 2, IsDefault = 0, CodeName = "B", Name = "Team B" };
+            _agencyUserRoleA = new AgencyUserRole() { AgencyUserRoleId = 1, IsDefault = 0, CodeName = "A", Name = "Role A" };
+            _agencyUserRoleB = new AgencyUserRole() { AgencyUserRoleId = 2, IsDefault = 0, CodeName = "B", Name = "Role B" };
+            userWithNeitherRoleNorTeam = new AgencyUser() { Username = "user" };
+            userWithRole = new AgencyUser() { Username = "userWithRole", Role = _agencyUserRoleA };
+            userWithTeam = new AgencyUser() { Username = "userTeam", Team = _agencyUserTeamA };
+            userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam", Role = _agencyUserRoleB, Team = _agencyUserTeamB };
 
             var dbInitialiser = new DatabaseInitialiser();
 
@@ -51,7 +52,7 @@
 
         private object[] GetSeedObjects()
         {
-            var seedObjects = new object[] {teamA, teamB, roleA, roleB, userWithBothRoleAndTeam, userWithNeitherRoleNorTeam, userWithRole, userWithTeam};
+            var seedObjects = new object[] {_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, userWithBothRoleAndTeam, userWithNeitherRoleNorTeam, userWithRole, userWithTeam};
 
             return seedObjects;
         }

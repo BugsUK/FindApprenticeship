@@ -23,13 +23,13 @@
             <div class="page-link">
                 <div class="form-group">
                     <p class="form-label">Change role</p>
-                    @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles)
+                    @Html.DropDownListFor(m => m.AgencyUser.AgencyUserRoleId, Model.AgencyUser.AgencyUserRoles)
                 </div>
             </div>
             <div class="page-link">
                 <div class="form-group">
                     <p class="form-label">Change team</p>
-                    @Html.DropDownListFor(m => m.AgencyUser.TeamId, Model.AgencyUser.Teams)
+                    @Html.DropDownListFor(m => m.AgencyUser.AgencyUserTeamId, Model.AgencyUser.AgencyUserTeams)
                 </div>
             </div>
             <div style="text-align: right">
