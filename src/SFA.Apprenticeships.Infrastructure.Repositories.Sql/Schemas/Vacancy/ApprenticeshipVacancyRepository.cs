@@ -329,9 +329,47 @@ FETCH NEXT @PageSize ROWS ONLY
                     throw new Exception("Failed to update record after failed insert", ex);
             }
 
+            var vacancyId = _getOpenConnection.Query<int>(@"
+SELECT VacancyId
+FROM   dbo.Vacancy
+WHERE  VacancyGuid = @VacancyGuid",
+                new
+                {
+                    VacancyGuid = entity.EntityId
+                }).Single(); // There's a better way to do this?
+
+            SaveTextFieldsFor(vacancyId, entity);
+
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
             return entity;
+        }
+
+        private void SaveTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
+        {
+            // TODO: study how we deal with nulls
+            InsertTextField(vacancyId, "TBP", entity.TrainingProvided);
+            InsertTextField(vacancyId, "QR", entity.DesiredQualifications);
+            InsertTextField(vacancyId, "SR", entity.DesiredSkills);
+            InsertTextField(vacancyId, "PQ", entity.PersonalQualities);
+            InsertTextField(vacancyId, "OII", entity.ThingsToConsider);
+            InsertTextField(vacancyId, "FP", entity.FutureProspects);
+        }
+
+        private void InsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
+        {
+            var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
+	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
+	WHERE CodeName = '{vacancyTextFieldCodeName}'
+").Single();
+            var vacancyTextField = new VacancyTextField
+            {
+                VacancyId = vacancyId,
+                Field = vacancyTextFieldValueId,
+                Value = value
+            };
+
+            _getOpenConnection.Insert(vacancyTextField);
         }
 
         private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)

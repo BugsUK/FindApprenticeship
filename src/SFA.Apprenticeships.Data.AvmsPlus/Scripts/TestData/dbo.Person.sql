@@ -1,4 +1,4 @@
-﻿INSERT INTO [AvmsPlus].[dbo].[Person] ([Title]
+﻿INSERT INTO [dbo].[Person] ([Title]
       ,[FirstName]
       ,[Surname]
       ,[PersonTypeId] )

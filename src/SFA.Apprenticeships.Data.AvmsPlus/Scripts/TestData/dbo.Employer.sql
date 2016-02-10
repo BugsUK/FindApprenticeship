@@ -1,4 +1,4 @@
-﻿INSERT INTO [AvmsPlus].[dbo].[Employer] ([EdsUrn]
+﻿INSERT INTO [dbo].[Employer] ([EdsUrn]
       ,[FullName]
       ,[TradingName]
       ,[AddressLine1]

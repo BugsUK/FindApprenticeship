@@ -867,6 +867,7 @@
     <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
     <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
     <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyTextFieldValue.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />

@@ -1,44 +1,59 @@
-﻿INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+﻿INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Dft', 'Draft', 'Draft')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Lve',	'Live',	'Live')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Ref',	'Referred',	'Referred')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Del',	'Deleted',	'Deleted')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Sub',	'Sub',	'Submitted')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Cld',	'Cld',	'Closed')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Wdr',	'Wdr',	'Withdrawn')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Com',	'Com',	'Completed')
 
-INSERT INTO [AvmsPlus].[dbo].[VacancyStatusType] ([CodeName]
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
       ,[ShortName]
       ,[FullName])
 	  VALUES('Pie',	'Pie',	'Posted In Error')
+
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
+      ,[ShortName]
+      ,[FullName])
+	  VALUES('Pqa',	'Pqa',	'PendingQA')
+
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
+      ,[ShortName]
+      ,[FullName])
+	  VALUES('Rqa',	'Rqa',	'ReservedForQA')
+
+INSERT INTO [dbo].[VacancyStatusType] ([CodeName]
+      ,[ShortName]
+      ,[FullName])
+	  VALUES('Pva',	'Pva',	'ParentVacancy')

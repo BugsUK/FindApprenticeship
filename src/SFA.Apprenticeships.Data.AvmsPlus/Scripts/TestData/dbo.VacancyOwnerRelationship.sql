@@ -1,4 +1,4 @@
-﻿INSERT INTO [AvmsPlus].[dbo].[VacancyOwnerRelationship]([EmployerId]
+﻿INSERT INTO [dbo].[VacancyOwnerRelationship]([EmployerId]
       ,[ProviderSiteID]
       ,[ContractHolderIsEmployer]
       ,[ManagerIsEmployer]

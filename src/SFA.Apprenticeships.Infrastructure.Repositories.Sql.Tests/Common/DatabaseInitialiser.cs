@@ -47,7 +47,7 @@
             //if (!File.Exists(_dacpacFilePath))
             //{
             //    //For NCrunch on Dave's machine
-                databaseProjectPath = $"C:\\Code\\Beta\\src\\{DatabaseProjectName}";
+                //databaseProjectPath = $"C:\\Code\\Beta\\src\\{DatabaseProjectName}";
             //    _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
             //}
         }

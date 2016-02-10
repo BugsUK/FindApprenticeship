@@ -1,4 +1,4 @@
-﻿INSERT INTO [AvmsPlus].[dbo].[EmployerContact] ( [PersonId]
+﻿INSERT INTO [dbo].[EmployerContact] ( [PersonId]
       ,[ContactPreferenceTypeId]
 )
 	  VALUES (

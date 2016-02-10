@@ -157,6 +157,8 @@
     <Compile Include="Schemas\Vacancy\Entities\VacancyPartyRelationshipType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyPartyType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyStatus.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\VacancyTextField.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\VacancyTextFieldValue.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\WageInterval.cs" />
     <Compile Include="Schemas\Vacancy\Entities\WageType.cs" />
