@@ -8,6 +8,7 @@
     {
         public VacanciesSummarySearchViewModel()
         {
+            VacancyType = VacancyType.Apprenticeship;
             ShowAllLotteryNumbers = true;
             PageSize = 25;
             CurrentPage = 1;

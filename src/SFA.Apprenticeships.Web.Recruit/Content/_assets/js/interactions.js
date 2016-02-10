@@ -303,32 +303,6 @@ $(function() {
      });
    }
 
-  //----------Tabbed content
-
-  $('.tabbed-tab').attr('href', "#");
-
-  $('.tabbed-tab').on('click', function() {
-      var $this = $(this),
-          $tabId = $this.attr('tab');
-
-      $this.addClass('active');
-
-      $('.tabbed-tab').not($('[tab="' + $tabId + '"]')).removeClass('active');
-
-      if ($($tabId).length) {
-          $($tabId).show();
-
-          $('.tabbed-content').not($tabId).hide();
-      } else {
-          var $tabClass = '.' + $tabId.substr(1);
-
-          $('.tabbed-element' + $tabClass).show();
-          $('.tabbed-element').not($tabClass).hide();
-      }
-
-      return false;
-  });
-
   //------- Select to inject content to text input
 
   $('.select-inject').on('change', function () {

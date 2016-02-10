@@ -38,6 +38,12 @@
         loadResults(searchQueryUrl, true, false, 'GET');
     });
 
+    $(document).on('click', '.tabbed-tab', function (e) {
+        e.preventDefault();
+        var searchQueryUrl = $(this).attr('href');
+        loadResults(searchQueryUrl, true, false, 'GET');
+    });
+
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {
 
         $('.search-results').addClass('disabled');
