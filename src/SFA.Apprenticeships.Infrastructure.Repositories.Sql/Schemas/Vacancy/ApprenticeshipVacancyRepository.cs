@@ -339,6 +339,7 @@ WHERE  VacancyGuid = @VacancyGuid",
                 }).Single(); // There's a better way to do this?
 
             SaveTextFieldsFor(vacancyId, entity);
+            SaveAdditionalQuestionsFor(vacancyId, entity);
 
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
@@ -354,6 +355,25 @@ WHERE  VacancyGuid = @VacancyGuid",
             InsertTextField(vacancyId, "PQ", entity.PersonalQualities);
             InsertTextField(vacancyId, "OII", entity.ThingsToConsider);
             InsertTextField(vacancyId, "FP", entity.FutureProspects);
+        }
+
+        private void SaveAdditionalQuestionsFor(int vacancyId, ApprenticeshipVacancy entity)
+        {
+            // TODO: study how we deal with nulls
+            InsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
+            InsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
+        }
+
+        private void InsertAdditionalQuestion(int vacancyId, short questionId, string question)
+        {
+            var additionalQuestion = new AdditionalQuestion
+            {
+                VacancyId = vacancyId,
+                QuestionId = questionId,
+                Question = question
+            };
+
+            _getOpenConnection.Insert(additionalQuestion);
         }
 
         private void InsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)

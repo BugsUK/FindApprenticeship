@@ -147,6 +147,7 @@
     <Compile Include="Schemas\UserProfile\Entities\Team.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepository.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\AdditionalQuestion.cs" />
     <Compile Include="Schemas\Vacancy\Entities\DurationType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\TrainingType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\Vacancy.cs" />
