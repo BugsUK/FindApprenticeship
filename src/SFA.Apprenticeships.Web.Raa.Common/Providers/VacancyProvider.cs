@@ -788,7 +788,8 @@
                 DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
                 QAUserName = apprenticeshipVacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy),
-                SubmissionCount = apprenticeshipVacancy.SubmissionCount
+                SubmissionCount = apprenticeshipVacancy.SubmissionCount,
+                VacancyType = apprenticeshipVacancy.VacancyType
             };
         }
 
