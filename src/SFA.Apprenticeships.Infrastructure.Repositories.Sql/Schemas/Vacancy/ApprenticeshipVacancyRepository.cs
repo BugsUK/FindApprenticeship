@@ -314,6 +314,8 @@ FETCH NEXT @PageSize ROWS ONLY
             //PopulateVacancyPartyIds(entity, dbVacancy);
             //PopulateFrameworkId(entity, dbVacancy);
 
+            PopulateCountyId(entity, dbVacancy);
+
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
@@ -340,10 +342,22 @@ WHERE  VacancyGuid = @VacancyGuid",
 
             SaveTextFieldsFor(vacancyId, entity);
             SaveAdditionalQuestionsFor(vacancyId, entity);
-
+            
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
             return entity;
+        }
+
+        private void PopulateCountyId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT CountyId
+FROM   dbo.County
+WHERE  CodeName = @CountyCodeName",
+                new
+                {
+                    CountyCodeName = entity.ProviderSiteEmployerLink.Employer.Address.County
+                }).Single(); // There's a better way to do this?
         }
 
         private void SaveTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
