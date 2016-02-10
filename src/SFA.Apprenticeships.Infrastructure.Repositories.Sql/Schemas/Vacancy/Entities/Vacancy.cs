@@ -244,9 +244,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string TrainingProvidedComment { get; set; }
 
-        // public string ContactNumber { get; set; } // Not considered in AVMS
+        public string ContactNumber { get; set; } // Added to AVMS
 
-        // public string ContactEmail { get; set; } // Not considered in AVMS
+        public string ContactEmail { get; set; } // Added to AVMS
 
         // public string ContactDetailsComment { get; set; } // Not considered in AVMS
     }

@@ -140,7 +140,6 @@
                 .IgnoreMember(v => v.VacancyManagerID)
                 // .IgnoreMember(v => v.VacancyOwnerRelationshipId)
                 .ForMember( v=> v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
-                //.IgnoreMember(v => v.VacancyStatusId)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
                 .IgnoreMember(v => v.VacancyId)
@@ -161,7 +160,10 @@
                 // .MapMemberFrom(v=> v.CountyId, av => av.ProviderSiteEmployerLink.Employer.Address.County) Get from DB?
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
-                .IgnoreMember(v => v.ContactName)
+                .MapMemberFrom(v => v.ContactName, av => av.ContactName)
+                .MapMemberFrom(v => v.ContactEmail, av => av.ContactEmail)
+                .MapMemberFrom(v => v.ContactNumber, av => av.ContactNumber)
+
                 .IgnoreMember(v => v.GeocodeEasting)
                 .IgnoreMember(v => v.GeocodeNorthing)
                 .MapMemberFrom(v => v.Title, av => av.Title)

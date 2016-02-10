@@ -52,6 +52,11 @@
     [SmallEmployerWageIncentive]       BIT              CONSTRAINT [DF_Vacancy_SmallEmployerWageIncentive] DEFAULT ((0)) NOT NULL,
     [OriginalContractOwnerId]          INT              NULL,
     [VacancyManagerAnonymous]          BIT              CONSTRAINT [DFT_VacancyManagerAnonymous] DEFAULT ((0)) NOT NULL,
+	-- NEW FIELDS
+	[ContactEmail]					   NVARCHAR (MAX)   NULL,
+	[ContactNumber]					   NVARCHAR (MAX)   NULL
+
+
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
     CONSTRAINT [FK_Vacancy_ApprenticeshipFramework] FOREIGN KEY ([ApprenticeshipFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
     CONSTRAINT [FK_Vacancy_ApprenticeshipType] FOREIGN KEY ([ApprenticeshipType]) REFERENCES [dbo].[ApprenticeshipType] ([ApprenticeshipTypeId]),
