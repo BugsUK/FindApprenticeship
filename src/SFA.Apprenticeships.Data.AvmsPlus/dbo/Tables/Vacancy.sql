@@ -54,7 +54,12 @@
     [VacancyManagerAnonymous]          BIT              CONSTRAINT [DFT_VacancyManagerAnonymous] DEFAULT ((0)) NOT NULL,
 	-- NEW FIELDS
 	[ContactEmail]					   NVARCHAR (MAX)   NULL,
-	[ContactNumber]					   NVARCHAR (MAX)   NULL
+	[ContactNumber]					   NVARCHAR (MAX)   NULL,
+	[PublishedDateTime]				   DATETIME			NULL,
+	[FirstSubmittedDateTime]		   DATETIME			NULL,
+	[SubmissionCount]				   INT				NULL,
+	[StartedToQADateTime]			   DATETIME			NULL,
+	[SubmittedDateTime]				   DATETIME			NULL
 
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),

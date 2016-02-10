@@ -197,6 +197,12 @@
                 .IgnoreMember(v => v.SmallEmployerWageIncentive)
                 .IgnoreMember( v=> v.VacancyManagerAnonymous)
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Db lookup?
+                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateQAApproved)
+                .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted)
+                .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
+                .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)
+                .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
+
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
@@ -272,15 +278,15 @@
                 .IgnoreMember(av => av.ProviderSiteEmployerLink)
                 .IgnoreMember(av => av.OfflineApplicationUrlComment)
                 .IgnoreMember(av => av.OfflineApplicationInstructionsComment)
-                .IgnoreMember(av => av.DateSubmitted)
-                .IgnoreMember(av => av.DateFirstSubmitted)
-                .IgnoreMember(av => av.DateStartedToQA)
                 .IgnoreMember(av => av.QAUserName)
-                .IgnoreMember(av => av.DateQAApproved)
-                .IgnoreMember(av => av.SubmissionCount)
                 .IgnoreMember(av => av.LastEditedById)
                 .IgnoreMember(av => av.DateCreated)
                 .IgnoreMember(av => av.DateUpdated)
+                .MapMemberFrom(av => av.DateQAApproved, v => v.PublishedDateTime)
+                .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime)
+                .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
+                .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
+                .MapMemberFrom(av => av.DateSubmitted, v => v.SubmittedDateTime)
                 /*.AfterMap((v, av) => 
                 {
                     

@@ -178,11 +178,11 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public int? OriginalContractOwnerVacancyPartyId { get; set; } -> probably goes to OriginalContractOwnerId
 
-            
+
         //[Required]
         //[StringLength(1)]
         //public string TrainingTypeCode { get; set; } // Framework or standard. Not considered in AVMS
-        
+
         // public decimal? HoursPerWeek { get; set; } // Not considered in AVMS
 
         // public string AdditionalLocationInformation { get; set; } // Not considered in AVMS
@@ -221,20 +221,19 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string LocationAddressesComment { get; set; }
 
-        // public DateTime? PublishedDateTime { get; set; } // Not considered in AVMS
+        public DateTime? PublishedDateTime { get; set; } // Not considered in AVMS
 
-        // public DateTime? FirstSubmittedDateTime { get; set; } // Not considered in AVMS
+        public DateTime? FirstSubmittedDateTime { get; set; } // Not considered in AVMS
 
-        // public int SubmissionCount { get; set; } // Not considered in AVMS
+        public int SubmissionCount { get; set; } // Not considered in AVMS
 
-        // [Column(TypeName = "datetime2")]
-        // public DateTime? TimeStartedToQA { get; set; }  // Not considered in AVMS
+        public DateTime? StartedToQADateTime { get; set; }  // Not considered in AVMS
 
         // public DateTime CreatedDateTime { get; set; } // Not considered in AVMS
 
         // public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
 
-        // public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
+        public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 
         // public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
 
