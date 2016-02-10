@@ -31,7 +31,7 @@
             var title = VacancyType.Traineeship.GetTitle(originalTitle);
 
             //Assert
-            title.Should().Be("Traineeship in " + originalTitle);
+            title.Should().Be(originalTitle);
         }
 
         [Test]

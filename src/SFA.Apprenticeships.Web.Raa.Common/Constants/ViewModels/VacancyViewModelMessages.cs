@@ -88,27 +88,27 @@
 
         public static class Duration
         {
-            public const string LabelText = "Apprenticeship duration";
+            public const string LabelText = "Expected duration";
             public const string WhiteListRegularExpression = Whitelists.IntegerWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The apprenticeship duration " + Whitelists.IntegerWhitelist.ErrorText;
-            public const string RequiredErrorText = "Enter the apprenticeship duration";
-            public const string RangeErrorText = "The apprenticeship duration must be a whole number";
-            public const string DurationCantBeLessThan12Months = "The duration must be at least 12 months (52 weeks)";
-            public const string DurationMustBeBetweenSixWeeksAndSixMonths = "The duration must be between six weeks and six months";
+            public const string WhiteListErrorText = "The expected duration " + Whitelists.IntegerWhitelist.ErrorText;
+            public const string RequiredErrorText = "Enter the expected duration";
+            public const string RangeErrorText = "The expected duration must be a whole number";
+            public const string DurationCantBeLessThan12Months = "The expected duration must be at least 12 months (52 weeks)";
+            public const string DurationMustBeBetweenSixWeeksAndSixMonths = "The expected duration must be between six weeks and six months";
             public const string DurationWarning16Hours =
-                "The minimum apprenticeship duration is 23 months based on the hours per week selected";
+                "The minimum expected duration is 23 months based on the hours per week selected";
             public const string DurationWarning18Hours =
-                "The minimum apprenticeship duration is 20 months based on the hours per week selected";
+                "The minimum expected duration is 20 months based on the hours per week selected";
             public const string DurationWarning20Hours =
-                "The minimum apprenticeship duration is 18 months based on the hours per week selected";
+                "The minimum expected duration is 18 months based on the hours per week selected";
             public const string DurationWarning22Hours =
-                "The minimum apprenticeship duration is 17 months based on the hours per week selected";
+                "The minimum expected duration is 17 months based on the hours per week selected";
             public const string DurationWarning25Hours =
-                "The minimum apprenticeship duration is 15 months based on the hours per week selected";
+                "The minimum expected duration is 15 months based on the hours per week selected";
             public const string DurationWarning28Hours =
-                "The minimum apprenticeship duration is 13 months based on the hours per week selected";
+                "The minimum expected duration is 13 months based on the hours per week selected";
             public const string DurationWarning30Hours =
-                "The minimum apprenticeship duration is 12 months based on the hours per week selected";
+                "The minimum expected duration is 12 months based on the hours per week selected";
         }
 
         public static class DurationComment

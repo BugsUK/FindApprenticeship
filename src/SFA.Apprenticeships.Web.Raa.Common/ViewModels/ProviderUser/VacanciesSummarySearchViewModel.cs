@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Domain.Entities.Vacancies;
 
     public class VacanciesSummarySearchViewModel
     {
@@ -14,6 +15,7 @@
 
         private VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel) : this()
         {
+            VacancyType = viewModel.VacancyType;
             FilterType = viewModel.FilterType;
             ShowAllLotteryNumbers = viewModel.ShowAllLotteryNumbers;
             SearchString = viewModel.SearchString;
@@ -31,11 +33,18 @@
             ShowAllLotteryNumbers = showAllLotteryNumbers;
         }
 
+        public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, VacancyType vacancyType) : this(viewModel)
+        {
+            VacancyType = vacancyType;
+            SearchString = null;
+        }
+
         public VacanciesSummarySearchViewModel(VacanciesSummarySearchViewModel viewModel, int currentPage) : this(viewModel)
         {
             CurrentPage = currentPage;
         }
 
+        public VacancyType VacancyType { get; set; }
         public VacanciesSummaryFilterTypes FilterType { get; set; }
         public bool ShowAllLotteryNumbers { get; set; }
         public string SearchString { get; set; }

@@ -300,6 +300,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.generated.cs">
+      <DependentUpon>_QuestionsForCandidates.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.generated.cs">
+      <DependentUpon>_AboutTheEmployer.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.generated.cs">
+      <DependentUpon>_RequirementsAndProspects.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -349,6 +364,18 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TrainingDetails.generated.cs</LastGenOutput>
     </Content>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_QuestionsForCandidates.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AboutTheEmployer.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_RequirementsAndProspects.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_WorkingWeekAndWage.generated.cs</LastGenOutput>

@@ -92,5 +92,15 @@
         public bool IsEditable { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public bool IsSingleLocation
+        {
+            get
+            {
+                return NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true ||
+                       (NewVacancyViewModel.LocationAddresses != null &&
+                        NewVacancyViewModel.LocationAddresses.Count == 1);
+            }
+        }
     }
 }
