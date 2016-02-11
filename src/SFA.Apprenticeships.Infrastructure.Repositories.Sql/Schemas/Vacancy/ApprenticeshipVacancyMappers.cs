@@ -11,6 +11,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Presentation;
     using SFA.Infrastructure.Interfaces;
     using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
 
@@ -66,83 +67,23 @@
             return result;
         }
     }
-
+    
     public class ApprenticeshipVacancyMappers : MapperEngine
     {
         public override void Initialise()
         {
-            //var wageTypeMap = new CodeEnumMap<WageType>
-            //{
-            //    { "NAP", 0},
-            //    { "AMW", WageType.ApprenticeshipMinimumWage },
-            //    { "NMW", WageType.NationalMinimumWage },
-            //    { "CUS", WageType.Custom }
-            //};
-
-            //var wageUnitMap = new CodeEnumMap<WageUnit>
-            //{
-            //    { "N", WageUnit.NotApplicable },
-            //    { "W", WageUnit.Weekly },
-            //    { "M", WageUnit.Monthly },
-            //    { "A", WageUnit.Annually },
-            //};
-
-            //var durationTypeMap = new CodeEnumMap<DurationType>
-            //{
-            //    { "U", DurationType.Unknown },
-            //    { "W", DurationType.Weeks },
-            //    { "M", DurationType.Months },
-            //    { "Y", DurationType.Years }
-            //};
-
-            //var trainingTypeMap = new CodeEnumMap<TrainingType>
-            //{
-            //    { "F", TrainingType.Frameworks },
-            //    { "S", TrainingType.Standards },
-            //    { "U", TrainingType.Unknown }, // TODO: null = blank??
-            //};
-
-            //var apprenticeshipLevelMap = new CodeEnumMap<ApprenticeshipLevel>
-            //{
-            //    { "2", ApprenticeshipLevel.Intermediate },
-            //    { "3", ApprenticeshipLevel.Advanced },
-            //    { "6", ApprenticeshipLevel.Degree },
-            //    { "5", ApprenticeshipLevel.FoundationDegree },
-            //    { "4", ApprenticeshipLevel.Higher },
-            //    { "7", ApprenticeshipLevel.Masters },
-            //    { "0", ApprenticeshipLevel.Unknown } // TODO: review
-            //};
-
-            //var vacancyStatusMap = new CodeEnumMap<ProviderVacancyStatuses>
-            //{
-            //    { "LIV", ProviderVacancyStatuses.Live },
-            //    { "CLD", ProviderVacancyStatuses.Closed },
-            //    { "DRA", ProviderVacancyStatuses.Draft },
-            //    { "PQA", ProviderVacancyStatuses.PendingQA },
-            //    { "REF", ProviderVacancyStatuses.RejectedByQA },
-            //    { "RES", ProviderVacancyStatuses.ReservedForQA },
-            //    { "PAR", ProviderVacancyStatuses.ParentVacancy },
-            //    { "UNK", ProviderVacancyStatuses.Unknown}
-            //};
-
-            //Mapper.CreateMap<string, ProviderVacancyStatuses>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
-            //Mapper.CreateMap<ProviderVacancyStatuses, string>().ConvertUsing(status => vacancyStatusMap.EnumToCode[status]);
-            
             Mapper.CreateMap<ApprenticeshipVacancy, Entities.Vacancy>()
-                // Ignore (maybe temporaly) ids from other entities
-                // .IgnoreMember(v => v.FrameworkId) // -> Map from FrameworkCodeName
-                .IgnoreMember(v => v.ContractOwnerID)
-                .IgnoreMember(v => v.CountyId)
-                .IgnoreMember(v => v.DeliveryOrganisationID)
-                .IgnoreMember(v => v.LocalAuthorityId)
-                .IgnoreMember(v => v.OriginalContractOwnerId)
-                .IgnoreMember(v => v.VacancyLocationTypeId)
-                .IgnoreMember(v => v.VacancyManagerID)
-                // .IgnoreMember(v => v.VacancyOwnerRelationshipId)
-                .ForMember( v=> v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
+                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
+                .IgnoreMember(v => v.CountyId) // -> DB Lookup
+                .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
+                .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
+                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
+                .IgnoreMember(v => v.VacancyLocationTypeId) // TODO
+                .IgnoreMember(v => v.VacancyManagerID) // DB Lookup using the vacancyOwnerRelationshipId?
+                .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
-                .IgnoreMember(v => v.VacancyId)
+                .IgnoreMember(v => v.VacancyId) 
                 
                 // Map employer address
                 .MapMemberFrom(v => v.AddressLine1, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine1)
@@ -152,57 +93,51 @@
                 .MapMemberFrom(v => v.AddressLine5, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine5)
                 .MapMemberFrom(v => v.PostCode, av => av.ProviderSiteEmployerLink.Employer.Address.Postcode)
                 .MapMemberFrom(v => v.Town, av => av.ProviderSiteEmployerLink.Employer.Address.Town)
-                //.MapMemberFrom(v => v.Latitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude) // From double to deciaml?
-                //.MapMemberFrom(v => v.Longitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude) // From double to deciaml?
-                .IgnoreMember(v=>v.Latitude)
-                .IgnoreMember(v=> v.Longitude)
-                
-                // .MapMemberFrom(v=> v.CountyId, av => av.ProviderSiteEmployerLink.Employer.Address.County) Get from DB?
+                .IgnoreMember(v=>v.Latitude) // Encoding user story
+                .IgnoreMember(v=> v.Longitude) // Encoding user story
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
                 .MapMemberFrom(v => v.ContactName, av => av.ContactName)
                 .MapMemberFrom(v => v.ContactEmail, av => av.ContactEmail)
                 .MapMemberFrom(v => v.ContactNumber, av => av.ContactNumber)
 
-                .IgnoreMember(v => v.GeocodeEasting)
-                .IgnoreMember(v => v.GeocodeNorthing)
+                .IgnoreMember(v => v.GeocodeEasting) // Encoding user story
+                .IgnoreMember(v => v.GeocodeNorthing) // Encoding user story
                 .MapMemberFrom(v => v.Title, av => av.Title)
-                .IgnoreMember(v => v.ApprenticeshipType) // DB Lookup from ApprenticeshipLevel?
+                .IgnoreMember(v => v.ApprenticeshipType) // DB Lookup from ApprenticeshipLevel? yes
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v=> v.Description, av=> av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage) // In migrated vacancies WageUnit will always be Week
                 .MapMemberFrom(v => v.WageType, av => av.WageType) // I can't find any example of wagetypecode in AVMS database
-                .IgnoreMember(v => v.WageText) // How are we going to map this?
-                // .MapMemberFrom(v => v.NumberOfPositions, av => av.NumberOfPositions)
+                .ForMember(v => v.WageText, opt => opt.MapFrom(av => WagePresenter.GetDisplayText(new Wage(av.WageType, av.Wage, av.WageUnit), av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.InterviewsFromDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
-                .IgnoreMember( v => v.ExpectedDuration) // How are we going to map this?
+                .ForMember( v => v.ExpectedDuration, opt => opt.MapFrom(av => DurationPresenter.GetDisplayText(new Duration(av.DurationType, av.Duration))))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
-                .IgnoreMember(v => v.NumberOfViews)
-                .IgnoreMember(v=>v.EmployerAnonymousName)
-                .MapMemberFrom(v=> v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // Correct?
-                .MapMemberFrom(v => v.EmployersWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl) //Correct?
+                .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
+                .IgnoreMember(v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description)
+                .MapMemberFrom(v => v.EmployersWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl)
                 .IgnoreMember(v => v.MaxNumberofApplications)
                 .MapMemberFrom(v => v.ApplyOutsideNAVMS, av => av.OfflineVacancy)
                 .MapMemberFrom(v => v.EmployersApplicationInstructions, av => av.OfflineApplicationInstructions)
                 .MapMemberFrom(v => v.EmployersRecruitmentWebsite, av => av.OfflineApplicationUrl)
-                .IgnoreMember(v => v.BeingSupportedBy)
-                .IgnoreMember( v=> v.LockedForSupportUntil)
-                .MapMemberFrom( v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  // Which one is the right mapping
-                .MapMemberFrom( v => v.NoOfOfflineSystemApplicants, av => av.OfflineApplicationClickThroughCount) // Which one is the right mapping
+                .MapMemberFrom(v => v.BeingSupportedBy, av => av.QAUserName)
+                .IgnoreMember(v => v.LockedForSupportUntil)
+                .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  // Which one is the right mapping
+                .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0)) // Which one is the right mapping
                 // .MapMemberFrom( v=> v.MasterVacancyId, av => av.ParentVacancyId) // PAremtVacancyId needs to be an int
                 .IgnoreMember(v => v.MasterVacancyId)
-                .IgnoreMember(v => v.SmallEmployerWageIncentive)
-                .IgnoreMember( v=> v.VacancyManagerAnonymous)
-                .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Db lookup?
+                .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
+                .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
+                .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateQAApproved)
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted)
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)
                 .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
-
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
