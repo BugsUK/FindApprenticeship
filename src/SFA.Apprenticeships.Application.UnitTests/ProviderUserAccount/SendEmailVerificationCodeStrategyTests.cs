@@ -114,7 +114,7 @@
 
             // Assert.
             _mockProviderUserWriteRepository.Verify(mock =>
-                mock.Save(providerUser), Times.Once);
+                mock.Update(providerUser), Times.Once);
 
             providerUser.EmailVerificationCode.Should().Be(EmailVerificationCode);
         }

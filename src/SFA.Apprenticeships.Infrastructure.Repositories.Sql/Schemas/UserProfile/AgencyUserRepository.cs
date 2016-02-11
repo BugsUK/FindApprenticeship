@@ -56,7 +56,7 @@
             //        throw new Exception("Failed to update record after failed insert", ex);
             //}
 
-            //_logger.Debug("Saved provider to SQL DB with UKPRN={0}", entity.EntityId);
+            //_logger.Debug("Saved provider to SQL DB with Ukprn={0}", entity.EntityId);
 
             //return _mapper.Map<Entities.AgencyUser, AgencyUser>(dbEntity);
             throw new NotImplementedException();

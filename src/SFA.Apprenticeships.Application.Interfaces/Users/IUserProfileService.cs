@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
-    using System;
     using System.Collections.Generic;
     using Domain.Entities.Users;
 
@@ -10,13 +9,16 @@
     /// </summary>
     public interface IUserProfileService
     {
-        ProviderUser GetProviderUser(Guid id);
+        // TODO: SQL: AG: make methods Provider / Agency user specific (e.g. SaveUser) and getters explicit (e.g. GetProviderUserByUsername).
+        ProviderUser GetProviderUser(int id);
 
         ProviderUser GetProviderUser(string username);
 
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
 
-        ProviderUser SaveUser(ProviderUser providerUser);
+        ProviderUser CreateProviderUser(ProviderUser providerUser);
+
+        ProviderUser UpdateProviderUser(ProviderUser providerUser);
 
         AgencyUser GetAgencyUser(string username);
 

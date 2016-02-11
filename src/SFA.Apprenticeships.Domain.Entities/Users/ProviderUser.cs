@@ -2,16 +2,19 @@
 {
     using System;
 
-    public class ProviderUser : BaseEntity<Guid>
+    // TODO: AG: SQL: remove dead code below.
+
+    public class ProviderUser : ICreatableEntity, IUpdatableEntity
     {
-        public ProviderUser()
-        {
-            Status = ProviderUserStatuses.Registered;
-        }
+        public int ProviderUserId { get; set; }
+
+        public Guid ProviderUserGuid { get; set; }
+
+        public int ProviderId { get; set; }
+
+        public ProviderUserStatuses Status { get; set; }
 
         public string Username { get; set; }
-
-        public string Ukprn { get; set; }
 
         public string Fullname { get; set; }
 
@@ -25,6 +28,8 @@
 
         public string PhoneNumber { get; set; }
 
-        public ProviderUserStatuses Status { get; set; }
+        public DateTime DateCreated { get; set; }
+
+        public DateTime? DateUpdated { get; set; }
     }
 }

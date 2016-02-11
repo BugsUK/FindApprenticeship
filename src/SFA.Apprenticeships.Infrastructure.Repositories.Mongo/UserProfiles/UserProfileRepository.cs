@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
+﻿// TODO: SQL: AG: remove dead code.
+
+/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
 {
     using System;
     using System.Collections.Generic;
@@ -44,14 +47,14 @@
 
         public IEnumerable<ProviderUser> GetForProvider(string ukprn)
         {
-            _logger.Debug("Called Mongodb to get provider users for provider with UKPRN={0}", ukprn);
+            _logger.Debug("Called Mongodb to get provider users for provider with Ukprn={0}", ukprn);
 
             var mongoEntities = Collection.Find(Query<MongoProviderUser>.EQ(e => e.Ukprn, ukprn));
 
             var entities =
                 _mapper.Map<IEnumerable<MongoProviderUser>, IEnumerable<ProviderUser>>(mongoEntities).ToList();
 
-            _logger.Debug("Found {1} provider users for provider with UKPRN={0}", ukprn, entities.Count);
+            _logger.Debug("Found {1} provider users for provider with Ukprn={0}", ukprn, entities.Count);
 
             return entities;
         }
@@ -81,3 +84,4 @@
         }
     }
 }
+*/

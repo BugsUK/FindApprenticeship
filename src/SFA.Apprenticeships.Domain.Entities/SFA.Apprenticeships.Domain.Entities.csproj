@@ -112,6 +112,8 @@
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
+    <Compile Include="ICreatableEntity.cs" />
+    <Compile Include="IUpdatableEntity.cs" />
     <Compile Include="Locations\PostalAddress.cs" />
     <Compile Include="Locations\VacancyLocationAddress.cs" />
     <Compile Include="Organisations\Employer.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\Name.cs" />
+    <Compile Include="Users\ProviderStatus.cs" />
     <Compile Include="Users\ProviderUserStatuses.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\Role.cs" />

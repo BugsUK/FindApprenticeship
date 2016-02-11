@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Users;
@@ -22,7 +21,7 @@
             _agencyUserWriteRepository = agencyUserWriteRepository;
         }
 
-        public ProviderUser GetProviderUser(Guid id)
+        public ProviderUser GetProviderUser(int id)
         {
             return _providerUserReadRepository.Get(id);
         }
@@ -37,10 +36,14 @@
             return _providerUserReadRepository.GetForProvider(ukprn);
         }
 
-        public ProviderUser SaveUser(ProviderUser providerUser)
+        public ProviderUser CreateProviderUser(ProviderUser providerUser)
         {
-            //Check if email is being updated and set pending, verification code, send email etc
-            return _providerUserWriteRepository.Save(providerUser);
+            return _providerUserWriteRepository.Create(providerUser);
+        }
+
+        public ProviderUser UpdateProviderUser(ProviderUser providerUser)
+        {
+            return _providerUserWriteRepository.Update(providerUser);
         }
 
         public AgencyUser GetAgencyUser(string username)

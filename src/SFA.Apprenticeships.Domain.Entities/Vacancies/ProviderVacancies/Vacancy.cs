@@ -47,9 +47,15 @@
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
         public int SubmissionCount { get; set; }
-        //Id if the Provider User who created the vacancy
-        public Guid VacancyManagerId { get; set; }
-        public Guid LastEditedById { get; set; }
+
+        // TODO: SQL: AG: rename to VacancyManagerProviderUserId (and remove comment below).
+        // Id of the Provider User who created the vacancy
+        public int VacancyManagerId { get; set; }
+
+        // TODO: SQL: AG: rename to LastEditedByProviderUserId (and remove comment below).
+        // Id of the Provider User who last edited the vacancy
+        public int LastEditedById { get; set; }
+
         public Guid? ParentVacancyId { get; set; }
     }
 }

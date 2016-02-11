@@ -2,8 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Security.Principal;
     using System.Threading;
     using Application.VacancyPosting;
     using Domain.Entities;
@@ -27,13 +25,13 @@
 
         private readonly ProviderUser _vacancyManager = new ProviderUser
         {
-            EntityId = Guid.NewGuid(),
+            ProviderUserId = 5,
             Username = "vacancy@manager.com"
         };
 
         private readonly ProviderUser _lastEditedBy = new ProviderUser
         {
-            EntityId = Guid.NewGuid(),
+            ProviderUserId = 42,
             Username = "vacancy@editor.com"
         };
 
@@ -75,7 +73,7 @@
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.VacancyManagerId == _vacancyManager.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
         }
 
         [Test]
@@ -105,7 +103,7 @@
 
             _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.LastEditedById == _lastEditedBy.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.DeepSave(It.Is<ApprenticeshipVacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
 
         [Test]
@@ -141,7 +139,9 @@
         {
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             int? numberOfPositions = null;
+
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new []{new VacancyLocationAddress(), new VacancyLocationAddress(), new VacancyLocationAddress()};
+
             const string locationAddressesComment = "location addresses comment";
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = "additional location information";

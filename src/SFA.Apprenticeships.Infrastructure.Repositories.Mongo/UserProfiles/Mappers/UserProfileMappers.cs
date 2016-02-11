@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.Mappers
+﻿// TODO: SQL: AG: remove dead code.
+
+/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.Mappers
 {
     using Domain.Entities.Users;
     using Infrastructure.Common.Mappers;
@@ -16,3 +19,4 @@
         }
     }
 }
+*/

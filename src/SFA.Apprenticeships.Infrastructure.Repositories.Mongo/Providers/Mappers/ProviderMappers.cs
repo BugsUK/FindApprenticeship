@@ -8,8 +8,9 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<Provider, MongoProvider>();
-            Mapper.CreateMap<MongoProvider, Provider>();
+            // TODO: SQL: AG: remove this class.
+            // Mapper.CreateMap<Provider, MongoProvider>();
+            // Mapper.CreateMap<MongoProvider, Provider>();
 
             Mapper.CreateMap<ProviderSite, MongoProviderSite>();
             Mapper.CreateMap<MongoProviderSite, ProviderSite>();

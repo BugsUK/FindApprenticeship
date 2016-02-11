@@ -1,12 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using System;
     using Entities.Providers;
 
-    public interface IProviderReadRepository : IReadRepository<Provider, Guid>
+    public interface IProviderReadRepository
     {
+        Provider Get(int providerId);
+
         Provider Get(string ukprn);
     }
 
-    public interface IProviderWriteRepository : IWriteRepository<Provider, Guid> { }
+    public interface IProviderWriteRepository
+    {
+        Provider Save(Provider provider);
+
+        void Delete(int providerId);
+    }
 }

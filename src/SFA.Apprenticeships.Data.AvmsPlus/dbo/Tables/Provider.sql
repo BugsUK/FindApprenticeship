@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[Provider] (
     [ProviderID]           INT            IDENTITY (1, 1) NOT NULL,
-    [UPIN]                 INT            NOT NULL,
+    [UPIN]                 INT            NULL,
     [UKPRN]                INT            NOT NULL,
     [FullName]             NVARCHAR (255) NULL,
     [TradingName]          NVARCHAR (255) NULL,

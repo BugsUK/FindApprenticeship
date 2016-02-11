@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.Entities
+﻿/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.Entities
 {
     using System;
     using Domain.Entities.Providers;
@@ -14,3 +15,4 @@
         }
     }
 }
+*/

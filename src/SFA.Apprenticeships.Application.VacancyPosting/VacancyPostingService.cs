@@ -40,9 +40,10 @@
             {
                 var username = Thread.CurrentPrincipal.Identity.Name;
                 var vacancyManager = _providerUserReadRepository.Get(username);
+
                 if (vacancyManager != null)
                 {
-                    vacancy.VacancyManagerId = vacancyManager.EntityId;
+                    vacancy.VacancyManagerId = vacancyManager.ProviderUserId;
                 }
             }
 
@@ -66,7 +67,7 @@
                 var lastEditedBy = _providerUserReadRepository.Get(username);
                 if (lastEditedBy != null)
                 {
-                    vacancy.LastEditedById = lastEditedBy.EntityId;
+                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
                 }
             }
 
@@ -92,7 +93,7 @@
                 var lastEditedBy = _providerUserReadRepository.Get(username);
                 if (lastEditedBy != null)
                 {
-                    vacancy.LastEditedById = lastEditedBy.EntityId;
+                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
                 }
             }
 
@@ -123,7 +124,9 @@
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
         {
-            return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
+            // TODO: SQL: AG: return empty list for now.
+            // return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
+            return new List<ApprenticeshipVacancy>();
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)

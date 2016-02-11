@@ -75,16 +75,6 @@
     <ServiceConfiguration Include="ServiceConfiguration.Sit.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeship.Api.AvService\SFA.Apprenticeship.Api.AvService.csproj">
-      <Name>SFA.Apprenticeship.Api.AvService</Name>
-      <Project>{f5ce7351-7509-4e21-a74c-16c5ec81baf8}</Project>
-      <Private>True</Private>
-      <RoleType>Web</RoleType>
-      <RoleName>SFA.Apprenticeship.Api.AvService</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="SFA.Apprenticeship.Api.AvServiceContent\" />
   </ItemGroup>
   <ItemGroup>

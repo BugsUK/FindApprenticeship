@@ -9,20 +9,25 @@
     {
         public override void Initialise()
         {
-            //TODO: When implementing changes to domain model, uncomment the id mappings, below
-            Mapper.CreateMap<Guid, int>().ConvertUsing<GuidToIntConverter>();
-            Mapper.CreateMap<int, Guid>().ConvertUsing<IntToGuidConverter>();
-
             Mapper.CreateMap<Provider, Entities.Provider>()
-                .ForMember(destination => destination.ProviderId, opt => opt.MapFrom(source => source.EntityId))
-                .ForMember(destintation => destintation.FullName, opt => opt.MapFrom(source => source.Name));
-            
+                .ForMember(destintation => destintation.FullName, opt =>
+                    opt.MapFrom(source => source.Name))
+
+                .ForMember(destination => destination.Ukprn, opt =>
+                    opt.MapFrom(source => Convert.ToInt32(source.Ukprn)));
+
             Mapper.CreateMap<Entities.Provider, Provider>()
-                .ForMember(destination => destination.EntityId, opt => opt.MapFrom(source => source.ProviderId))
-                .ForMember(destintation => destintation.Name, opt => opt.MapFrom(source => source.FullName));
+                .ForMember(destintation => destintation.Name, opt =>
+                    opt.MapFrom(source => source.FullName))
+
+                .ForMember(destination => destination.Ukprn, opt =>
+                    opt.MapFrom(source => Convert.ToString(source.Ukprn)));
         }
     }
 
+    // TODO: SQL: AG: remove dead code below.
+
+    /*
     public class GuidToIntConverter :
         ITypeConverter<Guid, int>
     {
@@ -65,4 +70,5 @@
             return new Guid(bytes);
         }
     }
+    */
 }

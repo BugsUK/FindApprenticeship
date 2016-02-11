@@ -3,7 +3,9 @@
     using Common;
     using Configuration;
     using Domain.Interfaces.Repositories;
+    using Schemas.Provider;
     using Schemas.Reference;
+    using Schemas.UserProfile;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
@@ -11,14 +13,22 @@
     {
         public RepositoriesRegistry(SqlConfiguration configuration)
         {
-            //Common
+            // Common.
             For<IGetOpenConnection>().Use<GetOpenConnectionFromConnectionString>().Ctor<string>("connectionString").Is(configuration.ConnectionString);
 
-            //Mappers
+            // Mappers.
             For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
+            For<IMapper>().Use<AgencyUserMappers>().Name = "AgencyUserMappers";
+            For<IMapper>().Use<ProviderUserMappers>().Name = "ProviderUserMappers";
 
-            //Repositories
+            // Repositories.
             For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
+
+            For<IAgencyUserReadRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
+            For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
+
+            For<IProviderUserReadRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
+            For<IProviderUserWriteRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
         }
     }
 }
