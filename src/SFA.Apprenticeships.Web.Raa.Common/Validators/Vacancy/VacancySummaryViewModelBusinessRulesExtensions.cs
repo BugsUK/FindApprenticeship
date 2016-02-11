@@ -5,6 +5,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Extensions;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Results;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -76,6 +77,12 @@
 
         public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, decimal? duration, string parentPropertyName)
         {
+            if (viewModel.VacancyType == VacancyType.Traineeship)
+            {
+                //This rule is not applicable to Traineeships
+                return null;
+            }
+
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
             {
                 //Other errors will superceed this one so return valid

@@ -4,6 +4,7 @@
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
+    using Domain.Entities.Vacancies;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
@@ -108,6 +109,44 @@
             var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "VacancySummaryViewModel.Duration");
             aggregateError.Should().NotBeNull();
             aggregateError?.ErrorMessage.Should().Be(expectedMessage);
+        }
+
+        [TestCase(28, 56, DurationType.Weeks)]
+        [TestCase(25, 62, DurationType.Weeks)]
+        [TestCase(22, 71, DurationType.Weeks)]
+        [TestCase(20, 77, DurationType.Weeks)]
+        [TestCase(18, 86, DurationType.Weeks)]
+        [TestCase(16, 97, DurationType.Weeks)]
+        [TestCase(28, 12, DurationType.Months)]
+        [TestCase(25, 13, DurationType.Months)]
+        [TestCase(22, 16, DurationType.Months)]
+        [TestCase(20, 17, DurationType.Months)]
+        [TestCase(18, 19, DurationType.Months)]
+        [TestCase(16, 22, DurationType.Months)]
+        [TestCase(28, 1, DurationType.Years)]
+        [TestCase(25, 1, DurationType.Years)]
+        [TestCase(22, 1, DurationType.Years)]
+        [TestCase(20, 1, DurationType.Years)]
+        [TestCase(18, 1, DurationType.Years)]
+        [TestCase(16, 1, DurationType.Years)]
+        public void RuleFour_DoesNotApplyToTraineeships(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                HoursPerWeek = hoursPerWeek,
+                Duration = expectedDuration,
+                DurationType = durationType,
+                VacancyType = VacancyType.Traineeship
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
+            _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
         }
 
         [TestCase(41, 56, DurationType.Weeks)]
