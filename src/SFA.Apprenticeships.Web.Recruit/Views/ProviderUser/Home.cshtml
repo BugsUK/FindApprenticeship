@@ -251,8 +251,8 @@
                             var apprenticeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ? " active" : "";
                             var traineeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? " active" : "";
                         }
-                        @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship), new {@class = "tabbed-tab" + apprenticeshipsTabControlClass })
-                        @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship), new {@class = "tabbed-tab" + traineeshipsTabControlClass })
+                        @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship), new {@class = "tabbed-tab no-js" + apprenticeshipsTabControlClass })
+                        @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship), new {@class = "tabbed-tab no-js" + traineeshipsTabControlClass })
                     </nav>
                     <div class="tabbed-content active width-all-1-1">
                         <table id="vacancies-table">

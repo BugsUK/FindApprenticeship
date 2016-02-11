@@ -305,9 +305,9 @@ $(function() {
 
   //----------Tabbed content
 
-  $('.tabbed-tab').attr('href', "#");
+  $('.tabbed-tab').not('.no-js').attr('href', "#");
 
-  $('.tabbed-tab').on('click', function() {
+  $('.tabbed-tab').not('.no-js').on('click', function () {
       var $this = $(this),
           $tabId = $this.attr('tab');
 
