@@ -25,6 +25,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Repositories.Mongo.Providers.IoC;
     using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
+    using Infrastructure.Repositories.Sql.IoC;
     using Infrastructure.TacticalDataServices.IoC;
     using StructureMap;
     using StructureMap.Web;
@@ -59,6 +60,9 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
 
                 // TODO: SQL: AG: reinstate.
                 // x.AddRegistry<UserProfileRepositoryRegistry>();
+
+                // TODO: SQL: AG: too coarse-grained, need more registries? Rename to SqlRepositoriesRegistry?
+                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
 
                 // x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp

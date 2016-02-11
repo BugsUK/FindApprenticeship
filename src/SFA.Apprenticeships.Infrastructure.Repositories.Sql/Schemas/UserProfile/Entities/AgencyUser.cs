@@ -6,8 +6,8 @@
     [Table("UserProfile.AgencyUser")]
     public class AgencyUser
     {
-        private AgencyUserRole _role;
-        private AgencyUserTeam _team;
+        //private AgencyUserRole _role;
+        //private AgencyUserTeam _team;
 
         public int AgencyUserId { get; set; }
 
@@ -17,38 +17,38 @@
 
         public string Username { get; set; }
 
-        public int? TeamId { get; set; }
+        //public int? TeamId { get; set; }
         
-        public int? RoleId { get; set; }
+        //public int? RoleId { get; set; }
 
-        [NotMapped]
-        public AgencyUserRole Role
-        {
-            get
-            {
-                return _role;
-            }
+        //[NotMapped]
+        //public AgencyUserRole Role
+        //{
+        //    get
+        //    {
+        //        return _role;
+        //    }
 
-            set
-            {
-                _role = value;
-                RoleId = value?.AgencyUserRoleId;
-            }
-        }
+        //    set
+        //    {
+        //        _role = value;
+        //        RoleId = value?.AgencyUserRoleId;
+        //    }
+        //}
 
-        [NotMapped]
-        public AgencyUserTeam Team
-        {
-            get
-            {
-                return _team;
-            }
+        //[NotMapped]
+        //public AgencyUserTeam Team
+        //{
+        //    get
+        //    {
+        //        return _team;
+        //    }
 
-            set
-            {
-                _team = value;
-                TeamId = value?.AgencyUserTeamId;
-            }
-        }
+        //    set
+        //    {
+        //        _team = value;
+        //        TeamId = value?.AgencyUserTeamId;
+        //    }
+        //}
     }
 }

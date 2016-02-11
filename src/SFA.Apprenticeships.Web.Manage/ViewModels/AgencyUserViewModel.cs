@@ -6,8 +6,8 @@
     public class AgencyUserViewModel
     {
         public List<SelectListItem> Teams { get; set; }
-        public string TeamId { get; set; }
+        public string TeamCode { get; set; }
         public List<SelectListItem> Roles { get; set; }
-        public string RoleId { get; set; }
+        public string RoleCode { get; set; }
     }
 }

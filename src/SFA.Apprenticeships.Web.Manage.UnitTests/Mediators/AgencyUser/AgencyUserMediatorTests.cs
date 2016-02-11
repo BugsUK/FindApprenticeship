@@ -104,7 +104,7 @@
             var userProvider = new Mock<IAgencyUserProvider>();
             userProvider.Setup(up => up.GetAgencyUser(userName, roleList)).Returns(new AgencyUserViewModel
             {
-                RoleId = roleList
+                RoleCode = roleList
             });
 
             var mediator = new AgencyUserMediatorBuilder().With(userProvider).Build();
@@ -112,7 +112,7 @@
             var response = mediator.GetHomeViewModel(principal, new DashboardVacancySummariesSearchViewModel());
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
-            response.ViewModel.AgencyUser.RoleId.Should().Be(roleList);
+            response.ViewModel.AgencyUser.RoleCode.Should().Be(roleList);
             userProvider.Verify(up => up.GetAgencyUser(userName, roleList), Times.Once);
         }
 

@@ -13,11 +13,11 @@
             };
         }
 
-        public static Team GetTeam(string id, string name, bool isDefault = false)
+        public static Team GetTeam(string codeName, string name, bool isDefault = false)
         {
             return new Team
             {
-                Id = id,
+                CodeName = codeName,
                 Name = name,
                 IsDefault = isDefault
             };
