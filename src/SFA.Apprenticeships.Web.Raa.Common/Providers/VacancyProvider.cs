@@ -721,6 +721,7 @@
             vacancy.SecondQuestionComment = null;
             vacancy.TrainingProvidedComment = null;
             vacancy.ContactDetailsComment = null;
+            vacancy.NumberOfPositionsComment = null;
 
             vacancy.EntityId = Guid.NewGuid();
 

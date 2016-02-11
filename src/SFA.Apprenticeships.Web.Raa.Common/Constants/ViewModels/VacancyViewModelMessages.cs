@@ -57,6 +57,7 @@
         public static class WorkingWeekComment
         {
             public const string LabelText = "Working week/Hours per week comment";
+            public const string TraineeshipLabelText = "Weekly hours comment";
         }
 
         public static class HoursPerWeek
@@ -113,7 +114,7 @@
 
         public static class DurationComment
         {
-            public const string LabelText = "Apprenticeship duration comment";
+            public const string LabelText = "Expected duration comment";
         }
 
         public static class ClosingDate
@@ -159,6 +160,7 @@
         public static class LongDescriptionComment
         {
             public const string LabelText = "Vacancy description comment";
+            public const string TraineeshipLabelText = "Work placement description comment";
         }
 
         public static class DesiredSkills
