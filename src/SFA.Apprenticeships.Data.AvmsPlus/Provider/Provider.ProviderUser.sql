@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [Provider].[ProviderUser]
 (
 	[ProviderUserId] INT NOT NULL PRIMARY KEY IDENTITY, 
-	[ProviderUserGuid] UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(), 
+	[ProviderUserGuid] UNIQUEIDENTIFIER NOT NULL , 
     [ProviderUserStatusId] INT NOT NULL,
     [ProviderId] INT NOT NULL, 
     [Username] NVARCHAR(100) NOT NULL, 
@@ -12,7 +12,8 @@
     [EmailVerifiedDateTime] DATETIME2 NULL, 
     [PhoneNumber] NVARCHAR(MAX) NOT NULL, 
     [DateCreated] DATETIME2 NOT NULL, 
-    [DateUpdated] DATETIME2 NULL
+    [DateUpdated] DATETIME2 NULL, 
+    CONSTRAINT [FK_ProviderUser_ProviderUserStatus] FOREIGN KEY ([ProviderUserStatusId]) REFERENCES [Provider].[ProviderUserStatus]([ProviderUserStatusId])
 )
 GO
 
