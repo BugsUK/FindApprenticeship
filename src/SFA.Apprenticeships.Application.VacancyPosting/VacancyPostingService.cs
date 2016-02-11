@@ -124,7 +124,9 @@
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
         {
-            return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
+            // TODO: SQL: AG: return empty list for now.
+            // return _apprenticeshipVacancyReadRepository.GetForProvider(ukPrn, providerSiteErn);
+            return new List<ApprenticeshipVacancy>();
         }
 
         public ApprenticeshipVacancy ReserveVacancyForQA(int vacancyReferenceNumber)

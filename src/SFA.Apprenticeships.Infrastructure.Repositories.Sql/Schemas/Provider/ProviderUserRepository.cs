@@ -25,7 +25,7 @@
 
         public ProviderUser Get(int id)
         {
-            _logger.Debug("Calling database to get provider user with Id={0}", id);
+            _logger.Debug("Getting provider user with Id={0}", id);
 
             const string sql = "SELECT * FROM Provider.ProviderUser WHERE ProviderUserId = @ProviderUserId";
 
@@ -38,12 +38,16 @@
                 .Query<Entities.ProviderUser>(sql, sqlParams)
                 .SingleOrDefault();
 
+            _logger.Debug(dbProviderUser == null
+                ? "Did not find provider user with username=\"{0}\""
+                : "Got provider user with username=\"{0}\"", id);
+
             return MapProviderUser(dbProviderUser);
         }
 
         public ProviderUser Get(string username)
         {
-            _logger.Debug("Calling database to get provider user with username={0}", username);
+            _logger.Debug("Getting provider user with username=\"{0}\"", username);
 
             const string sql = "SELECT * FROM Provider.ProviderUser WHERE Username = @username";
 
@@ -56,12 +60,16 @@
                 .Query<Entities.ProviderUser>(sql, sqlParams)
                 .SingleOrDefault();
 
+            _logger.Debug(dbProviderUser == null
+                ? "Did not find provider user with username=\"{0}\""
+                : "Got provider user with username=\"{0}\"", username);
+
             return MapProviderUser(dbProviderUser);
         }
 
         public IEnumerable<ProviderUser> GetForProvider(string ukprn)
         {
-            _logger.Debug("Calling database to get provider users for provider with Ukprn={0}", ukprn);
+            _logger.Debug("Getting provider users for provider with Ukprn=\"{0}\"", ukprn);
 
             const string sql = "SELECT pu.* FROM Provider.ProviderUser pu INNER JOIN dbo.Provider p ON p.ProviderId = pu.ProviderId WHERE p.Ukprn = @ukprn AND p.ProviderStatusTypeId = @providerStatusTypeId";
 
@@ -75,31 +83,38 @@
                 .Query<Entities.ProviderUser>(sql, sqlParams)
                 .Select(MapProviderUser);
 
+            _logger.Debug("Got provider users for provider with Ukprn=\"{0}\"", ukprn);
+
             return providerUsers;
         }
 
-        public ProviderUser Save(ProviderUser providerUser)
+        public ProviderUser Create(ProviderUser providerUser)
         {
-            _logger.Debug("Called SQL DB to save ProviderUser with Id={0}", providerUser.ProviderUserId);
+            _logger.Debug("Creating provider user with ProviderUserGuid={0}", providerUser.ProviderUserGuid);
 
             UpdateEntityTimestamps(providerUser);
 
             var dbProviderUser = MapProviderUser(providerUser);
 
-            try
-            {
-                dbProviderUser.ProviderUserId = (int)_getOpenConnection.Insert(dbProviderUser);
-            }
-            catch (Exception e)
-            {
-                // TODO: SQL: AG: need to talk about Save(). Can we get an upsert rather than throw/catch?
-                if (!_getOpenConnection.UpdateSingle(dbProviderUser))
-                {
-                    throw new Exception("Failed to update record after failed insert", e);
-                }
-            }
+            dbProviderUser.ProviderUserId = (int)_getOpenConnection.Insert(dbProviderUser);
 
-            _logger.Debug("Saved ProviderUser to SQL DB with ProviderUserId={0}", providerUser.ProviderUserId);
+            _logger.Debug("Created provider user with ProviderUserGuid={0} and ProviderId={1}",
+                providerUser.ProviderUserGuid, dbProviderUser.ProviderUserId);
+
+            return MapProviderUser(dbProviderUser);
+        }
+
+        public ProviderUser Update(ProviderUser providerUser)
+        {
+            _logger.Debug("Updating provider user with ProviderUserId={0}", providerUser.ProviderUserId);
+
+            UpdateEntityTimestamps(providerUser);
+
+            var dbProviderUser = MapProviderUser(providerUser);
+
+            _getOpenConnection.UpdateSingle(dbProviderUser);
+
+            _logger.Debug("Updated provider user with ProviderUserId={0}", providerUser.ProviderUserId);
 
             return MapProviderUser(dbProviderUser);
         }
@@ -111,16 +126,14 @@
             return _mapper.Map<Entities.ProviderUser, ProviderUser>(dbProviderUser);
         }
 
-        // TODO: SQL: AG: use or lose dead code.
-
         private Entities.ProviderUser MapProviderUser(ProviderUser providerUser)
         {
             return _mapper.Map<ProviderUser, Entities.ProviderUser>(providerUser);
         }
 
-        private void UpdateEntityTimestamps(ProviderUser entity)
+        // TODO: AG: move to UpdateEntityTimestamps to one place.
+        private static void UpdateEntityTimestamps(ProviderUser entity)
         {
-            // determine whether this is a "new" entity being saved for the first time
             if (entity.DateCreated == DateTime.MinValue)
             {
                 entity.DateCreated = DateTime.UtcNow;

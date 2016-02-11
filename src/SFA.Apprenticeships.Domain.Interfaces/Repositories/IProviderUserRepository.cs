@@ -16,6 +16,8 @@
 
     public interface IProviderUserWriteRepository
     {
-        ProviderUser Save(ProviderUser providerUser);
+        ProviderUser Create(ProviderUser providerUser);
+
+        ProviderUser Update(ProviderUser providerUser);
     }
 }

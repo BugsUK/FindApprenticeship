@@ -6,19 +6,13 @@
 
     public class ProviderUser : ICreatableEntity, IUpdatableEntity
     {
-        public ProviderUser()
-        {
-            Status = ProviderUserStatuses.Registered;
-        }
-
         public int ProviderUserId { get; set; }
 
-        // TODO: SQL: AG: required?
         public Guid ProviderUserGuid { get; set; }
 
         public int ProviderId { get; set; }
 
-        // public string Ukprn { get; set; }
+        public ProviderUserStatuses Status { get; set; }
 
         public string Username { get; set; }
 
@@ -33,8 +27,6 @@
         public string PreferredSiteErn { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        public ProviderUserStatuses Status { get; set; }
 
         public DateTime DateCreated { get; set; }
 

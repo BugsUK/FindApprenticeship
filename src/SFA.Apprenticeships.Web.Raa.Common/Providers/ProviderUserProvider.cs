@@ -51,38 +51,52 @@
                 providerUser.EmailVerificationCode = null;
                 providerUser.EmailVerifiedDate = DateTime.UtcNow;
                 providerUser.Status = ProviderUserStatuses.EmailVerified;
-                _userProfileService.SaveUser(providerUser);
+
+                _userProfileService.UpdateProviderUser(providerUser);
 
                 return true;
             }
 
             return false;
-
-            //End Stub
         }
 
         public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
-            var providerUser = _userProfileService.GetProviderUser(username) ?? new ProviderUser();
-            var provider = _providerService.GetProvider(ukprn);
+            var providerUser = _userProfileService.GetProviderUser(username);
+            var isNewProviderUser = providerUser == null;
 
-            var emailChanged = !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
+            if (isNewProviderUser)
+            {
+                var provider = _providerService.GetProvider(ukprn);
 
-            //TODO: Probably put this in a strategy in the service and add the verify email code
+                providerUser = new ProviderUser
+                {
+                    ProviderId = provider.ProviderId,
+                    ProviderUserGuid = Guid.NewGuid(),
+                    Status = ProviderUserStatuses.Registered
+                };
+            }
+
+            var shouldSendEmailVerificationCode = isNewProviderUser || !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
+
             providerUser.Username = username;
-            providerUser.ProviderId = provider.ProviderId;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
             providerUser.PreferredSiteErn = providerUserViewModel.DefaultProviderSiteErn;
             providerUser.Status = providerUser.Status;
 
-            _userProfileService.SaveUser(providerUser);
-
-            if (emailChanged)
+            if (isNewProviderUser)
             {
-                // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
-                // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
+                _userProfileService.CreateProviderUser(providerUser);
+            }
+            else
+            {
+                _userProfileService.UpdateProviderUser(providerUser);
+            }
+
+            if (shouldSendEmailVerificationCode)
+            {
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 

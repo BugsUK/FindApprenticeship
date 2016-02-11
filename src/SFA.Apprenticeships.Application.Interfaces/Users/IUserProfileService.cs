@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Users
 {
-    using System;
     using System.Collections.Generic;
     using Domain.Entities.Users;
 
@@ -17,7 +16,9 @@
 
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
 
-        ProviderUser SaveUser(ProviderUser providerUser);
+        ProviderUser CreateProviderUser(ProviderUser providerUser);
+
+        ProviderUser UpdateProviderUser(ProviderUser providerUser);
 
         AgencyUser GetAgencyUser(string username);
 
