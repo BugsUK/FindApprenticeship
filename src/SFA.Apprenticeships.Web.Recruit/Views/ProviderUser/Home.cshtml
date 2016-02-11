@@ -14,6 +14,7 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice";
+    var vacanciesLabel = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "opportunities" : "vacancies";
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -71,7 +72,7 @@
                 var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
                 var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
             }
-            <h2 class="heading-medium">Your vacancies
+            <h2 class="heading-medium">Your @vacanciesLabel
                 @if (filterType != VacanciesSummaryFilterTypes.All)
                 {
                     <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
@@ -240,7 +241,7 @@
                 <section>
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
-                        <summary>Search your vacancies</summary>
+                        <summary>Search your @vacanciesLabel</summary>
                         <div class="detail-content">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>
