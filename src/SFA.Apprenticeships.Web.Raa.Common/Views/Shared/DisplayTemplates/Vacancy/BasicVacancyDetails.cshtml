@@ -1,4 +1,5 @@
 ﻿@model NewVacancyViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
@@ -29,6 +30,20 @@
     @Html.FormTextAreaFor(m => m.ShortDescription, controlHtmlAttributes: new {type = "text", size = 12, @class = "width-all-1-1 form-textarea-medium"})
     @Html.EditorFor(m => m.ShortDescriptionComment, "Comment", Html.GetLabelFor(m => m.ShortDescriptionComment))
     @Html.ValidationMessageFor(m => m.ShortDescriptionComment)
+
+    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.VacancyType)))">
+        <a name="@Html.NameFor(m => m.VacancyType).ToString().ToLower()"></a>
+        <label class="form-label">Vacancy type</label>
+        @* ReSharper disable once Html.IdNotResolved *@
+        <label for="vacancy-type-apprenticeship" class="block-label">
+            @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Apprenticeship, new { id = "vacancy-type-apprenticeship", aria_labelledby = "vacancy-type-label" }) Apprenticeship
+        </label>
+        @* ReSharper disable once Html.IdNotResolved *@
+        <label for="vacancy-type-traineeship" class="block-label">
+            @Html.RadioButtonFor(model => model.VacancyType, VacancyType.Traineeship, new { id = "vacancy-type-traineeship", aria_labelledby = "vacancy-type-label" }) Traineeship
+        </label>
+        @Html.ValidationMessageFor(m => m.VacancyType)
+    </div>
 
     <div class="form-group">
         <div class="blocklabel-single-container">

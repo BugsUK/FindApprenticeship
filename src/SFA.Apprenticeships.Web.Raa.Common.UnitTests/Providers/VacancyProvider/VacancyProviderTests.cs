@@ -739,6 +739,7 @@
             providerService.Setup(s => s.GetProviderSite(It.IsAny<string>(), It.IsAny<string>())).Returns(providerSite);
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(s => s.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            referenceDataService.Setup(s => s.GetCategoryByCode(It.IsAny<string>())).Returns(new Category());
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });

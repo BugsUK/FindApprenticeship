@@ -1,67 +1,86 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancySummaryViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Common.Validators.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Enter further details";
+    var heading = Model.VacancyType == VacancyType.Traineeship ? "Enter opportunity details" : "Enter further details";
+    ViewBag.Title = "Recruit an Apprentice - " + heading;
 }
 
-<h1 class="heading-xlarge">
-    Enter further details
-</h1>
+<h1 id="heading" class="heading-xlarge">@heading</h1>
 
 @Html.AntiForgeryToken()
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 @Html.HiddenFor(m => m.VacancyReferenceNumber)
 @Html.HiddenFor(m => m.Status)
+@Html.HiddenFor(m => m.VacancyType)
 @Html.HiddenFor(m => m.WarningsHash)
 @Html.HiddenFor(m => m.ComeFromPreview)
 
 <section>
     <div class="form-group">
         <fieldset class="form-group inline-fixed">
-            @Html.FormTextAreaFor(m => m.WorkingWeek, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12})
+            @Html.FormTextAreaFor(m => m.WorkingWeek, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeek.TraineeshipLabelText : null, containerHtmlAttributes: new {@baseClassName = "working-week"}, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12})
         </fieldset>
-        <fieldset class="form-group inline-fixed">
-            @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new { @class = "form-control-small", type = "tel", size = 12 }, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
-        </fieldset>
-        <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment", Html.GetLabelFor(m => m.WorkingWeekComment))</div>
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            @Html.HiddenFor(m => m.HoursPerWeek)
+        }
+        else
+        {
+            <fieldset class="form-group inline-fixed">
+                @Html.FormTextFor(m => m.HoursPerWeek, controlHtmlAttributes: new {@class = "form-control-small", type = "tel", size = 12}, containerHtmlAttributes: new {style = "margin-bottom: 15px"})
+            </fieldset>
+        }
+        <div class="form-group">@Html.EditorFor(m => m.WorkingWeekComment, "Comment", Html.GetLabelFor(m => m.WorkingWeekComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.WorkingWeekComment.TraineeshipLabelText : null))</div>
 
-        <div class="blocklabel-single-container">
-            <div class="form-group">
-                <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
-                <label class="form-label" for="weekly-wage">Wage</label>
-                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
-                        Custom wage
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="national-minimum-wage" class="block-label">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
-                        National Minimum Wage
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-minimum-wage" class="block-label">
-                        @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
-                        National Minimum Wage for apprentices
-                    </label>
-                    @Html.ValidationMessageFor(m => m.WageType)
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            @Html.HiddenFor(m => m.WageType)
+            @Html.HiddenFor(m => m.Wage)
+            @Html.HiddenFor(m => m.WageUnit)
+            @Html.HiddenFor(m => m.WageComment)
+        }
+        else
+        {
+            <div class="blocklabel-single-container">
+                <div class="form-group">
+                    <a name="@Html.NameFor(m => m.WageType).ToString().ToLower()"></a>
+                    <label class="form-label" for="weekly-wage">Wage</label>
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.WageType)))" data-editable-x="">
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="custom-wage" class="block-label" data-target="custom-wage-panel">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.Custom, new {id = "custom-wage", aria_controls = "wage-type-panel"})
+                            Custom wage
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="national-minimum-wage" class="block-label">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.NationalMinimumWage, new {id = "national-minimum-wage", aria_controls = "wage-type-panel"})
+                            National Minimum Wage
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-minimum-wage" class="block-label">
+                            @Html.RadioButtonFor(model => model.WageType, WageType.ApprenticeshipMinimumWage, new {id = "apprenticeship-minimum-wage", aria_controls = "wage-type-panel"})
+                            National Minimum Wage for apprentices
+                        </label>
+                        @Html.ValidationMessageFor(m => m.WageType)
+                    </div>
+                    <div id="custom-wage-panel" class="toggle-content blocklabel-content">
+                        <fieldset class="form-group inline-fixed">
+                            £
+                            @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
+                            @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
+                        </fieldset>
+                    </div>
                 </div>
-                <div id="custom-wage-panel" class="toggle-content blocklabel-content">
-                    <fieldset class="form-group inline-fixed">
-                        £
-                        @Html.FormTextFor(m => m.Wage, containerHtmlAttributes: new {@class = "form-group-compound"}, labelHtmlAttributes: new {style = "Display: none"}, controlHtmlAttributes: new {@class = "form-control-large", type = "tel", size = 12})
-                        @Html.DropDownListFor(m => m.WageUnit, Model.WageUnits)
-                    </fieldset>
-                </div>
+                <div class="form-group">@Html.EditorFor(m => m.WageComment, "Comment", Html.GetLabelFor(m => m.WageComment))</div>
             </div>
-            <div class="form-group">@Html.EditorFor(m => m.WageComment, "Comment", Html.GetLabelFor(m => m.WageComment))</div>
-        </div>
+        }
 
         <fieldset class="form-group">
             <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.Duration)))">
@@ -91,8 +110,7 @@
             @Html.ValidationMessageWithSeverityFor(m => m.VacancyDatesViewModel.PossibleStartDate, Html.GetValidationType(m => m.VacancyDatesViewModel.PossibleStartDate))
         </fieldset>
         <div class="form-group">@Html.EditorFor(m => m.VacancyDatesViewModel.PossibleStartDateComment, "Comment", Html.GetLabelFor(m => m.VacancyDatesViewModel.PossibleStartDateComment))</div>
-
-        @Html.FormTextAreaFor(m => m.LongDescription, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
-        @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment))
+        @Html.FormTextAreaFor(m => m.LongDescription, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescription.TraineeshipLabelText : null, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-large", type = "text", size = 12, rows = 22})
+        @Html.EditorFor(m => m.LongDescriptionComment, "Comment", Html.GetLabelFor(m => m.LongDescriptionComment, Model.VacancyType == VacancyType.Traineeship ? VacancyViewModelMessages.LongDescriptionComment.TraineeshipLabelText : null))
     </div>
 </section>

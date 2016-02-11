@@ -7,6 +7,7 @@
     using NUnit.Framework;
     using Builders;
     using Common.Validators.Vacancy;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.UnitTests.Validators;
     using Web.Common.Validators;
@@ -51,6 +52,15 @@
         [TestCase(ApprenticeshipLevel.Degree, TrainingType.Standards, true)]
         [TestCase(ApprenticeshipLevel.Masters, TrainingType.Standards, true)]
         [TestCase(8, TrainingType.Standards, true)]
+        [TestCase(ApprenticeshipLevel.Unknown, TrainingType.Sectors, true)]
+        [TestCase(1, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.Intermediate, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.Advanced, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.Higher, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.FoundationDegree, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.Degree, TrainingType.Sectors, true)]
+        [TestCase(ApprenticeshipLevel.Masters, TrainingType.Sectors, true)]
+        [TestCase(8, TrainingType.Sectors, true)]
         public void ShouldRequireApprenticeshipLevel(ApprenticeshipLevel apprenticeshipLevel, TrainingType trainingType, bool expectValid)
         {
             // Arrange.
@@ -90,6 +100,7 @@
         [TestCase(TrainingType.Unknown, false)]
         [TestCase(TrainingType.Frameworks, true)]
         [TestCase(TrainingType.Standards, true)]
+        [TestCase(TrainingType.Sectors, true)]
         [TestCase(4, false)]
         public void ShouldRequireTrainingType(TrainingType trainingType, bool expectValid)
         {
@@ -213,6 +224,48 @@
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Errors);
                 _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.Warnings);
                 _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.StandardId, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+        }
+
+        [TestCase(null, VacancyType.Unknown, true)]
+        [TestCase("1234", VacancyType.Unknown, true)]
+        [TestCase(null, VacancyType.Apprenticeship, true)]
+        [TestCase("1234", VacancyType.Apprenticeship, true)]
+        [TestCase(null, VacancyType.Traineeship, false)]
+        [TestCase("1234", VacancyType.Traineeship, true)]
+        public void ShouldRequireSectorCodeName(string sectorCodeName, VacancyType vacancyType, bool expectValid)
+        {
+            // Arrange.
+            var viewModel = new TrainingDetailsViewModel
+            {
+                VacancyType = vacancyType,
+                SectorCodeName = sectorCodeName
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            // Act.
+            _validator.Validate(viewModel);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Errors);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.Warnings);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
+
+            // Assert.
+            if (expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(m => m.SectorCodeName, viewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(m => m.SectorCodeName, viewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.Errors);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.Warnings);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.TrainingDetailsViewModel, vm => vm.TrainingDetailsViewModel.SectorCodeName, vacancyViewModel, RuleSets.ErrorsAndWarnings);
             }
         }
 

@@ -4,6 +4,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Validators.Common;
@@ -103,7 +104,11 @@
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value == true);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
+
+            validator.RuleFor(viewModel => (int)viewModel.VacancyType)
+                .InclusiveBetween((int)VacancyType.Apprenticeship, (int)VacancyType.Traineeship)
+                .WithMessage(VacancyViewModelMessages.VacancyType.RequiredErrorText);
         }
     }
 }

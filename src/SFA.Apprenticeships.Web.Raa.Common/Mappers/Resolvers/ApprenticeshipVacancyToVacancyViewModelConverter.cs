@@ -28,7 +28,8 @@
                 VacancySummaryViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancySummaryViewModel>(source),
                 VacancyRequirementsProspectsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
-                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount
+                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
+                VacancyType = source.VacancyType
             };
 
             if (source.Status.IsStateInQa())

@@ -4,6 +4,7 @@
     using System.ComponentModel.DataAnnotations;
     using System.Web.Mvc;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation.Attributes;
@@ -17,6 +18,8 @@
         public long? VacancyReferenceNumber { get; set; }
 
         public ProviderVacancyStatuses Status { get; set; }
+
+        public VacancyType VacancyType { get; set; }
 
         public bool ComeFromPreview { get; set; }
 
@@ -40,6 +43,13 @@
 
         [Display(Name = VacancyViewModelMessages.ApprenticeshipLevelComment.LabelText)]
         public string ApprenticeshipLevelComment { get; set; }
+
+        public string SectorCodeName { get; set; }
+
+        [Display(Name = VacancyViewModelMessages.SectorCodeNameComment.LabelText)]
+        public string SectorCodeNameComment { get; set; }
+
+        public List<SelectListItem> Sectors { get; set; }
 
         [Display(Name = VacancyViewModelMessages.TrainingProvidedMessages.LabelText)]
         public string TrainingProvided { get; set; }

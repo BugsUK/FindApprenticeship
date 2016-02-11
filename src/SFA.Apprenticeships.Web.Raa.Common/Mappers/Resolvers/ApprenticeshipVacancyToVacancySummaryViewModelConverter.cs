@@ -26,7 +26,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
                 WorkingWeek = source.WorkingWeek,
                 WorkingWeekComment = source.WorkingWeekComment,
                 Status = source.Status,
-                VacancyDatesViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source)
+                VacancyDatesViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source),
+                VacancyType = source.VacancyType
             };
 
 

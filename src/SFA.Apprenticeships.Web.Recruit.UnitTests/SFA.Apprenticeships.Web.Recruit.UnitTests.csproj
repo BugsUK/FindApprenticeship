@@ -154,6 +154,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Mappers\RecruitMappersTests.cs" />
     <Compile Include="Mediators\Locations\LocationsTests.cs" />
     <Compile Include="Mediators\Locations\TestsBase.cs" />
@@ -189,19 +190,17 @@
     <Compile Include="Validators\VacancyPosting\MandatoryDateChecks.cs" />
     <Compile Include="Validators\VacancyPosting\MandatoryHoursAndDurationConditionTests.cs" />
     <Compile Include="Validators\VacancyPosting\MandatoryWageTests.cs" />
-    <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\OptionalClosingAndPossibleStartDateTests.cs" />
     <Compile Include="Validators\VacancyPosting\OptionalHoursAndDurationConditionTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyQuestionsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyQuestionsViewModelServerValidatorTests.cs" />
-    <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelServerValidatorTests.cs" />
-    <Compile Include="Validators\VacancyPosting\VacancyRequirementsProspectsViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancySummaryViewModelServerValidatorTests.cs" />
     <Compile Include="Views\Shared\ValidationSummaryViewModel.cs" />
     <Compile Include="Views\VacancyPosting\VacancyQuestionsTests.cs" />
     <Compile Include="Views\VacancyPosting\RequirementsProspectsTests.cs" />
     <Compile Include="Views\VacancyPosting\PreviewVacancyTests.cs" />
+    <Compile Include="Views\VacancyPosting\VacancySubmittedTests.cs" />
     <Compile Include="Views\VacancyPosting\VacancySummaryTests.cs" />
     <Compile Include="Views\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />
@@ -244,10 +243,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Common\SFA.Apprenticeships.Web.Common.csproj">
       <Project>{ADB1C795-A6AA-4CB8-82AE-2B8D10E22220}</Project>
       <Name>SFA.Apprenticeships.Web.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common.UnitTests\SFA.Apprenticeships.Web.Raa.Common.UnitTests.csproj">
-      <Project>{c156404c-5cd4-47f8-bbaf-bd4c36906103}</Project>
-      <Name>SFA.Apprenticeships.Web.Raa.Common.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
       <Project>{700D41DD-527A-42BD-94D2-FD49A5F00A18}</Project>

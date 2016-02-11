@@ -165,7 +165,7 @@
         [TestCase(WageType.ApprenticeshipMinimumWage, 37.5, "&#163;123.75")]
         public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
         {
-            var details = new VacancyPreview();
+            var details = new WorkingWeekAndWage();
 
             var viewModel = new VacancyViewModel
             {
@@ -198,7 +198,8 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = ProviderVacancyStatuses.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -211,7 +212,7 @@
         [TestCase(100, WageUnit.Annually, @"&#163;100")]
         public void ShouldShowCustomWageAmount(decimal wage, WageUnit wageUnit, string expectedDisplayText)
         {
-            var details = new VacancyPreview();
+            var details = new WorkingWeekAndWage();
 
             var viewModel = new VacancyViewModel()
             {
@@ -245,7 +246,8 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = ProviderVacancyStatuses.ReservedForQA,
+                VacancyType = VacancyType.Apprenticeship
             };
 
             var view = details.RenderAsHtml(_context, viewModel);

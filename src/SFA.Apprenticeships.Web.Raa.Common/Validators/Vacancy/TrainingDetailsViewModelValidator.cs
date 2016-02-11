@@ -4,6 +4,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
 
@@ -40,6 +41,10 @@
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(m => m.FrameworkCodeNameComment)
+                .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
+
+            validator.RuleFor(m => m.SectorCodeNameComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
@@ -82,7 +87,7 @@
         internal static void AddServerRules(this AbstractValidator<TrainingDetailsViewModel> validator)
         {
             validator.RuleFor(viewModel => (int)viewModel.TrainingType)
-                .InclusiveBetween((int)TrainingType.Frameworks, (int)TrainingType.Standards)
+                .InclusiveBetween((int)TrainingType.Frameworks, (int)TrainingType.Sectors)
                 .WithMessage(NewVacancyViewModelMessages.TrainingType.RequiredErrorText);
 
             validator.RuleFor(m => m.FrameworkCodeName)
@@ -94,6 +99,11 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.StandardId.RequiredErrorText)
                 .When(m => m.TrainingType == TrainingType.Standards);
+
+            validator.RuleFor(m => m.SectorCodeName)
+                .NotEmpty()
+                .WithMessage(VacancyViewModelMessages.SectorCodeName.RequiredErrorText)
+                .When(m => m.VacancyType == VacancyType.Traineeship);
 
             validator.RuleFor(viewModel => (int)viewModel.ApprenticeshipLevel)
                 .InclusiveBetween((int)ApprenticeshipLevel.Intermediate, (int)ApprenticeshipLevel.Degree)

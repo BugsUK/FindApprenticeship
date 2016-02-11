@@ -2,12 +2,13 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
 {
+    using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
+    using Domain.Entities.Vacancies;
     using FluentValidation;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Raa.Common.UnitTests.Builders;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;
 
@@ -257,6 +258,42 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.VacancyPosting
             _validator.ShouldHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel);
             _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+        }
+
+        [TestCase(5, DurationType.Weeks, false)]
+        [TestCase(6, DurationType.Weeks, true)]
+        [TestCase(26, DurationType.Weeks, true)]
+        [TestCase(27, DurationType.Weeks, false)]
+        [TestCase(1, DurationType.Months, false)]
+        [TestCase(2, DurationType.Months, true)]
+        [TestCase(6, DurationType.Months, true)]
+        [TestCase(7, DurationType.Months, false)]
+        public void TraineeshipDuration(int expectedDuration, DurationType durationType, bool expectValid)
+        {
+            var viewModel = new VacancySummaryViewModel
+            {
+                Duration = expectedDuration,
+                DurationType = durationType,
+                VacancyType = VacancyType.Traineeship
+            };
+            var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
+
+            _validator.Validate(viewModel, ruleSet: RuleSet);
+            _aggregateValidator.Validate(vacancyViewModel);
+            _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
+
+            if(expectValid)
+            {
+                _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            }
+            else
+            {
+                _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            }
         }
     }
 }

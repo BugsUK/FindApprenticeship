@@ -124,18 +124,18 @@
                     <div class="tabbed-element tab1 active width-all-1-1">
                         <table class="no-btm-margin">
                             <colgroup>
-                                <col class="t15">
-                                @*<col class="t15">*@
-                                <col class="t15">
-                                <col class="t15">
-                                <col class="t15">
-                                <col class="t15">
-                                <col class="t15">
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
                             </colgroup>
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    @*<th>Reference</th>*@
+                                    <th>Type</th>
                                     <th>Provider</th>
                                     <th>Date submitted</th>
                                     <th>Closing date</th>
@@ -150,9 +150,9 @@
                                     <td>
                                         <span class="vac-title">@vacancy.Title</span>
                                     </td>
-                                    @*<td>
-                                        <span>@vacancy.VacancyReferenceNumber.GetVacancyReference()</span>
-                                    </td>*@
+                                    <td>
+                                        <span>@vacancy.VacancyType.ToString()</span>
+                                    </td>
                                     <td>
                                         <span>@vacancy.ProviderName</span>
                                     </td>

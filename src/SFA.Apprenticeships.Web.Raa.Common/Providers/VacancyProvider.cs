@@ -19,6 +19,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
+    using Domain.Entities.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
     using ViewModels.Provider;
@@ -222,26 +223,37 @@
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0
+                NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
+                VacancyType = newVacancyViewModel.VacancyType
             });
 
             return vacancy;
         }
         
-        private string GetFrameworkCodeName(TrainingDetailsViewModel newVacancyViewModel)
+        private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            return newVacancyViewModel.TrainingType == TrainingType.Standards ? null : newVacancyViewModel.FrameworkCodeName;
+            return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : trainingDetailsViewModel.FrameworkCodeName;
+        }
+        
+        private int? GetStandardId(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            return trainingDetailsViewModel.TrainingType == TrainingType.Frameworks ? null : trainingDetailsViewModel.StandardId;
         }
 
-        private ApprenticeshipLevel GetApprenticeshipLevel(TrainingDetailsViewModel newVacancyViewModel)
+        private ApprenticeshipLevel GetApprenticeshipLevel(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            var apprenticeshipLevel = newVacancyViewModel.ApprenticeshipLevel;
-            if (newVacancyViewModel.TrainingType == TrainingType.Standards)
+            var apprenticeshipLevel = trainingDetailsViewModel.ApprenticeshipLevel;
+            if (trainingDetailsViewModel.TrainingType == TrainingType.Standards)
             {
-                var standard = GetStandard(newVacancyViewModel.StandardId);
+                var standard = GetStandard(trainingDetailsViewModel.StandardId);
                 apprenticeshipLevel = standard?.ApprenticeshipLevel ?? ApprenticeshipLevel.Unknown;
             }
             return apprenticeshipLevel;
+        }
+
+        private string GetSectorCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
+        {
+            return trainingDetailsViewModel.VacancyType == VacancyType.Traineeship ? trainingDetailsViewModel.SectorCodeName : null;
         }
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -256,9 +268,9 @@
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
-            vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
+            vacancy.VacancyType = newVacancyViewModel.VacancyType;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
@@ -276,10 +288,16 @@
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
-            var sectors = GetSectorsAndFrameworks();
+            if (viewModel.VacancyType == VacancyType.Traineeship)
+            {
+                viewModel.TrainingType = TrainingType.Sectors;
+            }
+            var sectorsAndFrameworks = GetSectorsAndFrameworks();
             var standards = GetStandards();
-            viewModel.SectorsAndFrameworks = sectors;
+            var sectors = GetSectors();
+            viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
+            viewModel.Sectors = sectors;
             return viewModel;
         }
 
@@ -289,8 +307,9 @@
 
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
-            vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardId = GetStandardId(viewModel);
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
+            vacancy.SectorCodeName = GetSectorCodeName(viewModel);
             vacancy.TrainingProvided = viewModel.TrainingProvided;
             vacancy.ContactName = viewModel.ContactName;
             vacancy.ContactNumber = viewModel.ContactNumber;
@@ -439,6 +458,9 @@
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName)
                 ? vacancy.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName)
+                ? vacancy.SectorCodeName
+                : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
@@ -509,6 +531,29 @@
                 select standard.Convert(sector)).ToList();
         }
 
+        public List<SelectListItem> GetSectors()
+        {
+            var categories = _referenceDataService.GetCategories();
+
+            var sectorItems = new List<SelectListItem>
+            {
+                new SelectListItem { Value = string.Empty, Text = "Choose from the list of sectors"}
+            };
+
+            var blacklistedCategoryCodes = GetBlacklistedCategoryCodeNames(_configurationService);
+
+            foreach (var sector in categories.Where(category => !blacklistedCategoryCodes.Contains(category.CodeName)))
+            {
+                sectorItems.Add(new SelectListItem
+                {
+                    Value = sector.CodeName,
+                    Text = sector.FullName
+                });
+            }
+
+            return sectorItems;
+        }
+
         public StandardViewModel GetStandard(int? standardId)
         {
             if (!standardId.HasValue) return null;
@@ -550,7 +595,7 @@
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
             //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
-            var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn);
+            var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn).Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType).ToList();
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
@@ -665,6 +710,7 @@
             vacancy.ApprenticeshipLevelComment = null;
             vacancy.FrameworkCodeNameComment = null;
             vacancy.StandardIdComment = null;
+            vacancy.SectorCodeNameComment = null;
             vacancy.WageComment = null;
             vacancy.ClosingDateComment = null;
             vacancy.DurationComment = null;
@@ -675,6 +721,7 @@
             vacancy.SecondQuestionComment = null;
             vacancy.TrainingProvidedComment = null;
             vacancy.ContactDetailsComment = null;
+            vacancy.NumberOfPositionsComment = null;
 
             vacancy.EntityId = Guid.NewGuid();
 
@@ -742,7 +789,8 @@
                 DateStartedToQA = apprenticeshipVacancy.DateStartedToQA,
                 QAUserName = apprenticeshipVacancy.QAUserName,
                 CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(apprenticeshipVacancy),
-                SubmissionCount = apprenticeshipVacancy.SubmissionCount
+                SubmissionCount = apprenticeshipVacancy.SubmissionCount,
+                VacancyType = apprenticeshipVacancy.VacancyType
             };
         }
 
@@ -845,6 +893,7 @@
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
+            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName) ? vacancy.SectorCodeName : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider, vacancyManager, vacancy);
@@ -909,6 +958,7 @@
             vacancy.OfflineApplicationUrlComment = viewModel.OfflineApplicationUrlComment;
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
+            vacancy.VacancyType = viewModel.VacancyType;
 
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
@@ -926,10 +976,12 @@
             //update properties
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
-            vacancy.StandardId = viewModel.StandardId;
+            vacancy.StandardId = GetStandardId(viewModel);
             vacancy.StandardIdComment = viewModel.StandardIdComment;
             vacancy.ApprenticeshipLevel = GetApprenticeshipLevel(viewModel);
             vacancy.ApprenticeshipLevelComment = viewModel.ApprenticeshipLevelComment;
+            vacancy.SectorCodeName = GetSectorCodeName(viewModel);
+            vacancy.SectorCodeNameComment = viewModel.SectorCodeNameComment;
             vacancy.FrameworkCodeNameComment = viewModel.FrameworkCodeNameComment;
             vacancy.TrainingProvided = viewModel.TrainingProvided;
             vacancy.TrainingProvidedComment = viewModel.TrainingProvidedComment;
@@ -941,10 +993,12 @@
             vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
 
             viewModel = _mapper.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(vacancy);
-            var sectors = GetSectorsAndFrameworks();
+            var sectorsAndFrameworks = GetSectorsAndFrameworks();
             var standards = GetStandards();
-            viewModel.SectorsAndFrameworks = sectors;
+            var sectors = GetSectors();
+            viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
+            viewModel.Sectors = sectors;
             return viewModel;
         }
 

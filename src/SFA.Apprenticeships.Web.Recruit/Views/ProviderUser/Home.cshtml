@@ -6,6 +6,7 @@
         return vacancy.Status != ProviderVacancyStatuses.RejectedByQA;
     }
 }
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
@@ -13,6 +14,7 @@
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
     ViewBag.Title = "Recruit an Apprentice";
+    var vacanciesLabel = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "opportunities" : "vacancies";
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -62,6 +64,7 @@
     {
         @Html.AntiForgeryToken()
 
+        @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.VacancyType)
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
 
         <section class="grid-wrapper">
@@ -69,7 +72,7 @@
                 var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
                 var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
             }
-            <h2 class="heading-medium">Your vacancies
+            <h2 class="heading-medium">Your @vacanciesLabel
                 @if (filterType != VacanciesSummaryFilterTypes.All)
                 {
                     <span>&nbsp;<a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
@@ -238,14 +241,22 @@
                 <section>
                     @{ var open = string.IsNullOrEmpty(Model.VacanciesSummary.VacanciesSummarySearch.SearchString) ? "" : "open"; }
                     <details class="@open" @open>
-                        <summary>Search your vacancies</summary>
+                        <summary>Search your @vacanciesLabel</summary>
                         <div class="detail-content">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>
                         </div>
                     </details>
-                    <div class="tabbed-element tab1 active width-all-1-1">
-                        <table class="no-btm-margin" id="vacancies-table">
+                    <nav class="tabbed-nav">
+                        @{
+                            var apprenticeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ? " active" : "";
+                            var traineeshipsTabControlClass = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? " active" : "";
+                        }
+                        @Html.RouteLink("Apprenticeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Apprenticeship), new {@class = "tabbed-tab no-js" + apprenticeshipsTabControlClass })
+                        @Html.RouteLink("Traineeships", RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacancyType.Traineeship), new {@class = "tabbed-tab no-js" + traineeshipsTabControlClass })
+                    </nav>
+                    <div class="tabbed-content active width-all-1-1">
+                        <table id="vacancies-table">
                             <colgroup>
                                 <col class="t25">
                                 <col class="t15">
