@@ -275,7 +275,8 @@
                             Employer = new Employer()
                         },
                         Ukprn = ukprn,
-                        Status = ProviderVacancyStatuses.PendingQA
+                        Status = ProviderVacancyStatuses.PendingQA,
+                        VacancyReferenceNumber = 1
                     }
                 });
 
@@ -785,7 +786,7 @@
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
             vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy());
+                .Returns(new ApprenticeshipVacancy { VacancyReferenceNumber = vacancyReferenceNumber});
             viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
             viewModel.DurationComment = durationComment;
             viewModel.LongDescriptionComment = longDescriptionComment;
@@ -821,7 +822,7 @@
 
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
             vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy());
+                .Returns(new ApprenticeshipVacancy { VacancyReferenceNumber = vacancyReferenceNumber});
 
             var viewModel = new VacancyQuestionsViewModel
             {
