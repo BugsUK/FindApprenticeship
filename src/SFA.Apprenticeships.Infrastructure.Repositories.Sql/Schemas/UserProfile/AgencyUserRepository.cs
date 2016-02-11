@@ -23,13 +23,13 @@
         public AgencyUser Get(string username)
         {
             var user = _getOpenConnection.Query<Entities.AgencyUser>("SELECT * FROM UserProfile.AgencyUser WHERE Username = @Username", new { Username  = username }).SingleOrDefault();
-            if (user != null)
-            {
-                var role = _getOpenConnection.Query<Entities.AgencyUserRole>("SELECT * FROM UserProfile.AgencyUserRole WHERE AgencyUserRole.AgencyUserRoleId = @id", new { id = user.RoleId }).SingleOrDefault();
-                user.Role = role;
-                var team = _getOpenConnection.Query<Entities.AgencyUserTeam>("SELECT * FROM UserProfile.AgencyUserTeam WHERE AgencyUserTeam.AgencyUserTeamId = @id", new { id = user.TeamId }).SingleOrDefault();
-                user.Team = team;
-            }
+            //if (user != null)
+            //{
+            //    var role = _getOpenConnection.Query<Entities.AgencyUserRole>("SELECT * FROM UserProfile.AgencyUserRole WHERE AgencyUserRole.AgencyUserRoleId = @id", new { id = user.RoleId }).SingleOrDefault();
+            //    user.Role = role;
+            //    var team = _getOpenConnection.Query<Entities.AgencyUserTeam>("SELECT * FROM UserProfile.AgencyUserTeam WHERE AgencyUserTeam.AgencyUserTeamId = @id", new { id = user.TeamId }).SingleOrDefault();
+            //    user.Team = team;
+            //}
 
             var result = _mapper.Map<Entities.AgencyUser, AgencyUser>(user);
             return result;
@@ -37,29 +37,32 @@
 
         public AgencyUser Save(AgencyUser entity)
         {
-            //_logger.Debug("Called SQL DB to save AgencyUser with Id={0}", entity.EntityId);
+            _logger.Debug("Called SQL DB to save AgencyUser with Id={0}", entity.EntityId);
 
-            //UpdateEntityTimestamps(entity);
+            UpdateEntityTimestamps(entity);
 
-            //var dbEntity = _mapper.Map<AgencyUser, Entities.AgencyUser>(entity);
+            var dbEntity = _mapper.Map<AgencyUser, Entities.AgencyUser>(entity);
 
-            //try
-            //{
-            //    var result = (int)_getOpenConnection.Insert(dbEntity);
-            //    dbEntity.Id = result;
-            //}
-            //catch (Exception ex)
-            //{
-            //    // TODO: Detect key violation
+            try
+            {
+                var result = (int)_getOpenConnection.Insert(dbEntity);
+                dbEntity.AgencyUserId = result;
+            }
+            catch (Exception ex)
+            {
+                // TODO: Detect key violation
 
-            //    if (!_getOpenConnection.UpdateSingle(dbEntity))
-            //        throw new Exception("Failed to update record after failed insert", ex);
-            //}
+                if (!_getOpenConnection.UpdateSingle(dbEntity))
+                    throw new Exception("Failed to update record after failed insert", ex);
+            }
 
-            //_logger.Debug("Saved provider to SQL DB with Ukprn={0}", entity.EntityId);
+            _logger.Debug("Saved provider to SQL DB with UKPRN={0}", entity.EntityId);
 
-            //return _mapper.Map<Entities.AgencyUser, AgencyUser>(dbEntity);
-            throw new NotImplementedException();
+            var endResult = _mapper.Map<Entities.AgencyUser, AgencyUser>(dbEntity);
+            endResult.Role = entity.Role;
+            endResult.Team = entity.Team;
+
+            return endResult;
         }
 
         private void UpdateEntityTimestamps(AgencyUser entity)

@@ -9,17 +9,17 @@
         {
             return new List<Role>
             {
-                GetRole("Helpdesk_advisor", "Helpdesk advisor"),
-                GetRole("QA_advisor", "QA advisor", true),
-                GetRole("Technical_advisor", "Technical advisor")
+                GetRole(Role.CodeNameHelpdeskAdviser, "Helpdesk adviser"),
+                GetRole(Role.CodeNameQAAdviser, "QA adviser", true),
+                GetRole(Role.CodeNameTechnicalAdviser, "Technical adviser")
             };
         }
 
-        public static Role GetRole(string id, string name, bool isDefault = false)
+        public static Role GetRole(string codeName, string name, bool isDefault = false)
         {
             return new Role
             {
-                Id = id,
+                CodeName = codeName,
                 Name = name,
                 IsDefault = isDefault
             };

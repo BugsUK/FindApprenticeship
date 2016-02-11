@@ -65,11 +65,11 @@
             };
         }
 
-        private static Team GetTeam(string id, string name, bool isDefault = false)
+        private static Team GetTeam(string codeName, string name, bool isDefault = false)
         {
             return new Team
             {
-                Id = id,
+                CodeName = codeName,
                 Name = name,
                 IsDefault = isDefault
             };
@@ -78,23 +78,23 @@
         public IEnumerable<Role> GetRoles(string roleList)
         {
             //TODO: Get these from config or a repo once the design and full list has been agreed
-            const string technicalAdvisor = "Technical_advisor";
+            const string technicalAdviser = Role.CodeNameTechnicalAdviser;
 
             var roles = new List<Role>
             {
-                GetRole("Helpdesk_advisor", "Helpdesk adviser"),
-                GetRole("QA_advisor", "Vacancy reviewer", true)
+                GetRole(1, Role.CodeNameHelpdeskAdviser, "Helpdesk adviser"),
+                GetRole(2, Role.CodeNameQAAdviser, "Vacancy reviewer", true)
                 //GetRole(technicalAdvisor, "Technical adviser")
             };
 
-            return roleList == "Serco" ? roles.Where(r => r.Id != technicalAdvisor) : roles;
+            return roleList == "Serco" ? roles.Where(r => r.CodeName != technicalAdviser) : roles;
         }
 
-        private static Role GetRole(string id, string name, bool isDefault = false)
+        private static Role GetRole(int id, string codeName, string name, bool isDefault = false)
         {
             return new Role
             {
-                Id = id,
+                CodeName = codeName,
                 Name = name,
                 IsDefault = isDefault
             };

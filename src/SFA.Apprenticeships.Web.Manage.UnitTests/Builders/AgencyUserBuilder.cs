@@ -13,7 +13,7 @@
         {
             _username = username;
             _team = TeamListFactory.GetTeam("All", "All", true);
-            _role = RoleListFactory.GetRole("QA_advisor", "QA advisor", true);
+            _role = RoleListFactory.GetRole(Role.CodeNameQAAdviser, "QA adviser", true);
         }
 
         public AgencyUser Build()

@@ -26,11 +26,19 @@
             {
                 agencyUser = new AgencyUser
                 {
-                    Username = username,
-                    Team = teams.Single(t => t.IsDefault),
-                    Role = roles.Single(r => r.IsDefault)
+                    Username = username
                 };
                 agencyUser = _userProfileService.SaveUser(agencyUser);
+            }
+
+            if (agencyUser.Role == null)
+            {
+                agencyUser.Role = roles.Single(r => r.IsDefault);
+            }
+
+            if (agencyUser.Team == null)
+            {
+                agencyUser.Team = teams.Single(r => r.IsDefault);
             }
 
             return GetAgencyUserViewModel(agencyUser, teams, roles);
@@ -42,6 +50,16 @@
             var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
+            if (agencyUser.Role == null)
+            {
+                agencyUser.Role = roles.Single(r => r.IsDefault);
+            }
+
+            if (agencyUser.Team == null)
+            {
+                agencyUser.Team = teams.Single(r => r.IsDefault);
+            }
+
             return GetAgencyUserViewModel(agencyUser, teams, roles);
         }
 
@@ -51,8 +69,8 @@
             var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
-            var team = teams.Single(t => t.Id == viewModel.TeamId);
-            var role = roles.Single(r => r.Id == viewModel.RoleId);
+            var team = teams.Single(t => t.CodeName == viewModel.TeamCode);
+            var role = roles.Single(r => r.CodeName == viewModel.RoleCode);
             agencyUser.Team = team;
             agencyUser.Role = role;
 
@@ -63,14 +81,14 @@
 
         private static List<SelectListItem> GetTeamsSelectList(IEnumerable<Team> teams, string teamId)
         {
-            var teamsSelectList = teams.Select(t => new SelectListItem { Value = t.Id, Text = t.Name, Selected = t.Id == teamId }).ToList();
+            var teamsSelectList = teams.Select(t => new SelectListItem { Value = t.CodeName, Text = t.Name, Selected = t.CodeName == teamId }).ToList();
 
             return teamsSelectList;
         }
 
         private static List<SelectListItem> GetRolesSelectList(IEnumerable<Role> roles, string roleId)
         {
-            var rolesSelectList = roles.Select(r => new SelectListItem { Value = r.Id, Text = r.Name, Selected = r.Id == roleId }).ToList();
+            var rolesSelectList = roles.Select(r => new SelectListItem { Value = r.CodeName, Text = r.Name, Selected = r.CodeName == roleId }).ToList();
 
             return rolesSelectList;
         }
@@ -79,10 +97,10 @@
         {
             return new AgencyUserViewModel
             {
-                Teams = GetTeamsSelectList(teams, agencyUser.Team.Id),
-                TeamId = agencyUser.Team.Id,
-                Roles = GetRolesSelectList(roles, agencyUser.Role.Id),
-                RoleId = agencyUser.Role.Id
+                Teams = GetTeamsSelectList(teams, agencyUser.Team.CodeName),
+                TeamCode = agencyUser.Team.CodeName,
+                Roles = GetRolesSelectList(roles, agencyUser.Role.CodeName),
+                RoleCode = agencyUser.Role.CodeName
             };
         }
     }

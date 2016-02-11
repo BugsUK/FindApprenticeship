@@ -17,21 +17,21 @@
         private readonly IMapper _mapper = new AgencyUserMappers();
         private IGetOpenConnection _connection;
         private Mock<ILogService> _logger;
-        private AgencyUserTeam _agencyUserTeamA;
-        private AgencyUserTeam _agencyUserTeamB;
-        private AgencyUserRole _agencyUserRoleA;
-        private AgencyUserRole _agencyUserRoleB;
+        //private AgencyUserTeam _agencyUserTeamA;
+        //private AgencyUserTeam _agencyUserTeamB;
+        //private AgencyUserRole _agencyUserRoleA;
+        //private AgencyUserRole _agencyUserRoleB;
         private AgencyUser userWithBothRoleAndTeam;
 
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            _agencyUserTeamA = new AgencyUserTeam() { AgencyUserTeamId = 1, IsDefault = 0, CodeName = "A", Name = "Team A" };
-            _agencyUserTeamB = new AgencyUserTeam() { AgencyUserTeamId = 2, IsDefault = 0, CodeName = "B", Name = "Team B" };
-            _agencyUserRoleA = new AgencyUserRole() { AgencyUserRoleId = 1, IsDefault = 0, CodeName = "A", Name = "Role A" };
-            _agencyUserRoleB = new AgencyUserRole() { AgencyUserRoleId = 2, IsDefault = 0, CodeName = "B", Name = "Role B" };
-            userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam", Role = _agencyUserRoleB, Team = _agencyUserTeamB };
+            //_agencyUserTeamA = new AgencyUserTeam() { AgencyUserTeamId = 1, IsDefault = 0, CodeName = "A", Name = "Team A" };
+            //_agencyUserTeamB = new AgencyUserTeam() { AgencyUserTeamId = 2, IsDefault = 0, CodeName = "B", Name = "Team B" };
+            //_agencyUserRoleA = new AgencyUserRole() { AgencyUserRoleId = 1, IsDefault = 0, CodeName = "A", Name = "Role A" };
+            //_agencyUserRoleB = new AgencyUserRole() { AgencyUserRoleId = 2, IsDefault = 0, CodeName = "B", Name = "Role B" };
+            userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam"};
 
             var dbInitialiser = new DatabaseInitialiser();
 
@@ -54,7 +54,7 @@
 
         private object[] GetSeedObjects()
         {
-            var seedObjects = new object[] {_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, userWithBothRoleAndTeam};
+            var seedObjects = new object[] {/*_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, */userWithBothRoleAndTeam};
 
             return seedObjects;
         }
@@ -72,8 +72,8 @@
 
             //Assert
             result.Should().NotBeNull();
-            result.Role.Should().NotBeNull();
-            result.Team.Should().NotBeNull();
+            //result.Role.Should().NotBeNull();
+            //result.Team.Should().NotBeNull();
         }
 
         [Test]
@@ -92,58 +92,6 @@
             result.Should().NotBeNull();
             result.Role.Should().BeNull();
             result.Team.Should().BeNull();
-        }
-
-        [Test]
-        public void DoSaveWithRole()
-        {
-            //Arrange
-            var newAgencyUser = new Domain.Entities.Users.AgencyUser();
-            newAgencyUser.Username = Guid.NewGuid().ToString();
-            newAgencyUser.Role = new Domain.Entities.Users.Role()
-            {
-                CodeName = "B",
-                Id = _agencyUserRoleB.AgencyUserRoleId.ToString(),
-                IsDefault = false,
-                Name = "Anything you like"
-            };
-            newAgencyUser.Team = null;
-
-            //Act
-            var result = _repoUnderTest.Save(newAgencyUser);
-
-            //Assert
-            result.Should().NotBeNull();
-            result.Role.Should().NotBeNull();
-            result.Team.Should().BeNull();
-            result.Role.CodeName.Should().Be("B");
-            result.Role.Id.Should().Be(_agencyUserRoleB.AgencyUserRoleId.ToString());
-        }
-
-        [Test]
-        public void DoSaveWithTeam()
-        {
-            //Arrange
-            var newAgencyUser = new Domain.Entities.Users.AgencyUser();
-            newAgencyUser.Username = Guid.NewGuid().ToString();
-            newAgencyUser.Team = new Domain.Entities.Users.Team()
-            {
-                CodeName = "B",
-                Id = _agencyUserTeamB.AgencyUserTeamId.ToString(),
-                IsDefault = false,
-                Name = "Anything you like"
-            };
-            newAgencyUser.Role = null;
-
-            //Act
-            var result = _repoUnderTest.Save(newAgencyUser);
-
-            //Assert
-            result.Should().NotBeNull();
-            result.Team.Should().NotBeNull();
-            result.Role.Should().BeNull();
-            result.Team.CodeName.Should().Be("B");
-            result.Team.Id.Should().Be(_agencyUserTeamB.AgencyUserTeamId.ToString());
         }
     }
 }

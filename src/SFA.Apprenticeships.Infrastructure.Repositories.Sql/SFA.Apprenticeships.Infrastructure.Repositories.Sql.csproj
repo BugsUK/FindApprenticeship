@@ -146,8 +146,6 @@
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
     <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
-    <Compile Include="Schemas\UserProfile\Entities\AgencyUserRole.cs" />
-    <Compile Include="Schemas\UserProfile\Entities\AgencyUserTeam.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\AdditionalQuestion.cs" />
