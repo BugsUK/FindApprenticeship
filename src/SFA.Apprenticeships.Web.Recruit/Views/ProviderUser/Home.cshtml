@@ -58,7 +58,7 @@
     </section>
 }
 
-@if(Model.VacanciesSummary.TotalCount > 0)
+@if(Model.VacanciesSummary.HasVacancies)
 {
     using (Html.BeginForm(null, "ProviderUser", FormMethod.Post, new { name = "vacancy-search-form" }))
     {

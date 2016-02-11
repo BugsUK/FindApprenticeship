@@ -595,7 +595,9 @@
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
             //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
-            var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn).Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType).ToList();
+            var vacancies = _vacancyPostingService.GetForProvider(ukprn, providerSiteErn);
+            var hasVacancies = vacancies.Count > 0;
+            vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
             var live = vacancies.Where(v => v.Status == ProviderVacancyStatuses.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == ProviderVacancyStatuses.PendingQA || v.Status == ProviderVacancyStatuses.ReservedForQA).ToList();
@@ -672,6 +674,7 @@
                 NewApplicationsCount = newApplications.Count,
                 WithdrawnCount = withdrawn.Count,
                 CompletedCount = completed.Count,
+                HasVacancies = hasVacancies,
                 Vacancies = vacancyPage
             };
 
