@@ -4,13 +4,12 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    // TODO: SQL: AG: choose UKPRN or ProviderId but not both.
     // TODO: SQL: AG: keep annotations (including Table)?
 
     [Table("Provider.ProviderUser")]
     public class ProviderUser
     {
-        [Required]
+        [Key]
         public int ProviderUserId { get; set; }
 
         [Required]
@@ -24,9 +23,6 @@
 
         [Required]
         public int ProviderUserStatusId { get; set; }
-
-        [Required]
-        public int Ukprn { get; set; }
 
         [Required]
         public int ProviderId { get; set; }

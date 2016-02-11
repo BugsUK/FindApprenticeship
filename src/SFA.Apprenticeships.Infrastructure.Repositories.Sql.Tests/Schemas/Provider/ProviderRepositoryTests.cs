@@ -18,8 +18,10 @@
     {
         private readonly IMapper _mapper = new ProviderMappers();
         private IGetOpenConnection _connection;
+
         private Provider _provider;
-        private Guid _providerId;
+        private int _providerId;
+
         private ProviderRepository _repository;
 
         [SetUp]
@@ -27,17 +29,15 @@
         {
             var dbInitialiser = new DatabaseInitialiser();
 
-            _providerId = 1.ResolveToGuid();
+            _providerId = 1;
 
             _provider = new Provider()
             {
                 FullName = "Provider A",
-                UKPrn = 1,
-                DateCreated = DateTime.Now
+                Ukprn = 1
             };
 
             dbInitialiser.Publish(true);
-
             dbInitialiser.Seed(new List<object>() { _provider });
 
             _connection = dbInitialiser.GetOpenConnection();
@@ -47,7 +47,7 @@
         }
 
         [Test]
-        public void GetByGuid()
+        public void GetByProviderId()
         {
             //Arrange
 
@@ -60,12 +60,12 @@
 
 
         [Test]
-        public void GetByUKPrn()
+        public void GetByUkprn()
         {
             //Arrange
 
             //Act
-            var result = _repository.Get(_provider.UKPrn.ToString());
+            var result = _repository.Get(_provider.Ukprn.ToString());
 
             //Assert
             result.Should().NotBeNull();
@@ -89,17 +89,18 @@
         {
             //Arrange
             var providerA = new Fixture().Build<DomainProvider>()
-                .With(x => x.EntityId, 1.ResolveToGuid())
+                .With(x => x.ProviderId, 1)
                 .With(x => x.Ukprn, "999").Create();
-            
+
             //Act
             var saveResult = _repository.Save(providerA);
-            var savedProvider = _repository.Get(saveResult.EntityId);
+            var savedProvider = _repository.Get(saveResult.ProviderId);
 
             //Assert
-            Assert.AreNotEqual(saveResult.EntityId, Guid.Empty);
-            Assert.AreNotEqual(savedProvider.EntityId, Guid.Empty);
-            Assert.AreEqual(savedProvider.EntityId, saveResult.EntityId);
+            Assert.AreNotEqual(saveResult.ProviderId, 0);
+
+            Assert.AreNotEqual(savedProvider.ProviderId, 0);
+            Assert.AreEqual(savedProvider.ProviderId, saveResult.ProviderId);
             Assert.AreEqual(savedProvider.Name, providerA.Name);
             Assert.AreEqual(savedProvider.Ukprn, providerA.Ukprn);
         }
@@ -109,17 +110,19 @@
         public void UpdateExistingProvider()
         {
             //Arrange
-            var _existing = _repository.Get(_providerId);
-            _existing.Name = Guid.NewGuid().ToString();
+            var existing = _repository.Get(_providerId);
+
+            existing.Name = Guid.NewGuid().ToString();
 
             //Act
-            var saveResult = _repository.Save(_existing);
-            var savedProvider = _repository.Get(saveResult.EntityId);
+            var saveResult = _repository.Save(existing);
+            var savedProvider = _repository.Get(saveResult.ProviderId);
 
             //Assert
-            Assert.AreNotEqual(saveResult.EntityId, Guid.Empty);
-            Assert.AreNotEqual(savedProvider.EntityId, Guid.Empty);
-            Assert.AreEqual(savedProvider.EntityId, saveResult.EntityId);
+            Assert.AreNotEqual(saveResult.ProviderId, Guid.Empty);
+
+            Assert.AreNotEqual(savedProvider.ProviderId, Guid.Empty);
+            Assert.AreEqual(savedProvider.ProviderId, saveResult.ProviderId);
         }
     }
 }

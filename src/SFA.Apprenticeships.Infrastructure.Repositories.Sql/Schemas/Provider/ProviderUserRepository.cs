@@ -8,6 +8,8 @@
     using Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
 
+    // TODO: SQL: AG: double check logging.
+
     public class ProviderUserRepository : IProviderUserReadRepository, IProviderUserWriteRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
@@ -59,18 +61,47 @@
 
         public IEnumerable<ProviderUser> GetForProvider(string ukprn)
         {
-            throw new NotImplementedException();
+            _logger.Debug("Calling database to get provider users for provider with Ukprn={0}", ukprn);
+
+            const string sql = "SELECT pu.* FROM Provider.ProviderUser pu INNER JOIN dbo.Provider p ON p.ProviderId = pu.ProviderId WHERE p.Ukprn = @ukprn AND p.ProviderStatusTypeId = @providerStatusTypeId";
+
+            var sqlParams = new
+            {
+                ukprn,
+                providerStatusTypeId = ProviderStatus.Activated
+            };
+
+            var providerUsers = _getOpenConnection
+                .Query<Entities.ProviderUser>(sql, sqlParams)
+                .Select(MapProviderUser);
+
+            return providerUsers;
         }
 
-        public void Delete(Guid id)
+        public ProviderUser Save(ProviderUser providerUser)
         {
-            throw new NotSupportedException();
-        }
+            _logger.Debug("Called SQL DB to save ProviderUser with Id={0}", providerUser.ProviderUserId);
 
-        public ProviderUser Save(ProviderUser entity)
-        {
-            // TODO: SQL: AG: need to talk about Save(). Can we get an upsert rather than throw/catch?
-            throw new NotImplementedException();
+            UpdateEntityTimestamps(providerUser);
+
+            var dbProviderUser = MapProviderUser(providerUser);
+
+            try
+            {
+                dbProviderUser.ProviderUserId = (int)_getOpenConnection.Insert(dbProviderUser);
+            }
+            catch (Exception e)
+            {
+                // TODO: SQL: AG: need to talk about Save(). Can we get an upsert rather than throw/catch?
+                if (!_getOpenConnection.UpdateSingle(dbProviderUser))
+                {
+                    throw new Exception("Failed to update record after failed insert", e);
+                }
+            }
+
+            _logger.Debug("Saved ProviderUser to SQL DB with ProviderUserId={0}", providerUser.ProviderUserId);
+
+            return MapProviderUser(dbProviderUser);
         }
 
         #region Helpers
@@ -82,12 +113,24 @@
 
         // TODO: SQL: AG: use or lose dead code.
 
-        /*
         private Entities.ProviderUser MapProviderUser(ProviderUser providerUser)
         {
             return _mapper.Map<ProviderUser, Entities.ProviderUser>(providerUser);
         }
-        */
+
+        private void UpdateEntityTimestamps(ProviderUser entity)
+        {
+            // determine whether this is a "new" entity being saved for the first time
+            if (entity.DateCreated == DateTime.MinValue)
+            {
+                entity.DateCreated = DateTime.UtcNow;
+                entity.DateUpdated = null;
+            }
+            else
+            {
+                entity.DateUpdated = DateTime.UtcNow;
+            }
+        }
 
         #endregion
     }

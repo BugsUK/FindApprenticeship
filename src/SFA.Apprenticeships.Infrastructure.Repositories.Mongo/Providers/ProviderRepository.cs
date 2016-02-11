@@ -1,4 +1,5 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers
+﻿/*
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers
 {
     using System;
     using Domain.Entities.Providers;
@@ -33,7 +34,7 @@
 
         public Provider Get(string ukprn)
         {
-            _logger.Debug("Called Mongodb to get provider with UKPRN={0}", ukprn);
+            _logger.Debug("Called Mongodb to get provider with Ukprn={0}", ukprn);
 
             var mongoEntity = Collection.FindOne(Query<MongoProvider>.EQ(e => e.Ukprn, ukprn));
 
@@ -51,7 +52,7 @@
 
         public Provider Save(Provider entity)
         {
-            _logger.Debug("Called Mongodb to save provider with UKPRN={0}", entity.Ukprn);
+            _logger.Debug("Called Mongodb to save provider with Ukprn={0}", entity.Ukprn);
 
             UpdateEntityTimestamps(entity);
 
@@ -59,9 +60,10 @@
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved provider to Mongodb with UKPRN={0}", entity.Ukprn);
+            _logger.Debug("Saved provider to Mongodb with Ukprn={0}", entity.Ukprn);
 
             return _mapper.Map<MongoProvider, Provider>(mongoEntity);
         }
     }
 }
+*/

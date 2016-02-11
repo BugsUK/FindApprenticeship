@@ -2,6 +2,8 @@
 {
     using System;
 
+    // TODO: AG: SQL: remove dead code below.
+
     public class ProviderUser : ICreatableEntity, IUpdatableEntity
     {
         public ProviderUser()
@@ -16,9 +18,9 @@
 
         public int ProviderId { get; set; }
 
-        public string Username { get; set; }
+        // public string Ukprn { get; set; }
 
-        public string Ukprn { get; set; }
+        public string Username { get; set; }
 
         public string Fullname { get; set; }
 

@@ -5,6 +5,7 @@
     using Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using Common;
+    using Domain.Entities.Users;
     using Provider = Domain.Entities.Providers.Provider;
 
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
@@ -23,49 +24,56 @@
         /// <summary>
         /// Gets one by Id. Default return is null.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="providerId"></param>
         /// <returns></returns>
-        public Provider Get(Guid id)
+        public Provider Get(int providerId)
         {
-            _logger.Debug("Calling database to get provider with Id={0}", id);
+            _logger.Debug("Getting provider with ProviderId={0}", providerId);
 
-            var dbVacancy = GetbyId(id);
+            var dbProvider = GetById(providerId);
 
-            return MapProvider(dbVacancy);
+            _logger.Debug("Got provider with ProviderId={0}", providerId);
+
+            return MapProvider(dbProvider);
         }
 
         /// <summary>
-        /// Gets one by UKPRN. Default return is null.
+        /// Gets one by Ukprn. Default return is null.
         /// </summary>
         /// <param name="ukprn"></param>
         /// <returns></returns>
         public Provider Get(string ukprn)
         {
-            _logger.Debug("Calling database to get provider with UKPrn={0}", ukprn);
+            _logger.Debug("Getting activated provider with Ukprn={0}", ukprn);
 
-            var dbVacancy = _getOpenConnection.Query<Entities.Provider>("SELECT * FROM Provider.Provider WHERE UKPrn = @ProviderUKPrn", new { ProviderUKPrn = ukprn }).SingleOrDefault();
+            const string sql = "SELECT * FROM dbo.Provider WHERE UKPRN = @ukprn AND ProviderStatusTypeId = @providerStatusTypeId";
+
+            var sqlParams = new
+            {
+                ukprn,
+                providerStatusTypeID = ProviderStatus.Activated
+            };
+
+            var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+
+            _logger.Debug("Got activated provider with Ukprn={0}", ukprn);
 
             return MapProvider(dbVacancy);
-        }
-
-        private Entities.Provider GetbyId(Guid id)
-        {
-            var dbVacancy = _getOpenConnection.Query<Entities.Provider>("SELECT * FROM Provider.Provider WHERE ProviderId = @ProviderGuid", new { ProviderGuid = id.ResolveToInt() }).SingleOrDefault();
-            return dbVacancy;
         }
 
         /// <summary>
         /// Deletes one by Id.
         /// </summary>
-        /// <param name="id"></param>
-        public void Delete(Guid id)
+        /// <param name="providerId"></param>
+        public void Delete(int providerId)
         {
-            _logger.Debug("Calling repository to delete provider with Id={0}", id);
-            var objectToDelete = GetbyId(id);
+            _logger.Debug("Deleting provider with ProviderId={0}", providerId);
+
+            var objectToDelete = GetById(providerId);
 
             _getOpenConnection.DeleteSingle(objectToDelete);
 
-            _logger.Debug("Deleted provider with Id={0}", id);
+            _logger.Debug("Deleted provider with ProviderId={0}", providerId);
         }
 
         /// <summary>
@@ -73,52 +81,50 @@
         /// Save to Collection
         /// Return Saved object - this should be returned from the collection.save operation.
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="provider"></param>
         /// <returns></returns>
-        public Provider Save(Provider entity)
+        public Provider Save(Provider provider)
         {
-            _logger.Debug("Called Mongodb to save provider with UKPRN={0}", entity.Ukprn);
+            _logger.Debug("Saving provider with Ukprn={0}", provider.Ukprn);
 
-            UpdateEntityTimestamps(entity);
+            var dbProvider = MapProvider(provider);
 
-            var dbEntity = _mapper.Map<Provider, Entities.Provider>(entity);
+            // TODO: SQL: AG: note that we are not attempting to insert a new Provider, we always update (temporary).
 
-            try
+            if (!_getOpenConnection.UpdateSingle(dbProvider))
             {
-                var result = (int)_getOpenConnection.Insert(dbEntity);
-                dbEntity.ProviderId = result;
-            }
-            catch (Exception ex)
-            {
-                // TODO: Detect key violation
-
-                if (!_getOpenConnection.UpdateSingle(dbEntity))
-                    throw new Exception("Failed to update record after failed insert", ex);
+                throw new Exception($"Failed to save provider with Ukprn={provider.Ukprn}");
             }
 
-            _logger.Debug("Saved provider to Mongodb with UKPRN={0}", entity.Ukprn);
+            return MapProvider(dbProvider);
+        }
 
-            return _mapper.Map<Entities.Provider, Provider>(dbEntity);
+        #region Helpers
+
+        private Entities.Provider MapProvider(Provider provider)
+        {
+            return _mapper.Map<Provider, Entities.Provider>(provider);
         }
 
         private Provider MapProvider(Entities.Provider provider)
         {
-            var result = _mapper.Map<Entities.Provider, Provider>(provider);
-            return result;
+            return _mapper.Map<Entities.Provider, Provider>(provider);
         }
 
-        protected void UpdateEntityTimestamps(Provider provider)
+        private Entities.Provider GetById(int providerId)
         {
-            // determine whether this is a "new" entity being saved for the first time
-            if (provider.DateCreated == DateTime.MinValue)
+            const string sql = "SELECT * FROM dbo.Provider WHERE ProviderId = @providerId";
+
+            var sqlParams = new
             {
-                provider.DateCreated = DateTime.UtcNow;
-                provider.DateUpdated = null;
-            }
-            else
-            {
-                provider.DateUpdated = DateTime.UtcNow;
-            }
+                providerId
+            };
+
+            var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();
+
+            return dbVacancy;
         }
+
+        #endregion
     }
 }

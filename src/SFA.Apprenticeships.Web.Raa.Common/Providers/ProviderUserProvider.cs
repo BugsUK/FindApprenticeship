@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SFA.Apprenticeships.Application.Interfaces.Users;
-using SFA.Apprenticeships.Domain.Entities.Users;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.Users;
+    using Domain.Entities.Users;
+    using ViewModels.ProviderUser;
+    using Application.Interfaces.Providers;
+
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly IProviderService _providerService;
         private readonly IProviderUserAccountService _providerUserAccountService;
 
         public ProviderUserProvider(
             IUserProfileService userProfileService,
+            IProviderService providerService,
             IProviderUserAccountService providerUserAccountService)
         {
             _userProfileService = userProfileService;
+            _providerService = providerService;
             _providerUserAccountService = providerUserAccountService;
         }
 
@@ -60,12 +64,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
             var providerUser = _userProfileService.GetProviderUser(username) ?? new ProviderUser();
+            var provider = _providerService.GetProvider(ukprn);
 
             var emailChanged = !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
 
             //TODO: Probably put this in a strategy in the service and add the verify email code
             providerUser.Username = username;
-            providerUser.Ukprn = ukprn;
+            providerUser.ProviderId = provider.ProviderId;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;

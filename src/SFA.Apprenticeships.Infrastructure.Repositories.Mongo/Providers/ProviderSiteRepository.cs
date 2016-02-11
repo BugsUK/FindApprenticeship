@@ -35,14 +35,14 @@
 
         public IEnumerable<ProviderSite> GetForProvider(string ukprn)
         {
-            _logger.Debug("Called Mongodb to get provider sites for provider with UKPRN={0}", ukprn);
+            _logger.Debug("Called Mongodb to get provider sites for provider with Ukprn={0}", ukprn);
 
             var mongoEntities = Collection.Find(Query<MongoProviderSite>.EQ(e => e.Ukprn, ukprn));
 
             var entities =
                 _mapper.Map<IEnumerable<MongoProviderSite>, IEnumerable<ProviderSite>>(mongoEntities).ToList();
 
-            _logger.Debug("Found {1} provider sites for provider with UKPRN={0}", ukprn, entities.Count);
+            _logger.Debug("Found {1} provider sites for provider with Ukprn={0}", ukprn, entities.Count);
 
             return entities;
         }
@@ -67,7 +67,7 @@
 
         public ProviderSite Save(ProviderSite entity)
         {
-            _logger.Debug("Called Mongodb to save provider site for provider with UKPRN={0}", entity.Ukprn);
+            _logger.Debug("Called Mongodb to save provider site for provider with Ukprn={0}", entity.Ukprn);
 
             UpdateEntityTimestamps(entity);
 
@@ -75,7 +75,7 @@
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved provider site to Mongodb for provider with UKPRN={0}", entity.Ukprn);
+            _logger.Debug("Saved provider site to Mongodb for provider with Ukprn={0}", entity.Ukprn);
 
             return _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }

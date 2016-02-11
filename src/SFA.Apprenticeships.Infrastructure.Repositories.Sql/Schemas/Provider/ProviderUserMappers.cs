@@ -2,19 +2,20 @@
 {
     using System;
     using AutoMapper;
-    using Domain.Entities.Users;
     using Vacancy;
+    using Domain = Domain.Entities.Users;
+    using Database = Entities;
 
+    // TODO: SQL: AG: need to understand MapperEngine usage here (and in AgencyUserMappers).
     public class ProviderUserMappers : MapperEngine
     {
         public override void Initialise()
         {
-            // TODO: AG: remove the Guid / int mappers below?
-            Mapper.CreateMap<Guid, int>().ConvertUsing<GuidToIntConverter>();
-            Mapper.CreateMap<int, Guid>().ConvertUsing<IntToGuidConverter>();
-
             // ProviderUser -> Entities.ProviderUser
-            Mapper.CreateMap<ProviderUser, Entities.ProviderUser>()
+            Mapper.CreateMap<Domain.ProviderUser, Database.ProviderUser>()
+                .ForMember(destination => destination.PreferredSiteErn, opt =>
+                    opt.MapFrom(source => Convert.ToInt32(source.PreferredSiteErn)))
+
                 .ForMember(destination => destination.ProviderUserStatusId, opt =>
                     opt.MapFrom(source => (int)source.Status))
 
@@ -22,7 +23,12 @@
                     opt.MapFrom(source => source.EmailVerifiedDate));
 
             // Entities.ProviderUser -> ProviderUser
-            Mapper.CreateMap<Entities.ProviderUser, ProviderUser>()
+            Mapper.CreateMap<Database.ProviderUser, Domain.ProviderUser>()
+                /*
+                .ForMember(destination => destination.Ukprn, opt =>
+                    opt.MapFrom(source => Convert.ToString(source.Ukprn)))
+                */
+
                 .ForMember(destination => destination.Status, opt =>
                     opt.ResolveUsing<ProviderUserStatusResolver>()
                         .FromMember(source => source.ProviderUserStatusId))
@@ -32,16 +38,16 @@
         }
     }
 
-    public class ProviderUserStatusResolver : ValueResolver<int, ProviderUserStatuses>
+    public class ProviderUserStatusResolver : ValueResolver<int, Domain.ProviderUserStatuses>
     {
-        protected override ProviderUserStatuses ResolveCore(int providerUserStatusId)
+        protected override Domain.ProviderUserStatuses ResolveCore(int providerUserStatusId)
         {
             switch (providerUserStatusId)
             {
                 case 10:
-                    return ProviderUserStatuses.Registered;
+                    return Domain.ProviderUserStatuses.Registered;
                 case 20:
-                    return ProviderUserStatuses.EmailVerified;
+                    return Domain.ProviderUserStatuses.EmailVerified;
             }
 
             throw new ArgumentOutOfRangeException(
