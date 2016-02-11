@@ -315,6 +315,7 @@ FETCH NEXT @PageSize ROWS ONLY
             //PopulateFrameworkId(entity, dbVacancy);
 
             PopulateCountyId(entity, dbVacancy);
+            PopulateVacancyOwnerRelationshipid(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -346,6 +347,37 @@ WHERE  VacancyGuid = @VacancyGuid",
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
 
             return entity;
+        }
+
+        private void PopulateVacancyOwnerRelationshipid(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            var ids = _getOpenConnection.Query<dynamic>(@"
+SELECT
+ ps.ProviderSiteID as ProviderSiteID,
+ e.EmployerId FROM dbo.ProviderSite AS ps
+INNER JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
+INNER JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId
+WHERE ps.EDSURN = @ProviderSiteErn
+AND ps.TrainingProviderStatusTypeId = 1
+AND e.EmployerStatusTypeId = 1
+AND e.EdsUrn = @EmployerEdsUrn",
+                new
+                {
+                    ProviderSiteErn = entity.ProviderSiteEmployerLink.ProviderSiteErn,
+                    EmployerEdsUrn = entity.ProviderSiteEmployerLink.Employer.Ern
+                }).Single(); // There's a better way to do this?
+
+            var vacancyOwnerRelationshipId = _getOpenConnection.Query<int>(@"
+SELECT VacancyOwnerRelationshipId
+FROM dbo.VacancyOwnerRelationship
+WHERE EmployerId = @EmployerId AND ProviderSiteID = @ProviderSiteId",
+                new
+                {
+                    EmployerId = ids.EmployerId,
+                    ProviderSiteId = ids.ProviderSiteID
+                }).Single();
+
+            dbVacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
         }
 
         private void PopulateCountyId(ApprenticeshipVacancy entity, Vacancy dbVacancy)

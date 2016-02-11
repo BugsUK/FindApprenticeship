@@ -82,6 +82,8 @@
             vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
             vacancy.Status = ProviderVacancyStatuses.Draft; // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.ProviderSiteEmployerLink.Employer.Address.County = "BER";
+            vacancy.ProviderSiteEmployerLink.ProviderSiteErn = "100339794";
+            vacancy.ProviderSiteEmployerLink.Employer.Ern = "123456";
 
             writeRepository.ShallowSave(vacancy);
         }

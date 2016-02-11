@@ -80,7 +80,8 @@
                 .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // TODO
                 .IgnoreMember(v => v.VacancyManagerID) // DB Lookup using the vacancyOwnerRelationshipId?
-                .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
+                 // .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
+                .IgnoreMember(v => v.VacancyOwnerRelationshipId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
                 .IgnoreMember(v => v.VacancyId) 

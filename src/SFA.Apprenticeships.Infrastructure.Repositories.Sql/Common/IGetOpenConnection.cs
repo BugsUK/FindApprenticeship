@@ -195,8 +195,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
                     var allResults = conn.QueryMultiple(sql, param, transaction: null, commandTimeout: commandTimeout, commandType: commandType);
                     return new Tuple<IList<T1>, IList<T2>>((IList<T1>)allResults.Read<T1>(), (IList<T2>)allResults.Read<T2>());
                 }
-            }
-            );
+            });
         }
 
         /// <summary>
