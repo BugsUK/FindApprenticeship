@@ -3,12 +3,11 @@
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
 
-    [Table("UserProfile.Team")]
-    public class Team
+    [Table("UserProfile.AgencyUserRole")]
+    public class AgencyUserRole
     {
-        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int Id { get; set; }
+        public int AgencyUserRoleId { get; set; }
 
         [Required]
         [StringLength(3)]
@@ -18,6 +17,6 @@
         public string Name { get; set; }
 
         [Required]
-        public bool IsDefault { get; set; }
+        public int IsDefault { get; set; }
     }
 }

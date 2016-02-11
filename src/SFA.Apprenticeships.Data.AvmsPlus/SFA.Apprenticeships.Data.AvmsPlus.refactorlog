@@ -1,1 +1,10 @@
-﻿
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="1467a61d-e3a1-45ec-adbc-e39e8029176e" ChangeDateTime="02/10/2016 15:41:59">
+    <Property Name="ElementName" Value="[UserProfile].[AgencyUserTeam].[TeamId]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[UserProfile].[AgencyUserTeam]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="AgencyUserTeamd" />
+  </Operation>
+</Operations>

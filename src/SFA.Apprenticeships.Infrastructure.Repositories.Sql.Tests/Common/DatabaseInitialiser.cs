@@ -31,25 +31,25 @@
 
         public DatabaseInitialiser()
         {
-            //var configurationManager = new ConfigurationManager();
+            var configurationManager = new ConfigurationManager();
 
-            //var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
+            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
 
-            //var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
-            // _databaseTargetName = $"RaaTest-{environment}";
+            _databaseTargetName = $"RaaTest-{environment}";
             _databaseTargetName = $"AvmsPlus";
             _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
 
-            //var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
-            //var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
-            //_dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            //if (!File.Exists(_dacpacFilePath))
-            //{
-            //    //For NCrunch on Dave's machine
-                //databaseProjectPath = $"C:\\Code\\Beta\\src\\{DatabaseProjectName}";
-            //    _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            //}
+            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
+            var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
+            _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            if (!File.Exists(_dacpacFilePath))
+            {
+                //For NCrunch on Dave's machine
+                databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
+                _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            }
         }
 
         public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)
@@ -61,17 +61,17 @@
 
         public void Publish(bool dropDatabase)
         {
-            //var dacServices = new DacServices(_targetConnectionString);
+            var dacServices = new DacServices(_targetConnectionString);
 
-            ////Wire up events for Deploy messages and for task progress (For less verbose output, don't subscribe to Message Event (handy for debugging perhaps?)
-            //dacServices.Message += dacServices_Message;
-            //dacServices.ProgressChanged += dacServices_ProgressChanged;
+            //Wire up events for Deploy messages and for task progress (For less verbose output, don't subscribe to Message Event (handy for debugging perhaps?)
+            dacServices.Message += dacServices_Message;
+            dacServices.ProgressChanged += dacServices_ProgressChanged;
 
-            //var dbPackage = DacPackage.Load(_dacpacFilePath);
+            var dbPackage = DacPackage.Load(_dacpacFilePath);
 
-            //var dbDeployOptions = new DacDeployOptions {CreateNewDatabase = dropDatabase};
+            var dbDeployOptions = new DacDeployOptions { CreateNewDatabase = dropDatabase };
 
-            //dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
+            dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
         }
 
         public void Seed(string[] seedScripts)
@@ -146,8 +146,9 @@
                 var propValue = prop.GetValue(vacancy, null);
 
                 var name = prop.Name;
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
 
-                if (name != typeIdProperty)
+                if (name != typeIdProperty && attributeMapped)
                 {
                     if (propValue == null)
                     {
@@ -162,6 +163,7 @@
                 }
                 else
                 {
+                    sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
                     sqlBuilder.Append(i != props.Count - 1 ? "" : ")");
                 }
             }
@@ -175,9 +177,19 @@
 
                 var name = prop.Name;
 
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
+
                 if (name != typeIdProperty)
                 {
-                    sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    if (attributeMapped)
+                    {
+                        sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    }
+                    else if (i == props.Count - 1)
+                    {
+                        sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
+                        sqlBuilder.Append(") VALUES (");
+                    }
                 }
             }
         }
