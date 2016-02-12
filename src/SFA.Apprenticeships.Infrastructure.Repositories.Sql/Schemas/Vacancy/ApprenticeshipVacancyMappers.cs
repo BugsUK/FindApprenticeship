@@ -137,7 +137,7 @@
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateQAApproved)
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted)
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
-                .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)
+                .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)//changed to locked field
                 .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.DateUpdated)
                 .MapMemberFrom(v => v.CreatedDateTime, av => av.DateCreated)

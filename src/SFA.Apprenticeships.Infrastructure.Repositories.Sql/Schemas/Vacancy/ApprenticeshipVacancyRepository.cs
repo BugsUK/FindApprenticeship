@@ -163,24 +163,26 @@ AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
 
         public List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses)
         {
-            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
-            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+            return new List<ApprenticeshipVacancy>();
 
-            var statuses = desiredStatuses.Select(_mapper.Map<ProviderVacancyStatuses, string>).ToList();
+//            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
+//            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+
+//            var statuses = desiredStatuses.Select(_mapper.Map<ProviderVacancyStatuses, string>).ToList();
             
-            var dbVacancies = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
-SELECT *
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
-            {
-                VacancyStatusCodes = statuses
-            });
+//            var dbVacancies = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
+//SELECT *
+//FROM   Vacancy.Vacancy
+//WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
+//            {
+//                VacancyStatusCodes = statuses
+//            });
 
-            // throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
-            _logger.Debug(
-                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
+//            // throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
+//            _logger.Debug(
+//                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
 
-            return dbVacancies.Select(MapVacancy).ToList();
+//            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public List<ApprenticeshipVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)

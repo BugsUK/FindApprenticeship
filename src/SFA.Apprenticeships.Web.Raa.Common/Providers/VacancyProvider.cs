@@ -695,9 +695,8 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies = new List<ApprenticeshipVacancy>();
             //TODO: OO: reinstate vacancy search.
-            //var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var vacancies = _vacancyPostingService.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
             var utcNow = _dateTimeService.UtcNow();
 
