@@ -247,7 +247,7 @@
 
             // Assert.
             _mockProviderUserAccountService.Verify(mock =>
-                mock.SendEmailVerificationCode(originalViewModel.EmailAddress), Times.Once);
+                mock.SendEmailVerificationCode(username), Times.Once);
 
         }
 
@@ -300,7 +300,7 @@
             var expectedTimes = expectToSendVerificationCodeEmail ? 1 : 0;
 
             _mockProviderUserAccountService.Verify(mock =>
-                mock.SendEmailVerificationCode(newEmailAddress), Times.Exactly(expectedTimes));
+                mock.SendEmailVerificationCode(username), Times.Exactly(expectedTimes));
         }
     }
 }

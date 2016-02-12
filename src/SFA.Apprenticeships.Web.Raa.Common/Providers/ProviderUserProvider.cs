@@ -94,7 +94,7 @@
 
             if (shouldSendEmailVerificationCode)
             {
-                _providerUserAccountService.SendEmailVerificationCode(providerUser.Email);
+                _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
             return Convert(savedProviderUser);
