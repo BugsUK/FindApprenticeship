@@ -1,15 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Candidate
 {
     using Common.Mediators;
+    using Providers;
     using Validators;
     using ViewModels;
 
     public class CandidateMediator : MediatorBase, ICandidateMediator
     {
+        private readonly ICandidateProvider _candidateProvider;
         private readonly CandidateSearchResultsViewModelServerValidator _candidateSearchResultsViewModelServerValidator;
 
-        public CandidateMediator(CandidateSearchResultsViewModelServerValidator candidateSearchResultsViewModelServerValidator)
+        public CandidateMediator(ICandidateProvider candidateProvider, CandidateSearchResultsViewModelServerValidator candidateSearchResultsViewModelServerValidator)
         {
+            _candidateProvider = candidateProvider;
             _candidateSearchResultsViewModelServerValidator = candidateSearchResultsViewModelServerValidator;
         }
 
@@ -32,7 +35,9 @@
                 return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, viewModel, validatonResult);
             }
 
-            return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, viewModel);
+            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel.SearchViewModel);
+
+            return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }
     }
 }

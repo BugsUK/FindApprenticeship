@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
+    using Application.Candidate;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
@@ -57,6 +59,7 @@
             For<IVacancyQAProvider>().Use<VacancyProvider>();
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
+            For<ICandidateProvider>().Use<CandidateProvider>();
         }
 
         private void RegisterServices()
@@ -66,6 +69,7 @@
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
+            For<ICandidateSearchService>().Use<CandidateSearchService>();
         }
 
         private void RegisterStrategies()

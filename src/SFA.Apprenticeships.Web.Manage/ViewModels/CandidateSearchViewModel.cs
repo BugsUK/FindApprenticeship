@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
+    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;
@@ -16,5 +18,8 @@
         public string DateOfBirth { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.Postcode.LabelText, Description = CandidateSearchViewModelMessages.Postcode.HintText)]
         public string Postcode { get; set; }
+        public int PageSize { get; set; }
+        public List<SelectListItem> PageSizes { get; set; }
+        public int CurrentPage { get; set; }
     }
 }
