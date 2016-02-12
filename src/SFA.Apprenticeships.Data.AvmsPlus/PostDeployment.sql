@@ -12,9 +12,10 @@ Post-Deployment Script Template
 
 -- Data
 :r ".\Scripts\Data\dbo.County.Upsert.sql"
-:r ".\Scripts\Data\dbo.LocalAuthority.Upsert.sql"
 :r ".\Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql"
+:r ".\Scripts\Data\dbo.LocalAuthority.Upsert.sql"
 :r ".\Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql"
+:r ".\Scripts\Data\Provider.ProviderUserStatus.Upsert.sql"
 
 -- Test Data
-:r ".\Scripts\TestData\dbo.TestProvider.Upsert.sql"
+:r ".\Scripts\TestData\dbo.TestProviders.Upsert.sql"

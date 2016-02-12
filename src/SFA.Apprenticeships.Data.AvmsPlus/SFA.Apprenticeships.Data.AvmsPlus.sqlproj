@@ -853,14 +853,15 @@
     <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />
     <Build Include="Provider\Provider.ProviderUserStatus.sql" />
+    <None Include="Scripts\Data\Provider.ProviderUserStatus.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Scripts\TestData\dbo.TestProvider.Upsert.sql" />
+    <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
     <None Include="Publish\localhost.sqlexpress.publish.xml" />
     <None Include="Scripts\TestData\dbo.PersonTitleType.sql" />
     <None Include="Scripts\TestData\dbo.PersonType.sql" />
     <None Include="Scripts\TestData\dbo.Person.sql" />
-    <None Include="Scripts\TestData\dbo.ContactPreferenctType.sql" />
+    <None Include="Scripts\TestData\dbo.ContactPreferenceType.sql" />
     <None Include="Scripts\TestData\dbo.EmployerContact.sql" />
     <None Include="Scripts\TestData\dbo.Employer.sql" />
     <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
