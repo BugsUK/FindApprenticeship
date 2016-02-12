@@ -17,20 +17,12 @@
         private readonly IMapper _mapper = new AgencyUserMappers();
         private IGetOpenConnection _connection;
         private Mock<ILogService> _logger;
-        //private AgencyUserTeam _agencyUserTeamA;
-        //private AgencyUserTeam _agencyUserTeamB;
-        //private AgencyUserRole _agencyUserRoleA;
-        //private AgencyUserRole _agencyUserRoleB;
         private AgencyUser userWithBothRoleAndTeam;
 
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            //_agencyUserTeamA = new AgencyUserTeam() { AgencyUserTeamId = 1, IsDefault = 0, CodeName = "A", Name = "Team A" };
-            //_agencyUserTeamB = new AgencyUserTeam() { AgencyUserTeamId = 2, IsDefault = 0, CodeName = "B", Name = "Team B" };
-            //_agencyUserRoleA = new AgencyUserRole() { AgencyUserRoleId = 1, IsDefault = 0, CodeName = "A", Name = "Role A" };
-            //_agencyUserRoleB = new AgencyUserRole() { AgencyUserRoleId = 2, IsDefault = 0, CodeName = "B", Name = "Role B" };
             userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam"};
 
             var dbInitialiser = new DatabaseInitialiser();
@@ -54,14 +46,11 @@
 
         private object[] GetSeedObjects()
         {
-            var seedObjects = new object[] {/*_agencyUserTeamA, _agencyUserTeamB, _agencyUserRoleA, _agencyUserRoleB, */userWithBothRoleAndTeam};
+            var seedObjects = new object[] {userWithBothRoleAndTeam};
 
             return seedObjects;
         }
 
-        /// <summary>
-        /// Ensure it gets the user along with role and team
-        /// </summary>
         [Test]
         public void DoGetByUsername()
         {
@@ -72,8 +61,6 @@
 
             //Assert
             result.Should().NotBeNull();
-            //result.Role.Should().NotBeNull();
-            //result.Team.Should().NotBeNull();
         }
 
         [Test]

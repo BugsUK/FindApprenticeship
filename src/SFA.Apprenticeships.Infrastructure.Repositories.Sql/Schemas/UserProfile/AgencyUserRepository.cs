@@ -23,14 +23,6 @@
         public AgencyUser Get(string username)
         {
             var user = _getOpenConnection.Query<Entities.AgencyUser>("SELECT * FROM UserProfile.AgencyUser WHERE Username = @Username", new { Username  = username }).SingleOrDefault();
-            //if (user != null)
-            //{
-            //    var role = _getOpenConnection.Query<Entities.AgencyUserRole>("SELECT * FROM UserProfile.AgencyUserRole WHERE AgencyUserRole.AgencyUserRoleId = @id", new { id = user.RoleId }).SingleOrDefault();
-            //    user.Role = role;
-            //    var team = _getOpenConnection.Query<Entities.AgencyUserTeam>("SELECT * FROM UserProfile.AgencyUserTeam WHERE AgencyUserTeam.AgencyUserTeamId = @id", new { id = user.TeamId }).SingleOrDefault();
-            //    user.Team = team;
-            //}
-
             var result = _mapper.Map<Entities.AgencyUser, AgencyUser>(user);
             return result;
         }
