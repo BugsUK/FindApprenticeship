@@ -9,8 +9,8 @@
         [BsonId]
         public Guid Id
         {
-            get { return EntityId; }
-            set { EntityId = value; }
+            get { return VacancyGuid; }
+            set { VacancyGuid = value; }
         }
     }
 }

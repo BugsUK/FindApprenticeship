@@ -83,8 +83,8 @@
                  // .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
                 .IgnoreMember(v => v.VacancyOwnerRelationshipId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
-                .MapMemberFrom(v => v.VacancyGuid, av => av.EntityId)
-                .IgnoreMember(v => v.VacancyId) 
+                .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
+                .IgnoreMember(v => v.VacancyId)
                 
                 // Map employer address
                 .MapMemberFrom(v => v.AddressLine1, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine1)
@@ -139,10 +139,12 @@
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)
                 .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
+                .MapMemberFrom(v => v.DateUpdated, av => av.DateUpdated)
+                .MapMemberFrom(v => v.DateCreated, av => av.DateCreated)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
-                .MapMemberFrom(av => av.EntityId, v => v.VacancyGuid)
+                .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription,av => av.ShortDescription)
@@ -215,9 +217,7 @@
                 .IgnoreMember(av => av.OfflineApplicationUrlComment)
                 .IgnoreMember(av => av.OfflineApplicationInstructionsComment)
                 .IgnoreMember(av => av.QAUserName)
-                .IgnoreMember(av => av.LastEditedById)
-                .IgnoreMember(av => av.DateCreated)
-                .IgnoreMember(av => av.DateUpdated)
+                .IgnoreMember(av => av.LastEditedById)                
                 .MapMemberFrom(av => av.DateQAApproved, v => v.PublishedDateTime)
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime)
                 .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)

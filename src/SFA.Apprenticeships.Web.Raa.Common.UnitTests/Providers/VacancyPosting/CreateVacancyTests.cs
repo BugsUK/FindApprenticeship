@@ -193,7 +193,7 @@
                 }
             });
 
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.EntityId == vacancyGuid)));
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.VacancyGuid == vacancyGuid)));
         }
 
         [Test]

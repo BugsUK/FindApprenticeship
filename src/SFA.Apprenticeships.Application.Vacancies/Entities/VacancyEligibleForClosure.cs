@@ -1,20 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Application.Vacancies.Entities
+﻿namespace SFA.Apprenticeships.Application.Vacancies.Entities
 {
     public class VacancyEligibleForClosure
     {
-        public Guid EntityId { get; private set; }
+        public int EntityId { get; private set; }
 
         private VacancyEligibleForClosure()
         {
         }
 
-        public VacancyEligibleForClosure(Guid entityId)
+        public VacancyEligibleForClosure(int entityId)
         {
             EntityId = entityId;
         }

@@ -73,7 +73,7 @@
 
             _apprenticeshipVacancyWriteRepository.DeepSave(vacancy);
 
-            return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
+            return _apprenticeshipVacancyReadRepository.Get(vacancy.VacancyGuid);
         }
 
         public ApprenticeshipVacancy ShallowSaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy)
@@ -99,7 +99,7 @@
 
             _apprenticeshipVacancyWriteRepository.ShallowSave(vacancy);
 
-            return _apprenticeshipVacancyReadRepository.Get(vacancy.EntityId);
+            return _apprenticeshipVacancyReadRepository.Get(vacancy.VacancyGuid);
         }
 
         public int GetNextVacancyReferenceNumber()

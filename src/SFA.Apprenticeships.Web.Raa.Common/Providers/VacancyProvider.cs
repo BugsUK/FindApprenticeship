@@ -81,7 +81,7 @@
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = _mapper.Map<ApprenticeshipVacancy, NewVacancyViewModel>(vacancy);
-            viewModel.VacancyGuid = vacancy.EntityId;
+            viewModel.VacancyGuid = vacancy.VacancyGuid;
             return viewModel;
         }
 
@@ -93,7 +93,7 @@
 
             var apprenticeshipVacancy = new ApprenticeshipVacancy
             {
-                EntityId = locationSearchViewModel.VacancyGuid,
+                VacancyGuid = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Ukprn = locationSearchViewModel.Ukprn,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
@@ -216,7 +216,7 @@
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new ApprenticeshipVacancy
             {
-                EntityId = newVacancyViewModel.VacancyGuid,
+                VacancyGuid = newVacancyViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Ukprn = newVacancyViewModel.Ukprn,
                 Title = newVacancyViewModel.Title,
@@ -683,12 +683,12 @@
             vacancy.TrainingProvidedComment = null;
             vacancy.ContactDetailsComment = null;
 
-            vacancy.EntityId = Guid.NewGuid();
+            vacancy.VacancyGuid = Guid.NewGuid();
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
             var result = vacancy.ProviderSiteEmployerLink.Convert();
-            result.VacancyGuid = vacancy.EntityId;
+            result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;
         }
@@ -799,10 +799,10 @@
             var newVacancy = (ApprenticeshipVacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             newVacancy.Status = ProviderVacancyStatuses.Live;
-            newVacancy.EntityId = Guid.NewGuid();
+            newVacancy.VacancyGuid = Guid.NewGuid();
             newVacancy.LocationAddresses = new List<VacancyLocationAddress>() { address };
             newVacancy.DateQAApproved = approvalTime;
-            newVacancy.ParentVacancyId = vacancy.EntityId;
+            newVacancy.ParentVacancyId = vacancy.VacancyGuid;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);

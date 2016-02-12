@@ -7,9 +7,11 @@
     using Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Queries;
 
-    public interface IApprenticeshipVacancyReadRepository : IReadRepository<ApprenticeshipVacancy, Guid>
+    public interface IApprenticeshipVacancyReadRepository
     {
         ApprenticeshipVacancy Get(int vacancyReferenceNumber);
+
+        ApprenticeshipVacancy Get(Guid vacancyGuid);
 
         List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
 

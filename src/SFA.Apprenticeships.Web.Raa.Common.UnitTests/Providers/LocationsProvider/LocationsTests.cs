@@ -66,14 +66,14 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
             var provider = GetVacancyPostingProvider();
 
-            var locationSearchViewModel = GetLocationSearchViewModel(vacancy.EntityId, aNewAdditionalLocationInformation,
+            var locationSearchViewModel = GetLocationSearchViewModel(vacancy.VacancyGuid, aNewAdditionalLocationInformation,
                 aNewAdditionalLocationInformationComment, vacancyReferenceNumber, aNewLocationAddressesComment);
 
             provider.AddLocations(locationSearchViewModel);
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancy.EntityId, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
+                    s.ReplaceLocationInformation(vacancy.VacancyGuid, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
                         null, It.Is<IEnumerable<VacancyLocationAddress>>(l => l.Count() == 3), aNewLocationAddressesComment,
                         aNewAdditionalLocationInformation, aNewAdditionalLocationInformationComment ));
         }
@@ -227,7 +227,7 @@
                 AdditionalLocationInformation = additionalLocationInformation,
                 LocationAddresses = addresses,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                EntityId = vacancyGuid,
+                VacancyGuid = vacancyGuid,
                 NumberOfPositions = numberOfPositions,
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 LocationAddressesComment = locationAddressesComment,

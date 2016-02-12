@@ -43,7 +43,7 @@
 
             var vacancy =
                 new Fixture().Build<ApprenticeshipVacancy>()
-                    .With(av => av.EntityId, Guid.Empty)
+                    .With(av => av.VacancyGuid, Guid.Empty)
                     .With(av => av.VacancyReferenceNumber, IntegrationTestVacancyReferenceNumber)
                     .Create();
 
@@ -68,7 +68,7 @@
 
             var vacancy =
                 new Fixture().Build<ApprenticeshipVacancy>()
-                    .With(av => av.EntityId, Guid.Empty)
+                    .With(av => av.VacancyGuid, Guid.Empty)
                     .With(av => av.VacancyReferenceNumber, IntegrationTestVacancyReferenceNumber)
                     .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
                     .With(av => av.QAUserName, null)
@@ -106,7 +106,7 @@
 
             var vacancy =
                 new Fixture().Build<ApprenticeshipVacancy>()
-                    .With(av => av.EntityId, Guid.Empty)
+                    .With(av => av.VacancyGuid, Guid.Empty)
                     .With(av => av.VacancyReferenceNumber, IntegrationTestVacancyReferenceNumber)
                     .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
                     .With(av => av.Title, title)
@@ -162,7 +162,7 @@
             const string locationAddressesComment = "location addresses comment";
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = "additional location information comment";
-            var savedVacancy = writer.ReplaceLocationInformation(vacancySaved.EntityId, isEmployerLocationMainApprenticeshipLocation,
+            var savedVacancy = writer.ReplaceLocationInformation(vacancySaved.VacancyGuid, isEmployerLocationMainApprenticeshipLocation,
                 numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
                 additionalLocationInformationComment);
 

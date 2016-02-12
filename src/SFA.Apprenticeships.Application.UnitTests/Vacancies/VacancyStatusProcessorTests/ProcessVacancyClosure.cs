@@ -41,10 +41,11 @@
         public void UpdatesLiveStatusToClosed()
         {
             //Arrange
-            var message = new VacancyEligibleForClosure(Guid.NewGuid());
+            var vacancyId = 1;
+            var message = new VacancyEligibleForClosure(vacancyId);
             var liveVacancy = new Fixture().Build<ApprenticeshipVacancy>()
                 .With(x => x.Status, ProviderVacancyStatuses.Live)
-                .With(x => x.EntityId, message.EntityId)
+                .With(x => x.VacancyId, message.EntityId)
                 .Create();
 
             _apprenticeshipVacancyReadRepository.Setup(m => m.Get(message.EntityId)).Returns(liveVacancy);
@@ -54,7 +55,7 @@
 
             //Assert
             _apprenticeshipVacancyReadRepository.Verify(m => m.Get(message.EntityId), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.DeepSave(It.Is<ApprenticeshipVacancy>(av => av.EntityId == message.EntityId)), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.DeepSave(It.Is<ApprenticeshipVacancy>(av => av.VacancyId == message.EntityId)), Times.Once);
             _apprenticeshipVacancyWriteRepository.Verify(m => m.DeepSave(It.Is<ApprenticeshipVacancy>(av => av.Status == ProviderVacancyStatuses.Closed)), Times.Once);
             _apprenticeshipVacancyWriteRepository.Verify(m => m.DeepSave(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
         }
@@ -68,10 +69,10 @@
         public void DoNothingWithVacancyThatIsNotLive(ProviderVacancyStatuses status)
         {
             //Arrange
-            var message = new VacancyEligibleForClosure(Guid.NewGuid());
+            var message = new VacancyEligibleForClosure(1);
             var vacancy = new Fixture().Build<ApprenticeshipVacancy>()
                 .With(x => x.Status, status)
-                .With(x => x.EntityId, message.EntityId)
+                .With(x => x.VacancyId, message.EntityId)
                 .Create();
 
             _apprenticeshipVacancyReadRepository.Setup(m => m.Get(message.EntityId)).Returns(vacancy);

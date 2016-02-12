@@ -49,21 +49,21 @@
             var writer = Container.GetInstance<IApprenticeshipVacancyWriteRepository>();
 
             var expiredLiveVacancy = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(av => av.EntityId, expiredVacancyIdCumTitle)
+                .With(av => av.VacancyGuid, expiredVacancyIdCumTitle)
                 .With(av => av.Title, expiredVacancyIdCumTitle.ToString())
                 .With(av => av.Status, ProviderVacancyStatuses.Live)
                 .With(av => av.ClosingDate, DateTime.Now.AddDays(-1))
                 .Create();
 
             var expiredQaVacancy = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(av => av.EntityId, expiredQaVacancyIdCumTitle)
+                .With(av => av.VacancyGuid, expiredQaVacancyIdCumTitle)
                 .With(av => av.Title, expiredQaVacancyIdCumTitle.ToString())
                 .With(av => av.Status, ProviderVacancyStatuses.ReservedForQA)
                 .With(av => av.ClosingDate, DateTime.Now.AddDays(-1))
                 .Create();
 
             var futureLiveVacancy = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(av => av.EntityId, futureVacancyIdCumTitle)
+                .With(av => av.VacancyGuid, futureVacancyIdCumTitle)
                 .With(av => av.Title, futureVacancyIdCumTitle.ToString())
                 .With(av => av.Status, ProviderVacancyStatuses.Live)
                 .With(av => av.ClosingDate, DateTime.Now.AddDays(100))

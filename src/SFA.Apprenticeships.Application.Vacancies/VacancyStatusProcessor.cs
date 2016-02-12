@@ -54,7 +54,7 @@
 
             foreach (var vacancy in eligibleVacancies)
             {
-                var eligibleForClosure = new VacancyEligibleForClosure(vacancy.EntityId);
+                var eligibleForClosure = new VacancyEligibleForClosure(vacancy.VacancyId);
                 _serviceBus.PublishMessage(eligibleForClosure);
                 counter ++;
             }

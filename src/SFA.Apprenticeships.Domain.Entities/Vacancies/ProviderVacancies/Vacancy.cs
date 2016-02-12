@@ -3,8 +3,10 @@
     using System;
     using Providers;
 
-    public abstract class Vacancy : BaseEntity<Guid>
+    public abstract class Vacancy
     {
+        public int VacancyId { get; set; }
+        public Guid VacancyGuid { get; set; }
         public int? VacancyReferenceNumber { get; set; }
         public string Ukprn { get; set; } // TODO: do we need to store UKPRN here
         public string Title { get; set; }
@@ -47,6 +49,8 @@
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
         public int SubmissionCount { get; set; }
+        public DateTime? DateUpdated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         // TODO: SQL: AG: rename to VacancyManagerProviderUserId (and remove comment below).
         // Id of the Provider User who created the vacancy

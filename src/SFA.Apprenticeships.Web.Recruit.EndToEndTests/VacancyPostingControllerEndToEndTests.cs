@@ -235,7 +235,7 @@
                 DesiredSkills = "desired skills",
                 Duration = 3,
                 DurationType = DurationType.Years,
-                EntityId = Guid.NewGuid(),
+                VacancyGuid = Guid.NewGuid(),
                 FutureProspects = "future prospects",
                 HoursPerWeek = 40,
                 LongDescription = "long description",

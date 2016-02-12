@@ -45,7 +45,7 @@
                 //TODO: Map once Vicenc has finished with multi location work
                 NumberOfPositions = 1,
                 RealityCheck = vacancy.ThingsToConsider,
-                Created = vacancy.DateCreated,
+                //Created = vacancy.DateCreated,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
                 //TODO: How is this captured in RAA?

@@ -42,7 +42,7 @@
             }
 
             // TODO: move to its custom mapper?
-            destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
+            destination.NewVacancyViewModel.VacancyGuid = source.VacancyGuid;
             destination.NewVacancyViewModel.LocationAddresses =
                 context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
                     source.LocationAddresses);

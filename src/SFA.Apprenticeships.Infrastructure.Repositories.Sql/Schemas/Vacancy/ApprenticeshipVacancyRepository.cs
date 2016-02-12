@@ -34,7 +34,7 @@
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Id={0}", id);
 
-            var dbVacancy = _getOpenConnection.Query<Entities.Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
+            var dbVacancy = _getOpenConnection.Query<Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
             return MapVacancy(dbVacancy);
         }
@@ -43,7 +43,7 @@
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
-            var dbVacancy = _getOpenConnection.Query<Entities.Vacancy>(
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
                 "SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber",
                 new { VacancyReferenceNumber = vacancyReferenceNumber }).SingleOrDefault();
 
@@ -52,7 +52,7 @@
             return MapVacancy(dbVacancy);
         }
 
-        private ApprenticeshipVacancy MapVacancy(Entities.Vacancy dbVacancy)
+        private ApprenticeshipVacancy MapVacancy(Vacancy dbVacancy)
         {
             if (dbVacancy == null)
                 return null;
@@ -229,7 +229,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
         public ApprenticeshipVacancy DeepSave(ApprenticeshipVacancy entity)
         {
-            _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.EntityId);
+            _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
             Condition.Requires(entity.LocationAddresses, "LocationAddresses").IsNotNull();
 
@@ -275,14 +275,14 @@ FETCH NEXT @PageSize ROWS ONLY
             }
 
             // TODO: Optimisation - insert several in one SQL round-trip
-            InsertVacancyLocationAddresses(entity.LocationAddresses, entity.EntityId);
+            InsertVacancyLocationAddresses(entity.LocationAddresses, entity.VacancyGuid);
 
             //if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
             //{
             //    InsertEmployerLocationAddressAsVacancyLocationAddress(entity.NumberOfPositions.Value, dbVacancy, employerPostalAddressId);
             //}
 
-            _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
+            _logger.Debug("Saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
             return entity;
         }
@@ -303,7 +303,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
         public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
         {
-            _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.EntityId);
+            _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
 
             // UpdateEntityTimestamps(entity); // Do we need this?
 
@@ -315,7 +315,9 @@ FETCH NEXT @PageSize ROWS ONLY
             //PopulateFrameworkId(entity, dbVacancy);
 
             PopulateCountyId(entity, dbVacancy);
-            PopulateVacancyOwnerRelationshipid(entity, dbVacancy);
+            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
+            PopulateVacancyManagerId(entity, dbVacancy);
+            PopulateVacancyLocationTypeId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -338,18 +340,18 @@ FROM   dbo.Vacancy
 WHERE  VacancyGuid = @VacancyGuid",
                 new
                 {
-                    VacancyGuid = entity.EntityId
+                    VacancyGuid = entity.VacancyGuid
                 }).Single(); // There's a better way to do this?
 
             SaveTextFieldsFor(vacancyId, entity);
             SaveAdditionalQuestionsFor(vacancyId, entity);
             
-            _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.EntityId);
+            _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
             return entity;
         }
 
-        private void PopulateVacancyOwnerRelationshipid(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        private void PopulateVacancyOwnerRelationshipId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
         {
             var ids = _getOpenConnection.Query<dynamic>(@"
 SELECT
@@ -365,7 +367,7 @@ AND e.EdsUrn = @EmployerEdsUrn",
                 {
                     ProviderSiteErn = entity.ProviderSiteEmployerLink.ProviderSiteErn,
                     EmployerEdsUrn = entity.ProviderSiteEmployerLink.Employer.Ern
-                }).Single(); // There's a better way to do this?
+                }).Single(); 
 
             var vacancyOwnerRelationshipId = _getOpenConnection.Query<int>(@"
 SELECT VacancyOwnerRelationshipId
@@ -380,6 +382,27 @@ WHERE EmployerId = @EmployerId AND ProviderSiteID = @ProviderSiteId",
             dbVacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;
         }
 
+        private void PopulateVacancyManagerId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            var ids = _getOpenConnection.Query<dynamic>(@"
+SELECT
+ ps.ProviderSiteID as ProviderSiteID
+ FROM dbo.ProviderSite AS ps
+INNER JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
+INNER JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId
+WHERE ps.EDSURN = @ProviderSiteErn
+AND ps.TrainingProviderStatusTypeId = 1
+AND e.EmployerStatusTypeId = 1
+AND e.EdsUrn = @EmployerEdsUrn",
+                new
+                {
+                    ProviderSiteErn = entity.ProviderSiteEmployerLink.ProviderSiteErn,
+                    EmployerEdsUrn = entity.ProviderSiteEmployerLink.Employer.Ern
+                }).Single(); 
+            
+            dbVacancy.VacancyManagerID = ids.ProviderSiteID;
+        }
+
         private void PopulateCountyId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
         {
             dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
@@ -390,6 +413,32 @@ WHERE  CodeName = @CountyCodeName",
                 {
                     CountyCodeName = entity.ProviderSiteEmployerLink.Employer.Address.County
                 }).Single(); // There's a better way to do this?
+        }
+
+        private void PopulateVacancyLocationTypeId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
+            string vacancyLocationTypeCodeName = null;
+
+            if ( entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                entity.IsEmployerLocationMainApprenticeshipLocation.Value == true)
+            {
+                vacancyLocationTypeCodeName = "STD";
+            } 
+            else if (entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                entity.IsEmployerLocationMainApprenticeshipLocation.Value == false)
+            {
+                vacancyLocationTypeCodeName = "MUL";
+            }
+
+            dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT VacancyLocationTypeId
+FROM   dbo.VacancyLocationType
+WHERE  CodeName = @VacancyLocationTypeCodeName",
+                new
+                {
+                    VacancyLocationTypeCodeName = vacancyLocationTypeCodeName
+                }).Single();
         }
 
         private void SaveTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
@@ -567,7 +616,7 @@ WHERE  VacancyPartyId = @VacancyPartyId",
 
             RemoveVacancyLocationAddresses(vacancyGuid); // Only if is not the same as the employer
 
-            InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyGuid).EntityId); // TODO: can be done in another way?
+            InsertVacancyLocationAddresses(vacancyLocationAddresses, Get(vacancyGuid).VacancyGuid); // TODO: can be done in another way?
 
             //if (dbVacancy.VacancyLocationTypeCode == VacancyLocationType.Employer)
             //{
@@ -580,15 +629,15 @@ WHERE  VacancyPartyId = @VacancyPartyId",
         private void UpdateEntityTimestamps(ApprenticeshipVacancy entity)
         {
             // determine whether this is a "new" entity being saved for the first time
-            if (entity.DateCreated == DateTime.MinValue)
-            {
-                entity.DateCreated = DateTime.UtcNow;
-                entity.DateUpdated = null;
-            }
-            else
-            {
-                entity.DateUpdated = DateTime.UtcNow;
-            }
+            //if (entity.DateCreated == DateTime.MinValue)
+            //{
+            //    entity.DateCreated = DateTime.UtcNow;
+            //    entity.DateUpdated = null;
+            //}
+            //else
+            //{
+            //    entity.DateUpdated = DateTime.UtcNow;
+            //}
         }
 
         private void InsertVacancyLocationAddresses(IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, Guid vacancyId)

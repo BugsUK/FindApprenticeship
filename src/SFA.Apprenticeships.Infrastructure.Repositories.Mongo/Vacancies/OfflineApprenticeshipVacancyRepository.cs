@@ -10,7 +10,9 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class OfflineApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy, Guid>, IOfflineApprenticeshipVacancyRepository
+
+    // TODO VGA SQL
+    public class OfflineApprenticeshipVacancyRepository : /*GenericMongoClient<MongoApprenticeshipVacancy, Guid>,*/ IOfflineApprenticeshipVacancyRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -19,7 +21,7 @@
         {
             var config = configurationService.Get<MongoConfiguration>();
 
-            Initialise(config.VacancyDb, "apprenticeshipVacancies");
+            //Initialise(config.VacancyDb, "apprenticeshipVacancies");
 
             _mapper = mapper;
             _logger = logger;
@@ -36,24 +38,24 @@
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
 
-            var result = Collection.FindAndModify(args);
+            //var result = Collection.FindAndModify(args);
 
-            if (result.Ok)
-            {
-                var mongoEntity = result.GetModifiedDocumentAs<MongoApprenticeshipVacancy>();
+            //if (result.Ok)
+            //{
+            //    var mongoEntity = result.GetModifiedDocumentAs<MongoApprenticeshipVacancy>();
 
-                var entity = _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+            //    var entity = _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
 
-                _logger.Debug(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully. New value: {1}",
-                    vacancyReferenceNumber, entity.OfflineApplicationClickThroughCount);
-            }
-            else
-            {
-                _logger.Warn(
-                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
-                    vacancyReferenceNumber, result.Code, result.ErrorMessage);
-            }
+            //    _logger.Debug(
+            //        "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully. New value: {1}",
+            //        vacancyReferenceNumber, entity.OfflineApplicationClickThroughCount);
+            //}
+            //else
+            //{
+            //    _logger.Warn(
+            //        "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
+            //        vacancyReferenceNumber, result.Code, result.ErrorMessage);
+            //}
         }
     }
 }

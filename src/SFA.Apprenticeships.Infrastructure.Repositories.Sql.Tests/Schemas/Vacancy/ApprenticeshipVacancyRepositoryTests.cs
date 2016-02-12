@@ -76,7 +76,7 @@
             locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
 
             var vacancy = CreateValidDomainVacancy();
-            vacancy.EntityId = vacancyGuid;
+            vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
@@ -279,7 +279,7 @@
 
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyReferenceNumber = vacancyReferenceNumber++;
-            vacancy.EntityId = vacancyGuid;
+            vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
@@ -320,7 +320,7 @@
             locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
 
             var vacancy = CreateValidDomainVacancy();
-            vacancy.EntityId = vacancyGuid;
+            vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.LocationAddresses = locations;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
@@ -371,7 +371,7 @@
             
             writeRepository.ShallowSave(vacancy);
 
-            var loadedVacancy = readRepository.Get(vacancy.EntityId);
+            var loadedVacancy = readRepository.Get(vacancy.VacancyGuid);
 
             loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
         }
@@ -392,7 +392,7 @@
 
             writeRepository.DeepSave(vacancy);
 
-            var loadedVacancy = readRepository.Get(vacancy.EntityId);
+            var loadedVacancy = readRepository.Get(vacancy.VacancyGuid);
 
             loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
         }
@@ -515,7 +515,7 @@
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = aComment;
 
-            writeRepository.ReplaceLocationInformation(vacancy.EntityId,
+            writeRepository.ReplaceLocationInformation(vacancy.VacancyGuid,
                 isEmployerLocationMainApprenticeshipLocation, numberOfPositions, newLocations, locationAddressesComment,
                 additionalLocationInformation, additionalLocationInformationComment);
 

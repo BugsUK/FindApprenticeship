@@ -3,9 +3,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using Domain.Entities;
 
     [Table("dbo.Vacancy")]
-    public class Vacancy
+    public class Vacancy : ICreatableEntity, IUpdatableEntity
     {
         public int VacancyId { get; set; }
 
@@ -229,9 +230,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public DateTime? StartedToQADateTime { get; set; }  // Not considered in AVMS
 
-        // public DateTime CreatedDateTime { get; set; } // Not considered in AVMS
+        public DateTime DateCreated { get; set; } // Not considered in AVMS
 
-        // public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
+        public DateTime? DateUpdated { get; set; }  // Not considered in AVMS
 
         public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 
