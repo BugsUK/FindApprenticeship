@@ -7,28 +7,41 @@
 
     public class ProviderUserProviderBuilder
     {
-        private Mock<IUserProfileService> _userProfileService;
-        private readonly Mock<IProviderService> _providerService;
-        private readonly Mock<IProviderUserAccountService> _providerUserAccountService;
+        private Mock<IUserProfileService> _mockUserProfileService;
+        private Mock<IProviderService> _mockProviderService;
+        private Mock<IProviderUserAccountService> _mockProviderUserAccountService;
 
         public ProviderUserProviderBuilder()
         {
-            _userProfileService = new Mock<IUserProfileService>();
-            _providerService = new Mock<IProviderService>();
-            _providerUserAccountService = new Mock<IProviderUserAccountService>();
+            _mockUserProfileService = new Mock<IUserProfileService>();
+            _mockProviderService = new Mock<IProviderService>();
+            _mockProviderUserAccountService = new Mock<IProviderUserAccountService>();
+        }
+
+        public ProviderUserProviderBuilder With(Mock<IUserProfileService> mockUserProfileService)
+        {
+            _mockUserProfileService = mockUserProfileService;
+            return this;
+        }
+
+        public ProviderUserProviderBuilder With(Mock<IProviderService> mockProviderService)
+        {
+            _mockProviderService = mockProviderService;
+            return this;
+        }
+
+        public ProviderUserProviderBuilder With(Mock<IProviderUserAccountService> mockProviderUserAccountService)
+        {
+            _mockProviderUserAccountService = mockProviderUserAccountService;
+            return this;
         }
 
         public IProviderUserProvider Build()
         {
             var provider = new ProviderUserProvider(
-                _userProfileService.Object, _providerService.Object, _providerUserAccountService.Object);
-            return provider;
-        }
+                _mockUserProfileService.Object, _mockProviderService.Object, _mockProviderUserAccountService.Object);
 
-        public ProviderUserProviderBuilder With(Mock<IUserProfileService> userProfileService)
-        {
-            _userProfileService = userProfileService;
-            return this;
+            return provider;
         }
     }
 }
