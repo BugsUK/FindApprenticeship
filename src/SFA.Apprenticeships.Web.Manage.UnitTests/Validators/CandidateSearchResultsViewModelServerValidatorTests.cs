@@ -6,14 +6,14 @@
     using NUnit.Framework;
     using ViewModels;
 
-    public class CandidateSearchViewModelServerValidatorTests
+    public class CandidateSearchResultsViewModelServerValidatorTests
     {
-        private CandidateSearchViewModelServerValidator _validator;
+        private CandidateSearchResultsViewModelServerValidator _validator;
 
         [SetUp]
         public void SetUp()
         {
-            _validator = new CandidateSearchViewModelServerValidator();
+            _validator = new CandidateSearchResultsViewModelServerValidator();
         }
 
         [TestCase(null, null, null, null, false)]
@@ -21,14 +21,17 @@
         [TestCase(null, "Scott", null, null, true)]
         [TestCase(null, null, "12/02/1985", null, true)]
         [TestCase(null, null, null, "CV1 2WT", true)]
-        public void FirstNameRequired(string firstName, string lastName, string dateOfBirth, string postCode, bool expectValid)
+        public void FirstNameRequired(string firstName, string lastName, string dateOfBirth, string postcode, bool expectValid)
         {
-            var viewModel = new CandidateSearchViewModel
+            var viewModel = new CandidateSearchResultsViewModel
             {
-                FirstName = firstName,
-                LastName = lastName,
-                DateOfBirth = dateOfBirth,
-                Postcode = postCode
+                SearchViewModel = new CandidateSearchViewModel
+                {
+                    FirstName = firstName,
+                    LastName = lastName,
+                    DateOfBirth = dateOfBirth,
+                    Postcode = postcode
+                }
             };
 
             var result = _validator.Validate(viewModel);

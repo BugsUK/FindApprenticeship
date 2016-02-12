@@ -3,8 +3,9 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
+    using Validators;
 
-    [Validator(typeof(CandidateSearchViewModel))]
+    [Validator(typeof(CandidateSearchViewModelClientValidator))]
     public class CandidateSearchViewModel
     {
         [Display(Name = CandidateSearchViewModelMessages.FirstName.LabelText)]
