@@ -51,10 +51,13 @@
             var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
-            var team = teams.Single(t => t.Id == viewModel.TeamId);
             var role = roles.Single(r => r.Id == viewModel.RoleId);
-            agencyUser.Team = team;
             agencyUser.Role = role;
+            if (!string.IsNullOrEmpty(viewModel.TeamId))
+            {
+                var team = teams.Single(t => t.Id == viewModel.TeamId);
+                agencyUser.Team = team;
+            }
 
             _userProfileService.SaveUser(agencyUser);
 
