@@ -96,5 +96,11 @@
                 @"http(s)?://([\w-]+\.)+[\w-]+(/[\w- ;,./?%&=]*)?";
             public const string ErrorText = "TODO: invalid url";
         }
+
+        public static class DateWhitelist
+        {
+            public const string RegularExpression = @"^\d{2}/\d{2}/\d{4}$";
+            public const string ErrorText = "is not a valid format";
+        }
     }
 }

@@ -156,6 +156,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AgencyUser\AgencyUserProviderBuilder.cs" />
     <Compile Include="Providers\AgencyUser\AgencyUserProviderTests.cs" />
+    <Compile Include="Validators\CandidateSearchViewModelClientValidatorTests.cs" />
+    <Compile Include="Validators\CandidateSearchViewModelServerValidatorTests.cs" />
     <Compile Include="Views\Vacancy\ReviewVacancyTests.cs" />
     <Compile Include="Views\ViewUnitTest.cs" />
   </ItemGroup>

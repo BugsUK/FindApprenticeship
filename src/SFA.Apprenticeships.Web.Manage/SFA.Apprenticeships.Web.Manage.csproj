@@ -324,6 +324,7 @@
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
     <Compile Include="Providers\AgencyUserProvider.cs" />
+    <Compile Include="Validators\CandidateSearchViewModelValidator.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
