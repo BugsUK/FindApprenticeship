@@ -300,6 +300,7 @@
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
     <Compile Include="Constants\Url.cs" />
+    <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AgencyUserController.cs" />
     <Compile Include="Controllers\CandidateController.cs" />
@@ -316,6 +317,9 @@
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\ManagementWebRegistry.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
+    <Compile Include="Mediators\Candidate\CandidateMediator.cs" />
+    <Compile Include="Mediators\Candidate\CandidateMediatorCodes.cs" />
+    <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
@@ -324,6 +328,7 @@
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\CandidateSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\CandidateSearchViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">

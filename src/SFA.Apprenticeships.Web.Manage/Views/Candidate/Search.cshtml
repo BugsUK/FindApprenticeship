@@ -1,6 +1,38 @@
-﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateSearchViewModel
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateSearchResultsViewModel
 
 @{
     ViewBag.Title = "Search for candidate";
     Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="heading-xlarge">
+    Search for a candidate
+</h1>
+
+@using (Html.BeginRouteForm(ManagementRouteNames.SearchCandidates, FormMethod.Post))
+{
+    <div class="form-group">
+        @Html.FormTextFor(
+            m => m.SearchViewModel.FirstName,
+            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+
+        @Html.FormTextFor(
+            m => m.SearchViewModel.LastName,
+            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+
+        @Html.FormTextFor(
+            m => m.SearchViewModel.DateOfBirth,
+            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+
+        @Html.FormTextFor(
+            m => m.SearchViewModel.Postcode,
+            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="button">Search</button>
+        @Html.RouteLink("Reset search", ManagementRouteNames.ReviewVacancy)
+    </div>
 }

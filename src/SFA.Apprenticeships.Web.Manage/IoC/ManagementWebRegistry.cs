@@ -26,6 +26,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
+    using Mediators.Candidate;
     using Raa.Common.Providers;
 
     public class ManagementWebRegistry : Registry
@@ -87,6 +88,7 @@
         private void RegisterMediators()
         {
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
+            For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
         }
     }
