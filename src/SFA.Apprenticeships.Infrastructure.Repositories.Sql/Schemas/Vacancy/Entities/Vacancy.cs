@@ -230,9 +230,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public DateTime? StartedToQADateTime { get; set; }  // Not considered in AVMS
 
-        public DateTime DateCreated { get; set; } // Not considered in AVMS
+        public DateTime CreatedDateTime { get; set; } // Not considered in AVMS
 
-        public DateTime? DateUpdated { get; set; }  // Not considered in AVMS
+        public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
 
         public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 

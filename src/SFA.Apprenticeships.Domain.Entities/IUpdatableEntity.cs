@@ -4,6 +4,6 @@ namespace SFA.Apprenticeships.Domain.Entities
 {
     public interface IUpdatableEntity
     {
-        DateTime? DateUpdated { get; set; }
+        DateTime? UpdatedDateTime { get; set; }
     }
 }

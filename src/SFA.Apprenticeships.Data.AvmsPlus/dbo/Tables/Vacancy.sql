@@ -59,7 +59,9 @@
 	[FirstSubmittedDateTime]		   DATETIME			NULL,
 	[SubmissionCount]				   INT				NULL,
 	[StartedToQADateTime]			   DATETIME			NULL,
-	[SubmittedDateTime]				   DATETIME			NULL
+	[SubmittedDateTime]				   DATETIME			NULL,
+	[CreatedDateTime]				   DATETIME			NOT NULL,
+	[UpdatedDateTime]				   DATETIME			NULL
 
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
@@ -75,7 +77,6 @@
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
     CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
 );
-
 
 GO
 CREATE NONCLUSTERED INDEX [idx_Vacancy_ApprenticeshipFrameworkId]

@@ -13,3 +13,12 @@ GO
 CREATE NONCLUSTERED INDEX [idx_VacancyTextField_VacancyId]
     ON [dbo].[VacancyTextField]([VacancyId] ASC);
 
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [idx_VacancyTextField_VacancyId_Field] 
+ON [dbo].[VacancyTextField]
+(
+	[VacancyId] ASC,
+	[Field] ASC
+)
+
+

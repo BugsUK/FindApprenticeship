@@ -47,8 +47,8 @@
             destination.ProviderUserId.Should().Be(source.ProviderUserId);
             destination.ProviderId.Should().Be(source.ProviderId);
             destination.ProviderUserGuid.Should().Be(source.ProviderUserGuid);
-            destination.DateCreated.Should().Be(source.DateCreated);
-            destination.DateUpdated.Should().Be(source.DateUpdated);
+            destination.DateCreated.Should().Be(source.CreatedDateTime);
+            destination.DateUpdated.Should().Be(source.UpdatedDateTime);
             destination.Username.Should().Be(source.Username);
             destination.Fullname.Should().Be(source.Fullname);
             destination.PreferredSiteErn.Should().Be(Convert.ToInt32(source.PreferredSiteErn));
@@ -102,8 +102,8 @@
             destination.ProviderUserId.Should().Be(source.ProviderUserId);
             destination.ProviderId.Should().Be(source.ProviderId);
             destination.ProviderUserGuid.Should().Be(source.ProviderUserGuid);
-            destination.DateCreated.Should().Be(source.DateCreated);
-            destination.DateUpdated.Should().Be(source.DateUpdated);
+            destination.CreatedDateTime.Should().Be(source.DateCreated);
+            destination.UpdatedDateTime.Should().Be(source.DateUpdated);
             destination.Username.Should().Be(source.Username);
             destination.Fullname.Should().Be(source.Fullname);
 

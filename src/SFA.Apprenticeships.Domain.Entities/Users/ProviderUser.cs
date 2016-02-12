@@ -28,8 +28,8 @@
 
         public string PhoneNumber { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
-        public DateTime? DateUpdated { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
     }
 }

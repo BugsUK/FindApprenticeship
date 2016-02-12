@@ -118,7 +118,7 @@
             var parentVacancy = CreateValidDomainVacancy();
 
             var childVacancy = CreateValidDomainVacancy();
-            childVacancy.ParentVacancyId = parentVacancy.VacancyGuid;
+            childVacancy.ParentVacancyId = parentVacancy.VacancyId;
 
             return new Tuple<ApprenticeshipVacancy, ApprenticeshipVacancy>(parentVacancy, childVacancy);
         }

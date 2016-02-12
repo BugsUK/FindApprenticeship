@@ -301,6 +301,7 @@ FETCH NEXT @PageSize ROWS ONLY
             _getOpenConnection.Insert(dbLocation);
         }
 
+        //TODO: rename it?
         public ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity)
         {
             _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
@@ -308,11 +309,6 @@ FETCH NEXT @PageSize ROWS ONLY
             // UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy>(entity);
-
-            //dbVacancy.VacancyLocationTypeCode = "S"; // TODO: Can't get this right unless / until added to ApprenticeshipVacancy or exclude from updates
-
-            //PopulateVacancyPartyIds(entity, dbVacancy);
-            //PopulateFrameworkId(entity, dbVacancy);
 
             PopulateCountyId(entity, dbVacancy);
             PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
@@ -322,33 +318,51 @@ FETCH NEXT @PageSize ROWS ONLY
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
-            try
-            {
-                _getOpenConnection.Insert(dbVacancy);
-            }
-            catch (Exception ex)
-            {
-                // TODO: Detect key violation
-
-                if (!_getOpenConnection.UpdateSingle(dbVacancy))
-                    throw new Exception("Failed to update record after failed insert", ex);
-            }
-
-            var vacancyId = _getOpenConnection.Query<int>(@"
-SELECT VacancyId
-FROM   dbo.Vacancy
-WHERE  VacancyGuid = @VacancyGuid",
-                new
-                {
-                    VacancyGuid = entity.VacancyGuid
-                }).Single(); // There's a better way to do this?
-
-            SaveTextFieldsFor(vacancyId, entity);
-            SaveAdditionalQuestionsFor(vacancyId, entity);
+            dbVacancy.VacancyId = (int)_getOpenConnection.Insert(dbVacancy);
             
+
+//            var vacancyId = _getOpenConnection.Query<int>(@"
+//SELECT VacancyId
+//FROM   dbo.Vacancy
+//WHERE  VacancyGuid = @VacancyGuid",
+//                new
+//                {
+//                    VacancyGuid = entity.VacancyGuid
+//                }).Single(); // There's a better way to do this?
+
+            SaveTextFieldsFor(dbVacancy.VacancyId, entity);
+            SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity); // TODO: check if we need it
+
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
-            return entity;
+            return _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
+        }
+
+        public ApprenticeshipVacancy ShallowUpdate(ApprenticeshipVacancy entity)
+        {
+            _logger.Debug("Calling database to shallow update apprenticeship vacancy with id={0}", entity.VacancyId);
+
+            // UpdateEntityTimestamps(entity); // Do we need this?
+
+            var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy>(entity);
+
+            PopulateCountyId(entity, dbVacancy);
+            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
+            PopulateVacancyManagerId(entity, dbVacancy);
+            PopulateVacancyLocationTypeId(entity, dbVacancy);
+
+            // TODO: This should be in a single call to the database (to avoid a double latency hit)
+            // This should be done as a single method in _getOpenConnection
+
+            if (!_getOpenConnection.UpdateSingle(dbVacancy))
+                throw new Exception("Failed to update record");
+            
+            UpdateTextFieldsFor(entity.VacancyId, entity);
+            UpdateAdditionalQuestionsFor(entity.VacancyId, entity);
+
+            _logger.Debug("Shallow updated apprenticeship vacancy with to database with id={0}", entity.VacancyId);
+
+            return _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
         }
 
         private void PopulateVacancyOwnerRelationshipId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
@@ -476,7 +490,7 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
             var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
 	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
 	WHERE CodeName = '{vacancyTextFieldCodeName}'
-").Single();
+").Single(); // TODO: Hardcode the ID?
             var vacancyTextField = new VacancyTextField
             {
                 VacancyId = vacancyId,
@@ -485,6 +499,64 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
             };
 
             _getOpenConnection.Insert(vacancyTextField);
+        }
+
+        private void UpdateTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
+        {
+            UpdateTextField(vacancyId, "TBP", entity.TrainingProvided);
+            UpdateTextField(vacancyId, "QR", entity.DesiredQualifications);
+            UpdateTextField(vacancyId, "SR", entity.DesiredSkills);
+            UpdateTextField(vacancyId, "PQ", entity.PersonalQualities);
+            UpdateTextField(vacancyId, "OII", entity.ThingsToConsider);
+            UpdateTextField(vacancyId, "FP", entity.FutureProspects);
+        }
+
+        private void UpdateTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
+        {
+            var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
+	            SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
+	            WHERE CodeName = '{vacancyTextFieldCodeName}'
+            ").Single(); // TODO: Hardcode the ID?
+
+            _getOpenConnection.MutatingQuery<VacancyTextField>(@"
+UPDATE [dbo].[VacancyTextField] 
+SET Value = @Value
+WHERE VacancyId = @VacancyId AND Field = @FieldId
+
+SELECT * 
+FROM [dbo].[VacancyTextField] 
+WHERE VacancyId = @VacancyId AND Field = @FieldId",
+                new
+                {
+                    VacancyId = vacancyId,
+                    FieldId = vacancyTextFieldValueId,
+                    Value = value
+                });
+        }
+
+        private void UpdateAdditionalQuestionsFor(int vacancyId, ApprenticeshipVacancy entity)
+        {
+            // TODO: study how we deal with nulls
+            UpdateAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
+            UpdateAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
+        }
+
+        private void UpdateAdditionalQuestion(int vacancyId, short questionId, string question)
+        {
+            _getOpenConnection.MutatingQuery<VacancyTextField>(@"
+UPDATE [dbo].[AdditionalQuestion]
+SET Question = @Question
+WHERE VacancyId = @VacancyId AND QuestionId = @QuestionId
+
+SELECT * 
+FROM [dbo].[AdditionalQuestion] 
+WHERE VacancyId = @VacancyId AND QuestionId = @QuestionId",
+                new
+                {
+                    VacancyId = vacancyId,
+                    QuestionId = questionId,
+                    Question = question
+                });
         }
 
         private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)

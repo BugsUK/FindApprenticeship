@@ -84,8 +84,9 @@
                 .IgnoreMember(v => v.VacancyOwnerRelationshipId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
-                .IgnoreMember(v => v.VacancyId)
-                
+                //.IgnoreMember(v => v.VacancyId)
+                .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
+
                 // Map employer address
                 .MapMemberFrom(v => v.AddressLine1, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine1)
                 .MapMemberFrom(v => v.AddressLine2, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine2)
@@ -129,8 +130,7 @@
                 .IgnoreMember(v => v.LockedForSupportUntil)
                 .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  // Which one is the right mapping
                 .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0)) // Which one is the right mapping
-                // .MapMemberFrom( v=> v.MasterVacancyId, av => av.ParentVacancyId) // PAremtVacancyId needs to be an int
-                .IgnoreMember(v => v.MasterVacancyId)
+                .MapMemberFrom( v=> v.MasterVacancyId, av => av.ParentVacancyId)
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
@@ -139,11 +139,12 @@
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)
                 .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
-                .MapMemberFrom(v => v.DateUpdated, av => av.DateUpdated)
-                .MapMemberFrom(v => v.DateCreated, av => av.DateCreated)
+                .MapMemberFrom(v => v.UpdatedDateTime, av => av.DateUpdated)
+                .MapMemberFrom(v => v.CreatedDateTime, av => av.DateCreated)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
+                .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
                 .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.Title, v => v.Title)
@@ -162,8 +163,7 @@
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)  // Which one is the right mapping
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineSystemApplicants) // Which one is the right mapping
-                // .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId) // Change to int
-                .IgnoreMember(av => av.ParentVacancyId)
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId) // Change to int
                 .IgnoreMember(av => av.VacancyManagerId)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.ApprenticeshipLevel)

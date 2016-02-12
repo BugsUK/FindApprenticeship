@@ -8,3 +8,10 @@
     CONSTRAINT [uq_idx_additionalQuestion] UNIQUE NONCLUSTERED ([VacancyId] ASC, [QuestionId] ASC)
 );
 
+GO
+CREATE NONCLUSTERED INDEX [idx_additionalQuestion_vacancyId_questionId] 
+ON [dbo].[AdditionalQuestion]
+(
+	[VacancyId] ASC,
+	[QuestionId] ASC
+)

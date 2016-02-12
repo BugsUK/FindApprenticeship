@@ -60,6 +60,6 @@
         // Id of the Provider User who last edited the vacancy
         public int LastEditedById { get; set; }
 
-        public Guid? ParentVacancyId { get; set; }
+        public int? ParentVacancyId { get; set; }
     }
 }

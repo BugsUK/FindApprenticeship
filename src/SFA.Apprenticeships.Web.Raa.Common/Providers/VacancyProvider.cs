@@ -804,7 +804,7 @@
             newVacancy.VacancyGuid = Guid.NewGuid();
             newVacancy.LocationAddresses = new List<VacancyLocationAddress>() { address };
             newVacancy.DateQAApproved = approvalTime;
-            newVacancy.ParentVacancyId = vacancy.VacancyGuid;
+            newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);

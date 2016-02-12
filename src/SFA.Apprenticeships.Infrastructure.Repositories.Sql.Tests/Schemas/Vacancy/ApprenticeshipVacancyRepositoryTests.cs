@@ -85,7 +85,9 @@
             vacancy.ProviderSiteEmployerLink.ProviderSiteErn = "100339794";
             vacancy.ProviderSiteEmployerLink.Employer.Ern = "123456";
 
-            writeRepository.ShallowSave(vacancy);
+            var entity = writeRepository.ShallowSave(vacancy);
+            vacancy.VacancyId = entity.VacancyId;
+            writeRepository.ShallowUpdate(vacancy);
         }
 
         [Test, Ignore]

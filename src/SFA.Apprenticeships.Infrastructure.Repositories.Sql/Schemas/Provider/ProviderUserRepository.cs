@@ -134,14 +134,14 @@
         // TODO: AG: move to UpdateEntityTimestamps to one place.
         private static void UpdateEntityTimestamps(ProviderUser entity)
         {
-            if (entity.DateCreated == DateTime.MinValue)
+            if (entity.CreatedDateTime == DateTime.MinValue)
             {
-                entity.DateCreated = DateTime.UtcNow;
-                entity.DateUpdated = null;
+                entity.CreatedDateTime = DateTime.UtcNow;
+                entity.UpdatedDateTime = null;
             }
             else
             {
-                entity.DateUpdated = DateTime.UtcNow;
+                entity.UpdatedDateTime = DateTime.UtcNow;
             }
         }
 

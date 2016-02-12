@@ -398,7 +398,7 @@
                        && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
                        && av.LocationAddresses.Single().NumberOfPositions == location.NumberOfPositions
                        && av.Status == ProviderVacancyStatuses.Live
-                       && av.ParentVacancyId == vacancy.VacancyGuid
+                       && av.ParentVacancyId == vacancy.VacancyId
                        && av.NumberOfPositions == location.NumberOfPositions)));
             }
 

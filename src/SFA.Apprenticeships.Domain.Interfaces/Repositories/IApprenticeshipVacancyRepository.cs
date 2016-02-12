@@ -26,6 +26,8 @@
 
         ApprenticeshipVacancy ShallowSave(ApprenticeshipVacancy entity);
 
+        ApprenticeshipVacancy ShallowUpdate(ApprenticeshipVacancy entity);
+
         ApprenticeshipVacancy DeepSave(ApprenticeshipVacancy entity);
 
         ApprenticeshipVacancy ReplaceLocationInformation(Guid vacancyGuid, bool? isEmployerLocationMainApprenticeshipLocation,
