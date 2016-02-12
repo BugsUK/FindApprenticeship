@@ -252,6 +252,7 @@
         }
 
         [TestCase("john.doe@example.com", "jane.doe@example.com", true)]
+        [TestCase("john.doe@example.com", "JANE.doe@EXAMPLE.com", true)]
         [TestCase("john.doe@example.com", "john.doe@example.com", false)]
         [TestCase("john.doe@example.com", "JOHN.doe@EXAMPLE.com", false)]
         public void ShouldSendEmailVerificationCodeToExistingProviderUserWhenEmailChanges(
