@@ -219,7 +219,7 @@
                 ShortDescription = newVacancyViewModel.ShortDescription,
                 ProviderSiteEmployerLink = providerSiteEmployerLink,
                 Status = ProviderVacancyStatuses.Draft,
-                OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value, //At this point we will always have a value
+                OfflineVacancy = newVacancyViewModel.OfflineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,

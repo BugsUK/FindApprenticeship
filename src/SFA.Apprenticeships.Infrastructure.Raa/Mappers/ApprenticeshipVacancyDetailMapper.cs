@@ -52,7 +52,7 @@
                 //AnonymousEmployerName = vacancy.,
                 EmployerDescription = vacancy.ProviderSiteEmployerLink.Description,
                 EmployerWebsite = vacancy.ProviderSiteEmployerLink.WebsiteUrl,
-                ApplyViaEmployerWebsite = vacancy.OfflineVacancy,
+                ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
                 //TODO: How is this captured in RAA?
