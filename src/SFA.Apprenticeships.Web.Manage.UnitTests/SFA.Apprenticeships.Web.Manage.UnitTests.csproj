@@ -150,6 +150,7 @@
     <Compile Include="Factory\TeamListFactory.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorBuilder.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorTests.cs" />
+    <Compile Include="Mediators\Candidate\CandidateMediatorTests.cs" />
     <Compile Include="Mediators\Vacancy\EditCommentTests.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorBuilder.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorTests.cs" />

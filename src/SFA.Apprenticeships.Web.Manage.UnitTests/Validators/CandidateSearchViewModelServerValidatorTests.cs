@@ -21,7 +21,7 @@
         [TestCase(null, "Scott", null, null, true)]
         [TestCase(null, null, "12/02/1985", null, true)]
         [TestCase(null, null, null, "CV1 2WT", true)]
-        public void FirstNameRequired(string firstName, string lastName, string dateOfBirth, string postCode, bool expectValid)
+        public void AtLeastOneSearchCriteriaRequired(string firstName, string lastName, string dateOfBirth, string postCode, bool expectValid)
         {
             var viewModel = new CandidateSearchViewModel
             {

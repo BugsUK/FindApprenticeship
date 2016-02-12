@@ -6,5 +6,7 @@
     public interface ICandidateMediator
     {
         MediatorResponse<CandidateSearchResultsViewModel> Search();
+
+        MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchResultsViewModel viewModel);
     }
 }

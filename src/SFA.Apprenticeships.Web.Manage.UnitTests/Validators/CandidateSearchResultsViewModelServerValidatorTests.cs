@@ -21,7 +21,7 @@
         [TestCase(null, "Scott", null, null, true)]
         [TestCase(null, null, "12/02/1985", null, true)]
         [TestCase(null, null, null, "CV1 2WT", true)]
-        public void FirstNameRequired(string firstName, string lastName, string dateOfBirth, string postcode, bool expectValid)
+        public void AtLeastOneSearchCriteriaRequired(string firstName, string lastName, string dateOfBirth, string postcode, bool expectValid)
         {
             var viewModel = new CandidateSearchResultsViewModel
             {
@@ -46,6 +46,18 @@
                 result.Errors.Count.Should().Be(1);
                 result.Errors[0].ErrorMessage.Should().Be(CandidateSearchViewModelMessages.NoSearchCriteriaErrorText);
             }
+        }
+
+        [Test]
+        public void SearchViewModelCriteriaRequired()
+        {
+            var viewModel = new CandidateSearchResultsViewModel();
+
+            var result = _validator.Validate(viewModel);
+
+            result.IsValid.Should().BeFalse();
+            result.Errors.Count.Should().Be(1);
+            result.Errors[0].ErrorMessage.Should().Be(CandidateSearchViewModelMessages.NoSearchCriteriaErrorText);
         }
     }
 }

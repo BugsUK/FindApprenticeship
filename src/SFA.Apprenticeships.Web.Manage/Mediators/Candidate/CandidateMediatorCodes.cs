@@ -4,6 +4,7 @@
     {
         public class Search
         {
+            public const string FailedValidation = "CandidateMediatorCodes.Search.FailedValidation";
             public const string Ok = "CandidateMediatorCodes.Search.Ok";
         }
     }

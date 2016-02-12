@@ -19,7 +19,7 @@
     <div class="form-group">
         @Html.FormTextFor(
             m => m.SearchViewModel.FirstName,
-            controlHtmlAttributes: new { type = "text", spellcheck = "false" })
+            controlHtmlAttributes: new { type = "text", autofocus = "autofocus", spellcheck = "false" })
 
         @Html.FormTextFor(
             m => m.SearchViewModel.LastName,
