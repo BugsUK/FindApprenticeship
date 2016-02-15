@@ -4,7 +4,7 @@
     using System.Collections.Generic;
 
     using Avms = SFA.Apprenticeships.Avms.Domain.Entities;
-    using Infrastructure.Sql;
+    using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common; // TODO: This stuff should be in a separate project, should not be forced to include Domain.Entities/Interfaces and should be sharable with DAS
 
     public class AvmsDatabaseRespository : IAvmsRepository
     {

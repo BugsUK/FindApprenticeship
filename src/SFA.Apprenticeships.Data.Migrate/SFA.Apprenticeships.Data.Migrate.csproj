@@ -59,6 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MutateTarget.cs" />
+    <Compile Include="IMutateTarget.cs" />
+    <Compile Include="DummyMutateTarget.cs" />
+    <Compile Include="Tables.cs" />
+    <Compile Include="ISyncRepository.cs" />
+    <Compile Include="SyncRepository.cs" />
     <Compile Include="NewDBDatabaseRepository.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="AvmsDatabaseRepository.cs" />
@@ -76,13 +82,9 @@
       <Project>{2bce308b-c935-41d9-adb1-2fbf78415abf}</Project>
       <Name>SFA.Apprenticeships.Avms.Domain.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.NewDB.Domain.Entities\SFA.Apprenticeships.NewDB.Domain.Entities.csproj">
-      <Project>{0298ef49-182c-42b8-a3d1-6f3bea9e4d1f}</Project>
-      <Name>SFA.Apprenticeships.NewDB.Domain.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure.Sql\SFA.Infrastructure.Sql.csproj">
-      <Project>{5f790d5c-5da8-4cbb-b24d-7c3d565a251b}</Project>
-      <Name>SFA.Infrastructure.Sql</Name>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

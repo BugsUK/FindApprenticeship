@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
 {
     public interface IGetOpenConnection
     {
-        SqlConnection GetOpenConnection();
+        IDbConnection GetOpenConnection();
     }
 
     public class GetOpenConnectionFromConnectionString : IGetOpenConnection
@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             ConnectionString = connectionString;
         }
 
-        public SqlConnection GetOpenConnection()
+        public IDbConnection GetOpenConnection()
         {
             var conn = new SqlConnection(ConnectionString);
             conn.Open();
