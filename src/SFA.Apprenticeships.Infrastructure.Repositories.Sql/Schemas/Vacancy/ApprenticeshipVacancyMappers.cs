@@ -141,6 +141,7 @@
                 .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.DateUpdated)
                 .MapMemberFrom(v => v.CreatedDateTime, av => av.DateCreated)
+                .MapMemberFrom(v => v.StandardId, av => av.StandardId)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
@@ -170,7 +171,7 @@
                 .IgnoreMember(av => av.ApprenticeshipLevelComment)
                 .IgnoreMember(av => av.FrameworkCodeName)
                 .IgnoreMember(av => av.FrameworkCodeNameComment)
-                .IgnoreMember(av => av.StandardId)
+                .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .IgnoreMember(av => av.StandardIdComment)
                 .IgnoreMember(av => av.Status)
                 .IgnoreMember(av => av.WageComment)

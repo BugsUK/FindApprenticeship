@@ -55,13 +55,14 @@
 	-- NEW FIELDS
 	[ContactEmail]					   NVARCHAR (MAX)   NULL,
 	[ContactNumber]					   NVARCHAR (MAX)   NULL,
-	[PublishedDateTime]				   DATETIME			NULL,
-	[FirstSubmittedDateTime]		   DATETIME			NULL,
+	[PublishedDateTime]				   DATETIME			NULL, --??
+	[FirstSubmittedDateTime]		   DATETIME			NULL, --??
 	[SubmissionCount]				   INT				NULL,
-	[StartedToQADateTime]			   DATETIME			NULL,
-	[SubmittedDateTime]				   DATETIME			NULL,
+	[StartedToQADateTime]			   DATETIME			NULL, --??
+	[SubmittedDateTime]				   DATETIME			NULL, --??
 	[CreatedDateTime]				   DATETIME			NOT NULL,
-	[UpdatedDateTime]				   DATETIME			NULL
+	[UpdatedDateTime]				   DATETIME			NULL,
+	[StandardId]					   INT				NULL
 
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),

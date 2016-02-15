@@ -50,7 +50,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         //public string FrameworkIdComment { get; set; }
 
-        //public int? StandardId { get; set; }
+        public int? StandardId { get; set; }
 
         //public string StandardIdComment { get; set; }
 
