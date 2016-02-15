@@ -110,7 +110,7 @@
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v=> v.Description, av=> av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage) // In migrated vacancies WageUnit will always be Week
-                .MapMemberFrom(v => v.WageType, av => av.WageType) // I can't find any example of wagetypecode in AVMS database
+                .IgnoreMember(v => v.WageType) // DbLookup
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => WagePresenter.GetDisplayText(new Wage(av.WageType, av.Wage, av.WageUnit), av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)

@@ -71,7 +71,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         //public string LongDescriptionComment { get; set; }
 
-
         [Column(TypeName = "money")]
         public decimal? WeeklyWage { get; set; } // equivalent (more or less) to WageValue
 
@@ -82,6 +81,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         // public string WageIntervalCode { get; set; }
 
         // public string WageComment { get; set; }
+
+        public int WageUnitId { get; set; }
 
         [Column(TypeName = "smallint")]
         public short? NumberOfPositions { get; set; } // was int

@@ -316,6 +316,7 @@ FETCH NEXT @PageSize ROWS ONLY
             PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
             PopulateVacancyManagerId(entity, dbVacancy);
             PopulateVacancyLocationTypeId(entity, dbVacancy);
+            PopulateWageTypeId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -352,6 +353,7 @@ FETCH NEXT @PageSize ROWS ONLY
             PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
             PopulateVacancyManagerId(entity, dbVacancy);
             PopulateVacancyLocationTypeId(entity, dbVacancy);
+            PopulateWageTypeId(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -455,6 +457,19 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
                 {
                     VacancyLocationTypeCodeName = vacancyLocationTypeCodeName
                 }).Single();
+        }
+
+        private void PopulateWageTypeId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            var wageUnit = entity.WageUnit.ToString("G");
+            dbVacancy.WageUnitId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT WageUnitId
+FROM   dbo.WageUnit
+WHERE  WageUnitName = @WageUnitName",
+                new
+                {
+                    WageUnitName = wageUnit
+                }).Single(); // There's a better way to do this?
         }
 
         private void SaveTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)

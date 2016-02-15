@@ -64,7 +64,8 @@
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[StandardId]					   INT				NULL,
 	[HoursPerWeek]                     DECIMAL (10, 2)  NULL,
-	[AdditionalLocationInformation]    NVARCHAR (MAX)   NULL
+	[AdditionalLocationInformation]    NVARCHAR (MAX)   NULL,
+	[WageUnitId]					   INT				NULL
 
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),

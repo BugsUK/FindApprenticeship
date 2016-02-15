@@ -854,6 +854,8 @@
     <Build Include="Provider\Provider.ProviderUserStatus.sql" />
     <None Include="Scripts\Data\Provider.ProviderUserStatus.Upsert.sql" />
     <Build Include="Schemas\UserProfile.sql" />
+    <None Include="Scripts\Data\dbo.WageUnit.Upsert.sql" />
+    <Build Include="dbo\Tables\WageUnit.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
