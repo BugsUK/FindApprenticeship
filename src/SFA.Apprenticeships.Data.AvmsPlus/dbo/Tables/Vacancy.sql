@@ -62,7 +62,9 @@
 	[SubmittedDateTime]				   DATETIME			NULL, --??
 	[CreatedDateTime]				   DATETIME			NOT NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
-	[StandardId]					   INT				NULL
+	[StandardId]					   INT				NULL,
+	[HoursPerWeek]                     DECIMAL (10, 2)  NULL,
+	[AdditionalLocationInformation]    NVARCHAR (MAX)   NULL
 
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),

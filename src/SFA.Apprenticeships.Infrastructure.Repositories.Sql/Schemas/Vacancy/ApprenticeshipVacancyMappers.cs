@@ -142,6 +142,8 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.DateUpdated)
                 .MapMemberFrom(v => v.CreatedDateTime, av => av.DateCreated)
                 .MapMemberFrom(v => v.StandardId, av => av.StandardId)
+                .MapMemberFrom(v => v.HoursPerWeek, av => av.HoursPerWeek)
+                .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
@@ -182,7 +184,7 @@
                 .IgnoreMember(av => av.WorkingWeekComment)
                 .IgnoreMember(av => av.FirstQuestionComment)
                 .IgnoreMember(av => av.SecondQuestionComment)
-                .IgnoreMember(av => av.AdditionalLocationInformation)
+                .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
                 .IgnoreMember(av => av.LocationAddresses)
                 .IgnoreMember(av => av.IsEmployerLocationMainApprenticeshipLocation)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
@@ -198,7 +200,7 @@
                 .IgnoreMember(av => av.Ukprn)
                 .IgnoreMember(av => av.TitleComment)
                 .IgnoreMember(av => av.ShortDescriptionComment)
-                .IgnoreMember(av => av.HoursPerWeek)
+                .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .IgnoreMember(av => av.WageUnit)
                 .IgnoreMember(av => av.DurationType)
                 .IgnoreMember(av => av.Duration)
