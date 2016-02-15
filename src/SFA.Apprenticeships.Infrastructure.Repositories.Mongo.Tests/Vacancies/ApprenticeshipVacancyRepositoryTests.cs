@@ -14,6 +14,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+    [TestFixture, Category("Integration")]
     public class ApprenticeshipVacancyRepositoryTests : RepositoryIntegrationTest
     {
         private Guid expiredVacancyIdCumTitle = Guid.NewGuid();

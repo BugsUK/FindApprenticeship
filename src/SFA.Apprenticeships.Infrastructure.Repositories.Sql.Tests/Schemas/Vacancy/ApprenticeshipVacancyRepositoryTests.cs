@@ -48,7 +48,7 @@
             _connection = dbInitialiser.GetOpenConnection();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void SimpleSaveTest()
         {
             var logger = new Mock<ILogService>();
@@ -90,7 +90,7 @@
             writeRepository.ShallowUpdate(vacancy);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void GetVacancyByVacancyReferenceNumberTest()
         {
             // configure _mapper
@@ -106,7 +106,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void GetVacancyByGuidTest()
         {
             // configure _mapper
@@ -122,7 +122,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Ignore, ExpectedException(typeof(ArgumentNullException))]
+        [Test, Ignore, ExpectedException(typeof(ArgumentNullException)), Category("Integration")]
         public void ShouldNotBeAbleToDeepSaveAVacancyWithLocationsAsNull()
         {
             var newReferenceNumber = vacancyReferenceNumber++;
@@ -140,7 +140,7 @@
             writeRepository.DeepSave(vacancy);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void UpdateTest()
         {
             var newReferenceNumber = vacancyReferenceNumber++;
@@ -169,7 +169,7 @@
             vacancy.TrainingType = TrainingType.Frameworks;
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void RoundTripWithLocationTypeEqualsEmployerTest()
         {
             // Arrange
@@ -192,7 +192,7 @@
                 .WhenTypeIs<DateTime>());
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void RoundTripWithLocationTypeEqualsMultipleTest()
         {
             // Arrange
@@ -225,7 +225,7 @@
                     .WhenTypeIs<DateTime>());
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void GetForProviderByUkprnAndProviderSiteErnTest()
         {
             var logger = new Mock<ILogService>();
@@ -242,7 +242,7 @@
             vacancies.Should().HaveCount(0);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void GetWithStatusTest()
         {
             var logger = new Mock<ILogService>();
@@ -259,7 +259,7 @@
             vacancies.Should().HaveCount(1);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void SaveVacancyShouldSaveLocations()
         {
             var logger = new Mock<ILogService>();
@@ -299,7 +299,7 @@
                     .WhenTypeIs<DateTime>());
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void ShallowSaveVacancyShouldNotSaveLocations()
         {
             var logger = new Mock<ILogService>();
@@ -357,7 +357,7 @@
                 );
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void ShallowSaveVacancyShouldSaveFrameworkId()
         {
             var logger = new Mock<ILogService>();
@@ -378,7 +378,7 @@
             loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void DeepSaveVacancyShouldSaveFrameworkId()
         {
             var logger = new Mock<ILogService>();
@@ -399,7 +399,7 @@
             loadedVacancy.FrameworkCodeName.Should().Be(vacancy.FrameworkCodeName);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void FindByFrameworkCodeNameWithPaginationTest()
         {
             var logger = new Mock<ILogService>();
@@ -420,7 +420,7 @@
             vacancies.Should().HaveCount(pageSize);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void FindByLiveDateWithPaginationTest()
         {
             var logger = new Mock<ILogService>();
@@ -441,7 +441,7 @@
             vacancies.Should().HaveCount(pageSize);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void FindByClosingDateWithPaginationTest()
         {
             var logger = new Mock<ILogService>();
@@ -461,7 +461,7 @@
             vacancies.Should().HaveCount(pageSize);
         }
         
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void ReserveVacancyForQaTest()
         {
             var logger = new Mock<ILogService>();
@@ -484,7 +484,7 @@
             loadedVacancy.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
 
-        [Test, Ignore]
+        [Test, Ignore, Category("Integration")]
         public void ReplaceLocationInformationTest()
         {
             var logger = new Mock<ILogService>();

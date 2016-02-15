@@ -9,7 +9,7 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class ElasticsearchClientFactoryTests
     {
         private IElasticsearchClientFactory _elasticsearchClientFactory;
@@ -27,7 +27,7 @@
             _elasticsearchClientFactory = container.GetInstance<IElasticsearchClientFactory>();
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnIndexNamesFromConfigurationForMappedObjectType()
         {
             _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary)).Should().EndWith("apprenticeships");
@@ -35,7 +35,7 @@
             _elasticsearchClientFactory.GetIndexNameForType(typeof(LocationLookup)).Should().EndWith("locations");
         }
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldReturnDocumentTypesFromConfigurationForMappedObjectType()
         {
             _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary)).Should().EndWith("apprenticeship");

@@ -8,10 +8,10 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class AzureServiceBusConfigurationTests
     {
-        [Test]
+        [Test, Category("Integration")]
         public void LoadConfigurationFromDatabase()
         {
             var container = new Container(x =>

@@ -9,7 +9,7 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class ElastricsearchConfigurationTests
     {
         private IConfigurationService _configurationService;
@@ -28,7 +28,7 @@
         }
 
 
-        [Test]
+        [Test, Category("Integration")]
         public void ShouldPopulateWithValues()
         {
             var searchConfig = _configurationService.Get<SearchConfiguration>();
