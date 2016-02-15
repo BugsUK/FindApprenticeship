@@ -307,6 +307,7 @@
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManagementControllerBase.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
+    <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
     <Compile Include="Mediators\AgencyUser\IAgencyUserMediator.cs" />
@@ -334,6 +335,7 @@
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\CandidateSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\CandidateSearchViewModel.cs" />
+    <Compile Include="ViewModels\CandidateSummaryViewModel.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>

@@ -11,7 +11,7 @@
 
     public class CandidateSearchRequest
     {
-        public CandidateSearchRequest(string firstName, string lastName, DateTime dateOfBirth, string postcode)
+        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -21,7 +21,7 @@
 
         public string FirstName { get; private set; }
         public string LastName { get; private set; }
-        public DateTime DateOfBirth { get; private set; }
+        public DateTime? DateOfBirth { get; private set; }
         public string Postcode { get; private set; }
     }
 }
