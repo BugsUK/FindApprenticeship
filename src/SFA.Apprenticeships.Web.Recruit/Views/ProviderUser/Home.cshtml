@@ -97,13 +97,13 @@
                     @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
                     {
                         <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
-                        <figcaption><h2>New Applications</h2></figcaption>
+                        <figcaption><h2>New applications</h2></figcaption>
                     }
                     else
                     {
                         <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
                             <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
-                            <figcaption><h2>New Applications</h2></figcaption>
+                            <figcaption><h2>New applications</h2></figcaption>
                         </a>
                     }
                 </figure></li>
@@ -270,7 +270,7 @@
                                 <th>Vacancy title</th>
                                 <th>Employer</th>
                             	<th>Location</th>
-                                <th>Applications / click throughs</th>
+                                <th>Applications / click-throughs</th>
                                 <th>Vacancy status</th>
                                 <th></th>
                             </tr>
@@ -298,7 +298,7 @@
                                                 @title
                                                 @if (isOfflineVacancy)
                                                 {
-                                                    <span class="subtitle"><br />(Offline)</span>
+                                                    <span class="subtitle"><br />(Applications managed externally)</span>
                                                 }
                                             </a>
                                         </div>
@@ -321,7 +321,7 @@
                                         @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
                                         {
                                             var count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
-                                            var unit = isOfflineVacancy ? "click through" : "application";
+                                            var unit = isOfflineVacancy ? "click-through" : "application";
                                             var units = unit + "s";
 
                                             if (vacancy.Status == ProviderVacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())

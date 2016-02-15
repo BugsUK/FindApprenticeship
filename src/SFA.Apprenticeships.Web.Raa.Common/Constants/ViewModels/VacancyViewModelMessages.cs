@@ -4,8 +4,8 @@
 
     public class VacancyViewModelMessages
     {
-        public const string NoApplications = "You've had no applications submitted for this vacancy";
-        public const string NoClickThroughs = "You've had no click throughs to your application page for this vacancy";
+        public const string NoApplications = "There have not been any applications for this vacancy";
+        public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
 
         public static class Title
         {
