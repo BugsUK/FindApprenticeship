@@ -56,20 +56,12 @@
             validator.RuleFor(viewModel => viewModel.WorkingWeek)
                 .Length(0, 250)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship);
-
-            validator.RuleFor(viewModel => viewModel.WorkingWeek)
-                .Length(0, 250)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.TraineeshipTooLongErrorText)
-                .When(x => x.VacancyType == VacancyType.Traineeship)
-                .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.TraineeshipWhiteListErrorText)
-                .When(x => x.VacancyType == VacancyType.Traineeship);
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.LongDescription)
+                .Length(0, 4000)
+                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
 
@@ -152,17 +144,11 @@
             validator.RuleFor(x => x.LongDescription)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.LongDescription.RequiredErrorText)
-                .When(x => x.VacancyType != VacancyType.Traineeship)
-                .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 
             validator.RuleFor(x => x.LongDescription)
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.LongDescription.TraineeshipRequiredErrorText)
-                .When(x => x.VacancyType == VacancyType.Traineeship)
-                .Length(0, 4000)
-                .WithMessage(VacancyViewModelMessages.LongDescription.TraineeshipTooLongErrorText)
                 .When(x => x.VacancyType == VacancyType.Traineeship);
         }
 
