@@ -51,7 +51,7 @@
             var sqlParams = new
             {
                 ukprn,
-                providerStatusTypeID = ProviderStatus.Activated
+                providerStatusTypeID = ProviderStatuses.Activated
             };
 
             var dbVacancy = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams).SingleOrDefault();

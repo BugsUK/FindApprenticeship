@@ -37,8 +37,7 @@
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
-            _databaseTargetName = $"RaaTest-{environment}";
-            _databaseTargetName = $"AvmsPlus";
+            _databaseTargetName = $"AvmsPlus-{environment}";
             _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
 
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";

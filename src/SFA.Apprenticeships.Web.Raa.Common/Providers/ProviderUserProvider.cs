@@ -27,6 +27,7 @@
         public ProviderUserViewModel GetUserProfileViewModel(string username)
         {
             var providerUser = _userProfileService.GetProviderUser(username);
+
             if (providerUser != null)
             {
                 return Convert(providerUser);
@@ -45,24 +46,25 @@
         {
             var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (code.Equals(providerUser.EmailVerificationCode, StringComparison.CurrentCultureIgnoreCase))
+            if (!code.Equals(providerUser.EmailVerificationCode, StringComparison.CurrentCultureIgnoreCase))
             {
-                //TODO: Probably put all this in a strategy in the service
-                providerUser.EmailVerificationCode = null;
-                providerUser.EmailVerifiedDate = DateTime.UtcNow;
-                providerUser.Status = ProviderUserStatuses.EmailVerified;
-
-                _userProfileService.UpdateProviderUser(providerUser);
-
-                return true;
+                return false;
             }
 
-            return false;
+            providerUser.Status = ProviderUserStatuses.EmailVerified;
+            providerUser.EmailVerificationCode = null;
+            providerUser.EmailVerifiedDate = DateTime.UtcNow;
+
+            _userProfileService.UpdateProviderUser(providerUser);
+
+            return true;
         }
 
-        public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
+        public ProviderUserViewModel SaveProviderUser(
+            string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
             var providerUser = _userProfileService.GetProviderUser(username);
+
             var isNewProviderUser = providerUser == null;
 
             if (isNewProviderUser)
@@ -80,27 +82,22 @@
             var shouldSendEmailVerificationCode = isNewProviderUser || !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
 
             providerUser.Username = username;
-            providerUser.Email = providerUserViewModel.EmailAddress;
+            providerUser.Status = providerUser.Status;
             providerUser.Fullname = providerUserViewModel.Fullname;
+            providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
             providerUser.PreferredSiteErn = providerUserViewModel.DefaultProviderSiteErn;
-            providerUser.Status = providerUser.Status;
 
-            if (isNewProviderUser)
-            {
-                _userProfileService.CreateProviderUser(providerUser);
-            }
-            else
-            {
-                _userProfileService.UpdateProviderUser(providerUser);
-            }
+            var savedProviderUser = isNewProviderUser
+                ? _userProfileService.CreateProviderUser(providerUser)
+                : _userProfileService.UpdateProviderUser(providerUser);
 
             if (shouldSendEmailVerificationCode)
             {
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
-            return GetUserProfileViewModel(providerUser.Username);
+            return Convert(savedProviderUser);
         }
 
         public void ResendEmailVerificationCode(string username)

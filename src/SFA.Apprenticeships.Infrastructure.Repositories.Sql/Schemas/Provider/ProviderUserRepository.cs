@@ -76,7 +76,7 @@
             var sqlParams = new
             {
                 ukprn,
-                providerStatusTypeId = ProviderStatus.Activated
+                providerStatusTypeId = ProviderStatuses.Activated
             };
 
             var providerUsers = _getOpenConnection

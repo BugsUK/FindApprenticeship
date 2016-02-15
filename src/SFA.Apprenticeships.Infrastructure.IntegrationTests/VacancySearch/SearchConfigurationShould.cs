@@ -9,10 +9,10 @@
     using NUnit.Framework;
     using StructureMap;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class SearchConfigurationShould
     {
-        [Test]
+        [Test, Category("Integration")]
         public void LoadWithValuesSetFromConfig()
         {
             var container = new Container(x =>

@@ -12,7 +12,7 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class ApprenticeshipApplicationReadRepositoryTests : RepositoryIntegrationTest
     {
         private IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;

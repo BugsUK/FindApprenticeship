@@ -9,7 +9,7 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class ContactMessageRepositoryTests : RepositoryIntegrationTest
     {
         private const string CollectionName = "contactmessages";

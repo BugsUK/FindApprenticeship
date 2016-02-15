@@ -10,7 +10,7 @@
     using MongoDB.Driver.Builders;
     using NUnit.Framework;
 
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class ApprenticeshipApplicationWriteRepositoryTests : RepositoryIntegrationTest
     {
         private const int LegacyApplicationId = 12345;

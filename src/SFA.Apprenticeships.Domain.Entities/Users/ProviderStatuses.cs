@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Users
 {
-    using System.Runtime.InteropServices;
-
-    public enum ProviderStatus
+    public enum ProviderStatuses
     {
         Unknown = 0,
         Activated = 1,
