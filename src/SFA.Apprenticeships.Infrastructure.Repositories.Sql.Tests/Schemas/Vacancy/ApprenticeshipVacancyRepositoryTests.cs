@@ -22,7 +22,6 @@
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using PostalAddress = Sql.Schemas.Address.Entities.PostalAddress;
     using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
-    using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
 
     [TestFixture(Category = "Integration")]
     public class ApprenticeshipVacancyRepositoryTests : TestBase

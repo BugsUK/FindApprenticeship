@@ -17,25 +17,12 @@
         private readonly IMapper _mapper = new AgencyUserMappers();
         private IGetOpenConnection _connection;
         private Mock<ILogService> _logger;
-        private AgencyUser userWithBothRoleAndTeam;
 
 
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            userWithBothRoleAndTeam = new AgencyUser() { Username = "userRoleTeam"};
-
             var dbInitialiser = new DatabaseInitialiser();
-
-            dbInitialiser.Publish(true);
-
-            var seedScripts = new string[]
-            {
-            };
-            var seedObjects = GetSeedObjects();
-
-            dbInitialiser.Seed(seedScripts);
-            dbInitialiser.Seed(seedObjects);
 
             _connection = dbInitialiser.GetOpenConnection();
 
@@ -44,20 +31,13 @@
             _repoUnderTest = new AgencyUserRepository(_connection, _mapper, _logger.Object);
         }
 
-        private object[] GetSeedObjects()
-        {
-            var seedObjects = new object[] {userWithBothRoleAndTeam};
-
-            return seedObjects;
-        }
-
         [Test]
         public void DoGetByUsername()
         {
             //Arrange
 
             //Act
-            var result = _repoUnderTest.Get(userWithBothRoleAndTeam.Username);
+            var result = _repoUnderTest.Get(SeedData.AgencyUser1.Username);
 
             //Assert
             result.Should().NotBeNull();
