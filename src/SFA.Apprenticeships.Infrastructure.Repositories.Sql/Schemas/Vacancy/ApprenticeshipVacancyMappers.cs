@@ -7,13 +7,10 @@
     using AutoMapper;
     using AutoMapper.Mappers;
     using Domain.Entities.Locations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Presentation;
     using SFA.Infrastructure.Interfaces;
-    using VacancyLocationType = Sql.Schemas.Vacancy.Entities.VacancyLocationType;
 
     /// <summary>
     /// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
@@ -80,11 +77,9 @@
                 .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // TODO
                 .IgnoreMember(v => v.VacancyManagerID) // DB Lookup using the vacancyOwnerRelationshipId?
-                 // .ForMember(v => v.VacancyOwnerRelationshipId, opt => opt.UseValue(2)) // Hardcoded for testing puroposes
                 .IgnoreMember(v => v.VacancyOwnerRelationshipId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
-                //.IgnoreMember(v => v.VacancyId)
                 .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
 
                 // Map employer address
@@ -111,12 +106,12 @@
                 .MapMemberFrom(v=> v.Description, av=> av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage) // In migrated vacancies WageUnit will always be Week
                 .IgnoreMember(v => v.WageType) // DbLookup
-                .ForMember(v => v.WageText, opt => opt.MapFrom(av => WagePresenter.GetDisplayText(new Wage(av.WageType, av.Wage, av.WageUnit), av.HoursPerWeek)))
+                .ForMember(v => v.WageText, opt => opt.MapFrom(av => new Wage(av.WageType, av.Wage, av.WageUnit).GetDisplayText(av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
                 .MapMemberFrom(v => v.InterviewsFromDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
-                .ForMember( v => v.ExpectedDuration, opt => opt.MapFrom(av => DurationPresenter.GetDisplayText(new Duration(av.DurationType, av.Duration))))
+                .ForMember( v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
                 .IgnoreMember(v => v.EmployerAnonymousName)
@@ -126,7 +121,7 @@
                 .MapMemberFrom(v => v.ApplyOutsideNAVMS, av => av.OfflineVacancy)
                 .MapMemberFrom(v => v.EmployersApplicationInstructions, av => av.OfflineApplicationInstructions)
                 .MapMemberFrom(v => v.EmployersRecruitmentWebsite, av => av.OfflineApplicationUrl)
-                .MapMemberFrom(v => v.BeingSupportedBy, av => av.QAUserName)
+                .IgnoreMember(v => v.BeingSupportedBy)
                 .IgnoreMember(v => v.LockedForSupportUntil)
                 .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  // Which one is the right mapping
                 .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0)) // Which one is the right mapping
@@ -134,16 +129,15 @@
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
-                .MapMemberFrom(v => v.PublishedDateTime, av => av.DateQAApproved)
-                .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted)
                 .MapMemberFrom(v => v.SubmissionCount, av => av.SubmissionCount)
                 .MapMemberFrom(v => v.StartedToQADateTime, av => av.DateStartedToQA)//changed to locked field
-                .MapMemberFrom(v => v.SubmittedDateTime, av => av.DateSubmitted)
-                .MapMemberFrom(v => v.UpdatedDateTime, av => av.DateUpdated)
-                .MapMemberFrom(v => v.CreatedDateTime, av => av.DateCreated)
                 .MapMemberFrom(v => v.StandardId, av => av.StandardId)
                 .MapMemberFrom(v => v.HoursPerWeek, av => av.HoursPerWeek)
                 .MapMemberFrom(v => v.AdditionalLocationInformation, av => av.AdditionalLocationInformation)
+                .ForMember(v => v.EditedInRaa, opt => opt.UseValue(true)) // Always true when saving
+                .MapMemberFrom(v => v.DurationTypeId, av => av.DurationType)
+                .MapMemberFrom(v => v.DurationValue, av => av.Duration)
+                .MapMemberFrom(v => v.QAUserName, av => av.QAUserName)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
@@ -221,11 +215,12 @@
                 .IgnoreMember(av => av.OfflineApplicationInstructionsComment)
                 .IgnoreMember(av => av.QAUserName)
                 .IgnoreMember(av => av.LastEditedById)                
-                .MapMemberFrom(av => av.DateQAApproved, v => v.PublishedDateTime)
-                .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime)
+                .IgnoreMember(av => av.DateQAApproved)
+                .IgnoreMember(av => av.DateFirstSubmitted)
                 .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
                 .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
-                .MapMemberFrom(av => av.DateSubmitted, v => v.SubmittedDateTime)
+                .IgnoreMember(av => av.DateSubmitted)
+                .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
                 /*.AfterMap((v, av) => 
                 {
                     

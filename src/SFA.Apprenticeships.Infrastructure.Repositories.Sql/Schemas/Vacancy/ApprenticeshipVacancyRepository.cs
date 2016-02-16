@@ -312,11 +312,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy>(entity);
 
-            PopulateCountyId(entity, dbVacancy);
-            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
-            PopulateVacancyManagerId(entity, dbVacancy);
-            PopulateVacancyLocationTypeId(entity, dbVacancy);
-            PopulateWageTypeId(entity, dbVacancy);
+            PopulateIds(entity, dbVacancy);
 
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
@@ -341,6 +337,16 @@ FETCH NEXT @PageSize ROWS ONLY
             return _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
         }
 
+        private void PopulateIds(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            PopulateCountyId(entity, dbVacancy);
+            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
+            PopulateVacancyManagerId(entity, dbVacancy);
+            PopulateVacancyLocationTypeId(entity, dbVacancy);
+            PopulateWageTypeId(entity, dbVacancy);
+            PopulateApprenticeshipTypeId(entity, dbVacancy);
+        }
+
         public ApprenticeshipVacancy ShallowUpdate(ApprenticeshipVacancy entity)
         {
             _logger.Debug("Calling database to shallow update apprenticeship vacancy with id={0}", entity.VacancyId);
@@ -349,12 +355,8 @@ FETCH NEXT @PageSize ROWS ONLY
 
             var dbVacancy = _mapper.Map<ApprenticeshipVacancy, Vacancy>(entity);
 
-            PopulateCountyId(entity, dbVacancy);
-            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
-            PopulateVacancyManagerId(entity, dbVacancy);
-            PopulateVacancyLocationTypeId(entity, dbVacancy);
-            PopulateWageTypeId(entity, dbVacancy);
-
+            PopulateIds(entity, dbVacancy);
+            
             // TODO: This should be in a single call to the database (to avoid a double latency hit)
             // This should be done as a single method in _getOpenConnection
 
@@ -469,6 +471,18 @@ WHERE  WageUnitName = @WageUnitName",
                 new
                 {
                     WageUnitName = wageUnit
+                }).Single(); // There's a better way to do this?
+        }
+
+        private void PopulateApprenticeshipTypeId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+        {
+            dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT ApprenticeshipTypeId
+FROM   dbo.ApprenticeshipType
+WHERE  EducationLevel = @EducationLevel",
+                new
+                {
+                    EducationLevel = entity.ApprenticeshipLevel
                 }).Single(); // There's a better way to do this?
         }
 

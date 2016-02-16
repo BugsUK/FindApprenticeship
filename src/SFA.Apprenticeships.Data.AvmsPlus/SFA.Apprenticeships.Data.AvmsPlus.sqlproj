@@ -856,6 +856,9 @@
     <Build Include="Schemas\UserProfile.sql" />
     <None Include="Scripts\Data\dbo.WageUnit.Upsert.sql" />
     <Build Include="dbo\Tables\WageUnit.sql" />
+    <Build Include="dbo\Tables\DurationType.sql" />
+    <None Include="Scripts\Data\dbo.DurationType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
@@ -864,7 +867,7 @@
     <None Include="Scripts\TestData\dbo.PersonType.sql" />
     <None Include="Scripts\TestData\dbo.Person.sql" />
     <None Include="Scripts\TestData\dbo.ContactPreferenceType.sql" />
-    <None Include="Scripts\TestData\dbo.EmployerContact.sql" />
+    <None Include="Scripts\TestData\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\TestData\dbo.Employer.sql" />
     <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
     <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />

@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
     using Domain.Entities;
 
     [Table("dbo.Vacancy")]
-    public class Vacancy : ICreatableEntity, IUpdatableEntity
+    public class Vacancy
     {
         public int VacancyId { get; set; }
 
@@ -102,12 +102,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string PossibleStartDateComment { get; set; }
 
-        //public int? DurationValue { get; set; } //Was short
+        public int? DurationValue { get; set; } //Was short
 
         public string ExpectedDuration { get; set; }
 
         //[StringLength(1)]
-        //public string DurationTypeCode { get; set; }
+        public int DurationTypeId { get; set; }
 
         //public string DurationComment { get; set; }
 
@@ -219,23 +219,13 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         // public string SecondQuestionComment { get; set; }
 
-        // public string QAUserName { get; set; } // Not considered in AVMS
+        public string QAUserName { get; set; } // Not considered in AVMS
 
         // public string LocationAddressesComment { get; set; }
-
-        public DateTime? PublishedDateTime { get; set; } // Not considered in AVMS
-
-        public DateTime? FirstSubmittedDateTime { get; set; } // Not considered in AVMS
 
         public int SubmissionCount { get; set; } // Not considered in AVMS
 
         public DateTime? StartedToQADateTime { get; set; }  // Not considered in AVMS
-
-        public DateTime CreatedDateTime { get; set; } // Not considered in AVMS
-
-        public DateTime? UpdatedDateTime { get; set; }  // Not considered in AVMS
-
-        public DateTime? SubmittedDateTime { get; set; } // Can be inferred from VacancyHistory?
 
         // public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
 
@@ -250,5 +240,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public string ContactEmail { get; set; } // Added to AVMS
 
         // public string ContactDetailsComment { get; set; } // Not considered in AVMS
+
+        public bool EditedInRaa { get; set; }
     }
 }

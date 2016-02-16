@@ -35,14 +35,24 @@
         {
             var dbInitialiser = new DatabaseInitialiser();
 
-            //dbInitialiser.Publish(true);
+            dbInitialiser.Publish(true);
 
-            //var seedScripts = new string[]
-            //{
-            //};
+            var seedScripts = new []
+            {
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertContactPreferenceType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPersonType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPersonTitleType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPerson.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertEmployerContact.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertEmployer.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyProvisionRelationshipStatusType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyOwnerRelationship.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyStatusType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyTextFieldValue.sql"
+            };
             //var seedObjects = GetSeedObjects();
 
-            //dbInitialiser.Seed(seedScripts);
+            dbInitialiser.Seed(seedScripts);
             //dbInitialiser.Seed(seedObjects);
 
             _connection = dbInitialiser.GetOpenConnection();

@@ -55,18 +55,17 @@
 	-- NEW FIELDS
 	[ContactEmail]					   NVARCHAR (MAX)   NULL,
 	[ContactNumber]					   NVARCHAR (MAX)   NULL,
-	[PublishedDateTime]				   DATETIME			NULL, --??
-	[FirstSubmittedDateTime]		   DATETIME			NULL, --??
 	[SubmissionCount]				   INT				NULL,
-	[StartedToQADateTime]			   DATETIME			NULL, --??
-	[SubmittedDateTime]				   DATETIME			NULL, --??
-	[CreatedDateTime]				   DATETIME			NOT NULL,
-	[UpdatedDateTime]				   DATETIME			NULL,
+	[StartedToQADateTime]			   DATETIME			NULL,
 	[StandardId]					   INT				NULL,
 	[HoursPerWeek]                     DECIMAL (10, 2)  NULL,
 	[AdditionalLocationInformation]    NVARCHAR (MAX)   NULL,
-	[WageUnitId]					   INT				NULL
-
+	[WageUnitId]					   INT				NULL,
+	[DurationTypeId]				   INT				NULL,
+	[DurationValue]					   INT				NULL,
+	[QAUserName]					   NVARCHAR (MAX)	NULL,
+	[EditedInRaa]					   BIT				NOT NULL
+	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
     CONSTRAINT [FK_Vacancy_ApprenticeshipFramework] FOREIGN KEY ([ApprenticeshipFrameworkId]) REFERENCES [dbo].[ApprenticeshipFramework] ([ApprenticeshipFrameworkId]),
@@ -79,6 +78,7 @@
     CONSTRAINT [FK_Vacancy_ProviderSite_As_VacancyManager] FOREIGN KEY ([VacancyManagerID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
     CONSTRAINT [FK_Vacancy_VacancyOwnerRelationship] FOREIGN KEY ([VacancyOwnerRelationshipId]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]),
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
+	CONSTRAINT [FK_Vacancy_DurationType] FOREIGN KEY ([DurationTypeId]) REFERENCES [dbo].[DurationType] ([DurationTypeId]),
     CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
 );
 

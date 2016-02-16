@@ -4,9 +4,9 @@
     {
         // TODO: AG: consider 1-based enums per FAA with Unknown = 0.
         // TODO: AG: consider setting each value explicitly (e.g. if it is to appear in the database) to avoid 'casual insertions'.
-        Unknown = -1,
-        Weeks = 0,
-        Months = 1,
-        Years = 2
+        Unknown = 0, //was -1
+        Weeks = 1, //was 0
+        Months = 2, //was 1
+        Years = 3 //was 2
     }
 }
