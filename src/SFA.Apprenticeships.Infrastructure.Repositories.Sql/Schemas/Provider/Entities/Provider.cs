@@ -18,8 +18,8 @@
 
         // public string TradingName { get; set; }
 
-        [Required]
-        public bool IsContracted { get; set; }
+        // [Required]
+        // public bool IsContracted { get; set; }
 
         // [Column(TypeName = "datetime2")]
         // public DateTime ContractedFrom { get; set; }
@@ -27,12 +27,12 @@
         // [Column(TypeName = "datetime2")]
         // public DateTime ContractedTo { get; set; }
 
-        [Required]
-        public int ProviderStatusTypeId { get; set; }
+        // [Required]
+        // public int ProviderStatusTypeId { get; set; }
 
-        [Required]
-        [Column(TypeName = "datetime2")]
-        public bool IsNasProvider { get; set; }
+        // [Required]
+        // [Column(TypeName = "datetime2")]
+        // public bool IsNasProvider { get; set; }
 
         // [Column(TypeName = "datetime2")]
         // public int OriginalUpin { get; set; }

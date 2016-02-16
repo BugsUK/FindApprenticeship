@@ -9,6 +9,8 @@
     internal class SeedData
     {
         #region Providers
+
+        /*
         public static Provider Provider1 = new Provider()
         {
             ProviderId = 1,
@@ -18,6 +20,8 @@
             IsNasProvider = false,
             ProviderStatusTypeId = (int)ProviderStatuses.Activated
         };
+        */
+
         #endregion
 
         #region ProviderUsers
@@ -43,10 +47,12 @@
         public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "userRoleTeam" };
         #endregion
 
+        /*
         public static object[] Providers => new object[]
         {
             Provider1
         };
+        */
 
         public static object[] ProviderUsers => new object[]
         {
