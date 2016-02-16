@@ -2,7 +2,7 @@
 {
     using Domain.Entities.Providers;
     using Infrastructure.Common.Mappers;
-    using Mongo.Providers.Entities;
+    using Entities;
 
     public class ProviderMappers : MapperEngine
     {

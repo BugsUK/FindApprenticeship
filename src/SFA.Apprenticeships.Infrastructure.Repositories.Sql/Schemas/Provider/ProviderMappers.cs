@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
     using System;
-    using AutoMapper;
     using Domain.Entities.Providers;
     using Vacancy;
 

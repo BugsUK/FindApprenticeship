@@ -10,15 +10,16 @@
         public ProviderRepositoryRegistry()
         {
             For<IMapper>().Use<ProviderMappers>().Name = "ProviderMappers";
+            For<IMapper>().Use<Mappers.ProviderMappers>().Name = "MongoProviderMappers";
 
             For<IProviderReadRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
             For<IProviderWriteRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
 
-            For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
+            For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("MongoProviderMappers");
+            For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("MongoProviderMappers");
 
-            For<IProviderSiteEmployerLinkReadRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteEmployerLinkWriteRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("ProviderMappers");
+            For<IProviderSiteEmployerLinkReadRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("MongoProviderMappers");
+            For<IProviderSiteEmployerLinkWriteRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("MongoProviderMappers");
         }
     }
 }
