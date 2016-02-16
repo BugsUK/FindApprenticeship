@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Globalization;
+    using System.Linq;
     using Application.Interfaces.Candidates;
     using Common.ViewModels;
     using Domain.Entities.Candidates;
@@ -33,8 +34,10 @@
                 SearchViewModel = searchViewModel,
                 Candidates = new PageableViewModel<CandidateSummaryViewModel>
                 {
-                    Page = _mapper.Map<List<CandidateSummary>, List<CandidateSummaryViewModel>>(candidates),
-                    ResultsCount = candidates.Count
+                    Page = candidates.Skip((searchViewModel.CurrentPage - 1) * searchViewModel.PageSize).Take(searchViewModel.PageSize).Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c)).ToList(),
+                    ResultsCount = candidates.Count,
+                    CurrentPage = searchViewModel.CurrentPage,
+                    TotalNumberOfPages = candidates.Count == 0 ? 1 : (int)Math.Ceiling((double)candidates.Count / searchViewModel.PageSize)
                 }
             };
 

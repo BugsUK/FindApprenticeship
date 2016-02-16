@@ -10,6 +10,12 @@
     [Validator(typeof(CandidateSearchViewModelClientValidator))]
     public class CandidateSearchViewModel
     {
+        public CandidateSearchViewModel()
+        {
+            PageSize = 10;
+            CurrentPage = 1;
+        }
+
         [Display(Name = CandidateSearchViewModelMessages.FirstName.LabelText)]
         public string FirstName { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.LastName.LabelText)]
