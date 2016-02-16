@@ -23,16 +23,16 @@ public class TestAssemblySetsup
 
             var seedScripts = new string[]
             {
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertContactPreferenceType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPersonType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPersonTitleType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertPerson.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertEmployerContact.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertEmployer.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyProvisionRelationshipStatusType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyOwnerRelationship.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyStatusType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "..\\..\\Scripts\\InsertVacancyTextFieldValue.sql"
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertContactPreferenceType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertPersonType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertPersonTitleType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertPerson.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertEmployerContact.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertEmployer.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyProvisionRelationshipStatusType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyOwnerRelationship.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyStatusType.sql",
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyTextFieldValue.sql"
             };
             dbInitialiser.Seed(seedScripts);
 

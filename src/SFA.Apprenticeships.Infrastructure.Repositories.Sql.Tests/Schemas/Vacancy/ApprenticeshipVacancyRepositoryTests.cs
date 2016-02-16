@@ -36,7 +36,7 @@
         }
 
         [Test, Category("Integration")]
-        public void SimpleSaveTest()
+        public void SimpleSaveAndUpdateTest()
         {
             var logger = new Mock<ILogService>();
             IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
@@ -47,12 +47,6 @@
             const string title = "Vacancy title";
             const int numberOfLocations = 5;
             var vacancyGuid = Guid.NewGuid();
-
-            //var locations = new Fixture()
-            //    .Build<VacancyLocationAddress>()
-            //    .WithAutoProperties()
-            //    .CreateMany(numberOfLocations)
-            //    .ToList();
 
             var fixture = new Fixture();
             fixture.Customizations.Add(
@@ -75,6 +69,46 @@
             var entity = writeRepository.ShallowSave(vacancy);
             vacancy.VacancyId = entity.VacancyId;
             writeRepository.ShallowUpdate(vacancy);
+        }
+
+        [Test, Category("Integration")]
+        public void SimpleGetTest()
+        {
+            var logger = new Mock<ILogService>();
+            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+                logger.Object);
+
+            const string title = "Vacancy title";
+            const int numberOfLocations = 5;
+            var vacancyGuid = Guid.NewGuid();
+
+            var fixture = new Fixture();
+            fixture.Customizations.Add(
+                new StringGenerator(() =>
+                    Guid.NewGuid().ToString().Substring(0, 10)));
+
+            var locations = fixture.CreateMany<VacancyLocationAddress>(numberOfLocations).ToList();
+            locations.ForEach(l => l.Address.ValidationSourceCode = "PCA");
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyGuid = vacancyGuid;
+            vacancy.Title = title;
+            vacancy.LocationAddresses = locations;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = (vacancy.LocationAddresses.Count == 1);
+            vacancy.Status = ProviderVacancyStatuses.Draft; // Changed from PendingQA to Draft because PendingQA is not still in the db
+            vacancy.ProviderSiteEmployerLink.Employer.Address.County = "BER";
+            vacancy.ProviderSiteEmployerLink.ProviderSiteErn = "100339794";
+            vacancy.ProviderSiteEmployerLink.Employer.Ern = "123456";
+
+            writeRepository.ShallowSave(vacancy);
+
+            var entity = readRepository.Get(vacancyGuid);
+
+            entity.ShouldBeEquivalentTo(vacancy, options => 
+                ForShallowSave(options)
+                .Excluding(x => x.SelectedMemberPath.EndsWith("Comment")));
         }
 
         [Test, Ignore, Category("Integration")]

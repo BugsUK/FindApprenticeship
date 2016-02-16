@@ -144,5 +144,15 @@
                 ;
         }
 
+        protected EquivalencyAssertionOptions<ApprenticeshipVacancy> ForShallowSave(EquivalencyAssertionOptions<ApprenticeshipVacancy> options)
+        {
+            return options
+                // TODO: Might be easier?
+                .Excluding(v => v.FrameworkCodeName)
+                .Excluding(v => v.Ukprn)
+                .Excluding(v => v.ProviderSiteEmployerLink)
+                ;
+        }
+
     }
 }

@@ -34,7 +34,7 @@
         {
             _logger.Debug("Calling database to get apprenticeship vacancy with Id={0}", id);
 
-            var dbVacancy = _getOpenConnection.Query<Vacancy>("SELECT * FROM Vacancy.Vacancy WHERE VacancyId = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
+            var dbVacancy = _getOpenConnection.Query<Vacancy>("SELECT * FROM dbo.Vacancy WHERE VacancyGuid = @VacancyGuid", new { VacancyGuid = id }).SingleOrDefault();
 
             return MapVacancy(dbVacancy);
         }
@@ -59,11 +59,11 @@
 
             // Vacancy
 
-            var vacancyLocations = _getOpenConnection.Query<VacancyLocation>(@"
-SELECT *
-FROM   Vacancy.VacancyLocation
-WHERE  VacancyId = @VacancyId",
-new { VacancyId = dbVacancy.VacancyId });
+            //            var vacancyLocations = _getOpenConnection.Query<VacancyLocation>(@"
+            //SELECT *
+            //FROM   Vacancy.VacancyLocation
+            //WHERE  VacancyId = @VacancyId",
+            //new { VacancyId = dbVacancy.VacancyId });
 
             // TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             //var employer = _getOpenConnection
@@ -76,23 +76,23 @@ new { VacancyId = dbVacancy.VacancyId });
             // TODO: Would like to make addresses immutable to allow caching - they probably don't
             // change that often. Also should have access methods that don't return the address as
             // most screens don't need it
-//            var addresses = _getOpenConnection.Query<Schemas.Address.Entities.PostalAddress>(@"
-//SELECT *
-//FROM   Address.PostalAddress
-//WHERE  PostalAddressId IN @PostalAddressIds",
-//new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(new int[] { employer.PostalAddressId.Value }) });
+            //            var addresses = _getOpenConnection.Query<Schemas.Address.Entities.PostalAddress>(@"
+            //SELECT *
+            //FROM   Address.PostalAddress
+            //WHERE  PostalAddressId IN @PostalAddressIds",
+            //new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId).Union(new int[] { employer.PostalAddressId.Value }) });
 
-//            var result = _mapper.Map<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy, ApprenticeshipVacancy>(dbVacancy);
+            //            var result = _mapper.Map<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy, ApprenticeshipVacancy>(dbVacancy);
 
-//            result.LocationAddresses = new List<VacancyLocationAddress>();
-//            foreach (var dbLocation in vacancyLocations)
-//            {
-//                result.LocationAddresses.Add(new VacancyLocationAddress
-//                {
-//                    NumberOfPositions = dbLocation.NumberOfPositions,
-//                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId)) //VGA_Address
-//                });
-//            }
+            //            result.LocationAddresses = new List<VacancyLocationAddress>();
+            //            foreach (var dbLocation in vacancyLocations)
+            //            {
+            //                result.LocationAddresses.Add(new VacancyLocationAddress
+            //                {
+            //                    NumberOfPositions = dbLocation.NumberOfPositions,
+            //                    Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, PostalAddress>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId)) //VGA_Address
+            //                });
+            //            }
 
             //// TODO: Method which looks up in cache and if not found refreshes cache / loads new record
             //result.Ukprn = _getOpenConnection
@@ -130,7 +130,9 @@ new { VacancyId = dbVacancy.VacancyId });
 
             //return result;
 
-            return new ApprenticeshipVacancy();
+            var result = _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
+
+            return result;
         }
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
