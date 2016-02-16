@@ -108,7 +108,27 @@
 
             entity.ShouldBeEquivalentTo(vacancy, options => 
                 ForShallowSave(options)
-                .Excluding(x => x.SelectedMemberPath.EndsWith("Comment")));
+                .Excluding(x => x.SelectedMemberPath.EndsWith("Comment"))
+                .Excluding(x => x.TrainingType)
+                .Excluding(x => x.WageType)
+                .Excluding(x => x.LocationAddresses)
+                .Excluding(x => x.IsEmployerLocationMainApprenticeshipLocation)
+                .Excluding(x => x.TrainingProvided)
+                .Excluding(x => x.VacancyId)
+                .Excluding(x => x.ClosingDate)
+                .Excluding(x => x.InterviewStartDate)
+                .Excluding(x => x.PossibleStartDate)
+                .Excluding(x => x.DesiredSkills)
+                .Excluding(x => x.FutureProspects)
+                .Excluding(x => x.PersonalQualities)
+                .Excluding(x => x.ThingsToConsider)
+                .Excluding(x => x.DesiredQualifications)
+                .Excluding(x => x.DateFirstSubmitted)
+                .Excluding(x => x.DateUpdated)
+                .Excluding(x => x.DateCreated)
+                .Excluding(x => x.VacancyManagerId)
+                .Excluding(x => x.LastEditedById)
+                );
         }
 
         [Test, Ignore, Category("Integration")]

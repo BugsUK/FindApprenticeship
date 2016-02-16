@@ -123,8 +123,8 @@
                 .MapMemberFrom(v => v.EmployersRecruitmentWebsite, av => av.OfflineApplicationUrl)
                 .IgnoreMember(v => v.BeingSupportedBy)
                 .IgnoreMember(v => v.LockedForSupportUntil)
-                .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  // Which one is the right mapping
-                .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0)) // Which one is the right mapping
+                .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)  
+                .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0)) 
                 .MapMemberFrom( v=> v.MasterVacancyId, av => av.ParentVacancyId)
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
@@ -147,8 +147,8 @@
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription,av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
-                .MapMemberFrom(av => av.Wage, v => v.WeeklyWage) // In migrated vacancies WageUnit will always be Week
-                .MapMemberFrom(av => av.WageType, v => v.WageType) // I can't find any example of wagetypecode in AVMS database
+                .MapMemberFrom(av => av.Wage, v => v.WeeklyWage) 
+                .IgnoreMember(av => av.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.InterviewStartDate, v => v.InterviewsFromDate)
@@ -158,8 +158,7 @@
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.EmployersApplicationInstructions)
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
-                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)  // Which one is the right mapping
-                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineSystemApplicants) // Which one is the right mapping
+                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId) // Change to int
                 .IgnoreMember(av => av.VacancyManagerId)
                 .IgnoreMember(av => av.TrainingType)
@@ -169,7 +168,7 @@
                 .IgnoreMember(av => av.FrameworkCodeNameComment)
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .IgnoreMember(av => av.StandardIdComment)
-                .IgnoreMember(av => av.Status)
+                .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .IgnoreMember(av => av.WageComment)
                 .IgnoreMember(av => av.ClosingDateComment)
                 .IgnoreMember(av => av.DurationComment)
@@ -188,16 +187,16 @@
                 .IgnoreMember(av => av.AdditionalLocationInformationComment)
                 .IgnoreMember(av => av.TrainingProvided)
                 .IgnoreMember(av => av.TrainingProvidedComment)
-                .IgnoreMember(av => av.ContactNumber)
-                .IgnoreMember(av => av.ContactEmail)
+                .MapMemberFrom(av => av.ContactNumber, v => v.ContactNumber)
+                .MapMemberFrom(av => av.ContactEmail, v => v.ContactEmail)
                 .IgnoreMember(av => av.ContactDetailsComment)
                 .IgnoreMember(av => av.Ukprn)
                 .IgnoreMember(av => av.TitleComment)
                 .IgnoreMember(av => av.ShortDescriptionComment)
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
-                .IgnoreMember(av => av.WageUnit)
-                .IgnoreMember(av => av.DurationType)
-                .IgnoreMember(av => av.Duration)
+                .MapMemberFrom(av => av.WageUnit, v => v.WageUnitId)
+                .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
+                .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.DesiredSkills)
                 .IgnoreMember(av => av.DesiredSkillsComment)
                 .IgnoreMember(av => av.FutureProspects)

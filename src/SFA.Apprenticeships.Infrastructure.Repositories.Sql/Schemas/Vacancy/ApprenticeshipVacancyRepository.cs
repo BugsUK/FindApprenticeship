@@ -131,8 +131,22 @@
             //return result;
 
             var result = _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
+            MapAdditionalQuestions(dbVacancy, result);
 
             return result;
+        }
+
+        private void MapAdditionalQuestions(Vacancy dbVacancy, ApprenticeshipVacancy result)
+        {
+            var results = _getOpenConnection.Query<dynamic>(@"
+SELECT Question
+FROM   dbo.AdditionalQuestion
+WHERE  VacancyId = @VacancyId
+ORDER BY QuestionId ASC
+", new { VacancyId = dbVacancy.VacancyId });
+
+            result.FirstQuestion = results.First().Question;
+            result.SecondQuestion = results.Last().Question;
         }
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
