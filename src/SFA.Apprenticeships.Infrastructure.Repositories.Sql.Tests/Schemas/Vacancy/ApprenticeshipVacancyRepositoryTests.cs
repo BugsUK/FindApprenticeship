@@ -32,7 +32,7 @@
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            _connection = new DatabaseInitialiser().GetOpenConnection();
+            _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
         }
 
         [Test, Category("Integration")]

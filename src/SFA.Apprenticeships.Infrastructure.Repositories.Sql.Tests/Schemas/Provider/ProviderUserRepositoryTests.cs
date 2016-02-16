@@ -19,9 +19,7 @@
         [SetUp]
         public void SetUpFixture()
         {
-            var dbInitialiser = new DatabaseInitialiser();
-
-            _connection = dbInitialiser.GetOpenConnection();
+            _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             var logger = new Mock<ILogService>();
 

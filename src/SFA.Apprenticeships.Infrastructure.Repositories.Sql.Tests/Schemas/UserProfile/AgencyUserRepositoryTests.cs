@@ -22,9 +22,7 @@
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            var dbInitialiser = new DatabaseInitialiser();
-
-            _connection = dbInitialiser.GetOpenConnection();
+            _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             _logger = new Mock<ILogService>();
 

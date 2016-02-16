@@ -22,33 +22,15 @@
     /// </summary>
     public class DatabaseInitialiser
     {
-        private const string DatabaseProjectName = "SFA.Apprenticeships.Data.AvmsPlus";
-
-        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private readonly string _dacpacFilePath;
         private readonly string _targetConnectionString;
         private readonly string _databaseTargetName;
 
         public DatabaseInitialiser()
         {
-            var configurationManager = new ConfigurationManager();
-
-            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
-
-            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
-
-            _databaseTargetName = $"AvmsPlus-{environment}";
-            _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
-
-            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
-            var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
-            _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            if (!File.Exists(_dacpacFilePath))
-            {
-                //For NCrunch on Dave's machine
-                databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
-                _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            }
+            _databaseTargetName = DatabaseConfigurationProvider.Instance.DatabaseTargetName;
+            _targetConnectionString = DatabaseConfigurationProvider.Instance.TargetConnectionString;
+            _dacpacFilePath = DatabaseConfigurationProvider.Instance.DacPacFilePath;
         }
 
         public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)

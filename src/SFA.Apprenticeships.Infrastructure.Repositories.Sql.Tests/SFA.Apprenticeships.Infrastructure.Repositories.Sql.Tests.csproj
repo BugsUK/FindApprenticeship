@@ -125,6 +125,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\DatabaseConfigurationProvider.cs" />
     <Compile Include="Schemas\Provider\ProviderMappersTests.cs" />
     <Compile Include="Schemas\Provider\ProviderRepositoryTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserMappersTests.cs" />
