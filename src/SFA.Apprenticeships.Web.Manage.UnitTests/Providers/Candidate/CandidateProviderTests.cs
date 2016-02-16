@@ -5,6 +5,7 @@
     using System.Linq;
     using Application.Interfaces.Candidates;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Locations;
     using FluentAssertions;
     using Manage.Mappers;
     using Manage.Providers;
@@ -141,6 +142,36 @@
             response.Candidates.ResultsCount.Should().Be(candidateSummaries.Count);
             response.Candidates.CurrentPage.Should().Be(2);
             response.Candidates.TotalNumberOfPages.Should().Be(2);
+        }
+
+        [Test]
+        public void TestOrdering()
+        {
+            //Arrange
+            var viewModel = new CandidateSearchViewModel();
+            var candidateSummaries = new List<CandidateSummary>
+            {
+                new CandidateSummary { EntityId = Guid.NewGuid(), FirstName = "bbb", LastName = "ddd", Address = new Address { AddressLine1 = "1", Postcode = "zzz"}},
+                new CandidateSummary { EntityId = Guid.NewGuid(), FirstName = "aaa", LastName = "ddd", Address = new Address { AddressLine1 = "3", Postcode = "ccc"}},
+                new CandidateSummary { EntityId = Guid.NewGuid(), FirstName = "bbb", LastName = "ddd", Address = new Address { AddressLine1 = "2", Postcode = "ccc"}},
+                new CandidateSummary { EntityId = Guid.NewGuid(), FirstName = "bbb", LastName = "ddd", Address = new Address { AddressLine1 = "1", Postcode = "ccc"}},
+                new CandidateSummary { EntityId = Guid.NewGuid(), FirstName = "bbb", LastName = "ccc", Address = new Address { AddressLine1 = "1", Postcode = "ccc"}},
+            };
+            var expectedOrder = new[] {4, 1, 3, 2, 0};
+            _candidateSearchService.Setup(s => s.SearchCandidates(It.IsAny<CandidateSearchRequest>())).Returns(candidateSummaries);
+
+            //Act
+            var response = _provider.SearchCandidates(viewModel);
+
+            //Assert
+            var index = 0;
+            foreach (var candidateSummaryViewModel in response.Candidates.Page)
+            {
+                var candidateSummary = candidateSummaries[expectedOrder[index]];
+                candidateSummaryViewModel.Id.Should().Be(candidateSummary.EntityId);
+                candidateSummaryViewModel.Name.Should().Be(candidateSummary.FirstName + " " + candidateSummary.LastName);
+                index++;
+            }
         }
     }
 }
