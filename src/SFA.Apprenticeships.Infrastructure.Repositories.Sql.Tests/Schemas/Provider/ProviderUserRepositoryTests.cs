@@ -40,8 +40,8 @@
                 EmailVerificationCode = "ABC123",
                 EmailVerifiedDateTime = DateTime.UtcNow,
                 PhoneNumber = "07999555123",
-                DateCreated = DateTime.UtcNow.AddDays(-1),
-                DateUpdated = DateTime.UtcNow.AddHours(-10)
+                CreatedDateTime = DateTime.UtcNow.AddDays(-1),
+                UpdatedDateTime = DateTime.UtcNow.AddHours(-10)
             };
 
             dbInitialiser.Publish(false);

@@ -16,10 +16,10 @@
         public Guid ProviderUserGuid { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime DateCreated { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? DateUpdated { get; set; }
+        public DateTime? UpdatedDateTime { get; set; }
 
         [Required]
         public int ProviderUserStatusId { get; set; }

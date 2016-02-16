@@ -35,4 +35,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="WageUnitId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="69c4ea92-e5a5-485b-bb0b-c4a8b9e20f76" ChangeDateTime="02/16/2016 10:12:41">
+    <Property Name="ElementName" Value="[Provider].[ProviderUser].[DateCreated]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Provider].[ProviderUser]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CreatedDateTime" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="4bbd2929-27ef-4cc3-a1c9-2d3ff2ebe5d8" ChangeDateTime="02/16/2016 10:12:46">
+    <Property Name="ElementName" Value="[Provider].[ProviderUser].[DateUpdated]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Provider].[ProviderUser]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="UpdatedDateTime" />
+  </Operation>
 </Operations>

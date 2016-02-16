@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using Common;
-    using Domain.Entities.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -32,16 +31,16 @@
             _provider = new Provider()
             {
                 ProviderId = 1,
-                Upin = 456,
+                // Upin = 456,
                 FullName = "Acme Corp",
                 Ukprn = 678,
-                TradingName = "A Trading Name Company",
-                IsContracted = true,
-                ContractedFrom = DateTime.Today.AddDays(-100),
-                ContractedTo = DateTime.Today.AddDays(100),
-                ProviderStatusTypeId = (int)ProviderStatuses.Activated,
-                IsNasProvider = false,
-                OriginalUpin = 901
+                // TradingName = "A Trading Name Company",
+                // IsContracted = true,
+                // ContractedFrom = DateTime.Today.AddDays(-100),
+                // ContractedTo = DateTime.Today.AddDays(100),
+                // ProviderStatusTypeId = (int)ProviderStatuses.Activated,
+                // IsNasProvider = false,
+                // OriginalUpin = 901
             };
 
             dbInitialiser.Publish(false);

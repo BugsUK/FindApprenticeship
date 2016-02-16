@@ -11,8 +11,8 @@
     [EmailVerificationCode] CHAR(6) NULL, 
     [EmailVerifiedDateTime] DATETIME2 NULL, 
     [PhoneNumber] NVARCHAR(MAX) NOT NULL, 
-    [DateCreated] DATETIME2 NOT NULL, 
-    [DateUpdated] DATETIME2 NULL, 
+    [CreatedDateTime] DATETIME2 NOT NULL, 
+    [UpdatedDateTime] DATETIME2 NULL, 
     CONSTRAINT [FK_ProviderUser_ProviderUserStatus] FOREIGN KEY ([ProviderUserStatusId]) REFERENCES [Provider].[ProviderUserStatus]([ProviderUserStatusId])
 )
 GO
