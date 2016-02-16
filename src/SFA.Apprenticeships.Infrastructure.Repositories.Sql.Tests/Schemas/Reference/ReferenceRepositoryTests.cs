@@ -19,8 +19,6 @@
         {
             var dbInitialiser = new DatabaseInitialiser();
 
-            dbInitialiser.Publish(true);
-
             _connection = dbInitialiser.GetOpenConnection();
         }
 

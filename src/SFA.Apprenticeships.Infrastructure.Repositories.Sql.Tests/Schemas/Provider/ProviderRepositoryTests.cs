@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
 {
     using System;
-    using System.Collections.Generic;
     using Common;
-    using Domain.Entities.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -11,7 +9,6 @@
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Provider;
-    using Sql.Schemas.Provider.Entities;
     using DomainProvider = Domain.Entities.Providers.Provider;
 
     [TestFixture(Category = "Integration")]
@@ -20,37 +17,13 @@
         private readonly IMapper _mapper = new ProviderMappers();
         private IGetOpenConnection _connection;
 
-        private Provider _provider;
-
         private ProviderRepository _repository;
 
         [SetUp]
         public void SetUpFixture()
         {
             var dbInitialiser = new DatabaseInitialiser();
-
-            _provider = new Provider()
-            {
-                ProviderId = 1,
-                Upin = 456,
-                FullName = "Acme Corp",
-                Ukprn = 678,
-                TradingName = "A Trading Name Company",
-                IsContracted = true,
-                ContractedFrom = DateTime.Today.AddDays(-100),
-                ContractedTo = DateTime.Today.AddDays(100),
-                ProviderStatusTypeId = (int)ProviderStatuses.Activated,
-                IsNasProvider = false,
-                OriginalUpin = 901
-            };
-
-            dbInitialiser.Publish(false);
-
-            dbInitialiser.Seed(new List<object>()
-            {
-                _provider            
-            });
-
+            
             _connection = dbInitialiser.GetOpenConnection();
 
             var logger = new Mock<ILogService>();
@@ -63,7 +36,7 @@
         public void GetByProviderId()
         {
             // Act.
-            var provider = _repository.Get(_provider.ProviderId);
+            var provider = _repository.Get(SeedData.Provider1.ProviderId);
 
             // Assert.
             provider.Should().NotBeNull();
@@ -75,7 +48,7 @@
         public void GetByUkprn()
         {
             // Act.
-            var provider = _repository.Get(_provider.Ukprn.ToString());
+            var provider = _repository.Get(SeedData.Provider1.Ukprn.ToString());
 
             // Assert.
             provider.Should().NotBeNull();
@@ -86,9 +59,9 @@
         public void Delete()
         {
             // Act.
-            _repository.Delete(_provider.ProviderId);
+            _repository.Delete(SeedData.Provider1.ProviderId);
 
-            var provider = _repository.Get(_provider.ProviderId);
+            var provider = _repository.Get(SeedData.Provider1.ProviderId);
 
             // Assert.
             provider.Should().BeNull();
@@ -123,7 +96,7 @@
         public void UpdateExistingProvider()
         {
             // Arrange.
-            var existingProvider = _repository.Get(_provider.ProviderId);
+            var existingProvider = _repository.Get(SeedData.Provider1.ProviderId);
 
             existingProvider.Name = Guid.NewGuid().ToString();
 
