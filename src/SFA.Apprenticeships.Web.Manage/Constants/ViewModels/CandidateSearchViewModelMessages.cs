@@ -10,15 +10,15 @@
         public class FirstName
         {
             public const string LabelText = "First name";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "First name " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "First name " + Whitelists.NameWhitelist.ErrorText;
         }
 
         public class LastName
         {
             public const string LabelText = "Last name";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "First name " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.NameWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "First name " + Whitelists.NameWhitelist.ErrorText;
         }
 
         public class DateOfBirth

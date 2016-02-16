@@ -6,6 +6,7 @@
     using Application.Interfaces.Candidates;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Manage.Mappers;
     using Manage.Providers;

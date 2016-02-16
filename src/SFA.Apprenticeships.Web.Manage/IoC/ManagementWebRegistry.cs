@@ -28,6 +28,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
+    using Mappers;
     using Mediators.Candidate;
     using Raa.Common.Providers;
 
@@ -37,6 +38,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
+            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -59,7 +61,7 @@
             For<IVacancyQAProvider>().Use<VacancyProvider>();
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
-            For<ICandidateProvider>().Use<CandidateProvider>();
+            For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
         }
 
         private void RegisterServices()

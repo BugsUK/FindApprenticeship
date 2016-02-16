@@ -7,6 +7,7 @@
     using Application.Interfaces.Candidates;
     using Common.ViewModels;
     using Domain.Entities.Candidates;
+    using Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 

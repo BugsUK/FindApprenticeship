@@ -6,9 +6,11 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
-    using Mongo.Candidates.Entities;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
+    using Entities;
+    using Common;
+    using Common.Configuration;
+    using MongoDB.Bson;
+    using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
@@ -156,6 +158,44 @@
             LogOutcome("SubscriberId", subscriberId, mongoEntity);
 
             return CandidateOrNull(mongoEntity);
+        }
+
+        public List<CandidateSummary> SearchCandidates(CandidateSearchRequest request)
+        {
+            _logger.Debug("Calling repository to find candidates matching search request {0}", request);
+
+            if (string.IsNullOrEmpty(request.FirstName) && string.IsNullOrEmpty(request.LastName) && request.DateOfBirth == null && string.IsNullOrEmpty(request.Postcode))
+            {
+                throw new ArgumentException("You must specify at least one search parameter");
+            }
+
+            var query = new List<IMongoQuery>();
+            if (!string.IsNullOrEmpty(request.FirstName))
+            {
+                query.Add(Query<MongoCandidate>.Matches(c => c.RegistrationDetails.FirstName, $@"/^{request.FirstName}$/i"));
+            }
+            if (!string.IsNullOrEmpty(request.LastName))
+            {
+                query.Add(Query<MongoCandidate>.Matches(c => c.RegistrationDetails.LastName, $@"/^{request.LastName}$/i"));
+            }
+            if (request.DateOfBirth.HasValue)
+            {
+                query.Add(Query<MongoCandidate>.EQ(c => c.RegistrationDetails.DateOfBirth, request.DateOfBirth));
+            }
+            if (!string.IsNullOrEmpty(request.Postcode))
+            {
+                query.Add(Query<MongoCandidate>.Matches(c => c.RegistrationDetails.Address.Postcode, $@"/^{request.Postcode}$/i"));
+            }
+
+            var candidates = Collection
+                .Find(Query.And(query))
+                .SetFields(Fields<MongoCandidate>.Include(c => c.RegistrationDetails))
+                .Select(c => _mapper.Map<MongoCandidate, CandidateSummary>(c))
+                .ToList();
+
+            _logger.Debug("Found {1} candidates matching search request {0}", request, candidates.Count);
+
+            return candidates;
         }
 
         public void Delete(Guid id)
