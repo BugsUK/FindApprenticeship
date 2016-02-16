@@ -2,6 +2,7 @@
 {
     using Common.Mediators;
     using Providers;
+    using Raa.Common.Factories;
     using Validators;
     using ViewModels;
 
@@ -28,6 +29,11 @@
 
         public MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchResultsViewModel viewModel)
         {
+            if (viewModel.SearchViewModel != null)
+            {
+                viewModel.SearchViewModel.PageSizes = SelectListItemsFactory.GetPageSizes(viewModel.SearchViewModel.PageSize);
+            }
+
             var validatonResult = _candidateSearchResultsViewModelServerValidator.Validate(viewModel);
 
             if (!validatonResult.IsValid)

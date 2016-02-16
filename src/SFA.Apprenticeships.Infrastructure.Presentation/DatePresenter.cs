@@ -122,5 +122,10 @@
 
             return "";
         }
+
+        public static string ToDateOfBirth(this DateTime dateTime)
+        {
+            return dateTime.ToString("dd/MM/yyyy");
+        }
     }
 }

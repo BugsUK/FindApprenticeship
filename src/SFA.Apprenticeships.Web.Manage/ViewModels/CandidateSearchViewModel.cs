@@ -16,6 +16,20 @@
             CurrentPage = 1;
         }
 
+        private CandidateSearchViewModel(CandidateSearchViewModel viewModel) : this()
+        {
+            FirstName = viewModel.FirstName;
+            LastName = viewModel.LastName;
+            DateOfBirth = viewModel.DateOfBirth;
+            Postcode = viewModel.Postcode;
+            PageSize = viewModel.PageSize;
+        }
+
+        public CandidateSearchViewModel(CandidateSearchViewModel viewModel, int currentPage) : this(viewModel)
+        {
+            CurrentPage = currentPage;
+        }
+
         [Display(Name = CandidateSearchViewModelMessages.FirstName.LabelText)]
         public string FirstName { get; set; }
         [Display(Name = CandidateSearchViewModelMessages.LastName.LabelText)]
