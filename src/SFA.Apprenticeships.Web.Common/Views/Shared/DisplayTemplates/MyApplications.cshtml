@@ -1,0 +1,320 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Infrastructure.Presentation
+
+@model SFA.Apprenticeships.Web.Common.ViewModels.MyApplications.MyApplicationsViewModel
+
+@if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
+{
+    <ul class="list-nav">
+        @if (Model.SuccessfulApprenticeshipApplications.Any())
+        {
+            <li>
+                <span id="successful-applications-count" class="bold-medium">@Model.SuccessfulApprenticeshipApplications.Count()</span>  <a class="" href="#dashSuccessful">Successful</a>
+            </li>
+        }
+        @if (Model.SubmittedApprenticeshipApplications.Any())
+        {
+            <li>
+                <span id="submitted-applications-count" class="bold-medium">@Model.SubmittedApprenticeshipApplications.Count()</span>  <a class="" href="#dashSubmitted">Submitted</a>
+            </li>
+        }
+        @if (Model.UnsuccessfulApplications.Any())
+        {
+            <li>
+                <span id="unsuccessful-applications-count" class="bold-medium">@Model.UnsuccessfulApplications.Count()</span>  <a class="" href="#dashUnsuccessful">Unsuccessful</a>
+            </li>
+        }
+        @if (Model.DraftApprenticeshipApplications.Any())
+        {
+            <li>
+                <span id="draft-applications-count" class="bold-medium">@Model.DraftApprenticeshipApplications.Count()</span>  <a class="" href="#dashDrafts">Saved</a>
+            </li>
+        }
+        @if (Model.TraineeshipApplications.Any())
+        {
+            <li>
+                <span id="traineeship-applications-count" class="bold-medium">@Model.TraineeshipApplications.Count()</span>  <a class="" href="#dashTraineeships">Traineeships</a>
+            </li>
+        }
+    </ul>
+    <div class="grid-wrapper proto-dashboard">
+    @if (
+            Model.SuccessfulApprenticeshipApplications.Any() ||
+            Model.UnsuccessfulApplications.Any() ||
+            Model.SubmittedApprenticeshipApplications.Any())
+        {
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <section class="clearfix">
+                    @if (Model.SuccessfulApprenticeshipApplications.Any())
+                        {
+                        <h2 class="heading-medium" id="dashSuccessful">Successful</h2>
+                        <table class="vert-middle">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody class="tbody-3rows">
+                                @foreach (var application in @Model.SuccessfulApprenticeshipApplications)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                            {
+                                                @application.Title @:with @application.EmployerName
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            }
+                                        </td>
+                                        <td class="ta-center">@Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId })</td>
+                                        <td class="ta-center">
+                                            <a title="Remove from my applications" class="icon-black archive-successful" href="@Url.RouteUrl(@Model.Routes.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        }
+
+                    @if (Model.SubmittedApprenticeshipApplications.Any())
+                        {
+                        <h2 class="heading-medium" id="dashSubmitted">Submitted</h2>
+                        <table class="vert-middle">
+                            <colgroup>
+                                <col class="t50">
+                                <col class="t25">
+                                <col class="t25">
+                                <col>
+                            </colgroup>
+                            <tbody class="tbody-3rows">
+                                @foreach (var application in @Model.SubmittedApprenticeshipApplications)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                            {
+                                                @application.Title @:with @application.EmployerName
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                            }
+                                        </td>
+                                        <td class="ta-center">@Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId })</td>
+                                        <td class="ta-center">
+                                            Applied<br/>
+                                            @{
+                                                if (application.DateApplied.HasValue)
+                                                {
+                                                    var submittedApplication = application;
+                                                    @Html.DisplayFor(m => submittedApplication.DateApplied)
+                                                }
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                            <tbody class="tbody-expandrows">
+                                <tr class="no-btm-border">
+                                    <td colspan="2"></td>
+                                    <td class="no-wrap ta-center">
+                                        <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        }
+
+                    @if (Model.UnsuccessfulApplications.Any())
+                    {
+                        <h2 class="heading-medium" id="dashUnsuccessful">Unsuccessful</h2>
+                            if (Model.UnsuccessfulApplications.Any(a => a.ApplicationStatus == ApplicationStatuses.Unsuccessful))
+                            {
+                                <div class="panel-indent font-xxsmall" id="candidate-support-message">
+                                    <p>Some of your applications have been unsuccessful. Please contact the training provider for further information.</p>
+                                    <p>
+                                        For advice on how to ensure your application has a better chance
+                                        of being successful @Html.RouteLink("see the next steps page", @Model.Routes.NextSteps).
+                                    </p>
+                                </div>
+                            }
+                            <table class="vert-middle">
+                                <colgroup>
+                                    <col class="t50">
+                                    <col class="t25">
+                                    <col class="t25">
+                                    <col>
+                                </colgroup>
+                                <tbody class="tbody-3rows tbody-withReasons">
+                                    @foreach (var application in @Model.UnsuccessfulApplications)
+                                    {
+                                        <tr class="no-btm-border">
+                                            <td>
+                                                @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                                {
+                                                    @application.Title @:with @application.EmployerName
+                                                }
+                                                else
+                                                {
+                                                    @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                }
+                                            </td>
+                                            <td class="ta-center">@Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId })</td>
+                                            <td class="ta-center">
+                                                <a title="Remove from my applications" class="icon-black archive-unsuccessful" href="@Url.RouteUrl(@Model.Routes.ApprenticeshipArchive, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                            </td>
+                                        </tr>
+
+                                        if (!string.IsNullOrWhiteSpace(application.UnsuccessfulReason) || application.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn)
+                                        {
+                                            var reason = string.IsNullOrWhiteSpace(application.UnsuccessfulReason) ? application.ApplicationStatusDescription : application.UnsuccessfulReason;
+                                            <tr>
+                                                <td colspan="3">
+                                                    <b>Reason:</b> <span id="application-status-description">@reason</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                                <tbody class="tbody-expandrows">
+                                    <tr class="no-btm-border">
+                                        <td colspan="2"></td>
+                                        <td class="no-wrap ta-center">
+                                            <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        }
+                </section>
+            </div>
+        </div>
+        }
+
+    @if (
+            Model.DraftApprenticeshipApplications.Any() ||
+            Model.TraineeshipApplications.Any())
+        {
+        <div class="grid grid-1-2">
+            <section class="clearfix">
+                @if (Model.DraftApprenticeshipApplications.Any())
+                {
+                    <h2 class="heading-medium" id="dashDrafts">Saved</h2>
+                    <table class="vert-middle">
+                        <colgroup>
+                            <col class="t70">
+                            <col class="t20">
+                            <col class="t10">
+                            <col>
+                        </colgroup>
+                        <tbody>
+                            @foreach (var application in @Model.DraftApprenticeshipApplications)
+                            {
+                                <tr>
+                                    <td>
+                                        @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                        {
+                                            @application.Title @:with @application.EmployerName
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "ApprenticeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+
+                                            if (application.VacancyStatus == VacancyStatuses.Live)
+                                            {
+                                                <br />
+                                                <strong>Closing date:</strong> @application.ClosingDate.ToFriendlyClosingWeek()
+                                            }
+                                        }
+                                    </td>
+                                    <td class="ta-center">
+                                        @if (application.ApplicationStatus == ApplicationStatuses.Draft && application.VacancyStatus == VacancyStatuses.Live)
+                                        {
+                                            @Html.ActionLink("Resume", "Resume", "ApprenticeshipApplication", new { id = application.VacancyId }, new { @class = "resume-link" })
+                                        }
+                                        else if (application.ApplicationStatus == ApplicationStatuses.Saved && application.VacancyStatus == VacancyStatuses.Live)
+                                        {
+                                            @Html.RouteLink("Apply", @Model.Routes.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" })
+                                        }
+                                        else
+                                        {
+                                            switch (application.VacancyStatus)
+                                            {
+                                                case VacancyStatuses.Expired:
+                                                    @:Apprenticeship closed
+                                                    break;
+                                                case VacancyStatuses.Unavailable:
+                                                    @:Apprenticeship no longer available
+                                                    break;
+                                            }
+                                        }
+                                    </td>
+                                    <td class="ta-center">
+                                        <a title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(@Model.Routes.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+                @if (Model.TraineeshipApplications.Any())
+                {
+                    <h2 class="heading-medium" id="dashTraineeships">Traineeships</h2>
+                    <table id="traineeships-table" class="vert-middle">
+                        <colgroup>
+                            <col class="t60">
+                            <col class="t20">
+                            <col class="t20">
+                            <col>
+                        </colgroup>
+                        <tbody class="tbody-3rows">
+                            @foreach (var application in @Model.TraineeshipApplications)
+                            {
+                                <tr class="traineeship-table-row">
+                                    <td>
+                                        @if (application.VacancyStatus == VacancyStatuses.Unavailable)
+                                        {
+                                            @application.Title @:with @application.EmployerName
+                                        }
+                                        else
+                                        {
+                                            @Html.ActionLink(application.Title + " with " + @application.EmployerName, "TraineeshipVacancyDetails", "Account", new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                        }
+                                    </td>
+                                    <td class="ta-center">@Html.RouteLink("View application", @Model.Routes.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
+                                    <td class="ta-center">
+                                        Applied<br />
+                                        @Html.DisplayFor(m => application.DateApplied)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tbody class="tbody-expandrows">
+                            <tr class="no-btm-border">
+                                <td colspan="2"></td>
+                                <td class="no-wrap ta-center">
+                                    <a class="btnExpandRows fake-link" href="#" aria-expanded="false"><i class="fa fa-angle-down"></i>More</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </section>
+        </div>
+        }
+    </div>
+}

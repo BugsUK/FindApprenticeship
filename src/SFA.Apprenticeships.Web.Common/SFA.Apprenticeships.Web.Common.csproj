@@ -274,12 +274,22 @@
     <Compile Include="Validators\Extensions\ValidationResultExtension.cs" />
     <Compile Include="Validators\RuleSets.cs" />
     <Compile Include="Validators\ValidationType.cs" />
+    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Locations\AddressViewModel.cs" />
     <Compile Include="ViewModels\Locations\GeoPointViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationRoutes.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\PageableViewModel.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\Date.generated.cs">
       <DependentUpon>Date.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\MyApplications.generated.cs">
+      <DependentUpon>MyApplications.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -370,6 +380,11 @@
       <LastGenOutput>Date.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\razorgenerator.directives" />
+    <Content Include="Views\Shared\DisplayTemplates\MyApplications.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MyApplications.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
