@@ -436,6 +436,7 @@
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\candidates.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
