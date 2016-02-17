@@ -28,6 +28,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Mongo.Communication.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Mongo.Vacancies.IoC;
+    using Repositories.Sql.Configuration;
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -94,6 +95,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
             _container = new Container(x =>
             {
@@ -108,7 +110,11 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
-                x.AddRegistry<VacancyRepositoryRegistry>();
+
+                // TODO: SQL: AG: why temp?
+                // x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp
+
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));

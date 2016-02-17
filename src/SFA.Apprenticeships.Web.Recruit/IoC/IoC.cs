@@ -59,12 +59,12 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<EmployerRepositoryRegistry>();
 
                 // TODO: SQL: AG: why temp?
+                // x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry(new VacancyRepositoryRegistry(sqlConfiguration)); //temp
 
                 // TODO: SQL: AG: too coarse-grained, need more registries? Rename to SqlRepositoriesRegistry?
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
 
-                x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
