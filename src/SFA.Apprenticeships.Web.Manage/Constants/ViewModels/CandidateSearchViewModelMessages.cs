@@ -26,7 +26,7 @@
             public const string LabelText = "Date of birth";
             public const string HintText = "Use dd/mm/yyyy format";
             public const string WhiteListRegularExpression = Whitelists.DateWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Date of birth " + Whitelists.DateWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Use the dd/mm/yyy format for date of birth";
         }
 
         public class Postcode
@@ -34,7 +34,7 @@
             public const string LabelText = "Postcode";
             public const string HintText = "Eg CV1 2WT";
             public const string WhiteListRegularExpression = Whitelists.PostcodeWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Postcode" + Whitelists.PostcodeWhitelist.ErrorText;
+            public const string WhiteListErrorText = "Enter a valid postcode eg CV1 2WT";
         }
     }
 }

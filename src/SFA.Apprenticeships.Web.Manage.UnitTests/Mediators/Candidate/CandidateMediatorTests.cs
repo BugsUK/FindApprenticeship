@@ -19,30 +19,14 @@
         {
             _candidateProvider = new Mock<ICandidateProvider>();
 
-            _mediator = new CandidateMediator(_candidateProvider.Object, new CandidateSearchResultsViewModelServerValidator());
-        }
-
-        [Test]
-        public void ValidationFailedNullViewModel()
-        {
-            //Arrange
-            var viewModel = new CandidateSearchResultsViewModel();
-
-            //Act
-            var result = _mediator.Search(viewModel);
-
-            //Assert
-            result.AssertValidationResult(CandidateMediatorCodes.Search.FailedValidation);
+            _mediator = new CandidateMediator(_candidateProvider.Object, new CandidateSearchViewModelServerValidator());
         }
 
         [Test]
         public void ValidationFailedNoSearchCriteria()
         {
             //Arrange
-            var viewModel = new CandidateSearchResultsViewModel
-            {
-                SearchViewModel = new CandidateSearchViewModel()
-            };
+            var viewModel = new CandidateSearchViewModel();
 
             //Act
             var result = _mediator.Search(viewModel);
@@ -55,12 +39,9 @@
         public void Ok()
         {
             //Arrange
-            var viewModel = new CandidateSearchResultsViewModel
+            var viewModel = new CandidateSearchViewModel
             {
-                SearchViewModel = new CandidateSearchViewModel
-                {
-                    FirstName = "First"
-                }
+                FirstName = "First"
             };
 
             //Act
@@ -68,7 +49,7 @@
 
             //Assert
             result.AssertCode(CandidateMediatorCodes.Search.Ok);
-            _candidateProvider.Verify(p => p.SearchCandidates(viewModel.SearchViewModel));
+            _candidateProvider.Verify(p => p.SearchCandidates(viewModel));
         }
     }
 }

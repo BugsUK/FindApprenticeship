@@ -17,6 +17,23 @@
     @Html.AntiForgeryToken()
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
+    if (Model.Candidates != null && Model.Candidates.ResultsCount == 0)
+    {
+        <div class="form-group">
+            <p>
+                There are currently no candidates that match your search.
+            </p>
+            <p>
+                Try editing your search:
+                <ul>
+                    <li>check the spelling of first and last names</li>
+                    <li>check any postcode used is correct</li>
+                    <li>check the candidate's date of birth has been entered correctly</li>
+                </ul>
+            </p>
+        </div>
+    }
+
     <div class="form-group">
         @Html.FormTextFor(
             m => m.SearchViewModel.FirstName,
@@ -40,7 +57,7 @@
         @Html.RouteLink("Reset search", ManagementRouteNames.Candidates)
     </div>
 
-    if (Model.Candidates != null)
+    if (Model.Candidates != null && Model.Candidates.ResultsCount > 0)
     {
         <div class="grid-wrapper">
             <div class="grid grid-1-1">
