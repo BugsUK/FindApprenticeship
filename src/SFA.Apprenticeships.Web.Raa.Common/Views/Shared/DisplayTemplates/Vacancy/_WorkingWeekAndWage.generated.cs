@@ -126,21 +126,26 @@ WriteLiteral("            <span>Working week</span>\r\n");
 
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+       Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment)));
+
+            
+            #line default
+            #line hidden
+            
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+                                                                                                                                                                                                                                                
         }
 
             
             #line default
             #line hidden
-WriteLiteral("        ");
-
-            
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-   Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment)));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n    </h3>\r\n    <p");
+WriteLiteral("    </h3>\r\n    <p");
 
 WriteLiteral(" id=\"vacancy-working-week\"");
 
@@ -235,14 +240,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1628), Tuple.Create("\"", 1654)
+WriteAttribute("class", Tuple.Create(" class=\"", 1632), Tuple.Create("\"", 1658)
             
             #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 1636), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1640), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1636), false)
+, 1640), false)
 );
 
 WriteLiteral(">\r\n        <h3");

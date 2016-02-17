@@ -18,8 +18,8 @@
         else
         {
             <span>Working week</span>
+            @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
         }
-        @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.WorkingWeek, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.WorkingWeekComment))
     </h3>
     <p id="vacancy-working-week" itemprop="workHours" class="preserve-formatting">@Model.VacancySummaryViewModel.WorkingWeek</p>
     @if (Model.VacancyType == VacancyType.Apprenticeship)

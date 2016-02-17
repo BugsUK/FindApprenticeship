@@ -58,7 +58,7 @@
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
-            For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
