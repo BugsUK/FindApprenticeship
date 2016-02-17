@@ -39,7 +39,7 @@
             switch (response.Code)
             {
                 case CandidateMediatorCodes.Search.FailedValidation:
-                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    response.ValidationResult.AddToModelState(ModelState, "SearchViewModel");
                     return View(response.ViewModel);
 
                 case CandidateMediatorCodes.Search.Ok:
