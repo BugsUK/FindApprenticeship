@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Applications;
     using Candidate;
+    using Common.ViewModels.Applications;
     using Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;

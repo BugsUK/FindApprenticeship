@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
-    using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.Candidate;
+    using Common.ViewModels.Applications;
 
     public class SettingsViewModelBuilder
     {

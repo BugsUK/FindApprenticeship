@@ -19,8 +19,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Constants.Pages;
     using ViewModels.Applications;
-    using ViewModels.MyApplications;
     using Common.Models.Application;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.MyApplications;
     using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
@@ -553,7 +554,7 @@
                     lastApplicationStatusNotificationDateTime = new DateTime(long.Parse(lastApplicationStatusNotification), DateTimeKind.Utc);
                 }
 
-                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime);
+                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime, new MyApplicationRoutes());
             }
             catch (Exception e)
             {

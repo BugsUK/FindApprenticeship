@@ -1044,8 +1044,6 @@
     <Compile Include="ViewModels\Candidate\TraineeshipCandidateViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockState.cs" />
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextTraineeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
@@ -1055,8 +1053,6 @@
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />

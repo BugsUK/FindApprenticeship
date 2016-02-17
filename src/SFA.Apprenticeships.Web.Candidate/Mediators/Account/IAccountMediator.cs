@@ -3,8 +3,8 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
 {
     using System;
+    using Common.ViewModels.MyApplications;
     using ViewModels.Account;
-    using ViewModels.MyApplications;
 
     public interface IAccountMediator
     {

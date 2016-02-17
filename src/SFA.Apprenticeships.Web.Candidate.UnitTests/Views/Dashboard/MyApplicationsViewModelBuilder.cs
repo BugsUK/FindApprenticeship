@@ -2,8 +2,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
     using System;
     using System.Collections.Generic;
-    using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.MyApplications;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.MyApplications;
 
     public class MyApplicationsViewModelBuilder
     {
@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
         public MyApplicationsViewModel Build()
         {
             return new MyApplicationsViewModel(_apprenticeshipApplicationViewModels, _traineeshipApplicationViewModels,
-                _traineeshipFeatureViewModel, _lastApplicationStatusNotification);
+                _traineeshipFeatureViewModel, _lastApplicationStatusNotification, new MyApplicationRoutes());
         }
     }
 }
