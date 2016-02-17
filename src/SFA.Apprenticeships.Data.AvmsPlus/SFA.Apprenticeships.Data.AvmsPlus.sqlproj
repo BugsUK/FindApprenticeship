@@ -121,6 +121,7 @@
     <Folder Include="Scripts\Data" />
     <Folder Include="Schemas" />
     <Folder Include="Publish" />
+    <Folder Include="Sync" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -859,6 +860,8 @@
     <Build Include="dbo\Tables\DurationType.sql" />
     <None Include="Scripts\Data\dbo.DurationType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipType.Upsert.sql" />
+    <Build Include="Schemas\Sync.sql" />
+    <Build Include="Sync\Sync.SyncParams.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
@@ -874,6 +877,7 @@
     <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
     <None Include="Scripts\TestData\dbo.VacancyTextFieldValue.sql" />
     <None Include="Scripts\Data\dbo.VacancyLocationType.Upsert.sql" />
+    <None Include="Scripts\Data\Sync.SyncParams.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
