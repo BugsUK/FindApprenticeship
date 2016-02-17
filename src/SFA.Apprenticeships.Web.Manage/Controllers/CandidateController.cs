@@ -2,7 +2,9 @@
 {
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Mediators;
+    using Constants;
     using Domain.Entities;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
@@ -19,16 +21,16 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Search()
+        public ActionResult Index()
         {
             var response = _candidateMediator.Search();
 
-            return View(response.ViewModel);
+            return View("Search", response.ViewModel);
         }
 
-        [HttpPost]
+        [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Search(CandidateSearchResultsViewModel viewModel)
+        public ActionResult Search(CandidateSearchViewModel viewModel)
         {
             var response = _candidateMediator.Search(viewModel);
 
@@ -46,6 +48,14 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SearchCandidatesAction")]
+        public ActionResult SearchCandidates(CandidateSearchResultsViewModel viewModel)
+        {
+            return RedirectToRoute(ManagementRouteNames.SearchCandidates, viewModel.SearchViewModel);
         }
     }
 }

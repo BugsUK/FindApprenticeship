@@ -9,12 +9,12 @@
     public class CandidateMediator : MediatorBase, ICandidateMediator
     {
         private readonly ICandidateProvider _candidateProvider;
-        private readonly CandidateSearchResultsViewModelServerValidator _candidateSearchResultsViewModelServerValidator;
+        private readonly CandidateSearchViewModelServerValidator _candidateSearchViewModelServerValidator;
 
-        public CandidateMediator(ICandidateProvider candidateProvider, CandidateSearchResultsViewModelServerValidator candidateSearchResultsViewModelServerValidator)
+        public CandidateMediator(ICandidateProvider candidateProvider, CandidateSearchViewModelServerValidator candidateSearchViewModelServerValidator)
         {
             _candidateProvider = candidateProvider;
-            _candidateSearchResultsViewModelServerValidator = candidateSearchResultsViewModelServerValidator;
+            _candidateSearchViewModelServerValidator = candidateSearchViewModelServerValidator;
         }
 
         public MediatorResponse<CandidateSearchResultsViewModel> Search()
@@ -27,21 +27,18 @@
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, viewModel);
         }
 
-        public MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchResultsViewModel viewModel)
+        public MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchViewModel viewModel)
         {
-            if (viewModel.SearchViewModel != null)
-            {
-                viewModel.SearchViewModel.PageSizes = SelectListItemsFactory.GetPageSizes(viewModel.SearchViewModel.PageSize);
-            }
+            viewModel.PageSizes = SelectListItemsFactory.GetPageSizes(viewModel.PageSize);
 
-            var validatonResult = _candidateSearchResultsViewModelServerValidator.Validate(viewModel);
+            var validatonResult = _candidateSearchViewModelServerValidator.Validate(viewModel);
 
             if (!validatonResult.IsValid)
             {
-                return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, viewModel, validatonResult);
+                return GetMediatorResponse(CandidateMediatorCodes.Search.FailedValidation, new CandidateSearchResultsViewModel { SearchViewModel = viewModel }, validatonResult);
             }
 
-            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel.SearchViewModel);
+            var resultsViewModel = _candidateProvider.SearchCandidates(viewModel);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
         }

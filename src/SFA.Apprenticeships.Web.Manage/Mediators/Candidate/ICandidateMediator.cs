@@ -7,6 +7,6 @@
     {
         MediatorResponse<CandidateSearchResultsViewModel> Search();
 
-        MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchResultsViewModel viewModel);
+        MediatorResponse<CandidateSearchResultsViewModel> Search(CandidateSearchViewModel viewModel);
     }
 }

@@ -28,6 +28,7 @@
         public const string ShowLocations = "ShowLocations";
 
         //Helpdesk
+        public const string Candidates = "Candidates";
         public const string SearchCandidates = "SearchCandidates";
     }
 }
