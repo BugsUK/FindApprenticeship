@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
+    using Repositories.Sql.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Provider = Domain.Entities.Providers.Provider;
     using ProviderSite = Domain.Entities.Providers.ProviderSite;
@@ -25,8 +26,11 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public LegacyProviderProvider(IConfigurationService configurationService)
         {
-            var config = configurationService.Get<TacticalDataServivcesConfiguration>();
-            _connectionString = config.AvSqlReferenceConnectionString;
+            // var config = configurationService.Get<TacticalDataServivcesConfiguration>();
+            // _connectionString = config.AvSqlReferenceConnectionString;
+
+            var config = configurationService.Get<SqlConfiguration>(); // When removing this line, remove reference to Repositories.Sql
+            _connectionString = config.ConnectionString;
         }
 
         public Provider GetProvider(string ukprn)

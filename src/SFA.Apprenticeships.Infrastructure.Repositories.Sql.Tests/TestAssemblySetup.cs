@@ -30,9 +30,7 @@ public class TestAssemblySetsup
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertEmployerContact.sql",
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertEmployer.sql",
                 AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyProvisionRelationshipStatusType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyOwnerRelationship.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyStatusType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyTextFieldValue.sql"
+                AppDomain.CurrentDomain.BaseDirectory + "\\Scripts\\InsertVacancyOwnerRelationship.sql"
             };
             dbInitialiser.Seed(seedScripts);
 

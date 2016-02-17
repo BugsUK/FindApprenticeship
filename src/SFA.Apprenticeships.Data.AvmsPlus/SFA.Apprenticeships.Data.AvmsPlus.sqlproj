@@ -863,6 +863,8 @@
     <None Include="Scripts\Data\dbo.TrainingType.Upsert.sql" />
     <Build Include="dbo\Tables\WageType.sql" />
     <None Include="Scripts\Data\dbo.WageType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyTextFieldValue.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
