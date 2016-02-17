@@ -1,9 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
+    using System.Collections.Generic;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.MyApplications;
     using Constants;
     using Domain.Entities;
     using FluentValidation.Mvc;
@@ -56,6 +60,15 @@
         public ActionResult SearchCandidates(CandidateSearchResultsViewModel viewModel)
         {
             return RedirectToRoute(ManagementRouteNames.SearchCandidates, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Candidate(Guid id)
+        {
+            var viewModel = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel(), DateTime.UtcNow, new MyApplicationRoutes());
+
+            return View(viewModel);
         }
     }
 }

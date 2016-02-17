@@ -8,6 +8,8 @@
 
     public class MyApplicationsViewModel
     {
+        public const string PartialView = "MyApplications";
+
         public MyApplicationsViewModel(
             IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
             IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications,

@@ -157,6 +157,12 @@
                defaults: new { controller = "Candidate", action = "Search" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidate,
+               url: "candidate",
+               defaults: new { controller = "Candidate", action = "Candidate" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

@@ -1,6 +1,8 @@
-﻿@using SFA.Apprenticeships.Application.Applications.Extensions
+﻿@using System.Web.Mvc.Html
+@using SFA.Apprenticeships.Application.Applications.Extensions
 @using SFA.Apprenticeships.Domain.Entities.Applications
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
+@using SFA.Apprenticeships.Web.Common.ViewModels.MyApplications
 
 @model SFA.Apprenticeships.Web.Common.ViewModels.MyApplications.MyApplicationsViewModel
 
@@ -68,21 +70,24 @@
         <div class="page-link">
             @if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
             {
-                 <ul class="list-text small-btm-margin">
-                     <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new { id = "find-apprenticeship-link", @class = "link-unimp" })</li>
-                 </ul>
+                <ul class="list-text small-btm-margin">
+                    <li>@Html.RouteLink("Find an apprenticeship", CandidateRouteNames.ApprenticeshipSearch, null, new {id = "find-apprenticeship-link", @class = "link-unimp"})</li>
+                </ul>
             }
             @if (Model.TraineeshipFeature.ShowTraineeshipsLink)
             {
                 <ul class="list-text">
                     <li>
-                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new { id = "find-traineeship-link", @class = "link-unimp" })
+                        @Html.RouteLink("Find a traineeship", CandidateRouteNames.TraineeshipSearch, null, new {id = "find-traineeship-link", @class = "link-unimp"})
                     </li>
                 </ul>
             }
         </div>
     </div>
 </div>
+
+@Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView)
+
 @if (!(Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any()))
 {
     <div class="text">

@@ -1,0 +1,11 @@
+﻿@using SFA.Apprenticeships.Web.Common.ViewModels.MyApplications
+@model MyApplicationsViewModel
+
+@{
+    ViewBag.Title = "Candidate applications";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>title</h2>
+
+@Html.DisplayFor(m => m, MyApplicationsViewModel.PartialView)
