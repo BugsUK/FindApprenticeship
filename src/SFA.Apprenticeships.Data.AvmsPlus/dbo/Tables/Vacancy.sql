@@ -64,6 +64,7 @@
 	[DurationTypeId]				   INT				NULL,
 	[DurationValue]					   INT				NULL,
 	[QAUserName]					   NVARCHAR (MAX)	NULL,
+	[TrainingTypeId]				   INT				NULL,
 	[EditedInRaa]					   BIT				NOT NULL
 	
 

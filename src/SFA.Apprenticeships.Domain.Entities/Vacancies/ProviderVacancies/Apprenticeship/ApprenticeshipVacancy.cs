@@ -33,7 +33,7 @@
             DurationType = previousVacancy.DurationType;
             Duration = previousVacancy.Duration;
             ClosingDate = previousVacancy.ClosingDate;
-            InterviewStartDate = previousVacancy.InterviewStartDate;
+            // InterviewStartDate = previousVacancy.InterviewStartDate;
             PossibleStartDate = previousVacancy.PossibleStartDate;
             LongDescription = previousVacancy.LongDescription;
             DesiredSkills = previousVacancy.DesiredSkills;

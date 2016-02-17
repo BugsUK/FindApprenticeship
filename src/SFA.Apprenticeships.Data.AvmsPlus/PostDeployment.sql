@@ -20,6 +20,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.WageUnit.Upsert.sql"
 :r ".\Scripts\Data\dbo.DurationType.Upsert.sql"
 :r ".\Scripts\Data\dbo.ApprenticeshipType.Upsert.sql"
+:r ".\Scripts\Data\dbo.TrainingType.Upsert.sql"
 
 -- Test Data
 :r ".\Scripts\TestData\dbo.TestProviders.Upsert.sql"

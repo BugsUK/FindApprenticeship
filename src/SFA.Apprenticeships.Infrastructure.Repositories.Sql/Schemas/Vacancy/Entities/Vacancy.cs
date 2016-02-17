@@ -185,6 +185,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         //[StringLength(1)]
         //public string TrainingTypeCode { get; set; } // Framework or standard. Not considered in AVMS
 
+        public int TrainingTypeId { get; set; }
+
         public decimal? HoursPerWeek { get; set; } // Not considered in AVMS
 
         public string AdditionalLocationInformation { get; set; } 

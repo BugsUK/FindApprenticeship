@@ -11,6 +11,7 @@
     using Domain.Interfaces.Repositories;
     using Common;
     using CuttingEdge.Conditions;
+    using Domain.Entities.Vacancies;
     using Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
@@ -132,8 +133,50 @@
 
             var result = _mapper.Map<Vacancy, ApprenticeshipVacancy>(dbVacancy);
             MapAdditionalQuestions(dbVacancy, result);
+            MapTextFields(dbVacancy, result);
+            //MapWageUnit(dbVacancy, result);
+            MapIsEmployerLocationMainApprenticeshipLocation(dbVacancy, result);
 
             return result;
+        }
+
+        private void MapIsEmployerLocationMainApprenticeshipLocation(Vacancy dbVacancy, ApprenticeshipVacancy result)
+        {
+            /*
+            // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
+            string vacancyLocationTypeCodeName = null;
+
+            if ( entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                entity.IsEmployerLocationMainApprenticeshipLocation.Value == true)
+            {
+                vacancyLocationTypeCodeName = "STD";
+            } 
+            else if (entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                entity.IsEmployerLocationMainApprenticeshipLocation.Value == false)
+            {
+                vacancyLocationTypeCodeName = "MUL";
+            }
+
+            dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT VacancyLocationTypeId
+FROM   dbo.VacancyLocationType
+WHERE  CodeName = @VacancyLocationTypeCodeName",
+                new
+                {
+                    VacancyLocationTypeCodeName = vacancyLocationTypeCodeName
+                }).Single();
+            */
+
+            var locationTypeCodeName = _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+SELECT CodeName
+FROM   dbo.VacancyLocationType
+WHERE  VacancyLocationTypeId = @VacancyLocationTypeId",
+                new
+                {
+                    VacancyLocationTypeId = dbVacancy.VacancyLocationTypeId.Value
+                }).Single();
+
+            result.IsEmployerLocationMainApprenticeshipLocation = locationTypeCodeName != "MUL";
         }
 
         private void MapAdditionalQuestions(Vacancy dbVacancy, ApprenticeshipVacancy result)
@@ -147,6 +190,49 @@ ORDER BY QuestionId ASC
 
             result.FirstQuestion = results.First().Question;
             result.SecondQuestion = results.Last().Question;
+        }
+
+        private void MapTextFields(Vacancy dbVacancy, ApprenticeshipVacancy result)
+        {
+            result.TrainingProvided = GetTextField(dbVacancy.VacancyId, "TBP");
+            result.DesiredQualifications = GetTextField(dbVacancy.VacancyId, "QR");
+            result.DesiredSkills = GetTextField(dbVacancy.VacancyId, "SR");
+            result.PersonalQualities = GetTextField(dbVacancy.VacancyId, "PQ");
+            result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, "OII");
+            result.FutureProspects = GetTextField(dbVacancy.VacancyId, "FP");
+        }
+
+//        private void MapWageUnit(Vacancy dbVacancy, ApprenticeshipVacancy result)
+//        {
+//            var wageUnitName = _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+//SELECT FullName
+//FROM   dbo.WageUnit
+//WHERE  WageUnitId = @WageUnitId",
+//                new
+//                {
+//                    WageUnitId = dbVacancy.WageUnitId
+//                }).Single(); // There's a better way to do this?
+
+//            result.WageUnit = (WageUnit)Enum.Parse(typeof(WageUnit), wageUnitName);
+//        }
+
+        private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)
+        {
+            var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
+	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
+	WHERE CodeName = '{vacancyTextFieldCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            return _getOpenConnection.Query<string>(@"
+SELECT Value
+FROM   dbo.VacancyTextField
+WHERE  VacancyId = @VacancyId AND Field = @Field
+", new
+            {
+                VacancyId = vacancyId,
+                Field = vacancyTextFieldValueId
+            }).Single();
+
         }
 
         public List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn)
@@ -359,7 +445,7 @@ FETCH NEXT @PageSize ROWS ONLY
             PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
             PopulateVacancyManagerId(entity, dbVacancy);
             PopulateVacancyLocationTypeId(entity, dbVacancy);
-            PopulateWageTypeId(entity, dbVacancy);
+            // PopulateWageUnitId(entity, dbVacancy);
             PopulateApprenticeshipTypeId(entity, dbVacancy);
         }
 
@@ -477,18 +563,18 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
                 }).Single();
         }
 
-        private void PopulateWageTypeId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
-        {
-            var wageUnit = entity.WageUnit.ToString("G");
-            dbVacancy.WageUnitId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
-SELECT WageUnitId
-FROM   dbo.WageUnit
-WHERE  WageUnitName = @WageUnitName",
-                new
-                {
-                    WageUnitName = wageUnit
-                }).Single(); // There's a better way to do this?
-        }
+//        private void PopulateWageUnitId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
+//        {
+//            var wageUnit = entity.WageUnit.ToString("G");
+//            dbVacancy.WageUnitId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+//SELECT WageUnitId
+//FROM   dbo.WageUnit
+//WHERE  FullName = @WageUnitName",
+//                new
+//                {
+//                    WageUnitName = wageUnit
+//                }).Single(); // There's a better way to do this?
+//        }
 
         private void PopulateApprenticeshipTypeId(ApprenticeshipVacancy entity, Vacancy dbVacancy)
         {

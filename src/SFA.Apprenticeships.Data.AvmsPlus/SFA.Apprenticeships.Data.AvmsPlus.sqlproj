@@ -859,6 +859,10 @@
     <Build Include="dbo\Tables\DurationType.sql" />
     <None Include="Scripts\Data\dbo.DurationType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipType.Upsert.sql" />
+    <Build Include="dbo\Tables\TrainingType.sql" />
+    <None Include="Scripts\Data\dbo.TrainingType.Upsert.sql" />
+    <Build Include="dbo\Tables\WageType.sql" />
+    <None Include="Scripts\Data\dbo.WageType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

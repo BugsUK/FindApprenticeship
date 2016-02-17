@@ -75,7 +75,7 @@
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
                 .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
-                .IgnoreMember(v => v.VacancyLocationTypeId) // TODO
+                .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .IgnoreMember(v => v.VacancyManagerID) // DB Lookup using the vacancyOwnerRelationshipId?
                 .IgnoreMember(v => v.VacancyOwnerRelationshipId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
@@ -105,11 +105,11 @@
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v=> v.Description, av=> av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage) // In migrated vacancies WageUnit will always be Week
-                .IgnoreMember(v => v.WageType) // DbLookup
+                .MapMemberFrom(v => v.WageType, av => av.WageType)
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => new Wage(av.WageType, av.Wage, av.WageUnit).GetDisplayText(av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
-                .MapMemberFrom(v => v.InterviewsFromDate, av => av.InterviewStartDate)
+                // .MapMemberFrom(v => v.InterviewsFromDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
                 .ForMember( v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
@@ -138,6 +138,8 @@
                 .MapMemberFrom(v => v.DurationTypeId, av => av.DurationType)
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
                 .MapMemberFrom(v => v.QAUserName, av => av.QAUserName)
+                .MapMemberFrom(v => v.TrainingTypeId, av => av.TrainingType)
+                .MapMemberFrom(v => v.WageUnitId, av => av.WageUnit)
                 .End();
 
             Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
@@ -148,10 +150,10 @@
                 .MapMemberFrom(av => av.ShortDescription,av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
                 .MapMemberFrom(av => av.Wage, v => v.WeeklyWage) 
-                .IgnoreMember(av => av.WageType)  //db lookup
+                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
-                .MapMemberFrom(av => av.InterviewStartDate, v => v.InterviewsFromDate)
+                // .MapMemberFrom(av => av.InterviewStartDate, v => v.InterviewsFromDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
                 
@@ -160,7 +162,7 @@
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId) // Change to int
-                .IgnoreMember(av => av.VacancyManagerId)
+                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID.Value)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.ApprenticeshipLevel)
                 .IgnoreMember(av => av.ApprenticeshipLevelComment)
@@ -220,29 +222,29 @@
                 .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
                 .IgnoreMember(av => av.DateSubmitted)
                 .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
-                /*.AfterMap((v, av) => 
+                .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
+                .AfterMap((v, av) => 
                 {
                     
                     // Map employer address
-                //.MapMemberFrom(v => v.AddressLine1, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine1)
-                //.MapMemberFrom(v => v.AddressLine2, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine2)
-                //.MapMemberFrom(v => v.AddressLine3, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine3)
-                //.MapMemberFrom(v => v.AddressLine4, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine4)
-                //.MapMemberFrom(v => v.AddressLine5, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine5)
-                //.MapMemberFrom(v => v.PostCode, av => av.ProviderSiteEmployerLink.Employer.Address.Postcode)
-                //.MapMemberFrom(v => v.Town, av => av.ProviderSiteEmployerLink.Employer.Address.Town)
-                //.MapMemberFrom(v => v.Latitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude)
-                //.MapMemberFrom(v => v.Longitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude)
-                // .MapMemberFrom(v=> v.CountyId, av => av.ProviderSiteEmployerLink.Employer.Address.County) Get from DB?
-                // .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // Correct?
-                // .MapMemberFrom(v => v.EmployerWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl) //Correct?
-                    
-                    av.ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
-                    {
-                        WebsiteUrl = v.EmployerWebsite,
-                        Description = v.EmployerDescription,
-                    };
-                })*/
+                    //.MapMemberFrom(v => v.AddressLine1, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine1)
+                    //.MapMemberFrom(v => v.AddressLine2, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine2)
+                    //.MapMemberFrom(v => v.AddressLine3, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine3)
+                    //.MapMemberFrom(v => v.AddressLine4, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine4)
+                    //.MapMemberFrom(v => v.AddressLine5, av => av.ProviderSiteEmployerLink.Employer.Address.AddressLine5)
+                    //.MapMemberFrom(v => v.PostCode, av => av.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                    //.MapMemberFrom(v => v.Town, av => av.ProviderSiteEmployerLink.Employer.Address.Town)
+                    //.MapMemberFrom(v => v.Latitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Latitude)
+                    //.MapMemberFrom(v => v.Longitude, av => av.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Longitude)
+                    // .MapMemberFrom(v=> v.CountyId, av => av.ProviderSiteEmployerLink.Employer.Address.County) Get from DB?
+                    // .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // Correct?
+                    // .MapMemberFrom(v => v.EmployerWebsite, av => av.ProviderSiteEmployerLink.WebsiteUrl) //Correct?
+                    //av.ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
+                    //{
+                    //    WebsiteUrl = v.EmployerWebsite,
+                    //    Description = v.EmployerDescription,
+                    //};
+                })
 
                 .End();
 
