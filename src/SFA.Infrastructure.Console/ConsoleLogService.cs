@@ -47,8 +47,20 @@
 
         private void Log(string level, string message, Exception exception, object[] args)
         {
+            string formattedMessage = message;
+            if (args.Length > 0)
+            {
+                try
+                {
+                    formattedMessage = string.Format(message, args);
+                }
+                catch (FormatException)
+                {
+                }
+            }
+
             // $"{level:0,5}"
-            Console.WriteLine(string.Format("{0,-6} ", level + ":") + string.Format(message, args));
+            Console.WriteLine(string.Format("{0,-6} ", level + ":") + formattedMessage);
             if (exception != null)
                 Console.WriteLine(exception.ToString());
         }

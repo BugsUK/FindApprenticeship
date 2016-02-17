@@ -10,7 +10,6 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
     {
         static void Main(string[] args)
         {
-            // IConfigurationManager configurationManager, ILogService loggerService
             var log = new ConsoleLogService();
 
             log.Info("IoC initialisation");
@@ -21,15 +20,18 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
 
             var sourceDatabase = new GetOpenConnectionFromConnectionString(config.SourceConnectionString);
             var targetDatabase = new GetOpenConnectionFromConnectionString(config.TargetConnectionString);
+            var syncRepository = new SyncRespository(log, sourceDatabase, targetDatabase);
 
             var controller = new Controller(
                 configService.Get<MigrateFromAvmsConfiguration>(),
                 log,
-                new SyncRespository(sourceDatabase, targetDatabase),
-                () => new DummyMutateTarget(log),
+                syncRepository,
+                //tableSpec => new DummyMutateTarget(log, tableSpec),
+                tableSpec => new MutateTarget(log, syncRepository, 5000, tableSpec), // TODO: 5000 or 1
                 new AvmsToAvmsPlusTables(log).All
                 );
-                
+
+            //controller.Reset(); // TODO: Remove
             controller.DoAll();
         }
     }

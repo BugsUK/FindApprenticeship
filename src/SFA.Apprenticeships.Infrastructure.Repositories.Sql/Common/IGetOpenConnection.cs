@@ -63,17 +63,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             {
                 using (var conn = goc.GetOpenConnection())
                 {
-                    try
-                    {
-                        return
-                            (IList<T>)
-                                conn.Query<T>(sql, param, transaction: null, buffered: true,
-                                    commandTimeout: commandTimeout, commandType: commandType);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    return
+                        (IList<T>)
+                            conn.Query<T>(sql, param, transaction: null, buffered: true,
+                                commandTimeout: commandTimeout, commandType: commandType);
                 }
             }
             );

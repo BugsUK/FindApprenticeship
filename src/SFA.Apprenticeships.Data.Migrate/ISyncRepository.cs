@@ -14,8 +14,12 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         ITransactionlessSyncContext StartFullTransactionlessSync();
 
-        void BulkInsert(ITableDetails table, IReadOnlyList<IDictionary<string, object>> records);
-        void BulkUpdate(ITableDetails table, IReadOnlyList<IDictionary<string, object>> records);
+        void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records);
+        void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records);
+
+        void Truncate(ITableDetails table);
+
+        void Reset();
     }
 
     public interface ISnapshotSyncContext : IDisposable
@@ -47,6 +51,13 @@ namespace SFA.Apprenticeships.Data.Migrate
     {
         public FullScanRequiredException() : base("Full scan required (change tracking does not go back far enough)")
         { }
+    }
+
+    public class FatalException : Exception
+    {
+        public FatalException(string message) : base(message)
+        { }
+
     }
 
     public enum Operation { Insert, Update, Delete, Unknown };

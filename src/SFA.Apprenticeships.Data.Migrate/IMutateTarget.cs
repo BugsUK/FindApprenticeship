@@ -8,5 +8,7 @@
     {
         void Insert(dynamic record);
         void Update(dynamic record);
+
+        void NoChange(dynamic record);
     }
 }
