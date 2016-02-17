@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     using System.Linq;
     using Dapper;
     using System.Collections.Generic;
-
+    using System.Threading.Tasks;
     public interface ISyncRespository
     {
         ISnapshotSyncContext StartChangesOnlySnapshotSync();
@@ -17,16 +17,18 @@ namespace SFA.Apprenticeships.Data.Migrate
         void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records);
         void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records);
 
-        void Truncate(ITableDetails table);
+        void DeleteAll(ITableDetails table);
 
         void Reset();
     }
 
     public interface ISnapshotSyncContext : IDisposable
     {
-        IEnumerable<ChangeTableRow> GetChanges(string tableName);
+        bool AreAnyChanges();
 
-        IEnumerable<dynamic> GetSourceRecords(ITableDetails table, IEnumerable<long> ids);
+        IEnumerable<ChangeTableRow> GetChangesForTable(ITableDetails table);
+
+        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<long> ids);
         IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<long> ids);
 
         void Success();
@@ -35,7 +37,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     public interface ITransactionlessSyncContext
     {
         long GetMaxId(ITableDetails table);
-        IEnumerable<dynamic> GetSourceRecords(ITableDetails table, long startId, long endId);
+        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startId, long endId);
         IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startId, long endId);
 
         void Success();

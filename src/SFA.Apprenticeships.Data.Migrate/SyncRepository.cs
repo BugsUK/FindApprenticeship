@@ -9,7 +9,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     using System.Collections.Generic;
     using System.Data.SqlClient;
     using SFA.Infrastructure.Interfaces;
-
+    using System.Threading.Tasks;
     public class SyncRespository : ISyncRespository
     {
         private IGetOpenConnection _sourceDatabase;
@@ -25,12 +25,12 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         public ISnapshotSyncContext StartChangesOnlySnapshotSync()
         {
-            return new ChangesOnlySnapshotSyncContext(_sourceDatabase, _targetDatabase);
+            return new ChangesOnlySnapshotSyncContext(_log, _sourceDatabase, _targetDatabase);
         }
 
         public ITransactionlessSyncContext StartFullTransactionlessSync()
         {
-            return new FullTransactionlessSyncContext(_sourceDatabase, _targetDatabase);
+            return new FullTransactionlessSyncContext(_log, _sourceDatabase, _targetDatabase);
         }
 
         public void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records)
@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         public void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records)
         {
-            const string tempTable = "#BulkUpdateTemp";
+            const string tempTable = "BulkUpdateTemp";
 
             if (records.Any())
             {
@@ -65,10 +65,10 @@ namespace SFA.Apprenticeships.Data.Migrate
                     var dataColumnNames = columnTypes.Keys.Where(k => k != table.PrimaryKey);
                     connection.Execute($@"
     UPDATE target
-    SET    {string.Join(", ", dataColumnNames.Select(col => $"[{col}] = t.[{col}]"))}
+    SET    {string.Join(", ", dataColumnNames.Select(col => $"[{col}] = temp.[{col}]"))}
     FROM   {table.Name} target
-    JOIN   {tempTable}  t
-    ON     t.{table.PrimaryKey} = target.{table.PrimaryKey}
+    JOIN   {tempTable}  temp
+    ON     temp.{table.PrimaryKey} = target.{table.PrimaryKey}
 
     DROP TABLE {tempTable}
     ");
@@ -123,7 +123,7 @@ namespace SFA.Apprenticeships.Data.Migrate
                 dataTable.Rows.Add(dataRow);
             }
 
-            using (var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.KeepIdentity, null))
+            using (var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.KeepIdentity, null))
             {
                 // Mapping columns names is required whenever the data might not tie up positionwise with the target
                 // This can happen to us when the supplied data has null for every value and therefore cannot include
@@ -195,10 +195,23 @@ namespace SFA.Apprenticeships.Data.Migrate
             return result;
         }
 
-        public void Truncate(ITableDetails table)
+        public void DeleteAll(ITableDetails table)
         {
-            _log.Info($"DELETEing contents of {table.Name}");
-            _targetDatabase.MutatingQuery<int>($"DELETE {table.Name}");
+            const long batchSize = 100000;
+
+            var maxId = _targetDatabase.Query<long?>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
+            if (maxId == null)
+            {
+                _log.Info($"{table.Name} is already empty");
+            }
+            else
+            {
+                for (long id = 0; id < maxId.Value; id += batchSize)
+                {
+                    _log.Info($"DELETEing contents of {table.Name} - {id / Math.Max(maxId.Value / 100, 1)}%");
+                    _targetDatabase.MutatingQuery<int>($"DELETE {table.Name} WHERE {table.PrimaryKey} BETWEEN {id} AND {id + batchSize}");
+                }
+            }
         }
 
         public void Reset()
@@ -209,13 +222,15 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         private abstract class CommonSyncContext
         {
+            protected ILogService _log;
             protected IGetOpenConnection _sourceDatabase;
             protected IGetOpenConnection _targetDatabase;
 
             protected long _nextSyncVersion { get; set; }
 
-            public CommonSyncContext(IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase)
+            public CommonSyncContext(ILogService log, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase)
             {
+                _log = log;
                 _sourceDatabase = sourceDatabase;
                 _targetDatabase = targetDatabase;
             }
@@ -245,12 +260,13 @@ namespace SFA.Apprenticeships.Data.Migrate
 
             private long _lastSyncVersion { get; set; }
 
-            public ChangesOnlySnapshotSyncContext(IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase) : base(sourceDatabase, targetDatabase)
+            public ChangesOnlySnapshotSyncContext(ILogService log, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase) : base(log, sourceDatabase, targetDatabase)
             {
                 var lastSyncVersion = _targetDatabase.Query<long?>($"SELECT LastSyncVersion FROM Sync.SyncParams").Single();
                 if (lastSyncVersion == null)
                     throw new FullScanRequiredException();
                 _lastSyncVersion = lastSyncVersion.Value;
+                _log.Info($"LastSyncVersion={_lastSyncVersion}");
 
                 try
                 {
@@ -259,6 +275,7 @@ namespace SFA.Apprenticeships.Data.Migrate
                     _sourceTransaction = _sourceConnection.BeginTransaction();
 
                     _nextSyncVersion = _sourceConnection.Query<long>($"SELECT CHANGE_TRACKING_CURRENT_VERSION()", transaction: _sourceTransaction, buffered: false).Single();
+                    _log.Info($"NextSyncVersion={_nextSyncVersion}");
                 }
                 catch (Exception)
                 {
@@ -267,22 +284,27 @@ namespace SFA.Apprenticeships.Data.Migrate
                 }
             }
 
-            public IEnumerable<ChangeTableRow> GetChanges(string tableName)
+            public bool AreAnyChanges()
             {
-                long? minValidVersion = _sourceConnection.Query<long?>($"SELECT CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('{tableName}'))", transaction: _sourceTransaction, buffered: false).Single();
+                return _nextSyncVersion > _lastSyncVersion;
+            }
+
+            public IEnumerable<ChangeTableRow> GetChangesForTable(ITableDetails table)
+            {
+                long? minValidVersion = _sourceConnection.Query<long?>($"SELECT CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('{table.Name}'))", transaction: _sourceTransaction, buffered: false).Single();
                 if (minValidVersion == null)
-                    throw new Exception($"Change tracking not enabled, unknown table or insufficient permission on {tableName}");
+                    throw new Exception($"Change tracking not enabled, unknown table or insufficient permission on {table.Name}");
                 if (minValidVersion > _lastSyncVersion)
                     throw new FullScanRequiredException();
 
                 // Note: The ordering of the results from CHANGETABLE is undefined and therefore it is difficult to do them in batches. Accordingly ideally the results would not be buffered.
                 // However, without enabling SQL Server MARS, this will not allow other queries to proceed at the same time.
-                return _sourceConnection.Query<ChangeTableRow>($"SELECT * FROM CHANGETABLE(CHANGES {tableName}, @lastSyncVersion) AS Dummy", new { lastSyncVersion = _lastSyncVersion }, transaction: _sourceTransaction);
+                return _sourceConnection.Query<ChangeTableRow>($"SELECT *, {table.PrimaryKey} AS Id FROM CHANGETABLE(CHANGES {table.Name}, @lastSyncVersion) AS Dummy", new { lastSyncVersion = _lastSyncVersion }, transaction: _sourceTransaction);
             }
 
-            public IEnumerable<dynamic> GetSourceRecords(ITableDetails table, IEnumerable<long> ids)
+            public Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<long> ids)
             {
-                return _sourceConnection.Query<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} IN @Ids ORDER BY {table.PrimaryKey}", new { Ids = ids }, transaction: _sourceTransaction);
+                return _sourceConnection.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} IN @Ids ORDER BY {table.PrimaryKey}", new { Ids = ids }, transaction: _sourceTransaction);
             }
 
             public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<long> ids)
@@ -306,7 +328,7 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         private class FullTransactionlessSyncContext : CommonSyncContext, ITransactionlessSyncContext
         {
-            public FullTransactionlessSyncContext(IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase) : base(sourceDatabase, targetDatabase)
+            public FullTransactionlessSyncContext(ILogService log, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase) : base(log, sourceDatabase, targetDatabase)
             {
                 /*
 ALTER DATABASE LSC_MI_MS_CRM_Staging
@@ -330,9 +352,12 @@ GRANT VIEW CHANGE TRACKING ON SCHEMA ::dbo TO MSSQLReadOnly
                 return _sourceDatabase.GetOpenConnection().Query<long>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
             }
 
-            public IEnumerable<dynamic> GetSourceRecords(ITableDetails table, long startId, long endId)
+            public async Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startId, long endId)
             {
-                return _sourceDatabase.Query<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId });
+                using (var conn = _sourceDatabase.GetOpenConnection())
+                {
+                    return await conn.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId });
+                }
             }
 
             public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startId, long endId)

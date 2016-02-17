@@ -70,24 +70,28 @@
 
         public void Reset()
         {
-            ApplyToTablesUnthreadedReverseDependency(table => _syncRepository.Truncate(table));
+            ApplyToTablesUnthreadedReverseDependency(table => _syncRepository.DeleteAll(table));
             _syncRepository.Reset();
         }
 
         public void DoUpdatesForAll()
         {
-            _log.Info("DoUpdatesForAll");
+            _log.Info("============ DoUpdatesForAll");
             using (var context = _syncRepository.StartChangesOnlySnapshotSync())
             {
-                ApplyToTablesUnthreaded(tableSpec => DoUpdatesForTable(tableSpec, context));
+                if (context.AreAnyChanges())
+                    ApplyToTablesUnthreaded(tableSpec => DoUpdatesForTable(tableSpec, context));
+                else
+                    _log.Info("No changes");
                 context.Success();
             }
         }
 
         public void DoFullScanForAll()
         {
+            _log.Info("============ DoFullScanForAll");
             var context = _syncRepository.StartFullTransactionlessSync();
-            ApplyToTablesUnthreaded(tableSpec => DoInitial(tableSpec, context)); // TODO: Thread it
+            ApplyToTables(tableSpec => DoInitial(tableSpec, context));
             context.Success();
         }
 
@@ -128,39 +132,23 @@
                 Task.WaitAny(tasksRemaining);
             }
 
+            // Rethrow first of any (non-fatal) exception that may have occurred
+            foreach (var table in tables)
+            {
+                if (table.Value.IsFaulted)
+                    throw table.Value.Exception;
+            }
+
         }
 
         public void ApplyToTablesUnthreaded(Action<ITableSpec> action)
         {
-            var tables = _tables.Select(tableSpec =>
-                new KeyValuePair<ITableSpec, bool>(tableSpec, false) // Table -> completed
-                ).ToDictionary(i => i.Key, i => i.Value);
+            _log.Info($"---------- Scanning for tables to process");
 
-            while (true)
+            foreach (var table in _tables)
             {
-                _log.Info($"---------- Scanning for tables to process");
-
-                foreach (var table in tables)
-                {
-                    if (table.Value)
-                    {
-                        _log.Debug($"Already finished {table.Key.Name}");
-                    }
-                    else if (table.Key.DependsOn.Where(dependency => !tables[dependency]).Any())
-                    {
-                        _log.Debug($"Deferring {table.Key.Name} as dependent on " + string.Join(", ", table.Key.DependsOn.Where(dependency => !tables[dependency]).Select(t => t.Name)));
-                    }
-                    else
-                    {
-                        _log.Info($"Processing {table.Key.Name}");
-                        action(table.Key);
-                        tables[table.Key] = true;
-                        break;
-                    }
-                }
-
-                if (!tables.Any(table => !table.Value))
-                    break;
+                _log.Info($"Processing {table.Name}");
+                action(table);
             }
         }
 
@@ -215,7 +203,7 @@
 
             using (var mutateTarget = _createMutateTarget(table))
             {
-                var changes = syncContext.GetChanges(table.Name);
+                var changes = syncContext.GetChangesForTable(table);
 
                 using (var changesEnumerator = changes.GetEnumerator())
                 {
@@ -242,10 +230,10 @@
                         if (!changesOfInterest.Any())
                             break;
 
-                        var sourceRecords = syncContext.GetSourceRecords(table, changesOfInterest.Keys);
+                        var sourceRecords = syncContext.GetSourceRecordsAsync(table, changesOfInterest.Keys);
                         var targetRecords = syncContext.GetTargetRecords(table, changesOfInterest.Keys);
 
-                        DoSlidingComparision(table, sourceRecords, targetRecords, changesOfInterest, mutateTarget);
+                        DoSlidingComparision(table, sourceRecords.Result, targetRecords, changesOfInterest, mutateTarget);
                     }
                 }
             }
@@ -266,10 +254,10 @@
                     long endId = startId + batchSize - 1;
                     _log.Info($"Processing {startId} to {endId} on {table.Name} ({startId / Math.Max(maxId / 100, 1)}% done)");
 
-                    var sourceRecords = syncContext.GetSourceRecords(table, startId, endId);
+                    var sourceRecords = syncContext.GetSourceRecordsAsync(table, startId, endId);
                     var targetRecords = syncContext.GetTargetRecords(table, startId, endId);
 
-                    DoSlidingComparision(table, sourceRecords, targetRecords, null, mutateTarget);
+                    DoSlidingComparision(table, sourceRecords.Result, targetRecords, null, mutateTarget);
 
                     startId = endId + 1;
                 }
@@ -290,6 +278,24 @@
 
         }
 
+        /*
+        private Keys GetPrimaryKeyValues(dynamic record, ITableSpec table)
+        {
+            foreach (var key in table.PrimaryKeys)
+            {
+                var sourceId = ((IDictionary<string, object>)record)[key];
+                if (sourceId == null)
+                    throw new FatalException($"Unknown column (may be case sensitive) or null value for {table.PrimaryKeys.First()} on {table.Name}");
+                if (sourceId is long)
+                    return (long)sourceId;
+                else if (sourceId is int)
+                    return (long)(int)sourceId;
+                else
+                    throw new FatalException($"Unknown type {sourceId.GetType()}");
+            }
+
+        }
+        */
 
         public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<long, Operation> operationById, IMutateTarget mutateTarget)
         {
@@ -378,6 +384,31 @@
                     else
                         mutateTarget.NoChange(sourceRecord);
                 }
+            }
+        }
+
+        public class Keys : IComparable<Keys>
+        {
+            private long[] _key;
+
+            public Keys(long[] values)
+            {
+                _key = new long[values.Length];
+                Array.Copy(values, _key, values.Length);
+            }
+
+            public int CompareTo(Keys other)
+            {
+                if (_key.Length != other._key.Length)
+                    throw new ArgumentException("Lengths differ");
+
+                int result = 0;
+                for (int i = 0; i < _key.Length && result == 0; i++)
+                {
+                    result = this._key[i].CompareTo(other._key[i]);
+                }
+
+                return result;
             }
         }
     }

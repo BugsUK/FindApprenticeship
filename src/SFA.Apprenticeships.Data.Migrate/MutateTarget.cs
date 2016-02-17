@@ -60,7 +60,7 @@
 
         private void FlushInsert(bool force)
         {
-            if (!force && _toInsert.Count < _maxBatchSize)
+            if ((!force && _toInsert.Count < _maxBatchSize) || _toInsert.Count == 0)
                 return;
             _log.Info($"Inserting {_toInsert.Count} records into {_tableDetails.Name}");
             _syncRepository.BulkInsert(_tableDetails, _toInsert.AsReadOnly());
@@ -69,7 +69,7 @@
 
         private void FlushUpdate(bool force)
         {
-            if (!force && _toUpdate.Count < _maxBatchSize)
+            if ((!force && _toUpdate.Count < _maxBatchSize) || _toUpdate.Count ==0)
                 return;
             _log.Info($"Updating {_toUpdate.Count} records into {_tableDetails.Name}");
             _syncRepository.BulkUpdate(_tableDetails, _toUpdate.AsReadOnly());

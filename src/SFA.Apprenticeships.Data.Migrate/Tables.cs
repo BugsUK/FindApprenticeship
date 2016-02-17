@@ -33,12 +33,10 @@
             var VacancyHistoryEventType            = _tables.AddNew("VacancyHistoryEventType",           OwnedByAv);
             var PersonType                         = _tables.AddNew("PersonType",                        OwnedByAv);
             var SicCode                            = _tables.AddNew("SICCode",                           OwnedByAv);
-            var Organisation                       = _tables.AddNew("Organisation",                      OwnedByAv);
-            var StakeholderStatus                  = _tables.AddNew("StakeHolderStatus",                 OwnedByAv);
             var EmployerTrainingProviderStatus     = _tables.AddNew("EmployerTrainingProviderStatus",    OwnedByAv);
             var VacancyTextFieldValue              = _tables.AddNew("VacancyTextFieldValue",             OwnedByAv);
             var ApprenticeshipType                 = _tables.AddNew("ApprenticeshipType",                OwnedByAv);
-            var ProviderSiteRelationshipType       = _tables.AddNew("ProviderSiteRelationshipType", "ProviderSiteRelationshipTypeID", OwnedByAv);
+            var ProviderSiteRelationshipType       = _tables.AddNew("ProviderSiteRelationshipType", new string[] { "ProviderSiteRelationshipTypeID" }, OwnedByAv);
             var VacancyStatusType                  = _tables.AddNew("VacancyStatusType",                 OwnedByAv);
             var ApprenticeshipOccupationStatusType = _tables.AddNew("ApprenticeshipOccupationStatusType", OwnedByAv);
             var ApprenticeshipFrameworkStatusType  = _tables.AddNew("ApprenticeshipFrameworkStatusType", OwnedByAv);
@@ -49,35 +47,41 @@
             var LocalAuthority = _tables.AddNew("LocalAuthority", OwnedByAv, County);
 
             // Other tables
-            var AttachedDocument                  = _tables.AddNew("AttachedDocument", "AttachedDocumentId", 0.1m, OwnedByAv, MimeType);
-            var EmployerContact                   = _tables.AddNew("EmployerContact",                 OwnedByAv, ContactPreferenceType, County, LocalAuthority);
+            var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, OwnedByAv, MimeType);
+            var Person                            = _tables.AddNew("Person",                          OwnedByAv, PersonTitleType, PersonType);
+            var EmployerContact                   = _tables.AddNew("EmployerContact",                 OwnedByAv, ContactPreferenceType, County, LocalAuthority, Person);
             var Employer                          = _tables.AddNew("Employer",                        OwnedByAv, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
             var EmployerHistory                   = _tables.AddNew("EmployerHistory",                 OwnedByAv, EmployerHistoryEventType, Employer, County, LocalAuthority);
-            var ProviderSite                      = _tables.AddNew("ProviderSite",        "ProviderSiteID",            OwnedByAv, EmployerTrainingProviderStatus);
-            var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", "TrainingProviderHistoryId", OwnedByAv, ProviderSiteHistoryEventType, ProviderSite);
-            var EmployerSicCodes                  = _tables.AddNew("EmployerSICCodes",    "EmployerSICCodes",          OwnedByAv, Employer, SicCode);
-            var Person                            = _tables.AddNew("Person",                          OwnedByAv, PersonTitleType, PersonType);
-            var Stakeholder                       = _tables.AddNew("StakeHolder",         "StakeHolderID",                 OwnedByAv, Person, Organisation, StakeholderStatus, County, LocalAuthority);
-            var VacancyHistory                    = _tables.AddNew("VacancyHistory",                  OwnedByAv, VacancyHistoryEventType);
-            var VacancyTextField                  = _tables.AddNew("VacancyTextField",                OwnedByAv, VacancyTextFieldValue);
-            var Provider                          = _tables.AddNew("Provider", "ProviderID",          TransformProvider, EmployerTrainingProviderStatus);
+            var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            OwnedByAv,         EmployerTrainingProviderStatus, LocalAuthority);
+            var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, OwnedByAv,         ProviderSiteHistoryEventType, ProviderSite);
+            var EmployerSicCodes                  = _tables.AddNew("EmployerSICCodes",    new string[] { "EmployerSICCodes" },          OwnedByAv,         Employer, SicCode);
+            var Provider                          = _tables.AddNew("Provider",            new string[] { "ProviderID" },                TransformProvider, EmployerTrainingProviderStatus);
             var ApprenticeshipOccupation          = _tables.AddNew("ApprenticeshipOccupation",        OwnedByAv, ApprenticeshipOccupationStatusType);
             var ApprenticeshipFramework           = _tables.AddNew("ApprenticeshipFramework",         OwnedByAv, ApprenticeshipOccupation, ApprenticeshipFrameworkStatusType);
             var VacancyOwnerRelationship          = _tables.AddNew("VacancyOwnerRelationship",        OwnedByAv,
                 ProviderSite, Employer, AttachedDocument, VacancyProvisionRelationshipStatusType);
             var Vacancy                           = _tables.AddNew("Vacancy",                         TransformVacancy,
                 VacancyOwnerRelationship, ProviderSite, Provider, ApprenticeshipType, VacancyStatusType, ApprenticeshipFramework, County, LocalAuthority);
+            var VacancyHistory                    = _tables.AddNew("VacancyHistory",                  OwnedByAv, Vacancy, VacancyHistoryEventType);
+            var VacancyTextField                  = _tables.AddNew("VacancyTextField",                OwnedByAv, Vacancy, VacancyTextFieldValue);
             var VacancyLocation                   = _tables.AddNew("VacancyLocation",                 OwnedByAv, Vacancy, County, LocalAuthority);
-            var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",              "ProviderSiteRelationshipID",            OwnedByAv, Provider, ProviderSiteRelationshipType);
-            var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", "RecruitmentAgentLinkedRelationshipsID", OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship);
+            var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   OwnedByAv, Provider, ProviderSite, ProviderSiteRelationshipType);
+//            var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship); // TODO: No primary key
             var SubVacancy                        = _tables.AddNew("SubVacancy",                      OwnedByAv, Vacancy);
             // var SectorSuccessRates = tables.AddNew("SectorSuccessRates", OwnedByAv); // TODO: Hard as link table with no primary key
             var AdditionalQuestion                = _tables.AddNew("AdditionalQuestion",              OwnedByAv, Vacancy);
-            var VacancyReferralComments           = _tables.AddNew("VacancyReferralComments",    "VacancyReferralCommentsID",    OwnedByAv, Vacancy, VacancyReferralCommentsFieldType);
-            var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", "ProviderSiteLocalAuthorityID", OwnedByAv, ProviderSiteRelationship);
-            var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      "ProviderSiteFrameworkID",      OwnedByAv, ProviderSiteRelationship, ApprenticeshipFramework);
-            var ProviderSiteOffer                 = _tables.AddNew("ProviderSiteOffer",          "ProviderSiteOfferID",          OwnedByAv, ProviderSiteLocalAuthority, ProviderSiteFramework);
+            var VacancyReferralComments           = _tables.AddNew("VacancyReferralComments",    new string[] { "VacancyReferralCommentsID" },    OwnedByAv, Vacancy, VacancyReferralCommentsFieldType);
+            var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, OwnedByAv, ProviderSiteRelationship);
+            var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      OwnedByAv, ProviderSiteRelationship, ApprenticeshipFramework);
+            var ProviderSiteOffer                 = _tables.AddNew("ProviderSiteOffer",          new string[] { "ProviderSiteOfferID" },          OwnedByAv, ProviderSiteLocalAuthority, ProviderSiteFramework);
             var VacancyOwnerRelationshipHistory   = _tables.AddNew("VacancyOwnerRelationshipHistory", OwnedByAv, VacancyOwnerRelationship, VacancyProvisionRelationshipHistoryEventType);
+
+            if (false) // TODO: Stakeholder
+            {
+                var Organisation      = _tables.AddNew("Organisation",                                        OwnedByAv);
+                var StakeholderStatus = _tables.AddNew("StakeHolderStatus",                                   OwnedByAv);
+                var Stakeholder       = _tables.AddNew("StakeHolder",       new string[] { "StakeHolderID" }, OwnedByAv, Person, Organisation, StakeholderStatus, County, LocalAuthority);
+            }
 
             /* Other tables from diagram not required here
             var VacancySearch = tables.AddNew("VacancySearch", OwnedByAv);
@@ -105,21 +109,21 @@
             /// <returns></returns>
             public TableSpec AddNew(string tableName, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, tableName + "Id", 1, transform, dependsOn);
+                var table = new TableSpec(tableName, new string[] { tableName + "Id" }, 1, transform, dependsOn);
                 All.Add(table);
                 return table;
             }
 
-            public TableSpec AddNew(string tableName, string primaryKey, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec AddNew(string tableName, string[] primaryKeys, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, primaryKey, 1, transform, dependsOn);
+                var table = new TableSpec(tableName, primaryKeys, 1, transform, dependsOn);
                 All.Add(table);
                 return table;
             }
 
-            public TableSpec AddNew(string tableName, string primaryKey, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec AddNew(string tableName, string[] primaryKeys, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, primaryKey, batchSizeMultiplier, transform, dependsOn);
+                var table = new TableSpec(tableName, primaryKeys, batchSizeMultiplier, transform, dependsOn);
                 All.Add(table);
                 return table;
             }
@@ -134,12 +138,17 @@
 
             public Func<dynamic, dynamic, bool> Transform { get; private set; }
 
+            public IEnumerable<string> PrimaryKeys { get; private set; }
+
             public string PrimaryKey { get; private set; }
 
             public decimal BatchSizeMultiplier { get; private set; }
 
-            public TableSpec(string name, string primaryKey, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
             {
+                if (primaryKeys.Length != 1)
+                    throw new NotImplementedException($"Only one primary key is supported, not {primaryKeys.Length}");
+
                 for (int i = 0; i < dependsOn.Length; i++)
                 {
                     if (dependsOn[i] == null)
@@ -147,7 +156,8 @@
                 }
 
                 Name = name;
-                PrimaryKey = primaryKey;
+                PrimaryKeys = primaryKeys;
+                PrimaryKey = primaryKeys[0];
                 BatchSizeMultiplier = batchSizeMultiplier;
                 Transform = transform;
                 _dependsOn = new List<TableSpec>(dependsOn);
@@ -190,6 +200,7 @@
 
         public static bool TransformProvider(dynamic oldRecord, dynamic newRecord)
         {
+            // ALTER TABLE Provider ALTER COLUMN UPIN INT NULL
             newRecord.UPIN = null; // We can't always populate this, so always set it to null to prove it isn't used.
             return true;
         }

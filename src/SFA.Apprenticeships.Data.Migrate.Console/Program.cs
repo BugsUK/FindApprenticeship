@@ -31,7 +31,7 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
                 new AvmsToAvmsPlusTables(log).All
                 );
 
-            //controller.Reset(); // TODO: Remove
+            controller.Reset(); // TODO: Remove
             controller.DoAll();
         }
     }
