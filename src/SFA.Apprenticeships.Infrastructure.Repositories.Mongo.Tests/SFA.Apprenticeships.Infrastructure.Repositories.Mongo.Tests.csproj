@@ -74,6 +74,14 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="AutoMapper.Net4, Version=3.3.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FizzWare.NBuilder, Version=3.0.1.0, Culture=neutral, PublicKeyToken=5651b03e12e42c12, processorArchitecture=MSIL">
       <HintPath>..\packages\NBuilder.3.0.1.1\lib\FizzWare.NBuilder.dll</HintPath>
       <Private>True</Private>
@@ -123,6 +131,7 @@
     <Compile Include="Applications\ApprenticeshipApplicationReadRepositoryTests.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationWriteRepositoryTests.cs" />
     <Compile Include="Applications\TraineeshipApplicationReadRepositoryTests.cs" />
+    <Compile Include="Candidates\CandidateMappersTests.cs" />
     <Compile Include="Candidates\CandidateRepositoryTests.cs" />
     <Compile Include="Communication\ContactMessageRepositoryTests.cs" />
     <Compile Include="Communication\ExpiringApprenticeshipApplicationDraftsRepositoryTests.cs" />
@@ -180,6 +189,7 @@ SET COPY_PATH=$(ProjectDir)..\..\config\$(ConfigurationName)\Configs\
 robocopy /IS %25COPY_PATH%25 $(ProjectDir)Configs *.config
 if %25errorlevel%25 leq 3 exit 0 else exit %25errorlevel%25</PreBuildEvent>
   </PropertyGroup>
+  <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

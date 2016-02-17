@@ -6304,6 +6304,15 @@ h2 a i.raa-icon-comment {
     padding: 0 10px 0 0;
     width: 25%; } }
 
+.candidate-results-count {
+  font-weight: bold; }
+
+.candidate-name {
+  font-weight: bold; }
+
+.candidate-address {
+  list-style-type: none; }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

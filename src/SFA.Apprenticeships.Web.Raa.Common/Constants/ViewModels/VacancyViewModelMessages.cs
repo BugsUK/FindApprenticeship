@@ -25,9 +25,9 @@
         {
             public const string LabelText = "Summary";
             public const string RequiredErrorText = "Enter a vacancy summary";
-            public const string TooLongErrorText = "The short description must not be more than 350 characters";
+            public const string TooLongErrorText = "The vacancy summary must not be more than 350 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The short description " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "The vacancy summary " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ShortDescriptionComment

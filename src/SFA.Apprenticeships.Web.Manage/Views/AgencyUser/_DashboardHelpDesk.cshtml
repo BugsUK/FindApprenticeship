@@ -1,0 +1,8 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+<section class="grid-wrapper">
+    <h2 class="heading-medium">
+        Search for candidate
+    </h2>
+    <p>Search for a candidate by first or last name, postcode or date of birth</p>
+    @Html.RouteLink("Search for candidate", ManagementRouteNames.Candidates, null, new { @class = "button" })
+</section>

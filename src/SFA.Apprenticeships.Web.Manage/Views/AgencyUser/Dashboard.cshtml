@@ -1,7 +1,4 @@
-﻿@using SFA.Apprenticeships.Infrastructure.Presentation
-@using SFA.Apprenticeships.Web.Manage.Constants
-@using SFA.Apprenticeships.Web.Manage.ViewModels
-@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 @{
@@ -10,174 +7,43 @@
 }
 
 <div class="grid-wrapper">
-    <div class="grid grid-2-3">
+    <div class="grid grid-1-2">
         <div class="inner-block-padr">
             <h1 class="heading-xlarge">
                 Agency home
             </h1>
         </div>
     </div>
-    <div class="grid grid-1-3">
-        @using (Html.BeginRouteForm(ManagementRouteNames.Dashboard, FormMethod.Post))
+    <div class="grid grid-1-2">
+        @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
         {
-            <div class="page-link">
-                <div class="form-group">
-                    <p class="form-label">Change role</p>
-                    @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles)
-                </div>
-            </div>
-            <div class="page-link">
-                <div class="form-group">
-                    <p class="form-label">Change team</p>
-                    @Html.DropDownListFor(m => m.AgencyUser.TeamId, Model.AgencyUser.Teams)
-                </div>
-            </div>
-            <div style="text-align: right">
-                <button class="button">Save</button>
-            </div>
+            <p class="form-label">Change role</p>
+            @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select grid grid-1-1"})
+            <noscript>
+                <button class="button" name="DashboardAction" value="ChangeRole">Change role</button>
+            </noscript>
         }
-    </div>
-
-    <section class="grid-wrapper">
-        @{
-            var filterType = Model.VacancySummaries.SearchViewModel.FilterType;
-        }
-        <h2 class="heading-medium">
-            Vacancies to review
-            @if (filterType != DashboardVacancySummaryFilterTypes.All)
-            {
-                <span>&nbsp;<a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
-            }
-        </h2>
-        <ul class="vacancies-summary">
-            <li>
-                <figure class="data">
-                    @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedToday)
-                    {
-                        <p class="count">@Model.VacancySummaries.SubmittedTodayCount</p>
-                        <figcaption><h2>Submitted today</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedToday))" class="vacancy-filter">
-                            <p class="count">@Model.VacancySummaries.SubmittedTodayCount</p>
-                            <figcaption><h2>Submitted today</h2></figcaption>
-                        </a>
-                    }
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedYesterday)
-                    {
-                        <p class="count">@Model.VacancySummaries.SubmittedYesterdayCount</p>
-                        <figcaption><h2>Submitted yesterday</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedYesterday))" class="vacancy-filter">
-                            <p class="count">@Model.VacancySummaries.SubmittedYesterdayCount</p>
-                            <figcaption><h2>Submitted yesterday</h2></figcaption>
-                        </a>
-                    }
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours)
-                    {
-                        <p class="count">@Model.VacancySummaries.SubmittedMoreThan48HoursCount</p>
-                        <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours))" class="vacancy-filter">
-                            <p class="count">@Model.VacancySummaries.SubmittedMoreThan48HoursCount</p>
-                            <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                        </a>
-                    }
-                </figure>
-            </li>
-            <li>
-                <figure class="data">
-                    @if (filterType == DashboardVacancySummaryFilterTypes.Resubmitted)
-                    {
-                        <p class="count">@Model.VacancySummaries.ResubmittedCount</p>
-                        <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                    }
-                    else
-                    {
-                        <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
-                            <p class="count">@Model.VacancySummaries.ResubmittedCount</p>
-                            <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                        </a>
-                    }
-                </figure>
-            </li>
-        </ul>
-    </section>
-
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
-            <div class="inner-block-padr">
-                <section>
-                    <div class="tabbed-element tab1 active width-all-1-1">
-                        <table class="no-btm-margin">
-                            <colgroup>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                                <col>
-                            </colgroup>
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Type</th>
-                                    <th>Provider</th>
-                                    <th>Date submitted</th>
-                                    <th>Closing date</th>
-                                    <th>Submission count</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @foreach (var vacancy in Model.VacancySummaries.Vacancies)
-                            {
-                                <tr>
-                                    <td>
-                                        <span class="vac-title">@vacancy.Title</span>
-                                    </td>
-                                    <td>
-                                        <span>@vacancy.VacancyType.ToString()</span>
-                                    </td>
-                                    <td>
-                                        <span>@vacancy.ProviderName</span>
-                                    </td>
-                                    <td>
-                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
-                                    </td>
-                                    <td>
-                                        <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
-                                    </td>
-                                    <td class="ta-center">
-                                        <span>@vacancy.SubmissionCount</span>
-                                    </td>
-                                    <td>
-                                        @if (vacancy.CanBeReservedForQaByCurrentUser)
-                                        {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ReviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Review vacancy</a>
-                                        }
-                                    </td>
-                                </tr>
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </div>
-        </div>
     </div>
 </div>
+
+@if(Model.AgencyUser.RoleId == "QA_advisor")
+{
+    @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
+}
+
+@if(Model.AgencyUser.RoleId == "Helpdesk_advisor")
+{
+    @Html.Partial("_DashboardHelpDesk")
+}
+
+<div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">
+    Loading
+</div>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/dashboard")
+    <script>
+        var searchUrl = '@Url.RouteUrl(ManagementRouteNames.Dashboard)';
+    </script>
+}
