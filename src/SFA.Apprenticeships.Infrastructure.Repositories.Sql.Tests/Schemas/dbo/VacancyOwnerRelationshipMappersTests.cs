@@ -9,7 +9,6 @@
         [Test]
         public void DoMappersMapEverything()
         {
-            Assert.Inconclusive("We dont expect all fields to be mapped");
             // Arrange
             var x = new VacancyOwnerRelationshipMappers();
 

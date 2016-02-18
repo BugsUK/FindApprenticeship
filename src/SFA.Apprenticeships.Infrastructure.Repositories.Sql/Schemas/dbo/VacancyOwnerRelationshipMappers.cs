@@ -8,22 +8,29 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<ProviderSiteEmployerLink, VacancyOwnerRelationship>();
-            //{
-            //    EmployerId = employer.EmployerId, //TODO: SQL: Once EmployerRepo is done, uncomment
-            //    //ContractHolderIsEmployer = ,  TODO: SQL: What is this?
-            //    EmployerDescription = providerSiteEmployerLink.Description,
-            //    EmployerLogoAttachmentId = null,
-            //    EmployerWebsite = providerSiteEmployerLink.WebsiteUrl,
-            //    //ManagerIsEmployer = , TODO: SQL: What is this?
-            //    //NationwideAllowed = , TODO: SQL: What is this?
-            //    //Notes = , TODO: SQL: What is this?
-            //    ProviderSiteID = provider.ProviderSiteId
-            //    //StatusTypeId = TODO: SQL: What is this?
-            //};
+            Mapper.CreateMap<ProviderSiteEmployerLink, VacancyOwnerRelationship>()
+                .ForMember(vor => vor.StatusTypeId, opt => opt.UseValue(2)) //Active by default?
+                .MapMemberFrom(vor => vor.EmployerId, psel => psel.Employer.EntityId)
+                .MapMemberFrom(vor => vor.EmployerDescription, psel => psel.Description)
+                .MapMemberFrom(vor => vor.EmployerWebsite, psel => psel.WebsiteUrl)
+                .MapMemberFrom(vor => vor.VacancyOwnerRelationshipId, psel => psel.EntityId)
+                .IgnoreMember(vor => vor.Notes)
+                .IgnoreMember(vor => vor.ProviderSiteID) // DB lookup
+                .IgnoreMember(vor => vor.ContractHolderIsEmployer)
+                .IgnoreMember(vor => vor.ManagerIsEmployer)
+                .IgnoreMember(vor => vor.NationwideAllowed)
+                .IgnoreMember(vor => vor.EmployerLogoAttachmentId)
+                ;
 
-
-            Mapper.CreateMap<VacancyOwnerRelationship, ProviderSiteEmployerLink>();
+            Mapper.CreateMap<VacancyOwnerRelationship, ProviderSiteEmployerLink>()
+                .MapMemberFrom(psel => psel.EntityId, vor => vor.VacancyOwnerRelationshipId)
+                .MapMemberFrom(psel => psel.Description, vor => vor.EmployerDescription)
+                .MapMemberFrom(psel => psel.WebsiteUrl, vor => vor.EmployerWebsite)
+                .IgnoreMember(psel => psel.DateCreated)
+                .IgnoreMember(psel => psel.Employer) // DB lookup
+                .IgnoreMember(psel => psel.ProviderSiteErn) // DB lookup
+                .IgnoreMember(psel => psel.DateUpdated)
+                ;
         }
     }
 }
