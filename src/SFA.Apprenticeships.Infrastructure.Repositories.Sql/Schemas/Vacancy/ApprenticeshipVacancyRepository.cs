@@ -315,8 +315,8 @@ FETCH NEXT @PageSize ROWS ONLY
 
             if (!_getOpenConnection.UpdateSingle(dbVacancy))
                 throw new Exception("Failed to update record");
-            
-            UpdateTextFieldsFor(entity.VacancyId, entity);
+
+            SaveTextFieldsFor(entity.VacancyId, entity);
             SaveAdditionalQuestionsFor(entity.VacancyId, entity);
 
             _logger.Debug("Shallow updated apprenticeship vacancy with to database with id={0}", entity.VacancyId);
@@ -428,13 +428,24 @@ WHERE  EducationLevel = @EducationLevel",
 
         private void SaveTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
         {
-            // TODO: study how we deal with nulls
-            InsertTextField(vacancyId, "TBP", entity.TrainingProvided);
-            InsertTextField(vacancyId, "QR", entity.DesiredQualifications);
-            InsertTextField(vacancyId, "SR", entity.DesiredSkills);
-            InsertTextField(vacancyId, "PQ", entity.PersonalQualities);
-            InsertTextField(vacancyId, "OII", entity.ThingsToConsider);
-            InsertTextField(vacancyId, "FP", entity.FutureProspects);
+            SaveTextField(vacancyId, "TBP", entity.TrainingProvided);
+            SaveTextField(vacancyId, "QR", entity.DesiredQualifications);
+            SaveTextField(vacancyId, "SR", entity.DesiredSkills);
+            SaveTextField(vacancyId, "PQ", entity.PersonalQualities);
+            SaveTextField(vacancyId, "OII", entity.ThingsToConsider);
+            SaveTextField(vacancyId, "FP", entity.FutureProspects);
+        }
+
+        private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
+        {
+            if (!string.IsNullOrWhiteSpace(value))
+            {
+                InsertTextField(vacancyId, vacancyTextFieldCodeName, value);
+            }
+            else
+            {
+                DeleteTextField(vacancyId, vacancyTextFieldCodeName);
+            }
         }
 
         private void SaveAdditionalQuestionsFor(int vacancyId, ApprenticeshipVacancy entity)
@@ -472,22 +483,31 @@ when not matched then
             });
         }
 
+        private void DeleteTextField(int vacancyId, string vacancyTextFieldCodeName)
+        {
+            var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
+	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
+	WHERE CodeName = '{vacancyTextFieldCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            var sql = @"
+    DELETE from dbo.VacancyTextField
+    WHERE VacancyId = @VacancyId and Field = @FieldId";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                FieldId = vacancyTextFieldValueId
+            });
+        }
+
         private void InsertTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
         {
             var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
 	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
 	WHERE CodeName = '{vacancyTextFieldCodeName}'
 ").Single(); // TODO: Hardcode the ID?
-            /*
-            var vacancyTextField = new VacancyTextField
-            {
-                VacancyId = vacancyId,
-                Field = vacancyTextFieldValueId,
-                Value = value
-            };
-
-            _getOpenConnection.Insert(vacancyTextField);*/
-
+            
             var sql = @"
 merge dbo.VacancyTextField as target
 using (values (@Value))
@@ -508,9 +528,17 @@ when not matched then
             });
         }
 
-        private void UpdateTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
+        /*private void UpdateTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
         {
-            UpdateTextField(vacancyId, "TBP", entity.TrainingProvided);
+            if (!string.IsNullOrWhiteSpace(entity.TrainingProvided))
+            {
+                UpdateTextField(vacancyId, "TBP", entity.TrainingProvided);
+            }
+            else
+            {
+                DeleteTextField(vacancyId, "TBP");
+            }
+            
             UpdateTextField(vacancyId, "QR", entity.DesiredQualifications);
             UpdateTextField(vacancyId, "SR", entity.DesiredSkills);
             UpdateTextField(vacancyId, "PQ", entity.PersonalQualities);
@@ -540,7 +568,7 @@ WHERE VacancyId = @VacancyId AND Field = @FieldId",
                     Value = value
                 });
         }
-
+        */
         private int PopulateVacancyPartyIds(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)
         {
             var results = _getOpenConnection.QueryMultiple<dynamic, int>(@"

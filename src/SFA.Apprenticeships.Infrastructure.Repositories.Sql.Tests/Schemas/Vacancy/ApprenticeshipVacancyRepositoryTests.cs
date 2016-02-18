@@ -39,8 +39,6 @@
         public void SimpleSaveAndUpdateTest()
         {
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
-                logger.Object);
             IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
                 logger.Object);
 
@@ -65,9 +63,11 @@
             vacancy.ProviderSiteEmployerLink.Employer.Address.County = "BER";
             vacancy.ProviderSiteEmployerLink.ProviderSiteErn = "100339794";
             vacancy.ProviderSiteEmployerLink.Employer.Ern = "123456";
+            vacancy.TrainingProvided = null;
 
             var entity = writeRepository.ShallowSave(vacancy);
             vacancy.VacancyId = entity.VacancyId;
+            vacancy.TrainingProvided = null;
             writeRepository.ShallowUpdate(vacancy);
         }
 
