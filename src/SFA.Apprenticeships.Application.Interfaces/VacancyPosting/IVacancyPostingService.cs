@@ -1,34 +1,36 @@
-﻿using System;
-
-namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
+﻿namespace SFA.Apprenticeships.Application.Interfaces.VacancyPosting
 {
+    using System;
     using System.Collections.Generic;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
 
     public interface IVacancyPostingService
     {
-        ApprenticeshipVacancy CreateApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+        Vacancy CreateApprenticeshipVacancy(Vacancy vacancy);
 
-        ApprenticeshipVacancy SaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+        Vacancy SaveApprenticeshipVacancy(Vacancy vacancy);
 
-        ApprenticeshipVacancy ShallowSaveApprenticeshipVacancy(ApprenticeshipVacancy vacancy);
+        Vacancy ShallowSaveApprenticeshipVacancy(Vacancy vacancy);
 
         long GetNextVacancyReferenceNumber();
 
-        ApprenticeshipVacancy GetVacancy(long vacancyReferenceNumber);
+        Vacancy GetVacancy(int vacancyId);
 
-        ApprenticeshipVacancy GetVacancy(Guid vacancyGuid);
+        Vacancy GetVacancy(long vacancyReferenceNumber);
 
-        List<ApprenticeshipVacancy> GetWithStatus(params ProviderVacancyStatuses[] desiredStatuses);
+        Vacancy GetVacancy(Guid vacancyGuid);
+        
+        List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<ApprenticeshipVacancy> GetForProvider(string ukPrn, string providerSiteErn);
+        List<Vacancy> GetForProvider(int providerId, int providerSiteId);
 
-        ApprenticeshipVacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 
         void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
             IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
             string additionalLocationInformation, string additionalLocationInformationComment);
+
+        List<VacancyLocationAddress> GetLocationAddresses(int vacancyId);
     }
 }

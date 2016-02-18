@@ -12,12 +12,9 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
     using Application.Organisation;
     using Configuration;
     using Dapper;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using SFA.Infrastructure.Interfaces;
-    using Provider = Domain.Entities.Providers.Provider;
-    using ProviderSite = Domain.Entities.Providers.ProviderSite;
 
     public class LegacyProviderProvider : ILegacyProviderProvider
     {
@@ -103,7 +100,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = legacyProviderSite.AddressLine1,
                 AddressLine2 = legacyProviderSite.AddressLine2,
@@ -121,7 +118,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             var providerSite = new ProviderSite
             {
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
-                Ern = legacyProviderSite.EDSURN.ToString(),
+                EdsErn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,
                 EmployerDescription = legacyProviderSite.EmployerDescription,
                 CandidateDescription = legacyProviderSite.CandidateDescription,
@@ -133,25 +130,33 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return providerSite;
         }
 
-        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
+        public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
+        {
+            return null;
+            /*var request = new EmployerSearchRequest(providerSiteId, employerId);
+            var results = GetVacancyParties(request);
+            return results.SingleOrDefault();*/
+        }
+
+        public VacancyParty GetVacancyParty(string providerSiteErn, string ern)
         {
             var request = new EmployerSearchRequest(providerSiteErn, ern);
             var results = GetProviderSiteEmployerLinks(request);
             return results.SingleOrDefault();
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
+        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(string providerSiteErn)
         {
             var request = new EmployerSearchRequest(providerSiteErn);
             return GetProviderSiteEmployerLinks(request);
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
+        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
         {
             Contract.Requires(searchRequest != null);
             IList<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
 
-            var queryBuilder = new StringBuilder(@"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
+            var queryBuilder = new StringBuilder(@"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteEdsErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
 
             object parameterList;
 
@@ -160,7 +165,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
+                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
                     EmployerEdsUrn = searchRequest.EmployerEdsUrn
                 };
             }
@@ -170,7 +175,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
+                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
                     NameSearchParameter = searchRequest.Name,
                     LocationSearchParameter = searchRequest.Location
                 };
@@ -180,7 +185,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
+                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
                     NameSearchParameter = searchRequest.Name
                 };
             }
@@ -190,7 +195,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
+                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
                     LocationSearchParameter = searchRequest.Location
                 };
             }
@@ -198,7 +203,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             {
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn
+                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn
                 };
             }
 
@@ -212,17 +217,17 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                         splitOn: "NationWideAllowed,EmployerId").ToList();
             }
 
-            return vacancyOwnerRelationships.Select(GetProviderSiteEmployerLink);
+            return vacancyOwnerRelationships.Select(GetVacancyParty);
         }
 
-        private static ProviderSiteEmployerLink GetProviderSiteEmployerLink(Models.VacancyOwnerRelationship vacancyOwnerRelationship)
+        private static VacancyParty GetVacancyParty(Models.VacancyOwnerRelationship vacancyOwnerRelationship)
         {
             if (vacancyOwnerRelationship == null)
             {
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = vacancyOwnerRelationship.Employer.AddressLine1,
                 AddressLine2 = vacancyOwnerRelationship.Employer.AddressLine2,
@@ -237,19 +242,13 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 //Uprn = 
             };
 
-            var employer = new Employer
+            var providerSiteEmployerLink = new VacancyParty
             {
-                Ern = vacancyOwnerRelationship.Employer.EdsUrn.ToString(),
-                Name = vacancyOwnerRelationship.Employer.FullName,
-                Address = address
-            };
-
-            var providerSiteEmployerLink = new ProviderSiteEmployerLink
-            {
-                ProviderSiteErn = vacancyOwnerRelationship.ProviderSiteEdsUrn.ToString(),
-                Description = CleanDescription(vacancyOwnerRelationship.EmployerDescription),
-                WebsiteUrl = vacancyOwnerRelationship.EmployerWebsite,
-                Employer = employer
+                VacancyPartyId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
+                ProviderSiteId = vacancyOwnerRelationship.ProviderSiteId,
+                EmployerId = vacancyOwnerRelationship.Employer.EmployerId,
+                EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
+                EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsite
             };
 
             return providerSiteEmployerLink;

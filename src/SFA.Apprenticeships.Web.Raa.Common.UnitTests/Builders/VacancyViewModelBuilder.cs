@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Builders
 {
     using System;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using Ploeh.AutoFixture;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
@@ -32,7 +30,7 @@
             return viewModel;
         }
 
-        public VacancyViewModel BuildValid(ProviderVacancyStatuses status, VacancyType vacancyType)
+        public VacancyViewModel BuildValid(VacancyStatus status, VacancyType vacancyType)
         {
             var viewModel = new Fixture().Build<VacancyViewModel>().Create();
             viewModel.NewVacancyViewModel.VacancyType = vacancyType;

@@ -14,6 +14,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
             ProviderSiteViewModels = new List<ProviderSiteViewModel>();
         }
 
+        public int ProviderId { get; set; }
+
         [Display(Name = ProviderViewModelMessages.ProviderNameMessages.LabelText)]
         public string ProviderName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }

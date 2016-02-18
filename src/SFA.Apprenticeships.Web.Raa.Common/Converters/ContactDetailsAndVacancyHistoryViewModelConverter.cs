@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
-    using Domain.Entities.Providers;
-    using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Users;
+    using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
 
     public static class ContactDetailsAndVacancyHistoryViewModelConverter
@@ -20,7 +20,7 @@
                 PhoneNumber = providerUser.PhoneNumber,
                 DateSubmitted = vacancy.DateSubmitted,
                 DateFirstSubmitted = vacancy.DateFirstSubmitted ?? vacancy.DateSubmitted,
-                DateLastUpdated = vacancy.DateUpdated
+                DateLastUpdated = vacancy.UpdatedDateTime
             };
         }
     }

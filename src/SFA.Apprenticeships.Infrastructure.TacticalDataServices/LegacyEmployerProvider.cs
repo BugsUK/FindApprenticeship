@@ -6,8 +6,8 @@
     using Application.Organisation;
     using Configuration;
     using Dapper;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using SFA.Infrastructure.Interfaces;
 
     public class LegacyEmployerProvider : ILegacyEmployerProvider
@@ -18,6 +18,20 @@
         {
             var config = configurationService.Get<TacticalDataServivcesConfiguration>();
             _connectionString = config.AvSqlReferenceConnectionString;
+        }
+
+        public Employer GetEmployer(int employerId)
+        {
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EmployerId = @EmployerId AND e.EmployerStatusTypeId = 1";
+
+            Models.Employer legacyEmployer;
+
+            using (var connection = GetConnection())
+            {
+                legacyEmployer = connection.Query<Models.Employer>(sql, new { EmployerId = employerId }).SingleOrDefault();
+            }
+
+            return GetEmployer(legacyEmployer);
         }
 
         public Employer GetEmployer(string ern)
@@ -41,7 +55,7 @@
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = legacyEmployer.AddressLine1,
                 AddressLine2 = legacyEmployer.AddressLine2,
@@ -58,7 +72,7 @@
 
             var employer = new Employer
             {
-                Ern = legacyEmployer.EdsUrn.ToString(),
+                EdsErn = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Address = address
             };

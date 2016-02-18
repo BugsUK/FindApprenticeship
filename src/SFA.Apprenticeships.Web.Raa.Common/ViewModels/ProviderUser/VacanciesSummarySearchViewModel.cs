@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public class VacanciesSummarySearchViewModel
     {

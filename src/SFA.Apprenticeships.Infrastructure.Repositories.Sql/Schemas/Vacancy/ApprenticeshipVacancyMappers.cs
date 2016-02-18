@@ -7,10 +7,8 @@
     using AutoMapper;
     using AutoMapper.Mappers;
     using Domain.Entities.Locations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
 
     /// <summary>
@@ -83,16 +81,16 @@
                 { "0", ApprenticeshipLevel.Unknown } // TODO: review
             };
 
-            var vacancyStatusMap = new CodeEnumMap<ProviderVacancyStatuses>
+            var vacancyStatusMap = new CodeEnumMap<VacancyStatus>
             {
-                { "LIV", ProviderVacancyStatuses.Live },
-                { "CLD", ProviderVacancyStatuses.Closed },
-                { "DFT", ProviderVacancyStatuses.Draft },
-                { "PQA", ProviderVacancyStatuses.PendingQA },
-                { "REJ", ProviderVacancyStatuses.RejectedByQA },
-                { "RES", ProviderVacancyStatuses.ReservedForQA },
-                { "PAR", ProviderVacancyStatuses.ParentVacancy },
-                { "UNK", ProviderVacancyStatuses.Unknown} // TODO: review
+                { "LIV", VacancyStatus.Live },
+                { "CLD", VacancyStatus.Closed },
+                { "DFT", VacancyStatus.Draft },
+                { "PQA", VacancyStatus.PendingQA },
+                { "REJ", VacancyStatus.RejectedByQA },
+                { "RES", VacancyStatus.ReservedForQA },
+                { "PAR", VacancyStatus.ParentVacancy },
+                { "UNK", VacancyStatus.Unknown} // TODO: review
             };
 
             var vacancyTypeMap = new CodeEnumMap<VacancyType>
@@ -102,32 +100,32 @@
                 { "T", VacancyType.Traineeship }
             };
 
-            Mapper.CreateMap<string, ProviderVacancyStatuses>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
-            Mapper.CreateMap<ProviderVacancyStatuses, string>().ConvertUsing(status => vacancyStatusMap.EnumToCode[status]);
+            Mapper.CreateMap<string, VacancyStatus>().ConvertUsing(code => vacancyStatusMap.CodeToEnum[code]);
+            Mapper.CreateMap<VacancyStatus, string>().ConvertUsing(status => vacancyStatusMap.EnumToCode[status]);
             
-            Mapper.CreateMap<ApprenticeshipVacancy, Entities.Vacancy>()
+            Mapper.CreateMap<Vacancy, Entities.Vacancy>()
                 .MapMemberFrom(v => v.WorkingWeekText, av => av.WorkingWeek)
                 .MapMemberFrom(v => v.WageTypeCode, av => wageTypeMap.EnumToCode[av.WageType])
                 .MapMemberFrom(v => v.WageIntervalCode, av => wageUnitMap.EnumToCode[av.WageUnit])
                 .MapMemberFrom(v => v.WageValue, av => av.Wage)
                 .MapMemberFrom(v => v.DurationTypeCode, av => durationTypeMap.EnumToCode[av.DurationType])
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
-                .MapMemberFrom(v => v.AV_InterviewStartDate, av => av.InterviewStartDate)
+                //.MapMemberFrom(v => v.AV_InterviewStartDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.PossibleStartDateDate, av => av.PossibleStartDate)
                 .MapMemberFrom(v => v.TrainingTypeCode, av => trainingTypeMap.EnumToCode[av.TrainingType])
                 .ForMember( v=> v.VacancyStatusCode, opt => opt.MapFrom(av => av.Status))
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
-                .MapMemberFrom(v => v.VacancyId, av => av.EntityId)
+                //.MapMemberFrom(v => v.VacancyId, av => av.EntityId)
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
                 .MapMemberFrom(v => v.SectorIdComment, av => av.SectorCodeNameComment)
-                .MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl) // TODO: The reverse
-                .MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // TODO: The reverse
+                //.MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl) // TODO: The reverse
+                //.MapMemberFrom(v => v.EmployerDescription, av => av.ProviderSiteEmployerLink.Description) // TODO: The reverse
                 .MapMemberFrom(v => v.PublishedDateTime, av => av.DateSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.FirstSubmittedDateTime, av => av.DateFirstSubmitted) // TODO: Believed to be correct
                 .MapMemberFrom(v => v.VacancyTypeCode, av => vacancyTypeMap.EnumToCode[av.VacancyType]) // Apprenticeship / Traineeship
 
-                // TODO: Change ApprenticeshipVacancy object in due course
+                // TODO: Change Vacancy object in due course
                 .MapMemberFrom(v => v.DirectApplicationInstructions, av => av.OfflineApplicationInstructions)
                 .MapMemberFrom(v => v.DirectApplicationInstructionsComment, av => av.OfflineApplicationInstructionsComment)
                 .MapMemberFrom(v => v.DirectApplicationUrl, av => av.OfflineApplicationUrl)
@@ -146,7 +144,7 @@
                 .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
 
-                // TODO: Missing from ApprenticeshipVacancy
+                // TODO: Missing from Vacancy
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
                 .ForMember(v => v.AV_ContactName, opt => opt.Ignore()) // TODO: I think this has been added back in as a requirement or needs renaming to AV_ContactDetails - check AVMS
                 .IgnoreMember(v => v.VacancyLocationTypeCode)
@@ -156,27 +154,27 @@
 
                 .End();
 
-            Mapper.CreateMap<Entities.Vacancy, ApprenticeshipVacancy>()
+            Mapper.CreateMap<Entities.Vacancy, Vacancy>()
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeekText)
                 .MapMemberFrom(av => av.WageType, v => wageTypeMap.CodeToEnum[v.WageTypeCode])
                 .MapMemberFrom(av => av.WageUnit, v => wageUnitMap.CodeToEnum[v.WageIntervalCode])
                 .MapMemberFrom(av => av.Wage, v => v.WageValue)
                 .MapMemberFrom(av => av.DurationType, v => durationTypeMap.CodeToEnum[v.DurationTypeCode])
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
-                .MapMemberFrom(av => av.InterviewStartDate, v => v.AV_InterviewStartDate)
+                //.MapMemberFrom(av => av.InterviewStartDate, v => v.AV_InterviewStartDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.PossibleStartDateDate)
                 .MapMemberFrom(av => av.TrainingType, v => trainingTypeMap.CodeToEnum[v.TrainingTypeCode])
                 .ForMember(av => av.Status, opt => opt.MapFrom(v => v.VacancyStatusCode))
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
-                .MapMemberFrom(av => av.EntityId, v => v.VacancyId)
+                //.MapMemberFrom(av => av.EntityId, v => v.VacancyId)
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
                 .MapMemberFrom(av => av.SectorCodeNameComment, v => v.SectorIdComment)
                 .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.DateFirstSubmitted, v => v.FirstSubmittedDateTime) // TODO: Believed to be correct
                 .MapMemberFrom(av => av.VacancyType, v => vacancyTypeMap.CodeToEnum[v.VacancyTypeCode])
 
-                // TODO: Change ApprenticeshipVacancy object in due course
+                // TODO: Change Vacancy object in due course
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.DirectApplicationInstructions)
                 .MapMemberFrom(av => av.OfflineApplicationInstructionsComment, v => v.DirectApplicationInstructionsComment)
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.DirectApplicationUrl)
@@ -184,10 +182,10 @@
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.IsDirectApplication)
 
                 // Need to map the following separately
-                .ForMember(av => av.Ukprn, opt => opt.Ignore())
+                //.ForMember(av => av.Ukprn, opt => opt.Ignore())
                 .ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
                 .ForMember(av => av.SectorCodeName, opt => opt.Ignore()) // To FrameworkId
-                .ForMember(av => av.LocationAddresses, opt => opt.Ignore())
+                //.ForMember(av => av.LocationAddresses, opt => opt.Ignore())
 
                 // TODO: Currently missing from Vacancy.Vacancy
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
@@ -197,20 +195,20 @@
 
                 // TODO: Currently missing from Vacancy.Vacancy, but should be times
                 .ForMember(av => av.DateStartedToQA, opt => opt.Ignore()) // Locking field DateTime
-                .ForMember(av => av.DateCreated, opt => opt.Ignore()) // Yes, keep this DateTime
-                .ForMember(av => av.DateUpdated, opt => opt.Ignore()) // Yes, keep this DateTime
+                .ForMember(av => av.CreatedDateTime, opt => opt.Ignore()) // Yes, keep this DateTime
+                .ForMember(av => av.UpdatedDateTime, opt => opt.Ignore()) // Yes, keep this DateTime
 
                 // TODO: vacancy source
 
-                .ForMember(av => av.ProviderSiteEmployerLink, opt => opt.Ignore())
+                /*.ForMember(av => av.ProviderSiteEmployerLink, opt => opt.Ignore())
                 .AfterMap((v, av) => 
                 {
-                    av.ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
+                    av.ProviderSiteEmployerLink = new VacancyParty()
                     {
                         WebsiteUrl = v.EmployerWebsiteUrl,
                         Description = v.EmployerDescription,
                     };
-                })
+                })*/
 
                 .End();
 

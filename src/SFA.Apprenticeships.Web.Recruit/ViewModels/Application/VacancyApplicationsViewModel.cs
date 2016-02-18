@@ -3,7 +3,7 @@
     using System;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public class VacancyApplicationsViewModel
     {
@@ -19,7 +19,7 @@
 
         public DateTime ClosingDate { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         public int NewApplicationsCount { get; set; }
 

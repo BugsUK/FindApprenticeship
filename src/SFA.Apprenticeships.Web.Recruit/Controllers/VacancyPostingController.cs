@@ -11,7 +11,8 @@
     using Common.Validators.Extensions;
     using Constants;
     using Domain.Entities;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
     using Mediators.VacancyPosting;
     using Raa.Common.Constants.ViewModels;
@@ -100,9 +101,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
+        public ActionResult ConfirmEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid, comeFromPreview, useEmployerLocation);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, employerId, vacancyGuid, comeFromPreview, useEmployerLocation);
 
             switch (response.Code)
             {
@@ -188,9 +189,9 @@
         #region Basic Details
 
         [HttpGet]
-        public ActionResult CreateVacancy(string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
+        public ActionResult CreateVacancy(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(User.GetUkprn(), providerSiteErn, ern, vacancyGuid, numberOfPositions);
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(providerId, providerSiteId, employerId, vacancyGuid, numberOfPositions);
             
             return View(response.ViewModel);
         }
@@ -578,7 +579,7 @@
                         });
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
                     var routeName = RecruitmentRouteNames.VacancyQuestions;
-                    if (response.ViewModel.Status == ProviderVacancyStatuses.RejectedByQA || response.ViewModel.ComeFromPreview)
+                    if (response.ViewModel.Status == VacancyStatus.RejectedByQA || response.ViewModel.ComeFromPreview)
                     {
                         routeName = RecruitmentRouteNames.PreviewVacancy;
                     }
@@ -782,9 +783,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview)
+        public ActionResult ConfirmNewEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteErn, ern, vacancyGuid, comeFromPreview, null);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, employerId, vacancyGuid, comeFromPreview, null);
             return View(response.ViewModel);
         }
 

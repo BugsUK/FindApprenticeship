@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Users;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using ViewModels;
 
     public class AgencyUserProvider : IAgencyUserProvider

@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -11,32 +10,35 @@
     [TestFixture]
     public class GetNewVacancyTests : TestBase
     {
+        protected const int ProviderSiteId = 1;
+        protected const int EmployerId = 2;
+        protected const int ProviderId = 3;
         protected static readonly string ProviderSiteUrn = Guid.NewGuid().ToString();
-        protected static readonly string Ern = Guid.NewGuid().ToString();
+        protected static readonly string EdsErn = Guid.NewGuid().ToString();
         protected static readonly string Ukprn = Guid.NewGuid().ToString();
         protected static readonly Guid VacancyGuid = Guid.NewGuid();
 
         private static readonly Employer Employer = new Employer
         {
-            Ern = Ern,
-            Address = new Address
+            EdsErn = EdsErn,
+            Address = new PostalAddress
             {
                 GeoPoint = new GeoPoint()
             }
         };
 
-        private static readonly ProviderSiteEmployerLink ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+        private static readonly VacancyParty VacancyParty = new VacancyParty
         {
-            ProviderSiteErn = ProviderSiteUrn,
-            Employer = Employer
+            ProviderSiteId = ProviderSiteId,
+            EmployerId = EmployerId
         };
 
         [SetUp]
         public void SetUp()
         {
             MockProviderService
-                .Setup(mock => mock.GetProviderSiteEmployerLink(ProviderSiteUrn, Ern))
-                .Returns(ProviderSiteEmployerLink);
+                .Setup(mock => mock.GetVacancyParty(ProviderSiteId, EmployerId))
+                .Returns(VacancyParty);
         }
 
         [Test]
@@ -46,11 +48,11 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.GetNewVacancyViewModel(Ukprn, ProviderSiteUrn, Ern, VacancyGuid, null);
+            var viewModel = provider.GetNewVacancyViewModel(ProviderId, ProviderSiteId, EmployerId, VacancyGuid, null);
 
             // Assert.
             MockProviderService.Verify(mock =>
-                mock.GetProviderSiteEmployerLink(ProviderSiteUrn, Ern), Times.Once);
+                mock.GetVacancyParty(ProviderSiteId, EmployerId), Times.Once);
 
             viewModel.Should().NotBeNull();
             viewModel.ProviderSiteEmployerLink.ProviderSiteErn.Should().Be(ProviderSiteUrn);

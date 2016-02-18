@@ -1,7 +1,6 @@
 ﻿@model VacancyViewModel
 
-@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -36,7 +35,7 @@
                     @Model.VacancyType.GetTitle(Model.NewVacancyViewModel.Title)
                     @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.Title, Model.NewVacancyViewModel.TitleComment, Model.BasicDetailsLink))
                 </h1>
-                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+                <p class="subtitle" id="vacancy-subtitle-employer-name" itemprop="hiringOrganization">@Model.EmployerName</p>
                 @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.Title, Model.BasicDetailsLink, Model.NewVacancyViewModel.TitleComment))
             </div>
         </div>

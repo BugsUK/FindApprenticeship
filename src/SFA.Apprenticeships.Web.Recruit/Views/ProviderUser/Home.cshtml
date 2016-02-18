@@ -3,11 +3,11 @@
 @functions {
     private static bool VacancyIsClonable(VacancyViewModel vacancy)
     {
-        return vacancy.Status != ProviderVacancyStatuses.RejectedByQA;
+        return vacancy.Status != VacancyStatuses.RejectedByQA;
     }
 }
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -285,7 +285,7 @@
                                             @{
                                                 var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
                                                 var routeName = RecruitmentRouteNames.PreviewVacancy;
-                                                if (vacancy.Status == ProviderVacancyStatuses.Unknown || vacancy.Status == ProviderVacancyStatuses.Draft)
+                                                if (vacancy.Status == VacancyStatuses.Unknown || vacancy.Status == VacancyStatuses.Draft)
                                                 {
                                                     routeName = RecruitmentRouteNames.ReviewCreateVacancy;
                                                 }
@@ -304,7 +304,7 @@
                                         </div>
                                     </td>
                                     <td class="vac-employer" data-label="Employer">
-                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+                                        @vacancy.NewVacancyViewModel.VacancyParty.Employer.Name
                                     </td>
                                     <td class="vac-ref-number" data-label="Vacancy ref">
                                     @if (vacancy.IsApprovedMultiLocationChildVacancy)
@@ -314,7 +314,7 @@
                                     }
                                     else
                                     {
-                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4
+                                        @vacancy.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine4
                                     }
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
@@ -324,7 +324,7 @@
                                             var unit = isOfflineVacancy ? "click-through" : "application";
                                             var units = unit + "s";
 
-                                            if (vacancy.Status == ProviderVacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            if (vacancy.Status == VacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
                                             {
                                                 <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
@@ -344,7 +344,7 @@
                                     </td>
                                     <td class="vac-status">
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
-                                        @if (vacancy.Status == ProviderVacancyStatuses.Live)
+                                        @if (vacancy.Status == VacancyStatuses.Live)
                                         {
                                             Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate);
                                         }

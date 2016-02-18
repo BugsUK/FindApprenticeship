@@ -1,12 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 {
-    using System.Collections.Generic;
     using AutoMapper;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using Infrastructure.Presentation;
     using ViewModels.Vacancy;
-    using ViewModels.VacancyPosting;
 
     /// <summary>
     /// This is meant to replace
@@ -14,20 +11,20 @@
     /// 
     /// TODO: DI for automapper within Raa websites (manage and recruit), then replace usage of converter (above) with this mapping class
     /// </summary>
-    internal sealed class ApprenticeshipVacancyToVacancyViewModelConverter : ITypeConverter<ApprenticeshipVacancy, VacancyViewModel>
+    internal sealed class ApprenticeshipVacancyToVacancyViewModelConverter : ITypeConverter<Vacancy, VacancyViewModel>
     {
         public VacancyViewModel Convert(ResolutionContext context)
         {
-            var source = (ApprenticeshipVacancy)context.SourceValue;
+            var source = (Vacancy)context.SourceValue;
             var destination = new VacancyViewModel
             {
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
                 Status = source.Status,
-                NewVacancyViewModel = context.Engine.Map<ApprenticeshipVacancy, NewVacancyViewModel>(source),
-                TrainingDetailsViewModel = context.Engine.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(source),
-                VacancySummaryViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancySummaryViewModel>(source),
-                VacancyRequirementsProspectsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>(source),
-                VacancyQuestionsViewModel = context.Engine.Map<ApprenticeshipVacancy, VacancyQuestionsViewModel>(source),
+                NewVacancyViewModel = context.Engine.Map<Vacancy, NewVacancyViewModel>(source),
+                TrainingDetailsViewModel = context.Engine.Map<Vacancy, TrainingDetailsViewModel>(source),
+                VacancySummaryViewModel = context.Engine.Map<Vacancy, VacancySummaryViewModel>(source),
+                VacancyRequirementsProspectsViewModel = context.Engine.Map<Vacancy, VacancyRequirementsProspectsViewModel>(source),
+                VacancyQuestionsViewModel = context.Engine.Map<Vacancy, VacancyQuestionsViewModel>(source),
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
                 VacancyType = source.VacancyType
             };
@@ -38,15 +35,16 @@
                 {
                     DateSubmitted = source.DateSubmitted,
                     DateFirstSubmitted = source.DateFirstSubmitted ?? source.DateSubmitted,
-                    DateLastUpdated = source.DateUpdated
+                    DateLastUpdated = source.UpdatedDateTime
                 };
             }
 
             // TODO: move to its custom mapper?
-            destination.NewVacancyViewModel.VacancyGuid = source.EntityId;
-            destination.NewVacancyViewModel.LocationAddresses =
-                context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
-                    source.LocationAddresses);
+            destination.NewVacancyViewModel.VacancyGuid = source.VacancyGuid;
+            //TODO: Map after this conversion
+            //destination.NewVacancyViewModel.LocationAddresses =
+            //    context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
+            //        source.LocationAddresses);
             destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
             destination.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation =
                 source.IsEmployerLocationMainApprenticeshipLocation;

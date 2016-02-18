@@ -2,9 +2,9 @@
 {
     using System;
     using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.Provider;
@@ -12,6 +12,7 @@
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
+    using GeoPoint = Domain.Entities.Raa.Locations.GeoPoint;
 
     public class RaaCommonWebMappers : MapperEngine
     {
@@ -20,7 +21,7 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<Employer, EmployerViewModel>();
-            Mapper.CreateMap<ProviderSiteEmployerLink, ProviderSiteEmployerLinkViewModel>()
+            Mapper.CreateMap<VacancyParty, ProviderSiteEmployerLinkViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())
@@ -35,25 +36,25 @@
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
 
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancyDatesViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancyDatesViewModelConverter>();
+            Mapper.CreateMap<Vacancy, VacancyDatesViewModel>().ConvertUsing<VacancyToVacancyDatesViewModelConverter>();
 
-            Mapper.CreateMap<ApprenticeshipVacancy, NewVacancyViewModel>()
+            Mapper.CreateMap<Vacancy, NewVacancyViewModel>()
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
 
-            Mapper.CreateMap<ApprenticeshipVacancy, TrainingDetailsViewModel>()
+            Mapper.CreateMap<Vacancy, TrainingDetailsViewModel>()
                 .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
                 .ForMember(dest => dest.Standards, opt => opt.Ignore())
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
 
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancySummaryViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancySummaryViewModelConverter>();
+            Mapper.CreateMap<Vacancy, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
 
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancyRequirementsProspectsViewModel>()
+            Mapper.CreateMap<Vacancy, VacancyRequirementsProspectsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancyQuestionsViewModel>()
+            Mapper.CreateMap<Vacancy, VacancyQuestionsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancyViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancyViewModelConverter>();
+            Mapper.CreateMap<Vacancy, VacancyViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancyViewModelConverter>();
         }
     }
 }

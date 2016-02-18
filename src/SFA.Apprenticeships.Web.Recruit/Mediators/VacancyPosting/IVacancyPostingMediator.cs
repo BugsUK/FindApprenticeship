@@ -15,11 +15,11 @@
 
         MediatorResponse<EmployerSearchViewModel> GetEmployers(EmployerSearchViewModel employerFilterViewModel);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation);
+        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation);
 
         MediatorResponse<ProviderSiteEmployerLinkViewModel> ConfirmEmployer(ProviderSiteEmployerLinkViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview);
 

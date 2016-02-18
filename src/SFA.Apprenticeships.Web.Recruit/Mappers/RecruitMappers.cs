@@ -5,8 +5,8 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
     using ViewModels.Application;
@@ -19,10 +19,10 @@
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
 
-            Mapper.CreateMap<ApprenticeshipVacancy, VacancyApplicationsViewModel>()
+            Mapper.CreateMap<Vacancy, VacancyApplicationsViewModel>()
                 .ForMember(v => v.VacancyApplicationsSearch, opt => opt.Ignore())
-                .ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
-                .ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
+                //.ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
+                //.ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
                 .ForMember(v => v.NewApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ViewedApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.SuccessfulApplicationsCount, opt => opt.Ignore())
@@ -32,7 +32,7 @@
             Mapper.CreateMap<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>()
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()));
 
-            Mapper.CreateMap<ApprenticeshipVacancy, ApplicationVacancyViewModel>();
+            Mapper.CreateMap<Vacancy, ApplicationVacancyViewModel>();
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicantDetailsViewModel>()
                 .ForMember(v => v.Name, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()))

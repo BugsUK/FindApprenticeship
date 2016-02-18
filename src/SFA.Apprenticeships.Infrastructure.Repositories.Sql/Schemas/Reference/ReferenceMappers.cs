@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
-    using Domain.Entities.Reference;
+    using Domain.Entities.Raa.Reference;
     using Vacancy;
 
     public class ReferenceMappers : MapperEngine

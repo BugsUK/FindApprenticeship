@@ -3,9 +3,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -160,7 +158,7 @@
                 }
             };
 
-            ProviderProvider.Setup(p => p.GetProviderSiteEmployerLinkViewModel(It.IsAny<string>(), It.IsAny<string>()))
+            ProviderProvider.Setup(p => p.GetProviderSiteEmployerLinkViewModel(It.IsAny<int>(), It.IsAny<int>()))
                 .Returns(new ProviderSiteEmployerLinkViewModel
                 {
                     Employer = new EmployerViewModel

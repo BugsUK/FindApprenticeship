@@ -1,13 +1,13 @@
 ﻿@model ProviderSiteEmployerLinkViewModel
 @using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
 @{
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) &&
+    var saveButtonText = (Model.Status == VacancyStatuses.RejectedByQA || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
         Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 }
@@ -26,7 +26,7 @@
 
     <div class="grid grid-1-1">
         <button class="button" id="confirmEmployer" name="ConfirmEmployer" value="ConfirmEmployer">@saveButtonText</button>
-        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" })
+        @Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteEdsErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" })
         @if (Model.ComeFromPreview)
         {
             @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })

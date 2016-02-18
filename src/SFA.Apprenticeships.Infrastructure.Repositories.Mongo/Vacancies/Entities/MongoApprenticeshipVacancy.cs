@@ -1,16 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.Entities
 {
-    using System;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using MongoDB.Bson.Serialization.Attributes;
+    using Domain.Entities.Raa.Vacancies;
 
-    public class MongoApprenticeshipVacancy : ApprenticeshipVacancy
+    public class MongoApprenticeshipVacancy : Vacancy
     {
-        [BsonId]
-        public Guid Id
-        {
-            get { return EntityId; }
-            set { EntityId = value; }
-        }
     }
 }

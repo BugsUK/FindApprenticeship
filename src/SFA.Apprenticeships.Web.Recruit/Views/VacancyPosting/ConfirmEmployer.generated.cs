@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.WebPages;
     
     #line 3 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden
@@ -73,7 +73,7 @@ WriteLiteral("\r\n");
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) &&
+    var saveButtonText = (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
         Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 

@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using Constants;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public static class WagePresenter
     {
@@ -28,15 +27,30 @@
             }
         }
 
-        public static string GetWagePostfix(this WageUnit wageUnit)
+        public static string GetHeaderDisplayText(this Domain.Entities.Vacancies.WageUnit wageUnit)
         {
             switch (wageUnit)
             {
-                case WageUnit.Annually:
+                case Domain.Entities.Vacancies.WageUnit.Annually:
+                    return "Annual wage";
+                case Domain.Entities.Vacancies.WageUnit.Monthly:
+                    return "Monthly wage";
+                case Domain.Entities.Vacancies.WageUnit.Weekly:
+                    return "Weekly wage";
+                default:
+                    return string.Empty;
+            }
+        }
+
+        public static string GetWagePostfix(this Domain.Entities.Vacancies.WageUnit wageUnit)
+        {
+            switch (wageUnit)
+            {
+                case Domain.Entities.Vacancies.WageUnit.Annually:
                     return "p/year";
-                case WageUnit.Monthly:
+                case Domain.Entities.Vacancies.WageUnit.Monthly:
                     return "p/month";
-                case WageUnit.Weekly:
+                case Domain.Entities.Vacancies.WageUnit.Weekly:
                     return "p/week";
                 default:
                     return string.Empty;
@@ -58,14 +72,22 @@
             }
         }
 
-        public static WageUnit GetWageUnit(this Wage wage)
+        public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
         {
             if (wage.Type == WageType.Custom)
             {
-                return wage.Unit;
+                switch (wage.Unit)
+                {
+                    case WageUnit.Weekly:
+                        return Domain.Entities.Vacancies.WageUnit.Weekly;
+                    case WageUnit.Monthly:
+                        return Domain.Entities.Vacancies.WageUnit.Weekly;
+                    case WageUnit.Annually:
+                        return Domain.Entities.Vacancies.WageUnit.Weekly;
+                }
             }
 
-            return WageUnit.Weekly;
+            return Domain.Entities.Vacancies.WageUnit.Weekly;
         }
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)

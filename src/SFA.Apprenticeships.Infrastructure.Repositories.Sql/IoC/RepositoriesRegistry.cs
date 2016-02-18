@@ -2,7 +2,7 @@
 {
     using Common;
     using Configuration;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Schemas.Reference;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;

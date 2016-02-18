@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -14,29 +14,29 @@
     [TestFixture]
     public class LocationsTests : TestBase
     {
+        private readonly Guid _vacancyGuid = Guid.NewGuid();
+
         [Test]
         public void WhenCreatingANewVacancyShouldReturnANewLocationSearchViewModel()
         {
-            var vacancyGuid = Guid.NewGuid();
             const string ukprn = "ukprn";
             const string ern = "ern";
             const string providerSiteErn = "providerSiteErn";
 
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, _vacancyGuid);
 
             result.Ukprn.Should().Be(ukprn);
             result.Ern.Should().Be(ern);
             result.ProviderSiteErn.Should().Be(providerSiteErn);
-            result.VacancyGuid.Should().Be(vacancyGuid);
+            result.VacancyGuid.Should().Be(_vacancyGuid);
             result.Addresses.Should().HaveCount(0);
         }
 
         [Test]
         public void IfTheVacancyAlreadyExistsShouldFillTheViewModelWithItsInformation()
         {
-            var vacancyGuid = Guid.NewGuid();
             const string ukprn = "ukprn";
             const string ern = "ern";
             const string providerSiteErn = "providerSiteErn";
@@ -44,10 +44,10 @@
             
             var vacancy = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancy);
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, _vacancyGuid);
 
             result.Addresses.Count.Should().Be(2);
         }
@@ -174,59 +174,57 @@
             return locationSearchViewModel;
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(string additionalLocationInformation)
+        private static Vacancy GetVacancyWithLocationAddresses(string additionalLocationInformation)
         {
             return GetVacancyWithLocationAddresses(Guid.NewGuid(), 1L, additionalLocationInformation);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber)
+        private static Vacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, string.Empty);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, string additionalLocationInformation)
+        private static Vacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, string additionalLocationInformation)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, null, null, null, null, additionalLocationInformation);
         }
 
-        private static ApprenticeshipVacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
+        private static Vacancy GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
         {
             var addresses = new List<VacancyLocationAddress>
             {
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 1",
                         AddressLine3 = "address line 3 - 1",
                         AddressLine2 = "address line 2 - 1",
                         AddressLine1 = "address line 1 - 1",
                         Postcode = "postcode",
-                        Uprn = "uprn"
                     },
                     NumberOfPositions = 2
                 },
                 new VacancyLocationAddress
                 {
-                    Address = new Address
+                    Address = new PostalAddress
                     {
                         AddressLine4 = "address line 4 - 1",
                         AddressLine3 = "address line 3 - 1",
                         AddressLine2 = "address line 2 - 1",
                         AddressLine1 = "address line 1 - 1",
                         Postcode = "postcode",
-                        Uprn = "uprn"
                     },
                     NumberOfPositions = 2
                 }
             };
 
-            var vacancy = new ApprenticeshipVacancy
+            var vacancy = new Vacancy
             {
                 AdditionalLocationInformation = additionalLocationInformation,
-                LocationAddresses = addresses,
+                //LocationAddresses = addresses,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                EntityId = vacancyGuid,
+                VacancyGuid = vacancyGuid,
                 NumberOfPositions = numberOfPositions,
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 LocationAddressesComment = locationAddressesComment,

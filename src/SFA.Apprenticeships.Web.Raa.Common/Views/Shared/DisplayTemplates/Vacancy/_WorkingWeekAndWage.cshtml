@@ -1,5 +1,4 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -25,7 +24,7 @@
     @if (Model.VacancyType == VacancyType.Apprenticeship)
     {
         <p>Total hours per week: @Model.VacancySummaryViewModel.HoursPerWeek</p>
-        @if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
+        if (Model.VacancySummaryViewModel.HoursPerWeek > 40)
         {
             <p>(the hours are based on the candidate being over 18)</p>
         }
@@ -56,7 +55,7 @@
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.WageType, Model.SummaryLink, Model.VacancySummaryViewModel.WageComment))
     </div>
 
-    @if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+    if (Model.VacancySummaryViewModel.WageType == WageType.ApprenticeshipMinimumWage)
     {
         <details>
             <summary>Wages explained</summary>
@@ -68,7 +67,7 @@
         </details>
     }
 
-    @if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
+    if (Model.VacancySummaryViewModel.WageType == WageType.NationalMinimumWage)
     {
         <details>
             <summary>Wages explained</summary>

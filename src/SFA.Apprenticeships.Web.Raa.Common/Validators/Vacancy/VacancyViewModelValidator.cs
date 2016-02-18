@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -35,7 +35,7 @@
             RuleFor(x => x.ResubmitOption)
                 .Equal(true)
                 .WithMessage(VacancyViewModelMessages.ResubmitOptin.RequiredErrorText)
-                .When(x => x.Status == ProviderVacancyStatuses.RejectedByQA);
+                .When(x => x.Status == VacancyStatus.RejectedByQA);
         }
     }
 }

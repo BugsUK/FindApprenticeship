@@ -1,9 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.VacancyPosting
 {
     using FluentValidation;
-    using FluentValidation.Validators;
-    using Raa.Common.Constants.ViewModels;
-    using Raa.Common.ViewModels.VacancyPosting;
+    using Constants.ViewModels;
+    using ViewModels.VacancyPosting;
 
     public class VacancyLocationAddressViewModelValidator : AbstractValidator<VacancyLocationAddressViewModel>
     {

@@ -3,8 +3,7 @@
 namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 {
     using System.Collections.Generic;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using Generic;
 
     public interface IOrganisationService
@@ -21,9 +20,13 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+        VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
-        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
+        VacancyParty GetVacancyParty(string providerSiteErn, string ern);
+
+        IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
+
+        Employer GetEmployer(int employerId);
 
         Employer GetEmployer(string ern);
 

@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using SFA.Apprenticeships.Application.Interfaces.Users;
-using SFA.Apprenticeships.Domain.Entities.Users;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Domain.Entities.Raa.Users;
+
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
@@ -46,7 +47,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 //TODO: Probably put all this in a strategy in the service
                 providerUser.EmailVerificationCode = null;
                 providerUser.EmailVerifiedDate = DateTime.UtcNow;
-                providerUser.Status = ProviderUserStatuses.EmailVerified;
+                providerUser.Status = ProviderUserStatus.EmailVerified;
                 _userProfileService.SaveUser(providerUser);
 
                 return true;
@@ -69,7 +70,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            providerUser.PreferredSiteErn = providerUserViewModel.DefaultProviderSiteErn;
+            providerUser.PreferredProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
             providerUser.Status = providerUser.Status;
 
             _userProfileService.SaveUser(providerUser);
@@ -93,9 +94,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var viewModel = new ProviderUserViewModel
             {
-                DefaultProviderSiteErn = providerUser.PreferredSiteErn,
+                DefaultProviderSiteId = providerUser.PreferredProviderSiteId,
                 EmailAddress = providerUser.Email,
-                EmailAddressVerified = providerUser.Status == ProviderUserStatuses.EmailVerified,
+                EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,
                 PhoneNumber = providerUser.PhoneNumber
             };

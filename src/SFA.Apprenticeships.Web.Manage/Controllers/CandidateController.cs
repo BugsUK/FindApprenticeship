@@ -5,7 +5,7 @@
     using Common.Attributes;
     using Common.Mediators;
     using Constants;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using ViewModels;

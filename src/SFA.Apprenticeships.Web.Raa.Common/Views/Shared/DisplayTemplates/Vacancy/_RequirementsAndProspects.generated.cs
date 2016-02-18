@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.WebPages;
     
     #line 1 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden
@@ -107,14 +107,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 645), Tuple.Create("\"", 671)
+WriteAttribute("class", Tuple.Create(" class=\"", 649), Tuple.Create("\"", 675)
             
             #line 17 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 653), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 657), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 653), false)
+, 657), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -185,14 +185,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1813), Tuple.Create("\"", 1839)
+WriteAttribute("class", Tuple.Create(" class=\"", 1817), Tuple.Create("\"", 1843)
             
             #line 30 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 1821), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1825), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1821), false)
+, 1825), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -263,14 +263,14 @@ WriteLiteral("                ");
             #line hidden
 WriteLiteral("                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3015), Tuple.Create("\"", 3041)
+WriteAttribute("class", Tuple.Create(" class=\"", 3019), Tuple.Create("\"", 3045)
             
             #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 3023), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3027), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3023), false)
+, 3027), false)
 );
 
 WriteLiteral(">\r\n                        <div");
@@ -351,14 +351,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4358), Tuple.Create("\"", 4384)
+WriteAttribute("class", Tuple.Create(" class=\"", 4362), Tuple.Create("\"", 4388)
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 4366), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 4370), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4366), false)
+, 4370), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -429,14 +429,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5490), Tuple.Create("\"", 5516)
+WriteAttribute("class", Tuple.Create(" class=\"", 5494), Tuple.Create("\"", 5520)
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 5498), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 5502), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 5498), false)
+, 5502), false)
 );
 
 WriteLiteral(">\r\n                    <div");

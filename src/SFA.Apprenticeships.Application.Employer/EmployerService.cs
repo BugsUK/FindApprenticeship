@@ -2,11 +2,11 @@
 {
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Organisations;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
     using Interfaces.Generic;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Organisations;
 
     public class EmployerService : IEmployerService
@@ -24,22 +24,22 @@
             _logService = logService;
         }
 
-        public Employer GetEmployer(string ern)
+        public Employer GetEmployer(string edsErn)
         {
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(edsErn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling EmployerReadRepository to get employer with ERN='{0}'.", ern);
+            _logService.Debug("Calling EmployerReadRepository to get employer with ERN='{0}'.", edsErn);
 
-            var employer = _employerReadRepository.Get(ern);
+            var employer = _employerReadRepository.Get(edsErn);
 
             if (employer != null)
             {
                 return employer;
             }
 
-            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", ern);
+            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsErn);
 
-            employer = _organisationService.GetEmployer(ern);
+            employer = _organisationService.GetEmployer(edsErn);
 
             return employer;
         }
@@ -49,14 +49,14 @@
             return _employerWriteRepository.Save(employer);
         }
 
-        public IEnumerable<Employer> GetEmployers(string ern, string name, string location)
+        public IEnumerable<Employer> GetEmployers(string edsErn, string name, string location)
         {
-            return _organisationService.GetEmployers(ern, name, location);
+            return _organisationService.GetEmployers(edsErn, name, location);
         }
 
-        public Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize)
+        public Pageable<Employer> GetEmployers(string edsErn, string name, string location, int currentPage, int pageSize)
         {
-            return _organisationService.GetEmployers(ern, name, location, currentPage, pageSize);
+            return _organisationService.GetEmployers(edsErn, name, location, currentPage, pageSize);
         }
     }
 }

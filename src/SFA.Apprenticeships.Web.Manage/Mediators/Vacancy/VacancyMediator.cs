@@ -7,8 +7,7 @@
     using Common.Validators;
     using Common.ViewModels;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Converters;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.ViewModels.Vacancy;

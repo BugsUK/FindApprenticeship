@@ -5,6 +5,7 @@
     using Common.Mediators;
     using Constants;
     using Domain.Entities;
+    using Domain.Entities.Raa;
     using Mediators.Application;
     using ViewModels.Application;
 

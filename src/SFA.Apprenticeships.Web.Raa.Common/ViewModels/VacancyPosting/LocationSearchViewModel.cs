@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Web.Common.ViewModels;
 
     public class LocationSearchViewModel
@@ -25,7 +25,11 @@
 
         public string ProviderSiteErn { get; set; }
 
+        public int ProviderSiteId { get; set; }
+
         public string Ern { get; set; }
+
+        public int EmployerId { get; set; }
 
         public Guid VacancyGuid { get; set; }
 
@@ -36,7 +40,7 @@
 
         public bool ComeFromPreview { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         public long VacancyReferenceNumber { get; set; }
 

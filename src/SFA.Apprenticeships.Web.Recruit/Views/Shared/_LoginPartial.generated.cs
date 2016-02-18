@@ -27,6 +27,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    
+    #line 3 "..\..\Views\Shared\_LoginPartial.cshtml"
+    using Roles = SFA.Apprenticeships.Domain.Entities.Raa.Roles;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
@@ -58,7 +64,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.Shared
 WriteLiteral("\r\n");
 
             
-            #line 4 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 5 "..\..\Views\Shared\_LoginPartial.cshtml"
  if (Request.IsAuthenticated)
 {
 
@@ -79,14 +85,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"signout-link\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 262), Tuple.Create("\"", 313)
+WriteAttribute("href", Tuple.Create(" href=\"", 324), Tuple.Create("\"", 375)
             
-            #line 8 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 269), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignOut)
+            #line 9 "..\..\Views\Shared\_LoginPartial.cshtml"
+, Tuple.Create(Tuple.Create("", 331), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignOut)
             
             #line default
             #line hidden
-, 269), false)
+, 331), false)
 );
 
 WriteLiteral("><i");
@@ -96,14 +102,14 @@ WriteLiteral(" class=\"fa fa-sign-out\"");
 WriteLiteral("></i>Sign out</a>\r\n        </div>\r\n");
 
             
-            #line 10 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 11 "..\..\Views\Shared\_LoginPartial.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 10 "..\..\Views\Shared\_LoginPartial.cshtml"
-         if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Roles.VerifiedEmail))
+            #line 11 "..\..\Views\Shared\_LoginPartial.cshtml"
+         if (User.IsInRole(Roles.VerifiedEmail))
         {
 
             
@@ -115,21 +121,21 @@ WriteLiteral(" class=\"account-link\"");
 
 WriteLiteral(" id=\"applicationsLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 552), Tuple.Create("\"", 611)
+WriteAttribute("href", Tuple.Create(" href=\"", 578), Tuple.Create("\"", 637)
             
-            #line 13 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 559), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 14 "..\..\Views\Shared\_LoginPartial.cshtml"
+, Tuple.Create(Tuple.Create("", 585), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 559), false)
+, 585), false)
 );
 
 WriteLiteral(">Home</a>\r\n                <!--<a class=\"account-link\" id=\"applicationsLink\" href" +
 "=\"");
 
             
-            #line 14 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 15 "..\..\Views\Shared\_LoginPartial.cshtml"
                                                                    Write(Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites));
 
             
@@ -139,7 +145,7 @@ WriteLiteral("\">Provider details</a>-->\r\n                <!--<a class=\"\" id
 "href=\"user-info.html\">Contact details</a>-->\r\n            </div>\r\n");
 
             
-            #line 17 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 18 "..\..\Views\Shared\_LoginPartial.cshtml"
         }
 
             
@@ -148,7 +154,7 @@ WriteLiteral("\">Provider details</a>-->\r\n                <!--<a class=\"\" id
 WriteLiteral("    </div>\r\n");
 
             
-            #line 19 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 20 "..\..\Views\Shared\_LoginPartial.cshtml"
 }
 else
 {
@@ -165,13 +171,13 @@ WriteLiteral(" id=\"bannerSignedOut\"");
 WriteLiteral(">\r\n");
 
             
-            #line 23 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 24 "..\..\Views\Shared\_LoginPartial.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 24 "..\..\Views\Shared\_LoginPartial.cshtml"
          if (ViewBag.AllowReturnUrl != null && ViewBag.AllowReturnUrl && Request.Url != null)
         {
 
@@ -180,14 +186,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1106), Tuple.Create("\"", 1156)
+WriteAttribute("href", Tuple.Create(" href=\"", 1132), Tuple.Create("\"", 1182)
             
-            #line 25 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 1113), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
+            #line 26 "..\..\Views\Shared\_LoginPartial.cshtml"
+, Tuple.Create(Tuple.Create("", 1139), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
             
             #line default
             #line hidden
-, 1113), false)
+, 1139), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");
@@ -201,7 +207,7 @@ WriteLiteral(" class=\"fa fa-sign-in\"");
 WriteLiteral("></i>Sign in / Create account</a>\r\n");
 
             
-            #line 26 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 27 "..\..\Views\Shared\_LoginPartial.cshtml"
         }
         else
         {
@@ -211,14 +217,14 @@ WriteLiteral("></i>Sign in / Create account</a>\r\n");
             #line hidden
 WriteLiteral("            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1315), Tuple.Create("\"", 1365)
+WriteAttribute("href", Tuple.Create(" href=\"", 1341), Tuple.Create("\"", 1391)
             
-            #line 29 "..\..\Views\Shared\_LoginPartial.cshtml"
-, Tuple.Create(Tuple.Create("", 1322), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
+            #line 30 "..\..\Views\Shared\_LoginPartial.cshtml"
+, Tuple.Create(Tuple.Create("", 1348), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SignIn)
             
             #line default
             #line hidden
-, 1322), false)
+, 1348), false)
 );
 
 WriteLiteral(" id=\"loginLink\"");
@@ -232,7 +238,7 @@ WriteLiteral(" class=\"fa fa-sign-in\"");
 WriteLiteral("></i>Sign in / Create account</a>\r\n");
 
             
-            #line 30 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 31 "..\..\Views\Shared\_LoginPartial.cshtml"
         }
 
             
@@ -241,7 +247,7 @@ WriteLiteral("></i>Sign in / Create account</a>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 32 "..\..\Views\Shared\_LoginPartial.cshtml"
+            #line 33 "..\..\Views\Shared\_LoginPartial.cshtml"
 }
 
             

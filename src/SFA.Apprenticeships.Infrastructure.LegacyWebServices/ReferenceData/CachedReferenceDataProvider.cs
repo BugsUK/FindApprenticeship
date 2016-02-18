@@ -4,6 +4,7 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.ReferenceData;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using SFA.Infrastructure.Interfaces.Caching;
 

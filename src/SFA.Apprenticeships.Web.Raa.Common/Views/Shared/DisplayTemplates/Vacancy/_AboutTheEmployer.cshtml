@@ -11,17 +11,17 @@
     <div class="grid-wrapper">
         <div class="grid">
             <h3 class="bold-small">Employer</h3>
-            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name</p>
+            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.VacancyParty.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.VacancyParty.Employer.Name</p>
         </div>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
                         Description
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyParty.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
-                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
+                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.VacancyParty.Description)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyParty.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
@@ -37,18 +37,18 @@
         }
         <div class="@gridClass">
             <div class="inner-block-padr">
-                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.VacancyParty.WebsiteUrl))
                 {
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Website
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.VacancyParty.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
                         </h3>
-                        <a itemprop="url" href="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl"
+                        <a itemprop="url" href="@Model.NewVacancyViewModel.VacancyParty.WebsiteUrl"
                            id="vacancy-employer-website"
                            target="_blank"
-                           title="@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl</a>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                           title="@Model.NewVacancyViewModel.VacancyParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.VacancyParty.WebsiteUrl</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.VacancyParty.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                     </div>
                 }
 
@@ -59,11 +59,11 @@
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>
                                 <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.VacancyParty.Employer.Address.Postcode</p>
                                 </div>
                             </div>
                         }
@@ -178,7 +178,7 @@
             {
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
-                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.VacancyParty.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }

@@ -81,17 +81,42 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="ICreatableEntity.cs" />
+    <Compile Include="IUpdatableEntity.cs" />
+    <Compile Include="Locations\GeoPoint.cs" />
+    <Compile Include="Locations\PostalAddress.cs" />
+    <Compile Include="Locations\VacancyLocationAddress.cs" />
+    <Compile Include="Parties\Employer.cs" />
+    <Compile Include="Parties\Provider.cs" />
+    <Compile Include="Parties\ProviderSite.cs" />
+    <Compile Include="Parties\VacancyParty.cs" />
+    <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
+    <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Reference\County.cs" />
+    <Compile Include="Reference\LocalAuthority.cs" />
+    <Compile Include="Reference\Region.cs" />
+    <Compile Include="Roles.cs" />
+    <Compile Include="Users\AgencyUser.cs" />
+    <Compile Include="Users\ProviderUser.cs" />
+    <Compile Include="Users\ProviderUserStatus.cs" />
+    <Compile Include="Users\Role.cs" />
+    <Compile Include="Users\Team.cs" />
+    <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
+    <Compile Include="Vacancies\Duration.cs" />
+    <Compile Include="Vacancies\DurationType.cs" />
+    <Compile Include="Vacancies\VacancyStatus.cs" />
+    <Compile Include="Vacancies\Sector.cs" />
+    <Compile Include="Vacancies\Standard.cs" />
+    <Compile Include="Vacancies\TrainingType.cs" />
+    <Compile Include="Vacancies\Vacancy.cs" />
+    <Compile Include="Vacancies\VacancySummary.cs" />
+    <Compile Include="Vacancies\VacancyType.cs" />
+    <Compile Include="Vacancies\Wage.cs" />
+    <Compile Include="Vacancies\WageType.cs" />
+    <Compile Include="Vacancies\WageUnit.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
-      <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
-      <Name>SFA.Apprenticeships.Domain.Entities</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Application\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

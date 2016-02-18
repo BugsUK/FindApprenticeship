@@ -1,20 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using SFA.Infrastructure.Interfaces;
-using SFA.Apprenticeships.Application.Interfaces.Employers;
-using SFA.Apprenticeships.Application.Interfaces.Providers;
-using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
-using SFA.Apprenticeships.Domain.Entities.Providers;
-using SFA.Apprenticeships.Web.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.Configuration;
-using SFA.Apprenticeships.Web.Raa.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.VacancyPosting;
+    using Configuration;
+    using Converters;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
+    using SFA.Infrastructure.Interfaces;
+    using ViewModels.Provider;
+    using ViewModels.VacancyPosting;
+    using Web.Common.Converters;
 
     public class ProviderProvider : IProviderProvider, IProviderQAProvider
     {
@@ -63,23 +62,25 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return providerSites.Select(ps => ps.Convert());
         }
 
-        public ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string providerSiteErn, string ern)
+        public ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(int providerSiteId, int employerId)
         {
-            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            var providerSiteEmployerLink = _providerService.GetVacancyParty(providerSiteId, employerId);
             return providerSiteEmployerLink.Convert();
         }
 
         public ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel)
         {
-            var providerSiteEmployerLink = _providerService.GetProviderSiteEmployerLink(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
-            providerSiteEmployerLink.WebsiteUrl = viewModel.WebsiteUrl;
-            providerSiteEmployerLink.Description = viewModel.Description;
-            providerSiteEmployerLink = _providerService.SaveProviderSiteEmployerLink(providerSiteEmployerLink);
+            var providerSiteEmployerLink = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerId);
+            providerSiteEmployerLink.EmployerWebsiteUrl = viewModel.WebsiteUrl;
+            providerSiteEmployerLink.EmployerDescription = viewModel.Description;
+            providerSiteEmployerLink = _providerService.SaveVacancyParty(providerSiteEmployerLink);
 
             var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
-                vacancy.ProviderSiteEmployerLink = providerSiteEmployerLink;
+                vacancy.OwnerPartyId = providerSiteEmployerLink.VacancyPartyId;
+                vacancy.EmployerWebsiteUrl = providerSiteEmployerLink.EmployerWebsiteUrl;
+                vacancy.EmployerDescription = providerSiteEmployerLink.EmployerDescription;
                 if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
                     vacancy.IsEmployerLocationMainApprenticeshipLocation =
                         viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
@@ -93,7 +94,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return result;
         }
 
-        private ApprenticeshipVacancy GetVacancy(ProviderSiteEmployerLinkViewModel viewModel)
+        private Vacancy GetVacancy(ProviderSiteEmployerLinkViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
                           _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
@@ -105,7 +106,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var parameters = new EmployerSearchRequest(providerSiteErn);
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, 1, pageSize);
+            var providerSiteEmployerLinks = _providerService.GetVacancyParties(parameters, 1, pageSize);
             var result = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(psel => psel.Convert().Employer.ConvertToResult()));
 
             return new EmployerSearchViewModel
@@ -136,7 +137,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
 
-            var providerSiteEmployerLinks = _providerService.GetProviderSiteEmployerLinks(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var providerSiteEmployerLinks = _providerService.GetVacancyParties(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
 
             var resultsViewModelPage = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(e => e.Convert().Employer.ConvertToResult()));
             viewModel.EmployerResultsPage = resultsViewModelPage;

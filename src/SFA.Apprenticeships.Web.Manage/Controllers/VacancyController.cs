@@ -10,7 +10,7 @@
     using Mediators.Vacancy;
     using Common.Mediators;
     using Common.Validators.Extensions;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Infrastructure.Presentation;
     using Raa.Common.Constants.ViewModels;

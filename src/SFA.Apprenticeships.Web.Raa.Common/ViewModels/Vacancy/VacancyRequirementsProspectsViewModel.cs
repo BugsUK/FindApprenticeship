@@ -2,8 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
 
@@ -44,7 +43,7 @@
         [Display(Name = VacancyViewModelMessages.DesiredQualificationsComment.LabelText)]
         public string DesiredQualificationsComment { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
         public bool ComeFromPreview { get; set; }
         public VacancyType VacancyType { get; set; }
     }

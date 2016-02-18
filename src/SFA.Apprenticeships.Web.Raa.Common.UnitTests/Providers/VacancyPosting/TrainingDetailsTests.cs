@@ -2,13 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -18,29 +14,20 @@
     [TestFixture]
     public class TrainingDetailsTests : TestBase
     {
-        private const string Ern = "ern";
-        private const string ProviderSiteErn = "providerSiteErn";
+        private const int EmployerId = 1;
+        private const int ProviderSiteId = 2;
         private const long VacancyReferenceNumber = 1;
 
-        private readonly ApprenticeshipVacancy _existingApprenticeshipVacancy = new ApprenticeshipVacancy()
+        private readonly Vacancy _existingVacancy = new Vacancy()
         {
-            ProviderSiteEmployerLink = new ProviderSiteEmployerLink()
-            {
-                Employer = new Employer()
-                {
-                    Address = new Address()
-                }
-            }
+            OwnerPartyId = 42
         };
 
-        private readonly ProviderSiteEmployerLink _providerSiteEmployerLink = new ProviderSiteEmployerLink
+        private readonly VacancyParty _vacancyParty = new VacancyParty
         {
-            ProviderSiteErn = ProviderSiteErn,
-            Description = "description",
-            Employer = new Employer
-            {
-                Address = new Address()
-            }
+            ProviderSiteId = ProviderSiteId,
+            EmployerDescription = "description",
+            EmployerId = EmployerId
         };
 
         private readonly CommonWebConfiguration _webConfiguration = new CommonWebConfiguration
@@ -111,13 +98,13 @@
         public void SetUp()
         {
             MockVacancyPostingService.Setup(mock => mock.GetVacancy(It.IsAny<long>()))
-                .Returns(_existingApprenticeshipVacancy);
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns<ApprenticeshipVacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns<ApprenticeshipVacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns<ApprenticeshipVacancy>(v => v);
+                .Returns(_existingVacancy);
+            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+                .Returns<Vacancy>(v => v);
+            MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+                .Returns<Vacancy>(v => v);
+            MockVacancyPostingService.Setup(mock => mock.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+                .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
                 {
@@ -136,8 +123,8 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetProviderSiteEmployerLink(ProviderSiteErn, Ern))
-                .Returns(_providerSiteEmployerLink);
+            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EmployerId))
+                .Returns(_vacancyParty);
 
             MockConfigurationService
                 .Setup(mock => mock.Get<CommonWebConfiguration>())
@@ -165,8 +152,8 @@
                 StandardId = standardId
             };
 
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => new TrainingDetailsViewModel() { ApprenticeshipLevel = av.ApprenticeshipLevel });
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) => new TrainingDetailsViewModel() { ApprenticeshipLevel = av.ApprenticeshipLevel });
 
             var provider = GetVacancyPostingProvider();
 
@@ -194,8 +181,8 @@
                 StandardId = standardId
             };
 
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) =>
                 {
                     return new TrainingDetailsViewModel() { ApprenticeshipLevel = av.ApprenticeshipLevel };
                 });
@@ -222,8 +209,8 @@
                 FrameworkCodeName = "ShouldBeNulled"
             };
 
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => new TrainingDetailsViewModel() { FrameworkCodeName = av.FrameworkCodeName });
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) => new TrainingDetailsViewModel() { FrameworkCodeName = av.FrameworkCodeName });
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -246,8 +233,8 @@
                 FrameworkCodeName = "ShouldBeNulled"
             };
 
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) =>
                 {
                     return new TrainingDetailsViewModel() { FrameworkCodeName = av.FrameworkCodeName };
                 });
@@ -273,8 +260,8 @@
                 StandardId = 1
             };
 
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) =>
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) =>
                 {
                     return new TrainingDetailsViewModel() { FrameworkCodeName = av.FrameworkCodeName, ApprenticeshipLevel = av.ApprenticeshipLevel };
                 });
@@ -292,7 +279,7 @@
         public void ShouldGetSectorsAndFrameworks()
         {
             // Arrange.
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -308,7 +295,7 @@
         public void ShouldNotGetBlacklistedSectorsAndFrameworks()
         {
             // Arrange.
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
             var blackListCodes = _webConfiguration.BlacklistedCategoryCodes.Split(',').Select(each => each.Trim()).ToArray();
 
@@ -326,7 +313,7 @@
         public void ShouldDefaultApprenticeshipLevel()
         {
             // Arrange.
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel());
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -341,7 +328,7 @@
         public void ShouldSetTrainingTypeIfTraineeship()
         {
             // Arrange.
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel
+            MockMapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>())).Returns(new TrainingDetailsViewModel
             {
                 VacancyType = VacancyType.Traineeship
             });

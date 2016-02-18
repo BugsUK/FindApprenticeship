@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Parties;
     using EmployerDataService;
 
     public class EmployerMapper

@@ -4,8 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -14,10 +12,11 @@
     using Sql.Schemas.Vacancy;
     using Sql.Schemas.Vacancy.Entities;
     using Common;
+    using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
-    using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
-    using WageType = Domain.Entities.Vacancies.ProviderVacancies.WageType;
+    using WageType = Domain.Entities.Raa.Vacancies.WageType;
 
     [TestFixture(Category = "Integration")]
     public class ApprenticeshipVacancyRepositoryTests : TestBase
@@ -48,12 +47,12 @@
         {
             // configure _mapper
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = repository.Get(VacancyReferenceNumber_VacancyA);
 
-            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Status.Should().Be(Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
             vacancy.Title.Should().Be("Test vacancy");
             vacancy.WageType.Should().Be(WageType.Custom);
             vacancy.TrainingType = TrainingType.Frameworks;
@@ -64,12 +63,12 @@
         {
             // configure _mapper
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = repository.Get(VacancyId_VacancyA);
 
-            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Status.Should().Be(Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
             vacancy.Title.Should().Be("Test vacancy");
             vacancy.WageType.Should().Be(WageType.Custom);
             vacancy.TrainingType = TrainingType.Frameworks;
@@ -81,24 +80,24 @@
             var newReferenceNumber = 3L;
             var logger = new Mock<ILogService>();
 
-            IApprenticeshipVacancyReadRepository readRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
-            IApprenticeshipVacancyWriteRepository writeRepository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
             var vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.VacancyReferenceNumber = newReferenceNumber;
-            vacancy.LocationAddresses = null; // TODO: Change to separate repo method
+            //vacancy.LocationAddresses = null; // TODO: Change to separate repo method
             writeRepository.Save(vacancy);
 
             vacancy = readRepository.Get(VacancyReferenceNumber_VacancyA);
 
             vacancy.Should().BeNull();
 
-            vacancy = readRepository.Get(newReferenceNumber);
+            vacancy = readRepository.GetByReferenceNumber(newReferenceNumber);
 
-            vacancy.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancy.Status.Should().Be(Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
             vacancy.Title.Should().Be("Test vacancy");
             vacancy.WageType.Should().Be(WageType.Custom);
             vacancy.TrainingType = TrainingType.Frameworks;
@@ -109,14 +108,14 @@
         {
             // Arrange
             var logger = new Mock<ILogService>();
-            var repository = new ApprenticeshipVacancyRepository(_connection, _mapper, logger.Object);
+            var repository = new VacancyRepository(_connection, _mapper, logger.Object);
 
             var vacancy = CreateValidDomainVacancy();
 
             // Act
             repository.Save(vacancy);
 
-            var loadedVacancy = repository.Get(vacancy.VacancyReferenceNumber);
+            var loadedVacancy = repository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
 
             // Assert
             loadedVacancy.ShouldBeEquivalentTo(vacancy,
@@ -130,16 +129,16 @@
         public void GetForProviderByUkprnAndProviderSiteErnTest()
         {
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
-            var vacancies = repository.GetForProvider("1", "3");
+            var vacancies = repository.GetForProvider(1, 3);
             vacancies.Should().HaveCount(12);
 
-            vacancies = repository.GetForProvider("2", "3");
+            vacancies = repository.GetForProvider(2, 3);
             vacancies.Should().HaveCount(0);
 
-            vacancies = repository.GetForProvider("1", "4");
+            vacancies = repository.GetForProvider(1, 4);
             vacancies.Should().HaveCount(0);
         }
 
@@ -147,19 +146,19 @@
         public void GetWithStatusTest()
         {
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
-            var vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy, ProviderVacancyStatuses.Live);
+            var vacancies = repository.GetWithStatus(Domain.Entities.Raa.Vacancies.VacancyStatus.ParentVacancy, Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
             vacancies.Should().HaveCount(13);
 
-            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.Live);
+            vacancies = repository.GetWithStatus(Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
             vacancies.Should().HaveCount(12);
 
-            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.ParentVacancy);
+            vacancies = repository.GetWithStatus(Domain.Entities.Raa.Vacancies.VacancyStatus.ParentVacancy);
             vacancies.Should().HaveCount(1);
 
-            vacancies = repository.GetWithStatus(ProviderVacancyStatuses.PendingQA);
+            vacancies = repository.GetWithStatus(Domain.Entities.Raa.Vacancies.VacancyStatus.PendingQA);
             vacancies.Should().HaveCount(0);
         }
 
@@ -167,7 +166,7 @@
         public void FindTest()
         {
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyReadRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
             int totalResultsCount;
@@ -183,7 +182,7 @@
         public void ReserveVacancyForQaTest()
         {
             var logger = new Mock<ILogService>();
-            IApprenticeshipVacancyWriteRepository repository = new ApprenticeshipVacancyRepository(_connection, _mapper,
+            IVacancyWriteRepository repository = new VacancyRepository(_connection, _mapper,
                 logger.Object);
 
             repository.ReserveVacancyForQA(1);
@@ -202,7 +201,7 @@
 
                 vacancies.Add(new Vacancy
                 {
-                    VacancyId = Guid.NewGuid(),
+                    VacancyId = 42,
                     VacancyReferenceNumber = null,
                     AV_ContactName = "av contact name",
                     VacancyTypeCode = VacancyTypeCode_Apprenticeship,

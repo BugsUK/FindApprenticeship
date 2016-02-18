@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public class ValidationResultViewModel
     {
         public const string PartialView = "_ValidationResultIcons";
 
-        public ValidationResultViewModel(ProviderVacancyStatuses status, string anchorName, bool hasError, string error, bool hasWarning, string warning, string viewValidationResultUrl, string comment)
+        public ValidationResultViewModel(VacancyStatus status, string anchorName, bool hasError, string error, bool hasWarning, string warning, string viewValidationResultUrl, string comment)
         {
             Status = status;
             HasError = hasError;
@@ -18,7 +18,7 @@
             CommentViewModel = new CommentViewModel(status, comment, viewValidationResultUrl, string.Empty);
         }
 
-        public ProviderVacancyStatuses Status { get; private set; }
+        public VacancyStatus Status { get; private set; }
 
         public string AnchorName { get; private set; }
 

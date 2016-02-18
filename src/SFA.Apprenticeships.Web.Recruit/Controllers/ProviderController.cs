@@ -10,6 +10,7 @@
     using Raa.Common.ViewModels.Provider;
     using Constants;
     using Domain.Entities;
+    using Domain.Entities.Raa;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]

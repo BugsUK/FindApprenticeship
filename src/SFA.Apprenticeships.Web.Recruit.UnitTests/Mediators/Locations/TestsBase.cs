@@ -8,7 +8,6 @@
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
-    using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {

@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Infrastructure.EmployerDataService.Configuration;
     using Infrastructure.EmployerDataService.EmployerDataService;
     using Infrastructure.EmployerDataService.Providers;

@@ -2,6 +2,8 @@
 {
     public class VacancyOwnerRelationship
     {
+        public int VacancyOwnerRelationshipId { get; set; }
+        public int ProviderSiteId { get; set; }
         public int ProviderSiteEdsUrn { get; set; }
         public bool ContractHolderIsEmployer { get; set; }
         public bool ManagerIsEmployer { get; set; }

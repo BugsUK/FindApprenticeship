@@ -3,7 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Vacancy;
     using Validators.Provider;
@@ -13,6 +13,8 @@
     {
         public const string PartialView = "Vacancy/EmployerDetails";
 
+        public int ProviderSiteId { get; set; }
+
         public string ProviderSiteErn { get; set; }
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.Description.LabelText)]
@@ -20,6 +22,8 @@
 
         [Display(Name = ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.LabelText)]
         public string WebsiteUrl { get; set; }
+
+        public int EmployerId { get; set; }
 
         public EmployerViewModel Employer { get; set; }
 
@@ -32,7 +36,7 @@
 
         public bool ComeFromPreview { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         public long VacancyReferenceNumber { get; set; }
 

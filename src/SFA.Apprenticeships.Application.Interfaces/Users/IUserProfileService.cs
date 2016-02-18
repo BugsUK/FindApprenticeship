@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
 
     /// <summary>
     /// For managing user profiles for users that are authenticated outside the service (ie. SSO). 
@@ -10,7 +10,7 @@
     /// </summary>
     public interface IUserProfileService
     {
-        ProviderUser GetProviderUser(Guid id);
+        ProviderUser GetProviderUser(int providerUserId);
 
         ProviderUser GetProviderUser(string username);
 

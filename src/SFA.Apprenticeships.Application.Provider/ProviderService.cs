@@ -6,8 +6,8 @@ namespace SFA.Apprenticeships.Application.Provider
     using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Providers;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Interfaces.Providers;
@@ -21,20 +21,26 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
         private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
-        private readonly IProviderSiteEmployerLinkReadRepository _providerSiteEmployerLinkReadRepository;
-        private readonly IProviderSiteEmployerLinkWriteRepository _providerSiteEmployerLinkWriteRepository;
+        private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
+        private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IProviderSiteEmployerLinkReadRepository providerSiteEmployerLinkReadRepository, IProviderSiteEmployerLinkWriteRepository providerSiteEmployerLinkWriteRepository, ILogService logService)
+        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService)
         {
             _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
             _providerWriteRepository = providerWriteRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _providerSiteWriteRepository = providerSiteWriteRepository;
-            _providerSiteEmployerLinkReadRepository = providerSiteEmployerLinkReadRepository;
-            _providerSiteEmployerLinkWriteRepository = providerSiteEmployerLinkWriteRepository;
+            _vacancyPartyReadRepository = vacancyPartyReadRepository;
+            _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
+        }
+
+        public Provider GetProviderViaOwnerParty(int vacancyPartyId)
+        {
+            var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
+            return _providerReadRepository.Get(vacancyParty.ProviderSiteId);
         }
 
         public Provider GetProvider(string ukprn)
@@ -43,7 +49,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            var provider = _providerReadRepository.Get(ukprn);
+            var provider = _providerReadRepository.GetViaUkprn(ukprn);
 
             if (provider != null)
             {
@@ -60,6 +66,11 @@ namespace SFA.Apprenticeships.Application.Provider
         public void SaveProvider(Provider provider)
         {
             _providerWriteRepository.Save(provider);
+        }
+
+        public ProviderSite GetProviderSiteViaOwnerParty(int vacancyPartyId)
+        {
+            throw new System.NotImplementedException();
         }
 
         public ProviderSite GetProviderSite(string ukprn, string ern)
@@ -111,71 +122,73 @@ namespace SFA.Apprenticeships.Application.Provider
             }
         }
 
-        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
+        public VacancyParty GetVacancyParty(int vacancyPartyId)
         {
-            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            throw new System.NotImplementedException();
+        }
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+        public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
+        {
+            Condition.Requires(providerSiteId);
+            Condition.Requires(employerId);
 
-            var providerSiteEmployerLink = _providerSiteEmployerLinkReadRepository.Get(providerSiteErn, ern);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
+
+            var providerSiteEmployerLink = _vacancyPartyReadRepository.Get(providerSiteId, employerId);
 
             if (providerSiteEmployerLink != null)
             {
                 return providerSiteEmployerLink;
             }
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
 
-            providerSiteEmployerLink = _organisationService.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            providerSiteEmployerLink = _organisationService.GetVacancyParty(providerSiteId, employerId);
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
 
             if (providerSiteEmployerLink == null)
             {
-                var employer = _organisationService.GetEmployer(ern);
-                if (employer == null)
-                {
-                    employer = _organisationService.GetEmployers(ern, null, null).SingleOrDefault();
-                }
+                var employer = _organisationService.GetEmployer(employerId);
 
                 //TODO: Where should employer description and web site come from
-                providerSiteEmployerLink = new ProviderSiteEmployerLink
+                providerSiteEmployerLink = new VacancyParty
                 {
-                    ProviderSiteErn = providerSiteErn,
-                    Employer = employer
+                    ProviderSiteId = providerSiteId,
+                    EmployerId = employer.EmployerId
                 };
             }
 
             return providerSiteEmployerLink;
         }
 
-        public ProviderSiteEmployerLink SaveProviderSiteEmployerLink(ProviderSiteEmployerLink providerSiteEmployerLink)
+        public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
         {
-            return _providerSiteEmployerLinkWriteRepository.Save(providerSiteEmployerLink);
+            return _vacancyPartyWriteRepository.Save(vacancyParty);
         }
 
-        private IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
+        private IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteEdsErn);
 
             var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteErn);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteEdsErn);
 
             var providerSiteEmployerLinksFromRepository = GetProviderSiteEmployerLinksFromRepository(request);
 
             //Combine with results from repository
-            providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new ProviderSiteEmployerLinkEqualityComparer()).ToList();
+            providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new VacancyPartyEqualityComparer()).ToList();
 
             return providerSiteEmployerLinks;
         }
 
-        private IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinksFromRepository(EmployerSearchRequest request)
+        private IEnumerable<VacancyParty> GetProviderSiteEmployerLinksFromRepository(EmployerSearchRequest request)
         {
-            var providerSiteEmployerLinksFromRepository = _providerSiteEmployerLinkReadRepository.GetForProviderSite(request.ProviderSiteErn);
+            //TODO: All this needs moving into the employer repository 
+            /*var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteEdsErn);
             //TODO: This search and the search object should be pushed into the datalayer once it's SQL based
             if (request.IsEmployerEdsUrnQuery)
             {
@@ -211,14 +224,16 @@ namespace SFA.Apprenticeships.Application.Provider
                               l.Employer.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
             }
 
-            return providerSiteEmployerLinksFromRepository;
+            return providerSiteEmployerLinksFromRepository;*/
+
+            return new List<VacancyParty>();
         }
 
-        public Pageable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request, int currentPage, int pageSize)
+        public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
         {
             var results = GetProviderSiteEmployerLinks(request);
 
-            var pageable = new Pageable<ProviderSiteEmployerLink>
+            var pageable = new Pageable<VacancyParty>
             {
                 CurrentPage = currentPage
             };

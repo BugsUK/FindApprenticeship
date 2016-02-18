@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Presentation
 {
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Locations;
     using Domain.Entities.Locations;

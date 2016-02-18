@@ -12,12 +12,9 @@
     using Common.Validators.Extensions;
     using Common.ViewModels;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Infrastructure.Presentation;
-    using Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
@@ -153,9 +150,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
+        public MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
         {
-            var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteErn, ern);
+            var viewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(providerSiteId, employerId);
             viewModel.VacancyGuid = vacancyGuid;
             viewModel.ComeFromPreview = comeFromPreview ?? false;
 
@@ -189,7 +186,7 @@
 
             if (!validationResult.IsValid)
             {
-                var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteErn, viewModel.Employer.Ern);
+                var existingViewModel = _providerProvider.GetProviderSiteEmployerLinkViewModel(viewModel.ProviderSiteId, viewModel.EmployerId);
                 existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
                 existingViewModel.Description = viewModel.Description;
                 existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
@@ -302,7 +299,7 @@
         public MediatorResponse<ProviderSiteEmployerLinkViewModel> CloneVacancy(long vacancyReferenceNumber)
         {
             var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
-            if (existingVacancy.Status == ProviderVacancyStatuses.RejectedByQA)
+            if (existingVacancy.Status == Domain.Entities.Raa.Vacancies.VacancyStatus.RejectedByQA)
             {
                 return GetMediatorResponse<ProviderSiteEmployerLinkViewModel>(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
             }
@@ -311,9 +308,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
         
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(ukprn, providerSiteErn, ern, vacancyGuid, numberOfPositions);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(providerId, providerSiteId, employerId, vacancyGuid, numberOfPositions);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
@@ -422,8 +419,8 @@
         {
             newVacancyViewModel.ProviderSiteEmployerLink =
                 _providerProvider.GetProviderSiteEmployerLinkViewModel(
-                    newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
-                    newVacancyViewModel.ProviderSiteEmployerLink.Employer.Ern);
+                    newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteId,
+                    newVacancyViewModel.ProviderSiteEmployerLink.EmployerId);
         }
 
         private void UpdateCommentsFor(NewVacancyViewModel newVacancyViewModel)
@@ -790,7 +787,7 @@
             var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             viewModelToValidate.ResubmitOption = resubmitOptin;
             
-            var resubmission = viewModelToValidate.Status == ProviderVacancyStatuses.RejectedByQA;
+            var resubmission = viewModelToValidate.Status == Domain.Entities.Raa.Vacancies.VacancyStatus.RejectedByQA;
 
             var validationResult = _vacancyViewModelValidator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndResubmission);
 

@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using FluentValidation.Results;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -13,7 +12,7 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
+        NewVacancyViewModel GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -45,7 +44,7 @@
 
         StandardViewModel GetStandard(int? standardId);
 
-        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
+        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
 

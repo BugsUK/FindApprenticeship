@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using ViewModels.Provider;
 
     public static class ProviderSiteViewModelConverter
@@ -9,7 +9,7 @@
         {
             var viewModel = new ProviderSiteViewModel
             {
-                Ern = providerSite.Ern,
+                Ern = providerSite.EdsErn,
                 Name = providerSite.Name,
                 EmployerDescription = providerSite.EmployerDescription,
                 CandidateDescription = providerSite.CandidateDescription,

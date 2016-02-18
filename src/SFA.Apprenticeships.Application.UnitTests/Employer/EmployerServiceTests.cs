@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Employer
 {
     using Application.Employer;
-    using Domain.Entities.Organisations;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Employers;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Moq;
     using NUnit.Framework;
@@ -37,7 +37,7 @@
             const string ern = "ern";
             var employer = new Employer
             {
-                Ern = ern
+                EdsErn = ern
             };
             var employerReadRepository = new Mock<IEmployerReadRepository>();
             var organisationServie = new Mock<IOrganisationService>();
@@ -58,7 +58,7 @@
             Employer nullEmployer = null;
             var employer = new Employer
             {
-                Ern = ern
+                EdsErn = ern
             };
             var employerReadRepository = new Mock<IEmployerReadRepository>();
             var organisationServie = new Mock<IOrganisationService>();
@@ -93,14 +93,14 @@
             const string ern = "ern";
             var employer = new Employer
             {
-                Ern = ern
+                EdsErn = ern
             };
             var writeRepository = new Mock<IEmployerWriteRepository>();
             var service = GetService(null, null, writeRepository);
 
             service.SaveEmployer(employer);
 
-            writeRepository.Verify(w => w.Save(It.Is<Employer>(e => e.Ern == ern)));
+            writeRepository.Verify(w => w.Save(It.Is<Employer>(e => e.EdsErn == ern)));
         }
 
         [Test]

@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Common.Providers;
     using Constants;
     using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
     using ViewModels;
@@ -159,7 +160,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             switch (response.Code)
             {
                 case ProviderUserMediatorCodes.ChangeProviderSite.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn });
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

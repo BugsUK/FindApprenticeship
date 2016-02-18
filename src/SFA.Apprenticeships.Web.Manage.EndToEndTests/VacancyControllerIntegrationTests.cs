@@ -6,11 +6,7 @@
     using Common.Validators;
     using Common.ViewModels;
     using Controllers;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using MongoDB.Driver;
@@ -467,7 +463,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
+            vacancyInDb.Status.Should().Be(VacancyStatus.ReservedForQA);
             vacancyInDb.QAUserName.Should().Be(QaUserName);
             vacancyInDb.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
@@ -489,7 +485,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancyInDb.Status.Should().Be(VacancyStatus.Live);
         }
 
         [Test, Category("Integration")]
@@ -551,7 +547,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.RejectedByQA);
+            vacancyInDb.Status.Should().Be(VacancyStatus.RejectedByQA);
         }
 
         [Test, Category("Integration")]
@@ -618,20 +614,22 @@
                 ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 ClosingDate = DateTime.UtcNow.AddDays(30),
-                DateCreated = DateTime.UtcNow.AddDays(-1),
+                CreatedDateTime = DateTime.UtcNow.AddDays(-1),
                 DateSubmitted = DateTime.UtcNow.AddDays(-1),
                 DesiredQualifications = "desired qualifications",
                 DesiredSkills = "desired skills",
                 Duration = 3,
                 DurationType = DurationType.Years,
-                EntityId = Guid.NewGuid(),
+                VacancyId = 42,
                 FutureProspects = "future prospects",
                 HoursPerWeek = 40,
                 LongDescription = "long description",
                 OfflineVacancy = false,
                 PersonalQualities = "personal qualities",
                 PossibleStartDate = DateTime.UtcNow.AddDays(100),
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                // TODO: DOMAIN: add owner etc.
+                /*
+                VacancyParty = new VacancyParty
                 {
                     DateCreated = DateTime.UtcNow,
                     Description = "employer link",
@@ -658,13 +656,14 @@
                         }
                     }
                 },
+                */
                 ShortDescription = "short description",
-                Status = ProviderVacancyStatuses.PendingQA,
+                Status = VacancyStatus.PendingQA,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
                 WageType = WageType.ApprenticeshipMinimumWage,
-                Ukprn = "10003816"
+                // Ukprn = "10003816"
             };
         }
 

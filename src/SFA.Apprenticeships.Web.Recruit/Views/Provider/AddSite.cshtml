@@ -27,12 +27,12 @@
 
     <div class="blocklabel-single-container">
         <div class="form-group inline clearfix blocklabel-single hide-nojs">
-            <label data-target="ernsearch-panel" for="ernsearch" class="block-label @ernSearchSelected">
-                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.EmployerReferenceNumber, new { id = "ernsearch", aria_controls = "ernsearch-panel" })
+            <label data-target="edsErnsearch-panel" for="edsErnsearch" class="block-label @ernSearchSelected">
+                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.EmployerReferenceNumber, new { id = "edsErnsearch", aria_controls = "edsErnsearch-panel" })
                 Search using ERN
             </label>
             <label data-target="namesearch-panel" for="namesearch" class="block-label @nameSearchSelected">
-                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.SiteNameAndLocation, new { id = "namesearch", aria_controls = "ernsearch-panel" })
+                @Html.RadioButtonFor(model => model.SiteSearchMode, ProviderSiteSearchMode.SiteNameAndLocation, new { id = "namesearch", aria_controls = "edsErnsearch-panel" })
                 Search using site name
             </label>
         </div>

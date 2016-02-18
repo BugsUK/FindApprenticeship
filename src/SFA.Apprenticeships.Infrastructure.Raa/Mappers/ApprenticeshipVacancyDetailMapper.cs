@@ -5,16 +5,16 @@
     using System.Linq;
     using System.Text;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Extensions;
     using Presentation;
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(ApprenticeshipVacancy vacancy, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
@@ -45,13 +45,13 @@
                 //TODO: Map once Vicenc has finished with multi location work
                 NumberOfPositions = 1,
                 RealityCheck = vacancy.ThingsToConsider,
-                Created = vacancy.DateCreated,
+                Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
+                //EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
                 //TODO: How is this captured in RAA?
                 //AnonymousEmployerName = vacancy.,
-                EmployerDescription = vacancy.ProviderSiteEmployerLink.Description,
-                EmployerWebsite = vacancy.ProviderSiteEmployerLink.WebsiteUrl,
+                //EmployerDescription = vacancy.ProviderSiteEmployerLink.Description,
+                //EmployerWebsite = vacancy.ProviderSiteEmployerLink.WebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
@@ -60,7 +60,7 @@
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
-                VacancyAddress = vacancy.ProviderSiteEmployerLink.Employer.Address,
+                //VacancyAddress = vacancy.ProviderSiteEmployerLink.Employer.Address,
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
                 //TODO: How is this captured in RAA?
@@ -70,7 +70,7 @@
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
                 //TODO: Get provider
-                //ProviderName = vacancy.ProviderSiteEmployerLink.,
+                //ProviderName = vacancy.VacancyParty.,
                 //TradingName = vacancy.,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
@@ -89,11 +89,11 @@
 
 
                 //TODO: Get provider
-                //ProviderName = vacancy.ProviderSiteEmployerLink.,
+                //ProviderName = vacancy.VacancyParty.,
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 //TODO: Store geopoints for employers
-                //Location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint,
+                //Location = vacancy.VacancyParty.Employer.Address.GeoPoint,
                 //Location = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }, //Coventry
                 //SubCategoryCode = vacancy.FrameworkCodeName
             };
@@ -130,7 +130,7 @@
             return detail;
         }
 
-        private static string GetContactInformation(ApprenticeshipVacancy vacancy)
+        private static string GetContactInformation(Vacancy vacancy)
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(vacancy.ContactName))

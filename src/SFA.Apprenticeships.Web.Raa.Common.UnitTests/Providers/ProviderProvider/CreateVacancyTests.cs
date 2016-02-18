@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
     using System;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
     using ViewModels.Provider;
@@ -19,28 +17,25 @@
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
-            var apprenticeshipVacancy = new ApprenticeshipVacancy();
-            var providerSiteErn = "providerSiteErn";
-            var ern = "ern";
-            var providerSiteEmployerLink = new ProviderSiteEmployerLink
+            var apprenticeshipVacancy = new Vacancy();
+            var vacancyPartyId = 42;
+            var providerSiteId = 1;
+            var employerId = 2;
+            var providerSiteEmployerLink = new VacancyParty
             {
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Employer = new Employer
-                {
-                    Ern = ern,
-                    Address = new Address()
-                },
-                Description = "Description",
-                EntityId = Guid.NewGuid(),
-                ProviderSiteErn = providerSiteErn,
-                WebsiteUrl = "Url"
+                VacancyPartyId = vacancyPartyId,
+                CreatedDateTime = DateTime.Now,
+                UpdatedDateTime = DateTime.Now,
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId,
+                EmployerDescription = "Description",
+                EmployerWebsiteUrl = "Url"
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(apprenticeshipVacancy);
-            MockProviderService.Setup(s => s.SaveProviderSiteEmployerLink(providerSiteEmployerLink))
+            MockProviderService.Setup(s => s.SaveVacancyParty(providerSiteEmployerLink))
                 .Returns(providerSiteEmployerLink);
-            MockProviderService.Setup(s => s.GetProviderSiteEmployerLink(providerSiteErn, ern))
+            MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, employerId))
                 .Returns(providerSiteEmployerLink);
 
             var provider = GetProvider();
@@ -48,10 +43,10 @@
             // Act
             provider.ConfirmProviderSiteEmployerLink(new ProviderSiteEmployerLinkViewModel
             {
-                ProviderSiteErn = providerSiteErn,
+                ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
                 {
-                    Ern = ern,
+                    EmployerId = employerId,
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid,
@@ -61,11 +56,11 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.SaveProviderSiteEmployerLink(providerSiteEmployerLink), Times.Once);
+            MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
                     s.SaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(v => v.ProviderSiteEmployerLink == providerSiteEmployerLink)), Times.Once);
+                        It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Once);
 
 
         }
@@ -75,28 +70,25 @@
         {
             // Arrange
             var vacancyGuid = Guid.NewGuid();
-            ApprenticeshipVacancy nullApprenticeshipVacancy = null;
-            var providerSiteErn = "providerSiteErn";
-            var ern = "ern";
-            var providerSiteEmployerLink = new ProviderSiteEmployerLink
+            Vacancy nullApprenticeshipVacancy = null;
+            var vacancyPartyId = 42;
+            var providerSiteId = 1;
+            var employerId = 2;
+            var providerSiteEmployerLink = new VacancyParty
             {
-                DateCreated = DateTime.Now,
-                DateUpdated = DateTime.Now,
-                Employer = new Employer
-                {
-                    Ern = ern,
-                    Address = new Address()
-                },
-                Description = "Description",
-                EntityId = Guid.NewGuid(),
-                ProviderSiteErn = providerSiteErn,
-                WebsiteUrl = "Url"
+                VacancyPartyId = vacancyPartyId,
+                CreatedDateTime = DateTime.Now,
+                UpdatedDateTime = DateTime.Now,
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId,
+                EmployerDescription = "Description",
+                EmployerWebsiteUrl = "Url"
             };
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(nullApprenticeshipVacancy);
-            MockProviderService.Setup(s => s.SaveProviderSiteEmployerLink(providerSiteEmployerLink))
+            MockProviderService.Setup(s => s.SaveVacancyParty(providerSiteEmployerLink))
                 .Returns(providerSiteEmployerLink);
-            MockProviderService.Setup(s => s.GetProviderSiteEmployerLink(providerSiteErn, ern))
+            MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, employerId))
                 .Returns(providerSiteEmployerLink);
 
             var provider = GetProvider();
@@ -104,10 +96,10 @@
             // Act
             provider.ConfirmProviderSiteEmployerLink(new ProviderSiteEmployerLinkViewModel
             {
-                ProviderSiteErn = providerSiteErn,
+                ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
                 {
-                    Ern = ern,
+                    EmployerId = employerId,
                     Address = new AddressViewModel()
                 },
                 VacancyGuid = vacancyGuid
@@ -115,11 +107,11 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.SaveProviderSiteEmployerLink(providerSiteEmployerLink), Times.Once);
+            MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
                     s.SaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(v => v.ProviderSiteEmployerLink == providerSiteEmployerLink)), Times.Never);
+                        It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
 
 
         }

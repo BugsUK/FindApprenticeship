@@ -1,16 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Employers.Entities
 {
-    using System;
-    using Domain.Entities.Organisations;
-    using MongoDB.Bson.Serialization.Attributes;
+    using Domain.Entities.Raa.Parties;
 
     public class MongoEmployer : Employer
     {
-        [BsonId]
-        public Guid Id
-        {
-            get { return EntityId; }
-            set { EntityId = value; }
-        }
+        
     }
 }

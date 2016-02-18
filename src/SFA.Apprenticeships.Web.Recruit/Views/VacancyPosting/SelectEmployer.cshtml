@@ -37,12 +37,12 @@
                     <li>try searching by ERN</li>
                 }
             </ul>
-            <p class="no-employers-optional-action">Alternatively, you might need to create a <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid})">link to the employer</a></p>
+            <p class="no-employers-optional-action">AltedsErnatively, you might need to create a <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteEdsErn, vacancyGuid = Model.VacancyGuid})">link to the employer</a></p>
         </div>
     }
 
     <section class="clearfix" id="providerSiteResults">
-        <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
+        <a class="select-employer-link-to-new" href="@Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer, new {providerSiteErn = Model.ProviderSiteEdsErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview})">Link to a new employer</a>
         <h2 class="heading-small">Search your employers</h2>
         <details @detailsOpen>
             <summary>Search your employers</summary>
@@ -55,15 +55,15 @@
                             Name and location
                         </label>
                         @* ReSharper disable once Html.IdNotResolved *@
-                        <label data-target="ern-search-panel" for="ern-search" class="block-label @ernSearchSelected">
-                            @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.Ern, new {id = "ern-search", aria_controls = "ern-search-panel"})
+                        <label data-target="edsErn-search-panel" for="edsErn-search" class="block-label @ernSearchSelected">
+                            @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.Ern, new {id = "edsErn-search", aria_controls = "edsErn-search-panel"})
                             ERN
                         </label>
                     </div>
 
-                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "ern-search-form"}))
+                    @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "edsErn-search-form"}))
                     {
-                        @Html.HiddenFor(model => model.ProviderSiteErn)
+                        @Html.HiddenFor(model => model.ProviderSiteEdsErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
                         @Html.HiddenFor(model => model.ComeFromPreview)
 
@@ -78,7 +78,7 @@
 
                     @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SearchExistingEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
                     {
-                        @Html.HiddenFor(model => model.ProviderSiteErn)
+                        @Html.HiddenFor(model => model.ProviderSiteEdsErn)
                         @Html.HiddenFor(model => model.VacancyGuid)
                         @Html.HiddenFor(model => model.ComeFromPreview)
 
@@ -133,7 +133,7 @@
                             </td>
                             <td>@employerResultsViewModel.Ern</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteErn = Model.ProviderSiteEdsErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

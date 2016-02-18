@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.WebPages;
     
     #line 3 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden
@@ -90,7 +90,7 @@ Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
     var saveButtonText = "Save and continue";
     var saveButtonValue = "CreateVacancy";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
+    if (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "CreateVacancyAndPreview";
@@ -114,14 +114,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 821), Tuple.Create("\"", 845)
+WriteAttribute("value", Tuple.Create(" value=\"", 799), Tuple.Create("\"", 823)
             
             #line 21 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 829), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                   , Tuple.Create(Tuple.Create("", 807), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 829), false)
+, 807), false)
 );
 
 WriteLiteral(">");

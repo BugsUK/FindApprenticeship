@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderUser
 {
     using Application.Interfaces.Users;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

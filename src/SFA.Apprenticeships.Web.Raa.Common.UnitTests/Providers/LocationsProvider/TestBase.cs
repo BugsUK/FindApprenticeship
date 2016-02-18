@@ -5,10 +5,10 @@
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
-    using Domain.Interfaces.Repositories;
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
+    using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
@@ -22,8 +22,8 @@
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
         protected Mock<IApprenticeshipApplicationService> ApprenticeshipApplicationService;
-        protected Mock<IApprenticeshipVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-        protected Mock<IApprenticeshipVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+        protected Mock<IVacancyReadRepository> MockApprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
+        protected Mock<IVacancyWriteRepository> MockApprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
@@ -33,8 +33,8 @@
             MockLogService = new Mock<ILogService>();
             MockConfigurationService = new Mock<IConfigurationService>();
             MockMapper = new Mock<IMapper>();
-            MockApprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-            MockApprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+            MockApprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
+            MockApprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockUserProfileService = new Mock<IUserProfileService>();

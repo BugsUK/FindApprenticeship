@@ -12,8 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Recruit.Views.Shared;
@@ -92,7 +91,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var details = new VacancySummary();
 
             var viewModel = new Fixture().Build<VacancySummaryViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.RejectedByQA)
+                .With(v => v.Status, VacancyStatus.RejectedByQA)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -108,7 +107,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var details = new VacancySummary();
 
             var viewModel = new Fixture().Build<VacancySummaryViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.Draft)
+                .With(v => v.Status, VacancyStatus.Draft)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);

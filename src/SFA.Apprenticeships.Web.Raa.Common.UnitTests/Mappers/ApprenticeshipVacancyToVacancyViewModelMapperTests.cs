@@ -2,7 +2,7 @@
 {
     using SFA.Infrastructure.Interfaces;
     using Common.Mappers;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -23,10 +23,10 @@
         public void ShouldMapChildObjects()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().Create();
+            var source = new Fixture().Build<Vacancy>().Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
             viewModel.VacancyReferenceNumber.Should().Be(source.VacancyReferenceNumber);
@@ -46,10 +46,10 @@
         public void NoDurationSpecified()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.Duration, null).Create();
+            var source = new Fixture().Build<Vacancy>().With(av => av.Duration, null).Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
             viewModel.VacancySummaryViewModel.Duration.Should().Be(null);
@@ -59,10 +59,10 @@
         public void NoPossibleStartDateSpecified()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.PossibleStartDate, null).Create();
+            var source = new Fixture().Build<Vacancy>().With(av => av.PossibleStartDate, null).Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
             viewModel.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Should().NotBe(null);
@@ -75,10 +75,10 @@
         public void NoClosingDateSpecified()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.ClosingDate, null).Create();
+            var source = new Fixture().Build<Vacancy>().With(av => av.ClosingDate, null).Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
             viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Should().NotBe(null);
@@ -91,10 +91,10 @@
         public void OfflineApplicationClickThroughCount()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().With(av => av.OfflineApplicationClickThroughCount, 3).Create();
+            var source = new Fixture().Build<Vacancy>().With(av => av.OfflineApplicationClickThroughCount, 3).Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
             viewModel.OfflineApplicationClickThroughCount.Should().Be(3);

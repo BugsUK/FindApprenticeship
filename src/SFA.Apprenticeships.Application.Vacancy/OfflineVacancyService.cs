@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Vacancy
 {
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Vacancies;
 
     public class OfflineVacancyService : IOfflineVacancyService

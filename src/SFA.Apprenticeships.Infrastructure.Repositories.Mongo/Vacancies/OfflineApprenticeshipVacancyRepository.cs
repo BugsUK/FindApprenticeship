@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class OfflineApprenticeshipVacancyRepository : GenericMongoClient<MongoApprenticeshipVacancy>, IOfflineApprenticeshipVacancyRepository
+    public class OfflineApprenticeshipVacancyRepository : GenericMongoClient2<MongoApprenticeshipVacancy>, IOfflineApprenticeshipVacancyRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -18,7 +18,7 @@
         {
             var config = configurationService.Get<MongoConfiguration>();
 
-            Initialise(config.VacancyDb, "apprenticeshipVacancies");
+            Initialise(config.VacancyDb, "vacancies");
 
             _mapper = mapper;
             _logger = logger;
@@ -30,7 +30,7 @@
 
             var args = new FindAndModifyArgs
             {
-                Query = new QueryBuilder<ApprenticeshipVacancy>().And(Query<ApprenticeshipVacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<ApprenticeshipVacancy>.EQ(d => d.OfflineVacancy, true)),
+                Query = new QueryBuilder<Vacancy>().And(Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<Vacancy>.EQ(d => d.OfflineVacancy, true)),
                 Update = Update.Inc("OfflineApplicationClickThroughCount", 1),
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
@@ -41,7 +41,7 @@
             {
                 var mongoEntity = result.GetModifiedDocumentAs<MongoApprenticeshipVacancy>();
 
-                var entity = _mapper.Map<MongoApprenticeshipVacancy, ApprenticeshipVacancy>(mongoEntity);
+                var entity = _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
 
                 _logger.Debug(
                     "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully. New value: {1}",

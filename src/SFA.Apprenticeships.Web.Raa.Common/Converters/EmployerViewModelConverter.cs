@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
-    using Domain.Entities.Organisations;
-    using Raa.Common.ViewModels.Vacancy;
+    using Domain.Entities.Raa.Parties;
+    using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
     public static class EmployerViewModelConverter
@@ -23,7 +23,7 @@
         {
             var viewModel = new EmployerResultViewModel
             {
-                Ern = employer.Ern,
+                Ern = employer.EdsErn,
                 //EmployerId = 
                 EmployerName = employer.Name,
                 Address = employer.Address.Convert()
@@ -36,7 +36,7 @@
         {
             var viewModel = new EmployerViewModel
             {
-                Ern = employer.Ern,
+                Ern = employer.EdsErn,
                 Name = employer.Name,
                 Address = employer.Address.Convert()
             };

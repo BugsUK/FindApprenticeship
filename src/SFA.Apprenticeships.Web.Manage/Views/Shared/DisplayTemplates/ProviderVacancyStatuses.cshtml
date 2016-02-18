@@ -1,12 +1,12 @@
 ﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@model ProviderVacancyStatuses
+@model VacancyStatuses
     
 @switch (Model)
 {
-    case ProviderVacancyStatuses.PendingQA:
+    case VacancyStatuses.PendingQA:
         <span>Pending QA</span>
         break;
-    case ProviderVacancyStatuses.ReservedForQA:
+    case VacancyStatuses.ReservedForQA:
         <span>Reserved for QA</span>
         break;
 }

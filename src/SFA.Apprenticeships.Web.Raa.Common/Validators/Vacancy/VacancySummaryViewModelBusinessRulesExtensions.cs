@@ -3,13 +3,11 @@
     using System.Collections.Generic;
     using System.Linq;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Extensions;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Results;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
-    using Web.Common.ViewModels;
 
     public static class VacancySummaryViewModelBusinessRulesExtensions
     {
@@ -132,14 +130,10 @@
             WarningMessage = warningMessage;
         }
 
-        private MinimumDurationForHoursPerWeek()
-        {
-        }
-
         public decimal? HoursInclusiveLowerBound { get; }
         public decimal? HoursExclusiveUpperBound { get; }
         public decimal MinimumDurationInMonths { get; }
-        public string WarningMessage { get; private set; }
+        public string WarningMessage { get; }
 
         public bool IsGreaterThanOrEqualToMinDuration(decimal duration, DurationType durationType)
         {

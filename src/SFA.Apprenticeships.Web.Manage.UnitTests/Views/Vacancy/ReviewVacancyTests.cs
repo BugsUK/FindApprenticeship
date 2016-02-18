@@ -6,8 +6,7 @@
     using System.Web.Routing;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;
     using Moq;
@@ -15,7 +14,6 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
-    using Raa.Common.Views.Shared.DisplayTemplates;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using RazorGenerator.Testing;
 
@@ -70,7 +68,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -110,7 +108,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -150,7 +148,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -198,7 +196,7 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA,
+                Status = VacancyStatus.ReservedForQA,
                 VacancyType = VacancyType.Apprenticeship
             };
 
@@ -246,7 +244,7 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA,
+                Status = VacancyStatus.ReservedForQA,
                 VacancyType = VacancyType.Apprenticeship
             };
 

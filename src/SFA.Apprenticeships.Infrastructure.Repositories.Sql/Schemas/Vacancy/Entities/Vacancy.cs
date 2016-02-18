@@ -16,7 +16,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         }
         */
 
-        public Guid VacancyId { get; set; }
+        public int VacancyId { get; set; }
 
         public int? VacancyReferenceNumber { get; set; }
 

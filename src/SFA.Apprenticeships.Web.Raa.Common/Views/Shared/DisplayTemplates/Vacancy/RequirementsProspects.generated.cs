@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.WebPages;
     
     #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\RequirementsProspects.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden

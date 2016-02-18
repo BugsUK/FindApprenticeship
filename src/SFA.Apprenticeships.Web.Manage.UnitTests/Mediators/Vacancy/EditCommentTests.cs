@@ -3,7 +3,7 @@
     using System;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Manage.Mediators.Vacancy;
     using Moq;
     using NUnit.Framework;
