@@ -23,6 +23,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.TrainingType.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyStatusType.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyTextFieldValue.Upsert.sql"
+:r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
 
 -- Test Data
 :r ".\Scripts\TestData\dbo.TestProviders.Upsert.sql"

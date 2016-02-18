@@ -125,6 +125,15 @@
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\EmployerMappers.cs" />
+    <Compile Include="Schemas\dbo\EmployerRepository.cs" />
+    <Compile Include="Schemas\dbo\Entities\Employer.cs" />
+    <Compile Include="Schemas\dbo\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
+    <Compile Include="Schemas\dbo\ProviderSiteMappers.cs" />
+    <Compile Include="Schemas\dbo\ProviderSiteRepository.cs" />
+    <Compile Include="Schemas\dbo\VacancyOwnerRelationshipMappers.cs" />
+    <Compile Include="Schemas\dbo\VacancyOwnerRelationshipRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />

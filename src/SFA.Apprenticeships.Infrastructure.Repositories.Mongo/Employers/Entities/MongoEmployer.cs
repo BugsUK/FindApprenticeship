@@ -7,7 +7,7 @@
     public class MongoEmployer : Employer
     {
         [BsonId]
-        public Guid Id
+        public int Id
         {
             get { return EntityId; }
             set { EntityId = value; }

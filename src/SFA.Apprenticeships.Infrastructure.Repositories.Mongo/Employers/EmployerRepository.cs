@@ -11,7 +11,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class EmployerRepository : GenericMongoClient<MongoEmployer, Guid>, IEmployerReadRepository, IEmployerWriteRepository
+    public class EmployerRepository : GenericMongoClient<MongoEmployer, int>, IEmployerReadRepository, IEmployerWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -24,14 +24,14 @@
             _logger = logger;
         }
 
-        public Employer Get(Guid id)
-        {
-            _logger.Debug("Called Mongodb to get employer with Id={0}", id);
+        //public Employer Get(Guid id)
+        //{
+        //    _logger.Debug("Called Mongodb to get employer with Id={0}", id);
 
-            var mongoEntity = Collection.FindOneById(id);
+        //    var mongoEntity = Collection.FindOneById(id);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
-        }
+        //    return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
+        //}
 
         public Employer Get(string ern)
         {
@@ -42,14 +42,14 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public void Delete(Guid id)
-        {
-            _logger.Debug("Calling repository to delete employer with Id={0}", id);
+        //public void Delete(Guid id)
+        //{
+        //    _logger.Debug("Calling repository to delete employer with Id={0}", id);
 
-            Collection.Remove(Query<MongoEmployer>.EQ(e => e.Id, id));
+        //    Collection.Remove(Query<MongoEmployer>.EQ(e => e.Id, id));
 
-            _logger.Debug("Deleted employer with Id={0}", id);
-        }
+        //    _logger.Debug("Deleted employer with Id={0}", id);
+        //}
 
         public Employer Save(Employer entity)
         {

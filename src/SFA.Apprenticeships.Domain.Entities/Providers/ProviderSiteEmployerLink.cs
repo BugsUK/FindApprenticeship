@@ -5,8 +5,11 @@
     using Organisations;
 
     //TODO: Perhaps rename to Relationship?
-    public class ProviderSiteEmployerLink : BaseEntity<Guid>
+    public class ProviderSiteEmployerLink
     {
+        public int EntityId { get; set; }
+        public DateTime DateCreated { get; set; }
+        public DateTime? DateUpdated { get; set; }
         public string ProviderSiteErn { get; set; }
         public string Description { get; set; }
         public string WebsiteUrl { get; set; }

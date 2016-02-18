@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.UserProfile
 {
     using System;
+    using System.Data.SqlClient;
     using System.Linq;
     using Common;
     using Domain.Entities.Users;
@@ -35,17 +36,18 @@
 
             var dbEntity = _mapper.Map<AgencyUser, Entities.AgencyUser>(entity);
 
+            // TODO: SQL: AG: consider generalising (and testing) SqlException handling below.
+
             try
             {
                 var result = (int)_getOpenConnection.Insert(dbEntity);
                 dbEntity.AgencyUserId = result;
             }
-            catch (Exception ex)
+            catch (SqlException e)
+            when (e.Number == 2601)
             {
-                // TODO: Detect key violation
-
                 if (!_getOpenConnection.UpdateSingle(dbEntity))
-                    throw new Exception("Failed to update record after failed insert", ex);
+                    throw new Exception("Failed to update record after failed insert", e);
             }
 
             _logger.Debug("Saved provider to SQL DB with UKPRN={0}", entity.EntityId);

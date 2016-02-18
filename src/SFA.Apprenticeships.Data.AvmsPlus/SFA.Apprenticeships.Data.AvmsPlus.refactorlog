@@ -49,4 +49,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="UpdatedDateTime" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="3157db0a-c00a-4d18-8aa6-e56f660cbaa7" ChangeDateTime="02/17/2016 16:45:30">
+    <Property Name="ElementName" Value="[Sync].[SyncParams].[Id]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Sync].[SyncParams]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="LastSyncVersion" />
+  </Operation>
 </Operations>

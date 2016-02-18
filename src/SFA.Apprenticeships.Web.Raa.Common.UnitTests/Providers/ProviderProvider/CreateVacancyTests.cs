@@ -32,7 +32,7 @@
                     Address = new PostalAddress()
                 },
                 Description = "Description",
-                EntityId = Guid.NewGuid(),
+                EntityId = 1,
                 ProviderSiteErn = providerSiteErn,
                 WebsiteUrl = "Url"
             };
@@ -88,7 +88,7 @@
                     Address = new PostalAddress()
                 },
                 Description = "Description",
-                EntityId = Guid.NewGuid(),
+                EntityId = 1,
                 ProviderSiteErn = providerSiteErn,
                 WebsiteUrl = "Url"
             };

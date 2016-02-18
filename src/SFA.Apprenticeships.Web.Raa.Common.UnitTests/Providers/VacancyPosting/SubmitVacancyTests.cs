@@ -30,7 +30,7 @@
                     {
                         Address = new PostalAddress()
                     },
-                    EntityId = Guid.NewGuid(),
+                    EntityId = 1,
                     ProviderSiteErn = string.Empty,
                     WebsiteUrl = "http://www.google.com"
                 },
@@ -71,7 +71,7 @@
                     {
                         Address = new PostalAddress()
                     },
-                    EntityId = Guid.NewGuid(),
+                    EntityId = 1,
                     ProviderSiteErn = string.Empty,
                     WebsiteUrl = "http://www.google.com"
                 },
@@ -111,7 +111,7 @@
                     {
                         Address = new PostalAddress()
                     },
-                    EntityId = Guid.NewGuid(),
+                    EntityId = 1,
                     ProviderSiteErn = string.Empty,
                     WebsiteUrl = "http://www.google.com",
                 },

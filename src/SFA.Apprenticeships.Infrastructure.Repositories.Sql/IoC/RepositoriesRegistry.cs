@@ -3,6 +3,7 @@
     using Common;
     using Configuration;
     using Domain.Interfaces.Repositories;
+    using Schemas.dbo;
     using Schemas.Provider;
     using Schemas.Reference;
     using Schemas.UserProfile;
@@ -20,7 +21,11 @@
             For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
             For<IMapper>().Use<AgencyUserMappers>().Name = "AgencyUserMappers";
             For<IMapper>().Use<ProviderUserMappers>().Name = "ProviderUserMappers";
+            For<IMapper>().Use<VacancyOwnerRelationshipMappers>().Name = "VacancyOwnerRelationshipMappers";
+            For<IMapper>().Use<EmployerMappers>().Name = "EmployerMappers";
+            For<IMapper>().Use<ProviderSiteMappers>().Name = "ProviderSiteMappers";
 
+            
             // Repositories.
             For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
 
@@ -29,6 +34,15 @@
 
             For<IProviderUserReadRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
             For<IProviderUserWriteRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
+
+            For<IProviderSiteEmployerLinkReadRepository>().Use<VacancyOwnerRelationshipRepository>().Ctor<IMapper>().Named("VacancyOwnerRelationshipMappers");
+            For<IProviderSiteEmployerLinkWriteRepository>().Use<VacancyOwnerRelationshipRepository>().Ctor<IMapper>().Named("VacancyOwnerRelationshipMappers");
+
+            For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
+            For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
+
+            For<IEmployerReadRepository>().Use<EmployerRepository>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IEmployerWriteRepository>().Use<EmployerRepository>().Ctor<IMapper>().Named("EmployerMappers");
         }
     }
 }
