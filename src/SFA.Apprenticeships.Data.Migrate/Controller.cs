@@ -2,7 +2,6 @@
 {
     using SFA.Infrastructure.Interfaces;
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -247,12 +246,12 @@
             {
                 long maxId = syncContext.GetMaxId(table);
 
-                long startId = 0;
+                long startId = 0; // (table.Name == "Vacancy") ? 560000 : 0;
 
                 while (startId < maxId)
                 {
                     long endId = startId + batchSize - 1;
-                    _log.Info($"Processing {startId} to {endId} on {table.Name} ({startId / Math.Max(maxId / 100, 1)}% done)");
+                    _log.Debug($"Processing {startId} to {endId} on {table.Name} ({startId / Math.Max(maxId / 100, 1)}% done)");
 
                     var sourceRecords = syncContext.GetSourceRecordsAsync(table, startId, endId);
                     var targetRecords = syncContext.GetTargetRecords(table, startId, endId);
@@ -278,24 +277,26 @@
 
         }
 
-        /*
         private Keys GetPrimaryKeyValues(dynamic record, ITableSpec table)
         {
+            var keys = new List<long>();
             foreach (var key in table.PrimaryKeys)
             {
                 var sourceId = ((IDictionary<string, object>)record)[key];
                 if (sourceId == null)
-                    throw new FatalException($"Unknown column (may be case sensitive) or null value for {table.PrimaryKeys.First()} on {table.Name}");
+                    throw new FatalException($"Unknown column (may be case sensitive) or null value for {key} on {table.Name}");
                 if (sourceId is long)
-                    return (long)sourceId;
+                    keys.Add((long)sourceId);
                 else if (sourceId is int)
-                    return (long)(int)sourceId;
+                    keys.Add((long)(int)sourceId);
+                else if (sourceId is short)
+                    keys.Add((long)(short)sourceId);
                 else
                     throw new FatalException($"Unknown type {sourceId.GetType()}");
             }
 
+            return new Keys(keys);
         }
-        */
 
         public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<long, Operation> operationById, IMutateTarget mutateTarget)
         {
@@ -361,7 +362,9 @@
 
                         bool equal;
                         if (sourceCol.Value == null || targetColValue == null)
+                        {
                             equal = (sourceCol.Value == null && targetColValue == null);
+                        }
                         else if (sourceCol.Value.GetType() == typeof(byte[]))
                         {
                             var s = (byte[])sourceCol.Value;
@@ -369,11 +372,13 @@
                             equal = s.SequenceEqual(t);
                         }
                         else
+                        {
                             equal = sourceCol.Value.Equals(targetColValue);
+                        }
 
                         if (!equal)
                         {
-                            _log.Info($"At least {sourceCol.Key} varies - updating");
+                            _log.Info($"At least {sourceCol.Key} varies for {GetPrimaryKeyValues(sourceRecord, table)} (Is '{targetColValue}', should be '{sourceCol.Value ?? "<null>"}') - updating");
                             changed = true;
                             break;
                         }
@@ -391,10 +396,9 @@
         {
             private long[] _key;
 
-            public Keys(long[] values)
+            public Keys(IEnumerable<long> values)
             {
-                _key = new long[values.Length];
-                Array.Copy(values, _key, values.Length);
+                _key = values.ToArray();
             }
 
             public int CompareTo(Keys other)
@@ -409,6 +413,11 @@
                 }
 
                 return result;
+            }
+
+            public override string ToString()
+            {
+                return string.Join(", ", _key);
             }
         }
     }

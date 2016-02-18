@@ -17,6 +17,8 @@ namespace SFA.Apprenticeships.Data.Migrate
         void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records);
         void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records);
 
+        void InsertSingle(ITableDetails table, dynamic record);
+
         void DeleteAll(ITableDetails table);
 
         void Reset();
@@ -47,6 +49,8 @@ namespace SFA.Apprenticeships.Data.Migrate
     {
         string Name { get; }
         string PrimaryKey { get; }
+
+        IEnumerable<string> PrimaryKeys { get; }
     }
 
     public class FullScanRequiredException : Exception

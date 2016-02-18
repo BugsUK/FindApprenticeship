@@ -60,7 +60,7 @@
             }
 
             // $"{level:0,5}"
-            Console.WriteLine(string.Format("{0,-6} ", level + ":") + formattedMessage);
+            Console.WriteLine(DateTime.Now.ToString("ss.ff ") + string.Format("{0,-6} ", level + ":") + formattedMessage);
             if (exception != null)
                 Console.WriteLine(exception.ToString());
         }

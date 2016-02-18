@@ -37,7 +37,7 @@ namespace SFA.Apprenticeships.Data.Migrate
         {
             if (records.Any())
             {
-                var columnTypes = GetColumnTypes(records);
+                var columnTypes = GetColumnTypes(records).Where(x => x.Value != null);
 
                 using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
                 {
@@ -48,38 +48,54 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         public void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records)
         {
-            const string tempTable = "BulkUpdateTemp";
+            const string tempTable = "#BulkUpdateTemp";
 
             if (records.Any())
             {
                 var columnTypes = GetColumnTypes(records);
+                var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
 
                 var prototypeRecord = ((IDictionary<string, object>)records[0]);
                 using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection()) // TODO: Cast
                 {
-                    var columnsWithSqlTypes = columnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
+                    var columnsWithSqlTypes = nonNullColumnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
                     connection.Execute($"CREATE TABLE {tempTable} ({string.Join(", ", columnsWithSqlTypes)})");
 
-                    BulkInsert(connection, tempTable, records, columnTypes);
+                    BulkInsert(connection, tempTable, records, nonNullColumnTypes);
 
-                    var dataColumnNames = columnTypes.Keys.Where(k => k != table.PrimaryKey);
+                    var columnAssignments = columnTypes.Where(c => c.Value == null).Select(c => (c.Value == null) ? $"[{c.Key}] = NULL" : $"[{c.Key}] = temp.[{c.Key}]");
+
                     connection.Execute($@"
-    UPDATE target
-    SET    {string.Join(", ", dataColumnNames.Select(col => $"[{col}] = temp.[{col}]"))}
-    FROM   {table.Name} target
-    JOIN   {tempTable}  temp
-    ON     temp.{table.PrimaryKey} = target.{table.PrimaryKey}
+UPDATE target
+SET    {string.Join(", ", columnAssignments)}
+FROM   {table.Name} target
+JOIN   {tempTable}  temp
+ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))}
 
-    DROP TABLE {tempTable}
-    ");
+DROP TABLE {tempTable}
+");
                 }
+            }
+        }
+
+        public void InsertSingle(ITableDetails table, dynamic record)
+        {
+            var dictRecord = ((IDictionary<string, object>)record);
+            using (var connection = _targetDatabase.GetOpenConnection())
+            {
+                connection.Execute($@"
+SET IDENTITY_INSERT {table.Name} ON;
+INSERT INTO {table.Name}
+       ({string.Join(",", dictRecord.Keys.Select(k => $" {k}"))})
+VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
+", new DynamicParameters(dictRecord));
             }
         }
 
         private static string SqlTypeFor(Type type)
         {
             if (type == typeof(string))
-                return "VARCHAR(MAX)";
+                return "NVARCHAR(MAX)";
             if (type == typeof(int))
                 return "INT";
             if (type == typeof(long))
@@ -105,7 +121,7 @@ namespace SFA.Apprenticeships.Data.Migrate
         /// <typeparam name="T"></typeparam>
         /// <param name="data">Note that lists of many types of dynamic are suitable</param>
         /// <param name="tableName"></param>
-        private static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IDictionary<string, Type> columnTypes)
+        private static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes)
         {
             var dataTable = new DataTable();
             foreach (var column in columnTypes)
@@ -116,9 +132,9 @@ namespace SFA.Apprenticeships.Data.Migrate
             foreach (IDictionary<string, object> row in data)
             {
                 var dataRow = dataTable.NewRow();
-                foreach (var name in columnTypes.Keys)
+                foreach (var column in columnTypes)
                 {
-                    dataRow[name] = row[name] ?? DBNull.Value;
+                    dataRow[column.Key] = row[column.Key] ?? DBNull.Value;
                 }
                 dataTable.Rows.Add(dataRow);
             }
@@ -140,8 +156,9 @@ namespace SFA.Apprenticeships.Data.Migrate
         }
 
         /// <summary>
-        /// Get a mapping between column name and the data type associated with it.
-        /// The results does not include columns where all values are null as a) the type cannot be determined and b) there is no need to specify a value when uploading
+        /// Get a mapping between column name and the CLR type associated with it.
+        /// Where a column contains only null values the type cannot be determined and is therefore set to null.
+        /// For inserts this can be dealt with by excluding them. For updates this can be dealt with by explicitly setting them to null.
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
@@ -188,10 +205,6 @@ namespace SFA.Apprenticeships.Data.Migrate
                 first = false;
             }
 
-            var nullNames = result.Where(r => r.Value == null).Select(r => r.Key).ToList();
-            foreach (var name in nullNames)
-                result.Remove(name);
-
             return result;
         }
 
@@ -199,17 +212,19 @@ namespace SFA.Apprenticeships.Data.Migrate
         {
             const long batchSize = 100000;
 
-            var maxId = _targetDatabase.Query<long?>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
-            if (maxId == null)
+            var maxFirstId = _targetDatabase.Query<dynamic>($"SELECT MAX({table.PrimaryKeys.First()}) FROM {table.Name}").Single();
+
+            //            var maxIds = _targetDatabase.Query<dynamic>($"SELECT {string.Join(", ", table.PrimaryKeys.Select(k => $"MAX({k}) AS {k}"))} FROM {table.Name}").Single();
+            if (maxFirstId == null)
             {
                 _log.Info($"{table.Name} is already empty");
             }
             else
             {
-                for (long id = 0; id < maxId.Value; id += batchSize)
+                for (long id = 0; id < maxFirstId.Value; id += batchSize)
                 {
-                    _log.Info($"DELETEing contents of {table.Name} - {id / Math.Max(maxId.Value / 100, 1)}%");
-                    _targetDatabase.MutatingQuery<int>($"DELETE {table.Name} WHERE {table.PrimaryKey} BETWEEN {id} AND {id + batchSize}");
+                    _log.Info($"DELETEing contents of {table.Name} - {id / Math.Max(maxFirstId.Value / 100, 1)}%");
+                    _targetDatabase.MutatingQuery<int>($"DELETE {table.Name} WHERE {table.PrimaryKeys.First()} BETWEEN {id} AND {id + batchSize}");
                 }
             }
         }
@@ -349,7 +364,7 @@ GRANT VIEW CHANGE TRACKING ON SCHEMA ::dbo TO MSSQLReadOnly
 
             public long GetMaxId(ITableDetails table)
             {
-                return _sourceDatabase.GetOpenConnection().Query<long>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
+                return _sourceDatabase.Query<long>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
             }
 
             public async Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startId, long endId)
@@ -358,6 +373,7 @@ GRANT VIEW CHANGE TRACKING ON SCHEMA ::dbo TO MSSQLReadOnly
                 {
                     return await conn.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId });
                 }
+                // return Task.FromResult(_sourceDatabase.QueryProgressive<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId }));
             }
 
             public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startId, long endId)

@@ -28,10 +28,10 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
                 syncRepository,
                 //tableSpec => new DummyMutateTarget(log, tableSpec),
                 tableSpec => new MutateTarget(log, syncRepository, 5000, tableSpec), // TODO: 5000 or 1
-                new AvmsToAvmsPlusTables(log).All
+                new AvmsToAvmsPlusTables(log, true).All
                 );
 
-            controller.Reset(); // TODO: Remove
+            //controller.Reset(); // TODO: Remove
             controller.DoAll();
         }
     }

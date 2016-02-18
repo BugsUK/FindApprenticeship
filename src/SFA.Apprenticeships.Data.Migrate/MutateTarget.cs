@@ -3,6 +3,7 @@
     using SFA.Infrastructure.Interfaces;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     /// <summary>
     /// Simple, single threaded synchronous implementation
@@ -38,8 +39,8 @@
 
         public void Insert(dynamic record)
         {
-            if (_maxBatchSize == 1)
-                _log.Debug($"Queuing for insert: {record}");
+            //if (_maxBatchSize == 1)
+            //    _log.Debug($"Queuing for insert: {record}");
             _toInsert.Add(record);
             _insertCount++;
             FlushInsert(false);
@@ -47,8 +48,8 @@
 
         public void Update(dynamic record)
         {
-            if (_maxBatchSize == 1)
-                _log.Debug($"Queuing for update: {record}");
+            //if (_maxBatchSize == 1)
+            //    _log.Debug($"Queuing for update: {record}");
             _toUpdate.Add(record);
             _updateCount++;
             FlushUpdate(false);
@@ -63,7 +64,42 @@
             if ((!force && _toInsert.Count < _maxBatchSize) || _toInsert.Count == 0)
                 return;
             _log.Info($"Inserting {_toInsert.Count} records into {_tableDetails.Name}");
-            _syncRepository.BulkInsert(_tableDetails, _toInsert.AsReadOnly());
+
+            if (_toInsert.Count == 1)
+            {
+                try
+                {
+                    _syncRepository.InsertSingle(_tableDetails, _toInsert.Single());
+                }
+                catch (Exception ex) // SqlException
+                {
+                    if (ex.Message.Contains("FOREIGN KEY"))
+                    {
+                        _log.Error($"Hit foreign key constraint on {_tableDetails.Name}.\nData: {_toInsert.Single()}.\nDetail: {ex.Message}.");
+                        throw;
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    _syncRepository.BulkInsert(_tableDetails, _toInsert.AsReadOnly());
+                }
+                catch (Exception ex) // SqlException
+                {
+                    if (ex.Message.Contains("FOREIGN KEY"))
+                    {
+                        _log.Info($"Hit foreign key constraint error on {_tableDetails.Name}. This may be genuine or due to a known bug in SqlBulkCopy with NULL foreign keys. Splitting the operation to identify the affected record.");
+                        using (var m = new MutateTarget(_log, _syncRepository, Math.Max(1, _maxBatchSize / 4), _tableDetails))
+                        {
+                            foreach (var item in _toInsert)
+                                m.Insert(item);
+                        }
+                    }
+                }
+            }
+
             _toInsert.Clear();
         }
 
