@@ -7,7 +7,7 @@
     public class MongoProviderSiteEmployerLink : ProviderSiteEmployerLink
     {
         [BsonId]
-        public Guid Id
+        public int Id
         {
             get { return EntityId; }
             set { EntityId = value; }

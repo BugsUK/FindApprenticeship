@@ -2,16 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Domain.Entities.Providers;
     using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
     using Entities;
-    using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ProviderSiteRepository : GenericMongoClient<MongoProviderSite, Guid>, IProviderSiteReadRepository, IProviderSiteWriteRepository
+    public class ProviderSiteRepository : GenericMongoClient<MongoProviderSite, int>, IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -26,58 +24,67 @@
 
         public ProviderSite Get(Guid id)
         {
-            _logger.Debug("Called Mongodb to get provider site with Id={0}", id);
+            throw new NotSupportedException();
 
-            var mongoEntity = Collection.FindOneById(id);
+            //_logger.Debug("Called Mongodb to get provider site with Id={0}", id);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+            //var mongoEntity = Collection.FindOneById(id);
+
+            //return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
 
         public IEnumerable<ProviderSite> GetForProvider(string ukprn)
         {
-            _logger.Debug("Called Mongodb to get provider sites for provider with Ukprn={0}", ukprn);
+            throw new NotSupportedException();
 
-            var mongoEntities = Collection.Find(Query<MongoProviderSite>.EQ(e => e.Ukprn, ukprn));
+            //_logger.Debug("Called Mongodb to get provider sites for provider with Ukprn={0}", ukprn);
 
-            var entities =
-                _mapper.Map<IEnumerable<MongoProviderSite>, IEnumerable<ProviderSite>>(mongoEntities).ToList();
+            //var mongoEntities = Collection.Find(Query<MongoProviderSite>.EQ(e => e.Ukprn, ukprn));
 
-            _logger.Debug("Found {1} provider sites for provider with Ukprn={0}", ukprn, entities.Count);
+            //var entities =
+            //    _mapper.Map<IEnumerable<MongoProviderSite>, IEnumerable<ProviderSite>>(mongoEntities).ToList();
 
-            return entities;
+            //_logger.Debug("Found {1} provider sites for provider with Ukprn={0}", ukprn, entities.Count);
+
+            //return entities;
         }
 
         public ProviderSite Get(string ern)
         {
-            _logger.Debug("Called Mongodb to get provider site with ERN={0}", ern);
+            throw new NotSupportedException();
 
-            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.Ern, ern));
+            //_logger.Debug("Called Mongodb to get provider site with ERN={0}", ern);
 
-            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+            //var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.Ern, ern));
+
+            //return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
 
         public void Delete(Guid id)
         {
-            _logger.Debug("Calling repository to delete provider site with Id={0}", id);
+            throw new NotSupportedException();
+            //_logger.Debug("Calling repository to delete provider site with Id={0}", id);
 
-            Collection.Remove(Query<MongoProviderSite>.EQ(o => o.Id, id));
+            //Collection.Remove(Query<MongoProviderSite>.EQ(o => o.Id, id));
 
-            _logger.Debug("Deleted provider with Id={0}", id);
+            //_logger.Debug("Deleted provider with Id={0}", id);
         }
 
         public ProviderSite Save(ProviderSite entity)
         {
-            _logger.Debug("Called Mongodb to save provider site for provider with Ukprn={0}", entity.Ukprn);
+            throw new NotSupportedException();
 
-            UpdateEntityTimestamps(entity);
+            //_logger.Debug("Called Mongodb to save provider site for provider with Ukprn={0}", entity.Ukprn);
 
-            var mongoEntity = _mapper.Map<ProviderSite, MongoProviderSite>(entity);
+            //UpdateEntityTimestamps(entity);
 
-            Collection.Save(mongoEntity);
+            //var mongoEntity = _mapper.Map<ProviderSite, MongoProviderSite>(entity);
 
-            _logger.Debug("Saved provider site to Mongodb for provider with Ukprn={0}", entity.Ukprn);
+            //Collection.Save(mongoEntity);
 
-            return _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+            //_logger.Debug("Saved provider site to Mongodb for provider with Ukprn={0}", entity.Ukprn);
+
+            //return _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
     }
 }

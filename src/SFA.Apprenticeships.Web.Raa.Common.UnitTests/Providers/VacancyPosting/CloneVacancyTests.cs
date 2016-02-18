@@ -94,7 +94,7 @@
                 {
                     DateCreated = DateTime.UtcNow.AddDays(-10),
                     Description = "some description",
-                    EntityId = Guid.NewGuid(),
+                    EntityId = 1,
                     ProviderSiteErn = "ern",
                     WebsiteUrl = "www.google.com",
                     DateUpdated = DateTime.UtcNow.AddDays(-5),
@@ -114,7 +114,7 @@
                         DateCreated = DateTime.UtcNow.AddDays(-20),
                         DateUpdated = null,
                         Ern = "ern",
-                        EntityId = Guid.NewGuid(),
+                        EntityId = 1,
                         Name = "employer name"
                     }
                 }

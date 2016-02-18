@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using System;
     using Entities.Organisations;
 
-    public interface IEmployerReadRepository : IReadRepository<Employer, Guid>
+    public interface IEmployerReadRepository
     {
         Employer Get(string ern);
     }
 
-    public interface IEmployerWriteRepository : IWriteRepository<Employer, Guid> { }
+    public interface IEmployerWriteRepository
+    {
+        Employer Save(Employer entity);
+    }
 }

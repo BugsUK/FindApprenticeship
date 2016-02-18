@@ -4,11 +4,13 @@
     using System.Collections.Generic;
     using Entities.Providers;
 
-    public interface IProviderSiteReadRepository : IReadRepository<ProviderSite, Guid>
-    {
+    public interface IProviderSiteReadRepository { 
         IEnumerable<ProviderSite> GetForProvider(string ukprn);
         ProviderSite Get(string ern);
     }
 
-    public interface IProviderSiteWriteRepository : IWriteRepository<ProviderSite, Guid> { }
+    public interface IProviderSiteWriteRepository
+    {
+        ProviderSite Save(ProviderSite entity);
+    }
 }

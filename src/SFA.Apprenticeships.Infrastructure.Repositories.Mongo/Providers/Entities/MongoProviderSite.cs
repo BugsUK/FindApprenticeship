@@ -7,7 +7,7 @@
     public class MongoProviderSite : ProviderSite
     {
         [BsonId]
-        public Guid Id
+        public int Id
         {
             get { return EntityId; }
             set { EntityId = value; }
