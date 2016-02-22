@@ -182,7 +182,7 @@
         {
             return new VacancyPartyViewModel
             {
-                Description = "desciption",
+                EmployerDescription = "desciption",
                 Employer = new EmployerViewModel
                 {
                     Address = new AddressViewModel

@@ -110,13 +110,13 @@
                 .MapMemberFrom(v => v.WageValue, av => av.Wage)
                 .MapMemberFrom(v => v.DurationTypeCode, av => durationTypeMap.EnumToCode[av.DurationType])
                 .MapMemberFrom(v => v.DurationValue, av => av.Duration)
-                //.MapMemberFrom(v => v.AV_InterviewStartDate, av => av.InterviewStartDate)
+                .ForMember(v => v.AV_InterviewStartDate, opt => opt.Ignore())
                 .MapMemberFrom(v => v.PossibleStartDateDate, av => av.PossibleStartDate)
                 .MapMemberFrom(v => v.TrainingTypeCode, av => trainingTypeMap.EnumToCode[av.TrainingType])
                 .ForMember( v=> v.VacancyStatusCode, opt => opt.MapFrom(av => av.Status))
                 .MapMemberFrom(v => v.LevelCode, av => apprenticeshipLevelMap.EnumToCode[av.ApprenticeshipLevel])
                 .MapMemberFrom(v => v.LevelCodeComment, av => av.ApprenticeshipLevelComment)
-                //.MapMemberFrom(v => v.VacancyId, av => av.EntityId)
+                .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
                 .MapMemberFrom(v => v.FrameworkIdComment, av => av.FrameworkCodeNameComment)
                 .MapMemberFrom(v => v.SectorIdComment, av => av.SectorCodeNameComment)
                 //.MapMemberFrom(v => v.EmployerWebsiteUrl, av => av.ProviderSiteEmployerLink.WebsiteUrl) // TODO: The reverse
@@ -142,7 +142,7 @@
                 .MapMemberFrom(v => v.DeliveryProviderVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.EmployerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
                 .MapMemberFrom(v => v.ManagerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
-                .MapMemberFrom(v => v.OwnerVacancyPartyId, av => 1) // TODO!!!!!!!!!!!!!
+                .MapMemberFrom(v => v.OwnerVacancyPartyId, av => av.OwnerPartyId) // TODO!!!!!!!!!!!!!
 
                 // TODO: Missing from Vacancy
                 .ForMember(v => v.AV_WageText, opt => opt.Ignore())
@@ -167,7 +167,9 @@
                 .ForMember(av => av.Status, opt => opt.MapFrom(v => v.VacancyStatusCode))
                 .MapMemberFrom(av => av.ApprenticeshipLevel, v => apprenticeshipLevelMap.CodeToEnum[v.LevelCode])
                 .MapMemberFrom(av => av.ApprenticeshipLevelComment, v => v.LevelCodeComment)
-                //.MapMemberFrom(av => av.EntityId, v => v.VacancyId)
+                .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
+                .MapMemberFrom(av => av.OwnerPartyId, v => v.OwnerVacancyPartyId)
+                .ForMember(av => av.VacancyGuid, opt => opt.Ignore())
                 .MapMemberFrom(av => av.FrameworkCodeNameComment, v => v.FrameworkIdComment)
                 .MapMemberFrom(av => av.SectorCodeNameComment, v => v.SectorIdComment)
                 .MapMemberFrom(av => av.DateSubmitted, v => v.PublishedDateTime) // TODO: Believed to be correct
@@ -185,7 +187,7 @@
                 //.ForMember(av => av.Ukprn, opt => opt.Ignore())
                 .ForMember(av => av.FrameworkCodeName, opt => opt.Ignore()) // To FrameworkId
                 .ForMember(av => av.SectorCodeName, opt => opt.Ignore()) // To FrameworkId
-                //.ForMember(av => av.LocationAddresses, opt => opt.Ignore())
+                .ForMember(av => av.Address, opt => opt.Ignore())
 
                 // TODO: Currently missing from Vacancy.Vacancy
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())

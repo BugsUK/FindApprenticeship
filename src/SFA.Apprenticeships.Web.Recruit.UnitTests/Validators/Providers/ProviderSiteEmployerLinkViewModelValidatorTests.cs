@@ -27,19 +27,19 @@
             // Arrange.
             var viewModel = new VacancyPartyViewModel
             {
-                WebsiteUrl = websiteUrl,
-                Description = "populated"
+                EmployerWebsiteUrl = websiteUrl,
+                EmployerDescription = "populated"
             };
             string uriString = null;
 
             // Act.
             var validator = new VacancyPartyViewModelValidator();
-            Action uriAction = () => { uriString = new UriBuilder(viewModel.WebsiteUrl).Uri.ToString(); };
+            Action uriAction = () => { uriString = new UriBuilder(viewModel.EmployerWebsiteUrl).Uri.ToString(); };
 
             // Assert.
             if (expectValid)
             {
-                validator.ShouldNotHaveValidationErrorFor(m => m.WebsiteUrl, viewModel);
+                validator.ShouldNotHaveValidationErrorFor(m => m.EmployerWebsiteUrl, viewModel);
                 if (!string.IsNullOrEmpty(websiteUrl))
                 {
                     uriAction.ShouldNotThrow();
@@ -48,7 +48,7 @@
             }
             else
             {
-                validator.ShouldHaveValidationErrorFor(m => m.WebsiteUrl, viewModel);
+                validator.ShouldHaveValidationErrorFor(m => m.EmployerWebsiteUrl, viewModel);
             }
         }
 
@@ -63,8 +63,8 @@
             // Arrange.
             var viewModel = new VacancyPartyViewModel
             {
-                WebsiteUrl = "http://www.valid.com",
-                Description = description
+                EmployerWebsiteUrl = "http://www.valid.com",
+                EmployerDescription = description
             };
 
             // Act.
@@ -73,11 +73,11 @@
             // Assert.
             if (expectValid)
             {
-                validator.ShouldNotHaveValidationErrorFor(m => m.Description, viewModel);
+                validator.ShouldNotHaveValidationErrorFor(m => m.EmployerDescription, viewModel);
             }
             else
             {
-                validator.ShouldHaveValidationErrorFor(m => m.Description, viewModel);
+                validator.ShouldHaveValidationErrorFor(m => m.EmployerDescription, viewModel);
             }
         }
 

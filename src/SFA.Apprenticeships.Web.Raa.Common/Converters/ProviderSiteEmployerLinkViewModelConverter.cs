@@ -11,8 +11,8 @@
             {
                 VacancyPartyId = vacancyParty.VacancyPartyId,
                 ProviderSiteId = vacancyParty.ProviderSiteId,
-                Description = vacancyParty.EmployerDescription,
-                WebsiteUrl = vacancyParty.EmployerWebsiteUrl,
+                EmployerDescription = vacancyParty.EmployerDescription,
+                EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl,
                 Employer = employer.Convert()
             };
 

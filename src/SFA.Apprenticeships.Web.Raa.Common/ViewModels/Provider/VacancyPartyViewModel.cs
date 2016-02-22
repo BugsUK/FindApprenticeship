@@ -17,11 +17,11 @@
 
         public int ProviderSiteId { get; set; }
 
-        [Display(Name = VacancyPartyViewModelMessages.Description.LabelText)]
-        public string Description { get; set; }
+        [Display(Name = VacancyPartyViewModelMessages.EmployerDescription.LabelText)]
+        public string EmployerDescription { get; set; }
 
-        [Display(Name = VacancyPartyViewModelMessages.WebsiteUrl.LabelText)]
-        public string WebsiteUrl { get; set; }
+        [Display(Name = VacancyPartyViewModelMessages.EmployerWebsiteUrl.LabelText)]
+        public string EmployerWebsiteUrl { get; set; }
 
         public EmployerViewModel Employer { get; set; }
 
@@ -38,11 +38,11 @@
 
         public long VacancyReferenceNumber { get; set; }
 
-        [Display(Name = VacancyPartyViewModelMessages.DescriptionComment.LabelText)]
-        public string DescriptionComment { get; set; }
+        [Display(Name = VacancyPartyViewModelMessages.EmployerDescriptionComment.LabelText)]
+        public string EmployerDescriptionComment { get; set; }
 
-        [Display(Name = VacancyPartyViewModelMessages.WebsiteUrlComment.LabelText)]
-        public string WebsiteUrlComment { get; set; }
+        [Display(Name = VacancyPartyViewModelMessages.EmployerWebsiteUrlComment.LabelText)]
+        public string EmployerWebsiteUrlComment { get; set; }
 
         [Display(Name = VacancyPartyViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }

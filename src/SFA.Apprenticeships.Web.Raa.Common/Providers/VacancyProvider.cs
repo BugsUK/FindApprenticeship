@@ -86,7 +86,7 @@
         public LocationSearchViewModel CreateVacancy(LocationSearchViewModel locationSearchViewModel)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var providerSiteEmployerLink =
+            var vacancyParty =
                 _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerId);
 
             var apprenticeshipVacancy = new Vacancy
@@ -94,7 +94,7 @@
                 VacancyId = (int)vacancyReferenceNumber,
                 VacancyGuid = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                OwnerPartyId = providerSiteEmployerLink.VacancyPartyId,
+                OwnerPartyId = vacancyParty.VacancyPartyId,
                 Status = VacancyStatus.Draft,
                 AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
@@ -134,7 +134,6 @@
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
-                    Addresses = new List<VacancyLocationAddressViewModel>(),
                     Status = vacancy.Status,
                     VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                     IsEmployerLocationMainApprenticeshipLocation = false,
@@ -205,7 +204,7 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
-            var providerSiteEmployerLink =
+            var vacancyParty =
                 _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
@@ -214,7 +213,7 @@
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 Title = newVacancyViewModel.Title,
                 ShortDescription = newVacancyViewModel.ShortDescription,
-                OwnerPartyId = providerSiteEmployerLink.VacancyPartyId,
+                OwnerPartyId = vacancyParty.VacancyPartyId,
                 Status = VacancyStatus.Draft,
                 OfflineVacancy = newVacancyViewModel.OfflineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,

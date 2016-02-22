@@ -9,7 +9,9 @@
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
+    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
+    using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
@@ -43,6 +45,10 @@
             MockUserProfileService = new Mock<IUserProfileService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
+            MockProviderService.Setup(s => s.GetProviderSite(It.IsAny<int>()))
+                .Returns(new Fixture().Build<ProviderSite>().Create());
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+                .Returns(new Fixture().Build<Employer>().Create());
             MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
 
             MockTimeService = new Mock<IDateTimeService>();

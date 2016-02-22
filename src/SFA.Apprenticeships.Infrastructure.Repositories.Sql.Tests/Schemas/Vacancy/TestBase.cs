@@ -92,6 +92,7 @@
                 .Excluding(v => v.VacancyLocationTypeCode)
                 .Excluding(v => v.AV_ContactName)
                 .Excluding(v => v.AV_WageText)
+                .Excluding(v => v.AV_InterviewStartDate)
 
                 // TODO: Rather hard / out of scope?
                 .Excluding(v => v.ParentVacancyId)
@@ -117,7 +118,7 @@
                 .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
 
                 // TODO: Rather hard / out of scope?
-//                .Excluding(v => v.LocationAddresses)
+                .Excluding(v => v.Address)
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)
@@ -130,6 +131,7 @@
                 .Excluding(v => v.ParentVacancyReferenceNumber)
                 .Excluding(v => v.CreatedDateTime)
                 .Excluding(v => v.UpdatedDateTime)
+                .Excluding(v => v.VacancyGuid)
                 ;
         }
     }

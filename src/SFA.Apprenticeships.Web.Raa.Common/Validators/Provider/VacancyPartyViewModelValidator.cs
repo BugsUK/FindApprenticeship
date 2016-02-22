@@ -13,16 +13,16 @@
 
         private void AddCommonRules()
         {
-            RuleFor(x => x.Description)
+            RuleFor(x => x.EmployerDescription)
                 .NotEmpty()
-                .WithMessage(VacancyPartyViewModelMessages.Description.RequiredErrorText)
-                .Matches(VacancyPartyViewModelMessages.Description.WhiteListRegularExpression)
-                .WithMessage(VacancyPartyViewModelMessages.Description.WhiteListErrorText);
+                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.RequiredErrorText)
+                .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListRegularExpression)
+                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListErrorText);
 
-            RuleFor(x => x.WebsiteUrl)
+            RuleFor(x => x.EmployerWebsiteUrl)
                 .Must(Common.IsValidUrl)
-                .WithMessage(VacancyPartyViewModelMessages.WebsiteUrl.ErrorUriText)
-                .When(x => !string.IsNullOrEmpty(x.WebsiteUrl));
+                .WithMessage(VacancyPartyViewModelMessages.EmployerWebsiteUrl.ErrorUriText)
+                .When(x => !string.IsNullOrEmpty(x.EmployerWebsiteUrl));
 
             RuleFor(x => x.IsEmployerLocationMainApprenticeshipLocation)
                 .NotNull()

@@ -74,8 +74,8 @@
         public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
         {
             var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EmployerId);
-            vacancyParty.EmployerWebsiteUrl = viewModel.WebsiteUrl;
-            vacancyParty.EmployerDescription = viewModel.Description;
+            vacancyParty.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            vacancyParty.EmployerDescription = viewModel.EmployerDescription;
             vacancyParty = _providerService.SaveVacancyParty(vacancyParty);
 
             var vacancy = GetVacancy(viewModel);

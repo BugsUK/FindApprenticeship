@@ -165,8 +165,8 @@
                 viewModel.NumberOfPositions = existingVacancy.NewVacancyViewModel.NumberOfPositions;
                 viewModel.Status = existingVacancy.Status;
                 viewModel.VacancyReferenceNumber = existingVacancy.VacancyReferenceNumber;
-                viewModel.DescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
-                viewModel.WebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
+                viewModel.EmployerDescriptionComment = existingVacancy.NewVacancyViewModel.EmployerDescriptionComment;
+                viewModel.EmployerWebsiteUrlComment = existingVacancy.NewVacancyViewModel.EmployerWebsiteUrlComment;
                 viewModel.NumberOfPositionsComment = existingVacancy.NewVacancyViewModel.NumberOfPositionsComment;
             }
 
@@ -187,8 +187,8 @@
             if (!validationResult.IsValid)
             {
                 var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId, viewModel.Employer.EmployerId);
-                existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
-                existingViewModel.Description = viewModel.Description;
+                existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+                existingViewModel.EmployerDescription = viewModel.EmployerDescription;
                 existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
                     viewModel.IsEmployerLocationMainApprenticeshipLocation;
                 existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;

@@ -552,7 +552,7 @@ WriteLiteral("        ");
 
             
             #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-   Write(Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" }));
+   Write(Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
             #line default
@@ -563,7 +563,7 @@ WriteLiteral("        ");
 
             
             #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-   Write(Html.EditorFor(m => m.WebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.WebsiteUrlComment)));
+   Write(Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment)));
 
             
             #line default
@@ -574,7 +574,7 @@ WriteLiteral("        ");
 
             
             #line 93 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-   Write(Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
+   Write(Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"}));
 
             
             #line default
@@ -585,7 +585,7 @@ WriteLiteral("        ");
 
             
             #line 94 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-   Write(Html.EditorFor(m => m.DescriptionComment, "Comment", Html.GetLabelFor(m => m.DescriptionComment)));
+   Write(Html.EditorFor(m => m.EmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.EmployerDescriptionComment)));
 
             
             #line default

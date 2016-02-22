@@ -233,8 +233,8 @@
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
             viewModel.Status = vacancy.Status;
             viewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value;
-            viewModel.DescriptionComment = vacancy.EmployerDescriptionComment;
-            viewModel.WebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
+            viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
+            viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
             viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
 
             if (useEmployerLocation.HasValue && useEmployerLocation.Value)
@@ -324,15 +324,15 @@
             var existingVacancy = _vacancyQaProvider.GetNewVacancyViewModel(viewModel.VacancyReferenceNumber);
 
             var existingViewModel = existingVacancy.OwnerParty;
-            existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
-            existingViewModel.Description = viewModel.Description;
+            existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
+            existingViewModel.EmployerDescription = viewModel.EmployerDescription;
             existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
             existingViewModel.NumberOfPositions = viewModel.NumberOfPositions;
             existingViewModel.VacancyGuid = viewModel.VacancyGuid;
             existingViewModel.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
-            existingViewModel.DescriptionComment = viewModel.DescriptionComment;
-            existingViewModel.WebsiteUrlComment = viewModel.WebsiteUrlComment;
+            existingViewModel.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
+            existingViewModel.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
 
             if (!validationResult.IsValid)
             {
@@ -345,8 +345,8 @@
             existingVacancy.NumberOfPositions = viewModel.NumberOfPositions;
             existingVacancy.VacancyGuid = viewModel.VacancyGuid;
             existingVacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
-            existingVacancy.EmployerDescriptionComment = viewModel.DescriptionComment;
-            existingVacancy.EmployerWebsiteUrlComment = viewModel.WebsiteUrlComment;
+            existingVacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
+            existingVacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 

@@ -80,6 +80,7 @@
 
             _providerService = new Mock<IProviderService>();
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());
+            _providerService.Setup(s => s.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Fixture().Create<Provider>());
 
             _configurationService = new Mock<IConfigurationService>();
             _configurationService.Setup(x => x.Get<ManageWebConfiguration>()).Returns(new ManageWebConfiguration { QAVacancyTimeout = 10 });

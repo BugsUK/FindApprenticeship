@@ -4,14 +4,14 @@
 
     public class VacancyPartyViewModelMessages
     {
-        public static class Description
+        public static class EmployerDescription
         {
             public const string LabelText = "Employer description for candidates";
             public const string RequiredErrorText = "Enter an employer description for candidates";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "Employer description for candidates " + Whitelists.FreetextWhitelist.ErrorText;
         }
-        public static class WebsiteUrl
+        public static class EmployerWebsiteUrl
         {
             public const string LabelText = "Employer website (optional)";
             public const string ErrorUriText = "Enter a valid website url";
@@ -29,12 +29,12 @@
             public const string RequiredErrorText = "Select whether the employer’s address is the vacancy location or not";
         }
 
-        public class DescriptionComment
+        public class EmployerDescriptionComment
         {
             public const string LabelText = "Employer description for candidates comment";
         }
 
-        public class WebsiteUrlComment
+        public class EmployerWebsiteUrlComment
         {
             public const string LabelText = "Website comment";
         }

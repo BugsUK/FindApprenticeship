@@ -11,17 +11,17 @@
     <div class="grid-wrapper">
         <div class="grid">
             <h3 class="bold-small">Employer</h3>
-            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.WebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
+            <p id="vacancy-employer-name" class="@(string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty)">@Model.NewVacancyViewModel.OwnerParty.Employer.Name</p>
         </div>
         <div class="grid grid-2-3">
             <div class="inner-block-padr">
                 <div class="@editableItemClass">
                     <h3 class="bold-small">
                         Description
-                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
-                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.Description)</p>
-                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
+                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
         </div>
@@ -37,18 +37,18 @@
         }
         <div class="@gridClass">
             <div class="inner-block-padr">
-                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.WebsiteUrl))
+                @if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
                     <div class="editable-item">
                         <h3 class="bold-small">
                             Website
-                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
+                            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink))
                         </h3>
-                        <a itemprop="url" href="@Model.NewVacancyViewModel.OwnerParty.WebsiteUrl"
+                        <a itemprop="url" href="@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl"
                            id="vacancy-employer-website"
                            target="_blank"
-                           title="@Model.NewVacancyViewModel.OwnerParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.OwnerParty.WebsiteUrl</a>
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
+                           title="@Model.NewVacancyViewModel.OwnerParty.Employer.Name Website" rel="external">@Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl</a>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                     </div>
                 }
 

@@ -17,7 +17,6 @@
     public class CreateVacancyTests : TestBase
     {
         private const int EmployerId = 1;
-        private const int ProviderId = 2;
         private const int ProviderSiteId = 3;
         private const int VacancyPartyId = 4;
 
@@ -31,7 +30,9 @@
 
         private readonly VacancyParty _vacancyParty = new VacancyParty
         {
+            VacancyPartyId = VacancyPartyId,
             ProviderSiteId = ProviderSiteId,
+            EmployerId = EmployerId,
             EmployerDescription = "description"
         };
 
@@ -48,6 +49,7 @@
             {
                 OwnerParty = new VacancyPartyViewModel()
                 {
+                    VacancyPartyId = VacancyPartyId,
                     ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
@@ -86,6 +88,9 @@
                 });
             MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EmployerId))
                 .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
+                .Returns(_vacancyParty);
+            MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
         }
 
         [Test]
@@ -143,6 +148,7 @@
             {
                 OwnerParty = new VacancyPartyViewModel
                 {
+                    VacancyPartyId = VacancyPartyId,
                     ProviderSiteId = ProviderSiteId,
                     Employer  = new EmployerViewModel
                     {
@@ -172,6 +178,7 @@
                 OfflineVacancy = false,
                 OwnerParty = new VacancyPartyViewModel
                 {
+                    VacancyPartyId = VacancyPartyId,
                     ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
@@ -243,11 +250,12 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EmployerId), Times.Once);
+            MockProviderService.Verify(s => s.GetVacancyParty(VacancyPartyId), Times.Once);
+            MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.OwnerParty.Description == _vacancyParty.EmployerDescription &&
+                        r.OwnerParty.EmployerDescription == _vacancyParty.EmployerDescription &&
                         r.OwnerParty.ProviderSiteId == ProviderSiteId);
         }
 
@@ -255,7 +263,11 @@
         public void CreateVacancy_LocationSearchViewModel_StatusIsDraft()
         {
             //Arrange
-            var locationSearchViewModel = new LocationSearchViewModel();
+            var locationSearchViewModel = new LocationSearchViewModel
+            {
+                ProviderSiteId = ProviderSiteId,
+                EmployerId = EmployerId
+            };
             var provider = GetVacancyPostingProvider();
 
             //Act
@@ -269,7 +281,11 @@
         public void CreateVacancy_LocationSearchViewModel_SavesOnce()
         {
             //Arrange
-            var locationSearchViewModel = new LocationSearchViewModel();
+            var locationSearchViewModel = new LocationSearchViewModel
+            {
+                ProviderSiteId = ProviderSiteId,
+                EmployerId = EmployerId
+            };
             var provider = GetVacancyPostingProvider();
 
             //Act
