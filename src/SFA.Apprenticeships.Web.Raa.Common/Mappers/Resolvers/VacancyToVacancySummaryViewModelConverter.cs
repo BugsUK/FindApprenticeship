@@ -4,13 +4,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
     using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
 
-    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<Vacancy, VacancySummaryViewModel>
+    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<Vacancy, FurtherVacancyDetailsViewModel>
     {
-        public VacancySummaryViewModel Convert(ResolutionContext context)
+        public FurtherVacancyDetailsViewModel Convert(ResolutionContext context)
         {
             var source = (Vacancy)context.SourceValue;
 
-            var destination = new VacancySummaryViewModel
+            var destination = new FurtherVacancyDetailsViewModel
             {
                 Duration = source.Duration.HasValue ? (decimal?) source.Duration.Value : null,
                 DurationComment = source.DurationComment,

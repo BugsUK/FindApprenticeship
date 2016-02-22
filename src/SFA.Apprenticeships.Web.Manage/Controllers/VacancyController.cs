@@ -212,7 +212,7 @@
         }
 
         [HttpPost]
-        public ActionResult Summary(VacancySummaryViewModel viewModel)
+        public ActionResult Summary(FurtherVacancyDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.UpdateVacancy(viewModel);
 

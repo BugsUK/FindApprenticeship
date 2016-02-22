@@ -323,7 +323,7 @@
                                             var unit = isOfflineVacancy ? "click-through" : "application";
                                             var units = unit + "s";
 
-                                            if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
                                             {
                                                 <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
@@ -345,7 +345,7 @@
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
                                         @if (vacancy.Status == VacancyStatus.Live)
                                         {
-                                            Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate);
+                                            Html.RenderPartial("_closingDate", @vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate);
                                         }
                                     </td>
                                     <td class="vac-toolbox">

@@ -18,7 +18,7 @@
         {
             const int vacancyReferenceNumber = 1;
             var vacancyProvider = new Mock<IVacancyQAProvider>();
-            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
+            vacancyProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -39,7 +39,7 @@
         {
             const int vacancyReferenceNumber = 1;
             var vacancyPostingProvider = new Mock<IVacancyQAProvider>();
-            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new VacancySummaryViewModel
+            vacancyPostingProvider.Setup(vp => vp.GetVacancySummaryViewModel(vacancyReferenceNumber)).Returns(new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -90,7 +90,7 @@
             var vacancyProvider = new Mock<IVacancyQAProvider>();
 
             var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -166,9 +166,9 @@
             vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
         }
 
-        private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            return new VacancySummaryViewModel
+            return new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyDatesViewModel = new VacancyDatesViewModel

@@ -70,10 +70,10 @@
             <div class="@editableItemClass">
                 <h3 class="bold-small">
                     Closing date
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDateComment))
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDateComment))
                 </h3>
-                <p id="vacancy-closing-date">@Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDateComment))
+                <p id="vacancy-closing-date">@Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDateComment))
             </div>
         </div>
     </div>
@@ -121,21 +121,21 @@
                     {
                         <span>Expected apprenticeship duration</span>
                     }
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment))
                 </h3>
-                <p id="vacancy-expected-duration">@Model.VacancySummaryViewModel.DurationTypeDisplayText</p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.Duration, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment))
+                <p id="vacancy-expected-duration">@Model.FurtherVacancyDetailsViewModel.DurationTypeDisplayText</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment))
             </div>
 
             <div class="@editableItemClass">
                 <h3 class="bold-small">
                     Possible start date
-                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDateComment))
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment))
                 </h3>
                 <p id="vacancy-start-date">
-                    @Html.DisplayFor(m => Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Date)
+                    @Html.DisplayFor(m => Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)
                 </p>
-                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDateComment))
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment))
             </div>
 
             @if (Model.VacancyType == VacancyType.Apprenticeship)
@@ -215,10 +215,10 @@
                 {
                     <span>Vacancy description</span>
                 }
-                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink))
+                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
             </h3>
-            <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.VacancySummaryViewModel.LongDescription)</p>
-            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment))
+            <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
         </div>
         @if (Model.VacancyType == VacancyType.Traineeship)
         {

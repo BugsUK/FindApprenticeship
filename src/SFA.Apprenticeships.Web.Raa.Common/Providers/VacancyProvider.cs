@@ -315,14 +315,14 @@
             return viewModel;
         }
 
-        public VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        public FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
         }
 
-        public VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel)
+        public FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
 
@@ -901,7 +901,7 @@
             return viewModel;
         }
 
-        public VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel)
+        public FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);

@@ -48,7 +48,7 @@
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
 
-            Mapper.CreateMap<Vacancy, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
+            Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
 
             Mapper.CreateMap<Vacancy, VacancyRequirementsProspectsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());

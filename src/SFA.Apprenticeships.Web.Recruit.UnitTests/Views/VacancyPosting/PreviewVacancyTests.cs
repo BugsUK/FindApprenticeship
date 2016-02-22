@@ -46,7 +46,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -89,7 +89,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -135,7 +135,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {

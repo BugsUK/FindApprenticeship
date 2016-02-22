@@ -22,13 +22,13 @@
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
 
         VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
 
-        VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel);
+        FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
         NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 

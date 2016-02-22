@@ -376,7 +376,7 @@ WriteLiteral("                    ");
 
             
             #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDateComment)));
+               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDateComment)));
 
             
             #line default
@@ -389,7 +389,7 @@ WriteLiteral(">");
 
             
             #line 75 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-                                        Write(Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday());
+                                        Write(Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday());
 
             
             #line default
@@ -400,7 +400,7 @@ WriteLiteral("                ");
 
             
             #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDateComment)));
+           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDateComment)));
 
             
             #line default
@@ -628,7 +628,7 @@ WriteLiteral("                    ");
 
             
             #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment)));
+               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment)));
 
             
             #line default
@@ -641,7 +641,7 @@ WriteLiteral(">");
 
             
             #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-                                             Write(Model.VacancySummaryViewModel.DurationTypeDisplayText);
+                                             Write(Model.FurtherVacancyDetailsViewModel.DurationTypeDisplayText);
 
             
             #line default
@@ -652,7 +652,7 @@ WriteLiteral("                ");
 
             
             #line 127 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.Duration, Model.SummaryLink, Model.VacancySummaryViewModel.DurationComment)));
+           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment)));
 
             
             #line default
@@ -679,7 +679,7 @@ WriteLiteral("                    ");
 
             
             #line 133 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDateComment)));
+               Write(Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment)));
 
             
             #line default
@@ -694,7 +694,7 @@ WriteLiteral("                    ");
 
             
             #line 136 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-               Write(Html.DisplayFor(m => Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
+               Write(Html.DisplayFor(m => Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date));
 
             
             #line default
@@ -705,7 +705,7 @@ WriteLiteral("                ");
 
             
             #line 138 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDateComment)));
+           Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment)));
 
             
             #line default
@@ -1163,7 +1163,7 @@ WriteLiteral("                ");
 
             
             #line 218 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-           Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.VacancySummaryViewModel.LongDescriptionComment, Model.SummaryLink)));
+           Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink)));
 
             
             #line default
@@ -1178,7 +1178,7 @@ WriteLiteral(">");
 
             
             #line 220 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-                                                                    Write(Html.Raw(Model.VacancySummaryViewModel.LongDescription));
+                                                                    Write(Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription));
 
             
             #line default
@@ -1189,7 +1189,7 @@ WriteLiteral("            ");
 
             
             #line 221 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.cshtml"
-       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancySummaryViewModel.LongDescription, Model.SummaryLink, Model.VacancySummaryViewModel.LongDescriptionComment)));
+       Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment)));
 
             
             #line default

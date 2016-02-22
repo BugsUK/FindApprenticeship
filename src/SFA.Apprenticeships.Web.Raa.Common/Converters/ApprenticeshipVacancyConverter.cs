@@ -10,9 +10,9 @@
 
     public static class ApprenticeshipVacancyConverter
     {
-        public static VacancySummaryViewModel ConvertToVacancySummaryViewModel(this Vacancy vacancy)
+        public static FurtherVacancyDetailsViewModel ConvertToVacancySummaryViewModel(this Vacancy vacancy)
         {
-            var vacancyViewModel = new VacancySummaryViewModel
+            var vacancyViewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 WorkingWeek = vacancy.WorkingWeek,

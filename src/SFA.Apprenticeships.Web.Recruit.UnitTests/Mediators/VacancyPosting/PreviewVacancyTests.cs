@@ -23,7 +23,7 @@
         {
             //Arrange
             var today = DateTime.Today;
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {

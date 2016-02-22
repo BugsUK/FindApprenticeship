@@ -14,9 +14,9 @@
 
         MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel);
+        MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
         MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber);
 

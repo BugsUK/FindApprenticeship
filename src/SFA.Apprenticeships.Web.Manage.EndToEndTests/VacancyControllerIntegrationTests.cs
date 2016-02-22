@@ -149,8 +149,8 @@
             var viewResult = view as ViewResult;
 
             viewResult.ViewData.ModelState.Should().HaveCount(0);
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -179,8 +179,8 @@
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
             viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -231,8 +231,8 @@
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
             viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -710,9 +710,9 @@
             return vacancy;
         }
 
-        private static VacancySummaryViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            var vacancySummaryViewModel = new VacancySummaryViewModel
+            var vacancySummaryViewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyDatesViewModel = new VacancyDatesViewModel
@@ -731,7 +731,7 @@
             return vacancySummaryViewModel;
         }
 
-        private static VacancySummaryViewModel GetVacancyViewModelWithErrorsAndWarningsInSummary(
+        private static FurtherVacancyDetailsViewModel GetVacancyViewModelWithErrorsAndWarningsInSummary(
             int vacancyReferenceNumber)
         {
             var vacancySummaryViewModel = GetVacancySummaryViewModel(vacancyReferenceNumber);

@@ -187,7 +187,7 @@
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancySummaryViewModel = new VacancySummaryViewModel(),
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
         }

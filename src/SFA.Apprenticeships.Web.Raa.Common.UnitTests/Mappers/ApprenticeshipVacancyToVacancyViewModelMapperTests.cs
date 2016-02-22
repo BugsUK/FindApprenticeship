@@ -37,7 +37,7 @@
             viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Should().NotBeNull();
             viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Should().NotBeNull();
             viewModel.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.GeoPoint.Should().NotBeNull();
-            viewModel.VacancySummaryViewModel.Should().NotBeNull();
+            viewModel.FurtherVacancyDetailsViewModel.Should().NotBeNull();
             viewModel.VacancyQuestionsViewModel.Should().NotBeNull();
             viewModel.VacancyRequirementsProspectsViewModel.Should().NotBeNull();
         }
@@ -52,7 +52,7 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
-            viewModel.VacancySummaryViewModel.Duration.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.Duration.Should().Be(null);
         }
 
         [Test]
@@ -65,10 +65,10 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Should().NotBe(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Day.Should().Be(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Month.Should().Be(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate.Year.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Should().NotBe(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Day.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Month.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Year.Should().Be(null);
         }
 
         [Test]
@@ -81,10 +81,10 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(source);
 
             //Assert
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Should().NotBe(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Day.Should().Be(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Month.Should().Be(null);
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Year.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Should().NotBe(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Day.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Month.Should().Be(null);
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Year.Should().Be(null);
         }
 
         [Test]

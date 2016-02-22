@@ -12,7 +12,7 @@
         private TrainingDetailsViewModel _trainingDetailsViewModel = new TrainingDetailsViewModel();
         private VacancyRequirementsProspectsViewModel _vacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel();
         private VacancyQuestionsViewModel _vacancyQuestionsViewModel = new VacancyQuestionsViewModel();
-        private VacancySummaryViewModel _vacancySummaryViewModel = new VacancySummaryViewModel
+        private FurtherVacancyDetailsViewModel _furtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
         {
             VacancyDatesViewModel = new VacancyDatesViewModel()
         };
@@ -23,7 +23,7 @@
             {
                 NewVacancyViewModel = _newVacancyViewModel,
                 TrainingDetailsViewModel = _trainingDetailsViewModel,
-                VacancySummaryViewModel = _vacancySummaryViewModel,
+                FurtherVacancyDetailsViewModel = _furtherVacancyDetailsViewModel,
                 VacancyRequirementsProspectsViewModel = _vacancyRequirementsProspectsViewModel,
                 VacancyQuestionsViewModel = _vacancyQuestionsViewModel
             };
@@ -43,13 +43,13 @@
             viewModel.TrainingDetailsViewModel.ContactName = null;
             viewModel.TrainingDetailsViewModel.ContactNumber = null;
             viewModel.TrainingDetailsViewModel.ContactEmail = null;
-            viewModel.VacancySummaryViewModel.Status = status;
-            viewModel.VacancySummaryViewModel.VacancyType = vacancyType;
-            viewModel.VacancySummaryViewModel.HoursPerWeek = 30;
-            viewModel.VacancySummaryViewModel.Duration = 12;
-            viewModel.VacancySummaryViewModel.DurationType = DurationType.Months;
-            viewModel.VacancySummaryViewModel.WageType = WageType.NationalMinimumWage;
-            viewModel.VacancySummaryViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
+            viewModel.FurtherVacancyDetailsViewModel.Status = status;
+            viewModel.FurtherVacancyDetailsViewModel.VacancyType = vacancyType;
+            viewModel.FurtherVacancyDetailsViewModel.HoursPerWeek = 30;
+            viewModel.FurtherVacancyDetailsViewModel.Duration = 12;
+            viewModel.FurtherVacancyDetailsViewModel.DurationType = DurationType.Months;
+            viewModel.FurtherVacancyDetailsViewModel.WageType = WageType.NationalMinimumWage;
+            viewModel.FurtherVacancyDetailsViewModel.VacancyDatesViewModel = new VacancyDatesViewModel
             {
                 PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(28)),
                 ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(14))
@@ -72,9 +72,9 @@
             return this;
         }
 
-        public VacancyViewModelBuilder With(VacancySummaryViewModel vacancySummaryViewModel)
+        public VacancyViewModelBuilder With(FurtherVacancyDetailsViewModel furtherVacancyDetailsViewModel)
         {
-            _vacancySummaryViewModel = vacancySummaryViewModel;
+            _furtherVacancyDetailsViewModel = furtherVacancyDetailsViewModel;
             return this;
         }
 
@@ -92,7 +92,7 @@
 
         public VacancyViewModelBuilder With(VacancyDatesViewModel vacancyDatesViewModel)
         {
-            _vacancySummaryViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
+            _furtherVacancyDetailsViewModel.VacancyDatesViewModel = vacancyDatesViewModel;
             return this;
         }
     }

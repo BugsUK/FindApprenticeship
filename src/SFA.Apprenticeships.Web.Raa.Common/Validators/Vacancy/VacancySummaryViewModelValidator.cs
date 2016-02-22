@@ -8,7 +8,7 @@
     using ViewModels.Vacancy;
     using Web.Common.Validators;
 
-    public class VacancySummaryViewModelClientValidator : AbstractValidator<VacancySummaryViewModel>
+    public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
         public VacancySummaryViewModelClientValidator()
         {
@@ -17,7 +17,7 @@
         }
     }
 
-    public class VacancySummaryViewModelServerValidator : AbstractValidator<VacancySummaryViewModel>
+    public class VacancySummaryViewModelServerValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
         public VacancySummaryViewModelServerValidator()
         {
@@ -29,7 +29,7 @@
         }
     }
 
-    public class VacancySummaryViewModelServerErrorValidator : AbstractValidator<VacancySummaryViewModel>
+    public class VacancySummaryViewModelServerErrorValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
         public VacancySummaryViewModelServerErrorValidator()
         {
@@ -40,7 +40,7 @@
         }
     }
 
-    public class VacancySummaryViewModelServerWarningValidator : AbstractValidator<VacancySummaryViewModel>
+    public class VacancySummaryViewModelServerWarningValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
         public VacancySummaryViewModelServerWarningValidator(string parentPropertyName)
         {
@@ -50,7 +50,7 @@
 
     internal static class VacancySummaryViewModelValidatorRules
     {
-        internal static void AddVacancySummaryViewModelCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
+        internal static void AddVacancySummaryViewModelCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
         {
             validator.RuleFor(viewModel => viewModel.WorkingWeek)
                 .Length(0, 250)
@@ -84,7 +84,7 @@
                 .SetValidator(new VacancyDatesViewModelCommonValidator());
         }
 
-        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<VacancySummaryViewModel> validator)
+        internal static void AddVacancySummaryViewModelServerCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
         {
             validator.RuleFor(x => x.WorkingWeek)
                 .NotEmpty()
@@ -151,7 +151,7 @@
                 .When(x => x.VacancyType == VacancyType.Traineeship);
         }
 
-        internal static void AddVacancySummaryViewModelServerWarningRules(this AbstractValidator<VacancySummaryViewModel> validator, string parentPropertyName)
+        internal static void AddVacancySummaryViewModelServerWarningRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator, string parentPropertyName)
         {
             validator.Custom(x => x.ExpectedDurationGreaterThanOrEqualToMinimumDuration(x.Duration, parentPropertyName));
 
@@ -163,45 +163,45 @@
                 .SetValidator(new VacancyDatesViewModelServerWarningValidator(parentPropertyNameToUse));
         }
 
-        private static bool HaveAValidHourRate(VacancySummaryViewModel vacancy, decimal? wage)
+        private static bool HaveAValidHourRate(FurtherVacancyDetailsViewModel furtherVacancy, decimal? wage)
         {
-            if (vacancy.VacancyType == VacancyType.Traineeship && !vacancy.Wage.HasValue)
+            if (furtherVacancy.VacancyType == VacancyType.Traineeship && !furtherVacancy.Wage.HasValue)
                 return true;
 
-            if (!vacancy.Wage.HasValue || !vacancy.HoursPerWeek.HasValue)
+            if (!furtherVacancy.Wage.HasValue || !furtherVacancy.HoursPerWeek.HasValue)
                 return false;
 
-            var hourRate = GetHourRate(vacancy.Wage.Value, vacancy.WageUnit, vacancy.HoursPerWeek.Value);
+            var hourRate = GetHourRate(furtherVacancy.Wage.Value, furtherVacancy.WageUnit, furtherVacancy.HoursPerWeek.Value);
 
             return !(hourRate < Wages.ApprenticeMinimumWage);
         }
 
-        private static bool HaveAValidApprenticeshipDuration(VacancySummaryViewModel vacancy, decimal? duration)
+        private static bool HaveAValidApprenticeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
         {
-            if (!vacancy.HoursPerWeek.HasValue || !vacancy.Duration.HasValue)
+            if (!furtherVacancy.HoursPerWeek.HasValue || !furtherVacancy.Duration.HasValue)
                 return true;
 
             if (duration.HasValue && duration.Value % 1 != 0)
                 return false;
 
-            if (vacancy.HoursPerWeekBetween30And40() || vacancy.HoursPerWeekGreaterThanOrEqualTo16())
-                return vacancy.DurationGreaterThanOrEqualTo12Months();
+            if (furtherVacancy.HoursPerWeekBetween30And40() || furtherVacancy.HoursPerWeekGreaterThanOrEqualTo16())
+                return furtherVacancy.DurationGreaterThanOrEqualTo12Months();
 
             return true;
         }
 
-        private static bool HaveAValidTraineeshipDuration(VacancySummaryViewModel vacancy, decimal? duration)
+        private static bool HaveAValidTraineeshipDuration(FurtherVacancyDetailsViewModel furtherVacancy, decimal? duration)
         {
-            if (!vacancy.Duration.HasValue)
+            if (!furtherVacancy.Duration.HasValue)
                 return true;
 
-            if (vacancy.DurationType == DurationType.Years)
+            if (furtherVacancy.DurationType == DurationType.Years)
                 return false;
 
             if (duration.HasValue && duration.Value % 1 != 0)
                 return false;
 
-            return vacancy.DurationBetweenSixWeeksAndSixMonths();
+            return furtherVacancy.DurationBetweenSixWeeksAndSixMonths();
         }
 
         private static bool HaveAValidHoursPerWeek(decimal? hours)

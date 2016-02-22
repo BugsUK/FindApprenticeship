@@ -252,7 +252,7 @@
     <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
-    <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\FurtherVacancyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">

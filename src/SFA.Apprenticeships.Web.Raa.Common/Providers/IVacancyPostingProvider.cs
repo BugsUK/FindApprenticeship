@@ -20,7 +20,7 @@
 
         TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
 
@@ -28,7 +28,7 @@
 
         VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
-        VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
+        FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 

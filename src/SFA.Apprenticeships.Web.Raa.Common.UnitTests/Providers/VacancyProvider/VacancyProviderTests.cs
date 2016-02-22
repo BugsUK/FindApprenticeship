@@ -810,9 +810,9 @@
 
         }
 
-        private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            return new VacancySummaryViewModel
+            return new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyDatesViewModel = new VacancyDatesViewModel { 

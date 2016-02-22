@@ -1,4 +1,4 @@
-﻿@model VacancySummaryViewModel
+﻿@model FurtherVacancyDetailsViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -6,7 +6,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySummary, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, VacancySummaryViewModel.PartialView)
+    @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";

@@ -19,7 +19,7 @@
 
         public TrainingDetailsViewModel TrainingDetailsViewModel { get; set; }
 
-        public VacancySummaryViewModel VacancySummaryViewModel { get; set; }
+        public FurtherVacancyDetailsViewModel FurtherVacancyDetailsViewModel { get; set; }
 
         public VacancyRequirementsProspectsViewModel VacancyRequirementsProspectsViewModel { get; set; }
 

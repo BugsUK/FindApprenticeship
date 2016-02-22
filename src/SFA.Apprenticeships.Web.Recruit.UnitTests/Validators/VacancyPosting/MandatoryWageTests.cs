@@ -39,7 +39,7 @@
         [TestCase(2574, WageUnit.Annually, 15, true)] //3.30 pounds per hour
         public void ApprenticeMinimumWage_PerHour(decimal wage, WageUnit wageUnit, decimal hoursPerWeek, bool expectValid)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 Wage = wage,
                 WageType = WageType.Custom,
@@ -55,14 +55,14 @@
             if (expectValid)
             {
                 _validator.ShouldNotHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
-                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSet);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel, RuleSet);
             }
             else
             {
                 _validator.ShouldHaveValidationErrorFor(vm => vm.Wage, viewModel, RuleSet);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel);
-                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Wage, vacancyViewModel, RuleSet);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel);
+                _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Wage, vacancyViewModel, RuleSet);
             }
         }
     }

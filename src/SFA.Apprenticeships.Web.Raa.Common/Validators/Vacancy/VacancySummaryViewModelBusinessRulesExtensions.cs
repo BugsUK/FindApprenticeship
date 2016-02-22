@@ -35,17 +35,17 @@
                 VacancyViewModelMessages.Duration.DurationWarning30Hours)
         };
 
-        public static bool HoursPerWeekBetween30And40(this VacancySummaryViewModel viewModel)
+        public static bool HoursPerWeekBetween30And40(this FurtherVacancyDetailsViewModel viewModel)
         {
             return viewModel.HoursPerWeek.HasValue && viewModel.HoursPerWeek >= 30 && viewModel.HoursPerWeek <= 40;
         }
 
-        public static bool HoursPerWeekGreaterThanOrEqualTo16(this VacancySummaryViewModel viewModel)
+        public static bool HoursPerWeekGreaterThanOrEqualTo16(this FurtherVacancyDetailsViewModel viewModel)
         {
             return viewModel.HoursPerWeek.HasValue && viewModel.HoursPerWeek >= 16;
         }
 
-        public static bool DurationGreaterThanOrEqualTo12Months(this VacancySummaryViewModel viewModel)
+        public static bool DurationGreaterThanOrEqualTo12Months(this FurtherVacancyDetailsViewModel viewModel)
         {
             switch (viewModel.DurationType)
             {
@@ -60,7 +60,7 @@
             }
         }
 
-        public static bool DurationBetweenSixWeeksAndSixMonths(this VacancySummaryViewModel viewModel)
+        public static bool DurationBetweenSixWeeksAndSixMonths(this FurtherVacancyDetailsViewModel viewModel)
         {
             switch (viewModel.DurationType)
             {
@@ -73,7 +73,7 @@
             }
         }
 
-        public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, decimal? duration, string parentPropertyName)
+        public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this FurtherVacancyDetailsViewModel viewModel, decimal? duration, string parentPropertyName)
         {
             if (viewModel.VacancyType == VacancyType.Traineeship)
             {

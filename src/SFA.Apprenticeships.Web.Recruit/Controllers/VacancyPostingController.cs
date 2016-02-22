@@ -444,7 +444,7 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummary(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        public ActionResult VacancySummary(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
             var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
 
@@ -458,7 +458,7 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummaryAndExit(VacancySummaryViewModel viewModel)
+        public ActionResult VacancySummaryAndExit(FurtherVacancyDetailsViewModel viewModel)
         {
             var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
@@ -467,7 +467,7 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
-        public ActionResult VacancySummaryAndPreview(VacancySummaryViewModel viewModel, bool acceptWarnings)
+        public ActionResult VacancySummaryAndPreview(FurtherVacancyDetailsViewModel viewModel, bool acceptWarnings)
         {
             var response = _vacancyPostingMediator.UpdateVacancy(viewModel, acceptWarnings);
             
@@ -479,7 +479,7 @@
                     }));
         }
 
-        private ActionResult HandleVacancySummary(MediatorResponse<VacancySummaryViewModel> response,
+        private ActionResult HandleVacancySummary(MediatorResponse<FurtherVacancyDetailsViewModel> response,
             Func<ActionResult> okAction)
         {
             ModelState.Clear();

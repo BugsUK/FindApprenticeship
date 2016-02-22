@@ -15,7 +15,7 @@
         public void ApprenticeshipHeading()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -31,7 +31,7 @@
         public void TraineeshipHeading()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -48,7 +48,7 @@
         public void ApprenticeshipWorkingWeekLabel()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -68,7 +68,7 @@
         public void TraineeshipWorkingWeekLabel()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -88,7 +88,7 @@
         public void ShouldHaveHoursPerWeekWhenApprenticeship()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -106,7 +106,7 @@
         public void ShouldNotHaveHoursPerWeekWhenTraineeship()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -124,7 +124,7 @@
         public void ShouldHaveWageWhenApprenticeship()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Apprenticeship)
                 .Create();
             var details = new FurtherVacancyDetails();
@@ -148,7 +148,7 @@
         public void ShouldNotHaveWageWhenTraineeship()
         {
             //Arrange
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
                 .With(vm => vm.VacancyType, VacancyType.Traineeship)
                 .Create();
             var details = new FurtherVacancyDetails();

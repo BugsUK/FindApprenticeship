@@ -22,7 +22,7 @@
                 Status = source.Status,
                 NewVacancyViewModel = context.Engine.Map<Vacancy, NewVacancyViewModel>(source),
                 TrainingDetailsViewModel = context.Engine.Map<Vacancy, TrainingDetailsViewModel>(source),
-                VacancySummaryViewModel = context.Engine.Map<Vacancy, VacancySummaryViewModel>(source),
+                FurtherVacancyDetailsViewModel = context.Engine.Map<Vacancy, FurtherVacancyDetailsViewModel>(source),
                 VacancyRequirementsProspectsViewModel = context.Engine.Map<Vacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<Vacancy, VacancyQuestionsViewModel>(source),
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
