@@ -41,7 +41,7 @@
             var provider = GetProvider();
 
             // Act
-            provider.ConfirmProviderSiteEmployerLink(new ProviderSiteEmployerLinkViewModel
+            provider.ConfirmVacancyParty(new VacancyPartyViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel
@@ -94,7 +94,7 @@
             var provider = GetProvider();
 
             // Act
-            provider.ConfirmProviderSiteEmployerLink(new ProviderSiteEmployerLinkViewModel
+            provider.ConfirmVacancyParty(new VacancyPartyViewModel
             {
                 ProviderSiteId = providerSiteId,
                 Employer = new EmployerViewModel

@@ -21,7 +21,7 @@
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<Employer, EmployerViewModel>();
-            Mapper.CreateMap<VacancyParty, ProviderSiteEmployerLinkViewModel>()
+            Mapper.CreateMap<VacancyParty, VacancyPartyViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
                 .ForMember(dest => dest.VacancyGuid, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositions, opt => opt.Ignore())

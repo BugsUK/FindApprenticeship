@@ -171,11 +171,11 @@ namespace SFA.Apprenticeships.Application.Provider
         {
             Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteEdsErn);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteId);
 
             var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteEdsErn);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteId);
 
             var providerSiteEmployerLinksFromRepository = GetProviderSiteEmployerLinksFromRepository(request);
 

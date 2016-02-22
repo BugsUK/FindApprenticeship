@@ -2,7 +2,7 @@
 {
     using Web.Common.Constants;
 
-    public class ProviderSiteEmployerLinkViewModelMessages
+    public class VacancyPartyViewModelMessages
     {
         public static class Description
         {

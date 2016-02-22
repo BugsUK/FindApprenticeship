@@ -8,19 +8,19 @@
     using Vacancy;
     using Validators.Provider;
 
-    [Validator(typeof (ProviderSiteEmployerLinkViewModelValidator))]
-    public class ProviderSiteEmployerLinkViewModel
+    [Validator(typeof (VacancyPartyViewModelValidator))]
+    public class VacancyPartyViewModel
     {
         public const string PartialView = "Vacancy/EmployerDetails";
 
         public int ProviderSiteId { get; set; }
 
-        public string ProviderSiteErn { get; set; }
+        public string ProviderSiteEdsErn { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.Description.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.Description.LabelText)]
         public string Description { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.WebsiteUrl.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.WebsiteUrl.LabelText)]
         public string WebsiteUrl { get; set; }
 
         public int EmployerId { get; set; }
@@ -31,7 +31,7 @@
 
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.NumberOfPositions.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.NumberOfPositions.LabelText)]
         public int? NumberOfPositions { get; set; }
 
         public bool ComeFromPreview { get; set; }
@@ -40,13 +40,13 @@
 
         public long VacancyReferenceNumber { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.DescriptionComment.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.DescriptionComment.LabelText)]
         public string DescriptionComment { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.WebsiteUrlComment.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.WebsiteUrlComment.LabelText)]
         public string WebsiteUrlComment { get; set; }
 
-        [Display(Name = ProviderSiteEmployerLinkViewModelMessages.NumberOfPositionsComment.LabelText)]
+        [Display(Name = VacancyPartyViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }
     }
 }

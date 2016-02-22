@@ -1,10 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
 {
+    using System.Collections.Generic;
     using Entities.Raa.Parties;
 
     public interface IEmployerReadRepository
     {
-        Employer Get(string ern);
+        Employer Get(int employerId);
+
+        Employer GetByEdsErn(string edsErn);
+
+        List<Employer> GetByIds(IEnumerable<int> employerIds);
     }
 
     public interface IEmployerWriteRepository

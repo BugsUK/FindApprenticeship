@@ -5,14 +5,14 @@
 
     public static class ProviderSiteEmployerLinkViewModelConverter
     {
-        public static ProviderSiteEmployerLinkViewModel Convert(this VacancyParty vacancyParty)
+        public static VacancyPartyViewModel Convert(this VacancyParty vacancyParty, Employer employer)
         {
-            var viewModel = new ProviderSiteEmployerLinkViewModel
+            var viewModel = new VacancyPartyViewModel
             {
-                //ProviderSiteEdsErn = vacancyParty.ProviderSiteEdsErn,
+                ProviderSiteId = vacancyParty.ProviderSiteId,
                 Description = vacancyParty.EmployerDescription,
                 WebsiteUrl = vacancyParty.EmployerWebsiteUrl,
-                //Employer = vacancyParty.Employer.Convert()
+                Employer = employer.Convert()
             };
 
             return viewModel;

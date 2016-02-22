@@ -10,7 +10,7 @@
         {
             var viewModel = new EmployerResultViewModel
             {
-                Ern = employer.Ern,
+                Ern = employer.EdsErn,
                 //EmployerId = 
                 EmployerName = employer.Name,
                 Address = employer.Address
@@ -36,7 +36,7 @@
         {
             var viewModel = new EmployerViewModel
             {
-                Ern = employer.EdsErn,
+                EdsErn = employer.EdsErn,
                 Name = employer.Name,
                 Address = employer.Address.Convert()
             };

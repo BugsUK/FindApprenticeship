@@ -160,7 +160,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             switch (response.Code)
             {
                 case ProviderUserMediatorCodes.ChangeProviderSite.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteId });
+                    return RedirectToRoute(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = viewModel.ProviderUserViewModel.DefaultProviderSiteId });
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

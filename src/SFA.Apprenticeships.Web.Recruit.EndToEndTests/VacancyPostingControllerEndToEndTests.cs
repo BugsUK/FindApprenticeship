@@ -70,8 +70,8 @@
             var result = vacancyPostingController.ConfirmEmployer(providerSiteId, employerId, vacancyGuid, false, null);
             result.Should().BeOfType<ViewResult>();
             var view = result as ViewResult;
-            view.Model.Should().BeOfType<ProviderSiteEmployerLinkViewModel>();
-            var viewModel = view.Model as ProviderSiteEmployerLinkViewModel;
+            view.Model.Should().BeOfType<VacancyPartyViewModel>();
+            var viewModel = view.Model as VacancyPartyViewModel;
             viewModel.IsEmployerLocationMainApprenticeshipLocation.Should().NotHaveValue();
             viewModel.NumberOfPositions.Should().NotHaveValue();
         }
@@ -176,11 +176,11 @@
             vacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);*/
         }
 
-        private static ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string ern,
+        private static VacancyPartyViewModel GetProviderSiteEmployerLinkViewModel(string ern,
             bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, string providerSiteErn,
             Guid vacancyGuid)
         {
-            return new ProviderSiteEmployerLinkViewModel
+            return new VacancyPartyViewModel
             {
                 Description = "desciption",
                 Employer = new EmployerViewModel
@@ -196,11 +196,11 @@
                         Uprn = "uprn"
                     },
                     Name = "some employer",
-                    Ern = ern
+                    EdsErn = ern
                 },
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
-                ProviderSiteErn = providerSiteErn,
+                ProviderSiteEdsErn = providerSiteErn,
                 VacancyGuid = vacancyGuid
             };
         }

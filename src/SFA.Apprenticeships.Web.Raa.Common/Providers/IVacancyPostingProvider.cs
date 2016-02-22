@@ -46,7 +46,7 @@
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
+        VacancyPartyViewModel CloneVacancy(long vacancyReferenceNumber);
 
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 

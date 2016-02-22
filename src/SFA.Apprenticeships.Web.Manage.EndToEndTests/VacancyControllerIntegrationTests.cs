@@ -634,7 +634,7 @@
                     DateCreated = DateTime.UtcNow,
                     Description = "employer link",
                     DateUpdated = DateTime.UtcNow,
-                    ProviderSiteErn = "101282923",
+                    ProviderSiteEdsErn = "101282923",
                     WebsiteUrl = "www.google.com",
                     Employer = new Employer
                     {

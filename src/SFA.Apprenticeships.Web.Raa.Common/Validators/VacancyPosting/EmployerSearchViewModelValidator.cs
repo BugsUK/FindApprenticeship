@@ -13,9 +13,9 @@
 
         private void AddCommonRules()
         {
-            RuleFor(x => x.Ern)
+            RuleFor(x => x.EdsErn)
                 .NotEmpty()
-                .When(x => x.FilterType == EmployerFilterType.Ern)
+                .When(x => x.FilterType == EmployerFilterType.EdsErn)
                 .WithMessage(EmployerSearchViewModelMessages.Ern.RequiredErrorText)
                 .Matches(EmployerSearchViewModelMessages.Ern.WhiteListRegularExpression)
                 .WithMessage(EmployerSearchViewModelMessages.Ern.WhiteListErrorText);

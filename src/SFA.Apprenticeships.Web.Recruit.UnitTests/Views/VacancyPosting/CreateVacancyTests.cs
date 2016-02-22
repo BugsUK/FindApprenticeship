@@ -20,7 +20,7 @@
 
             var viewModel = new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                VacancyParty = new VacancyPartyViewModel()
                 {
                     Employer = new EmployerViewModel()
                     {

@@ -55,7 +55,7 @@
                 mock.GetVacancyParty(ProviderSiteId, EmployerId), Times.Once);
 
             viewModel.Should().NotBeNull();
-            viewModel.ProviderSiteEmployerLink.ProviderSiteErn.Should().Be(ProviderSiteUrn);
+            viewModel.VacancyParty.ProviderSiteEdsErn.Should().Be(ProviderSiteUrn);
         }
     }
 }

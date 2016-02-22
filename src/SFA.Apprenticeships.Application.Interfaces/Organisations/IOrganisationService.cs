@@ -10,28 +10,30 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
     {
         VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber);
 
-        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location);
+        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsErn, string name, string location);
 
-        Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location, int currentPage, int pageSize);
+        Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsErn, string name, string location, int currentPage, int pageSize);
 
         Provider GetProvider(string ukprn);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSite GetProviderSite(string ukprn, string edsErn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
-        VacancyParty GetVacancyParty(string providerSiteErn, string ern);
+        VacancyParty GetVacancyParty(int providerSiteId, string edsErn);
 
         IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
 
         Employer GetEmployer(int employerId);
 
-        Employer GetEmployer(string ern);
+        Employer GetEmployer(string edsErn);
 
-        IEnumerable<Employer> GetEmployers(string ern, string name, string location);
+        IEnumerable<Employer> GetByIds(IEnumerable<int> employerIds);
 
-        Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize);
+        IEnumerable<Employer> GetEmployers(string edsErn, string name, string location);
+
+        Pageable<Employer> GetEmployers(string edsErn, string name, string location, int currentPage, int pageSize);
     }
 }

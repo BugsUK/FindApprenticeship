@@ -26,7 +26,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -52,7 +52,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -78,7 +78,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -102,7 +102,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -126,7 +126,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -147,19 +147,19 @@
         {
             var isEmployerLocationMainApprenticeshipLocation = true;
             var numberOfPositions = 5;
-            var viewModel = new ProviderSiteEmployerLinkViewModel
+            var viewModel = new VacancyPartyViewModel
             {
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
-                ProviderSiteErn = "provider site ern",
+                ProviderSiteEdsErn = "provider site ern",
                 Employer = new EmployerViewModel
                 {
-                    Ern = "ern"
+                    EdsErn = "ern"
                 }
             };
 
-            ProviderProvider.Setup(p => p.GetProviderSiteEmployerLinkViewModel(It.IsAny<int>(), It.IsAny<int>()))
-                .Returns(new ProviderSiteEmployerLinkViewModel
+            ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<int>()))
+                .Returns(new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel
                     {
@@ -181,7 +181,7 @@
             {
                 NewVacancyViewModel = new NewVacancyViewModel { 
                     OfflineVacancy = false,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                    VacancyParty = new VacancyPartyViewModel
                     {
                         Employer = new EmployerViewModel()
                     }

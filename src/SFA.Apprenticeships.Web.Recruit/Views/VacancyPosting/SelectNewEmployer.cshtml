@@ -9,7 +9,7 @@
 
     const string selected = "selected";
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
-    var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
+    var ernSearchSelected = Model.FilterType == EmployerFilterType.EdsErn ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
     var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
     var searchPerformed = !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected);
@@ -61,7 +61,7 @@
             </label>
             @* ReSharper disable once Html.IdNotResolved *@
             <label data-target="edsErn-search-panel" for="edsErn-search" class="block-label @ernSearchSelected">
-                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.Ern, new {id = "edsErn-search", aria_controls = "edsErn-search-panel"})
+                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.EdsErn, new {id = "edsErn-search", aria_controls = "edsErn-search-panel"})
                 ERN
             </label>
         </div>
@@ -70,11 +70,11 @@
         {
             @Html.HiddenFor(m => m.ProviderSiteEdsErn)
             @Html.HiddenFor(m => m.VacancyGuid)
-            @Html.Hidden("FilterType", EmployerFilterType.Ern)
+            @Html.Hidden("FilterType", EmployerFilterType.EdsErn)
             @Html.HiddenFor(m => m.ComeFromPreview)
 
             <div id="ern-search-panel" class="toggle-content blocklabel-content">
-                @Html.FormTextFor(model => model.Ern)
+                @Html.FormTextFor(model => model.EdsErn)
 
                 <button id="ern-search-button" type="submit" class="button">
                     Find employer

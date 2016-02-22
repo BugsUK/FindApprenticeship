@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Vacancy/EmployerDetails.cshtml")]
-    public partial class EmployerDetails : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel>
+    public partial class EmployerDetails : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.VacancyPartyViewModel>
     {
         public EmployerDetails()
         {
@@ -73,7 +73,7 @@ WriteLiteral("    ");
 
             
             #line 8 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-Write(Html.HiddenFor(m => m.ProviderSiteErn));
+Write(Html.HiddenFor(m => m.ProviderSiteEdsErn));
 
             
             #line default
@@ -84,7 +84,7 @@ WriteLiteral("    ");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Vacancy\EmployerDetails.cshtml"
-Write(Html.HiddenFor(m => m.Employer.Ern));
+Write(Html.HiddenFor(m => m.Employer.EdsErn));
 
             
             #line default

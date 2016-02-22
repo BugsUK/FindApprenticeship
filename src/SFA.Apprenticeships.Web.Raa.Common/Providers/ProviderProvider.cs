@@ -19,13 +19,15 @@
     {
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly IConfigurationService _configurationService;
 
-        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService)
+        public ProviderProvider(IProviderService providerService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IEmployerService employerService)
         {
             _providerService = providerService;
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
+            _employerService = employerService;
         }
 
         public ProviderViewModel GetProviderViewModel(string ukprn)
@@ -62,25 +64,26 @@
             return providerSites.Select(ps => ps.Convert());
         }
 
-        public ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(int providerSiteId, int employerId)
+        public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, int employerId)
         {
-            var providerSiteEmployerLink = _providerService.GetVacancyParty(providerSiteId, employerId);
-            return providerSiteEmployerLink.Convert();
+            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, employerId);
+            var employer = _employerService.GetEmployer(employerId);
+            return vacancyParty.Convert(employer);
         }
 
-        public ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel)
+        public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
         {
-            var providerSiteEmployerLink = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerId);
-            providerSiteEmployerLink.EmployerWebsiteUrl = viewModel.WebsiteUrl;
-            providerSiteEmployerLink.EmployerDescription = viewModel.Description;
-            providerSiteEmployerLink = _providerService.SaveVacancyParty(providerSiteEmployerLink);
+            var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerId);
+            vacancyParty.EmployerWebsiteUrl = viewModel.WebsiteUrl;
+            vacancyParty.EmployerDescription = viewModel.Description;
+            vacancyParty = _providerService.SaveVacancyParty(vacancyParty);
 
             var vacancy = GetVacancy(viewModel);
             if (vacancy != null)
             {
-                vacancy.OwnerPartyId = providerSiteEmployerLink.VacancyPartyId;
-                vacancy.EmployerWebsiteUrl = providerSiteEmployerLink.EmployerWebsiteUrl;
-                vacancy.EmployerDescription = providerSiteEmployerLink.EmployerDescription;
+                vacancy.OwnerPartyId = vacancyParty.VacancyPartyId;
+                vacancy.EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl;
+                vacancy.EmployerDescription = vacancyParty.EmployerDescription;
                 if (viewModel.IsEmployerLocationMainApprenticeshipLocation != null)
                     vacancy.IsEmployerLocationMainApprenticeshipLocation =
                         viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
@@ -89,12 +92,13 @@
                 _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
             }
 
-            var result = providerSiteEmployerLink.Convert();
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var result = vacancyParty.Convert(employer);
             
             return result;
         }
 
-        private Vacancy GetVacancy(ProviderSiteEmployerLinkViewModel viewModel)
+        private Vacancy GetVacancy(VacancyPartyViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
                           _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
@@ -102,34 +106,35 @@
             return vacancy;
         }
 
-        public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn)
+        public EmployerSearchViewModel GetVacancyPartyViewModels(int providerSiteId)
         {
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
-            var parameters = new EmployerSearchRequest(providerSiteErn);
-            var providerSiteEmployerLinks = _providerService.GetVacancyParties(parameters, 1, pageSize);
-            var result = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(psel => psel.Convert().Employer.ConvertToResult()));
+            var parameters = new EmployerSearchRequest(providerSiteId);
+            var vacancyParties = _providerService.GetVacancyParties(parameters, 1, pageSize);
+            var employers = _employerService.GetEmployers(vacancyParties.Page.Select(vp => vp.EmployerId).Distinct());
+            var result = vacancyParties.ToViewModel(vacancyParties.Page.Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId)).Employer.ConvertToResult()));
 
             return new EmployerSearchViewModel
             {
-                ProviderSiteErn = providerSiteErn,
+                ProviderSiteId = providerSiteId,
                 EmployerResultsPage = result
             };
         }
 
-        public EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel)
+        public EmployerSearchViewModel GetVacancyPartyViewModels(EmployerSearchViewModel viewModel)
         {
             EmployerSearchRequest parameters;
 
             switch (viewModel.FilterType)
             {
-                case EmployerFilterType.Ern:
-                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn, viewModel.Ern);
+                case EmployerFilterType.EdsErn:
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.EdsErn);
                     break;
                 case EmployerFilterType.NameAndLocation:
-                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn, viewModel.Name, viewModel.Location);
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.Name, viewModel.Location);
                     break;
                 case EmployerFilterType.Undefined:
-                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteErn);
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteId);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(viewModel), viewModel.FilterType, "");
@@ -137,9 +142,10 @@
 
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
 
-            var providerSiteEmployerLinks = _providerService.GetVacancyParties(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var vacancyParties = _providerService.GetVacancyParties(parameters, viewModel.EmployerResultsPage.CurrentPage, pageSize);
+            var employers = _employerService.GetEmployers(vacancyParties.Page.Select(vp => vp.EmployerId).Distinct());
 
-            var resultsViewModelPage = providerSiteEmployerLinks.ToViewModel(providerSiteEmployerLinks.Page.Select(e => e.Convert().Employer.ConvertToResult()));
+            var resultsViewModelPage = vacancyParties.ToViewModel(vacancyParties.Page.Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId)).Employer.ConvertToResult()));
             viewModel.EmployerResultsPage = resultsViewModelPage;
             return viewModel;
         }

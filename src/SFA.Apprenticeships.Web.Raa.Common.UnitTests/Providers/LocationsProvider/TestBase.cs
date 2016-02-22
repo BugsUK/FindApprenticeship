@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvider
 {
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
@@ -18,6 +19,7 @@
         protected Mock<ILogService> MockLogService;
         protected Mock<IMapper> MockMapper;
         protected Mock<IProviderService> MockProviderService;
+        protected Mock<IEmployerService> MockEmployerService;
         protected Mock<IUserProfileService> MockUserProfileService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
@@ -37,6 +39,7 @@
             MockApprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
+            MockEmployerService = new Mock<IEmployerService>();
             MockUserProfileService = new Mock<IUserProfileService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
@@ -53,6 +56,7 @@
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
+                MockEmployerService.Object,
                 MockTimeService.Object,
                 MockMapper.Object,
                 ApprenticeshipApplicationService.Object,

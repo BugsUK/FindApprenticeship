@@ -57,7 +57,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return provider;
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string ern)
+        public ProviderSite GetProviderSite(string ukprn, string edsErn)
         {
             const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
@@ -70,7 +70,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
             using (var connection = GetConnection())
             {
-                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, Ern = ern }).SingleOrDefault();
+                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, Ern = edsErn }).SingleOrDefault();
             }
 
             return GetProviderSite(legacyProviderSite);
@@ -140,16 +140,16 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return results.SingleOrDefault();*/
         }
 
-        public VacancyParty GetVacancyParty(string providerSiteErn, string ern)
+        public VacancyParty GetVacancyParty(int providerSiteId, string edsErn)
         {
-            var request = new EmployerSearchRequest(providerSiteErn, ern);
+            var request = new EmployerSearchRequest(providerSiteId, edsErn);
             var results = GetProviderSiteEmployerLinks(request);
             return results.SingleOrDefault();
         }
 
-        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(string providerSiteErn)
+        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(int providerSiteId)
         {
-            var request = new EmployerSearchRequest(providerSiteErn);
+            var request = new EmployerSearchRequest(providerSiteId);
             return GetProviderSiteEmployerLinks(request);
         }
 
@@ -158,7 +158,12 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             Contract.Requires(searchRequest != null);
             IList<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
 
-            var queryBuilder = new StringBuilder(@"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteEdsErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
+            var queryBuilder = new StringBuilder(@"
+SELECT ps.ProviderSiteID, ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.*
+FROM   dbo.ProviderSite AS ps
+JOIN   dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
+JOIN   dbo.Employer AS e on vor.EmployerId = e.EmployerId
+WHERE  ps.ProviderSiteID = @ProviderSiteId AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
 
             object parameterList;
 
@@ -167,7 +172,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
+                    ProviderSiteId = searchRequest.ProviderSiteId,
                     EmployerEdsUrn = searchRequest.EmployerEdsUrn
                 };
             }
@@ -177,7 +182,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
+                    ProviderSiteId = searchRequest.ProviderSiteId,
                     NameSearchParameter = searchRequest.Name,
                     LocationSearchParameter = searchRequest.Location
                 };
@@ -187,7 +192,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
+                    ProviderSiteId = searchRequest.ProviderSiteId,
                     NameSearchParameter = searchRequest.Name
                 };
             }
@@ -197,7 +202,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn,
+                    ProviderSiteId = searchRequest.ProviderSiteId,
                     LocationSearchParameter = searchRequest.Location
                 };
             }
@@ -205,7 +210,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             {
                 parameterList = new
                 {
-                    ProviderSiteErn = searchRequest.ProviderSiteEdsErn
+                    ProviderSiteId = searchRequest.ProviderSiteId
                 };
             }
 

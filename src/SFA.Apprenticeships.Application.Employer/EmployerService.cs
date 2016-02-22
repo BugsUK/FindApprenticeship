@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
     using Interfaces.Generic;
     using Infrastructure.Interfaces;
@@ -12,41 +11,35 @@
     public class EmployerService : IEmployerService
     {
         private readonly IOrganisationService _organisationService;
-        private readonly IEmployerReadRepository _employerReadRepository;
-        private readonly IEmployerWriteRepository _employerWriteRepository;
         private readonly ILogService _logService;
 
-        public EmployerService(IOrganisationService organisationService, IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository, ILogService logService)
+        public EmployerService(IOrganisationService organisationService, ILogService logService)
         {
             _organisationService = organisationService;
-            _employerReadRepository = employerReadRepository;
-            _employerWriteRepository = employerWriteRepository;
             _logService = logService;
+        }
+
+        public Employer GetEmployer(int employerId)
+        {
+            Condition.Requires(employerId);
+
+            _logService.Debug("Calling OrganisationService to get employer with Id='{0}'.", employerId);
+
+            return _organisationService.GetEmployer(employerId);
         }
 
         public Employer GetEmployer(string edsErn)
         {
             Condition.Requires(edsErn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling EmployerReadRepository to get employer with ERN='{0}'.", edsErn);
-
-            var employer = _employerReadRepository.Get(edsErn);
-
-            if (employer != null)
-            {
-                return employer;
-            }
-
             _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsErn);
 
-            employer = _organisationService.GetEmployer(edsErn);
-
-            return employer;
+            return _organisationService.GetEmployer(edsErn);
         }
 
-        public Employer SaveEmployer(Employer employer)
+        public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds)
         {
-            return _employerWriteRepository.Save(employer);
+            return _organisationService.GetByIds(employerIds);
         }
 
         public IEnumerable<Employer> GetEmployers(string edsErn, string name, string location)

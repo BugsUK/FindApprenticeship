@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
@@ -48,6 +49,20 @@
             return GetEmployer(legacyEmployer);
         }
 
+        public IEnumerable<Employer> GetEmployersByIds(IEnumerable<int> employerIds)
+        {
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EmployerId IN @Ids AND e.EmployerStatusTypeId = 1";
+
+            IEnumerable<Models.Employer> legacyEmployers;
+
+            using (var connection = GetConnection())
+            {
+                legacyEmployers = connection.Query<Models.Employer>(sql, new { Ids = employerIds });
+            }
+
+            return legacyEmployers.Select(GetEmployer).ToList();
+        }
+
         private static Employer GetEmployer(Models.Employer legacyEmployer)
         {
             if (legacyEmployer == null)
@@ -72,6 +87,7 @@
 
             var employer = new Employer
             {
+                EmployerId = legacyEmployer.EmployerId,
                 EdsErn = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Address = address

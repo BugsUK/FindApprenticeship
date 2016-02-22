@@ -21,8 +21,8 @@
 
             Mapper.CreateMap<Vacancy, VacancyApplicationsViewModel>()
                 .ForMember(v => v.VacancyApplicationsSearch, opt => opt.Ignore())
-                //.ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.ProviderSiteEmployerLink.Employer.Name))
-                //.ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.ProviderSiteEmployerLink.Employer.Address.GeoPoint)))
+                //.ForMember(v => v.EmployerName, opt => opt.MapFrom(src => src.VacancyParty.Employer.Name))
+                //.ForMember(v => v.EmployerGeoPoint, opt => opt.MapFrom(src => Map<GeoPoint, GeoPointViewModel>(src.VacancyParty.Employer.Address.GeoPoint)))
                 .ForMember(v => v.NewApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ViewedApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.SuccessfulApplicationsCount, opt => opt.Ignore())

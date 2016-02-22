@@ -57,7 +57,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    VacancyParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -97,7 +97,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    VacancyParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -137,7 +137,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    VacancyParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -183,7 +183,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    VacancyParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -231,7 +231,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    VacancyParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {

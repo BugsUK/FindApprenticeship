@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Employers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
@@ -24,22 +26,29 @@
             _logger = logger;
         }
 
-        public Employer Get(Guid id)
+        public Employer Get(int employerId)
         {
-            _logger.Debug("Called Mongodb to get employer with Id={0}", id);
+            _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EmployerId == employerId);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public Employer Get(string ern)
+        public Employer GetByEdsErn(string edsErn)
         {
-            _logger.Debug("Called Mongodb to get employer with ern={0}", ern);
+            _logger.Debug("Called Mongodb to get employer with edsErn={0}", edsErn);
 
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EdsErn == ern);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EdsErn == edsErn);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
+        }
+
+        public List<Employer> GetByIds(IEnumerable<int> employerIds)
+        {
+            var mongoEntities = Collection.Find(Query.In("EmployerId", new BsonArray(employerIds)));
+
+            return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
         public void Delete(int employerId)

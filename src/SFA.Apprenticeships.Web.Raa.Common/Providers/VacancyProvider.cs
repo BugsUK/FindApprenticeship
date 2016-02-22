@@ -6,6 +6,7 @@
     using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
@@ -24,7 +25,6 @@
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
-    using Web.Common.ViewModels.Locations;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -33,19 +33,20 @@
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
             _referenceDataService = referenceDataService;
             _providerService = providerService;
+            _employerService = employerService;
             _dateTimeService = dateTimeService;
             _configurationService = configurationService;
             _mapper = mapper;
@@ -63,12 +64,13 @@
                 return vacancyViewModel;
             }
 
-            var providerSiteEmployerLink = _providerService.GetVacancyParty(providerSiteId, employerId);
-            
+            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, employerId);
+            var employer = _employerService.GetEmployer(employerId);
+
             return new NewVacancyViewModel
             {
                 ProviderId = providerId,
-                ProviderSiteEmployerLink = providerSiteEmployerLink.Convert(),
+                VacancyParty = vacancyParty.Convert(employer),
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
             };
@@ -202,8 +204,8 @@
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var providerSiteEmployerLink =
-                _providerService.GetVacancyParty(newVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteId,
-                    newVacancyViewModel.ProviderSiteEmployerLink.EmployerId);
+                _providerService.GetVacancyParty(newVacancyViewModel.VacancyParty.ProviderSiteId,
+                    newVacancyViewModel.VacancyParty.EmployerId);
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
@@ -639,7 +641,7 @@
             if (isVacancySearch)
             {
                 //TODO: Different search based on employer name
-                //vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.ProviderSiteEmployerLink.Employer.Name.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                //vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.VacancyParty.Employer.Name.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
                 vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
 
@@ -676,7 +678,7 @@
             return vacanciesSummary; 
         }
 
-        public ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber)
+        public VacancyPartyViewModel CloneVacancy(long vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
 
@@ -726,7 +728,8 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
-            var result = vacancyParty.Convert();
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var result = vacancyParty.Convert(employer);
             result.VacancyGuid = vacancy.VacancyGuid;
 
             return result;

@@ -49,12 +49,12 @@
 
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                VacancyParty = new VacancyPartyViewModel()
                 {
-                    ProviderSiteErn = ProviderSiteEdsErn,
+                    ProviderSiteEdsErn = ProviderSiteEdsErn,
                     Employer = new EmployerViewModel
                     {
-                        Ern = EdsErn,
+                        EdsErn = EdsErn,
                         Address = new AddressViewModel()
                     }
                 },
@@ -144,12 +144,12 @@
 
             provider.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
-                    ProviderSiteErn = ProviderSiteEdsErn,
+                    ProviderSiteEdsErn = ProviderSiteEdsErn,
                     Employer  = new EmployerViewModel
                     {
-                        Ern = EdsErn
+                        EdsErn = EdsErn
                     }
                 },
                 OfflineVacancy = offlineVacancy,
@@ -173,12 +173,12 @@
             {
                 VacancyGuid = vacancyGuid,
                 OfflineVacancy = false,
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                VacancyParty = new VacancyPartyViewModel
                 {
-                    ProviderSiteErn = ProviderSiteEdsErn,
+                    ProviderSiteEdsErn = ProviderSiteEdsErn,
                     Employer = new EmployerViewModel
                     {
-                        Ern = EdsErn
+                        EdsErn = EdsErn
                     }
                 }
             });
@@ -250,8 +250,8 @@
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.ProviderSiteEmployerLink.Description == _vacancyParty.EmployerDescription &&
-                        r.ProviderSiteEmployerLink.ProviderSiteErn == ProviderSiteEdsErn);
+                        r.VacancyParty.Description == _vacancyParty.EmployerDescription &&
+                        r.VacancyParty.ProviderSiteEdsErn == ProviderSiteEdsErn);
         }
 
         [Test]

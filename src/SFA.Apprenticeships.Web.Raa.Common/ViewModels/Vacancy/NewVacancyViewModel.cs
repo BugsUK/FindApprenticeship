@@ -33,7 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
 
-        public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
+        public VacancyPartyViewModel VacancyParty { get; set; }
 
         public bool? OfflineVacancy { get; set; }
 

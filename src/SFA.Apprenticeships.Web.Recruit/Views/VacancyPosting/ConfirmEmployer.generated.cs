@@ -59,7 +59,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/VacancyPosting/ConfirmEmployer.cshtml")]
-    public partial class ConfirmEmployer : System.Web.Mvc.WebViewPage<ProviderSiteEmployerLinkViewModel>
+    public partial class ConfirmEmployer : System.Web.Mvc.WebViewPage<VacancyPartyViewModel>
     {
         public ConfirmEmployer()
         {
@@ -104,7 +104,7 @@ WriteLiteral(">\r\n            Check employer information\r\n        </h1>\r\n  
             #line hidden
             
             #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-Write(Html.DisplayFor(m => m, ProviderSiteEmployerLinkViewModel.PartialView));
+Write(Html.DisplayFor(m => m, VacancyPartyViewModel.PartialView));
 
             
             #line default
@@ -146,7 +146,7 @@ WriteLiteral("        ");
 
             
             #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteEdsErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
 
             
             #line default
