@@ -76,8 +76,8 @@
                     if (ex.Message.Contains("FOREIGN KEY"))
                     {
                         _log.Error($"Hit foreign key constraint on {_tableDetails.Name}.\nData: {_toInsert.Single()}.\nDetail: {ex.Message}.");
-                        throw;
                     }
+                    throw;
                 }
             }
             else

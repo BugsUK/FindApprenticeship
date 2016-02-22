@@ -1,13 +1,11 @@
-﻿
-namespace SFA.Apprenticeships.Data.Migrate
+﻿namespace SFA.Apprenticeships.Data.Migrate
 {
-    using Infrastructure.Repositories.Sql.Common;
     using System;
-    using System.Data;
     using System.Linq;
-    using Dapper;
     using System.Collections.Generic;
     using System.Threading.Tasks;
+    using System.Collections;
+
     public interface ISyncRespository
     {
         ISnapshotSyncContext StartChangesOnlySnapshotSync();
@@ -19,7 +17,7 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         void InsertSingle(ITableDetails table, dynamic record);
 
-        void DeleteAll(ITableDetails table);
+        void DeleteAll(ITableSpec table);
 
         void Reset();
     }
@@ -28,19 +26,19 @@ namespace SFA.Apprenticeships.Data.Migrate
     {
         bool AreAnyChanges();
 
-        IEnumerable<ChangeTableRow> GetChangesForTable(ITableDetails table);
+        IEnumerable<IChangeTableRow> GetChangesForTable(ITableDetails table);
 
-        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<long> ids);
-        IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<long> ids);
+        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<IKeys> keys);
+        IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<IKeys> keys);
 
         void Success();
     }
 
     public interface ITransactionlessSyncContext
     {
-        long GetMaxId(ITableDetails table);
-        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startId, long endId);
-        IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startId, long endId);
+        long GetMaxFirstId(ITableDetails table);
+        Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startFirstId, long endFirstId);
+        IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startFirstId, long endFirstId);
 
         void Success();
     }
@@ -48,7 +46,6 @@ namespace SFA.Apprenticeships.Data.Migrate
     public interface ITableDetails
     {
         string Name { get; }
-        string PrimaryKey { get; }
 
         IEnumerable<string> PrimaryKeys { get; }
     }
@@ -68,31 +65,94 @@ namespace SFA.Apprenticeships.Data.Migrate
 
     public enum Operation { Insert, Update, Delete, Unknown };
 
-    public class ChangeTableRow
+    public interface IKeys : IComparable<IKeys>, IEnumerable<long>
     {
-        public long SYS_CHANGE_VERSION;
-        public long SYS_CHANGE_CREATION_VERSION;
-        public string SYS_CHANGE_OPERATION;
-        public string SYS_CHANGE_COLUMNS;
-        public string SYS_CHANGE_CONTEXT;
-        public long Id;
+        int Length { get; }
+    }
 
-        public Operation Operation
+    public class Keys : IKeys
+    {
+        private static IKeys _maxValue = new Keys(new long[0] { });
+        public static IKeys MaxValue { get { return _maxValue; } }
+
+        private long[] _key;
+
+        public static Keys GetPrimaryKeys(dynamic record, ITableDetails table)
         {
-            get
+            var keys = new List<long>();
+            foreach (var key in table.PrimaryKeys)
             {
-                switch (SYS_CHANGE_OPERATION)
-                {
-                    case "I":
-                        return Operation.Insert;
-                    case "U":
-                        return Operation.Update;
-                    case "D":
-                        return Operation.Delete;
-                    default:
-                        throw new Exception($"Unknown change {SYS_CHANGE_OPERATION} for id {Id}");
-                }
+                var sourceId = ((IDictionary<string, object>)record)[key];
+                if (sourceId == null)
+                    throw new FatalException($"Unknown column (may be case sensitive) or null value for {key} on {table.Name}");
+                if (sourceId is long)
+                    keys.Add((long)sourceId);
+                else if (sourceId is int)
+                    keys.Add((long)(int)sourceId);
+                else if (sourceId is short)
+                    keys.Add((long)(short)sourceId);
+                else
+                    throw new FatalException($"Unknown type {sourceId.GetType()}");
             }
+
+            return new Keys(keys);
         }
+
+
+        public Keys(IEnumerable<long> values)
+        {
+            _key = values.ToArray();
+        }
+
+        public int CompareTo(IKeys other)
+        {
+            if (this != MaxValue && other == MaxValue)
+                return -1;
+            if (this == MaxValue && other == MaxValue)
+                return 0;
+            if (this == MaxValue && other != MaxValue)
+                return +1;
+
+            if (this.Length != other.Length)
+                throw new ArgumentException("Lengths differ");
+
+            int result = 0;
+
+            var thisKeyEnumerator = this.GetEnumerator();
+            foreach (var otherKey in other)
+            {
+                thisKeyEnumerator.MoveNext();
+                result = thisKeyEnumerator.Current.CompareTo(otherKey);
+                if (result != 0)
+                    break;
+            }
+
+            return result;
+        }
+
+        public int Length { get { return _key.Length; } }
+
+        public override string ToString()
+        {
+            return this == MaxValue ? "MaxValue" : string.Join(", ", _key);
+        }
+
+        public IEnumerator<long> GetEnumerator()
+        {
+            return ((IEnumerable<long>)_key).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
+
+    public interface IChangeTableRow
+    {
+        long ChangeVersion { get; }
+        long CreationVersion { get; }
+        Operation Operation { get; }
+        IKeys PrimaryKeys { get; }
     }
 }

@@ -27,20 +27,26 @@
                 //_tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, OwnedByAv);
                 //return;
 
+                /*
                 var Vacancy = _tables.AddNew("Vacancy", new string[] { "VacancyId" }, 0.2m, TransformVacancy);
                 var VacancyHistory = _tables.AddNew("VacancyHistory", OwnedByAv, Vacancy);
                 var VacancyTextField = _tables.AddNew("VacancyTextField", OwnedByAv, Vacancy);
                 var VacancyLocation = _tables.AddNew("VacancyLocation", OwnedByAv, Vacancy);
+                */
+
                 var ProviderSiteRelationship = _tables.AddNew("ProviderSiteRelationship", new string[] { "ProviderSiteRelationshipID" }, OwnedByAv);
-                //            var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship); // TODO: No primary key
+                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, OwnedByAv, ProviderSiteRelationship/*, VacancyOwnerRelationship*/);
+
                 //var SubVacancy                        = _tables.AddNew("SubVacancy",                      OwnedByAv, Vacancy); Seems to be related to applications
-                // var SectorSuccessRates = tables.AddNew("SectorSuccessRates", OwnedByAv); // TODO: Hard as link table with no primary key
+                var SectorSuccessRates = _tables.AddNew("SectorSuccessRates", new string[] { "ProviderID", "SectorID" }, OwnedByAv);
+                /*
                 var AdditionalQuestion = _tables.AddNew("AdditionalQuestion", OwnedByAv, Vacancy);
                 var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, OwnedByAv, Vacancy);
                 var ProviderSiteLocalAuthority = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, OwnedByAv, ProviderSiteRelationship);
                 var ProviderSiteFramework = _tables.AddNew("ProviderSiteFramework", new string[] { "ProviderSiteFrameworkID" }, OwnedByAv, ProviderSiteRelationship);
                 var ProviderSiteOffer = _tables.AddNew("ProviderSiteOffer", new string[] { "ProviderSiteOfferID" }, OwnedByAv, ProviderSiteLocalAuthority, ProviderSiteFramework);
                 var VacancyOwnerRelationshipHistory = _tables.AddNew("VacancyOwnerRelationshipHistory", OwnedByAv);
+                */
                 return;
             }
 
@@ -89,9 +95,9 @@
                 var VacancyTextField                  = _tables.AddNew("VacancyTextField",                OwnedByAv, Vacancy, VacancyTextFieldValue);
                 var VacancyLocation                   = _tables.AddNew("VacancyLocation",                 OwnedByAv, Vacancy, County, LocalAuthority);
                 var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   OwnedByAv, Provider, ProviderSite, ProviderSiteRelationshipType);
-    //            var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship); // TODO: No primary key
+                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship);
                 //var SubVacancy                        = _tables.AddNew("SubVacancy",                      OwnedByAv, Vacancy); Seems to be related to applications
-                // var SectorSuccessRates = tables.AddNew("SectorSuccessRates", OwnedByAv); // TODO: Hard as link table with no primary key
+                var SectorSuccessRates                = _tables.AddNew("SectorSuccessRates",         new string[] { "ProviderID", "SectorID" },       OwnedByAv, Provider, ApprenticeshipOccupation);
                 var AdditionalQuestion                = _tables.AddNew("AdditionalQuestion",              OwnedByAv, Vacancy);
                 var VacancyReferralComments           = _tables.AddNew("VacancyReferralComments",    new string[] { "VacancyReferralCommentsID" },    OwnedByAv, Vacancy, VacancyReferralCommentsFieldType);
                 var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, OwnedByAv, ProviderSiteRelationship);
@@ -164,15 +170,10 @@
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
-            public string PrimaryKey { get; private set; }
-
             public decimal BatchSizeMultiplier { get; private set; }
 
             public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
             {
-                if (primaryKeys.Length != 1)
-                    throw new NotImplementedException($"Only one primary key is supported, not {primaryKeys.Length}");
-
                 for (int i = 0; i < dependsOn.Length; i++)
                 {
                     if (dependsOn[i] == null)
@@ -181,7 +182,6 @@
 
                 Name = name;
                 PrimaryKeys = primaryKeys;
-                PrimaryKey = primaryKeys[0];
                 BatchSizeMultiplier = batchSizeMultiplier;
                 Transform = transform;
                 _dependsOn = new List<TableSpec>(dependsOn);

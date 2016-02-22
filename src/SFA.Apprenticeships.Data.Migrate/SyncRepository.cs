@@ -10,6 +10,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     using System.Data.SqlClient;
     using SFA.Infrastructure.Interfaces;
     using System.Threading.Tasks;
+
     public class SyncRespository : ISyncRespository
     {
         private IGetOpenConnection _sourceDatabase;
@@ -80,6 +81,7 @@ DROP TABLE {tempTable}
 
         public void InsertSingle(ITableDetails table, dynamic record)
         {
+            // TODO: Should only set identity_insert on for tables with an identity column. This fact should be addeded to ITableDetails (default: true).
             var dictRecord = ((IDictionary<string, object>)record);
             using (var connection = _targetDatabase.GetOpenConnection())
             {
@@ -121,7 +123,7 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
         /// <typeparam name="T"></typeparam>
         /// <param name="data">Note that lists of many types of dynamic are suitable</param>
         /// <param name="tableName"></param>
-        private static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes)
+        public static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes)
         {
             var dataTable = new DataTable();
             foreach (var column in columnTypes)
@@ -208,23 +210,60 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
             return result;
         }
 
-        public void DeleteAll(ITableDetails table)
+        public void DeleteAll(ITableSpec table)
         {
-            const long batchSize = 100000;
+            long batchSize = (long)(50000 * table.BatchSizeMultiplier * table.BatchSizeMultiplier);
+            int miniBatchSize = 100;
 
-            var maxFirstId = _targetDatabase.Query<dynamic>($"SELECT MAX({table.PrimaryKeys.First()}) FROM {table.Name}").Single();
+            _log.Info($"Deleting {table.Name} with a batch size of {batchSize}");
 
-            //            var maxIds = _targetDatabase.Query<dynamic>($"SELECT {string.Join(", ", table.PrimaryKeys.Select(k => $"MAX({k}) AS {k}"))} FROM {table.Name}").Single();
+            var maxFirstId = _targetDatabase.Query<long?>($"SELECT MAX({table.PrimaryKeys.First()}) AS max FROM {table.Name}").Single();
             if (maxFirstId == null)
             {
                 _log.Info($"{table.Name} is already empty");
             }
             else
             {
-                for (long id = 0; id < maxFirstId.Value; id += batchSize)
+                bool again = true;
+                while (again)
                 {
-                    _log.Info($"DELETEing contents of {table.Name} - {id / Math.Max(maxFirstId.Value / 100, 1)}%");
-                    _targetDatabase.MutatingQuery<int>($"DELETE {table.Name} WHERE {table.PrimaryKeys.First()} BETWEEN {id} AND {id + batchSize}");
+                    again = false;
+                    for (long lastIdInBatch = maxFirstId.Value; lastIdInBatch >= 0; lastIdInBatch -= batchSize)
+                    {
+                        _log.Info($" {table.Name} - {(maxFirstId.Value - lastIdInBatch) / Math.Max(maxFirstId.Value / 100, 1)}%, remaining {lastIdInBatch}");
+
+                        try
+                        {
+                            _targetDatabase.MutatingQuery<int>($"DELETE {table.Name} WHERE {table.PrimaryKeys.First()} BETWEEN @fromId AND @toId", new { fromid = lastIdInBatch - batchSize, toId = lastIdInBatch }, commandTimeout: 120);
+                        }
+                        catch (Exception ex)
+                        {
+                            if (ex.Message.Contains(" SAME TABLE REFERENCE "))
+                            {
+                                again = true;
+                                _log.Info($" Found SAME TABLE REFERENCE constraint. Deleting batch one by one");
+                                for (long lastIdInMiniBatch = lastIdInBatch; lastIdInMiniBatch >= lastIdInBatch - batchSize; lastIdInMiniBatch -= miniBatchSize)
+                                {
+                                    int errors = _targetDatabase.MutatingQuery<int>($@"
+DECLARE @Errors INT = 0
+
+WHILE @Id >= @FirstId
+BEGIN TRY
+	SET @Id = @Id - 1
+	DELETE Vacancy WHERE VacancyId = (@Id + 1)
+END TRY
+BEGIN CATCH
+	SET @Errors = @Errors + 1
+END CATCH
+
+SELECT @Errors
+", new { Id = lastIdInMiniBatch, FirstId = lastIdInMiniBatch - miniBatchSize }).Single();
+                                    _log.Info($" Deleted batch with {errors} errors");
+                                }
+
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -288,7 +327,6 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
                     _sourceConnection = _sourceDatabase.GetOpenConnection();
                     _sourceConnection.Execute("SET TRANSACTION ISOLATION LEVEL SNAPSHOT");
                     _sourceTransaction = _sourceConnection.BeginTransaction();
-
                     _nextSyncVersion = _sourceConnection.Query<long>($"SELECT CHANGE_TRACKING_CURRENT_VERSION()", transaction: _sourceTransaction, buffered: false).Single();
                     _log.Info($"NextSyncVersion={_nextSyncVersion}");
                 }
@@ -304,7 +342,7 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
                 return _nextSyncVersion > _lastSyncVersion;
             }
 
-            public IEnumerable<ChangeTableRow> GetChangesForTable(ITableDetails table)
+            public IEnumerable<IChangeTableRow> GetChangesForTable(ITableDetails table)
             {
                 long? minValidVersion = _sourceConnection.Query<long?>($"SELECT CHANGE_TRACKING_MIN_VALID_VERSION(OBJECT_ID('{table.Name}'))", transaction: _sourceTransaction, buffered: false).Single();
                 if (minValidVersion == null)
@@ -314,18 +352,95 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
 
                 // Note: The ordering of the results from CHANGETABLE is undefined and therefore it is difficult to do them in batches. Accordingly ideally the results would not be buffered.
                 // However, without enabling SQL Server MARS, this will not allow other queries to proceed at the same time.
-                return _sourceConnection.Query<ChangeTableRow>($"SELECT *, {table.PrimaryKey} AS Id FROM CHANGETABLE(CHANGES {table.Name}, @lastSyncVersion) AS Dummy", new { lastSyncVersion = _lastSyncVersion }, transaction: _sourceTransaction);
+                var result = _sourceConnection.Query<dynamic>($"SELECT * FROM CHANGETABLE(CHANGES {table.Name}, @lastSyncVersion) AS Dummy", new { lastSyncVersion = _lastSyncVersion }, transaction: _sourceTransaction);
+
+                return result.Select(row => new ChangeTableRow(row, table));
             }
 
-            public Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<long> ids)
+            public class ChangeTableRow : IChangeTableRow
             {
-                return _sourceConnection.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} IN @Ids ORDER BY {table.PrimaryKey}", new { Ids = ids }, transaction: _sourceTransaction);
+                public ChangeTableRow(dynamic data, ITableDetails tableDetails)
+                {
+                    PrimaryKeys = Keys.GetPrimaryKeys(data, tableDetails);
+                    ChangeVersion = data.SYS_CHANGE_VERSION;
+                    CreationVersion = data.SYS_CHANGE_CREATION_VERSION;
+                    switch ((string)data.SYS_CHANGE_OPERATION)
+                    {
+                        case "I":
+                            Operation = Operation.Insert;
+                            break;
+                        case "U":
+                            Operation = Operation.Update;
+                            break;
+                        case "D":
+                            Operation = Operation.Delete;
+                            break;
+                        default:
+                            throw new Exception($"Unknown change {data.SYS_CHANGE_OPERATION} for keys {PrimaryKeys}");
+                    }
+                }
+
+                public long ChangeVersion { get; private set; }
+                public long CreationVersion { get; private set; }
+                public Operation Operation { get; private set; }
+                public IKeys PrimaryKeys { get; private set; }
             }
 
-            public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<long> ids)
+
+            public Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, IEnumerable<IKeys> keys)
             {
-                return _targetDatabase.Query<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} IN @Ids ORDER BY {table.PrimaryKey}", new { Ids = ids });
+                return GetChangedRecords(_sourceConnection, _sourceTransaction, table, keys);
             }
+
+            public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, IEnumerable<IKeys> keys)
+            {
+                using (var connection = _targetDatabase.GetOpenConnection())
+                {
+                    return GetChangedRecords(_sourceConnection, _sourceTransaction, table, keys).Result;
+                }
+            }
+
+
+            private static Task<IEnumerable<dynamic>> GetChangedRecords(IDbConnection connection, IDbTransaction transaction, ITableDetails table, IEnumerable<IKeys> keys)
+            {
+                const string tempTable = "#temp";
+
+                var dataTable = new DataTable();
+                foreach (var columnName in table.PrimaryKeys)
+                {
+                    dataTable.Columns.Add(columnName, typeof(long));
+                }
+
+                foreach (var row in keys)
+                {
+                    var dataRow = dataTable.NewRow();
+
+                    var keyEnum = row.GetEnumerator();
+                    foreach (var columnName in table.PrimaryKeys)
+                    {
+                        keyEnum.MoveNext();
+                        dataRow[columnName] = (object)keyEnum.Current ?? DBNull.Value;
+                    }
+                    dataTable.Rows.Add(dataRow);
+                }
+
+                using (var bulkCopy = new SqlBulkCopy((SqlConnection)connection))
+                {
+                    bulkCopy.DestinationTableName = tempTable;
+                    bulkCopy.WriteToServerAsync(dataTable);
+                }
+
+                return connection.QueryAsync<dynamic>($@"
+SELECT {table.Name}.*
+FROM   {table.Name} a
+JOIN   {tempTable}  b
+  ON   {string.Join(" AND ", table.PrimaryKeys.Select(k => $"b.{k} = a.{k}"))}
+ORDER BY {string.Join(", ", table.PrimaryKeys)}
+
+DROP TABLE {tempTable}
+", transaction: transaction);
+            }
+
 
             public override void Success()
             {
@@ -362,23 +477,23 @@ GRANT VIEW CHANGE TRACKING ON SCHEMA ::dbo TO MSSQLReadOnly
                 _nextSyncVersion = version.Value;
             }
 
-            public long GetMaxId(ITableDetails table)
+            public long GetMaxFirstId(ITableDetails table)
             {
-                return _sourceDatabase.Query<long>($"SELECT MAX({table.PrimaryKey}) FROM {table.Name}").Single();
+                return _sourceDatabase.Query<long>($"SELECT MAX({table.PrimaryKeys.First()}) FROM {table.Name}").Single();
             }
 
-            public async Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startId, long endId)
+            public async Task<IEnumerable<dynamic>> GetSourceRecordsAsync(ITableDetails table, long startFirstId, long endFirstId)
             {
                 using (var conn = _sourceDatabase.GetOpenConnection())
                 {
-                    return await conn.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId });
+                    return await conn.QueryAsync<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKeys.First()} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKeys.First()}", new { StartId = startFirstId, EndId = endFirstId });
                 }
                 // return Task.FromResult(_sourceDatabase.QueryProgressive<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId }));
             }
 
-            public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startId, long endId)
+            public IEnumerable<dynamic> GetTargetRecords(ITableDetails table, long startFirstId, long endFirstId)
             {
-                return _targetDatabase.Query<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKey} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKey}", new { StartId = startId, EndId = endId });
+                return _targetDatabase.Query<dynamic>($"SELECT * FROM {table.Name} WHERE {table.PrimaryKeys.First()} BETWEEN @StartId AND @EndId ORDER BY {table.PrimaryKeys.First()}", new { StartId = startFirstId, EndId = endFirstId });
             }
 
             public override void Dispose()

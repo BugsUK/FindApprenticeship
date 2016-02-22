@@ -6,6 +6,7 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using System.Collections;
 
     public class Controller
     {
@@ -208,18 +209,18 @@
                 {
                     while (true)
                     {
-                        var changesOfInterest = new Dictionary<long, Operation>();
+                        var changesOfInterest = new Dictionary<IKeys, Operation>();
                         for (int i = 0; i < maxRecordsInBatch && changesEnumerator.MoveNext(); i++)
                         {
                             var change = changesEnumerator.Current;
                             switch (change.Operation)
                             {
                                 case Operation.Delete:
-                                    _log.Warn($"Ignored delete of record {change.Id} from {table.Name}");
+                                    _log.Warn($"Ignored delete of record {change.PrimaryKeys} from {table.Name}");
                                     break;
                                 case Operation.Insert:
                                 case Operation.Update:
-                                    changesOfInterest.Add(change.Id, change.Operation);
+                                    changesOfInterest.Add(change.PrimaryKeys, change.Operation);
                                     break;
                                 default:
                                     throw new Exception($"Unknown change {change.Operation}");
@@ -244,61 +245,26 @@
             int batchSize = (int)(_migrateConfig.RecordBatchSize * table.BatchSizeMultiplier);
             using (var mutateTarget = _createMutateTarget(table))
             {
-                long maxId = syncContext.GetMaxId(table);
+                long maxFirstId = syncContext.GetMaxFirstId(table);
 
-                long startId = 0; // (table.Name == "Vacancy") ? 560000 : 0;
+                long startFirstId = 0; // (table.Name == "Vacancy") ? 560000 : 0;
 
-                while (startId < maxId)
+                while (startFirstId < maxFirstId)
                 {
-                    long endId = startId + batchSize - 1;
-                    _log.Debug($"Processing {startId} to {endId} on {table.Name} ({startId / Math.Max(maxId / 100, 1)}% done)");
+                    long endFirstId = Math.Min(startFirstId + batchSize - 1, maxFirstId);
+                    _log.Debug($"Processing {startFirstId} to {endFirstId} on {table.Name} ({startFirstId / Math.Max(maxFirstId / 100, 1)}% done)");
 
-                    var sourceRecords = syncContext.GetSourceRecordsAsync(table, startId, endId);
-                    var targetRecords = syncContext.GetTargetRecords(table, startId, endId);
+                    var sourceRecords = syncContext.GetSourceRecordsAsync(table, startFirstId, endFirstId);
+                    var targetRecords = syncContext.GetTargetRecords(table, startFirstId, endFirstId);
 
                     DoSlidingComparision(table, sourceRecords.Result, targetRecords, null, mutateTarget);
 
-                    startId = endId + 1;
+                    startFirstId = endFirstId + 1;
                 }
             }
         }
 
-        private long GetPrimaryKeyId(dynamic record, ITableSpec table)
-        {
-            var sourceId = ((IDictionary<string, object>)record)[table.PrimaryKey];
-            if (sourceId == null)
-                throw new FatalException($"Unknown column (may be case sensitive) or null value for {table.PrimaryKey} on {table.Name}");
-            if (sourceId is long)
-                return (long)sourceId;
-            else if (sourceId is int)
-                return (long)(int)sourceId;
-            else
-                throw new FatalException($"Unknown type {sourceId.GetType()}");
-
-        }
-
-        private Keys GetPrimaryKeyValues(dynamic record, ITableSpec table)
-        {
-            var keys = new List<long>();
-            foreach (var key in table.PrimaryKeys)
-            {
-                var sourceId = ((IDictionary<string, object>)record)[key];
-                if (sourceId == null)
-                    throw new FatalException($"Unknown column (may be case sensitive) or null value for {key} on {table.Name}");
-                if (sourceId is long)
-                    keys.Add((long)sourceId);
-                else if (sourceId is int)
-                    keys.Add((long)(int)sourceId);
-                else if (sourceId is short)
-                    keys.Add((long)(short)sourceId);
-                else
-                    throw new FatalException($"Unknown type {sourceId.GetType()}");
-            }
-
-            return new Keys(keys);
-        }
-
-        public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<long, Operation> operationById, IMutateTarget mutateTarget)
+        public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<IKeys, Operation> operationById, IMutateTarget mutateTarget)
         {
             using (var targetRecordEnumerator = targetRecords.GetEnumerator())
             {
@@ -306,27 +272,27 @@
 
                 foreach (var sourceRecord in sourceRecords)
                 {
-                    long sourceId = GetPrimaryKeyId(sourceRecord, table);
+                    var sourcePrimaryKeys = Keys.GetPrimaryKeys(sourceRecord, table);
 
                     while (true)
                     {
-                        long targetId = (targetRecord != null) ? GetPrimaryKeyId(targetRecord, table) : long.MaxValue;
+                        var targetPrimaryKeys = (targetRecord != null) ? Keys.GetPrimaryKeys(targetRecord, table) : Keys.MaxValue;
 
-                        if (targetId < sourceId)
+                        var cmp = targetPrimaryKeys.CompareTo(sourcePrimaryKeys);
+                        if (cmp < 0)
                         {
                             // Record is missing from source. Keep advancing target until back in sync.
                             targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
                             continue;
                         }
-                        else if (targetId == sourceId)
+                        else if (cmp == 0)
                         {
-                            // TODO: Detect whether different!
                             // Record in both source and target
                             DoChange(mutateTarget, table, sourceRecord, targetRecord);
                             targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
                             break;
                         }
-                        else if (targetId > sourceId)
+                        else if (cmp > 0)
                         {
                             // Record is missing from target. Keep inserting from source and advancing it until back in sync.
                             DoChange(mutateTarget, table, sourceRecord, null);
@@ -378,7 +344,7 @@
 
                         if (!equal)
                         {
-                            _log.Info($"At least {sourceCol.Key} varies for {GetPrimaryKeyValues(sourceRecord, table)} (Is '{targetColValue}', should be '{sourceCol.Value ?? "<null>"}') - updating");
+                            _log.Info($"At least {sourceCol.Key} varies for {Keys.GetPrimaryKeys(sourceRecord, table)} (Is '{targetColValue}', should be '{sourceCol.Value ?? "<null>"}') - updating");
                             changed = true;
                             break;
                         }
@@ -392,33 +358,5 @@
             }
         }
 
-        public class Keys : IComparable<Keys>
-        {
-            private long[] _key;
-
-            public Keys(IEnumerable<long> values)
-            {
-                _key = values.ToArray();
-            }
-
-            public int CompareTo(Keys other)
-            {
-                if (_key.Length != other._key.Length)
-                    throw new ArgumentException("Lengths differ");
-
-                int result = 0;
-                for (int i = 0; i < _key.Length && result == 0; i++)
-                {
-                    result = this._key[i].CompareTo(other._key[i]);
-                }
-
-                return result;
-            }
-
-            public override string ToString()
-            {
-                return string.Join(", ", _key);
-            }
-        }
     }
 }
