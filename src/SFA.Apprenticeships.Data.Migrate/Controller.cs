@@ -199,42 +199,33 @@
 
         public void DoUpdatesForTable(ITableSpec table, ISnapshotSyncContext syncContext)
         {
-            const int maxRecordsInBatch = 2000; // SQL parameter limit is 2100, so this is pretty much fixed.
-
             using (var mutateTarget = _createMutateTarget(table))
             {
                 var changes = syncContext.GetChangesForTable(table);
 
-                using (var changesEnumerator = changes.GetEnumerator())
+                var changesOfInterest = new Dictionary<IKeys, Operation>();
+                foreach (var change in changes)
                 {
-                    while (true)
+                    switch (change.Operation)
                     {
-                        var changesOfInterest = new Dictionary<IKeys, Operation>();
-                        for (int i = 0; i < maxRecordsInBatch && changesEnumerator.MoveNext(); i++)
-                        {
-                            var change = changesEnumerator.Current;
-                            switch (change.Operation)
-                            {
-                                case Operation.Delete:
-                                    _log.Warn($"Ignored delete of record {change.PrimaryKeys} from {table.Name}");
-                                    break;
-                                case Operation.Insert:
-                                case Operation.Update:
-                                    changesOfInterest.Add(change.PrimaryKeys, change.Operation);
-                                    break;
-                                default:
-                                    throw new Exception($"Unknown change {change.Operation}");
-                            }
-                        }
-
-                        if (!changesOfInterest.Any())
+                        case Operation.Delete:
+                            _log.Warn($"Ignored delete of record {change.PrimaryKeys} from {table.Name}");
                             break;
-
-                        var sourceRecords = syncContext.GetSourceRecordsAsync(table, changesOfInterest.Keys);
-                        var targetRecords = syncContext.GetTargetRecords(table, changesOfInterest.Keys);
-
-                        DoSlidingComparision(table, sourceRecords.Result, targetRecords, changesOfInterest, mutateTarget);
+                        case Operation.Insert:
+                        case Operation.Update:
+                            changesOfInterest.Add(change.PrimaryKeys, change.Operation);
+                            break;
+                        default:
+                            throw new Exception($"Unknown change {change.Operation}");
                     }
+                }
+
+                if (changesOfInterest.Any())
+                {
+                    var sourceRecords = syncContext.GetSourceRecordsAsync(table, changesOfInterest.Keys);
+                    var targetRecords = syncContext.GetTargetRecords(table, changesOfInterest.Keys);
+
+                    DoSlidingComparision(table, sourceRecords.Result, targetRecords, changesOfInterest, mutateTarget);
                 }
             }
         }
@@ -344,7 +335,7 @@
 
                         if (!equal)
                         {
-                            _log.Info($"At least {sourceCol.Key} varies for {Keys.GetPrimaryKeys(sourceRecord, table)} (Is '{targetColValue}', should be '{sourceCol.Value ?? "<null>"}') - updating");
+                            _log.Info($"At least {sourceCol.Key} varies for {Keys.GetPrimaryKeys(sourceRecord, table)} (Is '{targetColValue ?? "<null>"}', should be '{sourceCol.Value ?? "<null>"}') - updating");
                             changed = true;
                             break;
                         }

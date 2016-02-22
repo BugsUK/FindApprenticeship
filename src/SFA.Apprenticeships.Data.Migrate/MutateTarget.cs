@@ -105,9 +105,9 @@
 
         private void FlushUpdate(bool force)
         {
-            if ((!force && _toUpdate.Count < _maxBatchSize) || _toUpdate.Count ==0)
+            if ((!force && _toUpdate.Count < _maxBatchSize) || _toUpdate.Count == 0)
                 return;
-            _log.Info($"Updating {_toUpdate.Count} records into {_tableDetails.Name}");
+            _log.Info($"Updating {_toUpdate.Count} records on {_tableDetails.Name}");
             _syncRepository.BulkUpdate(_tableDetails, _toUpdate.AsReadOnly());
             _toUpdate.Clear();
         }

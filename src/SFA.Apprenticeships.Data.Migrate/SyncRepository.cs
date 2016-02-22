@@ -56,7 +56,6 @@ namespace SFA.Apprenticeships.Data.Migrate
                 var columnTypes = GetColumnTypes(records);
                 var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
 
-                var prototypeRecord = ((IDictionary<string, object>)records[0]);
                 using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection()) // TODO: Cast
                 {
                     var columnsWithSqlTypes = nonNullColumnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
@@ -64,7 +63,7 @@ namespace SFA.Apprenticeships.Data.Migrate
 
                     BulkInsert(connection, tempTable, records, nonNullColumnTypes);
 
-                    var columnAssignments = columnTypes.Where(c => c.Value == null).Select(c => (c.Value == null) ? $"[{c.Key}] = NULL" : $"[{c.Key}] = temp.[{c.Key}]");
+                    var columnAssignments = columnTypes.Where(c => !table.PrimaryKeys.Contains(c.Key)).Select(c => (c.Value == null) ? $"[{c.Key}] = NULL" : $"[{c.Key}] = temp.[{c.Key}]");
 
                     connection.Execute($@"
 UPDATE target
@@ -72,8 +71,6 @@ SET    {string.Join(", ", columnAssignments)}
 FROM   {table.Name} target
 JOIN   {tempTable}  temp
 ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))}
-
-DROP TABLE {tempTable}
 ");
                 }
             }
@@ -381,7 +378,7 @@ SELECT @Errors
                 }
 
                 public long ChangeVersion { get; private set; }
-                public long CreationVersion { get; private set; }
+                public long? CreationVersion { get; private set; }
                 public Operation Operation { get; private set; }
                 public IKeys PrimaryKeys { get; private set; }
             }
@@ -396,14 +393,14 @@ SELECT @Errors
             {
                 using (var connection = _targetDatabase.GetOpenConnection())
                 {
-                    return GetChangedRecords(_sourceConnection, _sourceTransaction, table, keys).Result;
+                    return GetChangedRecords(connection, null, table, keys).Result.ToList();
                 }
             }
 
 
             private static Task<IEnumerable<dynamic>> GetChangedRecords(IDbConnection connection, IDbTransaction transaction, ITableDetails table, IEnumerable<IKeys> keys)
             {
-                const string tempTable = "#temp";
+                const string tempTable = "#GetChangedRecordsTemp";
 
                 var dataTable = new DataTable();
                 foreach (var columnName in table.PrimaryKeys)
@@ -424,21 +421,25 @@ SELECT @Errors
                     dataTable.Rows.Add(dataRow);
                 }
 
-                using (var bulkCopy = new SqlBulkCopy((SqlConnection)connection))
+
+                var columnsWithSqlTypes = table.PrimaryKeys.Select(name => $"{name} BIGINT");
+                connection.Execute($"CREATE TABLE {tempTable} ({string.Join(", ", columnsWithSqlTypes)})", transaction: transaction);
+
+                using (var bulkCopy = new SqlBulkCopy((SqlConnection)connection, SqlBulkCopyOptions.Default, (SqlTransaction)transaction)) // TODO: Nasty casts
                 {
                     bulkCopy.DestinationTableName = tempTable;
-                    bulkCopy.WriteToServerAsync(dataTable);
+                    bulkCopy.WriteToServer(dataTable);
                 }
 
-                return connection.QueryAsync<dynamic>($@"
-SELECT {table.Name}.*
+                return Task.FromResult(connection.Query<dynamic>($@"
+SELECT a.*
 FROM   {table.Name} a
 JOIN   {tempTable}  b
   ON   {string.Join(" AND ", table.PrimaryKeys.Select(k => $"b.{k} = a.{k}"))}
-ORDER BY {string.Join(", ", table.PrimaryKeys)}
+ORDER BY {string.Join(", ", table.PrimaryKeys.Select(name => $"a.{name}"))}
 
 DROP TABLE {tempTable}
-", transaction: transaction);
+", transaction: transaction));
             }
 
 
@@ -447,6 +448,7 @@ DROP TABLE {tempTable}
                 _sourceTransaction.Commit();
                 UpdateLastSyncVersion();
             }
+
             public override void Dispose()
             {
                 if (_sourceTransaction != null)

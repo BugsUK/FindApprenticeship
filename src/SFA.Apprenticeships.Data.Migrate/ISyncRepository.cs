@@ -151,7 +151,7 @@
     public interface IChangeTableRow
     {
         long ChangeVersion { get; }
-        long CreationVersion { get; }
+        long? CreationVersion { get; }
         Operation Operation { get; }
         IKeys PrimaryKeys { get; }
     }
