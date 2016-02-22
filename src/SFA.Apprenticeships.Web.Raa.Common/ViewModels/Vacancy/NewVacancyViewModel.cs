@@ -17,9 +17,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public long? VacancyReferenceNumber { get; set; }
 
+        //TODO: probably remove
         public string Ukprn { get; set; }
-
-        public int ProviderId { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
         public string Title { get; set; }
@@ -33,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
 
-        public VacancyPartyViewModel VacancyParty { get; set; }
+        public VacancyPartyViewModel OwnerParty { get; set; }
 
         public bool? OfflineVacancy { get; set; }
 
@@ -62,8 +61,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public string AdditionalLocationInformation { get; set; }
 
         public bool ComeFromPreview { get; set; }
-
-        public int EmployerId { get; set; }
 
         public string EmployerDescriptionComment { get; set; }
 

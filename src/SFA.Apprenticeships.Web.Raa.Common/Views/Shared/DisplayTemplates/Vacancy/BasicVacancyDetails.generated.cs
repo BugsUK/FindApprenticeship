@@ -551,55 +551,41 @@ Write(Html.HiddenFor(model => model.Ukprn));
             #line hidden
             
             #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-Write(Html.HiddenFor(model => model.ProviderId));
+Write(Html.HiddenFor(model => model.OwnerParty.VacancyPartyId));
 
             
             #line default
             #line hidden
             
             #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                              
+                                                             
     
             
             #line default
             #line hidden
             
             #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-Write(Html.HiddenFor(model => model.EmployerId));
-
-            
-            #line default
-            #line hidden
-            
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
-                                              
-    
-            
-            #line default
-            #line hidden
-            
-            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.VacancyGuid));
 
             
             #line default
             #line hidden
             
-            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                                
     
             
             #line default
             #line hidden
             
-            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
 Write(Html.HiddenFor(model => model.Status));
 
             
             #line default
             #line hidden
             
-            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
+            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\BasicVacancyDetails.cshtml"
                                           
 
             

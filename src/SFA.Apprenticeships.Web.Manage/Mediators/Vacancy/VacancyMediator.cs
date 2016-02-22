@@ -227,7 +227,7 @@
         {
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
-            var viewModel = vacancy.VacancyParty;
+            var viewModel = vacancy.OwnerParty;
             viewModel.IsEmployerLocationMainApprenticeshipLocation =
                     vacancy.IsEmployerLocationMainApprenticeshipLocation;
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
@@ -242,15 +242,15 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             }
 
-            var validationResult = _vacancyPartyViewModelValidator.Validate(vacancy.VacancyParty);
+            var validationResult = _vacancyPartyViewModelValidator.Validate(vacancy.OwnerParty);
 
             if (!validationResult.IsValid)
             {
                 return GetMediatorResponse(VacancyMediatorCodes.GetEmployerInformation.FailedValidation,
-                    vacancy.VacancyParty, validationResult);
+                    vacancy.OwnerParty, validationResult);
             }
 
-            return GetMediatorResponse(VacancyMediatorCodes.GetEmployerInformation.Ok, vacancy.VacancyParty);
+            return GetMediatorResponse(VacancyMediatorCodes.GetEmployerInformation.Ok, vacancy.OwnerParty);
         }
 
         public MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
@@ -323,7 +323,7 @@
             var validationResult = _vacancyPartyViewModelValidator.Validate(viewModel);
             var existingVacancy = _vacancyQaProvider.GetNewVacancyViewModel(viewModel.VacancyReferenceNumber);
 
-            var existingViewModel = existingVacancy.VacancyParty;
+            var existingViewModel = existingVacancy.OwnerParty;
             existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
             existingViewModel.Description = viewModel.Description;
             existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
@@ -363,7 +363,7 @@
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
             var locationSearchViewModel = _vacancyQaProvider.LocationAddressesViewModel(vacancy.Ukprn,
-                vacancy.VacancyParty.ProviderSiteEdsErn, vacancy.VacancyParty.Employer.EdsErn,
+                vacancy.OwnerParty.ProviderSiteId, vacancy.OwnerParty.Employer.EmployerId,
                 vacancy.VacancyGuid);
             locationSearchViewModel.CurrentPage = 1;
 

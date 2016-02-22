@@ -56,7 +56,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
         public object RouteValues => new
         {
-            ProviderSiteEdsErn = ProviderSiteId,
+            ProviderSiteId,
             FilterType,
             EdsErn,
             Name,

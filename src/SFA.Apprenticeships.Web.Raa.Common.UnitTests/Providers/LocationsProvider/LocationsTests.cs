@@ -20,16 +20,16 @@
         public void WhenCreatingANewVacancyShouldReturnANewLocationSearchViewModel()
         {
             const string ukprn = "ukprn";
-            const string ern = "ern";
-            const string providerSiteErn = "providerSiteErn";
+            const int employerId = 1;
+            const int providerSiteId = 42;
 
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, _vacancyGuid);
+            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Ukprn.Should().Be(ukprn);
-            result.Ern.Should().Be(ern);
-            result.ProviderSiteErn.Should().Be(providerSiteErn);
+            result.EmployerId.Should().Be(employerId);
+            result.ProviderSiteId.Should().Be(providerSiteId);
             result.VacancyGuid.Should().Be(_vacancyGuid);
             result.Addresses.Should().HaveCount(0);
         }
@@ -38,8 +38,8 @@
         public void IfTheVacancyAlreadyExistsShouldFillTheViewModelWithItsInformation()
         {
             const string ukprn = "ukprn";
-            const string ern = "ern";
-            const string providerSiteErn = "providerSiteErn";
+            const int employerId = 2;
+            const int providerSiteId = 43;
             const string additionalLocationInformation = "additional location information";
             
             var vacancy = GetVacancyWithLocationAddresses(additionalLocationInformation);
@@ -47,7 +47,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancy);
             var provider = GetVacancyPostingProvider();
 
-            var result = provider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, _vacancyGuid);
+            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Addresses.Count.Should().Be(2);
         }

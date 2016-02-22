@@ -19,7 +19,7 @@
 
         MediatorResponse<VacancyPartyViewModel> ConfirmEmployer(VacancyPartyViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions);
+        MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
         MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview);
 
@@ -63,7 +63,7 @@
 		
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel newVacancyViewModel);
 
-        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid, bool? comeFromPreview);
+        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId, int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview);
 
         MediatorResponse<LocationSearchViewModel> SearchLocations(LocationSearchViewModel viewModel, List<VacancyLocationAddressViewModel> alreadyAddedLocations);
 

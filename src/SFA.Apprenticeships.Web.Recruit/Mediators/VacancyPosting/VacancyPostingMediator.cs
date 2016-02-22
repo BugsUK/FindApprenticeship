@@ -186,7 +186,7 @@
 
             if (!validationResult.IsValid)
             {
-                var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId, viewModel.EmployerId);
+                var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId, viewModel.Employer.EmployerId);
                 existingViewModel.WebsiteUrl = viewModel.WebsiteUrl;
                 existingViewModel.Description = viewModel.Description;
                 existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
@@ -299,7 +299,7 @@
         public MediatorResponse<VacancyPartyViewModel> CloneVacancy(long vacancyReferenceNumber)
         {
             var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
-            if (existingVacancy.Status == Domain.Entities.Raa.Vacancies.VacancyStatus.RejectedByQA)
+            if (existingVacancy.Status == VacancyStatus.RejectedByQA)
             {
                 return GetMediatorResponse<VacancyPartyViewModel>(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
             }
@@ -308,9 +308,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.CloneVacancy.Ok, viewModel);
         }
         
-        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions)
+        public MediatorResponse<NewVacancyViewModel> GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(providerId, providerSiteId, employerId, vacancyGuid, numberOfPositions);
+            var viewModel = _vacancyPostingProvider.GetNewVacancyViewModel(vacancyPartyId, vacancyGuid, numberOfPositions);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetNewVacancyViewModel.Ok, viewModel);
         }
@@ -417,10 +417,10 @@
 
         private void UpdateReferenceDataFor(NewVacancyViewModel newVacancyViewModel)
         {
-            newVacancyViewModel.VacancyParty =
+            newVacancyViewModel.OwnerParty =
                 _providerProvider.GetVacancyPartyViewModel(
-                    newVacancyViewModel.VacancyParty.ProviderSiteId,
-                    newVacancyViewModel.VacancyParty.EmployerId);
+                    newVacancyViewModel.OwnerParty.ProviderSiteId,
+                    newVacancyViewModel.OwnerParty.Employer.EmployerId);
         }
 
         private void UpdateCommentsFor(NewVacancyViewModel newVacancyViewModel)
@@ -626,9 +626,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(string providerSiteErn, string ern, string ukprn, Guid vacancyGuid, bool? comeFromPreview)
+        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int providerSiteId, int employerId, string ukprn, Guid vacancyGuid, bool? comeFromPreview)
         {
-            var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteErn, ern, vacancyGuid);
+            var locationSearchViewModel = _vacancyPostingProvider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, vacancyGuid);
             locationSearchViewModel.CurrentPage = 1;
             locationSearchViewModel.ComeFromPreview = comeFromPreview ?? false;
 
@@ -813,7 +813,7 @@
 
             var viewModel = new SubmittedVacancyViewModel
             {
-                VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.VacancyParty.ProviderSiteEdsErn,
+                VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteId = vacancyViewModel.NewVacancyViewModel.OwnerParty.ProviderSiteId,
                 Resubmitted = resubmitted,
                 IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy,
                 VacancyType = vacancyViewModel.VacancyType

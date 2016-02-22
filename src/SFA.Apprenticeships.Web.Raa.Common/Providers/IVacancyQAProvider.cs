@@ -48,7 +48,7 @@
 
         NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 

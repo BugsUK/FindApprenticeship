@@ -13,17 +13,15 @@
     {
         public const string PartialView = "Vacancy/EmployerDetails";
 
-        public int ProviderSiteId { get; set; }
+        public int VacancyPartyId { get; set; }
 
-        public string ProviderSiteEdsErn { get; set; }
+        public int ProviderSiteId { get; set; }
 
         [Display(Name = VacancyPartyViewModelMessages.Description.LabelText)]
         public string Description { get; set; }
 
         [Display(Name = VacancyPartyViewModelMessages.WebsiteUrl.LabelText)]
         public string WebsiteUrl { get; set; }
-
-        public int EmployerId { get; set; }
 
         public EmployerViewModel Employer { get; set; }
 

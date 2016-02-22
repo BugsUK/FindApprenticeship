@@ -111,7 +111,7 @@ Write(Html.DisplayFor(m => m, VacancyPartyViewModel.PartialView));
             #line hidden
             
             #line 25 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-                                                                           
+                                                               
 
 
             
@@ -146,7 +146,7 @@ WriteLiteral("        ");
 
             
             #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteEdsErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
 
             
             #line default

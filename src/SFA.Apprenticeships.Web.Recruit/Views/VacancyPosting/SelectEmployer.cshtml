@@ -131,9 +131,9 @@
                                 }
                                 <br/>@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
                             </td>
-                            <td>@employerResultsViewModel.Ern</td>
+                            <td>@employerResultsViewModel.EdsErn</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteId = Model.ProviderSiteId, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteId = Model.ProviderSiteId, employerId = employerResultsViewModel.EmployerId, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

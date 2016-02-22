@@ -19,7 +19,9 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         ProviderSite GetProviderSiteViaOwnerParty(int vacancyPartyId);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSite GetProviderSite(int providerSiteId);
+
+        ProviderSite GetProviderSite(string ukprn, string edsErn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 

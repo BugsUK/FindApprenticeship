@@ -26,7 +26,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -52,7 +52,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -78,7 +78,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -102,7 +102,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -126,7 +126,7 @@
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -151,10 +151,10 @@
             {
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
-                ProviderSiteEdsErn = "provider site ern",
+                ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
-                    EdsErn = "ern"
+                    EmployerId = 7
                 }
             };
 
@@ -181,7 +181,7 @@
             {
                 NewVacancyViewModel = new NewVacancyViewModel { 
                     OfflineVacancy = false,
-                    VacancyParty = new VacancyPartyViewModel
+                    OwnerParty = new VacancyPartyViewModel
                     {
                         Employer = new EmployerViewModel()
                     }

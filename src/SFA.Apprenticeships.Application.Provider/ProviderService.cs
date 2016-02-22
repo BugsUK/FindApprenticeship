@@ -73,23 +73,28 @@ namespace SFA.Apprenticeships.Application.Provider
             throw new System.NotImplementedException();
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string ern)
+        public ProviderSite GetProviderSite(int providerSiteId)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public ProviderSite GetProviderSite(string ukprn, string edsErn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(edsErn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsErn);
 
-            var providerSite = _providerSiteReadRepository.Get(ern);
+            var providerSite = _providerSiteReadRepository.Get(edsErn);
 
             if (providerSite != null)
             {
                 return providerSite;
             }
 
-            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsErn);
 
-            providerSite = _organisationService.GetProviderSite(ukprn, ern);
+            providerSite = _organisationService.GetProviderSite(ukprn, edsErn);
 
             return providerSite;
         }
@@ -124,7 +129,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public VacancyParty GetVacancyParty(int vacancyPartyId)
         {
-            throw new System.NotImplementedException();
+            return _vacancyPartyReadRepository.Get(vacancyPartyId);
         }
 
         public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
@@ -134,32 +139,32 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
 
-            var providerSiteEmployerLink = _vacancyPartyReadRepository.Get(providerSiteId, employerId);
+            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employerId);
 
-            if (providerSiteEmployerLink != null)
+            if (vacancyParty != null)
             {
-                return providerSiteEmployerLink;
+                return vacancyParty;
             }
 
             _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
 
-            providerSiteEmployerLink = _organisationService.GetVacancyParty(providerSiteId, employerId);
+            vacancyParty = _organisationService.GetVacancyParty(providerSiteId, employerId);
 
             _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
 
-            if (providerSiteEmployerLink == null)
+            if (vacancyParty == null)
             {
                 var employer = _organisationService.GetEmployer(employerId);
 
                 //TODO: Where should employer description and web site come from
-                providerSiteEmployerLink = new VacancyParty
+                vacancyParty = new VacancyParty
                 {
                     ProviderSiteId = providerSiteId,
                     EmployerId = employer.EmployerId
                 };
             }
 
-            return providerSiteEmployerLink;
+            return vacancyParty;
         }
 
         public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
@@ -167,7 +172,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return _vacancyPartyWriteRepository.Save(vacancyParty);
         }
 
-        private IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
+        private IEnumerable<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
@@ -177,7 +182,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteId);
 
-            var providerSiteEmployerLinksFromRepository = GetProviderSiteEmployerLinksFromRepository(request);
+            var providerSiteEmployerLinksFromRepository = GetVacancyPartiesFromRepository(request);
 
             //Combine with results from repository
             providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new VacancyPartyEqualityComparer()).ToList();
@@ -185,7 +190,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return providerSiteEmployerLinks;
         }
 
-        private IEnumerable<VacancyParty> GetProviderSiteEmployerLinksFromRepository(EmployerSearchRequest request)
+        private IEnumerable<VacancyParty> GetVacancyPartiesFromRepository(EmployerSearchRequest request)
         {
             //TODO: All this needs moving into the employer repository 
             /*var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteEdsErn);
@@ -231,7 +236,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
         {
-            var results = GetProviderSiteEmployerLinks(request);
+            var results = GetVacancyParties(request);
 
             var pageable = new Pageable<VacancyParty>
             {

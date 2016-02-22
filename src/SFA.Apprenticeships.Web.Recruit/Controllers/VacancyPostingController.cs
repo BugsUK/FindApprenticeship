@@ -115,7 +115,7 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployerSelection(string providerSiteErn, string ern, Guid vacancyGuid,
+        public ActionResult ConfirmEmployerSelection(int providerSiteId, int employerId, Guid vacancyGuid,
             bool? comeFromPreview)
         {
             if (comeFromPreview == true)
@@ -126,15 +126,15 @@
             return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer,
                 new
                 {
-                    providerSiteErn = providerSiteErn,
-                    ern = ern,
-                    vacancyGuid = vacancyGuid,
-                    comeFromPreview = comeFromPreview
+                    providerSiteId,
+                    employerId,
+                    vacancyGuid,
+                    comeFromPreview
                 });
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployerSelection(string providerSiteErn, string ern, Guid vacancyGuid,
+        public ActionResult ConfirmNewEmployerSelection(int providerSiteId, int employerId, Guid vacancyGuid,
             bool? comeFromPreview)
         {
             if (comeFromPreview == true)
@@ -145,10 +145,10 @@
             return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer,
                 new
                 {
-                    providerSiteErn = providerSiteErn,
-                    ern = ern,
-                    vacancyGuid = vacancyGuid,
-                    comeFromPreview = comeFromPreview
+                    providerSiteId,
+                    employerId,
+                    vacancyGuid,
+                    comeFromPreview
                 });
         }
 
@@ -174,10 +174,10 @@
 
                     if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
-                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.Employer.EdsErn, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
+                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyPartyId = response.ViewModel.VacancyPartyId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
 
-                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.Employer.EdsErn, vacancyGuid = response.ViewModel.VacancyGuid, comeFromPreview = viewModel.ComeFromPreview });
+                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { vacancyPartyId = response.ViewModel.VacancyPartyId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, comeFromPreview = viewModel.ComeFromPreview });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -189,9 +189,9 @@
         #region Basic Details
 
         [HttpGet]
-        public ActionResult CreateVacancy(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions)
+        public ActionResult CreateVacancy(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
         {
-            var response = _vacancyPostingMediator.GetNewVacancyViewModel(providerId, providerSiteId, employerId, vacancyGuid, numberOfPositions);
+            var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyPartyId, vacancyGuid, numberOfPositions);
             
             return View(response.ViewModel);
         }
@@ -693,8 +693,8 @@
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
-            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = vacancyViewModel.ProviderSite.EdsErn, ern = vacancyViewModel.NewVacancyViewModel.VacancyParty.Employer.EdsErn , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
-            vacancyViewModel.LocationsLink = Url.RouteUrl(RecruitmentRouteNames.AddLocations, new { providerSiteErn = vacancyViewModel.ProviderSite.EdsErn, ern = vacancyViewModel.NewVacancyViewModel.VacancyParty.Employer.EdsErn , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, ern = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
+            vacancyViewModel.LocationsLink = Url.RouteUrl(RecruitmentRouteNames.AddLocations, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, ern = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
 
             ModelState.Clear();
 
@@ -811,10 +811,10 @@
 
                     if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
-                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.Employer.EdsErn, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
+                        return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
 
-                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.Employer.EdsErn, vacancyGuid = response.ViewModel.VacancyGuid, comeFromPreview = viewModel.ComeFromPreview });
+                    return RedirectToRoute(RecruitmentRouteNames.AddLocations, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, comeFromPreview = viewModel.ComeFromPreview });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -827,7 +827,7 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CloneVacancy.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.Employer.EdsErn, vacancyGuid = response.ViewModel.VacancyGuid });
+                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid });
                 case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
@@ -836,9 +836,9 @@
         }
 
         [HttpGet]
-        public ActionResult Locations(string providerSiteErn, string ern, Guid vacancyGuid, bool? comeFromPreview)
+        public ActionResult Locations(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteErn, ern, User.GetUkprn(), vacancyGuid, comeFromPreview);
+            var response = _vacancyPostingMediator.GetLocationAddressesViewModel(providerSiteId, employerId, User.GetUkprn(), vacancyGuid, comeFromPreview);
 
             switch (response.Code)
             {
@@ -865,7 +865,7 @@
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                     }
-                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteErn, ern = response.ViewModel.Ern, vacancyGuid = response.ViewModel.VacancyGuid });
+                    return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteErn = response.ViewModel.ProviderSiteEdsErn, ern = response.ViewModel.EmployerErn, vacancyGuid = response.ViewModel.VacancyGuid });
                 case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
@@ -883,8 +883,8 @@
             return RedirectToRoute(RecruitmentRouteNames.SearchAddresses, new
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
-                ProviderSiteErn = viewModel.ProviderSiteErn,
-                Ern = viewModel.Ern,
+                ProviderSiteErn = viewModel.ProviderSiteEdsErn,
+                Ern = viewModel.EmployerErn,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
                 Ukprn = viewModel.Ukprn,
@@ -1012,8 +1012,8 @@
             return RedirectToRoute(RecruitmentRouteNames.ShowLocations, new
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
-                ProviderSiteErn = viewModel.ProviderSiteErn,
-                Ern = viewModel.Ern,
+                ProviderSiteErn = viewModel.ProviderSiteEdsErn,
+                Ern = viewModel.EmployerErn,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
                 Ukprn = viewModel.Ukprn,

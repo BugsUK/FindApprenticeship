@@ -10,7 +10,6 @@
             var viewModel = new ProviderSiteViewModel
             {
                 ProviderSiteId = providerSite.ProviderSiteId,
-                EdsErn = providerSite.EdsErn,
                 Name = providerSite.Name,
                 EmployerDescription = providerSite.EmployerDescription,
                 CandidateDescription = providerSite.CandidateDescription,

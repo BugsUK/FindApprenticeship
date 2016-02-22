@@ -9,7 +9,5 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
         public string EmployerName { get; set; }
 
         public AddressViewModel Address { get; set; }
-
-        public string Ern { get; set; }
     }
 }

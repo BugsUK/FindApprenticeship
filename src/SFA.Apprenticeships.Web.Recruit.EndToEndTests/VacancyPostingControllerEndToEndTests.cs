@@ -79,12 +79,12 @@
         [Test]
         public void ConfirmEmployerShouldSaveLocationTypeAndNumberOfPositionsInDB()
         {
-            const string providerSiteErn = "101282923";
-            const string ern = "100608868";
+            const int providerSiteId = 101282923;
+            const int employerId = 100608868;
             const int numberOfPositions = 5;
             const bool isEmployerLocationMainApprenticeshipLocation = true;
             var vacancyGuid = Guid.NewGuid();
-            var viewModel = GetProviderSiteEmployerLinkViewModel(ern, isEmployerLocationMainApprenticeshipLocation, numberOfPositions, providerSiteErn, vacancyGuid);
+            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, numberOfPositions, providerSiteId, vacancyGuid);
 
             var savedVacancy = new MongoApprenticeshipVacancy
             {
@@ -104,12 +104,12 @@
         [Test]
         public void ConfirmEmployerWithLocationTypeAsDifferentFromEmployerLocationShouldRedirectToLocationView()
         {
-            const string providerSiteErn = "101282923";
-            const string ern = "100608868";
+            const int providerSiteId = 101282923;
+            const int employerId = 100608868;
             // const string ukprn = 
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             var vacancyGuid = Guid.NewGuid();
-            var viewModel = GetProviderSiteEmployerLinkViewModel(ern, isEmployerLocationMainApprenticeshipLocation, null, providerSiteErn, vacancyGuid);
+            var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, null, providerSiteId, vacancyGuid);
 
             var savedVacancy = new MongoApprenticeshipVacancy
             {
@@ -146,8 +146,8 @@
             var vacancyGuid = Guid.NewGuid();
             var viewModel = new LocationSearchViewModel
             {
-                ProviderSiteErn = providerSiteErn,
-                Ern = ern,
+                ProviderSiteEdsErn = providerSiteErn,
+                EmployerErn = ern,
                 AdditionalLocationInformation = additionalLocationInformation,
                 Addresses = new List<VacancyLocationAddressViewModel> {address1},
                 VacancyGuid = vacancyGuid
@@ -176,8 +176,8 @@
             vacancy.AdditionalLocationInformation.Should().Be(additionalLocationInformation);*/
         }
 
-        private static VacancyPartyViewModel GetProviderSiteEmployerLinkViewModel(string ern,
-            bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, string providerSiteErn,
+        private static VacancyPartyViewModel GetProviderSiteEmployerLinkViewModel(int employerId,
+            bool isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, int providerSiteId,
             Guid vacancyGuid)
         {
             return new VacancyPartyViewModel
@@ -196,11 +196,11 @@
                         Uprn = "uprn"
                     },
                     Name = "some employer",
-                    EdsErn = ern
+                    EmployerId = employerId
                 },
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
-                ProviderSiteEdsErn = providerSiteErn,
+                ProviderSiteId = providerSiteId,
                 VacancyGuid = vacancyGuid
             };
         }

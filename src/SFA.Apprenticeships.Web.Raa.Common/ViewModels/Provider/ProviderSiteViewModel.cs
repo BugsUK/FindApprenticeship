@@ -11,8 +11,6 @@
     {
         public int ProviderSiteId { get; set; }
 
-        public string EdsErn { get; set; }
-
         public string Name { get; set; }
 
         [Display(Name = ProviderSiteViewModelMessages.NameMessages.LabelText)]

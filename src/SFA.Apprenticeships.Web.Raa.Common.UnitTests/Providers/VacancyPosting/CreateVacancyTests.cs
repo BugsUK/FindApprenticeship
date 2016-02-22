@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
@@ -20,9 +19,7 @@
         private const int EmployerId = 1;
         private const int ProviderId = 2;
         private const int ProviderSiteId = 3;
-        private const string EdsErn = "ern";
-        private const string Ukprn = "ukprn";
-        private const string ProviderSiteEdsErn = "providerSiteErn";
+        private const int VacancyPartyId = 4;
 
         private NewVacancyViewModel _validNewVacancyViewModelWithReferenceNumber;
         private NewVacancyViewModel _validNewVacancyViewModelSansReferenceNumber;
@@ -49,12 +46,12 @@
 
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel()
+                OwnerParty = new VacancyPartyViewModel()
                 {
-                    ProviderSiteEdsErn = ProviderSiteEdsErn,
+                    ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
-                        EdsErn = EdsErn,
+                        EmployerId = EmployerId,
                         Address = new AddressViewModel()
                     }
                 },
@@ -144,12 +141,12 @@
 
             provider.CreateVacancy(new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
-                    ProviderSiteEdsErn = ProviderSiteEdsErn,
+                    ProviderSiteId = ProviderSiteId,
                     Employer  = new EmployerViewModel
                     {
-                        EdsErn = EdsErn
+                        EmployerId = EmployerId
                     }
                 },
                 OfflineVacancy = offlineVacancy,
@@ -173,12 +170,12 @@
             {
                 VacancyGuid = vacancyGuid,
                 OfflineVacancy = false,
-                VacancyParty = new VacancyPartyViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
-                    ProviderSiteEdsErn = ProviderSiteEdsErn,
+                    ProviderSiteId = ProviderSiteId,
                     Employer = new EmployerViewModel
                     {
-                        EdsErn = EdsErn
+                        EmployerId = EmployerId
                     }
                 }
             });
@@ -219,7 +216,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(ProviderId, ProviderSiteId, EmployerId, vacancyGuid, null);
+            var result = provider.GetNewVacancyViewModel(VacancyPartyId, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
@@ -242,7 +239,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act
-            var result = provider.GetNewVacancyViewModel(ProviderId, ProviderSiteId, EmployerId, vacancyGuid, null);
+            var result = provider.GetNewVacancyViewModel(VacancyPartyId, vacancyGuid, null);
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
@@ -250,8 +247,8 @@
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
-                        r.VacancyParty.Description == _vacancyParty.EmployerDescription &&
-                        r.VacancyParty.ProviderSiteEdsErn == ProviderSiteEdsErn);
+                        r.OwnerParty.Description == _vacancyParty.EmployerDescription &&
+                        r.OwnerParty.ProviderSiteId == ProviderSiteId);
         }
 
         [Test]

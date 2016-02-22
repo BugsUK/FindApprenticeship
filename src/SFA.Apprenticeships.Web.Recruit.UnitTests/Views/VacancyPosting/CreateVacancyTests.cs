@@ -20,7 +20,7 @@
 
             var viewModel = new NewVacancyViewModel
             {
-                VacancyParty = new VacancyPartyViewModel()
+                OwnerParty = new VacancyPartyViewModel()
                 {
                     Employer = new EmployerViewModel()
                     {

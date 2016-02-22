@@ -12,7 +12,7 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -50,7 +50,7 @@
 
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
 

@@ -9,6 +9,7 @@
         {
             var viewModel = new VacancyPartyViewModel
             {
+                VacancyPartyId = vacancyParty.VacancyPartyId,
                 ProviderSiteId = vacancyParty.ProviderSiteId,
                 Description = vacancyParty.EmployerDescription,
                 WebsiteUrl = vacancyParty.EmployerWebsiteUrl,

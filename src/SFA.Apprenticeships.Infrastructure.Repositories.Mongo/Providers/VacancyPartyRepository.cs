@@ -20,7 +20,7 @@
         public VacancyPartyRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
             var config = configurationService.Get<MongoConfiguration>();
-            Initialise(config.ProvidersDb, "providerSiteEmployerLinks");
+            Initialise(config.ProvidersDb, "vacancyParties");
             _mapper = mapper;
             _logger = logger;
         }
@@ -68,6 +68,12 @@
         public VacancyParty Save(VacancyParty entity)
         {
             _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", entity.EmployerId);
+
+            if (entity.VacancyPartyGuid == Guid.Empty)
+            {
+                entity.VacancyPartyGuid = Guid.NewGuid();
+                entity.VacancyPartyId = entity.VacancyPartyGuid.GetHashCode();
+            }
 
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);

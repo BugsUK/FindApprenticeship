@@ -56,7 +56,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 { 
-                    VacancyParty = new VacancyPartyViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -101,7 +101,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    VacancyParty = new VacancyPartyViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -148,7 +148,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    VacancyParty = new VacancyPartyViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {

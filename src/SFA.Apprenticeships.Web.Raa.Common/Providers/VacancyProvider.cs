@@ -54,7 +54,7 @@
             _userProfileService = userProfileService;
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(int providerId, int providerSiteId, int employerId, Guid vacancyGuid, int? numberOfPositions)
+        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
@@ -64,13 +64,12 @@
                 return vacancyViewModel;
             }
 
-            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, employerId);
-            var employer = _employerService.GetEmployer(employerId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
 
             return new NewVacancyViewModel
             {
-                ProviderId = providerId,
-                VacancyParty = vacancyParty.Convert(employer),
+                OwnerParty = vacancyParty.Convert(employer),
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
             };
@@ -92,6 +91,7 @@
 
             var apprenticeshipVacancy = new Vacancy
             {
+                VacancyId = (int)vacancyReferenceNumber,
                 VacancyGuid = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 OwnerPartyId = providerSiteEmployerLink.VacancyPartyId,
@@ -119,16 +119,18 @@
             return locationSearchViewModel;
         }
 
-        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid)
+        public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
+            var providerSite = _providerService.GetProviderSite(providerSiteId);
+            var employer = _employerService.GetEmployer(employerId);
 
             if (vacancy != null)
             {
                 var viewModel = new LocationSearchViewModel
                 {
-                    ProviderSiteErn = providerSiteErn,
-                    Ern = ern,
+                    ProviderSiteEdsErn = providerSite.EdsErn,
+                    EmployerErn = employer.EdsErn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
@@ -160,8 +162,8 @@
             {
                 return new LocationSearchViewModel
                 {
-                    ProviderSiteErn = providerSiteErn,
-                    Ern = ern,
+                    ProviderSiteEdsErn = providerSite.EdsErn,
+                    EmployerErn = employer.EdsErn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     Addresses = new List<VacancyLocationAddressViewModel>()
@@ -204,8 +206,7 @@
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var providerSiteEmployerLink =
-                _providerService.GetVacancyParty(newVacancyViewModel.VacancyParty.ProviderSiteId,
-                    newVacancyViewModel.VacancyParty.EmployerId);
+                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {

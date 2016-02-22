@@ -5,8 +5,8 @@
 <div class="grid-wrapper">
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.HiddenFor(m => m.ProviderSiteEdsErn)
-    @Html.HiddenFor(m => m.Employer.EdsErn)
+    @Html.HiddenFor(m => m.ProviderSiteId)
+    @Html.HiddenFor(m => m.Employer.EmployerId)
     @Html.HiddenFor(m => m.VacancyGuid)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ComeFromPreview)
