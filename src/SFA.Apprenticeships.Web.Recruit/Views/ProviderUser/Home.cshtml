@@ -36,14 +36,14 @@
             <div class="">
                 @if (Model.ProviderSites.Count == 1)
                 {
-                    <p class="form-label">Provider site</p>
+                    <label class="form-label" for="provider-site">Provider site</label>
                     Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
                     @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
                     <p>@Model.ProviderSites[0].Text</p>
                 }
                 else
                 {
-                    <p class="form-label">Change provider site</p>
+                    <label class="form-label" for="provider-site">Change provider site</label>
                     @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new {id = "provider-site", @class = "chosen-select grid grid-1-1"})
                     <noscript>
                         <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change provider site</button>
