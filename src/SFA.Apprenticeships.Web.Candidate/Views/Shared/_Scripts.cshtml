@@ -38,29 +38,3 @@
     }    
 }
 
-@if ((ViewBag.EnableSessionTimeout != null && ViewBag.EnableSessionTimeout) ||
-    (Request.IsAuthenticated && anyMessages))
-{
-    <script>
-        (function() {
-            var sessionTimeout = null;
-
-            function resetSessionTimeout() {
-                if (sessionTimeout) {
-                    clearTimeout(sessionTimeout);
-                }
-
-                sessionTimeout = setTimeout(onSessionTimeout, @ViewBag.SessionTimeout * 1000);
-            }
-
-            resetSessionTimeout();
-
-            function onSessionTimeout() {
-                window.location = "@ViewBag.SessionTimeoutUrl";
-            }
-        }());
-    </script>
-    <noscript>
-        <meta http-equiv="refresh" content="@string.Format("{0};{1}", ViewBag.SessionTimeout, ViewBag.SessionTimeoutUrl)">
-    </noscript>
-}
