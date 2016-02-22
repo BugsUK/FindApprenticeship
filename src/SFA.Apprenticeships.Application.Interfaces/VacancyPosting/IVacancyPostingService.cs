@@ -23,7 +23,9 @@
         
         List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<Vacancy> GetForProvider(int providerId, int providerSiteId);
+        List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
+
+        List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 

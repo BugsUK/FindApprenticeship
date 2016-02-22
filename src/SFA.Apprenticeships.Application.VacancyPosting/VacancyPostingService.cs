@@ -129,9 +129,14 @@
             return _vacancyReadRepository.GetWithStatus(desiredStatuses);
         }
 
-        public List<Vacancy> GetForProvider(int providerId, int providerSiteId)
+        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
         {
-            return _vacancyReadRepository.GetForProvider(providerId, providerSiteId);
+            return _vacancyReadRepository.GetByIds(vacancyIds);
+        }
+
+        public List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        {
+            return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
         }
 
         public Vacancy ReserveVacancyForQA(long vacancyReferenceNumber)

@@ -594,7 +594,9 @@
 
             //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
             //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
-            var vacancies = _vacancyPostingService.GetForProvider(providerId, providerSiteId);
+            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
+            var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
+            var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
             var hasVacancies = vacancies.Count > 0;
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
@@ -642,19 +644,21 @@
 
             vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
 
+            var vacancySummaries = vacancies.Select(v => _mapper.Map<Vacancy, VacancySummaryViewModel>(v)).ToList();
+
             if (isVacancySearch)
             {
                 //TODO: Different search based on employer name
-                //vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.VacancyParty.Employer.Name.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
+                vacancySummaries = vacancySummaries.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+                //vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
 
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
-                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<Vacancy, VacancySummaryViewModel>(v)).ToList(),
-                ResultsCount = vacancies.Count,
+                Page = vacancySummaries.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).ToList(),
+                ResultsCount = vacancySummaries.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)
+                TotalNumberOfPages = vacancySummaries.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancySummaries.Count/vacanciesSummarySearch.PageSize)
             };
 
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated

@@ -62,6 +62,16 @@
             return MapVacancy(dbVacancy);
         }
 
+        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        {
+            throw new NotImplementedException();
+        }
+
         private Vacancy MapVacancy(Entities.Vacancy dbVacancy)
         {
             if (dbVacancy == null)

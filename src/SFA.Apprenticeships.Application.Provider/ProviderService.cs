@@ -167,26 +167,33 @@ namespace SFA.Apprenticeships.Application.Provider
             return _vacancyPartyWriteRepository.Save(vacancyParty);
         }
 
+        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
+        {
+            return _vacancyPartyReadRepository.GetForProviderSite(providerSiteId);
+        }
+
         private IEnumerable<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteId);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var providerSiteEmployerLinks = _organisationService.GetProviderSiteEmployerLinks(request);
+            var vacancyParties = _organisationService.GetProviderSiteEmployerLinks(request);
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}'.", request.ProviderSiteId);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var providerSiteEmployerLinksFromRepository = GetVacancyPartiesFromRepository(request);
+            var vacancyPartiesFromRepository = GetVacancyPartiesFromRepository(request);
 
             //Combine with results from repository
-            providerSiteEmployerLinks = providerSiteEmployerLinksFromRepository.Union(providerSiteEmployerLinks, new VacancyPartyEqualityComparer()).ToList();
+            vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();
 
-            return providerSiteEmployerLinks;
+            return vacancyParties;
         }
 
         private IEnumerable<VacancyParty> GetVacancyPartiesFromRepository(EmployerSearchRequest request)
         {
+            var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId);
+
             //TODO: All this needs moving into the employer repository 
             /*var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteEdsErn);
             //TODO: This search and the search object should be pushed into the datalayer once it's SQL based
@@ -226,7 +233,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             return providerSiteEmployerLinksFromRepository;*/
 
-            return new List<VacancyParty>();
+            return providerSiteEmployerLinksFromRepository;
         }
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)

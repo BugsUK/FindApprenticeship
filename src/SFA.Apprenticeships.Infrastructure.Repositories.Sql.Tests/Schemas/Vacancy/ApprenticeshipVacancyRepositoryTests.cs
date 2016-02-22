@@ -124,23 +124,6 @@
                 .Using<DateTime>(ctx => ctx.Subject.Should().BeCloseTo(ctx.Expectation, 1000))
                 .WhenTypeIs<DateTime>());
         }
-        
-        [Test]
-        public void GetForProviderByUkprnAndProviderSiteErnTest()
-        {
-            var logger = new Mock<ILogService>();
-            IVacancyReadRepository repository = new VacancyRepository(_connection, _mapper,
-                logger.Object);
-
-            var vacancies = repository.GetForProvider(1, 3);
-            vacancies.Should().HaveCount(12);
-
-            vacancies = repository.GetForProvider(2, 3);
-            vacancies.Should().HaveCount(0);
-
-            vacancies = repository.GetForProvider(1, 4);
-            vacancies.Should().HaveCount(0);
-        }
 
         [Test]
         public void GetWithStatusTest()

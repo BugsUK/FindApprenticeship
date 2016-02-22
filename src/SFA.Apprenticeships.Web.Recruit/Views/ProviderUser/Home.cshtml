@@ -311,7 +311,7 @@
                                         @vacancy.LocationAddresses.First().Address.AddressLine4<br/>
                                         @vacancy.LocationAddresses.First().Address.AddressLine1Ellipsis
                                     }
-                                    else
+                                    else if(vacancy.Location != null)
                                     {
                                         @vacancy.Location.AddressLine4
                                     }

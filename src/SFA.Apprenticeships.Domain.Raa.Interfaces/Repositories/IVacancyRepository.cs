@@ -14,7 +14,9 @@
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
 
-        List<Vacancy> GetForProvider(int providerId, int providerSiteId);
+        List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
+
+        List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
 

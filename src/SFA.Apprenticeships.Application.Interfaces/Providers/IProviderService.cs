@@ -30,7 +30,9 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
-        
+
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
+
         Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
     }
 }

@@ -11,6 +11,7 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
@@ -60,29 +61,18 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
         }
 
-        public List<Vacancy> GetForProvider(int providerId, int providerSiteId)
+        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
         {
-            //TODO: Replace entirely with VacancySummaries
-            /*
-            _logger.Debug("Called Mongodb to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}", ukPrn, providerSiteErn);
+            var mongoEntities = Collection.Find(Query.In("VacancyId", new BsonArray(vacancyIds)));
 
-            var queryConditionList = new List<IMongoQuery>();
+            return mongoEntities.Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e)).ToList();
+        }
 
-            queryConditionList.Add(Query<Vacancy>.EQ(v => v.Ukprn, ukPrn));
-            queryConditionList.Add(Query<Vacancy>.NotIn(v => v.Status, new List<VacancyStatuses>() { VacancyStatuses.ParentVacancy }));
-            queryConditionList.Add(Query<Vacancy>.EQ(v => v.VacancyParty.ProviderSiteEdsErn, providerSiteErn));
+        public List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        {
+            var mongoEntities = Collection.Find(Query.In("OwnerPartyId", new BsonArray(ownerPartyIds)));
 
-            var mongoEntities = Collection.Find(Query.And(queryConditionList))
-                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e))
-                .OrderByDescending(v => v.CreatedDateTime)
-                .ToList();
-
-            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with ukprn = {1}, providerSiteErn = {2}", mongoEntities.Count, ukPrn, providerSiteErn));
-
-            return mongoEntities;
-            */
-
-            return new List<Vacancy>();
+            return mongoEntities.Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e)).ToList();
         }
 
         public List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
