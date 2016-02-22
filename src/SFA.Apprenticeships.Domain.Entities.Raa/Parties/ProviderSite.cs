@@ -8,6 +8,7 @@
         public int ProviderSiteId { get; set; }
         public Guid ProviderSiteGuid { get; set; }
         public string EdsErn { get; set; }
+        public int ProviderId { get; set; }
         public string Ukprn { get; set; }
         public string Name { get; set; }
         public string EmployerDescription { get; set; }

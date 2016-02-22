@@ -596,6 +596,7 @@
             //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.Single(e => e.EmployerId == vp.EmployerId));
             var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
             var hasVacancies = vacancies.Count > 0;
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
@@ -645,12 +646,14 @@
             vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
 
             var vacancySummaries = vacancies.Select(v => _mapper.Map<Vacancy, VacancySummaryViewModel>(v)).ToList();
+            foreach (var vacancySummary in vacancySummaries)
+            {
+                vacancySummary.EmployerName = vacancyPartyToEmployerMap[vacancySummary.OwnerPartyId].Name;
+            }
 
             if (isVacancySearch)
             {
-                //TODO: Different search based on employer name
                 vacancySummaries = vacancySummaries.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-                //vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
 
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
@@ -901,6 +904,8 @@
             //TODO: Get from data layer via joins once we're on SQL
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
             viewModel.ProviderSite = providerSite.Convert();

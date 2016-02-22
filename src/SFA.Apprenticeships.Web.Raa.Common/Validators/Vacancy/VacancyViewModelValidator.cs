@@ -27,7 +27,7 @@
 
         private void AddCommonWarningRules()
         {
-            RuleFor(x => x.FurtherVacancyDetailsViewModel).SetValidator(new VacancySummaryViewModelServerWarningValidator("VacancySummaryViewModel"));
+            RuleFor(x => x.FurtherVacancyDetailsViewModel).SetValidator(new VacancySummaryViewModelServerWarningValidator("FurtherVacancyDetailsViewModel"));
         }
 
         private void AddCommonResubmissionRules()

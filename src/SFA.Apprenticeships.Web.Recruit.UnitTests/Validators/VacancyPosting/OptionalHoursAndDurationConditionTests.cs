@@ -105,7 +105,7 @@
             var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Duration");
             error.Should().NotBeNull();
             error?.ErrorMessage.Should().Be(expectedMessage);
-            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "VacancySummaryViewModel.Duration");
+            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Duration");
             aggregateError.Should().NotBeNull();
             aggregateError?.ErrorMessage.Should().Be(expectedMessage);
         }

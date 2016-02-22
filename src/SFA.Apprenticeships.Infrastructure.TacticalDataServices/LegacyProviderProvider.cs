@@ -78,7 +78,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
-            const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
+            const string sql = @"SELECT ps.ProviderSiteID, p.ProviderID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
@@ -119,6 +119,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             var providerSite = new ProviderSite
             {
                 ProviderSiteId = legacyProviderSite.ProviderSiteID,
+                ProviderId = legacyProviderSite.ProviderID,
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
                 EdsErn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,

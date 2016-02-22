@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers
 {
     using System;
-    using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -12,14 +11,13 @@
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
-    using GeoPoint = Domain.Entities.Raa.Locations.GeoPoint;
 
     public class RaaCommonWebMappers : MapperEngine
     {
         public override void Initialise()
         {
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
-            Mapper.CreateMap<Address, AddressViewModel>();
+            Mapper.CreateMap<PostalAddress, AddressViewModel>();
             Mapper.CreateMap<Employer, EmployerViewModel>();
             Mapper.CreateMap<VacancyParty, VacancyPartyViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())

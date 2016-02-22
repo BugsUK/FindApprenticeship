@@ -33,10 +33,6 @@
             viewModel.Status.Should().Be(source.Status);
             viewModel.Should().NotBeNull();
             viewModel.NewVacancyViewModel.Should().NotBeNull();
-            viewModel.NewVacancyViewModel.OwnerParty.Should().NotBeNull();
-            viewModel.NewVacancyViewModel.OwnerParty.Employer.Should().NotBeNull();
-            viewModel.NewVacancyViewModel.OwnerParty.Employer.Address.Should().NotBeNull();
-            viewModel.NewVacancyViewModel.OwnerParty.Employer.Address.GeoPoint.Should().NotBeNull();
             viewModel.FurtherVacancyDetailsViewModel.Should().NotBeNull();
             viewModel.VacancyQuestionsViewModel.Should().NotBeNull();
             viewModel.VacancyRequirementsProspectsViewModel.Should().NotBeNull();

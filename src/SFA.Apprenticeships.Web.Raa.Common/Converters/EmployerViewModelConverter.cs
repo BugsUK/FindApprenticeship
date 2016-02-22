@@ -11,6 +11,7 @@
             var viewModel = new EmployerResultViewModel
             {
                 EmployerId = employer.EmployerId,
+                EdsErn = employer.EdsErn,
                 EmployerName = employer.Name,
                 Address = employer.Address
             };
@@ -23,6 +24,7 @@
             var viewModel = new EmployerResultViewModel
             {
                 EmployerId = employer.EmployerId,
+                EdsErn = employer.EdsErn,
                 EmployerName = employer.Name,
                 Address = employer.Address.Convert()
             };
@@ -35,6 +37,7 @@
             var viewModel = new EmployerViewModel
             {
                 EmployerId = employer.EmployerId,
+                EdsErn = employer.EdsErn,
                 Name = employer.Name,
                 Address = employer.Address.Convert()
             };

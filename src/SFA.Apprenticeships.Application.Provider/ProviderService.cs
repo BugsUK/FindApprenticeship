@@ -40,7 +40,8 @@ namespace SFA.Apprenticeships.Application.Provider
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
         {
             var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
-            return _providerReadRepository.Get(vacancyParty.ProviderSiteId);
+            var providerSite = _providerSiteReadRepository.Get(vacancyParty.ProviderSiteId);
+            return _providerReadRepository.Get(providerSite.ProviderId);
         }
 
         public Provider GetProvider(string ukprn)
