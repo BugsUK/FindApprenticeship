@@ -15,9 +15,9 @@
         private Func<ITableDetails, IMutateTarget> _createMutateTarget;
         private IEnumerable<ITableSpec> _tables;
 
-        public ISyncRespository _syncRepository;
+        public IGenericSyncRespository _syncRepository;
 
-        public Controller(IMigrateConfiguration migrateConfig, ILogService log, ISyncRespository syncRepository, Func<ITableDetails, IMutateTarget> createMutateTarget, IEnumerable<ITableSpec> tables)
+        public Controller(IMigrateConfiguration migrateConfig, ILogService log, IGenericSyncRespository syncRepository, Func<ITableDetails, IMutateTarget> createMutateTarget, IEnumerable<ITableSpec> tables)
         {
             _migrateConfig = migrateConfig;
             _log = log;

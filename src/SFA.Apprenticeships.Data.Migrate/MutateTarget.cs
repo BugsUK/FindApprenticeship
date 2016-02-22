@@ -11,7 +11,7 @@
     public class MutateTarget : IMutateTarget
     {
         private ILogService _log;
-        private ISyncRespository _syncRepository;
+        private IGenericSyncRespository _syncRepository;
         private int _maxBatchSize;
         private ITableDetails _tableDetails;
 
@@ -22,7 +22,7 @@
         private int _updateCount;
         private int _unchangedCount;
 
-        public MutateTarget(ILogService log, ISyncRespository syncRepository, int maxBatchSize, ITableDetails tableDetails)
+        public MutateTarget(ILogService log, IGenericSyncRespository syncRepository, int maxBatchSize, ITableDetails tableDetails)
         {
             _log = log;
             _syncRepository = syncRepository;

@@ -59,17 +59,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AvmsSyncRepository.cs" />
+    <Compile Include="IAvmsSyncRepository.cs" />
     <Compile Include="MutateTarget.cs" />
     <Compile Include="IMutateTarget.cs" />
     <Compile Include="DummyMutateTarget.cs" />
     <Compile Include="Tables.cs" />
-    <Compile Include="ISyncRepository.cs" />
-    <Compile Include="SyncRepository.cs" />
+    <Compile Include="IGenericSyncRepository.cs" />
+    <Compile Include="GenericSyncRepository.cs" />
     <Compile Include="NewDBDatabaseRepository.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="AvmsDatabaseRepository.cs" />
     <Compile Include="INewDBRepository.cs" />
-    <Compile Include="IAvmsRepository.cs" />
     <Compile Include="MigrateFromAvmsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -90,6 +90,9 @@
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
       <Name>SFA.Infrastructure</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

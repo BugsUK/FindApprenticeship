@@ -11,13 +11,13 @@ namespace SFA.Apprenticeships.Data.Migrate
     using SFA.Infrastructure.Interfaces;
     using System.Threading.Tasks;
 
-    public class SyncRespository : ISyncRespository
+    public class GenericSyncRespository : IGenericSyncRespository
     {
         private IGetOpenConnection _sourceDatabase;
         private IGetOpenConnection _targetDatabase;
         private ILogService _log;
 
-        public SyncRespository(ILogService log, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase)
+        public GenericSyncRespository(ILogService log, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase)
         {
             _log = log;
             _sourceDatabase = sourceDatabase;

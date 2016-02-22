@@ -6,7 +6,7 @@
     using System.Threading.Tasks;
     using System.Collections;
 
-    public interface ISyncRespository
+    public interface IGenericSyncRespository
     {
         ISnapshotSyncContext StartChangesOnlySnapshotSync();
 
