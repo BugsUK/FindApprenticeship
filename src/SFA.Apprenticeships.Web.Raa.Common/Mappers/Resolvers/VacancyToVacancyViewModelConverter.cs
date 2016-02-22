@@ -11,7 +11,7 @@
     /// 
     /// TODO: DI for automapper within Raa websites (manage and recruit), then replace usage of converter (above) with this mapping class
     /// </summary>
-    internal sealed class ApprenticeshipVacancyToVacancyViewModelConverter : ITypeConverter<Vacancy, VacancyViewModel>
+    internal sealed class VacancyToVacancyViewModelConverter : ITypeConverter<Vacancy, VacancyViewModel>
     {
         public VacancyViewModel Convert(ResolutionContext context)
         {

@@ -1,35 +1,43 @@
-namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 {
+    using System;
     using AutoMapper;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
+    using Web.Common.ViewModels;
+    using Web.Common.ViewModels.Locations;
 
-    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<Vacancy, FurtherVacancyDetailsViewModel>
+    /// <summary>
+    /// This is meant to replace
+    /// SFA.Apprenticeships.Web.Raa.Common.Converters.ApprenticeshipVacancyConverter.ConvertToVacancyViewModel
+    /// 
+    /// TODO: DI for automapper within Raa websites (manage and recruit), then replace usage of converter (above) with this mapping class
+    /// </summary>
+    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<Vacancy, VacancySummaryViewModel>
     {
-        public FurtherVacancyDetailsViewModel Convert(ResolutionContext context)
+        public VacancySummaryViewModel Convert(ResolutionContext context)
         {
             var source = (Vacancy)context.SourceValue;
 
-            var destination = new FurtherVacancyDetailsViewModel
+            var destination = new VacancySummaryViewModel
             {
-                Duration = source.Duration.HasValue ? (decimal?) source.Duration.Value : null,
-                DurationComment = source.DurationComment,
-                DurationType = source.DurationType,
-                HoursPerWeek = source.HoursPerWeek,
-                LongDescription = source.LongDescription,
-                LongDescriptionComment = source.LongDescriptionComment,
+                VacancyId = source.VacancyId,
                 VacancyReferenceNumber = source.VacancyReferenceNumber,
-                Wage = source.Wage,
-                WageComment = source.WageComment,
-                WageType = source.WageType,
-                WageUnit = source.WageUnit,
-                WorkingWeek = source.WorkingWeek,
-                WorkingWeekComment = source.WorkingWeekComment,
+                VacancyType = source.VacancyType,
                 Status = source.Status,
-                VacancyDatesViewModel = context.Engine.Map<Vacancy, VacancyDatesViewModel>(source),
-                VacancyType = source.VacancyType
+                Title = source.Title,
+                //ProviderName = source.ProviderName,
+                //EmployerName = source.EmployerName,
+                Location = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address),
+                OfflineVacancy = source.OfflineVacancy,
+                //ApplicationCount = source.ApplicationCount,
+                OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
+                ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
+                DateSubmitted = source.DateSubmitted,
+                SubmissionCount = source.SubmissionCount,
             };
-
 
             return destination;
         }

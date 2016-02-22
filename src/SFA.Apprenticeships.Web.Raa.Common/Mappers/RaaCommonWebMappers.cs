@@ -48,13 +48,14 @@
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
 
-            Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
+            Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToFurtherVacancyDetailsViewModelConverter>();
 
             Mapper.CreateMap<Vacancy, VacancyRequirementsProspectsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
             Mapper.CreateMap<Vacancy, VacancyQuestionsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
-            Mapper.CreateMap<Vacancy, VacancyViewModel>().ConvertUsing<ApprenticeshipVacancyToVacancyViewModelConverter>();
+            Mapper.CreateMap<Vacancy, VacancyViewModel>().ConvertUsing<VacancyToVacancyViewModelConverter>();
+            Mapper.CreateMap<Vacancy, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
         }
     }
 }

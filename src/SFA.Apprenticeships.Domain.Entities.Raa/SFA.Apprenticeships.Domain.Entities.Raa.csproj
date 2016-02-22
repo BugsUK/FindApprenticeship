@@ -110,7 +110,6 @@
     <Compile Include="Vacancies\Standard.cs" />
     <Compile Include="Vacancies\TrainingType.cs" />
     <Compile Include="Vacancies\Vacancy.cs" />
-    <Compile Include="Vacancies\VacancySummary.cs" />
     <Compile Include="Vacancies\VacancyType.cs" />
     <Compile Include="Vacancies\Wage.cs" />
     <Compile Include="Vacancies\WageType.cs" />

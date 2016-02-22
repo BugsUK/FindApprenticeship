@@ -179,8 +179,9 @@
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToFurtherVacancyDetailsViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\VacancyToVacancySummaryViewModelConverter.cs" />
-    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -253,6 +254,7 @@
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\FurtherVacancyDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
     <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">

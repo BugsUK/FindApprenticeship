@@ -643,9 +643,9 @@
                 vacancies = vacancies.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0)).ToList();
             }
 
-            var vacancyPage = new PageableViewModel<VacancyViewModel>
+            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
-                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<Vacancy, VacancyViewModel>(v)).ToList(),
+                Page = vacancies.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).Select(v => _mapper.Map<Vacancy, VacancySummaryViewModel>(v)).ToList(),
                 ResultsCount = vacancies.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
                 TotalNumberOfPages = vacancies.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancies.Count/vacanciesSummarySearch.PageSize)

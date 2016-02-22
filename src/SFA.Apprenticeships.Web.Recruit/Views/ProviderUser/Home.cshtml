@@ -1,7 +1,7 @@
 ﻿@model HomeViewModel
 
 @functions {
-    private static bool VacancyIsClonable(VacancyViewModel vacancy)
+    private static bool VacancyIsClonable(VacancySummaryViewModel vacancy)
     {
         return vacancy.Status != VacancyStatus.RejectedByQA;
     }
@@ -277,12 +277,12 @@
                             <tbody>
                             @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
                             {
-                                var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy == true;
+                                var isOfflineVacancy = vacancy.OfflineVacancy == true;
                                 <tr>
                                     <td data-label="Vacancy title">
                                         <div class="vac-title">
                                             @{
-                                                var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
+                                                var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
                                                 var routeName = RecruitmentRouteNames.PreviewVacancy;
                                                 if (vacancy.Status == VacancyStatus.Unknown || vacancy.Status == VacancyStatus.Draft)
                                                 {
@@ -303,17 +303,17 @@
                                         </div>
                                     </td>
                                     <td class="vac-employer" data-label="Employer">
-                                        @vacancy.NewVacancyViewModel.VacancyParty.Employer.Name
+                                        @vacancy.EmployerName
                                     </td>
                                     <td class="vac-ref-number" data-label="Vacancy ref">
-                                    @if (vacancy.IsApprovedMultiLocationChildVacancy)
+                                    @if (vacancy.LocationAddresses != null && vacancy.LocationAddresses.Any())
                                     {
-                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4<br/>
-                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1Ellipsis
+                                        @vacancy.LocationAddresses.First().Address.AddressLine4<br/>
+                                        @vacancy.LocationAddresses.First().Address.AddressLine1Ellipsis
                                     }
                                     else
                                     {
-                                        @vacancy.NewVacancyViewModel.VacancyParty.Employer.Address.AddressLine4
+                                        @vacancy.Location.AddressLine4
                                     }
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
@@ -323,7 +323,7 @@
                                             var unit = isOfflineVacancy ? "click-through" : "application";
                                             var units = unit + "s";
 
-                                            if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
                                             {
                                                 <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
@@ -345,7 +345,7 @@
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
                                         @if (vacancy.Status == VacancyStatus.Live)
                                         {
-                                            Html.RenderPartial("_closingDate", @vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate);
+                                            Html.RenderPartial("_closingDate", @vacancy.ClosingDate);
                                         }
                                     </td>
                                     <td class="vac-toolbox">
