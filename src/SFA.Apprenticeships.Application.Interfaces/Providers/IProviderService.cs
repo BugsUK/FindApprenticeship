@@ -17,8 +17,6 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         void SaveProvider(Provider provider);
 
-        ProviderSite GetProviderSiteViaOwnerParty(int vacancyPartyId);
-
         ProviderSite GetProviderSite(int providerSiteId);
 
         ProviderSite GetProviderSite(string ukprn, string edsErn);

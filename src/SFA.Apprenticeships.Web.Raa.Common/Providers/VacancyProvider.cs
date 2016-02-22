@@ -449,7 +449,10 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var providerSite = _providerService.GetProviderSiteViaOwnerParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
+            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName)
                 ? vacancy.FrameworkCodeName
@@ -893,7 +896,8 @@
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
             //TODO: Get from data layer via joins once we're on SQL
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
-            var providerSite = _providerService.GetProviderSiteViaOwnerParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;

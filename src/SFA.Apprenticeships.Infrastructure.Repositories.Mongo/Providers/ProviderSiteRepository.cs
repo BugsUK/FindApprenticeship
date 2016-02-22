@@ -24,11 +24,20 @@
             _logger = logger;
         }
 
-        public ProviderSite Get(Guid id)
+        public ProviderSite Get(int providerSiteId)
         {
-            _logger.Debug("Called Mongodb to get provider site with Id={0}", id);
+            _logger.Debug("Called Mongodb to get provider site with Id={0}", providerSiteId);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.ProviderSiteId, providerSiteId));
+
+            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+        }
+
+        public ProviderSite GetByEdsErn(string edsErn)
+        {
+            _logger.Debug("Called Mongodb to get provider site with ERN={0}", edsErn);
+
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.EdsErn, edsErn));
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
@@ -45,15 +54,6 @@
             _logger.Debug("Found {1} provider sites for provider with UKPRN={0}", ukprn, entities.Count);
 
             return entities;
-        }
-
-        public ProviderSite Get(string ern)
-        {
-            _logger.Debug("Called Mongodb to get provider site with ERN={0}", ern);
-
-            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.EdsErn, ern));
-
-            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
 
         public void Delete(int providerSiteId)

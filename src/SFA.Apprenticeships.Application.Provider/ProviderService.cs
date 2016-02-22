@@ -68,14 +68,9 @@ namespace SFA.Apprenticeships.Application.Provider
             _providerWriteRepository.Save(provider);
         }
 
-        public ProviderSite GetProviderSiteViaOwnerParty(int vacancyPartyId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public ProviderSite GetProviderSite(int providerSiteId)
         {
-            throw new System.NotImplementedException();
+            return _providerSiteReadRepository.Get(providerSiteId);
         }
 
         public ProviderSite GetProviderSite(string ukprn, string edsErn)
@@ -85,7 +80,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsErn);
 
-            var providerSite = _providerSiteReadRepository.Get(edsErn);
+            var providerSite = _providerSiteReadRepository.GetByEdsErn(edsErn);
 
             if (providerSite != null)
             {
