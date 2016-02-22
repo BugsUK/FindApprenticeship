@@ -68,9 +68,9 @@
         }
 
         public static object GetLabelFor<TModel, TProperty>(this HtmlHelper<TModel> html,
-            Expression<Func<TModel, TProperty>> propertyCommentExpression)
+            Expression<Func<TModel, TProperty>> propertyCommentExpression, string commentLabelText = null)
         {
-            var commentLabelText = html.DisplayNameFor(propertyCommentExpression).ToString();
+            commentLabelText = commentLabelText ?? html.DisplayNameFor(propertyCommentExpression).ToString();
             return new {Label = commentLabelText};
         }
     }

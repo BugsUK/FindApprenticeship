@@ -24,7 +24,7 @@
                 WageUnit = apprenticeshipVacancy.WageUnit,
                 WageUnits = GetWageUnits(),
                 DurationType = apprenticeshipVacancy.DurationType,
-                DurationTypes = GetDurationTypes(),
+                DurationTypes = GetDurationTypes(apprenticeshipVacancy.VacancyType),
                 Duration = apprenticeshipVacancy.Duration,
                 Status = apprenticeshipVacancy.Status,
                 VacancyDatesViewModel = new VacancyDatesViewModel { 
@@ -37,7 +37,8 @@
                 WageComment = apprenticeshipVacancy.WageComment,
                 DurationComment = apprenticeshipVacancy.DurationComment,
                 LongDescriptionComment = apprenticeshipVacancy.LongDescriptionComment,
-                WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment
+                WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment,
+                VacancyType = apprenticeshipVacancy.VacancyType
             };
 
             return vacancyViewModel;
@@ -55,12 +56,12 @@
             return wageUnits;
         }
 
-        public static List<SelectListItem> GetDurationTypes()
+        public static List<SelectListItem> GetDurationTypes(VacancyType vacancyType)
         {
             var durationTypes =
                 Enum.GetValues(typeof(DurationType))
                     .Cast<DurationType>()
-                    .Where(al => al != DurationType.Unknown)
+                    .Where(al => al != DurationType.Unknown && (vacancyType != VacancyType.Traineeship || al != DurationType.Years))
                     .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
                     .ToList();
 
@@ -82,7 +83,8 @@
                 ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
                 DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
                 DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment,
-                Status = apprenticeshipVacancy.Status
+                Status = apprenticeshipVacancy.Status,
+                VacancyType = apprenticeshipVacancy.VacancyType
             };
 
             return vacancyViewModel;

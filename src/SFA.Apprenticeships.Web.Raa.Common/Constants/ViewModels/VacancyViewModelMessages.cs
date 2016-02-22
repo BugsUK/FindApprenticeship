@@ -4,8 +4,8 @@
 
     public class VacancyViewModelMessages
     {
-        public const string NoApplications = "You've had no applications submitted for this vacancy";
-        public const string NoClickThroughs = "You've had no click throughs to your application page for this vacancy";
+        public const string NoApplications = "There have not been any applications for this vacancy";
+        public const string NoClickThroughs = "There have not been any click-throughs to your application page for this vacancy";
 
         public static class Title
         {
@@ -25,14 +25,20 @@
         {
             public const string LabelText = "Summary";
             public const string RequiredErrorText = "Enter a vacancy summary";
-            public const string TooLongErrorText = "The short description must not be more than 350 characters";
+            public const string TooLongErrorText = "The vacancy summary must not be more than 350 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The short description " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "The vacancy summary " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ShortDescriptionComment
         {
             public const string LabelText = "Summary comment";
+        }
+
+        public static class VacancyType
+        {
+            public const string LabelText = "Vacancy type";
+            public const string RequiredErrorText = "Select a vacancy type";
         }
 
         public static class WorkingWeek
@@ -42,11 +48,16 @@
             public const string TooLongErrorText = "The working week must not be more than 256 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The working week " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TraineeshipLabelText = "Weekly hours";
+            public const string TraineeshipRequiredErrorText = "Enter the weekly hours";
+            public const string TraineeshipTooLongErrorText = "The weekly hours must not be more than 256 characters";
+            public const string TraineeshipWhiteListErrorText = "The weekly hours " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class WorkingWeekComment
         {
             public const string LabelText = "Working week/Hours per week comment";
+            public const string TraineeshipLabelText = "Weekly hours comment";
         }
 
         public static class HoursPerWeek
@@ -78,31 +89,32 @@
 
         public static class Duration
         {
-            public const string LabelText = "Apprenticeship duration";
+            public const string LabelText = "Expected duration";
             public const string WhiteListRegularExpression = Whitelists.IntegerWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The apprenticeship duration " + Whitelists.IntegerWhitelist.ErrorText;
-            public const string RequiredErrorText = "Enter the apprenticeship duration";
-            public const string RangeErrorText = "The apprenticeship duration must be a whole number";
-            public const string DurationCantBeLessThan12Months = "The duration must be at least 12 months (52 weeks)";
+            public const string WhiteListErrorText = "The expected duration " + Whitelists.IntegerWhitelist.ErrorText;
+            public const string RequiredErrorText = "Enter the expected duration";
+            public const string RangeErrorText = "The expected duration must be a whole number";
+            public const string DurationCantBeLessThan12Months = "The expected duration must be at least 12 months (52 weeks)";
+            public const string DurationMustBeBetweenSixWeeksAndSixMonths = "The expected duration must be between six weeks and six months";
             public const string DurationWarning16Hours =
-                "The minimum apprenticeship duration is 23 months based on the hours per week selected";
+                "The minimum expected duration is 23 months based on the hours per week selected";
             public const string DurationWarning18Hours =
-                "The minimum apprenticeship duration is 20 months based on the hours per week selected";
+                "The minimum expected duration is 20 months based on the hours per week selected";
             public const string DurationWarning20Hours =
-                "The minimum apprenticeship duration is 18 months based on the hours per week selected";
+                "The minimum expected duration is 18 months based on the hours per week selected";
             public const string DurationWarning22Hours =
-                "The minimum apprenticeship duration is 17 months based on the hours per week selected";
+                "The minimum expected duration is 17 months based on the hours per week selected";
             public const string DurationWarning25Hours =
-                "The minimum apprenticeship duration is 15 months based on the hours per week selected";
+                "The minimum expected duration is 15 months based on the hours per week selected";
             public const string DurationWarning28Hours =
-                "The minimum apprenticeship duration is 13 months based on the hours per week selected";
+                "The minimum expected duration is 13 months based on the hours per week selected";
             public const string DurationWarning30Hours =
-                "The minimum apprenticeship duration is 12 months based on the hours per week selected";
+                "The minimum expected duration is 12 months based on the hours per week selected";
         }
 
         public static class DurationComment
         {
-            public const string LabelText = "Apprenticeship duration comment";
+            public const string LabelText = "Expected duration comment";
         }
 
         public static class ClosingDate
@@ -139,11 +151,16 @@
             public const string TooLongErrorText = "The long description must not be more than 4000 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
             public const string WhiteListErrorText = "The long description " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string TraineeshipLabelText = "Work placement description";
+            public const string TraineeshipRequiredErrorText = "Enter the work placement description";
+            public const string TraineeshipTooLongErrorText = "The work placement description must not be more than 4000 characters";
+            public const string TraineeshipWhiteListErrorText = "The work placement description " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class LongDescriptionComment
         {
             public const string LabelText = "Vacancy description comment";
+            public const string TraineeshipLabelText = "Work placement description comment";
         }
 
         public static class DesiredSkills
@@ -306,6 +323,16 @@
         public static class StandardIdComment
         {
             public const string LabelText = "Apprenticeship standard comment";
+        }
+
+        public static class SectorCodeName
+        {
+            public const string RequiredErrorText = "Select the traineeship sector";
+        }
+
+        public static class SectorCodeNameComment
+        {
+            public const string LabelText = "Traineeship sector comment";
         }
 
         public static class TrainingProvidedMessages

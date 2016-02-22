@@ -71,6 +71,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string StandardIdComment { get; set; }
 
+        public int? SectorId { get; set; }
+
+        public string SectorIdComment { get; set; }
+
         [Required]
         [StringLength(1)]
         public string LevelCode { get; set; }

@@ -15,7 +15,7 @@
         public int NewApplicationsCount { get; set; }
         public int WithdrawnCount { get; set; }
         public int CompletedCount { get; set; }
-        public int TotalCount => LiveCount + SubmittedCount + RejectedCount + ClosingSoonCount + ClosedCount + DraftCount + NewApplicationsCount + WithdrawnCount + CompletedCount;
+        public bool HasVacancies { get; set; }
         public PageableViewModel<VacancyViewModel> Vacancies { get; set; }
     }
 }

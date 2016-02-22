@@ -17,9 +17,32 @@
         IEnumerable<Guid> GetCandidatesWithPendingMobileVerification();
 
         Candidate GetBySubscriberId(Guid subscriberId, bool errorIfNotFound = true);
+
+        List<CandidateSummary> SearchCandidates(CandidateSearchRequest request);
     }
 
     public interface ICandidateWriteRepository : IWriteRepository<Candidate>
     {
+    }
+
+    public class CandidateSearchRequest
+    {
+        public CandidateSearchRequest(string firstName, string lastName, DateTime? dateOfBirth, string postcode)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            DateOfBirth = dateOfBirth;
+            Postcode = postcode;
+        }
+
+        public string FirstName { get; private set; }
+        public string LastName { get; private set; }
+        public DateTime? DateOfBirth { get; private set; }
+        public string Postcode { get; private set; }
+
+        public override string ToString()
+        {
+            return $"CandidateSearchRequest FirstName: {FirstName}, LastName: {LastName}, DateOfBirth: {DateOfBirth}, Postcode: {Postcode}";
+        }
     }
 }

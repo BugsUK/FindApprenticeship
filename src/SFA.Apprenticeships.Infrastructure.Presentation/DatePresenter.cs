@@ -83,6 +83,14 @@
             return dataTimeByZoneId.ToString("dd MMM yyyy");
         }
 
+        public static string ToDateOfBirthString(this DateTime dateTime)
+        {
+            var timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            var dataTimeByZoneId = TimeZoneInfo.ConvertTime(dateTime.ToUniversalTime(), timeZoneInfo);
+
+            return dataTimeByZoneId.ToString("dd/MM/yyyy");
+        }
+
         public static int GetDaysTillClose(this DateTime date)
         {
             var daysTillClose = (date - DateTime.UtcNow.Date).Days;
@@ -121,6 +129,11 @@
             }
 
             return "";
+        }
+
+        public static string ToDateOfBirth(this DateTime dateTime)
+        {
+            return dateTime.ToString("dd/MM/yyyy");
         }
     }
 }

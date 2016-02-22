@@ -42,6 +42,8 @@
 
         List<StandardViewModel> GetStandards();
 
+        List<SelectListItem> GetSectors();
+
         void RemoveLocationAddresses(Guid vacancyGuid);
 
         NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);

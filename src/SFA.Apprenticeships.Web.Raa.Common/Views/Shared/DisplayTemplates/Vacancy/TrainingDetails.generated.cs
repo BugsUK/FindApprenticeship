@@ -29,12 +29,18 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.WebPages;
     
     #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using SFA.Apprenticeships.Domain.Entities.Vacancies;
     
     #line default
     #line hidden
     
     #line 3 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    
+    #line default
+    #line hidden
+    
+    #line 4 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
     using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     
     #line default
@@ -44,13 +50,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Raa.Common;
     
-    #line 4 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+    #line 5 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.Extensions;
     
     #line default
     #line hidden
     
-    #line 5 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+    #line 6 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
     using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
     
     #line default
@@ -68,7 +74,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
 WriteLiteral("\r\n");
 
             
-            #line 7 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 8 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Apprenticeship training";
 
@@ -85,38 +91,38 @@ WriteLiteral("    <h1");
 
 WriteLiteral(" class=\"heading-xlarge\"");
 
-WriteLiteral(">\r\n        Apprenticeship training\r\n    </h1>\r\n");
+WriteLiteral(">\r\n        Enter training details\r\n    </h1>\r\n");
 
             
-            #line 18 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
     
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 Write(Html.AntiForgeryToken());
 
             
             #line default
             #line hidden
             
-            #line 19 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
                             
     
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 Write(Html.Partial("ValidationSummary", ViewData.ModelState));
 
             
             #line default
             #line hidden
             
-            #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
                                                            
 
     
@@ -124,42 +130,56 @@ Write(Html.Partial("ValidationSummary", ViewData.ModelState));
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 Write(Html.HiddenFor(m => m.VacancyReferenceNumber));
 
             
             #line default
             #line hidden
             
-            #line 22 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
                                                   
     
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 Write(Html.HiddenFor(m => m.Status));
 
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
                                   
     
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+Write(Html.HiddenFor(m => m.VacancyType));
+
+            
+            #line default
+            #line hidden
+            
+            #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                       
+    
+            
+            #line default
+            #line hidden
+            
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 Write(Html.HiddenFor(m => m.ComeFromPreview));
 
             
             #line default
             #line hidden
             
-            #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 26 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
                                            
 
     var isAnyTrainingTypeSelected = Model.TrainingType != TrainingType.Unknown;
@@ -180,140 +200,249 @@ WriteLiteral(">\r\n        <div");
 
 WriteLiteral(" class=\"blocklabel-single-container\"");
 
-WriteLiteral(">\r\n            <div");
+WriteLiteral(">\r\n");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1418), Tuple.Create("\"", 1606)
-, Tuple.Create(Tuple.Create("", 1426), Tuple.Create("form-group", 1426), true)
             
-            #line 34 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 1436), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))
+            #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            
             
             #line default
             #line hidden
-, 1437), false)
-, Tuple.Create(Tuple.Create(" ", 1562), Tuple.Create("inline", 1563), true)
-, Tuple.Create(Tuple.Create(" ", 1569), Tuple.Create("clearfix", 1570), true)
-, Tuple.Create(Tuple.Create(" ", 1578), Tuple.Create("blocklabel-single", 1579), true)
-, Tuple.Create(Tuple.Create(" ", 1596), Tuple.Create("hide-nojs", 1597), true)
-);
-
-WriteLiteral(">\r\n                <a");
-
-WriteAttribute("name", Tuple.Create(" name=\"", 1628), Tuple.Create("\"", 1690)
             
-            #line 35 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 1635), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.TrainingType).ToString().ToLower()
+            #line 36 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+             if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                
             
             #line default
             #line hidden
-, 1635), false)
+            
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.TrainingType));
+
+            
+            #line default
+            #line hidden
+            
+            #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                    
+                
+            
+            #line default
+            #line hidden
+            
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.FrameworkCodeName));
+
+            
+            #line default
+            #line hidden
+            
+            #line 39 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                         
+                
+            
+            #line default
+            #line hidden
+            
+            #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.FrameworkCodeNameComment));
+
+            
+            #line default
+            #line hidden
+            
+            #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                                
+                
+            
+            #line default
+            #line hidden
+            
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.StandardId));
+
+            
+            #line default
+            #line hidden
+            
+            #line 41 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                  
+                
+            
+            #line default
+            #line hidden
+            
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.StandardIdComment));
+
+            
+            #line default
+            #line hidden
+            
+            #line 42 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                         
+                
+            
+            #line default
+            #line hidden
+            
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.ApprenticeshipLevel));
+
+            
+            #line default
+            #line hidden
+            
+            #line 43 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                           
+                
+            
+            #line default
+            #line hidden
+            
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+           Write(Html.HiddenFor(m => m.ApprenticeshipLevelComment));
+
+            
+            #line default
+            #line hidden
+            
+            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                                  
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 2016), Tuple.Create("\"", 2162)
+, Tuple.Create(Tuple.Create("", 2024), Tuple.Create("form-group", 2024), true)
+            
+            #line 46 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 2034), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.SectorCodeName))
+            
+            #line default
+            #line hidden
+, 2035), false)
 );
-
-WriteLiteral("></a>\r\n                <label");
-
-WriteLiteral(" class=\"form-label\"");
-
-WriteLiteral(">Apprenticeship type</label>\r\n\r\n                <p");
-
-WriteLiteral(" id=\"frameworks-standards-explained\"");
 
 WriteLiteral(">\r\n                    <a");
 
-WriteLiteral(" href=\"https://www.gov.uk/government/publications/apprenticeship-frameworks-live-" +
-"list\"");
-
-WriteLiteral(" rel=\"external\"");
-
-WriteLiteral(" target=\"_blank\"");
-
-WriteLiteral(">Frameworks explained</a><br/>\r\n                    <a");
-
-WriteLiteral(" href=\"https://www.gov.uk/government/collections/apprenticeship-standards\"");
-
-WriteLiteral(" rel=\"external\"");
-
-WriteLiteral(" target=\"_blank\"");
-
-WriteLiteral(">Standards explained</a>\r\n                </p>\r\n\r\n                ");
-
-WriteLiteral("\r\n                <label");
-
-WriteLiteral(" data-target=\"training-type-frameworks-panel\"");
-
-WriteLiteral(" for=\"training-type-frameworks\"");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 2339), Tuple.Create("\"", 2378)
-, Tuple.Create(Tuple.Create("", 2347), Tuple.Create("block-label", 2347), true)
+WriteAttribute("name", Tuple.Create(" name=\"", 2188), Tuple.Create("\"", 2252)
             
-            #line 44 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                     , Tuple.Create(Tuple.Create(" ", 2358), Tuple.Create<System.Object, System.Int32>(frameworksSelected
+            #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 2195), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.SectorCodeName).ToString().ToLower()
             
             #line default
             #line hidden
-, 2359), false)
+, 2195), false)
 );
 
-WriteLiteral(">\r\n");
+WriteLiteral("></a>\r\n                    <label");
+
+WriteAttribute("for", Tuple.Create(" for=\"", 2286), Tuple.Create("\"", 2328)
+            
+            #line 48 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 2292), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.SectorCodeName)
+            
+            #line default
+            #line hidden
+, 2292), false)
+);
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">Traineeship sector</label>\r\n");
 
 WriteLiteral("                    ");
 
             
-            #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                    Framework\r\n                </label>\r\n                ");
-
-WriteLiteral("\r\n                <label");
-
-WriteLiteral(" data-target=\"training-type-standards-panel\"");
-
-WriteLiteral(" for=\"training-type-standards\"");
-
-WriteAttribute("class", Tuple.Create(" class=\"", 2785), Tuple.Create("\"", 2823)
-, Tuple.Create(Tuple.Create("", 2793), Tuple.Create("block-label", 2793), true)
-            
             #line 49 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                   , Tuple.Create(Tuple.Create(" ", 2804), Tuple.Create<System.Object, System.Int32>(standardsSelected
+               Write(Html.DropDownListFor(m => m.SectorCodeName, Model.Sectors, new { @class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" }));
+
             
             #line default
             #line hidden
-, 2805), false)
-);
-
-WriteLiteral(">\r\n");
+WriteLiteral("\r\n");
 
 WriteLiteral("                    ");
 
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"}));
+               Write(Html.ValidationMessageFor(m => m.SectorCodeName));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                    Standard\r\n                </label>\r\n");
+WriteLiteral("\r\n");
 
-WriteLiteral("                ");
+WriteLiteral("                    ");
 
             
-            #line 53 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-           Write(Html.ValidationMessageFor(m => m.TrainingType));
+            #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+               Write(Html.EditorFor(m => m.SectorCodeNameComment, "Comment", Html.GetLabelFor(m => m.SectorCodeNameComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n            </div>\r\n\r\n            <noscript>\r\n                <div");
+WriteLiteral("\r\n");
 
-WriteLiteral(" class=\"form-group\"");
+WriteLiteral("                    ");
 
-WriteLiteral(">\r\n                    <h3");
+            
+            #line 52 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+               Write(Html.ValidationMessageFor(m => m.SectorCodeNameComment));
 
-WriteLiteral(" class=\"bold-small\"");
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </div>\r\n");
 
-WriteLiteral(">Apprenticeship type</h3>\r\n\r\n                    <p");
+            
+            #line 54 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 2923), Tuple.Create("\"", 3111)
+, Tuple.Create(Tuple.Create("", 2931), Tuple.Create("form-group", 2931), true)
+            
+            #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 2941), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))
+            
+            #line default
+            #line hidden
+, 2942), false)
+, Tuple.Create(Tuple.Create(" ", 3067), Tuple.Create("inline", 3068), true)
+, Tuple.Create(Tuple.Create(" ", 3074), Tuple.Create("clearfix", 3075), true)
+, Tuple.Create(Tuple.Create(" ", 3083), Tuple.Create("blocklabel-single", 3084), true)
+, Tuple.Create(Tuple.Create(" ", 3101), Tuple.Create("hide-nojs", 3102), true)
+);
+
+WriteLiteral(">\r\n                    <a");
+
+WriteAttribute("name", Tuple.Create(" name=\"", 3137), Tuple.Create("\"", 3199)
+            
+            #line 58 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 3144), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.TrainingType).ToString().ToLower()
+            
+            #line default
+            #line hidden
+, 3144), false)
+);
+
+WriteLiteral("></a>\r\n                    <label");
+
+WriteLiteral(" class=\"form-label\"");
+
+WriteLiteral(">Apprenticeship type</label>\r\n\r\n                    <p");
 
 WriteLiteral(" id=\"frameworks-standards-explained\"");
 
@@ -334,38 +463,148 @@ WriteLiteral(" rel=\"external\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteLiteral(">Standards explained</a>\r\n                    </p>\r\n\r\n");
+WriteLiteral(">Standards explained</a>\r\n                    </p>\r\n\r\n                    ");
+
+WriteLiteral("\r\n                    <label");
+
+WriteLiteral(" data-target=\"training-type-frameworks-panel\"");
+
+WriteLiteral(" for=\"training-type-frameworks\"");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 3876), Tuple.Create("\"", 3915)
+, Tuple.Create(Tuple.Create("", 3884), Tuple.Create("block-label", 3884), true)
+            
+            #line 67 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                         , Tuple.Create(Tuple.Create(" ", 3895), Tuple.Create<System.Object, System.Int32>(frameworksSelected
+            
+            #line default
+            #line hidden
+, 3896), false)
+);
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
 
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    
+            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        Framework\r\n                    </label>\r\n              " +
+"      ");
+
+WriteLiteral("\r\n                    <label");
+
+WriteLiteral(" data-target=\"training-type-standards-panel\"");
+
+WriteLiteral(" for=\"training-type-standards\"");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 4342), Tuple.Create("\"", 4380)
+, Tuple.Create(Tuple.Create("", 4350), Tuple.Create("block-label", 4350), true)
+            
+            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                       , Tuple.Create(Tuple.Create(" ", 4361), Tuple.Create<System.Object, System.Int32>(standardsSelected
+            
+            #line default
+            #line hidden
+, 4362), false)
+);
+
+WriteLiteral(">\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 73 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                        Standard\r\n                    </label>\r\n");
+
+WriteLiteral("                    ");
+
+            
+            #line 76 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+               Write(Html.ValidationMessageFor(m => m.TrainingType));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                </div>\r\n");
+
+            
+            #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <noscript>\r\n                    <div");
+
+WriteLiteral(" class=\"form-group\"");
+
+WriteLiteral(">\r\n                        <h3");
+
+WriteLiteral(" class=\"bold-small\"");
+
+WriteLiteral(">Apprenticeship type</h3>\r\n\r\n                        <p");
+
+WriteLiteral(" id=\"frameworks-standards-explained\"");
+
+WriteLiteral(">\r\n                            <a");
+
+WriteLiteral(" href=\"https://www.gov.uk/government/publications/apprenticeship-frameworks-live-" +
+"list\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">Frameworks explained</a><br/>\r\n                            <a");
+
+WriteLiteral(" href=\"https://www.gov.uk/government/collections/apprenticeship-standards\"");
+
+WriteLiteral(" rel=\"external\"");
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">Standards explained</a>\r\n                        </p>\r\n\r\n");
+
+            
+            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        
             
             #line default
             #line hidden
             
-            #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                     if (isFramework)
-                    {
+            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                         if (isFramework)
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <label");
+WriteLiteral("                            <label");
 
 WriteLiteral(" class=\"unselected-apprenticeship-type\"");
 
 WriteLiteral(">Framework</label>\r\n");
 
             
-            #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    }
-                    else
-                    {
+            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        }
+                        else
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <button");
+WriteLiteral("                            <button");
 
 WriteLiteral(" id=\"selectFramework\"");
 
@@ -380,8 +619,8 @@ WriteLiteral(" value=\"SelectFramework\"");
 WriteLiteral(">Framework</button>\r\n");
 
             
-            #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    }
+            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        }
 
             
             #line default
@@ -389,35 +628,35 @@ WriteLiteral(">Framework</button>\r\n");
 WriteLiteral("\r\n");
 
             
-            #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        
             
             #line default
             #line hidden
             
-            #line 74 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                     if (isStandard)
-                    {
+            #line 97 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                         if (isStandard)
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <label");
+WriteLiteral("                            <label");
 
 WriteLiteral(" class=\"unselected-apprenticeship-type\"");
 
 WriteLiteral(">Standard</label>\r\n");
 
             
-            #line 77 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    }
-                    else
-                    {
+            #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        }
+                        else
+                        {
 
             
             #line default
             #line hidden
-WriteLiteral("                        <button");
+WriteLiteral("                            <button");
 
 WriteLiteral(" id=\"selectStandard\"");
 
@@ -432,143 +671,152 @@ WriteLiteral(" value=\"SelectStandard\"");
 WriteLiteral(">Standard</button>\r\n");
 
             
-            #line 81 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                    }
+            #line 104 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                        }
 
             
             #line default
             #line hidden
-WriteLiteral("                </div>\r\n            </noscript>\r\n\r\n            <div");
+WriteLiteral("                    </div>\r\n                </noscript>\r\n");
+
+            
+            #line 107 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
 
 WriteLiteral(" id=\"training-type-frameworks-panel\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4610), Tuple.Create("\"", 4667)
-, Tuple.Create(Tuple.Create("", 4618), Tuple.Create("toggle-content", 4618), true)
-, Tuple.Create(Tuple.Create(" ", 4632), Tuple.Create("blocklabel-content", 4633), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6291), Tuple.Create("\"", 6348)
+, Tuple.Create(Tuple.Create("", 6299), Tuple.Create("toggle-content", 6299), true)
+, Tuple.Create(Tuple.Create(" ", 6313), Tuple.Create("blocklabel-content", 6314), true)
             
-            #line 85 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-             , Tuple.Create(Tuple.Create(" ", 4651), Tuple.Create<System.Object, System.Int32>(frameworkClass
+            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                 , Tuple.Create(Tuple.Create(" ", 6332), Tuple.Create<System.Object, System.Int32>(frameworkClass
             
             #line default
             #line hidden
-, 4652), false)
+, 6333), false)
 );
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4691), Tuple.Create("\"", 4840)
-, Tuple.Create(Tuple.Create("", 4699), Tuple.Create("form-group", 4699), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 6376), Tuple.Create("\"", 6525)
+, Tuple.Create(Tuple.Create("", 6384), Tuple.Create("form-group", 6384), true)
             
-            #line 86 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 4709), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName))
+            #line 109 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 6394), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName))
             
             #line default
             #line hidden
-, 4710), false)
+, 6395), false)
 );
 
-WriteLiteral(">\r\n                    <a");
+WriteLiteral(">\r\n                        <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 4866), Tuple.Create("\"", 4933)
+WriteAttribute("name", Tuple.Create(" name=\"", 6555), Tuple.Create("\"", 6622)
             
-            #line 87 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 4873), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()
+            #line 110 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 6562), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()
             
             #line default
             #line hidden
-, 4873), false)
+, 6562), false)
 );
 
-WriteLiteral("></a>\r\n                    <label");
+WriteLiteral("></a>\r\n                        <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 4967), Tuple.Create("\"", 5012)
+WriteAttribute("for", Tuple.Create(" for=\"", 6660), Tuple.Create("\"", 6705)
             
-            #line 88 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 4973), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
+            #line 111 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 6666), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.FrameworkCodeName)
             
             #line default
             #line hidden
-, 4973), false)
+, 6666), false)
 );
 
 WriteLiteral(" class=\"form-label\"");
 
 WriteLiteral(">Apprenticeship framework</label>\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 89 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 90 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.FrameworkCodeName));
+            #line 112 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"}));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 91 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment)));
+            #line 113 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.FrameworkCodeName));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 92 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.FrameworkCodeNameComment));
+            #line 114 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n                <div");
+WriteLiteral("\r\n");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5593), Tuple.Create("\"", 5744)
-, Tuple.Create(Tuple.Create("", 5601), Tuple.Create("form-group", 5601), true)
+WriteLiteral("                        ");
+
             
-            #line 95 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 5611), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel))
+            #line 115 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.FrameworkCodeNameComment));
+
             
             #line default
             #line hidden
-, 5612), false)
+WriteLiteral("\r\n                    </div>\r\n\r\n                    <div");
+
+WriteAttribute("class", Tuple.Create(" class=\"", 7310), Tuple.Create("\"", 7461)
+, Tuple.Create(Tuple.Create("", 7318), Tuple.Create("form-group", 7318), true)
+            
+            #line 118 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 7328), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel))
+            
+            #line default
+            #line hidden
+, 7329), false)
 );
 
-WriteLiteral(">\r\n                    <a");
+WriteLiteral(">\r\n                        <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 5770), Tuple.Create("\"", 5839)
+WriteAttribute("name", Tuple.Create(" name=\"", 7491), Tuple.Create("\"", 7560)
             
-            #line 96 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 5777), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()
+            #line 119 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 7498), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()
             
             #line default
             #line hidden
-, 5777), false)
+, 7498), false)
 );
 
-WriteLiteral("></a>\r\n                    <label");
+WriteLiteral("></a>\r\n                        <label");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Apprenticeship level</label>\r\n                    ");
+WriteLiteral(">Apprenticeship level</label>\r\n                        ");
 
-WriteLiteral("\r\n                    <label");
+WriteLiteral("\r\n                        <label");
 
 WriteLiteral(" for=\"apprenticeship-level-intermediate\"");
 
@@ -576,18 +824,18 @@ WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                            ");
 
             
-            #line 100 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                   Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}));
+            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                       Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}));
 
             
             #line default
             #line hidden
-WriteLiteral(" Intermediate\r\n                    </label>\r\n                    ");
+WriteLiteral(" Intermediate\r\n                        </label>\r\n                        ");
 
-WriteLiteral("\r\n                    <label");
+WriteLiteral("\r\n                        <label");
 
 WriteLiteral(" for=\"apprenticeship-level-advanced\"");
 
@@ -595,18 +843,18 @@ WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                            ");
 
             
-            #line 104 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                   Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}));
+            #line 127 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                       Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}));
 
             
             #line default
             #line hidden
-WriteLiteral(" Advanced\r\n                    </label>\r\n                    ");
+WriteLiteral(" Advanced\r\n                        </label>\r\n                        ");
 
-WriteLiteral("\r\n                    <label");
+WriteLiteral("\r\n                        <label");
 
 WriteLiteral(" for=\"apprenticeship-level-higher\"");
 
@@ -614,18 +862,18 @@ WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n");
 
-WriteLiteral("                        ");
+WriteLiteral("                            ");
 
             
-            #line 108 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                   Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}));
+            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                       Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}));
 
             
             #line default
             #line hidden
-WriteLiteral(" Higher\r\n                    </label>\r\n                    ");
+WriteLiteral(" Higher\r\n                        </label>\r\n                        ");
 
-WriteLiteral("\r\n                    <label");
+WriteLiteral("\r\n                        <label");
 
 WriteLiteral(" for=\"apprenticeship-level-degree\"");
 
@@ -633,194 +881,203 @@ WriteLiteral(" class=\"block-label\"");
 
 WriteLiteral(">\r\n");
 
+WriteLiteral("                            ");
+
+            
+            #line 135 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                       Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" Degree\r\n                        </label>\r\n");
+
 WriteLiteral("                        ");
 
             
-            #line 112 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                   Write(Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}));
-
-            
-            #line default
-            #line hidden
-WriteLiteral(" Degree\r\n                    </label>\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 114 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.ApprenticeshipLevel));
+            #line 137 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.ApprenticeshipLevel));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 115 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment", Html.GetLabelFor(m => m.ApprenticeshipLevelComment)));
+            #line 138 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment", Html.GetLabelFor(m => m.ApprenticeshipLevelComment)));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 116 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment));
+            #line 139 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n            </div>\r\n\r\n            <div");
+WriteLiteral("\r\n                    </div>\r\n                </div>\r\n");
+
+            
+            #line 142 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
 
 WriteLiteral(" id=\"training-type-standards-panel\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7903), Tuple.Create("\"", 7959)
-, Tuple.Create(Tuple.Create("", 7911), Tuple.Create("toggle-content", 7911), true)
-, Tuple.Create(Tuple.Create(" ", 7925), Tuple.Create("blocklabel-content", 7926), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9716), Tuple.Create("\"", 9772)
+, Tuple.Create(Tuple.Create("", 9724), Tuple.Create("toggle-content", 9724), true)
+, Tuple.Create(Tuple.Create(" ", 9738), Tuple.Create("blocklabel-content", 9739), true)
             
-            #line 120 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-            , Tuple.Create(Tuple.Create(" ", 7944), Tuple.Create<System.Object, System.Int32>(standardClass
+            #line 143 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                , Tuple.Create(Tuple.Create(" ", 9757), Tuple.Create<System.Object, System.Int32>(standardClass
             
             #line default
             #line hidden
-, 7945), false)
+, 9758), false)
 );
 
-WriteLiteral(">\r\n                <div");
+WriteLiteral(">\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7983), Tuple.Create("\"", 8125)
-, Tuple.Create(Tuple.Create("", 7991), Tuple.Create("form-group", 7991), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 9800), Tuple.Create("\"", 9942)
+, Tuple.Create(Tuple.Create("", 9808), Tuple.Create("form-group", 9808), true)
             
-            #line 121 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 8001), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId))
+            #line 144 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create(" ", 9818), Tuple.Create<System.Object, System.Int32>(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId))
             
             #line default
             #line hidden
-, 8002), false)
+, 9819), false)
 );
 
-WriteLiteral(">\r\n                    <a");
+WriteLiteral(">\r\n                        <a");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 8151), Tuple.Create("\"", 8211)
+WriteAttribute("name", Tuple.Create(" name=\"", 9972), Tuple.Create("\"", 10032)
             
-            #line 122 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8158), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId).ToString().ToLower()
+            #line 145 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 9979), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId).ToString().ToLower()
             
             #line default
             #line hidden
-, 8158), false)
+, 9979), false)
 );
 
-WriteLiteral("></a>\r\n                    <label");
+WriteLiteral("></a>\r\n                        <label");
 
-WriteAttribute("for", Tuple.Create(" for=\"", 8245), Tuple.Create("\"", 8283)
+WriteAttribute("for", Tuple.Create(" for=\"", 10070), Tuple.Create("\"", 10108)
             
-            #line 123 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8251), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+            #line 146 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10076), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 8251), false)
+, 10076), false)
 );
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Apprenticeship standard</label>\r\n                    <select");
+WriteLiteral(">Apprenticeship standard</label>\r\n                        <select");
 
-WriteAttribute("name", Tuple.Create(" name=\"", 8364), Tuple.Create("\"", 8403)
+WriteAttribute("name", Tuple.Create(" name=\"", 10193), Tuple.Create("\"", 10232)
             
-            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8371), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+            #line 147 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10200), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 8371), false)
+, 10200), false)
 );
 
-WriteAttribute("id", Tuple.Create(" id=\"", 8404), Tuple.Create("\"", 8441)
+WriteAttribute("id", Tuple.Create(" id=\"", 10233), Tuple.Create("\"", 10270)
             
-            #line 124 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8409), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
+            #line 147 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10238), Tuple.Create<System.Object, System.Int32>(Html.NameFor(m => m.StandardId)
             
             #line default
             #line hidden
-, 8409), false)
+, 10238), false)
 );
 
 WriteLiteral(" class=\"para-btm-margin chosen-select\"");
 
 WriteLiteral(" style=\"min-width: 50%; margin-bottom: 15px;\"");
 
-WriteLiteral(">\r\n                        <option");
+WriteLiteral(">\r\n                            <option");
 
 WriteLiteral(" value=\"\"");
 
 WriteLiteral(">Choose from the list of standards</option>\r\n");
 
             
-            #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                        
+            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                            
             
             #line default
             #line hidden
             
-            #line 126 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                         foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
-                        {
+            #line 149 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                             foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
+                            {
 
             
             #line default
             #line hidden
-WriteLiteral("                            <optgroup");
+WriteLiteral("                                <optgroup");
 
-WriteAttribute("label", Tuple.Create(" label=\"", 8773), Tuple.Create("\"", 8799)
+WriteAttribute("label", Tuple.Create(" label=\"", 10618), Tuple.Create("\"", 10644)
             
-            #line 128 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8781), Tuple.Create<System.Object, System.Int32>(standardGroup.Key
+            #line 151 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10626), Tuple.Create<System.Object, System.Int32>(standardGroup.Key
             
             #line default
             #line hidden
-, 8781), false)
+, 10626), false)
 );
 
 WriteLiteral(">\r\n");
 
             
-            #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                
+            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                    
             
             #line default
             #line hidden
             
-            #line 129 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                 foreach (var standard in standardGroup)
-                                {
+            #line 152 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                     foreach (var standard in standardGroup)
+                                    {
 
             
             #line default
             #line hidden
-WriteLiteral("                                    <option");
+WriteLiteral("                                        <option");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 8955), Tuple.Create("\"", 8975)
+WriteAttribute("value", Tuple.Create(" value=\"", 10812), Tuple.Create("\"", 10832)
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8963), Tuple.Create<System.Object, System.Int32>(standard.Id
+            #line 154 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+, Tuple.Create(Tuple.Create("", 10820), Tuple.Create<System.Object, System.Int32>(standard.Id
             
             #line default
             #line hidden
-, 8963), false)
+, 10820), false)
 );
 
 WriteLiteral(" ");
 
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                                             Write(standard.Id == Model.StandardId ? "selected" : "");
+            #line 154 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                                 Write(standard.Id == Model.StandardId ? "selected" : "");
 
             
             #line default
@@ -828,127 +1085,136 @@ WriteLiteral(" ");
 WriteLiteral(" data-apprenticeship-level=\"");
 
             
-            #line 131 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                                                                                                                            Write(standard.ApprenticeshipLevel);
+            #line 154 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                                                                                                                Write(standard.ApprenticeshipLevel);
 
             
             #line default
             #line hidden
 WriteLiteral("\">\r\n");
 
-WriteLiteral("                                        ");
+WriteLiteral("                                            ");
 
             
-            #line 132 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                   Write(standard.Name);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("\r\n                                    </option>\r\n");
-
-            
-            #line 134 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                }
+            #line 155 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                       Write(standard.Name);
 
             
             #line default
             #line hidden
-WriteLiteral("                            </optgroup>\r\n");
+WriteLiteral("\r\n                                        </option>\r\n");
 
             
-            #line 136 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                    </select>\r\n\r\n");
-
-WriteLiteral("                    ");
-
-            
-            #line 139 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.StandardId));
+            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                    }
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n");
-
-WriteLiteral("                    ");
+WriteLiteral("                                </optgroup>\r\n");
 
             
-            #line 140 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.EditorFor(m => m.StandardIdComment, "Comment", Html.GetLabelFor(m => m.StandardIdComment)));
+            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                        </select>\r\n\r\n");
+
+WriteLiteral("                        ");
+
+            
+            #line 162 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.StandardId));
 
             
             #line default
             #line hidden
 WriteLiteral("\r\n");
 
-WriteLiteral("                    ");
+WriteLiteral("                        ");
 
             
-            #line 141 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-               Write(Html.ValidationMessageFor(m => m.StandardIdComment));
+            #line 163 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.EditorFor(m => m.StandardIdComment, "Comment", Html.GetLabelFor(m => m.StandardIdComment)));
 
             
             #line default
             #line hidden
-WriteLiteral("\r\n                </div>\r\n\r\n");
+WriteLiteral("\r\n");
+
+WriteLiteral("                        ");
 
             
-            #line 144 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                
+            #line 164 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                   Write(Html.ValidationMessageFor(m => m.StandardIdComment));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n                    </div>\r\n\r\n");
+
+            
+            #line 167 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                    
             
             #line default
             #line hidden
             
-            #line 144 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                  
-                    var style = Model.StandardId.HasValue ? "" : "display: none";
-                
+            #line 167 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                      
+                        var style = Model.StandardId.HasValue ? "" : "display: none";
+                    
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n                <div");
+WriteLiteral("\r\n\r\n                    <div");
 
 WriteLiteral(" class=\"form-group hide-nojs\"");
 
 WriteLiteral(" id=\"apprenticeship-level-container\"");
 
-WriteAttribute("style", Tuple.Create(" style=\"", 9823), Tuple.Create("\"", 9837)
+WriteAttribute("style", Tuple.Create(" style=\"", 11736), Tuple.Create("\"", 11750)
             
-            #line 148 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-             , Tuple.Create(Tuple.Create("", 9831), Tuple.Create<System.Object, System.Int32>(style
+            #line 171 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                , Tuple.Create(Tuple.Create("", 11744), Tuple.Create<System.Object, System.Int32>(style
             
             #line default
             #line hidden
-, 9831), false)
+, 11744), false)
 );
 
-WriteLiteral(">\r\n                    <label");
+WriteLiteral(">\r\n                        <label");
 
 WriteLiteral(" class=\"form-label\"");
 
-WriteLiteral(">Apprenticeship level</label>\r\n                    <p");
+WriteLiteral(">Apprenticeship level</label>\r\n                        <p");
 
 WriteLiteral(" id=\"apprenticeship-level-name\"");
 
 WriteLiteral(">");
 
             
-            #line 150 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
-                                                 Write(Html.DisplayFor(m => m.ApprenticeshipLevel));
+            #line 173 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+                                                     Write(Html.DisplayFor(m => m.ApprenticeshipLevel));
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n                </div>\r\n            </div>\r\n        </div>\r\n    </div>\r\n");
+WriteLiteral("</p>\r\n                    </div>\r\n                </div>\r\n");
 
             
-            #line 155 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 176 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("        </div>\r\n    </div>\r\n");
+
+            
+            #line 179 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
 
             
@@ -963,7 +1229,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("        ");
 
             
-            #line 157 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 181 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextAreaFor(m => m.TrainingProvided, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" }));
 
             
@@ -974,7 +1240,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 158 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 182 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.EditorFor(m => m.TrainingProvidedComment, "Comment", Html.GetLabelFor(m => m.TrainingProvidedComment)));
 
             
@@ -985,7 +1251,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 159 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 183 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.ValidationMessageFor(m => m.TrainingProvidedComment));
 
             
@@ -994,7 +1260,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 161 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 185 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
 
             
@@ -1013,7 +1279,7 @@ WriteLiteral(">Contact details for candidate</h3>\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 165 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 189 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactName,
             controlHtmlAttributes: new { type = "text", spellcheck = "false" }));
@@ -1026,7 +1292,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 169 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 193 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactNumber,
             controlHtmlAttributes: new { @class = "form-label", type = "tel", spellcheck = "false" }));
@@ -1039,7 +1305,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 173 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 197 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.FormTextFor(
             m => m.ContactEmail,
             controlHtmlAttributes: new { type = "email", spellcheck = "false" }));
@@ -1052,7 +1318,7 @@ WriteLiteral("\r\n\r\n");
 WriteLiteral("        ");
 
             
-            #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 201 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.EditorFor(m => m.ContactDetailsComment, "Comment", Html.GetLabelFor(m => m.ContactDetailsComment)));
 
             
@@ -1063,7 +1329,7 @@ WriteLiteral("\r\n");
 WriteLiteral("        ");
 
             
-            #line 178 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 202 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
    Write(Html.ValidationMessageFor(m => m.ContactDetailsComment));
 
             
@@ -1072,7 +1338,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 180 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
+            #line 204 "..\..\Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml"
 
             
             #line default

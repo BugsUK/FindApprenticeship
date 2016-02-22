@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
     using System;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
 
     public class DashboardVacancySummaryViewModel
@@ -26,5 +27,7 @@
         public bool CanBeReservedForQaByCurrentUser { get; set; }
 
         public int SubmissionCount { get; set; }
+
+        public VacancyType VacancyType { get; set; }
     }
 }

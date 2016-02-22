@@ -3,7 +3,6 @@ using NUnit.Framework;
 using RazorGenerator.Testing;
 using SFA.Apprenticeships.Web.Raa.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
-using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
@@ -13,11 +12,13 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Recruit.Views.Shared;
     using Shared;
+    using VacancySummary = Recruit.Views.VacancyPosting.VacancySummary;
 
     [TestFixture]
     public class VacancySummaryTests : ViewUnitTest
@@ -30,7 +31,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var viewModel = new VacancySummaryViewModel
             {
                 WageUnits = ApprenticeshipVacancyConverter.GetWageUnits(),
-                DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes()
+                DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(VacancyType.Apprenticeship)
             };
            
             var view = details.RenderAsHtml(viewModel);

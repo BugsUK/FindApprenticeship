@@ -1,0 +1,42 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model VacancyViewModel
+
+@{
+    var editableItemClass = ViewData["editableItemClass"];
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+{
+    <section class="section-border grid-wrapper" id="course-info">
+        <h2 class="heading-large">Questions for candidates</h2>
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <div class="text">
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.FirstQuestion))
+                    {
+                        <div class="@editableItemClass">
+                            <h3 class="heading-small">
+                                First question
+                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.VacancyQuestionsViewModel.FirstQuestionComment, Model.QuestionsLink))
+                            </h3>
+                            <p class="preserve-formatting">@Html.Raw(Model.VacancyQuestionsViewModel.FirstQuestion)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.FirstQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.FirstQuestionComment))
+                        </div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.VacancyQuestionsViewModel.SecondQuestion))
+                    {
+                        <div class="@editableItemClass">
+                            <h3 class="heading-small">
+                                Second question
+                                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.VacancyQuestionsViewModel.SecondQuestionComment, Model.QuestionsLink))
+                            </h3>
+                            <p class="preserve-formatting">@Html.Raw(Model.VacancyQuestionsViewModel.SecondQuestion)</p>
+                            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyQuestionsViewModel.SecondQuestion, Model.QuestionsLink, Model.VacancyQuestionsViewModel.SecondQuestionComment))
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </section>
+}

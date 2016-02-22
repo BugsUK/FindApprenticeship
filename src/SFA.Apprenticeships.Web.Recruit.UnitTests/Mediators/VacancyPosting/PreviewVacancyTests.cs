@@ -2,15 +2,16 @@
 {
     using System;
     using System.Linq;
+    using Builders;
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Constants.ViewModels;
-    using Raa.Common.UnitTests.Builders;
     using Raa.Common.ViewModels.Vacancy;
     using Recruit.Mediators.VacancyPosting;
 
@@ -51,7 +52,7 @@
         public void CanHaveApplications_NoApplicationsRouteTest(ProviderVacancyStatuses status)
         {
             //Arrange
-            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 0;
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
@@ -70,7 +71,7 @@
         public void CanHaveApplications_OneApplicationRouteTest(ProviderVacancyStatuses status)
         {
             //Arrange
-            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 1;
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
@@ -90,7 +91,7 @@
         public void CannotHaveApplications(ProviderVacancyStatuses status)
         {
             //Arrange
-            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
@@ -108,7 +109,7 @@
         public void CanHaveClickThroughs_NoClickThroughsRouteTest(ProviderVacancyStatuses status)
         {
             //Arrange
-            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 0;
             VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
@@ -128,7 +129,7 @@
         public void CanHaveClickThroughs_OneClickThroughRouteTest(ProviderVacancyStatuses status)
         {
             //Arrange
-            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status);
+            var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 1;
             vacancyViewModel.ApplicationCount = 0;

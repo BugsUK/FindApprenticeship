@@ -41,6 +41,8 @@
 
         List<StandardViewModel> GetStandards();
 
+        List<SelectListItem> GetSectors();
+
         StandardViewModel GetStandard(int? standardId);
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);

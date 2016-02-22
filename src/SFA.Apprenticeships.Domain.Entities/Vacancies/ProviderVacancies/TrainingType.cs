@@ -4,6 +4,7 @@
     {
         Unknown = 0,
         Frameworks = 1,
-        Standards = 2
+        Standards = 2,
+        Sectors = 3
     }
 }

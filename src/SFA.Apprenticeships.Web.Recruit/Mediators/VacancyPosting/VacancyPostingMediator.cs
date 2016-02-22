@@ -12,6 +12,7 @@
     using Common.Validators.Extensions;
     using Common.ViewModels;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Vacancies;
     using Raa.Common.Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
@@ -340,8 +341,10 @@
             viewModel.TrainingType = TrainingType.Frameworks;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.FrameworkCodeName = null;
+            viewModel.SectorCodeName = null;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
@@ -350,9 +353,11 @@
         {
             viewModel.TrainingType = TrainingType.Standards;
             viewModel.StandardId = null;
+            viewModel.SectorCodeName = null;
             viewModel.ApprenticeshipLevel = ApprenticeshipLevel.Unknown;
             viewModel.Standards = _vacancyPostingProvider.GetStandards();
             viewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
+            viewModel.Sectors = _vacancyPostingProvider.GetSectors();
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetTrainingDetailsViewModel.Ok, viewModel);
         }
@@ -516,6 +521,7 @@
         {
             trainingDetailsViewModel.SectorsAndFrameworks = _vacancyPostingProvider.GetSectorsAndFrameworks();
             trainingDetailsViewModel.Standards = _vacancyPostingProvider.GetStandards();
+            trainingDetailsViewModel.Sectors = _vacancyPostingProvider.GetSectors();
             if (trainingDetailsViewModel.TrainingType == TrainingType.Standards && trainingDetailsViewModel.StandardId.HasValue)
             {
                 var standard = _vacancyPostingProvider.GetStandard(trainingDetailsViewModel.StandardId);
@@ -529,6 +535,7 @@
             trainingDetailsViewModel.ApprenticeshipLevelComment = storedVacancy.TrainingDetailsViewModel.ApprenticeshipLevelComment;
             trainingDetailsViewModel.FrameworkCodeNameComment = storedVacancy.TrainingDetailsViewModel.FrameworkCodeNameComment;
             trainingDetailsViewModel.StandardIdComment = storedVacancy.TrainingDetailsViewModel.StandardIdComment;
+            trainingDetailsViewModel.SectorCodeNameComment = storedVacancy.TrainingDetailsViewModel.SectorCodeNameComment;
         }
 
         public MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber, bool validate, bool? comeFromPreview)
@@ -559,7 +566,7 @@
             if (!validationResult.IsValid && !warningsAccepted)
             {
                 viewModel.WageUnits = ApprenticeshipVacancyConverter.GetWageUnits();
-                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes();
+                viewModel.DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(viewModel.VacancyType);
                 viewModel.WarningsHash = validationResult.GetWarningsHash();
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation, viewModel, validationResult);
@@ -811,9 +818,18 @@
             {
                 VacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, ProviderSiteErn = vacancyViewModel.NewVacancyViewModel.ProviderSiteEmployerLink.ProviderSiteErn,
                 Resubmitted = resubmitted,
-                VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location vacancy" : "Vacancy",
-                IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy
+                IsMultiLocationVacancy = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy,
+                VacancyType = vacancyViewModel.VacancyType
             };
+
+            if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
+            {
+                viewModel.VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location traineeship opportunity" : "Traineeship opportunity";
+            }
+            else
+            {
+                viewModel.VacancyText = vacancyViewModel.IsUnapprovedMultiLocationParentVacancy ? "Multi location vacancy" : "Vacancy";
+            }
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetSubmittedVacancyViewModel.Ok, viewModel);
         }

@@ -5,6 +5,7 @@
     using Constants.ViewModels;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Extensions;
+    using Domain.Entities.Vacancies;
     using FluentValidation.Results;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
@@ -14,6 +15,7 @@
     {
         // TODO: we are using these constants in the decimal extension methods class. Maybe we should move it to a common place?
         private const int AYearInWeeks = 52;
+        private const int SixMonthsInWeeks = 26;
         private const int AYearInMonths = 12;
 
         private static readonly List<MinimumDurationForHoursPerWeek> HoursAndMinDurationLookup = new List
@@ -60,8 +62,27 @@
             }
         }
 
+        public static bool DurationBetweenSixWeeksAndSixMonths(this VacancySummaryViewModel viewModel)
+        {
+            switch (viewModel.DurationType)
+            {
+                case DurationType.Weeks:
+                    return viewModel.Duration >= 6 && viewModel.Duration <= SixMonthsInWeeks;
+                case DurationType.Months:
+                    return viewModel.Duration >= 2 && viewModel.Duration <= 6;
+                default:
+                    return false;
+            }
+        }
+
         public static ValidationFailure ExpectedDurationGreaterThanOrEqualToMinimumDuration(this VacancySummaryViewModel viewModel, decimal? duration, string parentPropertyName)
         {
+            if (viewModel.VacancyType == VacancyType.Traineeship)
+            {
+                //This rule is not applicable to Traineeships
+                return null;
+            }
+
             if (!viewModel.HoursPerWeek.HasValue || !duration.HasValue)
             {
                 //Other errors will superceed this one so return valid

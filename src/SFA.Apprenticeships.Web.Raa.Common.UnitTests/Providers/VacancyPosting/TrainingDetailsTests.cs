@@ -6,6 +6,7 @@
     using Domain.Entities.Organisations;
     using Domain.Entities.Providers;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
@@ -334,6 +335,24 @@
             // Assert.
             viewModel.Should().NotBeNull();
             viewModel.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Unknown);
+        }
+
+        [Test]
+        public void ShouldSetTrainingTypeIfTraineeship()
+        {
+            // Arrange.
+            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>())).Returns(new TrainingDetailsViewModel
+            {
+                VacancyType = VacancyType.Traineeship
+            });
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.GetTrainingDetailsViewModel(VacancyReferenceNumber);
+
+            // Assert.
+            viewModel.Should().NotBeNull();
+            viewModel.TrainingType.Should().Be(TrainingType.Sectors);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿@model TrainingDetailsViewModel
+@using SFA.Apprenticeships.Domain.Entities.Vacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
 @using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
@@ -13,7 +14,7 @@
     var standardsSelected = Model.TrainingType == TrainingType.Standards ? selected : null;
 
     <h1 class="heading-xlarge">
-        Apprenticeship training
+        Enter training details
     </h1>
 
     @Html.AntiForgeryToken()
@@ -21,6 +22,7 @@
 
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.Status)
+    @Html.HiddenFor(m => m.VacancyType)
     @Html.HiddenFor(m => m.ComeFromPreview)
 
     var isAnyTrainingTypeSelected = Model.TrainingType != TrainingType.Unknown;
@@ -31,125 +33,147 @@
 
     <div class="form-group">
         <div class="blocklabel-single-container">
-            <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
-                <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                <label class="form-label">Apprenticeship type</label>
+            @if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                @Html.HiddenFor(m => m.TrainingType)
+                @Html.HiddenFor(m => m.FrameworkCodeName)
+                @Html.HiddenFor(m => m.FrameworkCodeNameComment)
+                @Html.HiddenFor(m => m.StandardId)
+                @Html.HiddenFor(m => m.StandardIdComment)
+                @Html.HiddenFor(m => m.ApprenticeshipLevel)
+                @Html.HiddenFor(m => m.ApprenticeshipLevelComment)
 
-                <p id="frameworks-standards-explained">
-                    <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
-                    <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
-                </p>
-
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
-                    @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
-                    Framework
-                </label>
-                @* ReSharper disable once Html.IdNotResolved *@
-                <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label @standardsSelected">
-                    @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
-                    Standard
-                </label>
-                @Html.ValidationMessageFor(m => m.TrainingType)
-            </div>
-
-            <noscript>
-                <div class="form-group">
-                    <h3 class="bold-small">Apprenticeship type</h3>
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.SectorCodeName)))">
+                    <a name="@Html.NameFor(m => m.SectorCodeName).ToString().ToLower()"></a>
+                    <label for="@Html.NameFor(m => m.SectorCodeName)" class="form-label">Traineeship sector</label>
+                    @Html.DropDownListFor(m => m.SectorCodeName, Model.Sectors, new { @class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;" })
+                    @Html.ValidationMessageFor(m => m.SectorCodeName)
+                    @Html.EditorFor(m => m.SectorCodeNameComment, "Comment", Html.GetLabelFor(m => m.SectorCodeNameComment))
+                    @Html.ValidationMessageFor(m => m.SectorCodeNameComment)
+                </div>
+            }
+            else
+            {
+                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
+                    <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
+                    <label class="form-label">Apprenticeship type</label>
 
                     <p id="frameworks-standards-explained">
                         <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
                         <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
                     </p>
 
-                    @if (isFramework)
-                    {
-                        <label class="unselected-apprenticeship-type">Framework</label>
-                    }
-                    else
-                    {
-                        <button id="selectFramework" type="submit" class="button-link" name="TrainingDetails" value="SelectFramework">Framework</button>
-                    }
-
-                    @if (isStandard)
-                    {
-                        <label class="unselected-apprenticeship-type">Standard</label>
-                    }
-                    else
-                    {
-                        <button id="selectStandard" type="submit" class="button-link" name="TrainingDetails" value="SelectStandard">Standard</button>
-                    }
-                </div>
-            </noscript>
-
-            <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
-                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
-                    <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
-                    <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
-                    @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"})
-                    @Html.ValidationMessageFor(m => m.FrameworkCodeName)
-                    @Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment))
-                    @Html.ValidationMessageFor(m => m.FrameworkCodeNameComment)
+                    @* ReSharper disable once Html.IdNotResolved *@
+                    <label data-target="training-type-frameworks-panel" for="training-type-frameworks" class="block-label @frameworksSelected">
+                        @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Frameworks, new {id = "training-type-frameworks", aria_controls = "training-type-frameworks-panel"})
+                        Framework
+                    </label>
+                    @* ReSharper disable once Html.IdNotResolved *@
+                    <label data-target="training-type-standards-panel" for="training-type-standards" class="block-label @standardsSelected">
+                        @Html.RadioButtonFor(model => model.TrainingType, TrainingType.Standards, new {id = "training-type-standards", aria_controls = "training-type-standards-panel"})
+                        Standard
+                    </label>
+                    @Html.ValidationMessageFor(m => m.TrainingType)
                 </div>
 
-                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
-                    <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
-                    <label class="form-label">Apprenticeship level</label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-intermediate" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-advanced" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-higher" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
-                    </label>
-                    @* ReSharper disable once Html.IdNotResolved *@
-                    <label for="apprenticeship-level-degree" class="block-label">
-                        @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
-                    </label>
-                    @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
-                    @Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment", Html.GetLabelFor(m => m.ApprenticeshipLevelComment))
-                    @Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment)
-                </div>
-            </div>
+                <noscript>
+                    <div class="form-group">
+                        <h3 class="bold-small">Apprenticeship type</h3>
 
-            <div id="training-type-standards-panel" class="toggle-content blocklabel-content @standardClass">
-                <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
-                    <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
-                    <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
-                    <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
-                        <option value="">Choose from the list of standards</option>
-                        @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
+                        <p id="frameworks-standards-explained">
+                            <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
+                            <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+                        </p>
+
+                        @if (isFramework)
                         {
-                            <optgroup label="@standardGroup.Key">
-                                @foreach (var standard in standardGroup)
-                                {
-                                    <option value="@standard.Id" @(standard.Id == Model.StandardId ? "selected" : "") data-apprenticeship-level="@standard.ApprenticeshipLevel">
-                                        @standard.Name
-                                    </option>
-                                }
-                            </optgroup>
+                            <label class="unselected-apprenticeship-type">Framework</label>
                         }
-                    </select>
+                        else
+                        {
+                            <button id="selectFramework" type="submit" class="button-link" name="TrainingDetails" value="SelectFramework">Framework</button>
+                        }
 
-                    @Html.ValidationMessageFor(m => m.StandardId)
-                    @Html.EditorFor(m => m.StandardIdComment, "Comment", Html.GetLabelFor(m => m.StandardIdComment))
-                    @Html.ValidationMessageFor(m => m.StandardIdComment)
+                        @if (isStandard)
+                        {
+                            <label class="unselected-apprenticeship-type">Standard</label>
+                        }
+                        else
+                        {
+                            <button id="selectStandard" type="submit" class="button-link" name="TrainingDetails" value="SelectStandard">Standard</button>
+                        }
+                    </div>
+                </noscript>
+
+                <div id="training-type-frameworks-panel" class="toggle-content blocklabel-content @frameworkClass">
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.FrameworkCodeName)))">
+                        <a name="@Html.NameFor(m => m.FrameworkCodeName).ToString().ToLower()"></a>
+                        <label for="@Html.NameFor(m => m.FrameworkCodeName)" class="form-label">Apprenticeship framework</label>
+                        @Html.DropDownListFor(m => m.FrameworkCodeName, Model.SectorsAndFrameworks, new {@class = "para-btm-margin chosen-select", style = "min-width: 50%; margin-bottom: 15px;"})
+                        @Html.ValidationMessageFor(m => m.FrameworkCodeName)
+                        @Html.EditorFor(m => m.FrameworkCodeNameComment, "Comment", Html.GetLabelFor(m => m.FrameworkCodeNameComment))
+                        @Html.ValidationMessageFor(m => m.FrameworkCodeNameComment)
+                    </div>
+
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ApprenticeshipLevel)))">
+                        <a name="@Html.NameFor(m => m.ApprenticeshipLevel).ToString().ToLower()"></a>
+                        <label class="form-label">Apprenticeship level</label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-level-intermediate" class="block-label">
+                            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Intermediate, new {id = "apprenticeship-level-intermediate", aria_labelledby = "apprenticeship-level-label"}) Intermediate
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-level-advanced" class="block-label">
+                            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Advanced, new {id = "apprenticeship-level-advanced", aria_labelledby = "apprenticeship-level-label"}) Advanced
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-level-higher" class="block-label">
+                            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Higher, new {id = "apprenticeship-level-higher", aria_labelledby = "apprenticeship-level-label"}) Higher
+                        </label>
+                        @* ReSharper disable once Html.IdNotResolved *@
+                        <label for="apprenticeship-level-degree" class="block-label">
+                            @Html.RadioButtonFor(model => model.ApprenticeshipLevel, ApprenticeshipLevel.Degree, new {id = "apprenticeship-level-degree", aria_labelledby = "apprenticeship-level-label"}) Degree
+                        </label>
+                        @Html.ValidationMessageFor(m => m.ApprenticeshipLevel)
+                        @Html.EditorFor(m => m.ApprenticeshipLevelComment, "Comment", Html.GetLabelFor(m => m.ApprenticeshipLevelComment))
+                        @Html.ValidationMessageFor(m => m.ApprenticeshipLevelComment)
+                    </div>
                 </div>
 
-                @{
-                    var style = Model.StandardId.HasValue ? "" : "display: none";
-                }
+                <div id="training-type-standards-panel" class="toggle-content blocklabel-content @standardClass">
+                    <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.StandardId)))">
+                        <a name="@Html.NameFor(m => m.StandardId).ToString().ToLower()"></a>
+                        <label for="@Html.NameFor(m => m.StandardId)" class="form-label">Apprenticeship standard</label>
+                        <select name="@Html.NameFor(m => m.StandardId)" id="@Html.NameFor(m => m.StandardId)" class="para-btm-margin chosen-select" style="min-width: 50%; margin-bottom: 15px;">
+                            <option value="">Choose from the list of standards</option>
+                            @foreach (var standardGroup in Model.Standards.GroupBy(s => s.Sector))
+                            {
+                                <optgroup label="@standardGroup.Key">
+                                    @foreach (var standard in standardGroup)
+                                    {
+                                        <option value="@standard.Id" @(standard.Id == Model.StandardId ? "selected" : "") data-apprenticeship-level="@standard.ApprenticeshipLevel">
+                                            @standard.Name
+                                        </option>
+                                    }
+                                </optgroup>
+                            }
+                        </select>
 
-                <div class="form-group hide-nojs" id="apprenticeship-level-container" style="@style">
-                    <label class="form-label">Apprenticeship level</label>
-                    <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
+                        @Html.ValidationMessageFor(m => m.StandardId)
+                        @Html.EditorFor(m => m.StandardIdComment, "Comment", Html.GetLabelFor(m => m.StandardIdComment))
+                        @Html.ValidationMessageFor(m => m.StandardIdComment)
+                    </div>
+
+                    @{
+                        var style = Model.StandardId.HasValue ? "" : "display: none";
+                    }
+
+                    <div class="form-group hide-nojs" id="apprenticeship-level-container" style="@style">
+                        <label class="form-label">Apprenticeship level</label>
+                        <p id="apprenticeship-level-name">@Html.DisplayFor(m => m.ApprenticeshipLevel)</p>
+                    </div>
                 </div>
-            </div>
+            }
         </div>
     </div>
 

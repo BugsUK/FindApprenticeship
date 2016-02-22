@@ -8,6 +8,7 @@
     using Provider;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
+    using Domain.Entities.Vacancies;
     using VacancyPosting;
 
     public class VacancyViewModel
@@ -31,6 +32,8 @@
         public string FrameworkName { get; set; }
 
         public string StandardName { get; set; }
+
+        public string SectorName { get; set; }
 
         public ProviderSiteViewModel ProviderSite { get; set; }
 
@@ -87,5 +90,17 @@
         public ContactDetailsAndVacancyHistoryViewModel ContactDetailsAndVacancyHistory { get; set; }
 
         public bool IsEditable { get; set; }
+
+        public VacancyType VacancyType { get; set; }
+
+        public bool IsSingleLocation
+        {
+            get
+            {
+                return NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true ||
+                       (NewVacancyViewModel.LocationAddresses != null &&
+                        NewVacancyViewModel.LocationAddresses.Count == 1);
+            }
+        }
     }
 }

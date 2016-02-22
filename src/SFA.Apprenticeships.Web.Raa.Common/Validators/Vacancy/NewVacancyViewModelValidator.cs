@@ -4,6 +4,7 @@
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentValidation;
     using Constants.ViewModels;
+    using Domain.Entities.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
     using Common = Validators.Common;
@@ -52,10 +53,6 @@
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            validator.RuleFor(x => x.OfflineVacancy)
-                .NotNull()
-                .WithMessage(VacancyViewModelMessages.OfflineVacancy.RequiredErrorText);
-
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText)
@@ -100,10 +97,18 @@
                 .NotEmpty()
                 .WithMessage(VacancyViewModelMessages.ShortDescription.RequiredErrorText);
 
+            validator.RuleFor(x => x.OfflineVacancy)
+                .NotNull()
+                .WithMessage(VacancyViewModelMessages.OfflineVacancy.RequiredErrorText);
+
             validator.RuleFor(m => m.OfflineApplicationUrl)
                 .Must(Common.IsValidUrl)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ErrorUriText)
-                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value == true);
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
+
+            validator.RuleFor(viewModel => (int)viewModel.VacancyType)
+                .InclusiveBetween((int)VacancyType.Apprenticeship, (int)VacancyType.Traineeship)
+                .WithMessage(VacancyViewModelMessages.VacancyType.RequiredErrorText);
         }
     }
 }

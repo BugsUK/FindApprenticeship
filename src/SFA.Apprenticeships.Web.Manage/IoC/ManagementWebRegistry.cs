@@ -1,8 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using System.Web;
+    using Application.Candidate;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
@@ -26,6 +28,8 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
+    using Mappers;
+    using Mediators.Candidate;
     using Raa.Common.Providers;
 
     public class ManagementWebRegistry : Registry
@@ -34,6 +38,7 @@
         {
             For<HttpContextBase>().Use(ctx => new HttpContextWrapper(HttpContext.Current));
             For<IMapper>().Singleton().Use<RaaCommonWebMappers>().Name = "RaaCommonWebMappers";
+            For<IMapper>().Singleton().Use<CandidateMappers>().Name = "CandidateMappers";
 
             RegisterCodeGenerators();
             RegisterServices();
@@ -53,9 +58,10 @@
             For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
             For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
-            For<IVacancyQAProvider>().Use<VacancyProvider>();
+            For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
+            For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
         }
 
         private void RegisterServices()
@@ -65,6 +71,7 @@
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
+            For<ICandidateSearchService>().Use<CandidateSearchService>();
         }
 
         private void RegisterStrategies()
@@ -87,6 +94,7 @@
         private void RegisterMediators()
         {
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
+            For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
         }
     }

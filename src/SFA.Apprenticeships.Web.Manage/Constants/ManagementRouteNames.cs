@@ -26,5 +26,9 @@
         public const string AddLocations = "AddLocations";
         public const string SearchAddresses = "SearchAddresses";
         public const string ShowLocations = "ShowLocations";
+
+        //Helpdesk
+        public const string Candidates = "Candidates";
+        public const string SearchCandidates = "SearchCandidates";
     }
 }

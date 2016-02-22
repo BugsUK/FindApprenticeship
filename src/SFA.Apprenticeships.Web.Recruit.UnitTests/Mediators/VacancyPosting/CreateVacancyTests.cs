@@ -3,6 +3,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Common.ViewModels.Locations;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.ProviderVacancies;
     using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
@@ -36,7 +37,8 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = ALong,
+                VacancyType = VacancyType.Apprenticeship
             });
 
             result.Should()
@@ -61,7 +63,8 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = ALong,
+                VacancyType = VacancyType.Apprenticeship
             });
 
             result.Should()

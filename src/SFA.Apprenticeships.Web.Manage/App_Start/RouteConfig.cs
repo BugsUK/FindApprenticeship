@@ -145,6 +145,18 @@
                defaults: new { controller = "Vacancy", action = "ShowLocations" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.Candidates,
+               url: "candidates",
+               defaults: new { controller = "Candidate", action = "Index" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.SearchCandidates,
+               url: "candidates/search",
+               defaults: new { controller = "Candidate", action = "Search" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

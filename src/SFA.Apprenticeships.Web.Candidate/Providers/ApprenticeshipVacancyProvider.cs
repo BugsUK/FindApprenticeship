@@ -210,7 +210,7 @@
         public ApprenticeshipVacancyDetailViewModel IncrementClickThroughFor(int vacancyId)
         {
             _logger.Debug(
-                "Calling ApprenticeshipVacancyDetailProvider to increment click throughs for vacancy ID: {0}.", vacancyId);
+                "Calling ApprenticeshipVacancyDetailProvider to increment click-throughs for vacancy ID: {0}.", vacancyId);
 
             var vacancyDetail = _apprenticeshipSearchService.GetVacancyDetails(vacancyId);
 
@@ -225,7 +225,7 @@
             }
             catch (Exception e)
             {
-                var message = $"Increment click throughs failed for vacancy ID: {vacancyId}.";
+                var message = $"Increment click-throughs failed for vacancy ID: {vacancyId}.";
 
                 _logger.Error(message, e);
             }

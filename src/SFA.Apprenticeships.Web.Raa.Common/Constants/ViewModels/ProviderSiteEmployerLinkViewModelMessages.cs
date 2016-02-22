@@ -13,7 +13,7 @@
         }
         public static class WebsiteUrl
         {
-            public const string LabelText = "Website (optional)";
+            public const string LabelText = "Employer website (optional)";
             public const string ErrorUriText = "Enter a valid website url";
         }
 

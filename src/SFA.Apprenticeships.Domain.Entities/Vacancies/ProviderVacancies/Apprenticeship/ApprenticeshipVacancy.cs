@@ -71,6 +71,8 @@
             FrameworkCodeNameComment = previousVacancy.FrameworkCodeNameComment;
             StandardId = previousVacancy.StandardId;
             StandardIdComment = previousVacancy.StandardIdComment;
+            SectorCodeName = previousVacancy.SectorCodeName;
+            SectorCodeNameComment = previousVacancy.SectorCodeNameComment;
             Status = previousVacancy.Status;
             WageComment = previousVacancy.WageComment;
             ClosingDateComment = previousVacancy.ClosingDateComment;
@@ -95,6 +97,7 @@
             ContactNumber = previousVacancy.ContactNumber;
             ContactEmail = previousVacancy.ContactEmail;
             ContactDetailsComment = previousVacancy.ContactDetailsComment;
+            VacancyType = previousVacancy.VacancyType;
         }
 
         public TrainingType TrainingType { get; set; }
@@ -104,6 +107,8 @@
         public string FrameworkCodeNameComment { get; set; }
         public int? StandardId { get; set; }
         public string StandardIdComment { get; set; }
+        public string SectorCodeName { get; set; }
+        public string SectorCodeNameComment { get; set; }
         public ProviderVacancyStatuses Status { get; set; }
         public string WageComment { get; set; }
         public string ClosingDateComment { get; set; }
@@ -128,5 +133,6 @@
         public string ContactNumber { get; set; }
         public string ContactEmail { get; set; }
         public string ContactDetailsComment { get; set; }
+        public VacancyType VacancyType { get; set; }
     }
 }
