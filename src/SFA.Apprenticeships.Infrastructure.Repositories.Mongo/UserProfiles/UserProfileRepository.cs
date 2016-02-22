@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
@@ -67,6 +68,12 @@
         public ProviderUser Save(ProviderUser entity)
         {
             _logger.Debug("Called Mongodb to save provider user with username={0}", entity.Username);
+
+            if (entity.ProviderUserGuid == Guid.Empty)
+            {
+                entity.ProviderUserGuid = Guid.NewGuid();
+                entity.ProviderUserId = entity.ProviderUserGuid.GetHashCode();
+            }
 
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);

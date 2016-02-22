@@ -22,6 +22,16 @@
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
+            For<IVacancyLocationAddressReadRepository>()
+                .Use<VacancyLocationAddressRepository>()
+                .Ctor<IMapper>()
+                .Named("ApprenticeshipVacancyMappers");
+
+            For<IVacancyLocationAddressWriteRepository>()
+                .Use<VacancyLocationAddressRepository>()
+                .Ctor<IMapper>()
+                .Named("ApprenticeshipVacancyMappers");
+
             For<IOfflineApprenticeshipVacancyRepository>()
                 .Use<OfflineApprenticeshipVacancyRepository>()
                 .Ctor<IMapper>()

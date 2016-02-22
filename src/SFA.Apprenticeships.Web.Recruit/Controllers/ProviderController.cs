@@ -117,7 +117,7 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case ProviderMediatorCodes.UpdateSite.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new { ern = response.ViewModel.Ern });
+                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new { ern = response.ViewModel.EdsErn });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

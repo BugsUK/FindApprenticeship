@@ -10,6 +10,7 @@
         }
 
         public int ProviderUserId { get; set; }
+        public Guid ProviderUserGuid { get; set; }
 
         public string Username { get; set; }
 

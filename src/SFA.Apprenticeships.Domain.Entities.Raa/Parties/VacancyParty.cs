@@ -5,6 +5,7 @@
     public class VacancyParty : ICreatableEntity, IUpdatableEntity
     {
         public int VacancyPartyId { get; set; }
+        public Guid VacancyPartyGuid { get; set; }
         public int ProviderSiteId { get; set; }
         public int EmployerId { get; set; }
         public string EmployerDescription { get; set; }

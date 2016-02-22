@@ -5,6 +5,7 @@
     public class AgencyUser : ICreatableEntity, IUpdatableEntity
     {
         public int AgencyUserId { get; set; }
+        public Guid AgencyUserGuid { get; set; }
         public string Username { get; set; }
         public Team Team { get; set; }
         public Role Role { get; set; }

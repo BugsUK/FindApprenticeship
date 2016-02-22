@@ -171,6 +171,8 @@
     <Compile Include="Users\IoC\UserRepositoryRegistry.cs" />
     <Compile Include="Users\Mappers\UserMappers.cs" />
     <Compile Include="Users\UserRepository.cs" />
+    <Compile Include="Vacancies\Entities\MongoVacancyLocationAddress.cs" />
+    <Compile Include="Vacancies\VacancyLocationAddressRepository.cs" />
     <Compile Include="Vacancies\VacancyRepository.cs" />
     <Compile Include="Vacancies\Entities\MongoApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />

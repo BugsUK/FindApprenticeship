@@ -49,6 +49,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
             var provider = new Provider
             {
+                ProviderId = legacyProvider.ProviderID,
                 Ukprn = legacyProvider.UKPRN.ToString(),
                 Name = legacyProvider.FullName
             };
@@ -58,7 +59,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public ProviderSite GetProviderSite(string ukprn, string ern)
         {
-            const string sql = @"SELECT p.UKPRN, ps.* 
+            const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
@@ -77,7 +78,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
-            const string sql = @"SELECT p.UKPRN, ps.* 
+            const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
@@ -117,6 +118,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
             var providerSite = new ProviderSite
             {
+                ProviderSiteId = legacyProviderSite.ProviderSiteID,
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
                 EdsErn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,

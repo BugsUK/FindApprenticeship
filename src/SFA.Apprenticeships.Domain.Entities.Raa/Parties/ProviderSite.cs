@@ -6,7 +6,7 @@
     public class ProviderSite : ICreatableEntity, IUpdatableEntity
     {
         public int ProviderSiteId { get; set; }
-        //TODO: Review the name of this property - It's specific to employers (Employer Reference Number) and should perhaps be EDSURN (Employer Data Service Unique Reference Number)
+        public Guid ProviderSiteGuid { get; set; }
         public string EdsErn { get; set; }
         public string Ukprn { get; set; }
         public string Name { get; set; }
