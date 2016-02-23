@@ -28,15 +28,6 @@
             return _organisationService.GetEmployer(employerId);
         }
 
-        public Employer GetEmployer(string edsUrn)
-        {
-            Condition.Requires(edsUrn).IsNotNullOrEmpty();
-
-            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsUrn);
-
-            return _organisationService.GetEmployer(edsUrn);
-        }
-
         public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds)
         {
             return _organisationService.GetByIds(employerIds);
