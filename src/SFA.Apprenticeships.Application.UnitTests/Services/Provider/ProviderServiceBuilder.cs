@@ -11,7 +11,7 @@
     public class ProviderServiceBuilder
     {
         private IOrganisationService _organisationService;
-        private readonly IEmployerService _employerService;
+        private IEmployerService _employerService;
         private IProviderReadRepository _providerReadRepository;
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
@@ -42,6 +42,12 @@
         public ProviderServiceBuilder With(IOrganisationService organisationService)
         {
             _organisationService = organisationService;
+            return this;
+        }
+
+        public ProviderServiceBuilder With(IEmployerService employerService)
+        {
+            _employerService = employerService;
             return this;
         }
 

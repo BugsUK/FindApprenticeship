@@ -190,41 +190,40 @@ namespace SFA.Apprenticeships.Application.Provider
             //Combine with results from repository
             vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();
 
-            var employers = _employerService.GetEmployers(vacancyParties.Select(v => v.EmployerId).Distinct());
-
-            //TODO: All searching needs doing here rather than the repositories
-            /*if (searchRequest.IsNameAndLocationQuery)
+            if (request.IsQuery)
             {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
+                var employers = _employerService.GetEmployers(vacancyParties.Select(v => v.EmployerId).Distinct());
 
-                parameterList = new
+                if (request.IsEmployerEdsUrnQuery)
                 {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    NameSearchParameter = searchRequest.Name,
-                    LocationSearchParameter = searchRequest.Location
-                };
+                    employers = employers.Where(e => e.EdsUrn == request.EmployerEdsUrn);
+                }
+                else if (request.IsNameAndLocationQuery)
+                {
+                    employers = employers.Where(e =>
+                        e.Name.ToLower().Contains(request.Name.ToLower()) &&
+                        ((e.Address.Postcode != null &&
+                          e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                         (e.Address.AddressLine4 != null &&
+                          e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
+                }
+                else if (request.IsNameQuery)
+                {
+                    employers = employers.Where(e => e.Name.ToLower().Contains(request.Name.ToLower()));
+                }
+                else if (request.IsLocationQuery)
+                {
+                    employers = employers.Where(e =>
+                        (e.Address.Postcode != null &&
+                         e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                        (e.Address.AddressLine4 != null &&
+                         e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower())));
+                }
+
+                vacancyParties = vacancyParties.Where(vp => employers.Any(e => e.EmployerId == vp.EmployerId)).ToList();
             }
-            else if (searchRequest.IsNameQuery)
-            {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    NameSearchParameter = searchRequest.Name
-                };
-            }
-            else if (searchRequest.IsLocationQuery)
-            {
-                queryBuilder.Append(" AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
 
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    LocationSearchParameter = searchRequest.Location
-                };
-            }*/
-
-            return vacancyParties.Where(vp => employers.Any(e => e.EmployerId == vp.EmployerId)).ToList();
+            return vacancyParties;
         }
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)

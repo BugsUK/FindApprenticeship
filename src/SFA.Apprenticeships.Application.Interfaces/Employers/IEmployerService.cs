@@ -61,5 +61,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         public bool IsNameAndLocationQuery => !string.IsNullOrWhiteSpace(Name) && !string.IsNullOrWhiteSpace(Location);
 
         public bool IsLocationQuery => !string.IsNullOrWhiteSpace(Location) && string.IsNullOrWhiteSpace(Name);
+
+        public bool IsQuery => IsEmployerEdsUrnQuery || IsNameQuery || IsNameAndLocationQuery || IsLocationQuery;
     }
 }
