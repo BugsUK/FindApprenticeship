@@ -2,7 +2,6 @@
 {
     using Constants.ViewModels;
     using FluentValidation;
-    using Recruit.Validators.VacancyPosting;
     using ViewModels.VacancyPosting;
 
     public class LocationSearchViewModelValidator : AbstractValidator<LocationSearchViewModel>

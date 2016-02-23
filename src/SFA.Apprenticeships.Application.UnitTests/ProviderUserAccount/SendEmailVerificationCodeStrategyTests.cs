@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
     using Interfaces.Users;

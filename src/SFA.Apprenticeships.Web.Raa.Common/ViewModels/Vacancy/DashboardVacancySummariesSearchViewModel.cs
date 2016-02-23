@@ -9,7 +9,7 @@
             
         }
 
-        public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewMode) : this()
+        public DashboardVacancySummariesSearchViewModel(DashboardVacancySummariesSearchViewModel viewModel) : this()
         {
             
         }

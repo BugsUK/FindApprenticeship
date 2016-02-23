@@ -4,8 +4,8 @@
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
+    using Raa.Common.Validators.ProviderUser;
     using Recruit.Mediators.ProviderUser;
-    using Recruit.Validators.ProviderUser;
 
     public class TestBase
     {

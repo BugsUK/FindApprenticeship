@@ -3,7 +3,7 @@
     using FluentValidation.TestHelper;
     using NUnit.Framework;
     using Common.Validators.Vacancy;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
 
     [TestFixture]

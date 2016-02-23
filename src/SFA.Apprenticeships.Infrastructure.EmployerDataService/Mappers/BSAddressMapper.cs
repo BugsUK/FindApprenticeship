@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using EmployerDataService;
 
     public class BsAddressMapper

@@ -2,8 +2,7 @@
 {
     using Builders;
     using Common.Views.Shared.DisplayTemplates.Vacancy;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
@@ -15,7 +14,7 @@
         public void ApprenticeshipHeader()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Apprenticeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
             var details = new VacancyPreview();
 
             //Act
@@ -31,7 +30,7 @@
         public void TraineeshipHeader()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Traineeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Traineeship);
             var details = new VacancyPreview();
 
             //Act
@@ -47,7 +46,7 @@
         public void ApprenticeshipLongDescriptionHeader()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Apprenticeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
             var details = new VacancyPreview();
 
             //Act
@@ -63,7 +62,7 @@
         public void TraineeshipLongDescriptionHeader()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Traineeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Traineeship);
             var details = new VacancyPreview();
 
             //Act
@@ -79,7 +78,7 @@
         public void ApprenticeshipProviderInfoSection()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Apprenticeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
             var details = new VacancyPreview();
 
             //Act
@@ -94,7 +93,7 @@
         public void TraineeshipAboutTraineeshipsSection()
         {
             //Arrange
-            var viewModel = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Traineeship);
+            var viewModel = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Traineeship);
             var details = new VacancyPreview();
 
             //Act

@@ -90,7 +90,7 @@ WriteLiteral(" id=\"vacancy-employer-name\"");
 WriteAttribute("class", Tuple.Create(" class=\"", 471), Tuple.Create("\"", 598)
             
             #line 14 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 479), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl) ? "no-btm-margin" : string.Empty
+, Tuple.Create(Tuple.Create("", 479), Tuple.Create<System.Object, System.Int32>(string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl) ? "no-btm-margin" : string.Empty
             
             #line default
             #line hidden
@@ -101,7 +101,7 @@ WriteLiteral(">");
 
             
             #line 14 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                                                                                     Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name);
+                                                                                                                                                                     Write(Model.NewVacancyViewModel.OwnerParty.Employer.Name);
 
             
             #line default
@@ -136,7 +136,7 @@ WriteLiteral("                        ");
 
             
             #line 21 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                   Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink)));
+                   Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink)));
 
             
             #line default
@@ -151,7 +151,7 @@ WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                Write(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Description));
+                                                                                Write(Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription));
 
             
             #line default
@@ -162,7 +162,7 @@ WriteLiteral("                    ");
 
             
             #line 24 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-               Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.Description, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment)));
+               Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment)));
 
             
             #line default
@@ -218,7 +218,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 40 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                 if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl))
+                 if (!string.IsNullOrEmpty(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl))
                 {
 
             
@@ -238,7 +238,7 @@ WriteLiteral("                            ");
 
             
             #line 45 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                       Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink)));
+                       Write(Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.NewVacancyViewModel.EmployerWebsiteUrlComment, Model.EmployerLink)));
 
             
             #line default
@@ -250,7 +250,7 @@ WriteLiteral(" itemprop=\"url\"");
 WriteAttribute("href", Tuple.Create(" href=\"", 2514), Tuple.Create("\"", 2583)
             
             #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2521), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl
+, Tuple.Create(Tuple.Create("", 2521), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl
             
             #line default
             #line hidden
@@ -264,7 +264,7 @@ WriteLiteral("\r\n                           target=\"_blank\"");
 WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 2686), Tuple.Create("\"", 2795)
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2722), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+, Tuple.Create(Tuple.Create("", 2722), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.Employer.Name
             
             #line default
             #line hidden
@@ -278,7 +278,7 @@ WriteLiteral(">");
 
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                                                       Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl);
+                                                                                                                       Write(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl);
 
             
             #line default
@@ -289,7 +289,7 @@ WriteLiteral("                        ");
 
             
             #line 51 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ProviderSiteEmployerLink.WebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
+                   Write(Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl, Model.EmployerLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment)));
 
             
             #line default
@@ -349,7 +349,7 @@ WriteLiteral(">");
 
             
             #line 62 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                    Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine1);
+                                                                                    Write(Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine1);
 
             
             #line default
@@ -364,7 +364,7 @@ WriteLiteral(">");
 
             
             #line 63 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                    Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine2);
+                                                                                    Write(Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine2);
 
             
             #line default
@@ -379,7 +379,7 @@ WriteLiteral(">");
 
             
             #line 64 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                      Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine3);
+                                                                                      Write(Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine3);
 
             
             #line default
@@ -394,7 +394,7 @@ WriteLiteral(">");
 
             
             #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                    Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4);
+                                                                                    Write(Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine4);
 
             
             #line default
@@ -409,7 +409,7 @@ WriteLiteral(">");
 
             
             #line 66 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                                 Write(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode);
+                                                                                 Write(Model.NewVacancyViewModel.OwnerParty.Employer.Address.Postcode);
 
             
             #line default
@@ -868,7 +868,7 @@ WriteAttribute("src", Tuple.Create(" src=\"", 13092), Tuple.Create("\"", 13294)
 , Tuple.Create(Tuple.Create("", 13098), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13098), true)
             
             #line 181 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 13143), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 13143), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.OwnerParty.Employer.Address.Postcode)
             
             #line default
             #line hidden

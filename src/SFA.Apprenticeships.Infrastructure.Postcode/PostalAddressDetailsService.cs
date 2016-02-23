@@ -5,7 +5,7 @@
     using System.Linq;
     using Configuration;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Entities;
     using Rest;
     using SFA.Infrastructure.Interfaces;

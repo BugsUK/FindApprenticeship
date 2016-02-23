@@ -3,10 +3,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using System.Web.Mvc;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Provider;
     using VacancyPosting;
@@ -19,6 +17,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public long? VacancyReferenceNumber { get; set; }
 
+        //TODO: probably remove
         public string Ukprn { get; set; }
 
         [Display(Name = VacancyViewModelMessages.Title.LabelText)]
@@ -33,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         [Display(Name = VacancyViewModelMessages.ShortDescriptionComment.LabelText)]
         public string ShortDescriptionComment { get; set; }
 
-        public ProviderSiteEmployerLinkViewModel ProviderSiteEmployerLink { get; set; }
+        public VacancyPartyViewModel OwnerParty { get; set; }
 
         public bool? OfflineVacancy { get; set; }
 
@@ -51,7 +50,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public Guid VacancyGuid { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
 

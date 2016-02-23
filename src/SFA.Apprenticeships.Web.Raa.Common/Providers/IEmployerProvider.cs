@@ -8,6 +8,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     {
         EmployerSearchViewModel GetEmployerViewModels(EmployerSearchViewModel searchViewModel);
 
-        EmployerViewModel GetEmployerViewModel(string ern);
+        EmployerViewModel GetEmployerViewModel(string edsUrn);
     }
 }

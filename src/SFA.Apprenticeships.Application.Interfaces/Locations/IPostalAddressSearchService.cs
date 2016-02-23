@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Locations
 {
     using System.Collections.Generic;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
 
     public interface IPostalAddressSearchService
     {

@@ -9,7 +9,7 @@
     [Validator(typeof(ProviderSiteViewModelValidator))]
     public class ProviderSiteViewModel
     {
-        public string Ern { get; set; }
+        public int ProviderSiteId { get; set; }
 
         public string Name { get; set; }
 

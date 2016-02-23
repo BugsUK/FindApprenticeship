@@ -1,5 +1,5 @@
 ﻿@model VacancyViewModel
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -21,7 +21,7 @@
         {
             @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-            if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            if (Model.Status == VacancyStatuses.RejectedByQA)
             {
                 Model.ResubmitOption = false;
                 @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
@@ -34,7 +34,7 @@
 
             <section>
                 <div class="form-group">
-                    @if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+                    @if (Model.Status == VacancyStatuses.RejectedByQA)
                     {
                         <button type="submit" class="button">Resubmit vacancy</button>
                     }

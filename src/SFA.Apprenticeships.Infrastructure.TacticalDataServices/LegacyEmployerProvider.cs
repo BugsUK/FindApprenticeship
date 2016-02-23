@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
+    using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
     using System.Linq;
     using Application.Organisation;
     using Configuration;
     using Dapper;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using SFA.Infrastructure.Interfaces;
 
     public class LegacyEmployerProvider : ILegacyEmployerProvider
@@ -20,18 +21,46 @@
             _connectionString = config.AvSqlReferenceConnectionString;
         }
 
-        public Employer GetEmployer(string ern)
+        public Employer GetEmployer(int employerId)
         {
-            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EdsUrn = @Ern AND e.EmployerStatusTypeId = 1";
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EmployerId = @EmployerId AND e.EmployerStatusTypeId = 1";
 
             Models.Employer legacyEmployer;
 
             using (var connection = GetConnection())
             {
-                legacyEmployer = connection.Query<Models.Employer>(sql, new { Ern = ern }).SingleOrDefault();
+                legacyEmployer = connection.Query<Models.Employer>(sql, new { EmployerId = employerId }).SingleOrDefault();
             }
 
             return GetEmployer(legacyEmployer);
+        }
+
+        public Employer GetEmployer(string edsUrn)
+        {
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EdsUrn = @EdsUrn AND e.EmployerStatusTypeId = 1";
+
+            Models.Employer legacyEmployer;
+
+            using (var connection = GetConnection())
+            {
+                legacyEmployer = connection.Query<Models.Employer>(sql, new { EdsUrn = edsUrn }).SingleOrDefault();
+            }
+
+            return GetEmployer(legacyEmployer);
+        }
+
+        public IEnumerable<Employer> GetEmployersByIds(IEnumerable<int> employerIds)
+        {
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EmployerId IN @Ids AND e.EmployerStatusTypeId = 1";
+
+            IEnumerable<Models.Employer> legacyEmployers;
+
+            using (var connection = GetConnection())
+            {
+                legacyEmployers = connection.Query<Models.Employer>(sql, new { Ids = employerIds });
+            }
+
+            return legacyEmployers.Select(GetEmployer).ToList();
         }
 
         private static Employer GetEmployer(Models.Employer legacyEmployer)
@@ -41,7 +70,7 @@
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = legacyEmployer.AddressLine1,
                 AddressLine2 = legacyEmployer.AddressLine2,
@@ -58,7 +87,8 @@
 
             var employer = new Employer
             {
-                Ern = legacyEmployer.EdsUrn.ToString(),
+                EmployerId = legacyEmployer.EmployerId,
+                EdsUrn = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Address = address
             };

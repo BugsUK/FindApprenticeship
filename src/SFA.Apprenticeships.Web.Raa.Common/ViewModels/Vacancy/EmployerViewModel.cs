@@ -4,7 +4,8 @@
 
     public class EmployerViewModel
     {
-        public string Ern { get; set; }
+        public int EmployerId { get; set; }
+        public string EdsUrn { get; set; }
         public string Name { get; set; }
         public AddressViewModel Address { get; set; }
     }

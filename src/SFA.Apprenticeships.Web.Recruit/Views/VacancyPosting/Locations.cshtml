@@ -1,6 +1,6 @@
 ﻿@model LocationSearchViewModel
 @using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 @using SFA.Apprenticeships.Web.Recruit.Constants
 
@@ -11,9 +11,9 @@
 
     @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    var saveButtonText = (Model.Status == VacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
     <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteErn, ern = Model.Ern, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true })
+    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ComfirmEmployer, new { providerSiteErn = Model.ProviderSiteEdsUrn, edsUrn = Model.EmployerErn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true })
 }
 
 @section scripts {

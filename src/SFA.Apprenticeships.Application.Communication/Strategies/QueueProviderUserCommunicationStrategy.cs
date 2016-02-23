@@ -4,7 +4,7 @@
     using System.Linq;
     using Interfaces.Communications;
     using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
 
     public class QueueProviderUserCommunicationStrategy : ISendProviderUserCommunicationStrategy
     {
@@ -31,7 +31,8 @@
 
             var request = new CommunicationRequest
             {
-                EntityId = providerUser.EntityId,
+                //TODO: Might be an issue nulling this
+                EntityId = null,
                 MessageType = messageType,
                 Tokens = tokens
             };

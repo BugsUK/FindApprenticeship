@@ -2,7 +2,7 @@
 {
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
     using Validators.Vacancy;
 
@@ -27,6 +27,6 @@
 
         public bool ComeFromPreview { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
     }
 }

@@ -7,7 +7,7 @@
     using Application.Interfaces.VacancyPosting;
     using Common.ViewModels;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Factories;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
@@ -32,7 +32,7 @@
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyApplicationsSearch.VacancyReferenceNumber);
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyApplicationsViewModel>(vacancy);
+            var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(vacancy);
 
             var applications = _apprenticeshipApplicationService.GetSubmittedApplicationSummaries((int)vacancyApplicationsSearch.VacancyReferenceNumber);
 
@@ -101,7 +101,7 @@
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
             viewModel.ApplicationSelection = applicationSelectionViewModel;
-            viewModel.Vacancy = _mapper.Map<ApprenticeshipVacancy, ApplicationVacancyViewModel>(vacancy);
+            viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
             return viewModel;
         }
     }

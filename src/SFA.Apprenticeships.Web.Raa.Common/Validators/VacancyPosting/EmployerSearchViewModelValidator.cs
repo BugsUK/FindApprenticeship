@@ -1,10 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
-
-namespace SFA.Apprenticeships.Web.Recruit.Validators.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.VacancyPosting
 {
     using FluentValidation;
-    using Raa.Common.Constants.ViewModels;
-
+    using Constants.ViewModels;
+    using ViewModels.VacancyPosting;
 
     public class EmployerSearchViewModelClientValidator : AbstractValidator<EmployerSearchViewModel>
     {
@@ -15,12 +13,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.VacancyPosting
 
         private void AddCommonRules()
         {
-            RuleFor(x => x.Ern)
+            RuleFor(x => x.EdsUrn)
                 .NotEmpty()
-                .When(x => x.FilterType == EmployerFilterType.Ern)
-                .WithMessage(EmployerSearchViewModelMessages.Ern.RequiredErrorText)
-                .Matches(EmployerSearchViewModelMessages.Ern.WhiteListRegularExpression)
-                .WithMessage(EmployerSearchViewModelMessages.Ern.WhiteListErrorText);
+                .When(x => x.FilterType == EmployerFilterType.EdsUrn)
+                .WithMessage(EmployerSearchViewModelMessages.EdsUrn.RequiredErrorText)
+                .Matches(EmployerSearchViewModelMessages.EdsUrn.WhiteListRegularExpression)
+                .WithMessage(EmployerSearchViewModelMessages.EdsUrn.WhiteListErrorText);
 
             RuleFor(x => x.Name)
                 .Matches(EmployerSearchViewModelMessages.Name.WhiteListRegularExpression)

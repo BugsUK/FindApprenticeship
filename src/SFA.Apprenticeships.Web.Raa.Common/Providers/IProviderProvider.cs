@@ -8,11 +8,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     {
         ProviderViewModel GetProviderViewModel(string ukprn);
         ProviderViewModel SaveProviderViewModel(string ukprn, ProviderViewModel providerViewModel);
-        ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string ern);
+        ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string edsUrn);
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
-        ProviderSiteEmployerLinkViewModel GetProviderSiteEmployerLinkViewModel(string providerSiteErn, string ern);
-        ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel);
-        EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(string providerSiteErn);
-        EmployerSearchViewModel GetProviderSiteEmployerLinkViewModels(EmployerSearchViewModel viewModel);
+        VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, int employerId);
+        VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel);
+        EmployerSearchViewModel GetVacancyPartyViewModels(int providerSiteId);
+        EmployerSearchViewModel GetVacancyPartyViewModels(EmployerSearchViewModel viewModel);
     }
 }

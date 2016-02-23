@@ -5,6 +5,7 @@
     using System.Configuration;
     using System.Linq;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Infrastructure.Postcode;
     using Infrastructure.Postcode.Configuration;
     using Infrastructure.Postcode.Entities;

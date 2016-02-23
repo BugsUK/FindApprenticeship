@@ -4,48 +4,49 @@ using System.Text.RegularExpressions;
 namespace SFA.Apprenticeships.Application.Interfaces.Employers
 {
     using System.Collections.Generic;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Parties;
     using Generic;
 
     public interface IEmployerService
     {
-        Employer GetEmployer(string ern);
-        Employer SaveEmployer(Employer employer);
+        Employer GetEmployer(int employerId);
+        Employer GetEmployer(string edsUrn);
+        IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
         //TODO: Use the object below once it has been agreed upon
-        IEnumerable<Employer> GetEmployers(string ern, string name, string location);
-        Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize);
+        IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location);
+        Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
     }
     
     public class EmployerSearchRequest
     {
-        public EmployerSearchRequest(string providerSiteErn)
-            : this(providerSiteErn, null)
+        public EmployerSearchRequest(int providerSiteId)
+            : this(providerSiteId, null)
         { }
 
-        public EmployerSearchRequest(string providerSiteErn, string ern)
-            : this(providerSiteErn, ern, null, null)
+        public EmployerSearchRequest(int providerSiteId, string employerEdsUrn)
+            : this(providerSiteId, employerEdsUrn, null, null)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(ern));
+            Contract.Requires(!string.IsNullOrWhiteSpace(employerEdsUrn));
         }
 
-        public EmployerSearchRequest(string providerSiteErn, string employerName, string location)
-            : this(providerSiteErn, null, employerName, location)
+        public EmployerSearchRequest(int providerSiteId, string employerName, string location)
+            : this(providerSiteId, null, employerName, location)
         {
             Contract.Requires(!string.IsNullOrWhiteSpace(employerName) | !string.IsNullOrWhiteSpace(location));
         }
 
-        private EmployerSearchRequest(string providerSiteErn, string ern, string employerName, string location)
+        private EmployerSearchRequest(int providerSiteId, string employerEdsUrn, string employerName, string location)
         {
-            Contract.Requires(!string.IsNullOrWhiteSpace(providerSiteErn));
-            EmployerEdsUrn = ern;
-            ProviderSiteErn = providerSiteErn;
+            Contract.Requires(providerSiteId != 0);
+            EmployerEdsUrn = employerEdsUrn;
+            ProviderSiteId = providerSiteId;
             Name = employerName;
             Location = !string.IsNullOrEmpty(location) ? Regex.Replace(location, @"\s+", "") : location;
         }
 
         private EmployerSearchRequest() {}
 
-        public string ProviderSiteErn { get; private set; }
+        public int ProviderSiteId { get; private set; }
         
         public string EmployerEdsUrn { get; private set; }
 

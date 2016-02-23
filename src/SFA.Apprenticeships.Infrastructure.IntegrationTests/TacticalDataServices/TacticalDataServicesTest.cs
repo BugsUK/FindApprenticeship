@@ -5,8 +5,8 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
     using System.Linq;
     using Application.Organisation;
     using Application.ReferenceData;
-    using Common.Configuration;
     using Common.IoC;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using Infrastructure.Caching.Memory.IoC;
@@ -60,11 +60,11 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             }
         }
         
-        [TestCase("902763946"), Category("Integration")]
-        public void ReturnsProviderSiteEmployerLinks(string providerSiteErn)
+        [TestCase(902763946), Category("Integration")]
+        public void ReturnsProviderSiteEmployerLinks(int providerSiteId)
         {
             //Arrange
-            var query = new EmployerSearchRequest(providerSiteErn);
+            var query = new EmployerSearchRequest(providerSiteId);
 
             //Act
             var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
@@ -73,16 +73,16 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             links.Count().Should().Be(168);
         }
 
-        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "L E3 ", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "LE3 1HRz", 0), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "", 1), Category("Integration")]
-        public void ReturnsProviderSiteEmployerLinksByNameAndPostcode(string providerSiteErn, string employerName, string postCode, int expectedResults)
+        [TestCase(902763946, "Hit Training", "LE3 1HR", 1), Category("Integration")]
+        [TestCase(902763946, "", "LE3 1HR", 1), Category("Integration")]
+        [TestCase(902763946, "Hit Training", "L E3 ", 1), Category("Integration")]
+        [TestCase(902763946, "Hit Training", "LE3 1HR", 1), Category("Integration")]
+        [TestCase(902763946, "Hit Training", "LE3 1HRz", 0), Category("Integration")]
+        [TestCase(902763946, "Hit Training", "", 1), Category("Integration")]
+        public void ReturnsProviderSiteEmployerLinksByNameAndPostcode(int providerSiteId, string employerName, string postCode, int expectedResults)
         {
             //Arrange
-            var query = new EmployerSearchRequest(providerSiteErn, employerName, postCode);
+            var query = new EmployerSearchRequest(providerSiteId, employerName, postCode);
 
             //Act
             var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
@@ -91,13 +91,13 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             links.Count().Should().Be(expectedResults);
         }
 
-        [TestCase("902763946", "902763946"), Category("Integration")]
-        [TestCase("902763946", "105108332"), Category("Integration")]
-        [TestCase("902763946", "162258372"), Category("Integration")]
-        public void SearchProviderSiteEmployerLinksByEmployerEdsUrn(string providerSiteErn, string employerEdsUrn)
+        [TestCase(902763946, "902763946"), Category("Integration")]
+        [TestCase(902763946, "105108332"), Category("Integration")]
+        [TestCase(902763946, "162258372"), Category("Integration")]
+        public void SearchProviderSiteEmployerLinksByEmployerEdsUrn(int providerSiteId, string employerEdsUrn)
         {
             //Arrange
-            var query= new EmployerSearchRequest(providerSiteErn, employerEdsUrn);
+            var query= new EmployerSearchRequest(providerSiteId, employerEdsUrn);
 
             //Act
             var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);

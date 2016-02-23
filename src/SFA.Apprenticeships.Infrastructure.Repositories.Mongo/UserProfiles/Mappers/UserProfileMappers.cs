@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles.Mappers
 {
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using Infrastructure.Common.Mappers;
-    using Mongo.UserProfiles.Entities;
+    using Entities;
 
     public class UserProfileMappers : MapperEngine
     {

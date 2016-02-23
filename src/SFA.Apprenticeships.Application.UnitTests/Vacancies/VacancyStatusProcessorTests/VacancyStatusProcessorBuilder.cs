@@ -2,14 +2,14 @@
 {
     using Application.Vacancies;
     using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
     using Moq;
 
     public class VacancyStatusProcessorBuilder
     {
-        private Mock<IApprenticeshipVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-        private Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+        private Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
+        private Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
         private Mock<IServiceBus> _serviceBus = new Mock<IServiceBus>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
 
@@ -25,13 +25,13 @@
             return processor;
         }
 
-        public VacancyStatusProcessorBuilder With(Mock<IApprenticeshipVacancyReadRepository> mock)
+        public VacancyStatusProcessorBuilder With(Mock<IVacancyReadRepository> mock)
         {
             _apprenticeshipVacancyReadRepository = mock;
             return this;
         }
 
-        public VacancyStatusProcessorBuilder With(Mock<IApprenticeshipVacancyWriteRepository> mock)
+        public VacancyStatusProcessorBuilder With(Mock<IVacancyWriteRepository> mock)
         {
             _apprenticeshipVacancyWriteRepository = mock;
             return this;

@@ -1,19 +1,16 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-
+﻿
 namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Collections.Generic;
     using System.Linq;
     using Common.UnitTests.Mediators;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Manage.Mediators.Vacancy;
-    using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
-    using ViewModels;
 
     [TestFixture]
     public class VacancyMediatorTests
@@ -103,7 +100,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             return vacancyReferenceNumbers.Select(vacancyReferenceNumber => new DashboardVacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Status = ProviderVacancyStatuses.PendingQA
+                Status = VacancyStatus.PendingQA
             });
         }
     }

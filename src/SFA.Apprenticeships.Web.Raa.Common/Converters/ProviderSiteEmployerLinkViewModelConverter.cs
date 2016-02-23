@@ -1,18 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Converters
 {
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using ViewModels.Provider;
 
     public static class ProviderSiteEmployerLinkViewModelConverter
     {
-        public static ProviderSiteEmployerLinkViewModel Convert(this ProviderSiteEmployerLink providerSiteEmployerLink)
+        public static VacancyPartyViewModel Convert(this VacancyParty vacancyParty, Employer employer)
         {
-            var viewModel = new ProviderSiteEmployerLinkViewModel
+            var viewModel = new VacancyPartyViewModel
             {
-                ProviderSiteErn = providerSiteEmployerLink.ProviderSiteErn,
-                Description = providerSiteEmployerLink.Description,
-                WebsiteUrl = providerSiteEmployerLink.WebsiteUrl,
-                Employer = providerSiteEmployerLink.Employer.Convert()
+                VacancyPartyId = vacancyParty.VacancyPartyId,
+                ProviderSiteId = vacancyParty.ProviderSiteId,
+                EmployerDescription = vacancyParty.EmployerDescription,
+                EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl,
+                Employer = employer.Convert()
             };
 
             return viewModel;

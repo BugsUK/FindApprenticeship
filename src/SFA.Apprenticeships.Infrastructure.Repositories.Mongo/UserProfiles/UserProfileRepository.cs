@@ -3,15 +3,15 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class UserProfileRepository : GenericMongoClient<MongoProviderUser>, IProviderUserReadRepository, IProviderUserWriteRepository
+    public class UserProfileRepository : GenericMongoClient2<MongoProviderUser>, IProviderUserReadRepository, IProviderUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -24,11 +24,11 @@
             _logger = logger;
         }
 
-        public ProviderUser Get(Guid id)
+        public ProviderUser Get(int providerUserId)
         {
-            _logger.Debug("Called Mongodb to get provider user with Id={0}", id);
+            _logger.Debug("Called Mongodb to get provider user with Id={0}", providerUserId);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOneById(providerUserId);
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderUser, ProviderUser>(mongoEntity);
         }
@@ -56,20 +56,27 @@
             return entities;
         }
 
-        public void Delete(Guid id)
+        public void Delete(int providerUserId)
         {
-            _logger.Debug("Calling repository to delete provider user with Id={0}", id);
+            _logger.Debug("Calling repository to delete provider user with Id={0}", providerUserId);
 
-            Collection.Remove(Query<MongoProviderUser>.EQ(o => o.Id, id));
+            Collection.Remove(Query<MongoProviderUser>.EQ(o => o.ProviderUserId, providerUserId));
 
-            _logger.Debug("Deleted provider user with Id={0}", id);
+            _logger.Debug("Deleted provider user with Id={0}", providerUserId);
         }
 
         public ProviderUser Save(ProviderUser entity)
         {
             _logger.Debug("Called Mongodb to save provider user with username={0}", entity.Username);
 
-            UpdateEntityTimestamps(entity);
+            if (entity.ProviderUserGuid == Guid.Empty)
+            {
+                entity.ProviderUserGuid = Guid.NewGuid();
+                entity.ProviderUserId = entity.ProviderUserGuid.GetHashCode();
+            }
+
+            SetCreatedDateTime(entity);
+            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<ProviderUser, MongoProviderUser>(entity);
 

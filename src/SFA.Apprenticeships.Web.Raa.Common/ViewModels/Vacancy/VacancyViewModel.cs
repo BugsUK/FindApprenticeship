@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using VacancyPosting;
 
     public class VacancyViewModel
@@ -21,7 +19,7 @@
 
         public TrainingDetailsViewModel TrainingDetailsViewModel { get; set; }
 
-        public VacancySummaryViewModel VacancySummaryViewModel { get; set; }
+        public FurtherVacancyDetailsViewModel FurtherVacancyDetailsViewModel { get; set; }
 
         public VacancyRequirementsProspectsViewModel VacancyRequirementsProspectsViewModel { get; set; }
 
@@ -37,7 +35,7 @@
 
         public ProviderSiteViewModel ProviderSite { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ResubmitOptin.LabelText)]
         public bool ResubmitOption { get; set; }
@@ -62,12 +60,14 @@
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
+        public string EmployerName { get; set; }
+
         public bool IsUnapprovedMultiLocationParentVacancy
         {
             get
             {
                 return
-                    Status != ProviderVacancyStatuses.ParentVacancy
+                    Status != VacancyStatus.ParentVacancy
                     && NewVacancyViewModel.LocationAddresses != null
                     && NewVacancyViewModel.LocationAddresses.Count() > 1;
             }
@@ -77,7 +77,7 @@
         {
             get
             {
-                return Status == ProviderVacancyStatuses.Live
+                return Status == VacancyStatus.Live
                        && NewVacancyViewModel.LocationAddresses != null
                        && NewVacancyViewModel.LocationAddresses.Count() == 1;
             }

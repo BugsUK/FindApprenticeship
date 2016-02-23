@@ -6,7 +6,7 @@
     using Common.UnitTests.Builders;
     using Common.UnitTests.Mediators;
     using Constants.Messages;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentAssertions;
     using Manage.Mediators.AgencyUser;
     using Manage.Providers;

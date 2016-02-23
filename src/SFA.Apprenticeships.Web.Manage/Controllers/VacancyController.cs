@@ -10,7 +10,7 @@
     using Mediators.Vacancy;
     using Common.Mediators;
     using Common.Validators.Extensions;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Infrastructure.Presentation;
     using Raa.Common.Constants.ViewModels;
@@ -212,7 +212,7 @@
         }
 
         [HttpPost]
-        public ActionResult Summary(VacancySummaryViewModel viewModel)
+        public ActionResult Summary(FurtherVacancyDetailsViewModel viewModel)
         {
             var response = _vacancyMediator.UpdateVacancy(viewModel);
 
@@ -387,7 +387,7 @@
         }
 
         [HttpPost]
-        public ActionResult EmployerInformation(ProviderSiteEmployerLinkViewModel viewModel)
+        public ActionResult EmployerInformation(VacancyPartyViewModel viewModel)
         {
             var response = _vacancyMediator.UpdateEmployerInformation(viewModel);
 

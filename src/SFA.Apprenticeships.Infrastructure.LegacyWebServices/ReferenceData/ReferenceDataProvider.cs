@@ -7,6 +7,7 @@
     using Apprenticeships.Application.ReferenceData;
     using Configuration;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using LegacyReferenceDataProxy;
     using Wcf;

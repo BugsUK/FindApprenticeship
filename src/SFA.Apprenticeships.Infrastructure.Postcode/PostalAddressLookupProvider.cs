@@ -5,8 +5,7 @@
     using System.Linq;
     using Application.Location;
     using Configuration;
-    using CuttingEdge.Conditions;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Entities;
     using Rest;
     using RestSharp;

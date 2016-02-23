@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/Summary.cshtml")]
-    public partial class Summary : System.Web.Mvc.WebViewPage<VacancySummaryViewModel>
+    public partial class Summary : System.Web.Mvc.WebViewPage<FurtherVacancyDetailsViewModel>
     {
         public Summary()
         {
@@ -67,7 +67,7 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 7 "..\..\Views\Vacancy\Summary.cshtml"
-Write(Html.DisplayFor(m => m, VacancySummaryViewModel.PartialView));
+Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
 
             
             #line default

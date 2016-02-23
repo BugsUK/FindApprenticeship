@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using ViewModels.Vacancy;
     using Web.Common.Validators;

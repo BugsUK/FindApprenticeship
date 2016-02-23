@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
     using ViewModels.Vacancy;
@@ -24,19 +24,19 @@
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
-            var apprenticeshipVacancy = new ApprenticeshipVacancy {VacancyReferenceNumber = vacancyReferenceNumber};
+            var apprenticeshipVacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber};
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 
             var provider = GetVacancyPostingProvider();
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.ClosingDate == closingDate)));
+            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<Vacancy>(v => v.ClosingDate == closingDate)));
         }
 
         [Test]
@@ -53,19 +53,19 @@
                 VacancyReferenceNumber = vacancyReferenceNumber
             };
 
-            var apprenticeshipVacancy = new ApprenticeshipVacancy { VacancyReferenceNumber = vacancyReferenceNumber };
+            var apprenticeshipVacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber };
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
+            MockVacancyPostingService.Setup(s => s.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
-            MockMapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
 
             var provider = GetVacancyPostingProvider();
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(v => v.PossibleStartDate == possibleStartDate)));
+            MockVacancyPostingService.Verify(s => s.ShallowSaveApprenticeshipVacancy(It.Is<Vacancy>(v => v.PossibleStartDate == possibleStartDate)));
         }
     }
 }

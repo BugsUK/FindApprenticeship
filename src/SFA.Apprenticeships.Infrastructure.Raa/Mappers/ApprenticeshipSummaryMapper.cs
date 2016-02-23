@@ -5,26 +5,25 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Extensions;
     using Presentation;
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(ApprenticeshipVacancy vacancy, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(Vacancy vacancy, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             
             //TODO: Store geopoints for employers
-            var location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint ?? new GeoPoint();
-            if (location.Latitude == 0 || location.Longitude == 0)
+            var location = new GeoPoint
             {
                 //Coventry
-                location.Latitude = 52.4009991288043;
-                location.Longitude = -1.50812239495425;
-            }
+                Latitude = 52.4009991288043,
+                Longitude = -1.50812239495425
+            };
 
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
             var summary = new ApprenticeshipSummary
@@ -38,9 +37,10 @@
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
                 Description = vacancy.ShortDescription,
                 NumberOfPositions = vacancy.NumberOfPositions,
-                EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
+                //TODO: Get Employer
+                //EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
                 //TODO: Get provider
-                //ProviderName = vacancy.ProviderSiteEmployerLink.,
+                //ProviderName = vacancy.VacancyParty.,
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 Location = location,

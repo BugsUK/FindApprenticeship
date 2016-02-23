@@ -6,7 +6,7 @@
     [Description] NVARCHAR(MAX) NULL, 
     [PostalAddressId] INT NULL, 
     [WebsiteUrl] NVARCHAR(MAX) NULL, 
-    [EdsErn] INT NULL, 
+    [EdsUrn] INT NULL, 
     [UKPrn] INT NULL, 
     CONSTRAINT [PK_VacancyParty] PRIMARY KEY ([VacancyPartyId]), 
     CONSTRAINT [FK_VacancyParty_VacancyTypeCode] FOREIGN KEY ([VacancyPartyTypeCode]) REFERENCES [Vacancy].[VacancyPartyType]([VacancyPartyTypeCode]), 
@@ -21,4 +21,4 @@ EXEC sp_addextendedproperty @name = N'MS_Description',
     @level1type = N'TABLE',
     @level1name = N'VacancyParty',
     @level2type = N'COLUMN',
-    @level2name = 'EdsErn'
+    @level2name = 'EdsUrn'

@@ -1,12 +1,12 @@
-﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.ProviderSiteEmployerLinkViewModel
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider.VacancyPartyViewModel
 @using System.Web.Mvc.Html
 @using SFA.Apprenticeships.Web.Raa.Common.Extensions
 
 <div class="grid-wrapper">
     @Html.Partial("ValidationSummary", ViewData.ModelState)
 
-    @Html.HiddenFor(m => m.ProviderSiteErn)
-    @Html.HiddenFor(m => m.Employer.Ern)
+    @Html.HiddenFor(m => m.ProviderSiteId)
+    @Html.HiddenFor(m => m.Employer.EmployerId)
     @Html.HiddenFor(m => m.VacancyGuid)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ComeFromPreview)
@@ -88,9 +88,9 @@
     </div>
 
     <div class="grid grid-1-1">
-        @Html.FormTextFor(model => model.WebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
-        @Html.EditorFor(m => m.WebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.WebsiteUrlComment))
-        @Html.FormTextAreaFor(m => m.Description, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
-        @Html.EditorFor(m => m.DescriptionComment, "Comment", Html.GetLabelFor(m => m.DescriptionComment))
+        @Html.FormTextFor(model => model.EmployerWebsiteUrl, controlHtmlAttributes: new { type = "text", @class = "form-control-1-1" }, labelHtmlAttributes: new { @class = "bold-small" })
+        @Html.EditorFor(m => m.EmployerWebsiteUrlComment, "Comment", Html.GetLabelFor(m => m.EmployerWebsiteUrlComment))
+        @Html.FormTextAreaFor(m => m.EmployerDescription, controlHtmlAttributes: new {@class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;"}, labelHtmlAttributes: new {@class = "bold-small"})
+        @Html.EditorFor(m => m.EmployerDescriptionComment, "Comment", Html.GetLabelFor(m => m.EmployerDescriptionComment))
     </div>
 </div>

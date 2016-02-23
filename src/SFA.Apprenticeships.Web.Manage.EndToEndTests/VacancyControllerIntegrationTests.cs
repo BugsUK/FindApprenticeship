@@ -6,11 +6,7 @@
     using Common.Validators;
     using Common.ViewModels;
     using Controllers;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Infrastructure.Repositories.Mongo.Vacancies.Entities;
     using MongoDB.Driver;
@@ -153,8 +149,8 @@
             var viewResult = view as ViewResult;
 
             viewResult.ViewData.ModelState.Should().HaveCount(0);
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -183,8 +179,8 @@
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
             viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -235,8 +231,8 @@
             viewResult.ViewData.ModelState.Values.First().Errors.First().Should().BeOfType<ModelError>();
             viewResult.ViewData.ModelState.Keys.Last().Should().Be("VacancyDatesViewModel.ClosingDate");
             viewResult.ViewData.ModelState.Values.Last().Errors.First().Should().BeOfType<ModelWarning>();
-            viewResult.Model.Should().BeOfType<VacancySummaryViewModel>();
-            var vacancyViewModel = viewResult.Model as VacancySummaryViewModel;
+            viewResult.Model.Should().BeOfType<FurtherVacancyDetailsViewModel>();
+            var vacancyViewModel = viewResult.Model as FurtherVacancyDetailsViewModel;
             vacancyViewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
         }
 
@@ -467,7 +463,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
+            vacancyInDb.Status.Should().Be(VacancyStatus.ReservedForQA);
             vacancyInDb.QAUserName.Should().Be(QaUserName);
             vacancyInDb.DateStartedToQA.Should().BeCloseTo(DateTime.UtcNow, 1000);
         }
@@ -489,7 +485,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.Live);
+            vacancyInDb.Status.Should().Be(VacancyStatus.Live);
         }
 
         [Test, Category("Integration")]
@@ -551,7 +547,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(ProviderVacancyStatuses.RejectedByQA);
+            vacancyInDb.Status.Should().Be(VacancyStatus.RejectedByQA);
         }
 
         [Test, Category("Integration")]
@@ -618,29 +614,31 @@
                 ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 ClosingDate = DateTime.UtcNow.AddDays(30),
-                DateCreated = DateTime.UtcNow.AddDays(-1),
+                CreatedDateTime = DateTime.UtcNow.AddDays(-1),
                 DateSubmitted = DateTime.UtcNow.AddDays(-1),
                 DesiredQualifications = "desired qualifications",
                 DesiredSkills = "desired skills",
                 Duration = 3,
                 DurationType = DurationType.Years,
-                EntityId = Guid.NewGuid(),
+                VacancyId = 42,
                 FutureProspects = "future prospects",
                 HoursPerWeek = 40,
                 LongDescription = "long description",
                 OfflineVacancy = false,
                 PersonalQualities = "personal qualities",
                 PossibleStartDate = DateTime.UtcNow.AddDays(100),
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLink
+                // TODO: DOMAIN: add owner etc.
+                /*
+                VacancyParty = new OwnerParty
                 {
                     DateCreated = DateTime.UtcNow,
                     Description = "employer link",
                     DateUpdated = DateTime.UtcNow,
-                    ProviderSiteErn = "101282923",
+                    ProviderSiteEdsUrn = "101282923",
                     WebsiteUrl = "www.google.com",
                     Employer = new Employer
                     {
-                        Ern = "100608868",
+                        EdsUrn = "100608868",
                         Name = "Employer name",
                         Address = new Address
                         {
@@ -658,13 +656,14 @@
                         }
                     }
                 },
+                */
                 ShortDescription = "short description",
-                Status = ProviderVacancyStatuses.PendingQA,
+                Status = VacancyStatus.PendingQA,
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
                 WageType = WageType.ApprenticeshipMinimumWage,
-                Ukprn = "10003816"
+                // Ukprn = "10003816"
             };
         }
 
@@ -711,9 +710,9 @@
             return vacancy;
         }
 
-        private static VacancySummaryViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            var vacancySummaryViewModel = new VacancySummaryViewModel
+            var vacancySummaryViewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 VacancyDatesViewModel = new VacancyDatesViewModel
@@ -732,7 +731,7 @@
             return vacancySummaryViewModel;
         }
 
-        private static VacancySummaryViewModel GetVacancyViewModelWithErrorsAndWarningsInSummary(
+        private static FurtherVacancyDetailsViewModel GetVacancyViewModelWithErrorsAndWarningsInSummary(
             int vacancyReferenceNumber)
         {
             var vacancySummaryViewModel = GetVacancySummaryViewModel(vacancyReferenceNumber);

@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 
@@ -84,7 +84,7 @@
                 .Returns(new ProviderUser
                 {
                     Username = UnverifiedUsername,
-                    Status = ProviderUserStatuses.Registered,
+                    Status = ProviderUserStatus.Registered,
                     EmailVerificationCode = EmailVerificationCode
                 });
 
@@ -124,7 +124,7 @@
                 .Setup(mock => mock.Get(VerifiedUsername))
                 .Returns(new ProviderUser
                 {
-                    Status = ProviderUserStatuses.EmailVerified
+                    Status = ProviderUserStatus.EmailVerified
                 });
 
             // Act.

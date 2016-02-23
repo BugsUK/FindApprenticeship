@@ -14,9 +14,9 @@
 
         MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancySummaryViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
-        MediatorResponse<VacancySummaryViewModel> UpdateVacancy(VacancySummaryViewModel viewModel);
+        MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
         MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber);
 
@@ -29,7 +29,7 @@
         MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(
             long vacancyReferenceNumber);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> GetEmployerInformation(long vacancyReferenceNumber,
+        MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(long vacancyReferenceNumber,
             bool? useEmployerLocation);
 
         MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
@@ -39,8 +39,8 @@
         MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(
             VacancyRequirementsProspectsViewModel viewModel);
 
-        MediatorResponse<ProviderSiteEmployerLinkViewModel> UpdateEmployerInformation(
-            ProviderSiteEmployerLinkViewModel viewModel);
+        MediatorResponse<VacancyPartyViewModel> UpdateEmployerInformation(
+            VacancyPartyViewModel viewModel);
 
         MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(long vacancyReferenceNumber);
 
