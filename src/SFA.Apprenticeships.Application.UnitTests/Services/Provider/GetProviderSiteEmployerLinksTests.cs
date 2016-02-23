@@ -26,6 +26,10 @@
 
         private readonly EmployerSearchRequest _employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
 
+        private Employer _employer1;
+        private Employer _employer2;
+        private Employer _employer3;
+
         private VacancyParty _providerSiteEmployerLink1;
         private VacancyParty _providerSiteEmployerLink2;
         private VacancyParty _providerSiteEmployerLink3;
@@ -39,6 +43,9 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
+            _employer1 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn1).Create();
+            _employer2 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn2).Create();
+
             _providerSiteEmployerLink1 =
                 new Fixture().Build<VacancyParty>()
                     .With(l => l.ProviderSiteId, ProviderSiteId)
@@ -60,6 +67,8 @@
         [SetUp]
         public void Setup()
         {
+            _employer3 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn3).Create();
+
             _providerSiteEmployerLink3 =
                 new Fixture().Build<VacancyParty>()
                     .With(l => l.ProviderSiteId, ProviderSiteId)
@@ -152,7 +161,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer3.Name.Substring(0, 10), null);
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
@@ -170,7 +179,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.Postcode.Substring(0, 10));
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
@@ -188,7 +197,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.AddressLine4.Substring(0, 15));
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
@@ -206,7 +215,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, null, _employer3.Address.Postcode.Substring(0, 10));
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 
@@ -224,7 +233,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, null, _employer3.Address.AddressLine4.Substring(0, 15));
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 

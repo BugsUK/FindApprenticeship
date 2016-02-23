@@ -1,12 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class CloneVacancyTests : TestBase
@@ -22,6 +22,11 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(initialVacancyReferenceNumber))
                 .Returns(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle));
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
+            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
+                .Returns(new Fixture().Build<VacancyParty>().Create());
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+                .Returns(new Fixture().Build<Employer>().Create());
+
             MockTimeService.Setup(s => s.UtcNow()).Returns(dateTimeNow);
             
             var provider = GetVacancyPostingProvider();

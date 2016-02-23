@@ -5,6 +5,7 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
 
     [TestFixture]
     public class GetNewVacancyTests : TestBase
@@ -24,8 +25,10 @@
         public void SetUp()
         {
             MockProviderService
-                .Setup(mock => mock.GetVacancyParty(ProviderSiteId, EmployerId))
+                .Setup(mock => mock.GetVacancyParty(VacancyPartyId))
                 .Returns(VacancyParty);
+            MockEmployerService.Setup(s => s.GetEmployer(VacancyParty.EmployerId))
+                .Returns(new Fixture().Build<Employer>().Create());
         }
 
         [Test]
@@ -39,7 +42,8 @@
 
             // Assert.
             MockProviderService.Verify(mock =>
-                mock.GetVacancyParty(ProviderSiteId, EmployerId), Times.Once);
+                mock.GetVacancyParty(VacancyPartyId), Times.Once);
+            MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
 
             viewModel.Should().NotBeNull();
             viewModel.OwnerParty.ProviderSiteId.Should().Be(ProviderSiteId);

@@ -338,13 +338,13 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                //.With(x => x.LocationAddresses, locationAddresses)
                 .Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
             vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber))
                 .Returns(vacancy);
+            vacancyPostingService.Setup(s => s.GetLocationAddresses(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
             var fixture = new Fixture {RepeatCount = locationAddressCount};
@@ -380,20 +380,20 @@
             }
 
             //save new vacancies with only one of the new addresses and the position count
-            /*foreach (var location in locationAddresses)
+            foreach (var location in locationAddresses)
             {
                 vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av
-                    => av.LocationAddresses.Single().Address.Postcode == location.Address.Postcode
-                       && av.LocationAddresses.Single().Address.AddressLine1 == location.Address.AddressLine1
-                       && av.LocationAddresses.Single().Address.AddressLine2 == location.Address.AddressLine2
-                       && av.LocationAddresses.Single().Address.AddressLine3 == location.Address.AddressLine3
-                       && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
-                       && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
-                       && av.LocationAddresses.Single().NumberOfPositions == location.NumberOfPositions
+                    => av.Address.Postcode == location.Address.Postcode
+                       && av.Address.AddressLine1 == location.Address.AddressLine1
+                       && av.Address.AddressLine2 == location.Address.AddressLine2
+                       && av.Address.AddressLine3 == location.Address.AddressLine3
+                       && av.Address.AddressLine4 == location.Address.AddressLine4
+                       && av.Address.AddressLine4 == location.Address.AddressLine4
+                       && av.NumberOfPositions == location.NumberOfPositions
                        && av.Status == VacancyStatus.Live
                        && av.ParentVacancyReferenceNumber == vacancyReferenceNumber
                        && av.NumberOfPositions == location.NumberOfPositions)));
-            }*/
+            }
 
             //save the submitted vacancy once
             vacancyPostingService.Verify( r => r.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);

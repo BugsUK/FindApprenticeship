@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
     using ViewModels.Provider;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels.Locations;
@@ -37,6 +38,8 @@
                 .Returns(providerSiteEmployerLink);
             MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, employerId))
                 .Returns(providerSiteEmployerLink);
+            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+                .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
             var provider = GetProvider();
 
@@ -90,6 +93,8 @@
                 .Returns(providerSiteEmployerLink);
             MockProviderService.Setup(s => s.GetVacancyParty(providerSiteId, employerId))
                 .Returns(providerSiteEmployerLink);
+            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+                .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
             var provider = GetProvider();
 

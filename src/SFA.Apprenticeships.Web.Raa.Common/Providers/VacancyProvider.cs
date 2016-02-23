@@ -25,6 +25,7 @@
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;
     using Web.Common.ViewModels;
+    using Web.Common.ViewModels.Locations;
 
     public class VacancyProvider : IVacancyPostingProvider, IVacancyQAProvider
     {
@@ -137,11 +138,13 @@
                     Status = vacancy.Status,
                     VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                     IsEmployerLocationMainApprenticeshipLocation = false,
+                    Addresses = new List<VacancyLocationAddressViewModel>(),
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
                 };
 
-                /*vacancy.LocationAddresses.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
+                var locationAddresses = _vacancyPostingService.GetLocationAddresses(vacancy.VacancyId);
+                locationAddresses?.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
                 {
                     Address = new AddressViewModel
                     {
@@ -150,10 +153,10 @@
                         AddressLine3 = v.Address.AddressLine3,
                         AddressLine4 = v.Address.AddressLine4,
                         Postcode = v.Address.Postcode,
-                        Uprn = v.Address.Uprn
+                        //Uprn = v.Address.Uprn
                     },
                     NumberOfPositions = v.NumberOfPositions
-                }));*/
+                }));
 
                 return viewModel;
             }
@@ -161,7 +164,9 @@
             {
                 return new LocationSearchViewModel
                 {
+                    ProviderSiteId = providerSite.ProviderSiteId,
                     ProviderSiteEdsErn = providerSite.EdsErn,
+                    EmployerId = employer.EmployerId,
                     EmployerErn = employer.EdsErn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
