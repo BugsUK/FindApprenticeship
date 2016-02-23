@@ -197,7 +197,7 @@
         }
 
         public Vacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
-            int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
+            int? numberOfPositions, IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment,
             string additionalLocationInformation, string additionalLocationInformationComment)
         {
             _logger.Debug($"Calling Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");

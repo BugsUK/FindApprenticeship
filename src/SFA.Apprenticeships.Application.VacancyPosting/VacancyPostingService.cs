@@ -19,20 +19,20 @@
         private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IProviderUserReadRepository _providerUserReadRepository;
-        private readonly IVacancyLocationAddressReadRepository _vacancyLocationAddressReadRepository;
+        private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
 
         public VacancyPostingService(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IReferenceNumberRepository referenceNumberRepository,
             IProviderUserReadRepository providerUserReadRepository, 
-            IVacancyLocationAddressReadRepository vacancyLocationAddressReadRepository)
+            IVacancyLocationReadRepository vacancyLocationReadRepository)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
             _referenceNumberRepository = referenceNumberRepository;
             _providerUserReadRepository = providerUserReadRepository;
-            _vacancyLocationAddressReadRepository = vacancyLocationAddressReadRepository;
+            _vacancyLocationReadRepository = vacancyLocationReadRepository;
         }
 
         public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
@@ -145,7 +145,7 @@
         }
 
         public void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
-            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
+            IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
             string additionalLocationInformationComment)
         {
             _vacancyWriteRepository.ReplaceLocationInformation(vacancyReferenceNumber,
@@ -153,9 +153,9 @@
                 locationAddressesComment, additionalLocationInformation, additionalLocationInformationComment);
         }
 
-        public List<VacancyLocationAddress> GetLocationAddresses(int vacancyId)
+        public List<VacancyLocation> GetLocationAddresses(int vacancyId)
         {
-            return _vacancyLocationAddressReadRepository.GetForVacancyId(vacancyId);
+            return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
         }
 
         public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)

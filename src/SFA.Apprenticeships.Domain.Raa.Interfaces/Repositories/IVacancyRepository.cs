@@ -34,7 +34,7 @@
         Vacancy ShallowSave(Vacancy entity);
 
         Vacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
-            int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
+            int? numberOfPositions, IEnumerable<VacancyLocation> vacancyLocationAddresses,
             string locationAddressesComment, string additionalLocationInformation,
             string additionalLocationInformationComment);
 

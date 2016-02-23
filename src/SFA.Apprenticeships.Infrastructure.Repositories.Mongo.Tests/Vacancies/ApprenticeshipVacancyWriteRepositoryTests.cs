@@ -117,9 +117,9 @@
             writer.Save(vacancy);
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             int? numberOfPositions = null;
-            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new[]
+            IEnumerable<VacancyLocation> vacancyLocationAddresses = new[]
             {
-                new VacancyLocationAddress
+                new VacancyLocation
                 {
                     Address = new PostalAddress
                     {
@@ -132,7 +132,7 @@
                     },
                     NumberOfPositions = 1
                 },
-                new VacancyLocationAddress
+                new VacancyLocation
                 {
                     Address = new PostalAddress
                     {
@@ -145,7 +145,7 @@
                     },
                     NumberOfPositions = 1
                 },
-                new VacancyLocationAddress
+                new VacancyLocation
                 {
                     Address = new PostalAddress
                     {

@@ -31,7 +31,7 @@
                 .ForMember(dest => dest.EmployerWebsiteUrlComment, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
                 .ForMember(dest => dest.Employer, opt => opt.Ignore());
-            Mapper.CreateMap<VacancyLocationAddress, VacancyLocationAddressViewModel>();
+            Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>();
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();

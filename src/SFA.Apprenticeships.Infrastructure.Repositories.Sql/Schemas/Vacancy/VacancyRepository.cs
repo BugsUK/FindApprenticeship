@@ -12,6 +12,7 @@
     using Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using VacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
 
     // TODO GenericSqlClient??
@@ -79,7 +80,7 @@
 
             // Vacancy
 
-            var vacancyLocations = _getOpenConnection.Query<VacancyLocation>(@"
+            var vacancyLocations = _getOpenConnection.Query<Entities.VacancyLocation>(@"
 SELECT *
 FROM   Vacancy.VacancyLocation
 WHERE  VacancyId = @VacancyId",
@@ -96,10 +97,10 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
 
             var result = _mapper.Map<Entities.Vacancy, Vacancy>(dbVacancy);
 
-            /*result.LocationAddresses = new List<VacancyLocationAddress>();
+            /*result.LocationAddresses = new List<VacancyLocation>();
             foreach (var dbLocation in vacancyLocations)
             {
-                result.LocationAddresses.Add(new VacancyLocationAddress
+                result.LocationAddresses.Add(new VacancyLocation
                 {
                     NumberOfPositions = dbLocation.NumberOfPositions,
                     Address = _mapper.Map<Schemas.Address.Entities.PostalAddress, Address>(addresses.Single(a => a.PostalAddressId == dbLocation.PostalAddressId))
@@ -364,7 +365,7 @@ AND    @RowCount = 1
         }
 
         public Vacancy ReplaceLocationInformation(long vacancyReferenceNumber,
-            bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
+            bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocation> vacancyLocationAddresses,
             string locationAddressesComment, string additionalLocationInformation, string additionalLocationInformationComment)
         {
             throw new NotImplementedException();

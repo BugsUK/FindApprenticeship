@@ -21,7 +21,7 @@
         private readonly Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
         private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
         private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
-        private readonly Mock<IVacancyLocationAddressReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationAddressReadRepository>();
+        private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
         private IVacancyPostingService _vacancyPostingService;
 
         private readonly ProviderUser _vacancyManager = new ProviderUser
@@ -140,7 +140,7 @@
         {
             const bool isEmployerLocationMainApprenticeshipLocation = false;
             int? numberOfPositions = null;
-            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new []{new VacancyLocationAddress(), new VacancyLocationAddress(), new VacancyLocationAddress()};
+            IEnumerable<VacancyLocation> vacancyLocationAddresses = new []{new VacancyLocation(), new VacancyLocation(), new VacancyLocation()};
             const string locationAddressesComment = "location addresses comment";
             const string additionalLocationInformation = "additional location information";
             const string additionalLocationInformationComment = "additional location information";

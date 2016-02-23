@@ -4,13 +4,13 @@
     using Domain.Entities.Raa.Locations;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class MongoVacancyLocationAddress : VacancyLocationAddress
+    public class MongoVacancyLocation : VacancyLocation
     {
         [BsonId]
         public Guid Id
         {
-            get { return VacancyLocationAddressGuid; }
-            set { VacancyLocationAddressGuid = value; }
+            get { return VacancyLocationGuid; }
+            set { VacancyLocationGuid = value; }
         }
     }
 }

@@ -43,7 +43,7 @@
             destination.NewVacancyViewModel.VacancyGuid = source.VacancyGuid;
             //TODO: Map after this conversion
             //destination.NewVacancyViewModel.LocationAddresses =
-            //    context.Engine.Map<List<VacancyLocationAddress>, List<VacancyLocationAddressViewModel>>(
+            //    context.Engine.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
             //        source.LocationAddresses);
             destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
             destination.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation =

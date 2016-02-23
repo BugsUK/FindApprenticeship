@@ -2,10 +2,10 @@
 {
     using System;
 
-    public class VacancyLocationAddress : ICreatableEntity, IUpdatableEntity
+    public class VacancyLocation : ICreatableEntity, IUpdatableEntity
     {
-        public int VacancyLocationAddressId { get; set; }
-        public Guid VacancyLocationAddressGuid { get; set; }
+        public int VacancyLocationId { get; set; }
+        public Guid VacancyLocationGuid { get; set; }
         public int VacancyId { get; set; }
         public PostalAddress Address { get; set; }
         public int NumberOfPositions { get; set; }

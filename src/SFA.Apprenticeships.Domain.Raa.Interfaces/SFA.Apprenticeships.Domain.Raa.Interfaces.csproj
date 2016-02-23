@@ -86,7 +86,7 @@
     <Compile Include="Queries\ApprenticeshipVacancyQuery.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IAgencyUserRepository.cs" />
-    <Compile Include="Repositories\IVacancyLocationAddressRepository.cs" />
+    <Compile Include="Repositories\IVacancyLocationRepository.cs" />
     <Compile Include="Repositories\IVacancyPartyRepository.cs" />
     <Compile Include="Repositories\IReferenceNumberRepository.cs" />
     <Compile Include="Repositories\IVacancyRepository.cs" />

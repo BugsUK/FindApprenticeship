@@ -30,10 +30,10 @@
         Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 
         void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
-            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses, string locationAddressesComment,
+            IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment,
             string additionalLocationInformation, string additionalLocationInformationComment);
 
-        List<VacancyLocationAddress> GetLocationAddresses(int vacancyId);
+        List<VacancyLocation> GetLocationAddresses(int vacancyId);
 
         void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
     }

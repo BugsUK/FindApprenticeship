@@ -82,7 +82,7 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.ReplaceLocationInformation(vacancyReferenceNumber, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                        null, It.Is<IEnumerable<VacancyLocationAddress>>(l => l.Count() == 3), aNewLocationAddressesComment,
+                        null, It.Is<IEnumerable<VacancyLocation>>(l => l.Count() == 3), aNewLocationAddressesComment,
                         aNewAdditionalLocationInformation, aNewAdditionalLocationInformationComment ));
         }
 
@@ -102,7 +102,7 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.ReplaceLocationInformation(vacancyReferenceNumber, null, null,
-                        It.Is<IEnumerable<VacancyLocationAddress>>(l => !l.Any()), null, null, null));
+                        It.Is<IEnumerable<VacancyLocation>>(l => !l.Any()), null, null, null));
         }
 
         [Test]
@@ -125,7 +125,7 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation, numberOfPositions,
-                        It.Is<IEnumerable<VacancyLocationAddress>>(l => !l.Any()), aComment, null, aComment));
+                        It.Is<IEnumerable<VacancyLocation>>(l => !l.Any()), aComment, null, aComment));
         }
 
         private static LocationSearchViewModel GetLocationSearchViewModel(string aNewAdditionalLocationInformation,
@@ -201,9 +201,9 @@
 
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, long vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string locationAddressesComment, string additionalLocationInformationComment, string additionalLocationInformation)
         {
-            var addresses = new List<VacancyLocationAddress>
+            var addresses = new List<VacancyLocation>
             {
-                new VacancyLocationAddress
+                new VacancyLocation
                 {
                     Address = new PostalAddress
                     {
@@ -215,7 +215,7 @@
                     },
                     NumberOfPositions = 2
                 },
-                new VacancyLocationAddress
+                new VacancyLocation
                 {
                     Address = new PostalAddress
                     {
@@ -253,7 +253,7 @@
         private class VacancyWithLocationAddresses
         {
             public Vacancy Vacancy { get; set; }
-            public List<VacancyLocationAddress> LocationAddresses { get; set; }
+            public List<VacancyLocation> LocationAddresses { get; set; }
         }
     }
 }

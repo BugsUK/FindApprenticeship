@@ -100,7 +100,7 @@
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
             };
 
-            /*locationSearchViewModel.Addresses.ForEach(a => apprenticeshipVacancy.LocationAddresses.Add(new VacancyLocationAddress
+            /*locationSearchViewModel.Addresses.ForEach(a => apprenticeshipVacancy.LocationAddresses.Add(new VacancyLocation
             {
                 Address = new PostalAddress
                 {
@@ -851,7 +851,7 @@
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();
         }
 
-        private void CreateChildVacancy(Vacancy vacancy, VacancyLocationAddress address, DateTime approvalTime)
+        private void CreateChildVacancy(Vacancy vacancy, VacancyLocation address, DateTime approvalTime)
         {
             var newVacancy = (Vacancy)vacancy.Clone();
             newVacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
@@ -1041,7 +1041,7 @@
                 vacancy.NumberOfPositions = viewModel.NumberOfPositions;
                 vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
 
-                //vacancy.LocationAddresses = new List<VacancyLocationAddress>();
+                //vacancy.LocationAddresses = new List<VacancyLocation>();
                 vacancy.LocationAddressesComment = null;
             }
             else
@@ -1094,7 +1094,7 @@
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var addresses = viewModel.Addresses.Select(a => new VacancyLocationAddress
+            var addresses = viewModel.Addresses.Select(a => new VacancyLocation
             {
                 Address = new PostalAddress
                 {
@@ -1120,7 +1120,7 @@
             if (vacancy != null)
             {
                 _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber, null, null,
-                    new List<VacancyLocationAddress>(), null, null, null);
+                    new List<VacancyLocation>(), null, null, null);
             }
         }
 
@@ -1130,7 +1130,7 @@
             if (vacancy != null)
             {
                 _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation, vacancy.NumberOfPositions, new List<VacancyLocationAddress>(), vacancy.LocationAddressesComment,
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation, vacancy.NumberOfPositions, new List<VacancyLocation>(), vacancy.LocationAddressesComment,
                     null, vacancy.AdditionalLocationInformationComment);
             }
         }

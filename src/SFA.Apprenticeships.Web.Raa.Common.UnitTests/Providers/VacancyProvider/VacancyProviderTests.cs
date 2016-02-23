@@ -334,7 +334,7 @@
         {
             //Arrange
             long vacancyReferenceNumber = 1;
-            var locationAddresses = new Fixture().Build<VacancyLocationAddress>()
+            var locationAddresses = new Fixture().Build<VacancyLocation>()
                 .CreateMany(locationAddressCount).ToList();
 
             var vacancy = new Fixture().Build<Vacancy>()
