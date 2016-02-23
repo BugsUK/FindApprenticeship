@@ -14,6 +14,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 
         Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsErn, string name, string location, int currentPage, int pageSize);
 
+        //TODO: Remove all these methods once we have migrated the data layer
         Provider GetProvider(string ukprn);
 
         ProviderSite GetProviderSite(string ukprn, string edsErn);

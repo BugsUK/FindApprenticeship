@@ -17,6 +17,7 @@ namespace SFA.Apprenticeships.Application.Provider
     public class ProviderService : IProviderService
     {
         private readonly IOrganisationService _organisationService;
+        private readonly IEmployerService _employerService;
         private readonly IProviderReadRepository _providerReadRepository;
         private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
@@ -25,7 +26,7 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService)
+        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
         {
             _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
@@ -35,6 +36,7 @@ namespace SFA.Apprenticeships.Application.Provider
             _vacancyPartyReadRepository = vacancyPartyReadRepository;
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
+            _employerService = employerService;
         }
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
@@ -173,13 +175,13 @@ namespace SFA.Apprenticeships.Application.Provider
             return _vacancyPartyReadRepository.GetForProviderSite(providerSiteId);
         }
 
-        private IEnumerable<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
+        private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
         {
             Condition.Requires(request).IsNotNull();
 
             _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyParties = _organisationService.GetProviderSiteEmployerLinks(request);
+            var vacancyParties = _organisationService.GetProviderSiteEmployerLinks(request).ToList();
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
@@ -188,17 +190,10 @@ namespace SFA.Apprenticeships.Application.Provider
             //Combine with results from repository
             vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();
 
+            var employers = _employerService.GetEmployers(vacancyParties.Select(v => v.EmployerId).Distinct());
+
             //TODO: All searching needs doing here rather than the repositories
-            /*if (searchRequest.IsEmployerEdsUrnQuery)
-            {
-                queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    EmployerEdsUrn = searchRequest.EmployerEdsUrn
-                };
-            }
-            else if (searchRequest.IsNameAndLocationQuery)
+            /*if (searchRequest.IsNameAndLocationQuery)
             {
                 queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
 
@@ -227,16 +222,9 @@ namespace SFA.Apprenticeships.Application.Provider
                     ProviderSiteId = searchRequest.ProviderSiteId,
                     LocationSearchParameter = searchRequest.Location
                 };
-            }
-            else //it's a standard search by provider Site Urn
-            {
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId
-                };
             }*/
 
-            return vacancyParties;
+            return vacancyParties.Where(vp => employers.Any(e => e.EmployerId == vp.EmployerId)).ToList();
         }
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
