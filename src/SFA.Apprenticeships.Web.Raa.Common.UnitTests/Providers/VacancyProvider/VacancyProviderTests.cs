@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Security.Principal;
     using System.Threading;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.VacancyPosting;
@@ -253,7 +254,7 @@
             //Arrange
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
                 .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
@@ -268,12 +269,12 @@
                     {
                         ClosingDate = DateTime.Now,
                         DateSubmitted = DateTime.Now,
-                        OwnerPartyId = 42,
+                        OwnerPartyId = ownerPartyId,
                         Status = VacancyStatus.PendingQA
                     }
                 });
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -287,7 +288,7 @@
 
             //Assert
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA));
-            providerService.Verify(ps => ps.GetProvider(ukprn), Times.Once);
+            providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
 
         [Test]
@@ -445,7 +446,7 @@
             //Arrange
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             const int vacancyReferenceNumber = 1;
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
@@ -459,7 +460,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumber,
                     Status = VacancyStatus.PendingQA
                 }
@@ -469,7 +470,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -493,7 +494,7 @@
             var apprenticeshipVacancyRepository = new Mock<IVacancyReadRepository>();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             const int vacancyReferenceNumberOK = 1;
             const int vacancyReferenceNumberNonOK = 2;
             const string username = "qa@test.com";
@@ -509,7 +510,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumberOK,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -519,7 +520,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumberNonOK,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = "qa1@test.com",
@@ -531,7 +532,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -557,7 +558,7 @@
             var apprenticeshipVacancyRepository = new Mock<IVacancyReadRepository>();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             const int vacancyReferenceNumberOK = 1;
             const int vacancyReferenceNumberNonOK = 2;
             const string username = "qa@test.com";
@@ -573,7 +574,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumberOK,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = username,
@@ -583,7 +584,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumberNonOK,
                     Status = VacancyStatus.ReservedForQA,
                     QAUserName = "qa1@test.com",
@@ -595,7 +596,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -623,7 +624,7 @@
             //Arrange
             const int GreaterThanTimeout = 20;
             const int LesserThanTimeout = 2;
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             const int vacancyReferenceNumberOK = 1;
             const int vacancyReferenceNumberNonOK = 2;
 
@@ -643,7 +644,7 @@
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    OwnerPartyId = 42,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumberOK,
                     QAUserName = "someUserName",
                     DateStartedToQA = DateTime.UtcNow.AddMinutes(-GreaterThanTimeout),
@@ -665,7 +666,7 @@
                 avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -702,7 +703,11 @@
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             vacancyPostingService.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(reservedVacancy);
             var providerService = new Mock<IProviderService>();
-            providerService.Setup(s => s.GetProviderSite(It.IsAny<string>(), It.IsAny<string>())).Returns(providerSite);
+            providerService.Setup(s => s.GetProviderSite(It.IsAny<int>())).Returns(providerSite);
+            providerService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
+                .Returns(new Fixture().Build<VacancyParty>().Create());
+            var employerService = new Mock<IEmployerService>();
+            employerService.Setup(s => s.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Build<Employer>().Create());
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(s => s.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
             referenceDataService.Setup(s => s.GetCategoryByCode(It.IsAny<string>())).Returns(new Category());
@@ -721,6 +726,7 @@
                     .With(referenceDataService)
                     .With(configurationService)
                     .With(vacancyPostingService)
+                    .With(employerService)
                     .With(mapper)
                     .Build();
 
@@ -737,7 +743,7 @@
         [Test]
         public void ShouldSaveCommentsWhenUpdatingVacancySummaryViewModel()
         {
-            const int vacancyReferenceNumber = 1;
+            const long vacancyReferenceNumber = 1;
             const string closingDateComment = "Closing date comment";
             const string workingWeekComment = "Working week comment";
             const string wageComment = "Wage comment";
@@ -779,7 +785,7 @@
         [Test]
         public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()
         {
-            const int vacancyReferenceNumber = 1;
+            const long vacancyReferenceNumber = 1;
             const string firstQuestionComment = "First question comment";
             const string secondQuestionComment = "Second question comment";
 
@@ -810,7 +816,7 @@
 
         }
 
-        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(long vacancyReferenceNumber)
         {
             return new FurtherVacancyDetailsViewModel
             {

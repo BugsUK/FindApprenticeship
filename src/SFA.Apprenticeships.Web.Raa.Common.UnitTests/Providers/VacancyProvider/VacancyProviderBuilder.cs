@@ -76,6 +76,12 @@
             return this;
         }
 
+        public VacancyProviderBuilder With(Mock<IEmployerService> employerService)
+        {
+            _employerService = employerService;
+            return this;
+        }
+
         public VacancyProviderBuilder With(Mock<IMapper> mapper)
         {
             _mapper = mapper;
