@@ -3,6 +3,7 @@
     using System;
     using System.Linq;
 
+    /*
     using Vacancy = SFA.Apprenticeships.NewDB.Domain.Entities.Vacancy;
     using Infrastructure.Sql;
 
@@ -29,4 +30,5 @@ WHERE  VacancyId = @VacancyId
 ", new { VacancyId = vacancyId }).Single();
         }
     }
+        */
 }
