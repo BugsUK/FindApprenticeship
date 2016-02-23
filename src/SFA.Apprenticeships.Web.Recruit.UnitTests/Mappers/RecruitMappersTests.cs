@@ -38,8 +38,6 @@
             //Assert
             viewModel.Should().NotBeNull();
             viewModel.Title.Should().Be(source.Title);
-            //viewModel.EmployerName.Should().Be(source.VacancyParty.Employer.Name);
-            viewModel.EmployerGeoPoint.Should().NotBeNull();
             viewModel.ShortDescription.Should().Be(source.ShortDescription);
             viewModel.Status.Should().Be(source.Status);
         }

@@ -157,72 +157,14 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
         public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
         {
             Contract.Requires(searchRequest != null);
-            IList<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
 
-            var queryBuilder = new StringBuilder(@"
-SELECT ps.ProviderSiteID, ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.*
-FROM   dbo.ProviderSite AS ps
-JOIN   dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
-JOIN   dbo.Employer AS e on vor.EmployerId = e.EmployerId
-WHERE  ps.ProviderSiteID = @ProviderSiteId AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
+            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND vor.StatusTypeId = 4";;
 
-            object parameterList;
-
-            if (searchRequest.IsEmployerEdsUrnQuery)
-            {
-                queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    EmployerEdsUrn = searchRequest.EmployerEdsUrn
-                };
-            }
-            else if (searchRequest.IsNameAndLocationQuery)
-            {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
-
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    NameSearchParameter = searchRequest.Name,
-                    LocationSearchParameter = searchRequest.Location
-                };
-            }
-            else if (searchRequest.IsNameQuery)
-            {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    NameSearchParameter = searchRequest.Name
-                };
-            }
-            else if (searchRequest.IsLocationQuery)
-            {
-                queryBuilder.Append(" AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
-
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId,
-                    LocationSearchParameter = searchRequest.Location
-                };
-            }
-            else //it's a standard search by provider Site Urn
-            {
-                parameterList = new
-                {
-                    ProviderSiteId = searchRequest.ProviderSiteId
-                };
-            }
+            IEnumerable<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
 
             using (var connection = GetConnection())
             {
-                vacancyOwnerRelationships =
-                    connection.Query<Models.VacancyOwnerRelationship, Models.Employer, Models.VacancyOwnerRelationship>(
-                        queryBuilder.ToString(),
-                        (vor, employer) => { vor.Employer = employer; return vor; },
-                        parameterList,
-                        splitOn: "NationWideAllowed,EmployerId").ToList();
+                vacancyOwnerRelationships = connection.Query<Models.VacancyOwnerRelationship>(sql, new { searchRequest.ProviderSiteId });
             }
 
             return vacancyOwnerRelationships.Select(GetVacancyParty);
@@ -235,27 +177,12 @@ WHERE  ps.ProviderSiteID = @ProviderSiteId AND ps.TrainingProviderStatusTypeId =
                 return null;
             }
 
-            var address = new PostalAddress
-            {
-                AddressLine1 = vacancyOwnerRelationship.Employer.AddressLine1,
-                AddressLine2 = vacancyOwnerRelationship.Employer.AddressLine2,
-                AddressLine3 = vacancyOwnerRelationship.Employer.AddressLine3,
-                AddressLine4 = vacancyOwnerRelationship.Employer.Town,
-                Postcode = vacancyOwnerRelationship.Employer.PostCode,
-                GeoPoint = new GeoPoint
-                {
-                    Latitude = vacancyOwnerRelationship.Employer.Latitude,
-                    Longitude = vacancyOwnerRelationship.Employer.Longitude
-                },
-                //Uprn = 
-            };
-
             var providerSiteEmployerLink = new VacancyParty
             {
                 VacancyPartyId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
                 ProviderSiteId = vacancyOwnerRelationship.ProviderSiteId,
-                EmployerId = vacancyOwnerRelationship.Employer.EmployerId,
-                EmployerDescription = vacancyOwnerRelationship.EmployerDescription,
+                EmployerId = vacancyOwnerRelationship.EmployerId,
+                EmployerDescription = CleanDescription(vacancyOwnerRelationship.EmployerDescription),
                 EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsite
             };
 

@@ -183,58 +183,60 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyPartiesFromRepository = GetVacancyPartiesFromRepository(request);
+            var vacancyPartiesFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId);
 
             //Combine with results from repository
             vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();
 
+            //TODO: All searching needs doing here rather than the repositories
+            /*if (searchRequest.IsEmployerEdsUrnQuery)
+            {
+                queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
+                parameterList = new
+                {
+                    ProviderSiteId = searchRequest.ProviderSiteId,
+                    EmployerEdsUrn = searchRequest.EmployerEdsUrn
+                };
+            }
+            else if (searchRequest.IsNameAndLocationQuery)
+            {
+                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
+
+                parameterList = new
+                {
+                    ProviderSiteId = searchRequest.ProviderSiteId,
+                    NameSearchParameter = searchRequest.Name,
+                    LocationSearchParameter = searchRequest.Location
+                };
+            }
+            else if (searchRequest.IsNameQuery)
+            {
+                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
+                parameterList = new
+                {
+                    ProviderSiteId = searchRequest.ProviderSiteId,
+                    NameSearchParameter = searchRequest.Name
+                };
+            }
+            else if (searchRequest.IsLocationQuery)
+            {
+                queryBuilder.Append(" AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
+
+                parameterList = new
+                {
+                    ProviderSiteId = searchRequest.ProviderSiteId,
+                    LocationSearchParameter = searchRequest.Location
+                };
+            }
+            else //it's a standard search by provider Site Urn
+            {
+                parameterList = new
+                {
+                    ProviderSiteId = searchRequest.ProviderSiteId
+                };
+            }*/
+
             return vacancyParties;
-        }
-
-        private IEnumerable<VacancyParty> GetVacancyPartiesFromRepository(EmployerSearchRequest request)
-        {
-            var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId);
-
-            //TODO: All this needs moving into the employer repository 
-            /*var providerSiteEmployerLinksFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteEdsErn);
-            //TODO: This search and the search object should be pushed into the datalayer once it's SQL based
-            if (request.IsEmployerEdsUrnQuery)
-            {
-                providerSiteEmployerLinksFromRepository =
-                    providerSiteEmployerLinksFromRepository.Where(l => l.Employer.Ern == request.EmployerEdsUrn);
-            }
-            else if (request.IsNameAndLocationQuery)
-            {
-                providerSiteEmployerLinksFromRepository =
-                    providerSiteEmployerLinksFromRepository.Where(
-                        l =>
-                            l.Employer.Name.ToLower().Contains(request.Name.ToLower()) &&
-                            ((l.Employer.Address.Postcode != null &&
-                              l.Employer.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
-                             (l.Employer.Address.AddressLine4 != null &&
-                              l.Employer.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
-            }
-            else if (request.IsNameQuery)
-            {
-                providerSiteEmployerLinksFromRepository =
-                    providerSiteEmployerLinksFromRepository.Where(
-                        l =>
-                            l.Employer.Name.ToLower().Contains(request.Name.ToLower()));
-            }
-            else if (request.IsLocationQuery)
-            {
-                providerSiteEmployerLinksFromRepository =
-                    providerSiteEmployerLinksFromRepository.Where(
-                        l =>
-                            ((l.Employer.Address.Postcode != null &&
-                              l.Employer.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
-                             (l.Employer.Address.AddressLine4 != null &&
-                              l.Employer.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
-            }
-
-            return providerSiteEmployerLinksFromRepository;*/
-
-            return providerSiteEmployerLinksFromRepository;
         }
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)

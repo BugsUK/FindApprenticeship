@@ -92,7 +92,6 @@
 
             var apprenticeshipVacancy = new Vacancy
             {
-                VacancyId = (int)vacancyReferenceNumber,
                 VacancyGuid = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
                 OwnerPartyId = vacancyParty.VacancyPartyId,

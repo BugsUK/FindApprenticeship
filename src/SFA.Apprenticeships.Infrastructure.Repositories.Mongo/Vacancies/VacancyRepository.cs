@@ -194,6 +194,11 @@
 
         private MongoApprenticeshipVacancy SaveEntity(Vacancy entity)
         {
+            if (entity.VacancyId == 0 && entity.VacancyReferenceNumber != 0)
+            {
+                entity.VacancyId = (int)entity.VacancyReferenceNumber;
+            }
+
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);
 
