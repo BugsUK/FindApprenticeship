@@ -370,6 +370,11 @@ AND    @RowCount = 1
             throw new NotImplementedException();
         }
 
+        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        {
+            throw new NotImplementedException();
+        }
+
         private void UpdateEntityTimestamps(Vacancy entity)
         {
             /* TODO

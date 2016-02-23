@@ -113,7 +113,6 @@
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />
-    <Compile Include="Vacancies\IOfflineVacancyService.cs" />
     <Compile Include="Vacancies\VacancySearchParametersBase.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchParameters.cs" />
     <Compile Include="Search\SearchParametersBase.cs" />

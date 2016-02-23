@@ -32,11 +32,6 @@
                 .Ctor<IMapper>()
                 .Named("ApprenticeshipVacancyMappers");
 
-            For<IOfflineApprenticeshipVacancyRepository>()
-                .Use<OfflineApprenticeshipVacancyRepository>()
-                .Ctor<IMapper>()
-                .Named("ApprenticeshipVacancyMappers");
-
             For<IReferenceNumberRepository>()
                 .Use<ReferenceNumberRepository>();
 

@@ -91,7 +91,6 @@
     <Compile Include="IVacancyDataProvider.cs" />
     <Compile Include="IAllVacanciesProvider.cs" />
     <Compile Include="IVacancySearchProvider.cs" />
-    <Compile Include="OfflineVacancyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SiteMap\ISiteMapVacancyProvider.cs" />
     <Compile Include="SiteMap\SiteMapVacancy.cs" />

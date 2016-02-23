@@ -178,7 +178,6 @@
     <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />
     <Compile Include="Vacancies\IoC\VacancyRepositoryRegistry.cs" />
     <Compile Include="Vacancies\Mappers\ApprenticeshipVacancyMappers.cs" />
-    <Compile Include="Vacancies\OfflineApprenticeshipVacancyRepository.cs" />
     <Compile Include="Vacancies\ReferenceNumberRepository.cs" />
   </ItemGroup>
   <ItemGroup>

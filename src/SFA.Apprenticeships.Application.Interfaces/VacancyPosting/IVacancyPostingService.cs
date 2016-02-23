@@ -34,5 +34,7 @@
             string additionalLocationInformation, string additionalLocationInformationComment);
 
         List<VacancyLocationAddress> GetLocationAddresses(int vacancyId);
+
+        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
     }
 }

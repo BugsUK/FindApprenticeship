@@ -37,5 +37,7 @@
             int? numberOfPositions, IEnumerable<VacancyLocationAddress> vacancyLocationAddresses,
             string locationAddressesComment, string additionalLocationInformation,
             string additionalLocationInformationComment);
+
+        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
     }
 }

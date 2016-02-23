@@ -157,5 +157,10 @@
         {
             return _vacancyLocationAddressReadRepository.GetForVacancyId(vacancyId);
         }
+
+        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        {
+            _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
+        }
     }
 }

@@ -138,6 +138,33 @@
             return vacancies;
         }
 
+        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        {
+            _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
+
+            var args = new FindAndModifyArgs
+            {
+                Query = new QueryBuilder<Vacancy>().And(Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<Vacancy>.EQ(d => d.OfflineVacancy, true)),
+                Update = Update.Inc("OfflineApplicationClickThroughCount", 1),
+                VersionReturned = FindAndModifyDocumentVersion.Modified
+            };
+
+            var result = Collection.FindAndModify(args);
+
+            if (result.Ok)
+            {
+                _logger.Debug(
+                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} successfully",
+                    vacancyReferenceNumber);
+            }
+            else
+            {
+                _logger.Warn(
+                    "Call to Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0} failed: {1}, {2}",
+                    vacancyReferenceNumber, result.Code, result.ErrorMessage);
+            }
+        }
+
         public void Delete(int vacancyId)
         {
             _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", vacancyId);
