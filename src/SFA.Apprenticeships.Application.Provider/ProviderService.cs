@@ -76,23 +76,23 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.Get(providerSiteId);
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string edsErn)
+        public ProviderSite GetProviderSite(string ukprn, string edsUrn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
-            Condition.Requires(edsErn).IsNotNullOrEmpty();
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsErn);
+            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsUrn);
 
-            var providerSite = _providerSiteReadRepository.GetByEdsErn(edsErn);
+            var providerSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             if (providerSite != null)
             {
                 return providerSite;
             }
 
-            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsErn);
+            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsUrn);
 
-            providerSite = _organisationService.GetProviderSite(ukprn, edsErn);
+            providerSite = _organisationService.GetProviderSite(ukprn, edsUrn);
 
             return providerSite;
         }

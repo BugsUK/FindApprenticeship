@@ -97,9 +97,9 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        public ActionResult EditSite(string ern)
+        public ActionResult EditSite(string edsUrn)
         {
-            var response = _providerMediator.GetSite(User.GetUkprn(), ern);
+            var response = _providerMediator.GetSite(User.GetUkprn(), edsUrn);
             var providerSiteViewModel = response.ViewModel;
 
             return View(providerSiteViewModel);

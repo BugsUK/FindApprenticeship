@@ -57,20 +57,20 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return provider;
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string edsErn)
+        public ProviderSite GetProviderSite(string ukprn, string edsUrn)
         {
             const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                                 WHERE p.UKPRN = @Ukprn AND ps.EDSURN = @Ern 
+                                 WHERE p.UKPRN = @Ukprn AND ps.EDSURN = @EdsUrn 
                                  AND ps.TrainingProviderStatusTypeId = 1";
 
             Models.ProviderSite legacyProviderSite;
 
             using (var connection = GetConnection())
             {
-                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, Ern = edsErn }).SingleOrDefault();
+                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, EdsUrn = edsUrn }).SingleOrDefault();
             }
 
             return GetProviderSite(legacyProviderSite);
@@ -121,7 +121,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 ProviderSiteId = legacyProviderSite.ProviderSiteID,
                 ProviderId = legacyProviderSite.ProviderID,
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
-                EdsErn = legacyProviderSite.EDSURN.ToString(),
+                EdsUrn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,
                 EmployerDescription = legacyProviderSite.EmployerDescription,
                 CandidateDescription = legacyProviderSite.CandidateDescription,
@@ -141,9 +141,9 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return results.SingleOrDefault();*/
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, string edsErn)
+        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
         {
-            var request = new EmployerSearchRequest(providerSiteId, edsErn);
+            var request = new EmployerSearchRequest(providerSiteId, edsUrn);
             var results = GetProviderSiteEmployerLinks(request);
             return results.SingleOrDefault();
         }

@@ -23,7 +23,7 @@
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
 
-        public string ProviderSiteEdsErn { get; set; }
+        public string ProviderSiteEdsUrn { get; set; }
 
         public int ProviderSiteId { get; set; }
 

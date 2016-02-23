@@ -120,7 +120,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
                 .Single(p => p.VacancyPartyId == dbVacancy.EmployerVacancyPartyId); // TODO: Verify
 
 
-            /*result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsErn.ToString(); // TODO: Verify. TODO: Type?
+            /*result.ProviderSiteEmployerLink.ProviderSiteErn = employer.EdsUrn.ToString(); // TODO: Verify. TODO: Type?
             result.ProviderSiteEmployerLink.Employer = new Domain.Entities.Organisations.Employer()
             {
                 Address = new Address()
@@ -130,7 +130,7 @@ new { PostalAddressIds = vacancyLocations.Select(l => l.PostalAddressId) /*.Unio
                 //DateCreated = employer.DateCreated, TODO
                 //DateUpdated = employer.DateUpdated, TODO
                 //EntityId = employer.VacancyPartyId, // TODO: Verify
-                Ern = employer.EdsErn.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
+                EdsUrn = employer.EdsUrn.ToString(), // TODO: Verify. TODO: Case. TODO: Type?
                 Name = employer.FullName
             };*/
 

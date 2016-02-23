@@ -6,7 +6,7 @@
     public interface ILegacyEmployerProvider
     {
         Employer GetEmployer(int employerId);
-        Employer GetEmployer(string ern);
+        Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployersByIds(IEnumerable<int> employerIds);
     }
 }

@@ -7,7 +7,7 @@
     {
         public int EmployerId { get; set; }
         public Guid EmployerGuid { get; set; }
-        public string EdsErn { get; set; }
+        public string EdsUrn { get; set; }
         public string Name { get; set; }
         public PostalAddress Address { get; set; }
         public DateTime CreatedDateTime { get; set; }

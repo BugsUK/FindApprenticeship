@@ -6,7 +6,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
     {
         public int EmployerId { get; set; }
 
-        public string EdsErn { get; set; }
+        public string EdsUrn { get; set; }
 
         public string EmployerName { get; set; }
 

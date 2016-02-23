@@ -7,7 +7,7 @@
     {
         Employer Get(int employerId);
 
-        Employer GetByEdsErn(string edsErn);
+        Employer GetByEdsUrn(string edsUrn);
 
         List<Employer> GetByIds(IEnumerable<int> employerIds);
     }

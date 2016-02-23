@@ -6,7 +6,7 @@
     public interface IProviderSiteReadRepository
     {
         ProviderSite Get(int providerSiteId);
-        ProviderSite GetByEdsErn(string edsErn);
+        ProviderSite GetByEdsUrn(string edsUrn);
         IEnumerable<ProviderSite> GetForProvider(string ukprn);
     }
 

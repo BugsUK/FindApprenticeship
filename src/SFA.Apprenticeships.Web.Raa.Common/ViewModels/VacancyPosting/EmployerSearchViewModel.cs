@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
     public enum EmployerFilterType
     {
         Undefined,
-        EdsErn,
+        EdsUrn,
         NameAndLocation
     }
 
@@ -25,7 +25,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
         {
             ProviderSiteId = viewModel.ProviderSiteId;
             FilterType = viewModel.FilterType;
-            EdsErn = viewModel.EdsErn;
+            EdsUrn = viewModel.EdsUrn;
             Name = viewModel.Name;
             Location = viewModel.Location;
             if (viewModel.EmployerResultsPage != null)
@@ -40,8 +40,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
         public EmployerFilterType FilterType { get; set; }
 
-        [Display(Name = EmployerSearchViewModelMessages.Ern.LabelText)]
-        public string EdsErn { get; set; }
+        [Display(Name = EmployerSearchViewModelMessages.EdsUrn.LabelText)]
+        public string EdsUrn { get; set; }
 
         [Display(Name = EmployerSearchViewModelMessages.Name.LabelText)]
         public string Name { get; set; }
@@ -58,7 +58,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
         {
             ProviderSiteId,
             FilterType,
-            EdsErn,
+            EdsUrn,
             Name,
             Location,
             VacancyGuid,

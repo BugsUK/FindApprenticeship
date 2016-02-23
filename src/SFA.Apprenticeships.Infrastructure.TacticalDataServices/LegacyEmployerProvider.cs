@@ -35,15 +35,15 @@
             return GetEmployer(legacyEmployer);
         }
 
-        public Employer GetEmployer(string ern)
+        public Employer GetEmployer(string edsUrn)
         {
-            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EdsUrn = @Ern AND e.EmployerStatusTypeId = 1";
+            const string sql = @"SELECT e.* FROM dbo.Employer AS e WHERE e.EdsUrn = @EdsUrn AND e.EmployerStatusTypeId = 1";
 
             Models.Employer legacyEmployer;
 
             using (var connection = GetConnection())
             {
-                legacyEmployer = connection.Query<Models.Employer>(sql, new { Ern = ern }).SingleOrDefault();
+                legacyEmployer = connection.Query<Models.Employer>(sql, new { EdsUrn = edsUrn }).SingleOrDefault();
             }
 
             return GetEmployer(legacyEmployer);
@@ -88,7 +88,7 @@
             var employer = new Employer
             {
                 EmployerId = legacyEmployer.EmployerId,
-                EdsErn = legacyEmployer.EdsUrn.ToString(),
+                EdsUrn = legacyEmployer.EdsUrn.ToString(),
                 Name = legacyEmployer.FullName,
                 Address = address
             };

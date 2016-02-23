@@ -129,8 +129,8 @@
             {
                 var viewModel = new LocationSearchViewModel
                 {
-                    ProviderSiteEdsErn = providerSite.EdsErn,
-                    EmployerErn = employer.EdsErn,
+                    ProviderSiteEdsUrn = providerSite.EdsUrn,
+                    EmployerErn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
@@ -164,9 +164,9 @@
                 return new LocationSearchViewModel
                 {
                     ProviderSiteId = providerSite.ProviderSiteId,
-                    ProviderSiteEdsErn = providerSite.EdsErn,
+                    ProviderSiteEdsUrn = providerSite.EdsUrn,
                     EmployerId = employer.EmployerId,
-                    EmployerErn = employer.EdsErn,
+                    EmployerErn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     Addresses = new List<VacancyLocationAddressViewModel>()

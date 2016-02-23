@@ -33,19 +33,19 @@
         {
             var organisationServie = new Mock<IOrganisationService>();
             var service = GetService(organisationServie);
-            const string ern = "Ern";
+            const string edsUrn = "EdsUrn";
             const string name = "name";
             const string location = "Location";
 
-            service.GetEmployers(ern, name, location);
+            service.GetEmployers(edsUrn, name, location);
 
-            organisationServie.Verify(s => s.GetEmployers(ern, name, location));
+            organisationServie.Verify(s => s.GetEmployers(edsUrn, name, location));
         }
 
         [Test]
         public void GetEmployersGetsThemFromOrganisationalService()
         {
-            const string ern = "ern";
+            const string edsUrn = "edsUrn";
             const string name = "name";
             const string location = "location";
             const int currentPage = 1;
@@ -54,9 +54,9 @@
             var organisationServie = new Mock<IOrganisationService>();
             var service = GetService(organisationServie);
 
-            service.GetEmployers(ern, name, location, currentPage, pageSize);
+            service.GetEmployers(edsUrn, name, location, currentPage, pageSize);
 
-            organisationServie.Verify(s => s.GetEmployers(ern, name, location, currentPage, pageSize));
+            organisationServie.Verify(s => s.GetEmployers(edsUrn, name, location, currentPage, pageSize));
         }
 
         private IEmployerService GetService(Mock<IOrganisationService> orgService = null)

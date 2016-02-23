@@ -36,7 +36,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string WebsiteUrl { get; set; }
 
-        public int? EdsErn { get; set; }
+        public int? EdsUrn { get; set; }
 
         public int? UKPrn { get; set; }
 

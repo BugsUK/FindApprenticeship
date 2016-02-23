@@ -20,11 +20,11 @@
                     <input checked name="@Html.NameFor(m => m.FilterType)" value="NameAndLocation" type="radio" id="namesearch">Name and location
                 </label>
                 <label data-target="edsErnsearch-panel" for="ernsearch" class="block-label">
-                    <input aria-controls="edsErnsearch-panel" name="@Html.NameFor(m => m.FilterType)" value="Ern" type="radio" id="ernsearch">ERN
+                    <input aria-controls="edsErnsearch-panel" name="@Html.NameFor(m => m.FilterType)" value="EdsUrn" type="radio" id="ernsearch">ERN
                 </label>
             </div>
             <div id="ernsearch-panel" class="toggle-content blocklabel-content">
-                @Html.FormTextFor(m => m.EdsErn)
+                @Html.FormTextFor(m => m.EdsUrn)
                 <div class="form-group">
                     <button class="button">Find employer</button>
                 </div>

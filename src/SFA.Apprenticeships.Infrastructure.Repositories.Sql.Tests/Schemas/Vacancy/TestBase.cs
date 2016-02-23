@@ -30,8 +30,8 @@
         protected const string WageIntervalCode_Weekly = "W";
         protected const string DurationTypeCode_Years = "Y";
         protected const string Ukprn = "Ukrpn provider 1";
-        protected const string EmployerErn = "Employer 1 ern";
-        protected const string ProviderSiteErn = "Provider 1 site ern";
+        protected const string EmployerErn = "Employer 1 edsUrn";
+        protected const string ProviderSiteErn = "Provider 1 site edsUrn";
 
         protected Vacancy CreateValidDatabaseVacancy()
         {

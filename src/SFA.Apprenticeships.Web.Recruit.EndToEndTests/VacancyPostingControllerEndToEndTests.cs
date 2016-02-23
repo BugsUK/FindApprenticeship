@@ -129,7 +129,7 @@
         public void AddLocationsShouldStoreLocationsInDB()
         {
             const string providerSiteErn = "101282923";
-            const string ern = "100608868";
+            const string edsUrn = "100608868";
             const string additionalLocationInformation = "additional location information";
             var numberOfPositions = 5;
             var address1 = new VacancyLocationAddressViewModel
@@ -146,8 +146,8 @@
             var vacancyGuid = Guid.NewGuid();
             var viewModel = new LocationSearchViewModel
             {
-                ProviderSiteEdsErn = providerSiteErn,
-                EmployerErn = ern,
+                ProviderSiteEdsUrn = providerSiteErn,
+                EmployerErn = edsUrn,
                 AdditionalLocationInformation = additionalLocationInformation,
                 Addresses = new List<VacancyLocationAddressViewModel> {address1},
                 VacancyGuid = vacancyGuid

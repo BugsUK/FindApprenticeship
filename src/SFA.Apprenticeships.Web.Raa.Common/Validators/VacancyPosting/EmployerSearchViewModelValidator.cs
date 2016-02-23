@@ -13,12 +13,12 @@
 
         private void AddCommonRules()
         {
-            RuleFor(x => x.EdsErn)
+            RuleFor(x => x.EdsUrn)
                 .NotEmpty()
-                .When(x => x.FilterType == EmployerFilterType.EdsErn)
-                .WithMessage(EmployerSearchViewModelMessages.Ern.RequiredErrorText)
-                .Matches(EmployerSearchViewModelMessages.Ern.WhiteListRegularExpression)
-                .WithMessage(EmployerSearchViewModelMessages.Ern.WhiteListErrorText);
+                .When(x => x.FilterType == EmployerFilterType.EdsUrn)
+                .WithMessage(EmployerSearchViewModelMessages.EdsUrn.RequiredErrorText)
+                .Matches(EmployerSearchViewModelMessages.EdsUrn.WhiteListRegularExpression)
+                .WithMessage(EmployerSearchViewModelMessages.EdsUrn.WhiteListErrorText);
 
             RuleFor(x => x.Name)
                 .Matches(EmployerSearchViewModelMessages.Name.WhiteListRegularExpression)

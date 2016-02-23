@@ -9,14 +9,14 @@ namespace SFA.Apprenticeships.Application.Organisation
     {
         Provider GetProvider(string ukprn);
 
-        ProviderSite GetProviderSite(string ukprn, string edsErn);
+        ProviderSite GetProviderSite(string ukprn, string edsUrn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         //TODO: VacancyParty provider
         VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
-        VacancyParty GetVacancyParty(int providerSiteId, string edsErn);
+        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
         
         IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest);
     }

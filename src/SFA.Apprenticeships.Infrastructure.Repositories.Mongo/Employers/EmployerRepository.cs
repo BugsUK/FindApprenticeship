@@ -35,11 +35,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public Employer GetByEdsErn(string edsErn)
+        public Employer GetByEdsUrn(string edsUrn)
         {
-            _logger.Debug("Called Mongodb to get employer with edsErn={0}", edsErn);
+            _logger.Debug("Called Mongodb to get employer with edsUrn={0}", edsUrn);
 
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EdsErn == edsErn);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EdsUrn == edsUrn);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
@@ -62,7 +62,7 @@
 
         public Employer Save(Employer entity)
         {
-            _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsErn);
+            _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
 
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);
@@ -71,7 +71,7 @@
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved employer to Mongodb with ERN={0}", entity.EdsErn);
+            _logger.Debug("Saved employer to Mongodb with ERN={0}", entity.EdsUrn);
 
             return _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }

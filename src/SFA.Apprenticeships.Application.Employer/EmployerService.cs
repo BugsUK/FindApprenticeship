@@ -28,13 +28,13 @@
             return _organisationService.GetEmployer(employerId);
         }
 
-        public Employer GetEmployer(string edsErn)
+        public Employer GetEmployer(string edsUrn)
         {
-            Condition.Requires(edsErn).IsNotNullOrEmpty();
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsErn);
+            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsUrn);
 
-            return _organisationService.GetEmployer(edsErn);
+            return _organisationService.GetEmployer(edsUrn);
         }
 
         public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds)
@@ -42,14 +42,14 @@
             return _organisationService.GetByIds(employerIds);
         }
 
-        public IEnumerable<Employer> GetEmployers(string edsErn, string name, string location)
+        public IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location)
         {
-            return _organisationService.GetEmployers(edsErn, name, location);
+            return _organisationService.GetEmployers(edsUrn, name, location);
         }
 
-        public Pageable<Employer> GetEmployers(string edsErn, string name, string location, int currentPage, int pageSize)
+        public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
-            return _organisationService.GetEmployers(edsErn, name, location, currentPage, pageSize);
+            return _organisationService.GetEmployers(edsUrn, name, location, currentPage, pageSize);
         }
     }
 }

@@ -121,9 +121,9 @@
 
             //TODO: pull this into the view and use hidden form inputs
             //OR: just use a model that caters for it.
-            if (!string.IsNullOrWhiteSpace(employerFilterViewModel.EdsErn))
+            if (!string.IsNullOrWhiteSpace(employerFilterViewModel.EdsUrn))
             {
-                employerFilterViewModel.FilterType = EmployerFilterType.EdsErn;
+                employerFilterViewModel.FilterType = EmployerFilterType.EdsUrn;
             }
             else if (!string.IsNullOrWhiteSpace(employerFilterViewModel.Location) || !string.IsNullOrWhiteSpace(employerFilterViewModel.Name))
             {

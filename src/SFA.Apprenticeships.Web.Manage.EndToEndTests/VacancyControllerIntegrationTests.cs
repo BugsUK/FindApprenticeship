@@ -634,11 +634,11 @@
                     DateCreated = DateTime.UtcNow,
                     Description = "employer link",
                     DateUpdated = DateTime.UtcNow,
-                    ProviderSiteEdsErn = "101282923",
+                    ProviderSiteEdsUrn = "101282923",
                     WebsiteUrl = "www.google.com",
                     Employer = new Employer
                     {
-                        Ern = "100608868",
+                        EdsUrn = "100608868",
                         Name = "Employer name",
                         Address = new Address
                         {

@@ -51,9 +51,9 @@
             return GetProviderViewModel(ukprn);
         }
 
-        public ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string ern)
+        public ProviderSiteViewModel GetProviderSiteViewModel(string ukprn, string edsUrn)
         {
-            var providerSite = _providerService.GetProviderSite(ukprn, ern);
+            var providerSite = _providerService.GetProviderSite(ukprn, edsUrn);
 
             return providerSite.Convert();
         }
@@ -127,8 +127,8 @@
 
             switch (viewModel.FilterType)
             {
-                case EmployerFilterType.EdsErn:
-                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.EdsErn);
+                case EmployerFilterType.EdsUrn:
+                    parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.EdsUrn);
                     break;
                 case EmployerFilterType.NameAndLocation:
                     parameters = new EmployerSearchRequest(viewModel.ProviderSiteId, viewModel.Name, viewModel.Location);

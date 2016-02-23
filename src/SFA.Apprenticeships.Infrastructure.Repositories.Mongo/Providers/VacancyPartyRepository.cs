@@ -36,7 +36,7 @@
 
         public VacancyParty Get(int providerSiteId, int employerId)
         {
-            _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, ern={1}", providerSiteId, employerId);
+            _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, edsUrn={1}", providerSiteId, employerId);
 
             var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteId == providerSiteId && e.EmployerId == employerId);
 

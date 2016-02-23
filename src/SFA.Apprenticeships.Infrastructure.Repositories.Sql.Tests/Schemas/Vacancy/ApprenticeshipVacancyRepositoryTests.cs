@@ -310,7 +310,7 @@
                 FullName = "Employer A",
                 Description = "A",
                 WebsiteUrl = "URL",
-                EdsErn = 1,
+                EdsUrn = 1,
                 UKPrn = null
             };
 
@@ -320,7 +320,7 @@
                 FullName = "Provider A",
                 Description = "A",
                 WebsiteUrl = "URL",
-                EdsErn = null,
+                EdsUrn = null,
                 UKPrn = 1
             };
 
@@ -330,7 +330,7 @@
                 FullName = "Provider B",
                 Description = "B",
                 WebsiteUrl = "URL",
-                EdsErn = 3,
+                EdsUrn = 3,
                 UKPrn = 1
             };
 

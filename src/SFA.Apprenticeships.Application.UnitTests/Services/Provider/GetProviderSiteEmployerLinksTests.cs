@@ -15,9 +15,9 @@
     public class GetProviderSiteEmployerLinksTests
     {
         private const int ProviderSiteId = 654321;
-        private const string EdsErn1 = "100000";
-        private const string EdsErn2 = "200000";
-        private const string EdsErn3 = "300000";
+        private const string EdsUrn1 = "100000";
+        private const string EdsUrn2 = "200000";
+        private const string EdsUrn3 = "300000";
         private const int EmployerId1 = 100000;
         private const int EmployerId2 = 200000;
         private const int EmployerId3 = 300000;
@@ -43,8 +43,8 @@
         [TestFixtureSetUp]
         public void TestFixtureSetUp()
         {
-            _employer1 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn1).Create();
-            _employer2 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn2).Create();
+            _employer1 = new Fixture().Build<Employer>().With(e => e.EdsUrn, EdsUrn1).Create();
+            _employer2 = new Fixture().Build<Employer>().With(e => e.EdsUrn, EdsUrn2).Create();
 
             _providerSiteEmployerLink1 =
                 new Fixture().Build<VacancyParty>()
@@ -67,7 +67,7 @@
         [SetUp]
         public void Setup()
         {
-            _employer3 = new Fixture().Build<Employer>().With(e => e.EdsErn, EdsErn3).Create();
+            _employer3 = new Fixture().Build<Employer>().With(e => e.EdsUrn, EdsUrn3).Create();
 
             _providerSiteEmployerLink3 =
                 new Fixture().Build<VacancyParty>()
@@ -143,7 +143,7 @@
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
             _providerSiteEmployerLinkReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_providerSiteEmployerLinkReadRepository.Object).Build();
-            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, EdsErn2);
+            var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, EdsUrn2);
 
             var linksPage = service.GetVacancyParties(employerSearchRequest, CurrentPage, PageSize);
 

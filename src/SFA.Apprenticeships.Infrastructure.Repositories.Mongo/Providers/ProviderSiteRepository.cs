@@ -33,11 +33,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
 
-        public ProviderSite GetByEdsErn(string edsErn)
+        public ProviderSite GetByEdsUrn(string edsUrn)
         {
-            _logger.Debug("Called Mongodb to get provider site with ERN={0}", edsErn);
+            _logger.Debug("Called Mongodb to get provider site with ERN={0}", edsUrn);
 
-            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.EdsErn, edsErn));
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.EdsUrn, edsUrn));
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }

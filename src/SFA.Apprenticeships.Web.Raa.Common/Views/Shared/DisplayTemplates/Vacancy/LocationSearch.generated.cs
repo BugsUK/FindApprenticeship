@@ -94,7 +94,7 @@ WriteLiteral("\r\n");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
-Write(Html.HiddenFor(m => m.ProviderSiteEdsErn));
+Write(Html.HiddenFor(m => m.ProviderSiteEdsUrn));
 
             
             #line default

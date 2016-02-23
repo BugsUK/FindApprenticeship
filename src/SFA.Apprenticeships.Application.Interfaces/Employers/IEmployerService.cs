@@ -10,11 +10,11 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
     public interface IEmployerService
     {
         Employer GetEmployer(int employerId);
-        Employer GetEmployer(string edsErn);
+        Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
         //TODO: Use the object below once it has been agreed upon
-        IEnumerable<Employer> GetEmployers(string edsErn, string name, string location);
-        Pageable<Employer> GetEmployers(string edsErn, string name, string location, int currentPage, int pageSize);
+        IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location);
+        Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
     }
     
     public class EmployerSearchRequest
