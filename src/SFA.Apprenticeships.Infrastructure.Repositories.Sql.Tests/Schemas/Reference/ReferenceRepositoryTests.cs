@@ -9,6 +9,7 @@
     using Sql.Schemas.Reference;
 
     [TestFixture(Category = "Integration")]
+    [Ignore("Un-ignore, once we start using the reference data")]
     public class ReferenceRepositoryTests
     {
         private readonly IMapper _mapper = new ReferenceMappers();
@@ -17,11 +18,8 @@
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            var dbInitialiser = new DatabaseInitialiser();
-
-            dbInitialiser.Publish(true);
-
-            _connection = dbInitialiser.GetOpenConnection();
+            _connection =
+                new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
         }
 
         [Test]

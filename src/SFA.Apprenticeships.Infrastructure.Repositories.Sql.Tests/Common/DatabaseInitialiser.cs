@@ -10,45 +10,22 @@
     using System.Reflection;
     using System.Text;
     using Microsoft.SqlServer.Dac;
-    using Moq;
-    using SFA.Infrastructure.Azure.Configuration;
-    using SFA.Infrastructure.Configuration;
-    using SFA.Infrastructure.Interfaces;
     using Sql.Common;
-    using Web.Common.Configuration;
 
     /// <summary>
     /// Class to initialise the database independant (as far as possible) of the database access method used to query data.
     /// </summary>
     public class DatabaseInitialiser
     {
-        private const string DatabaseProjectName = "SFA.Apprenticeships.Data";
-
-        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private readonly string _dacpacFilePath;
         private readonly string _targetConnectionString;
         private readonly string _databaseTargetName;
 
         public DatabaseInitialiser()
         {
-            var configurationManager = new ConfigurationManager();
-
-            var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
-
-            var environment = configurationService.Get<CommonWebConfiguration>().Environment;
-
-            _databaseTargetName = $"RaaTest-{environment}";
-            _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
-
-            var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
-            var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
-            _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            if (!File.Exists(_dacpacFilePath))
-            {
-                //For NCrunch on Dave's machine
-                databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
-                _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            }
+            _databaseTargetName = DatabaseConfigurationProvider.Instance.DatabaseTargetName;
+            _targetConnectionString = DatabaseConfigurationProvider.Instance.TargetConnectionString;
+            _dacpacFilePath = DatabaseConfigurationProvider.Instance.DacPacFilePath;
         }
 
         public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)
@@ -68,7 +45,7 @@
 
             var dbPackage = DacPackage.Load(_dacpacFilePath);
 
-            var dbDeployOptions = new DacDeployOptions {CreateNewDatabase = dropDatabase};
+            var dbDeployOptions = new DacDeployOptions { CreateNewDatabase = dropDatabase };
 
             dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
         }
@@ -145,8 +122,9 @@
                 var propValue = prop.GetValue(vacancy, null);
 
                 var name = prop.Name;
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
 
-                if (name != typeIdProperty)
+                if (name != typeIdProperty && attributeMapped)
                 {
                     if (propValue == null)
                     {
@@ -161,6 +139,7 @@
                 }
                 else
                 {
+                    sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
                     sqlBuilder.Append(i != props.Count - 1 ? "" : ")");
                 }
             }
@@ -174,9 +153,19 @@
 
                 var name = prop.Name;
 
+                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
+
                 if (name != typeIdProperty)
                 {
-                    sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    if (attributeMapped)
+                    {
+                        sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                    }
+                    else if (i == props.Count - 1)
+                    {
+                        sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
+                        sqlBuilder.Append(") VALUES (");
+                    }
                 }
             }
         }
@@ -186,7 +175,7 @@
             var tableName = myType.Name;
             var tableAttribute =
                 myType.CustomAttributes.FirstOrDefault(
-                    a => a.AttributeType == typeof (TableAttribute));
+                    a => a.AttributeType == typeof(TableAttribute));
             if (tableAttribute != null)
             {
                 tableName = tableAttribute.ConstructorArguments.First().Value.ToString();
