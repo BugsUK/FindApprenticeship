@@ -14,8 +14,6 @@
 
     public interface IProviderUserWriteRepository
     {
-        void Delete(int providerUserId);
-
         ProviderUser Save(ProviderUser entity);
     }
 }

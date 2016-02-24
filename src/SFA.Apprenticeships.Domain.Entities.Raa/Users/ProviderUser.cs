@@ -10,7 +10,10 @@
         }
 
         public int ProviderUserId { get; set; }
+
         public Guid ProviderUserGuid { get; set; }
+
+        public int ProviderId { get; set; }
 
         public string Username { get; set; }
 
@@ -29,7 +32,9 @@
         public string PhoneNumber { get; set; }
 
         public ProviderUserStatus Status { get; set; }
+
         public DateTime CreatedDateTime { get; set; }
+
         public DateTime? UpdatedDateTime { get; set; }
     }
 }

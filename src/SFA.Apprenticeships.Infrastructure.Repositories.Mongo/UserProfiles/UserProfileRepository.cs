@@ -56,15 +56,6 @@
             return entities;
         }
 
-        public void Delete(int providerUserId)
-        {
-            _logger.Debug("Calling repository to delete provider user with Id={0}", providerUserId);
-
-            Collection.Remove(Query<MongoProviderUser>.EQ(o => o.ProviderUserId, providerUserId));
-
-            _logger.Debug("Deleted provider user with Id={0}", providerUserId);
-        }
-
         public ProviderUser Save(ProviderUser entity)
         {
             _logger.Debug("Called Mongodb to save provider user with username={0}", entity.Username);
