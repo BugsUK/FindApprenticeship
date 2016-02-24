@@ -29,7 +29,6 @@
 
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
         List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
         void DeleteVacancyLocationsFor(int vacancyId);
     }

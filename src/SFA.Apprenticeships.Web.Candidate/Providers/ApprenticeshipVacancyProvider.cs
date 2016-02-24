@@ -9,7 +9,6 @@
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
-    using Application.Interfaces.VacancyPosting;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;
@@ -23,7 +22,7 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
-        private readonly IVacancyPostingService _vacancyPostingService;
+        private readonly ICandidateVacancyService _candidateVacancyService;
 
         private static class ResultsKeys
         {
@@ -36,13 +35,13 @@
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
             ICandidateService candidateService,
             IMapper apprenticeshipSearchMapper,
-            ILogService logger, IVacancyPostingService vacancyPostingService)
+            ILogService logger, ICandidateVacancyService candidateVacancyService)
         {
             _apprenticeshipSearchService = apprenticeshipSearchService;
             _candidateService = candidateService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _logger = logger;
-            _vacancyPostingService = vacancyPostingService;
+            _candidateVacancyService = candidateVacancyService;
         }
 
         public ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search)
@@ -222,7 +221,7 @@
             try
             {
                 //Incrementing this value should be able to fail and the user still redirected to the offline URL
-                _vacancyPostingService.IncrementOfflineApplicationClickThrough(vacancyId);
+                _candidateVacancyService.IncrementOfflineApplicationClickThrough(vacancyId);
             }
             catch (Exception e)
             {
