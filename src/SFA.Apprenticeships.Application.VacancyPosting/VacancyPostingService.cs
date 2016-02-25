@@ -125,11 +125,6 @@
             return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
         }
 
-        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
-        {
-            _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
-        }
-
         public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
         {
             return _vacancyLocationWriteRepository.Save(vacancyLocations);

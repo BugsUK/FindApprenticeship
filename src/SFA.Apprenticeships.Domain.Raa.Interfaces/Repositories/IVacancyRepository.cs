@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Entities.Raa.Locations;
     using Entities.Raa.Vacancies;
     using Queries;
 
