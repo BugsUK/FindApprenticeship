@@ -48,7 +48,7 @@
             return nextNumber;
         }
 
-        public long GetNextLegacyApplicationId()
+        public int GetNextLegacyApplicationId()
         {
             _logger.Debug($"Called Mongodb to get next legacy application id with Id={LegacyApplicationId}");
 

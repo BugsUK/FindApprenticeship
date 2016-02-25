@@ -4,6 +4,6 @@
     {
         long GetNextVacancyReferenceNumber();
 
-        long GetNextLegacyApplicationId();
+        int GetNextLegacyApplicationId();
     }
 }

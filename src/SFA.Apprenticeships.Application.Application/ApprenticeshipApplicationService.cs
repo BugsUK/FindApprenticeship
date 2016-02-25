@@ -12,17 +12,20 @@
     public class ApprenticeshipApplicationService : IApprenticeshipApplicationService
     {
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
+        private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
         private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
 
         public ApprenticeshipApplicationService(
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IReferenceNumberRepository referenceNumberRepository,
             IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
             IUpdateApplicationNotesStrategy updateApplicationNotesStrategy,
             IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
+            _referenceNumberRepository = referenceNumberRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
@@ -62,12 +65,13 @@
         public void AppointCandidate(Guid applicationId)
         {
             var apprenticeshipApplication = GetApplication(applicationId);
+            var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
 
             var applicationStatusSummary = new ApplicationStatusSummary
             {               
                 ApplicationId = Guid.Empty, // CRITICAL: make the update look like it came from legacy AVMS application
                 ApplicationStatus = ApplicationStatuses.Successful,
-                LegacyApplicationId = apprenticeshipApplication.LegacyApplicationId,
+                LegacyApplicationId = nextLegacyApplicationId,
                 LegacyCandidateId = 0, // not required
                 LegacyVacancyId = 1, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
