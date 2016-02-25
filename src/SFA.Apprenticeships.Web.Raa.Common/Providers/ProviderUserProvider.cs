@@ -73,11 +73,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             //TODO: Probably put this in a strategy in the service and add the verify email code
             providerUser.Username = username;
-            providerUser.Ukprn = ukprn;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            providerUser.PreferredProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
+            int? defaultProviderSiteId = null;
+            if (providerUserViewModel.DefaultProviderSiteId > 0)
+            {
+                defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
+            }
+            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
             providerUser.Status = providerUser.Status;
 
             if (isNewProvider)
@@ -108,7 +112,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var viewModel = new ProviderUserViewModel
             {
-                DefaultProviderSiteId = providerUser.PreferredProviderSiteId,
+                DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,

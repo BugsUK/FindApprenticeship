@@ -43,19 +43,19 @@
             return mongoEntity == null ? null : _mapper.Map<MongoProviderUser, ProviderUser>(mongoEntity);
         }
 
-        public IEnumerable<ProviderUser> GetForProvider(string ukprn)
-        {
-            _logger.Debug("Called Mongodb to get provider users for provider with UKPRN={0}", ukprn);
+        //public IEnumerable<ProviderUser> GetForProvider(string ukprn)
+        //{
+        //    _logger.Debug("Called Mongodb to get provider users for provider with UKPRN={0}", ukprn);
 
-            var mongoEntities = Collection.Find(Query<MongoProviderUser>.EQ(e => e.Ukprn, ukprn));
+        //    var mongoEntities = Collection.Find(Query<MongoProviderUser>.EQ(e => e.Ukprn, ukprn));
 
-            var entities =
-                _mapper.Map<IEnumerable<MongoProviderUser>, IEnumerable<ProviderUser>>(mongoEntities).ToList();
+        //    var entities =
+        //        _mapper.Map<IEnumerable<MongoProviderUser>, IEnumerable<ProviderUser>>(mongoEntities).ToList();
 
-            _logger.Debug("Found {1} provider users for provider with UKPRN={0}", ukprn, entities.Count);
+        //    _logger.Debug("Found {1} provider users for provider with UKPRN={0}", ukprn, entities.Count);
 
-            return entities;
-        }
+        //    return entities;
+        //}
 
         public ProviderUser Save(ProviderUser entity)
         {

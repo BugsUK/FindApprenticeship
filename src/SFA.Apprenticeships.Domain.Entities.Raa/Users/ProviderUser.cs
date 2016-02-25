@@ -17,8 +17,6 @@
 
         public string Username { get; set; }
 
-        public string Ukprn { get; set; }
-
         public string Fullname { get; set; }
 
         public string Email { get; set; }
@@ -27,7 +25,7 @@
 
         public DateTime? EmailVerifiedDate { get; set; }
 
-        public int PreferredProviderSiteId { get; set; }
+        public int? PreferredProviderSiteId { get; set; }
 
         public string PhoneNumber { get; set; }
 
