@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService, IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository)
+        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
         {
             _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
