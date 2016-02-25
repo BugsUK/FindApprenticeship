@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Provider
 {
     using Application.Provider;
+    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
     using Interfaces.Employers;

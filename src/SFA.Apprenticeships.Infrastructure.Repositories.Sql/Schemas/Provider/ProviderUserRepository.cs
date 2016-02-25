@@ -5,6 +5,7 @@
     using System.Linq;
     using Common;
     using Domain.Entities.Raa.Users;
+    using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
 
@@ -76,7 +77,7 @@
             var sqlParams = new
             {
                 ukprn,
-                providerStatusTypeId = ProviderStatus.Activated
+                providerStatusTypeId = ProviderStatuses.Activated
             };
 
             var providerUsers = _getOpenConnection

@@ -13,8 +13,8 @@
         {
             // ProviderUser -> Entities.ProviderUser
             Mapper.CreateMap<Domain.ProviderUser, Database.ProviderUser>()
-                .ForMember(destination => destination.PreferredSiteErn, opt =>
-                    opt.MapFrom(source => Convert.ToInt32(source.PreferredProviderSiteId)))
+                //.ForMember(destination => destination.PreferredProviderSiteId, opt =>
+                //    opt.MapFrom(source => source.PreferredProviderSiteId))
 
                 .ForMember(destination => destination.ProviderUserStatusId, opt =>
                     opt.MapFrom(source => (int)source.Status))

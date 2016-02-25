@@ -39,7 +39,7 @@
             // ReSharper disable once RedundantArgumentDefaultValue
             providerUser.EmailVerificationCode = _codeGenerator.GenerateAlphaNumeric(EmailVerificationCodeLength);
 
-            _providerUserWriteRepository.Save(providerUser);
+            _providerUserWriteRepository.Update(providerUser);
 
             _communicationService.SendMessageToProviderUser(username, MessageTypes.SendProviderUserEmailVerificationCode,
                 new[]

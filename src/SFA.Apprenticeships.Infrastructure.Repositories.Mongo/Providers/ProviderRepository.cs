@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers
 {
     using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;

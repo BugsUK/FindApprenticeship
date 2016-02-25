@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
 {
+    using Common;
+    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
@@ -26,7 +28,6 @@
         }
 
         [Test]
-        [Ignore]
         public void ShouldGetProviderUserById()
         {
             // Arrange.
@@ -39,7 +40,6 @@
         }
 
         [Test]
-        [Ignore]
         public void ShouldGetProviderUsername()
         {
             // Arrange.

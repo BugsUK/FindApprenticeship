@@ -26,16 +26,16 @@
             _mapper.Mapper.AssertConfigurationIsValid();
         }
 
-        [TestCase("903008386")]
+        [TestCase(903008386)]
         [TestCase(null)]
-        public void ShouldMapFromDomainToDatabaseProviderUser(string preferredSiteErn)
+        public void ShouldMapFromDomainToDatabaseProviderUser(int? preferredProviderSiteId)
         {
             // Arrange.
             var fixture = new Fixture();
 
             var source = fixture
                 .Build<Domain.ProviderUser>()
-                .With(each => each.PreferredSiteErn, preferredSiteErn)
+                .With(each => each.PreferredProviderSiteId, preferredProviderSiteId)
                 .Create();
 
             // Act.
@@ -51,7 +51,7 @@
             destination.UpdatedDateTime.Should().Be(source.UpdatedDateTime);
             destination.Username.Should().Be(source.Username);
             destination.Fullname.Should().Be(source.Fullname);
-            destination.PreferredSiteErn.Should().Be(Convert.ToInt32(source.PreferredSiteErn));
+            destination.PreferredProviderSiteId.Should().Be(source.PreferredProviderSiteId);
             destination.Email.Should().Be(source.Email);
             destination.EmailVerificationCode.Should().Be(source.EmailVerificationCode);
             destination.EmailVerifiedDateTime.Should().Be(source.EmailVerifiedDate);
@@ -68,7 +68,7 @@
 
             var source = fixture
                 .Build<Domain.ProviderUser>()
-                .With(each => each.PreferredSiteErn, fixture.Create<int>().ToString())
+                .With(each => each.PreferredProviderSiteId, fixture.Create<int>())
                 .With(each => each.Status, providerUserStatus)
                 .Create();
 
@@ -82,14 +82,14 @@
 
         [TestCase(903008386)]
         [TestCase(null)]
-        public void ShouldMapFromDatabaseToDomainProviderUser(int? preferredSiteErn)
+        public void ShouldMapFromDatabaseToDomainProviderUser(int? preferredProviderSiteId)
         {
             // Arrange.
             var fixture = new Fixture();
 
             var source = fixture
                 .Build<Database.ProviderUser>()
-                .With(each => each.PreferredSiteErn, preferredSiteErn)
+                .With(each => each.PreferredProviderSiteId, preferredProviderSiteId)
                 .With(each => each.ProviderUserStatusId, (int)Domain.ProviderUserStatus.Registered)
                 .Create();
 
@@ -107,9 +107,7 @@
             destination.Username.Should().Be(source.Username);
             destination.Fullname.Should().Be(source.Fullname);
 
-            destination.PreferredSiteErn.Should().Be(source.PreferredSiteErn.HasValue
-                ? Convert.ToString(source.PreferredSiteErn)
-                : null);
+            destination.PreferredProviderSiteId.Should().Be(source.PreferredProviderSiteId);
 
             destination.Email.Should().Be(source.Email);
             destination.EmailVerificationCode.Should().Be(source.EmailVerificationCode);

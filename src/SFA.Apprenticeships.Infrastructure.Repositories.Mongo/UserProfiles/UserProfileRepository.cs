@@ -6,12 +6,13 @@
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Users;
+    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class UserProfileRepository : GenericMongoClient2<MongoProviderUser>, IProviderUserReadRepository, IProviderUserWriteRepository
+    public class UserProfileRepository : GenericMongoClient2<MongoProviderUser>//, IProviderUserReadRepository, IProviderUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;

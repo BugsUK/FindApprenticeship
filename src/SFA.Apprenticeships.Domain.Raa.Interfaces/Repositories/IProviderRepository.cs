@@ -1,23 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
-    using System.Collections.Generic;
+    using Entities.Raa.Parties;
     using Entities.Raa.Users;
 
-    public interface IProviderUserReadRepository
+    public interface IProviderReadRepository
     {
-        // TODO: SQL: AG: rename Get methods to be specific.
-        ProviderUser Get(int id);
-
-        ProviderUser Get(string username);
-
-        // TODO: SQL: rename to GetByUkprn?
-        IEnumerable<ProviderUser> GetForProvider(string ukprn);
+        Provider Get(int providerId);
+        Provider GetViaUkprn(string ukprn);
     }
 
-    public interface IProviderUserWriteRepository
+    public interface IProviderWriteRepository
     {
-        ProviderUser Create(ProviderUser providerUser);
-
-        ProviderUser Update(ProviderUser providerUser);
+        void Delete(int providerId);
+        Provider Save(Provider entity);
     }
 }
