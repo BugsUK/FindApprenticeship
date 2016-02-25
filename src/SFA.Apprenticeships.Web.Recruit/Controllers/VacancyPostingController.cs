@@ -101,9 +101,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
+        public ActionResult ConfirmEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, employerId, vacancyGuid, comeFromPreview, useEmployerLocation);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsUrn, vacancyGuid, comeFromPreview, useEmployerLocation);
 
             switch (response.Code)
             {
@@ -115,7 +115,7 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmEmployerSelection(int providerSiteId, int employerId, Guid vacancyGuid,
+        public ActionResult ConfirmEmployerSelection(int providerSiteId, string edsUrn, Guid vacancyGuid,
             bool? comeFromPreview)
         {
             if (comeFromPreview == true)
@@ -127,14 +127,14 @@
                 new
                 {
                     providerSiteId,
-                    employerId,
+                    edsUrn,
                     vacancyGuid,
                     comeFromPreview
                 });
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployerSelection(int providerSiteId, int employerId, Guid vacancyGuid,
+        public ActionResult ConfirmNewEmployerSelection(int providerSiteId, string edsUrn, Guid vacancyGuid,
             bool? comeFromPreview)
         {
             if (comeFromPreview == true)
@@ -146,7 +146,7 @@
                 new
                 {
                     providerSiteId,
-                    employerId,
+                    edsUrn,
                     vacancyGuid,
                     comeFromPreview
                 });
@@ -783,9 +783,9 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview)
+        public ActionResult ConfirmNewEmployer(int providerSiteId, string edsErn, Guid vacancyGuid, bool? comeFromPreview)
         {
-            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, employerId, vacancyGuid, comeFromPreview, null);
+            var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsErn, vacancyGuid, comeFromPreview, null);
             return View(response.ViewModel);
         }
 
@@ -884,7 +884,7 @@
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
-                EdsUrn = viewModel.EmployerErn,
+                EdsUrn = viewModel.EmployerEdsUrn,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
                 Ukprn = viewModel.Ukprn,
@@ -1013,7 +1013,7 @@
             {
                 PostcodeSearch = viewModel.PostcodeSearch,
                 ProviderSiteErn = viewModel.ProviderSiteEdsUrn,
-                EdsUrn = viewModel.EmployerErn,
+                EdsUrn = viewModel.EmployerEdsUrn,
                 VacancyGuid = viewModel.VacancyGuid,
                 AdditionalLocationInformation = viewModel.AdditionalLocationInformation,
                 Ukprn = viewModel.Ukprn,

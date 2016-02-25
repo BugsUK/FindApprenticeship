@@ -88,7 +88,7 @@
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
-                _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerId);
+                _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerEdsUrn);
 
             locationSearchViewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
@@ -136,7 +136,7 @@
                 var viewModel = new LocationSearchViewModel
                 {
                     ProviderSiteEdsUrn = providerSite.EdsUrn,
-                    EmployerErn = employer.EdsUrn,
+                    EmployerEdsUrn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
@@ -172,7 +172,7 @@
                     ProviderSiteId = providerSite.ProviderSiteId,
                     ProviderSiteEdsUrn = providerSite.EdsUrn,
                     EmployerId = employer.EmployerId,
-                    EmployerErn = employer.EdsUrn,
+                    EmployerEdsUrn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     Addresses = new List<VacancyLocationAddressViewModel>()
@@ -1136,7 +1136,7 @@
             });
 
             var vacancyParty =
-                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerId);
+                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
             viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);

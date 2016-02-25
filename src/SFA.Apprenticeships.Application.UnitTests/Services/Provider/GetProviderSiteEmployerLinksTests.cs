@@ -89,7 +89,7 @@
             };
 
             _organisationService = new Mock<IOrganisationService>();
-            _organisationService.Setup(r => r.GetProviderSiteEmployerLinks(It.IsAny<EmployerSearchRequest>())).Returns(_fromService);
+            _organisationService.Setup(r => r.GetVacancyParties(It.IsAny<int>())).Returns(_fromService);
             _employerService = new Mock<IEmployerService>();
             _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>())).Returns(_employersFromService);
             _providerSiteEmployerLinkReadRepository = new Mock<IVacancyPartyReadRepository>();

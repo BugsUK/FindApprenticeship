@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
-
-namespace SFA.Apprenticeships.Application.Organisation
+﻿namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -123,28 +121,18 @@ namespace SFA.Apprenticeships.Application.Organisation
             Condition.Requires(providerSiteId);
             Condition.Requires(employerId);
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with id='{0}' and employer with id='{1}'.", providerSiteId, employerId);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with Id='{0}' and employer with Id='{1}'.", providerSiteId, employerId);
 
             return _legacyProviderProvider.GetVacancyParty(providerSiteId, employerId);
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
+        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
         {
             Condition.Requires(providerSiteId);
-            Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, edsUrn);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with Id='{0}'.", providerSiteId);
 
-            return _legacyProviderProvider.GetVacancyParty(providerSiteId, edsUrn);
-        }
-
-        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
-        {
-            Condition.Requires(request).IsNotNull();
-
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with ERN='{0}'.", request.ProviderSiteId);
-
-            return _legacyProviderProvider.GetProviderSiteEmployerLinks(request);
+            return _legacyProviderProvider.GetVacancyParties(providerSiteId);
         }
 
         public Employer GetEmployer(int employerId)
@@ -162,7 +150,7 @@ namespace SFA.Apprenticeships.Application.Organisation
 
             _logService.Debug("Calling LegacyEmployerProvider to get employer with ERN='{0}'.", edsUrn);
 
-            return _legacyEmployerProvider.GetEmployer(edsUrn);
+            return _legacyEmployerProvider.GetEmployer(edsUrn) ?? Convert(GetVerifiedOrganisationSummary(edsUrn));
         }
 
         public IEnumerable<Employer> GetByIds(IEnumerable<int> employerIds)

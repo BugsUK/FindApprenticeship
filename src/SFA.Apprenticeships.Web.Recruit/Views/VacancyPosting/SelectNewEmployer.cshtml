@@ -68,7 +68,7 @@
 
         @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "edsUrn-search-form"}))
         {
-            @Html.HiddenFor(m => m.ProviderSiteEdsUrn)
+            @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.EdsUrn)
             @Html.HiddenFor(m => m.ComeFromPreview)
@@ -79,13 +79,13 @@
                 <button id="edsUrn-search-button" type="submit" class="button">
                     Find employer
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteEdsUrn, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
             </div>
         }
 
         @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
         {
-            @Html.HiddenFor(m => m.ProviderSiteEdsUrn)
+            @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
             @Html.HiddenFor(m => m.ComeFromPreview)
@@ -97,7 +97,7 @@
                 <button id="name-location-search-button" type="submit" class="button">
                     Search
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteEdsUrn, vacancyGuid = vacancyGuidValue})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = vacancyGuidValue})">Return to your linked employers</a>
             </div>
         }
     </div>
@@ -141,7 +141,7 @@
                             </td>
                             <td>@employerResultsViewModel.EdsUrn</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteErn = Model.ProviderSiteEdsUrn, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteId = Model.ProviderSiteId, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

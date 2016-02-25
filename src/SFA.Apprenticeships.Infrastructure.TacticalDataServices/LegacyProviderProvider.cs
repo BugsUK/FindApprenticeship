@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.Contracts;
-using System.Text;
-using SFA.Apprenticeships.Application.Interfaces.Employers;
 
 namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
@@ -135,36 +133,32 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
         {
-            return null;
-            /*var request = new EmployerSearchRequest(providerSiteId, employerId);
-            var results = GetVacancyParties(request);
-            return results.SingleOrDefault();*/
+            Contract.Requires(providerSiteId != 0);
+            Contract.Requires(employerId != 0);
+
+            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND EmployerId = @employerId AND vor.StatusTypeId = 4"; ;
+
+            Models.VacancyOwnerRelationship vacancyOwnerRelationship;
+
+            using (var connection = GetConnection())
+            {
+                vacancyOwnerRelationship = connection.Query<Models.VacancyOwnerRelationship>(sql, new { providerSiteId, employerId }).SingleOrDefault();
+            }
+
+            return GetVacancyParty(vacancyOwnerRelationship);
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
+        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
         {
-            var request = new EmployerSearchRequest(providerSiteId, edsUrn);
-            var results = GetProviderSiteEmployerLinks(request);
-            return results.SingleOrDefault();
-        }
+            Contract.Requires(providerSiteId != 0);
 
-        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(int providerSiteId)
-        {
-            var request = new EmployerSearchRequest(providerSiteId);
-            return GetProviderSiteEmployerLinks(request);
-        }
-
-        public IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
-        {
-            Contract.Requires(searchRequest != null);
-
-            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND vor.StatusTypeId = 4";;
+            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND vor.StatusTypeId = 4"; ;
 
             IEnumerable<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
 
             using (var connection = GetConnection())
             {
-                vacancyOwnerRelationships = connection.Query<Models.VacancyOwnerRelationship>(sql, new { searchRequest.ProviderSiteId });
+                vacancyOwnerRelationships = connection.Query<Models.VacancyOwnerRelationship>(sql, new { providerSiteId });
             }
 
             return vacancyOwnerRelationships.Select(GetVacancyParty);

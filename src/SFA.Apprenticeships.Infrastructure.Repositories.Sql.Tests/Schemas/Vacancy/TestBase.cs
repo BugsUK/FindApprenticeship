@@ -11,27 +11,27 @@
     [TestFixture]
     public class TestBase
     {
-        protected static readonly int VacancyId_VacancyA = 1;
-        protected static readonly int VacancyId_VacancyAParent = 2;
-        protected const int VacancyReferenceNumber_VacancyA = 1;
-        protected const int VacancyPartyId_EmployerA = 3;
-        protected const int VacancyPartyId_ProviderA = 4;
-        protected const int FrameworkId_Framework1 = 1;
-        protected const int FrameworkId_Framework2 = 2;
-        protected const int StandardId_Standard1 = 1;
-        protected const string VacancyTypeCode_Apprenticeship = "A";
-        protected const string VacancyStatusCode_Live = "LIV";
-        protected const string VacancyStatusCode_Parent = "PAR";
-        protected const string VacancyLocationTypeCode_Specific = "S";
-        protected const string TrainingTypeCode_Framework = "F";
-        protected const string TrainingTypeCode_Standard = "S";
-        protected const string LevelCode_Intermediate = "2";
-        protected const string WageTypeCode_Custom = "CUS";
-        protected const string WageIntervalCode_Weekly = "W";
-        protected const string DurationTypeCode_Years = "Y";
-        protected const string Ukprn = "Ukrpn provider 1";
-        protected const string EmployerErn = "Employer 1 edsUrn";
-        protected const string ProviderSiteErn = "Provider 1 site edsUrn";
+        public static readonly int VacancyId_VacancyA = 1;
+        public static readonly int VacancyId_VacancyAParent = 2;
+        public const int VacancyReferenceNumber_VacancyA = 1;
+        public const int VacancyPartyId_EmployerA = 3;
+        public const int VacancyPartyId_ProviderA = 4;
+        public const int FrameworkId_Framework1 = 1;
+        public const int FrameworkId_Framework2 = 2;
+        public const int StandardId_Standard1 = 1;
+        public const string VacancyTypeCode_Apprenticeship = "A";
+        public const string VacancyStatusCode_Live = "LIV";
+        public const string VacancyStatusCode_Parent = "PAR";
+        public const string VacancyLocationTypeCode_Specific = "S";
+        public const string TrainingTypeCode_Framework = "F";
+        public const string TrainingTypeCode_Standard = "S";
+        public const string LevelCode_Intermediate = "2";
+        public const string WageTypeCode_Custom = "CUS";
+        public const string WageIntervalCode_Weekly = "W";
+        public const string DurationTypeCode_Years = "Y";
+        public const string Ukprn = "Ukrpn provider 1";
+        public const string EmployerErn = "Employer 1 edsUrn";
+        public const string ProviderSiteErn = "Provider 1 site edsUrn";
 
         protected Vacancy CreateValidDatabaseVacancy()
         {

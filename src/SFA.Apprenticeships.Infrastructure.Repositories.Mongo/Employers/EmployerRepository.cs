@@ -63,6 +63,12 @@
         {
             _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
 
+            if (entity.EmployerGuid == Guid.Empty)
+            {
+                entity.EmployerGuid = Guid.NewGuid();
+                entity.EmployerId = entity.EmployerGuid.GetHashCode();
+            }
+
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);
 

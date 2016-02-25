@@ -240,14 +240,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1669), Tuple.Create("\"", 1728)
+WriteAttribute("href", Tuple.Create(" href=\"", 1665), Tuple.Create("\"", 1724)
             
             #line 45 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1676), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 1672), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1676), false)
+, 1672), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");
