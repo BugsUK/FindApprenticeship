@@ -7,8 +7,9 @@ namespace SFA.Apprenticeships.Application.Provider
     using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
+    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Interfaces.Providers;
 

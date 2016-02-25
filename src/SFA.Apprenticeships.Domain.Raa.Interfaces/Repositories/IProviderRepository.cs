@@ -1,6 +1,7 @@
-﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
+﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
     using Entities.Raa.Parties;
+    using Entities.Raa.Users;
 
     public interface IProviderReadRepository
     {
@@ -11,7 +12,6 @@
     public interface IProviderWriteRepository
     {
         void Delete(int providerId);
-
         Provider Save(Provider entity);
     }
 }

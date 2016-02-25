@@ -116,6 +116,7 @@
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\Name.cs" />
+    <Compile Include="Users\ProviderStatuses.cs" />
     <Compile Include="Users\UserCredentials.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />

@@ -6,7 +6,7 @@
     [ProviderId] INT NOT NULL, 
     [Username] NVARCHAR(100) NOT NULL, 
     [Fullname] NVARCHAR(MAX) NOT NULL, 
-    [PreferredSiteErn] INT NULL, 
+    [PreferredProviderSiteId] INT NULL, 
     [Email] NVARCHAR(MAX) NOT NULL, 
     [EmailVerificationCode] CHAR(6) NULL, 
     [EmailVerifiedDateTime] DATETIME2 NULL, 
