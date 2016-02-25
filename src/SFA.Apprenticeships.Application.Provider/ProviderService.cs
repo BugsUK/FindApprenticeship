@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
+        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService, IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository)
         {
             _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
@@ -130,31 +130,37 @@ namespace SFA.Apprenticeships.Application.Provider
             return _vacancyPartyReadRepository.Get(vacancyPartyId);
         }
 
-        public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
+        public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
         {
             Condition.Requires(providerSiteId);
-            Condition.Requires(employerId);
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
+            var employer = _employerService.GetEmployer(edsUrn);
+            if (employer.EdsUrn != edsUrn)
+            {
+                employer = _employerService.GetEmployer(employer.EdsUrn);
+            }
+            if (employer.EmployerId == 0)
+            {
+                //New employer
+                employer = _employerService.SaveEmployer(employer);
+            }
 
-            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employerId);
+            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employer.EmployerId);
+
+            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employer.EmployerId);
 
             if (vacancyParty != null)
             {
                 return vacancyParty;
             }
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
+            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, edsUrn);
 
-            vacancyParty = _organisationService.GetVacancyParty(providerSiteId, employerId);
-
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employerId);
+            vacancyParty = _organisationService.GetVacancyParty(providerSiteId, employer.EmployerId);
 
             if (vacancyParty == null)
             {
-                var employer = _organisationService.GetEmployer(employerId);
-
-                //TODO: Where should employer description and web site come from
                 vacancyParty = new VacancyParty
                 {
                     ProviderSiteId = providerSiteId,
@@ -181,7 +187,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyParties = _organisationService.GetProviderSiteEmployerLinks(request).ToList();
+            var vacancyParties = _organisationService.GetVacancyParties(request.ProviderSiteId).ToList();
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 

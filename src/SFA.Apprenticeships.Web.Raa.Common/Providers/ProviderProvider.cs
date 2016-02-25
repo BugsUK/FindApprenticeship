@@ -71,16 +71,16 @@
             return vacancyParty.Convert(employer);
         }
 
-        public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, int employerId)
+        public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, string edsUrn)
         {
-            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, employerId);
-            var employer = _employerService.GetEmployer(employerId);
+            var vacancyParty = _providerService.GetVacancyParty(providerSiteId, edsUrn);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             return vacancyParty.Convert(employer);
         }
 
         public VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel)
         {
-            var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EmployerId);
+            var vacancyParty = _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
             vacancyParty.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
             vacancyParty.EmployerDescription = viewModel.EmployerDescription;
             vacancyParty = _providerService.SaveVacancyParty(vacancyParty);

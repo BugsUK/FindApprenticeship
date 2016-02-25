@@ -90,6 +90,7 @@
     <Compile Include="Parties\Provider.cs" />
     <Compile Include="Parties\ProviderSite.cs" />
     <Compile Include="Parties\VacancyParty.cs" />
+    <Compile Include="Parties\EmployerEqualityComparer.cs" />
     <Compile Include="Parties\VacancyPartyEqualityComparer.cs" />
     <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

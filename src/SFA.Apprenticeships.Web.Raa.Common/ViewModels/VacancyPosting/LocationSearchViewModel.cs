@@ -27,7 +27,7 @@
 
         public int ProviderSiteId { get; set; }
 
-        public string EmployerErn { get; set; }
+        public string EmployerEdsUrn { get; set; }
 
         public int EmployerId { get; set; }
 

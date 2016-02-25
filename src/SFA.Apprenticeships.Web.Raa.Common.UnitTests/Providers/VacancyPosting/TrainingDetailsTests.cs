@@ -14,6 +14,7 @@
     [TestFixture]
     public class TrainingDetailsTests : TestBase
     {
+        private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 2;
         private const long VacancyReferenceNumber = 1;
@@ -27,7 +28,7 @@
         {
             ProviderSiteId = ProviderSiteId,
             EmployerDescription = "description",
-            EmployerId = EmployerId
+            EmployerId = EmployerId,
         };
 
         private readonly CommonWebConfiguration _webConfiguration = new CommonWebConfiguration
@@ -123,7 +124,7 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EmployerId))
+            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
 
             MockConfigurationService

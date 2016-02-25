@@ -158,7 +158,7 @@
                 }
             };
 
-            ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<int>()))
+            ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel
