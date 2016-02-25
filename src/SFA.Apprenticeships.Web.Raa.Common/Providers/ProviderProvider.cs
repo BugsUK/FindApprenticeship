@@ -64,6 +64,13 @@
             return providerSites.Select(ps => ps.Convert());
         }
 
+        public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
+        {
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            return vacancyParty.Convert(employer);
+        }
+
         public VacancyPartyViewModel GetVacancyPartyViewModel(int providerSiteId, int employerId)
         {
             var vacancyParty = _providerService.GetVacancyParty(providerSiteId, employerId);

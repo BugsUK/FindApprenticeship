@@ -134,7 +134,7 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmNewEmployerSelection(int providerSiteId, int employerId, Guid vacancyGuid,
+        public ActionResult ConfirmNewEmployerSelection(int providerSiteId, string edsUrn, Guid vacancyGuid,
             bool? comeFromPreview)
         {
             if (comeFromPreview == true)
@@ -146,7 +146,7 @@
                 new
                 {
                     providerSiteId,
-                    employerId,
+                    employerId = 0,
                     vacancyGuid,
                     comeFromPreview
                 });

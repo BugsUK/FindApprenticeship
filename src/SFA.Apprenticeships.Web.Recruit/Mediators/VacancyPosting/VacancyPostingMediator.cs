@@ -419,8 +419,7 @@
         {
             newVacancyViewModel.OwnerParty =
                 _providerProvider.GetVacancyPartyViewModel(
-                    newVacancyViewModel.OwnerParty.ProviderSiteId,
-                    newVacancyViewModel.OwnerParty.Employer.EmployerId);
+                    newVacancyViewModel.OwnerParty.VacancyPartyId);
         }
 
         private void UpdateCommentsFor(NewVacancyViewModel newVacancyViewModel)

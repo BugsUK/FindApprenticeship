@@ -21,7 +21,7 @@
         {
             @Html.HiddenFor(m => m.VacancyReferenceNumber)
 
-            if (Model.Status == VacancyStatuses.RejectedByQA)
+            if (Model.Status == VacancyStatus.RejectedByQA)
             {
                 Model.ResubmitOption = false;
                 @Html.FormCheckBoxFor(model => model.ResubmitOption, labelHtmlAttributes: new { @class = "block-label para-btm-margin" })
@@ -34,7 +34,7 @@
 
             <section>
                 <div class="form-group">
-                    @if (Model.Status == VacancyStatuses.RejectedByQA)
+                    @if (Model.Status == VacancyStatus.RejectedByQA)
                     {
                         <button type="submit" class="button">Resubmit vacancy</button>
                     }
