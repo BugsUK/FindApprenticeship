@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Parties;
 
     public interface IVerifiedOrganisationProvider
     {

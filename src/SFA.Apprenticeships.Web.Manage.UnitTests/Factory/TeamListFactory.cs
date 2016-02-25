@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Factory
 {
     using System.Collections.Generic;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
 
     public class TeamListFactory
     {

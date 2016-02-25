@@ -113,7 +113,6 @@
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchField.cs" />
-    <Compile Include="Vacancies\IOfflineVacancyService.cs" />
     <Compile Include="Vacancies\VacancySearchParametersBase.cs" />
     <Compile Include="Vacancies\ApprenticeshipSearchParameters.cs" />
     <Compile Include="Search\SearchParametersBase.cs" />
@@ -130,9 +129,14 @@
     <Compile Include="Vacancies\VacancySearchSortType.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
     <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
+    <Compile Include="Vacancies\ICandidateVacancyService.cs" />
     <Compile Include="VacancyPosting\IVacancyPostingService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -140,6 +144,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
+      <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
+      <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

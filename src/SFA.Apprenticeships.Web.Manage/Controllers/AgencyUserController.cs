@@ -10,7 +10,7 @@
     using Common.Mediators;
     using Common.Models.Azure.AccessControlService;
     using Constants;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using Mediators.AgencyUser;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;

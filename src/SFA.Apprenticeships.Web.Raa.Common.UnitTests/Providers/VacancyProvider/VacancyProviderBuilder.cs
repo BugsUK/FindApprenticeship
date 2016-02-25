@@ -2,6 +2,7 @@
 {
     using System;
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Domain.Interfaces.Repositories;
@@ -15,6 +16,7 @@
     public class VacancyProviderBuilder
     {
         private Mock<IProviderService> _providerService = new Mock<IProviderService>();
+        private Mock<IEmployerService> _employerService = new Mock<IEmployerService>();
         private Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
         private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
@@ -32,7 +34,7 @@
         public IVacancyQAProvider Build()
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
-                _referenceDataService.Object, _providerService.Object, _dateTimeService.Object, 
+                _referenceDataService.Object, _providerService.Object, _employerService.Object, _dateTimeService.Object, 
                 _mapper.Object, _apprenticeshipApplicationService.Object, _userProfileService.Object);
         }
         
@@ -71,6 +73,12 @@
         public VacancyProviderBuilder With(Mock<IVacancyPostingService> vacancyPostingServiceService)
         {
             _vacancyPostingServcie = vacancyPostingServiceService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IEmployerService> employerService)
+        {
+            _employerService = employerService;
             return this;
         }
 

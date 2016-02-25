@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.Mappers
 {
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using Infrastructure.Common.Mappers;
-    using Mongo.Providers.Entities;
+    using Entities;
 
     public class ProviderMappers : MapperEngine
     {
@@ -14,8 +14,8 @@
             Mapper.CreateMap<ProviderSite, MongoProviderSite>();
             Mapper.CreateMap<MongoProviderSite, ProviderSite>();
 
-            Mapper.CreateMap<ProviderSiteEmployerLink, MongoProviderSiteEmployerLink>();
-            Mapper.CreateMap<MongoProviderSiteEmployerLink, ProviderSiteEmployerLink>();
+            Mapper.CreateMap<VacancyParty, MongoVacancyParty>();
+            Mapper.CreateMap<MongoVacancyParty, VacancyParty>();
         }
     }
 }

@@ -1,17 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Employers
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Organisations;
-    using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
 
-    public class EmployerRepository : GenericMongoClient<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
+    public class EmployerRepository : GenericMongoClient2<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -24,44 +26,58 @@
             _logger = logger;
         }
 
-        public Employer Get(Guid id)
+        public Employer Get(int employerId)
         {
-            _logger.Debug("Called Mongodb to get employer with Id={0}", id);
+            _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EmployerId == employerId);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public Employer Get(string ern)
+        public Employer GetByEdsUrn(string edsUrn)
         {
-            _logger.Debug("Called Mongodb to get employer with ern={0}", ern);
+            _logger.Debug("Called Mongodb to get employer with edsUrn={0}", edsUrn);
 
-            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.Ern == ern);
+            var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.EdsUrn == edsUrn);
 
             return mongoEntity == null ? null : _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }
 
-        public void Delete(Guid id)
+        public List<Employer> GetByIds(IEnumerable<int> employerIds)
         {
-            _logger.Debug("Calling repository to delete employer with Id={0}", id);
+            var mongoEntities = Collection.Find(Query.In("EmployerId", new BsonArray(employerIds)));
 
-            Collection.Remove(Query<MongoEmployer>.EQ(e => e.Id, id));
+            return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
+        }
 
-            _logger.Debug("Deleted employer with Id={0}", id);
+        public void Delete(int employerId)
+        {
+            _logger.Debug("Calling repository to delete employer with Id={0}", employerId);
+
+            Collection.Remove(Query<MongoEmployer>.EQ(e => e.EmployerId, employerId));
+
+            _logger.Debug("Deleted employer with Id={0}", employerId);
         }
 
         public Employer Save(Employer entity)
         {
-            _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.Ern);
+            _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
 
-            UpdateEntityTimestamps(entity);
+            if (entity.EmployerGuid == Guid.Empty)
+            {
+                entity.EmployerGuid = Guid.NewGuid();
+                entity.EmployerId = entity.EmployerGuid.GetHashCode();
+            }
+
+            SetCreatedDateTime(entity);
+            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<Employer, MongoEmployer>(entity);
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved employer to Mongodb with ERN={0}", entity.Ern);
+            _logger.Debug("Saved employer to Mongodb with ERN={0}", entity.EdsUrn);
 
             return _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }

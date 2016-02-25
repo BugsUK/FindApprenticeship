@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.ReferenceData
 {
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
 
     public interface IReferenceDataProvider

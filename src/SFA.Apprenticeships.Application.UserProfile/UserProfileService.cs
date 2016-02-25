@@ -1,10 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Users;
 
     public class UserProfileService : IUserProfileService
@@ -22,9 +21,9 @@
             _agencyUserWriteRepository = agencyUserWriteRepository;
         }
 
-        public ProviderUser GetProviderUser(Guid id)
+        public ProviderUser GetProviderUser(int providerUserId)
         {
-            return _providerUserReadRepository.Get(id);
+            return _providerUserReadRepository.Get(providerUserId);
         }
 
         public ProviderUser GetProviderUser(string username)
@@ -37,10 +36,16 @@
             return _providerUserReadRepository.GetForProvider(ukprn);
         }
 
-        public ProviderUser SaveUser(ProviderUser providerUser)
+        public ProviderUser CreateUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, verification code, send email etc
-            return _providerUserWriteRepository.Save(providerUser);
+            return _providerUserWriteRepository.Create(providerUser);
+        }
+
+        public ProviderUser UpdateUser(ProviderUser providerUser)
+        {
+            //Check if email is being updated and set pending, verification code, send email etc
+            return _providerUserWriteRepository.Update(providerUser);
         }
 
         public AgencyUser GetAgencyUser(string username)
@@ -93,7 +98,6 @@
             {
                 Id = id,
                 Name = name,
-                AllowTeamSelection = true,
                 IsDefault = isDefault
             };
         }

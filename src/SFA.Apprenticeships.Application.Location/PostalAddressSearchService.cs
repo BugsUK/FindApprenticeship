@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Interfaces.Locations;
     public class PostalAddressSearchService : IPostalAddressSearchService
     {

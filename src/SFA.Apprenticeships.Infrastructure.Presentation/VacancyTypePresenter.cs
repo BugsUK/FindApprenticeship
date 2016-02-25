@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public static class VacancyTypePresenter
     {

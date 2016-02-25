@@ -1,0 +1,892 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>SFA.Apprenticeships.Data.AvmsPlus</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{6c7ebdb8-70e9-49a2-8eff-c664d8ae7e56}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.SqlAzureV12DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>SFA.Apprenticeships.Data.AvmsPlus</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Data.AvmsPlus</AssemblyName>
+    <ModelCollation>1033,CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultCollation>Latin1_General_CI_AS</DefaultCollation>
+    <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
+    <OutputPath>bin\Local\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Dev|AnyCPU' ">
+    <OutputPath>bin\Dev\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Demo|AnyCPU' ">
+    <OutputPath>bin\Demo\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Sit|AnyCPU' ">
+    <OutputPath>bin\Sit\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Pre|AnyCPU' ">
+    <OutputPath>bin\Pre\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Prod|AnyCPU' ">
+    <OutputPath>bin\Prod\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
+    <OutputPath>bin\Local\</OutputPath>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="dbo\" />
+    <Folder Include="dbo\Tables\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Storage\" />
+    <Folder Include="Security\" />
+    <Folder Include="dbo\Functions\" />
+    <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="Provider" />
+    <Folder Include="dbo\Schemas" />
+    <Folder Include="Scripts" />
+    <Folder Include="Scripts\TestData" />
+    <Folder Include="Scripts\Data" />
+    <Folder Include="Schemas" />
+    <Folder Include="Publish" />
+    <Folder Include="Sync" />
+    <Folder Include="UserProfile" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="dbo\Tables\ExternalSystem.sql" />
+    <Build Include="dbo\Tables\AdditionalQuestion.sql" />
+    <Build Include="dbo\Tables\SystemParameters.sql" />
+    <Build Include="dbo\Tables\FAQ.sql" />
+    <Build Include="dbo\Tables\AlertPreference.sql" />
+    <Build Include="dbo\Tables\TermsAndConditions.sql" />
+    <Build Include="dbo\Tables\InterfaceErrorGroupType.sql" />
+    <Build Include="dbo\Tables\AlertType.sql" />
+    <Build Include="dbo\Tables\TestConnection.sql" />
+    <Build Include="dbo\Tables\ThirdParty.sql" />
+    <Build Include="dbo\Tables\InterfaceErrorType.sql" />
+    <Build Include="dbo\Tables\Application.sql" />
+    <Build Include="dbo\Tables\InternalMessages.sql" />
+    <Build Include="dbo\Tables\UniqueKeyRegister.sql" />
+    <Build Include="dbo\Tables\LocalAuthority.sql" />
+    <Build Include="dbo\Tables\ApplicationHistory.sql" />
+    <Build Include="dbo\Tables\UserType.sql" />
+    <Build Include="dbo\Tables\ApplicationHistoryEvent.sql" />
+    <Build Include="dbo\Tables\Vacancy.sql" />
+    <Build Include="dbo\Tables\LocalAuthorityAudit.sql" />
+    <Build Include="dbo\Tables\ApplicationNextAction.sql" />
+    <Build Include="dbo\Tables\LocalAuthorityGroup.sql" />
+    <Build Include="dbo\Tables\VacancyHistory.sql" />
+    <Build Include="dbo\Tables\ApplicationStatusType.sql" />
+    <Build Include="dbo\Tables\VacancyHistoryEventType.sql" />
+    <Build Include="dbo\Tables\LocalAuthorityGroupMembership.sql" />
+    <Build Include="dbo\Tables\LocalAuthorityGroupPurpose.sql" />
+    <Build Include="dbo\Tables\ApplicationUnsuccessfulReasonType.sql" />
+    <Build Include="dbo\Tables\VacancyLocation.sql" />
+    <Build Include="dbo\Tables\LocalAuthorityGroupType.sql" />
+    <Build Include="dbo\Tables\VacancyLocationType.sql" />
+    <Build Include="dbo\Tables\ApplicationWithdrawnOrDeclinedReasonType.sql" />
+    <Build Include="dbo\Tables\MasterUPIN.sql" />
+    <Build Include="dbo\Tables\VacancyOwnerRelationship.sql" />
+    <Build Include="dbo\Tables\ApprenticeshipFramework.sql" />
+    <Build Include="dbo\Tables\Message.sql" />
+    <Build Include="dbo\Tables\VacancyOwnerRelationshipHistory.sql" />
+    <Build Include="dbo\Tables\MessageCategory.sql" />
+    <Build Include="dbo\Tables\ApprenticeshipFrameworkStatusType.sql" />
+    <Build Include="dbo\Tables\VacancyProvisionRelationshipHistoryEventType.sql" />
+    <Build Include="dbo\Tables\MessageEvent.sql" />
+    <Build Include="dbo\Tables\ApprenticeshipOccupation.sql" />
+    <Build Include="dbo\Tables\VacancyProvisionRelationshipStatusType.sql" />
+    <Build Include="dbo\Tables\MessageStatus.sql" />
+    <Build Include="dbo\Tables\ApprenticeshipOccupationStatusType.sql" />
+    <Build Include="dbo\Tables\VacancyReferenceNumber.sql" />
+    <Build Include="dbo\Tables\MIMEType.sql" />
+    <Build Include="dbo\Tables\ApprenticeshipType.sql" />
+    <Build Include="dbo\Tables\VacancyReferralComments.sql" />
+    <Build Include="dbo\Tables\NASSupportContact.sql" />
+    <Build Include="dbo\Tables\AttachedDocument.sql" />
+    <Build Include="dbo\Tables\VacancyReferralCommentsFieldType.sql" />
+    <Build Include="dbo\Tables\AttachedtoItemType.sql" />
+    <Build Include="dbo\Tables\NoiseWord.sql" />
+    <Build Include="dbo\Tables\VacancySearch.sql" />
+    <Build Include="dbo\Tables\Organisation.sql" />
+    <Build Include="dbo\Tables\AuditRecord.sql" />
+    <Build Include="dbo\Tables\BackgroundSearchLog.sql" />
+    <Build Include="dbo\Tables\VacancySearchAudit.sql" />
+    <Build Include="dbo\Tables\Person.sql" />
+    <Build Include="dbo\Tables\CAFFields.sql" />
+    <Build Include="dbo\Tables\VacancyStatusType.sql" />
+    <Build Include="dbo\Tables\PersonTitleType.sql" />
+    <Build Include="dbo\Tables\CAFFieldsFieldType.sql" />
+    <Build Include="dbo\Tables\VacancyTextField.sql" />
+    <Build Include="dbo\Tables\PersonType.sql" />
+    <Build Include="dbo\Tables\VacancyTextFieldValue.sql" />
+    <Build Include="dbo\Tables\Candidate.sql" />
+    <Build Include="dbo\Tables\PIMSOrgTypeBlackList.sql" />
+    <Build Include="dbo\Tables\PostcodeOutcode.sql" />
+    <Build Include="dbo\Tables\WageTypes.sql" />
+    <Build Include="dbo\Tables\CandidateBroadcastMessage.sql" />
+    <Build Include="dbo\Tables\WatchedVacancy.sql" />
+    <Build Include="dbo\Tables\PrivilegeType.sql" />
+    <Build Include="dbo\Tables\CandidateDeRegistrationControl.sql" />
+    <Build Include="dbo\Tables\CandidateDisability.sql" />
+    <Build Include="dbo\Tables\WorkExperience.sql" />
+    <Build Include="dbo\Tables\Provider.sql" />
+    <Build Include="dbo\Tables\CandidateEthnicOrigin.sql" />
+    <Build Include="dbo\Tables\ProviderSite.sql" />
+    <Build Include="dbo\Tables\CandidateGender.sql" />
+    <Build Include="dbo\Tables\ProviderSiteFramework.sql" />
+    <Build Include="dbo\Tables\CandidateHistory.sql" />
+    <Build Include="dbo\Tables\CandidateHistoryEvent.sql" />
+    <Build Include="dbo\Tables\ProviderSiteHistory.sql" />
+    <Build Include="dbo\Tables\ProviderSiteHistoryEventType.sql" />
+    <Build Include="dbo\Tables\CandidatePreferences.sql" />
+    <Build Include="dbo\Tables\CandidateStatus.sql" />
+    <Build Include="dbo\Tables\ProviderSiteLocalAuthority.sql" />
+    <Build Include="dbo\Tables\CandidateULNStatus.sql" />
+    <Build Include="dbo\Tables\ProviderSiteOffer.sql" />
+    <Build Include="dbo\Tables\ContactPreferenceType.sql" />
+    <Build Include="dbo\Tables\ProviderSiteRelationship.sql" />
+    <Build Include="dbo\Tables\County.sql" />
+    <Build Include="dbo\Tables\ProviderSiteRelationshipType.sql" />
+    <Build Include="dbo\Tables\RecruitmentAgentLinkedRelationships.sql" />
+    <Build Include="dbo\Tables\CountyAudit.sql" />
+    <Build Include="dbo\Tables\ReportAgeRanges.sql" />
+    <Build Include="dbo\Tables\DisplayText.sql" />
+    <Build Include="dbo\Tables\EducationResult.sql" />
+    <Build Include="dbo\Tables\ReportDefinitions.sql" />
+    <Build Include="dbo\Tables\EducationResultLevel.sql" />
+    <Build Include="dbo\Tables\RoleType.sql" />
+    <Build Include="dbo\Tables\Employer.sql" />
+    <Build Include="dbo\Tables\RoleTypePrivileges.sql" />
+    <Build Include="dbo\Tables\SavedSearchCriteria.sql" />
+    <Build Include="dbo\Tables\EmployerContact.sql" />
+    <Build Include="dbo\Tables\SavedSearchCriteriaSearchType.sql" />
+    <Build Include="dbo\Tables\EmployerHistory.sql" />
+    <Build Include="dbo\Tables\EmployerHistoryEventType.sql" />
+    <Build Include="dbo\Tables\SavedSearchCriteriaVacancyPostedSince.sql" />
+    <Build Include="dbo\Tables\EmployerSICCodes.sql" />
+    <Build Include="dbo\Tables\School.sql" />
+    <Build Include="dbo\Tables\SchoolAttended.sql" />
+    <Build Include="dbo\Tables\EmployerTrainingProviderStatus.sql" />
+    <Build Include="dbo\Tables\EShotJob.sql" />
+    <Build Include="dbo\Tables\SearchAuditRecord.sql" />
+    <Build Include="dbo\Tables\EShotJobItem.sql" />
+    <Build Include="dbo\Tables\SearchFrameworks.sql" />
+    <Build Include="dbo\Tables\EShotJobItemStatusType.sql" />
+    <Build Include="dbo\Tables\SectorSuccessRates.sql" />
+    <Build Include="dbo\Tables\EShotJobStatusType.sql" />
+    <Build Include="dbo\Tables\SICCode.sql" />
+    <Build Include="dbo\Tables\ExternalApplication.sql" />
+    <Build Include="dbo\Tables\StakeHolder.sql" />
+    <Build Include="dbo\Tables\ExternalMessages.sql" />
+    <Build Include="dbo\Tables\StakeHolderStatus.sql" />
+    <Build Include="dbo\Tables\ExternalService.sql" />
+    <Build Include="dbo\Tables\pimsdata2.sql" />
+    <Build Include="dbo\Tables\AdditionalAnswer.sql" />
+    <Build Include="dbo\Tables\ExternalServiceSystemRelationship.sql" />
+    <Build Include="dbo\Tables\SubVacancy.sql" />
+    <Build Include="dbo\Views\vwAliases.sql" />
+    <Build Include="dbo\Views\vwDivisions.sql" />
+    <Build Include="dbo\Views\vwManagingAreaAndLocalAuthority.sql" />
+    <Build Include="dbo\Views\vwManagingAreas.sql" />
+    <Build Include="dbo\Views\vwRegions.sql" />
+    <Build Include="dbo\Views\vwRegionsAndLocalAuthority.sql" />
+    <Build Include="dbo\Views\vwSubContractors.sql" />
+    <Build Include="dbo\Functions\fnx_CalcDistance.sql" />
+    <Build Include="dbo\Functions\fnx_GetCategory.sql" />
+    <Build Include="dbo\Functions\fnx_GetOrganisationCode.sql" />
+    <Build Include="dbo\Functions\fnx_GetSICCodes.sql" />
+    <Build Include="dbo\Functions\fnx_RemoveTime.sql" />
+    <Build Include="dbo\Functions\replaceHTMLTags.sql" />
+    <Build Include="dbo\Functions\fnx_ConvertToArrayTable.sql" />
+    <Build Include="dbo\Functions\fnx_SplitListToTable.sql" />
+    <Build Include="dbo\Functions\fnx_Numbers.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyOwnerForProviderSites.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobGetNextJob.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectApproachingClosingDateWithNoApps.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectSectorsAndFrameworks.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyToTransferUsingId.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobGetStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectBySearchCriteriaWithDistance.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectSectorsByProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetWebInterfaceGenericDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobGetUnsuccessfulItems.sql" />
+    <Build Include="dbo\Stored Procedures\uspWatchedVacancyAndVacancySelectByPersonId.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectTaskSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspInboxInsertAlert.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobItemUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspWatchedVacancySelectByPersonIdAndByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSiteInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspInsertTestConnection.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSiteRelationshipInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspInternalMessagesDeleteOldData.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalApplicationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProvidersSelectByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspMergeDuplicateProviderSites.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalMessagesDeleteOldData.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAllEmployersForProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderStatusChange.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageBroadcast.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalServiceSystemRelationshipUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAllProvidersForEmployer.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageGetMessageById.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalSystemInsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetReportDefinitions.sql" />
+    <Build Include="dbo\Stored Procedures\uspTransferVacancySearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageGetSummaryByRecipientAndRecipientType.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalSystemRemove.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetReportDefinitionsByDisplayName.sql" />
+    <Build Include="dbo\Stored Procedures\uspTransferVacancySearchFilter.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspExternalSystemUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\RethrowError.sql" />
+    <Build Include="dbo\Stored Procedures\uspUniqueKeyRegisterInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageSelectByRecipientAndRecipientType.sql" />
+    <Build Include="dbo\Stored Procedures\uspFAQDelete.sql" />
+    <Build Include="dbo\Stored Procedures\usp_CandidateDeRegister.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateAlertForBackgroundSearchByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageUpdateDeleteStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspFaqGetByUserType.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalAnswerInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateGetVacancyContractOwnerByUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageUpdateReadStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspFAQInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalAnswerSelectByAdditionalAnswerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateGetVacancyDeliveryOrganisationByProviderSite.sql" />
+    <Build Include="dbo\Stored Procedures\uspMoveSitesToNewProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspFaqSelectById.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalAnswerSelectByApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateGetVacancyManagerByProviderSite.sql" />
+    <Build Include="dbo\Stored Procedures\uspNASSupportContactSelectEmailById.sql" />
+    <Build Include="dbo\Stored Procedures\uspFAQUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalAnswerUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateGetVacancyOwnerByProviderSite.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonAndCandidateIsEmailRegistered.sql" />
+    <Build Include="dbo\Stored Procedures\uspFAQUpdateFAQOrder.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalQuestionAnswerSelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateMobileNumberUnconfirmed.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGeographicRegionSelectByLocalAuthorityCode.sql" />
+    <Build Include="dbo\Stored Procedures\uspAdditionalQuestionSelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNewVacancyCountForBatch.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateNASSystemDownMessage.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGeographicRegionsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationAlreadyAppliedForVacIdandCandidateID.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacanciesForRSS.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateReminderStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonInsertByPersonType.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetActiveVacanciesForRegisteredRecruitmentAgency.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationCandidateWithdrawalSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancy.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateSubContractorStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonIsEmailRegistered.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLAlertType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationCandidateWithdrawalSearchCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyDisabledApplicationsCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspUpdateTermsAndConditions.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationHistoryEvent.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationCreateSnapshot.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectByUKPRNList.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyChangeTrainingProviderSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspPersonUpdateByPersonType.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationNextAction.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationDeleteDraft.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencySelectByUrnList.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationExistAppliedForVacancyProvisionRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyDetailsSelectByUrnList.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyDeleteOldVacancies.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectByTradingName.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationunsuccessfulreasontype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationHistoryDeleteByStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyExistLiveForFrameworkStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectByTrainingProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationUnsuccessfulReasonTypeForCandidate.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyExistLiveForVacancyProvisionRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectByUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApplicationwithdrawnordeclinedreasontype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationHistorySelectByApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspThirdPartySelectByUrnList.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGeocodeUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderSelectByUPIN.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApprenticeshipframework.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetChildVacancyIdsFromMasterVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderStatusChangeByUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApprenticeshipFrameworkAndOccupation.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetClosedUnfilled.sql" />
+    <Build Include="dbo\Stored Procedures\uspProviderUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllApprenticeshipFrameworkStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByCandidateAndStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetClosedUnfilledCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencyCanManageForSite.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApprenticeshipoccupation.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetClosing.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencyDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllApprenticeshipOccupationStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByStatusandVacId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetClosingCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLApprenticeshiptype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByStatusandVacIdCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencySelectById.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLattachedtoitemtype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByUnSuccessfulCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetExpired.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencySelectByUrn.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLCAFFieldsFieldType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectByVacIdandCandidateID.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAllRegions.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetFilledWithOpenApplications.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencySelectTaskSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcandidatedisability.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSelectNewSummaryBySearchCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetDivisions.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetFilledWithOpenApplicationsCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencyUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcandidategender.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationSentCount.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetGeoRegions.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetNewReference.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyDetailsSelectByCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcandidatehistoryevent.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationStillValidForVacancy.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetManagingAreas.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyGetVacancyIdFromReference.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyDetailsSelectByProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllCandidates.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationUnsuccessfulReasonTypeInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyDetailsSelectByUrn.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcandidatestatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationUnsuccessfulReasonTypeUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByEdsId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyProviderEmployerUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcandidateulnstatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByEdsIdForEveryStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyLocationDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspRegisteredRecruitmentAgencyProviderRelationshipUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcontactpreferencetype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationUpdateAppStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyLocationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspRetrieveFullVacancyXMLDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLcounty.sql" />
+    <Build Include="dbo\Stored Procedures\uspApplicationUpdateCandidateWithdrawals.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByNameAndPostcodeAndUrnAndRegion.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyLocationSelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspRetrieveSummaryVacancyXMLDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLCountyAndAlias.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGeographicRegionSelectByLocalAuthorityId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyLocationUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspRoleTypePrivilegesSelectByRoleTypeId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllDisplayText.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllDivisions.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLeducationresultlevel.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkSelectByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLManagingAreas.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectByBackgroundSearchAndCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLemployerhistoryeventtype.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkSelectByOccupationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetContractorProviderSitesForSubContractorProviderSite.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerSelectByEmployerProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectByBackgroundSearchAndDate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLGeographicalRegions.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkSelectIdByFrameworkName.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetEmployersWithoutTrainingPartners.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerSelectBySearchCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLGeographicRegionOfPSByPSId.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetEmployersWithoutTrainingPartnersCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerSelectByTrainingProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectByCandidateIdAndByName.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLInterfaceErrorCodes.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkUpdatePreviousOccupation.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNASSupportHomePageAllDivisionCounts.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerSelectByVacancyManagerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLlocalauthority.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipFrameworkUpdateStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNASSupportHomePageAreaCounts.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyManagerUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectBySavedSearchCriteriaId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllMasterUPIN.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNASSupportHomePageDivisionCounts.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyMultiLocationsByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectCountByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllMessageCategory.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetSubContractorProvidersForTrainingProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyNASDetailsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectCountByCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllMessageEvent.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTrainingProviderAndNumSubContracatorsByUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyNasSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaSelectFavCountByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllMimeType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationSelectIdByOccupationName.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTrainingProviderByOtherDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyOfflineApplicantsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaUpdateFavStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLOrganisation.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspMessageGetSummaryByRecipientAndRecipientTypeForDivision.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyProvisionRelationshipHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaUpdateForBatchJob.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllPersonTitleType.sql" />
+    <Build Include="dbo\Stored Procedures\uspApprenticeshipOccupationUpdateStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeholderSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyProvisionRelationshipIsEmployerAVacancyOwner.sql" />
+    <Build Include="dbo\Stored Procedures\uspSavedSearchCriteriaUpdateGeocode.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllPersonType.sql" />
+    <Build Include="dbo\Stored Procedures\uspAttachedDocumentDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderOfferDeleteByTrainingProviderIdAndGeographicRegionId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyProvisionRelationshipIsRecruitmentAgencyAVacancyManager.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolAttendedInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLPIMSOrgTypeBlackList.sql" />
+    <Build Include="dbo\Stored Procedures\uspAttachedDocumentInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectBySearchCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyProvisionRelationshipIsTrainingProviderAVacancyManager.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolAttendedSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllSavedSearchCriteriaSearchType.sql" />
+    <Build Include="dbo\Stored Procedures\uspAttachedDocumentSelectById.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectLocations.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyProvisionRelationshipIsTrainingProviderAVacancyOwner.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolAttendedSelectBySchoolAttendedId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllSavedSearchCriteriaVacancyPostedSince.sql" />
+    <Build Include="dbo\Stored Procedures\uspAuditRecordDeleteOldData.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyReferenceExistsForEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolAttendedUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllSICCode.sql" />
+    <Build Include="dbo\Stored Procedures\uspAuditRecordInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyReferralCommentsDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetALLStakeholderstatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspBackgroundSearchLogInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyReferralCommentsSelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolSearch.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllTermsAndConditions.sql" />
+    <Build Include="dbo\Stored Procedures\uspBackgroundSearchLogSelectLastDate.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyReferralCommentsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolSearchByPostcode.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllUserType.sql" />
+    <Build Include="dbo\Stored Procedures\uspBroadcastMessageSynchronise.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyRequireFurtherWork.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllVacancyHistoryEvent.sql" />
+    <Build Include="dbo\Stored Procedures\uspBulkVacancyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySearchAuditDeleteOldData.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolSelectById.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllVacancyProvisionRelationshipStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspBulkVacancyLocationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySearchAuditInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolSelectByName.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllVacancyReferralCommentsFieldType.sql" />
+    <Build Include="dbo\Stored Procedures\uspCAFFieldsInsertCAF.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByEmployerOrProviderID.sql" />
+    <Build Include="dbo\Stored Procedures\uspSchoolUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllVacancyStatusType.sql" />
+    <Build Include="dbo\Stored Procedures\uspCAFFieldsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByEmployerSearchCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspSearchAuditRecordInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetAllVacancyTextFieldValue.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSearchFrameworksDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetApplicationCountByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateDeRegister.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByProviderSearchCriteria.sql" />
+    <Build Include="dbo\Stored Procedures\uspSearchFrameworksSelectBySavedSearchCriteriaId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetApplicationHistoryCandidateUpdateCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateDeRegistrationControlInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectBySearchCriteriaWithoutDistance.sql" />
+    <Build Include="dbo\Stored Procedures\uspSearchVacUnfilledPassedClosingDate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetApplicationUnsuccessfulReasonTypeById.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateDeregistrationControlSelect.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSectorSuccessRatesDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetApplicationUnsuccessfulReasonTypeByWithdrawn.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateDeregistrationControlUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectByVacancyReferenceNumber.sql" />
+    <Build Include="dbo\Stored Procedures\uspSectorSuccessRatesInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCAFFieldsByCandidateIdAndByApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateEthnicOriginSelectAllShortName.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectCountByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSectorSuccessRatesSelectByOccupationFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCandidateDetailForVacancyTransfer.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateEthnicOriginSelectFullNamebyShortName.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectCountByRelationshipId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSectorSuccessRatesUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCandidateSavedSearchCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateEthnicOriginSelectShortNamebyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectDraftByVacancyManagerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSetExternalMessageStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCandidateSavedVacancyCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateGetHistory.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectFilledNotCompleted.sql" />
+    <Build Include="dbo\Stored Procedures\uspSetInternalMessageStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCandidatesForAlertSetupPrompt.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectPostedByVacancyManagerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSICCodeSelectBySICCode.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetContractOwnerBySites.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateHistorySelectByEventTypeId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancySelectReEditByRelationshipId.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeholderDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetContractOwnersByVacancyOwner.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateHistorySelectByHistoryId.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyTransfer.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderInsertPreRegistrationDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetCurrentApplicationForCandidate.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderIsUserCredentialRequestValid.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetDate.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateInsertPreRegistrationDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyUpdateCloseVacancies.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderSelectByStakeHolderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetDeliveryOrganisationByVacancyOwner.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateIsUserCredentialRequestValid.sql" />
+    <Build Include="dbo\Stored Procedures\uspVacancyUpdateOfflineSystemApplications.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeholderStatusChange.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetDisplayText.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidatePreferencesDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspValidateTrainingProviderVacancyRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderUpdateActivationValues.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetEducationResultByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidatePreferencesSelectByApprFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspValidateTransferVacancy.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderUpdateConfirmEmail.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetEmployerVacancySummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidatePreferencesUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspWatchedVacancyDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderUpdateDetails.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetExternalMessageStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSchoolInfoNotificationSend.sql" />
+    <Build Include="dbo\Stored Procedures\uspWatchedVacancyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspStakeHolderUpdateLastAccessedDate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetExternalServices.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSearchByVacManager.sql" />
+    <Build Include="dbo\Stored Procedures\uspWatchedVacancySelectByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSubVacancyDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetExternalServicesBySystemId.sql" />
+    <Build Include="dbo\Stored Procedures\UspCandidateSelectAlertPreferences.sql" />
+    <Build Include="dbo\Stored Procedures\uspWorkExperienceDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspSubVacancyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetFrameworkByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspWorkExperienceInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspSubVacancySelectByVacancyIdAndApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetGeographicalRegionsForVacancy.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSelectByEmail.sql" />
+    <Build Include="dbo\Stored Procedures\uspWorkExperienceSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSystemParametersEditableSelect.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetInternalMessageStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateStatusChange.sql" />
+    <Build Include="dbo\Stored Procedures\uspWorkExperienceSelectByWorkExperienceId.sql" />
+    <Build Include="dbo\Stored Procedures\uspSystemParametersSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetLocalAuthoritiesSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspWorkExperienceUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspSystemParametersUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetLocalAuthorityById.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateActivationValues.sql" />
+    <Build Include="dbo\Stored Procedures\ProofConceptMethod2GIS.sql" />
+    <Build Include="dbo\Stored Procedures\uspTEMPGetAllByRole.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetLocalAuthoritybyRegionId.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateConfirmEmail.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAgeRange.sql" />
+    <Build Include="dbo\Stored Procedures\uspTEMPGetEmployerUrn.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetLocalAuthorityGroupById.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateLastAccessedDate.sql" />
+    <Build Include="dbo\Stored Procedures\reportGetAllPostcodes.sql" />
+    <Build Include="dbo\Stored Procedures\uspTEMPGetTrainingProviderPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetLocalAuthorityIdByCodeName.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateLastAccessedManageApplications.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetApplicationStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspThirdPartyInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetManagingAreaAndAssociatedLocalAuthority.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateMonitoringInfo.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetApprenticeshipType.sql" />
+    <Build Include="dbo\Stored Procedures\uspThirdPartySelectByEdsId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNASSystemDownMessage.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateMyInformationDetails.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetCandidateDisability.sql" />
+    <Build Include="dbo\Stored Procedures\uspThirdPartySelectByThirdPartyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNewVacancyCount.sql" />
+    <Build Include="dbo\Stored Procedures\UspCandidateUpdateNewVacAlertEmail.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetCandidateEthnicOrigin.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNoiseWords.sql" />
+    <Build Include="dbo\Stored Procedures\UspCandidateUpdateNewVacAlertSMS.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetCandidatePostcode.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkDeleteByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNonGeocodedPostcodes.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateReferralPoints.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetEmployer.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkDeleteByRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNoOfOfflineApplicants.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateUpdateVoucherReferenceNumber.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetEmployerProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNotProgressedApplicationsCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspChangeProviderUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetEmployerTradingName.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkSelect.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNotProgressedVacanciesCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspChangeRelationshipEmployerDescription.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetEmployerTrainingProviderStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkSelectByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetOccupationByOccupationId.sql" />
+    <Build Include="dbo\Stored Procedures\uspConvertOwnedSiteToSubContractor.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetFrameworkFor.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworksSelectByTrainingProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetOccupationsAndAssociatedFrameworks.sql" />
+    <Build Include="dbo\Stored Procedures\uspDeleteTestConnection.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetFrameworkForOccupation.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderFrameworkUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetOldEmployerDescription.sql" />
+    <Build Include="dbo\Stored Procedures\uspDisplayTextSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetGender.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderGetHistory.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetOriginalContractOwnerForSites.sql" />
+    <Build Include="dbo\Stored Procedures\uspEducationResultDelete.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetLocalAuthority.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetOwnerForProviderSitesByType.sql" />
+    <Build Include="dbo\Stored Procedures\uspEducationResultInsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetLSCRegionInOut.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderHistorySelectByHistoryId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetPastApplicationForCandidate.sql" />
+    <Build Include="dbo\Stored Procedures\uspEducationResultSelectByCandidateId.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetPostcodeOutcode.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetPendingVacanciesCount.sql" />
+    <Build Include="dbo\Stored Procedures\uspEducationResultUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetRecruitmentAgency.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderLocationDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetPotentialEmployersForRecruitmentAgent.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerAndEmployerContactSelectByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetSchoolsByName.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderLocationDeleteByRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetPreviousTrainingProviderForFramework.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerContactDelete.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetSectorForVacancy.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderLocationInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetProviderById.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerContactInsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetStartDatePresent.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderLocationSelect.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetProviderBySites.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerContactUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetTrainingProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderOfferDelete.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetProviderNewUpin.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerDelete.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetTrainingProviderForProviderReport.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderOfferDeleteByTrainingProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetProviderUsingSiteRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerEDSURNUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetUnsuccessfulCatrgory.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderOfferInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetRegionsAndAssociatedLocalAuthorities.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerGetHistory.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyStatus.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectActiveCountByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetSitesUsingProviderRelationship.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerHistoryInsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyTitle.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectAllByEdsId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetSubContractorSitesForProvider.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerHistorySelectByHistoryId.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyType.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectAllTypeByTrainingProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetSuspendedProvidersOfDeliverySite.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNotProgressedApplications.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByEdsId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTermsAndConditionsByFullName.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerNASDetailsUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetPendingVacancies.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByFrameworkId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTermsAndConditionsById.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectAll.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderOrganisationRegistration.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByTrainingProviderId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTestConnection.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByApplicationId.sql" />
+    <Build Include="dbo\Stored Procedures\ProofConceptMethod1GIS.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByUKPRN.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetThirdPartyUrnById.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByUrnList.sql" />
+    <Build Include="dbo\Stored Procedures\uspCandidateSelectByReferralPoints.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByUPin.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTrainingProviderByName.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectTaskSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectAlertSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByURN_AVMS.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetTrainingProviderFrameworkSectors.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSICCodesByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSelectByNameAndPostcodeAndCity.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectByUrnList.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetUkprnForUpin.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSICCodesDeleteByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetExternalSystemById.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectCountByEmployerId.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetUniqueKeyRegister.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerSICCodesInsert.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetExternalSystemsByOrgTypeAndOrgId.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectFrameworks.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyByReferenceNumberOnly.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerStatusChange.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetNASSupportHomePageCounts.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectFrameworksById.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyByVacancyId.sql" />
+    <Build Include="dbo\Stored Procedures\uspEmployerUpdate.sql" />
+    <Build Include="dbo\Stored Procedures\uspRecruitmentAgencySelectAlertSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectOffers.sql" />
+    <Build Include="dbo\Stored Procedures\uspGetVacancyLocationTypes.sql" />
+    <Build Include="dbo\Stored Procedures\uspEShotJobDeleteOldJobs.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectAlertSummary.sql" />
+    <Build Include="dbo\Stored Procedures\uspTrainingProviderSelectSectors.sql" />
+    <Build Include="Provider\Provider.ProviderUser.sql" />
+    <Build Include="Schemas\Provider.sql" />
+    <PostDeploy Include="PostDeployment.sql" />
+    <None Include="Scripts\Data\dbo.County.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />
+    <Build Include="Provider\Provider.ProviderUserStatus.sql" />
+    <None Include="Scripts\Data\Provider.ProviderUserStatus.Upsert.sql" />
+    <Build Include="Schemas\UserProfile.sql" />
+    <None Include="Scripts\Data\dbo.WageUnit.Upsert.sql" />
+    <Build Include="dbo\Tables\WageUnit.sql" />
+    <Build Include="dbo\Tables\DurationType.sql" />
+    <None Include="Scripts\Data\dbo.DurationType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipType.Upsert.sql" />
+    <Build Include="dbo\Tables\TrainingType.sql" />
+    <None Include="Scripts\Data\dbo.TrainingType.Upsert.sql" />
+    <Build Include="dbo\Tables\WageType.sql" />
+    <None Include="Scripts\Data\dbo.WageType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyTextFieldValue.Upsert.sql" />
+    <Build Include="Schemas\Sync.sql" />
+    <Build Include="Sync\Sync.SyncParams.sql" />
+    <Build Include="UserProfile\UserProfile.AgencyUser.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
+    <None Include="Publish\localhost.sqlexpress.publish.xml" />
+    <None Include="Scripts\TestData\dbo.PersonTitleType.sql" />
+    <None Include="Scripts\TestData\dbo.PersonType.sql" />
+    <None Include="Scripts\TestData\dbo.Person.sql" />
+    <None Include="Scripts\TestData\dbo.ContactPreferenceType.sql" />
+    <None Include="Scripts\TestData\dbo.EmployerContact.Upsert.sql" />
+    <None Include="Scripts\TestData\dbo.Employer.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
+    <None Include="Scripts\TestData\dbo.VacancyTextFieldValue.sql" />
+    <None Include="Scripts\Data\dbo.VacancyLocationType.Upsert.sql" />
+    <None Include="Scripts\Data\Sync.SyncParams.Upsert.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
+  </ItemGroup>
+</Project>

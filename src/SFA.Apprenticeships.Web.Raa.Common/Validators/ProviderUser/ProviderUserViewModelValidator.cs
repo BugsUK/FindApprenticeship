@@ -1,9 +1,8 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-
-namespace SFA.Apprenticeships.Web.Recruit.Validators.ProviderUser
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.ProviderUser
 {
     using FluentValidation;
+    using Constants.ViewModels;
+    using ViewModels.ProviderUser;
 
     public class ProviderUserViewModelValidator : AbstractValidator<ProviderUserViewModel>
     {
@@ -38,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Validators.ProviderUser
                 .Matches(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListRegularExpression)
                 .WithMessage(ProviderUserViewModelMessages.PhoneNumberMessages.WhiteListErrorText);
 
-            RuleFor(x => x.DefaultProviderSiteErn)
+            RuleFor(x => x.DefaultProviderSiteId)
                 .NotEmpty()
                 .WithMessage(ProviderUserViewModelMessages.DefaultProviderSiteErn.RequiredErrorText);
         }

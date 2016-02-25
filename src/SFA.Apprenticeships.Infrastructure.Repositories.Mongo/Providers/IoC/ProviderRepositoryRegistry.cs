@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC
 {
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
@@ -14,8 +15,8 @@
             For<IProviderWriteRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
             For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
             For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteEmployerLinkReadRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteEmployerLinkWriteRepository>().Use<ProviderSiteEmployerLinkRepository>().Ctor<IMapper>().Named("ProviderMappers");
+            For<IVacancyPartyReadRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderMappers");
+            For<IVacancyPartyWriteRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderMappers");
         }
     }
 }

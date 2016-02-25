@@ -9,7 +9,7 @@
     using Common.ViewModels.Applications;
     using Common.ViewModels.MyApplications;
     using Constants;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using ViewModels;

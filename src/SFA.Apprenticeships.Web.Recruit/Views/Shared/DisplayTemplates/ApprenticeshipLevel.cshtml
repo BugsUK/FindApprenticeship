@@ -1,5 +1,5 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship
-@model ApprenticeshipLevel
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@model SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.ApprenticeshipLevel
 @{
     var text = Model == ApprenticeshipLevel.Unknown ? "Select an apprenticeship standard" : Model.ToString();
     if (Model == ApprenticeshipLevel.FoundationDegree || Model == ApprenticeshipLevel.Masters)

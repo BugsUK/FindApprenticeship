@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Domain.Entities.Reference;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Reference;
     using SFA.Infrastructure.Interfaces;
     using Common;
+    using Domain.Raa.Interfaces.Repositories;
 
     public class ReferenceRepository : IReferenceRepository
     {

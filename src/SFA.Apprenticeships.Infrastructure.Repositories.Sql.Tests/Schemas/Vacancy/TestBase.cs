@@ -1,38 +1,37 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
     using System;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using TrainingType = Domain.Entities.Vacancies.ProviderVacancies.TrainingType;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
 
     [TestFixture]
     public class TestBase
     {
-        protected static readonly Guid VacancyId_VacancyA = Guid.NewGuid();
-        protected static readonly Guid VacancyId_VacancyAParent = Guid.NewGuid();
-        protected const int VacancyReferenceNumber_VacancyA = 1;
-        protected const int VacancyPartyId_EmployerA = 3;
-        protected const int VacancyPartyId_ProviderA = 4;
-        protected const int FrameworkId_Framework1 = 1;
-        protected const int FrameworkId_Framework2 = 2;
-        protected const int StandardId_Standard1 = 1;
-        protected const string VacancyTypeCode_Apprenticeship = "A";
-        protected const string VacancyStatusCode_Live = "LIV";
-        protected const string VacancyStatusCode_Parent = "PAR";
-        protected const string VacancyLocationTypeCode_Specific = "S";
-        protected const string TrainingTypeCode_Framework = "F";
-        protected const string TrainingTypeCode_Standard = "S";
-        protected const string LevelCode_Intermediate = "2";
-        protected const string WageTypeCode_Custom = "CUS";
-        protected const string WageIntervalCode_Weekly = "W";
-        protected const string DurationTypeCode_Years = "Y";
-        protected const string Ukprn = "Ukrpn provider 1";
-        protected const string EmployerErn = "Employer 1 ern";
-        protected const string ProviderSiteErn = "Provider 1 site ern";
+        public static readonly int VacancyId_VacancyA = 1;
+        public static readonly int VacancyId_VacancyAParent = 2;
+        public const int VacancyReferenceNumber_VacancyA = 1;
+        public const int VacancyPartyId_EmployerA = 3;
+        public const int VacancyPartyId_ProviderA = 4;
+        public const int FrameworkId_Framework1 = 1;
+        public const int FrameworkId_Framework2 = 2;
+        public const int StandardId_Standard1 = 1;
+        public const string VacancyTypeCode_Apprenticeship = "A";
+        public const string VacancyStatusCode_Live = "LIV";
+        public const string VacancyStatusCode_Parent = "PAR";
+        public const string VacancyLocationTypeCode_Specific = "S";
+        public const string TrainingTypeCode_Framework = "F";
+        public const string TrainingTypeCode_Standard = "S";
+        public const string LevelCode_Intermediate = "2";
+        public const string WageTypeCode_Custom = "CUS";
+        public const string WageIntervalCode_Weekly = "W";
+        public const string DurationTypeCode_Years = "Y";
+        public const string Ukprn = "Ukrpn provider 1";
+        public const string EmployerErn = "Employer 1 edsUrn";
+        public const string ProviderSiteErn = "Provider 1 site edsUrn";
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
@@ -62,10 +61,10 @@
             return result;
         }
 
-        protected ApprenticeshipVacancy CreateValidDomainVacancy()
+        protected Domain.Entities.Raa.Vacancies.Vacancy CreateValidDomainVacancy()
         {
-            var result = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
+            var result = new Fixture().Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+                .With(av => av.Status, VacancyStatus.PendingQA)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
@@ -93,6 +92,7 @@
                 .Excluding(v => v.VacancyLocationTypeCode)
                 .Excluding(v => v.AV_ContactName)
                 .Excluding(v => v.AV_WageText)
+                .Excluding(v => v.AV_InterviewStartDate)
 
                 // TODO: Rather hard / out of scope?
                 .Excluding(v => v.ParentVacancyId)
@@ -111,29 +111,28 @@
                 ;
         }
 
-        protected EquivalencyAssertionOptions<ApprenticeshipVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<ApprenticeshipVacancy> options)
+        protected EquivalencyAssertionOptions<Domain.Entities.Raa.Vacancies.Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Domain.Entities.Raa.Vacancies.Vacancy> options)
         {
             return options
                 // TODO: Not in database object yet
                 .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
 
                 // TODO: Rather hard / out of scope?
-//                .Excluding(v => v.LocationAddresses)
+                .Excluding(v => v.Address)
 
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)
                 .Excluding(v => v.SectorCodeName)
-                .Excluding(v => v.Ukprn)
-                .Excluding(v => v.ProviderSiteEmployerLink)
+                // .Excluding(v => v.Ukprn)
+                // .Excluding(v => v.VacancyParty)
                 .Excluding(v => v.DateStartedToQA)
                 .Excluding(v => v.VacancyManagerId)
                 .Excluding(v => v.LastEditedById)
                 .Excluding(v => v.ParentVacancyReferenceNumber)
-                .Excluding(v => v.DateCreated)
-                .Excluding(v => v.DateUpdated)
-
+                .Excluding(v => v.CreatedDateTime)
+                .Excluding(v => v.UpdatedDateTime)
+                .Excluding(v => v.VacancyGuid)
                 ;
         }
-
     }
 }

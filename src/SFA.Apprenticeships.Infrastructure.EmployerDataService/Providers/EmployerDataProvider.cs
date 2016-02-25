@@ -8,12 +8,12 @@
     using Application.Organisation;
     using Configuration;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using EmployerDataService;
     using Mappers;
     using WebServices.Wcf;
-    using ErrorCodes = Infrastructure.EmployerDataService.ErrorCodes;
+    using ErrorCodes = ErrorCodes;
 
     public class EmployerDataProvider : IVerifiedOrganisationProvider
     {

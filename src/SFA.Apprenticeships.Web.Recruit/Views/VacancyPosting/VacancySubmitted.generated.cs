@@ -205,10 +205,10 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1740), Tuple.Create("\"", 1855)
+WriteAttribute("href", Tuple.Create(" href=\"", 1740), Tuple.Create("\"", 1853)
             
             #line 51 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 1747), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteErn })
+, Tuple.Create(Tuple.Create("", 1747), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
@@ -219,14 +219,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(">Create new vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1927), Tuple.Create("\"", 1986)
+WriteAttribute("href", Tuple.Create(" href=\"", 1925), Tuple.Create("\"", 1984)
             
             #line 54 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 1934), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 1932), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1934), false)
+, 1932), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");

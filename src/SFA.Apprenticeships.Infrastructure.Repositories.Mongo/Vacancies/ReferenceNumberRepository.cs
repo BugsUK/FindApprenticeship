@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
     using System;
-    using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;

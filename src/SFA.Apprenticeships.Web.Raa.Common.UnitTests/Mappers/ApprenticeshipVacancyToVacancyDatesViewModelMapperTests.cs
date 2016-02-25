@@ -2,7 +2,7 @@
 {
     using System;
     using Common.Mappers;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -26,11 +26,11 @@
             const long vacancyReferenceNumber = 1;
 
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>()
+            var source = new Fixture().Build<Vacancy>()
                 .With(av => av.VacancyReferenceNumber, vacancyReferenceNumber).Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(source);
 
             //Assert
             viewModel.VacancyReferenceNumber.Should().Be(vacancyReferenceNumber);
@@ -43,13 +43,13 @@
             const string aString = "AString";
 
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>()
+            var source = new Fixture().Build<Vacancy>()
                 .With(av => av.ClosingDate, today)
                 .With(av => av.ClosingDateComment, aString)
                 .Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(source);
 
             //Assert
             viewModel.ClosingDate.Date.Should().Be(today);
@@ -63,13 +63,13 @@
             const string aString = "AString";
 
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>()
+            var source = new Fixture().Build<Vacancy>()
                 .With(av => av.PossibleStartDate, today)
                 .With(av => av.PossibleStartDateComment, aString)
                 .Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyDatesViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(source);
 
             //Assert
             viewModel.PossibleStartDate.Date.Should().Be(today);

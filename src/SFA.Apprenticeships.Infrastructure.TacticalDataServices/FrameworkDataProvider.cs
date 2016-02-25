@@ -7,6 +7,7 @@
     using Application.ReferenceData;
     using Configuration;
     using Dapper;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using SFA.Infrastructure.Interfaces;
     using Models;

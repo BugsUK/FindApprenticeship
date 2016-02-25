@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public class CommentViewModel
     {
@@ -13,13 +13,13 @@
             CommentLabel = commentLabel;
         }
 
-        public CommentViewModel(ProviderVacancyStatuses status, string comment, string viewCommentUrl, string commentLabel)
+        public CommentViewModel(VacancyStatus status, string comment, string viewCommentUrl, string commentLabel)
             :this(comment, viewCommentUrl, commentLabel)
         {
             Status = status;
         }
 
-        public ProviderVacancyStatuses Status { get; private set; }
+        public VacancyStatus Status { get; private set; }
 
         public string Comment { get; private set; }
 

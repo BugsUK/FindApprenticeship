@@ -12,12 +12,15 @@
     using Infrastructure.Console;
     using Infrastructure.Interfaces;
 
+/*
     using NewDB = SFA.Apprenticeships.NewDB.Domain.Entities;
     using Infrastructure.Sql;
+    */
 
     [TestFixture]
     public class Class1
     {
+#if false
         private IAvmsRepository _avms;
         private INewDBRepository _newDB;
 
@@ -161,6 +164,6 @@ values (1, 'F01', 'Framework 1', 'Framework 1', 1, 1, null, null)
             // Assert.
             vacancy.DeliveryProviderVacancyPartyId.ShouldBeEquivalentTo(vacancy2.DeliveryProviderVacancyPartyId);
         }
-
+#endif
     }
 }

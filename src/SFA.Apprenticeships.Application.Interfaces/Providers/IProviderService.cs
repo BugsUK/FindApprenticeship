@@ -4,27 +4,35 @@ using SFA.Apprenticeships.Application.Interfaces.Generic;
 namespace SFA.Apprenticeships.Application.Interfaces.Providers
 {
     using System.Collections.Generic;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
 
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
     /// </summary>
     public interface IProviderService
     {
+        Provider GetProviderViaOwnerParty(int vacancyPartyId);
+
         Provider GetProvider(string ukprn);
 
         void SaveProvider(Provider provider);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSite GetProviderSite(int providerSiteId);
+
+        ProviderSite GetProviderSite(string ukprn, string edsUrn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         void SaveProviderSites(IEnumerable<ProviderSite> providerSites);
 
-        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+        VacancyParty GetVacancyParty(int vacancyPartyId);
 
-        ProviderSiteEmployerLink SaveProviderSiteEmployerLink(ProviderSiteEmployerLink providerSiteEmployerLink);
-        
-        Pageable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request, int currentPage, int pageSize);
+        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
+
+        VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
+
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
+
+        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
     }
 }

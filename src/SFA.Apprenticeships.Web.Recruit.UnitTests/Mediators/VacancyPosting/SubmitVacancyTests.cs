@@ -1,8 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
     using Builders;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -14,7 +13,7 @@
         [Test]
         public void ShouldSubmitVacancy()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.Draft, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
             VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<long>())).Returns(vvm);
@@ -28,7 +27,7 @@
         [Test]
         public void ShouldResubmitVacancy()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
             vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
@@ -43,7 +42,7 @@
         [Test]
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(ProviderVacancyStatuses.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
             vvm.ResubmitOption = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);

@@ -22,7 +22,7 @@
         private readonly ICandidateService _candidateService;
         private readonly IMapper _apprenticeshipSearchMapper;
         private readonly ILogService _logger;
-        private readonly IOfflineVacancyService _offlineVacancyService;
+        private readonly ICandidateVacancyService _candidateVacancyService;
 
         private static class ResultsKeys
         {
@@ -35,13 +35,13 @@
             IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters> apprenticeshipSearchService,
             ICandidateService candidateService,
             IMapper apprenticeshipSearchMapper,
-            ILogService logger, IOfflineVacancyService offlineVacancyService)
+            ILogService logger, ICandidateVacancyService candidateVacancyService)
         {
             _apprenticeshipSearchService = apprenticeshipSearchService;
             _candidateService = candidateService;
             _apprenticeshipSearchMapper = apprenticeshipSearchMapper;
             _logger = logger;
-            _offlineVacancyService = offlineVacancyService;
+            _candidateVacancyService = candidateVacancyService;
         }
 
         public ApprenticeshipSearchResponseViewModel FindVacancies(ApprenticeshipSearchViewModel search)
@@ -221,7 +221,7 @@
             try
             {
                 //Incrementing this value should be able to fail and the user still redirected to the offline URL
-                _offlineVacancyService.IncrementOfflineApplicationClickThrough(vacancyId);
+                _candidateVacancyService.IncrementOfflineApplicationClickThrough(vacancyId);
             }
             catch (Exception e)
             {

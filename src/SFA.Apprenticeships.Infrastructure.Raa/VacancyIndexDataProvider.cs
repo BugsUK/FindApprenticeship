@@ -6,9 +6,9 @@
     using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancies.Entities;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
     /// <summary>
@@ -17,13 +17,13 @@
     /// </summary>
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
     {
-        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
+        private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
 
-        public VacancyIndexDataProvider(IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IReferenceDataProvider referenceDataProvider, ILogService logService)
         {
-            _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
+            _vacancyReadRepository = vacancyReadRepository;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
         }
@@ -37,7 +37,7 @@
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
-            var vacancies = _apprenticeshipVacancyReadRepository.GetWithStatus(ProviderVacancyStatuses.Live);
+            var vacancies = _vacancyReadRepository.GetWithStatus(VacancyStatus.Live);
             var categories = _referenceDataProvider.GetCategories();
             var vacancySummaries = vacancies.Select(v => ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v, categories, _logService));
             return new VacancySummaries(vacancySummaries, new List<TraineeshipSummary>());

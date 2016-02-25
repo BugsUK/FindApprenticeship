@@ -9,7 +9,7 @@
 
     const string selected = "selected";
     var vacancyGuidValue = Model.VacancyGuid ?? Guid.NewGuid();
-    var ernSearchSelected = Model.FilterType == EmployerFilterType.Ern ? selected : null;
+    var ernSearchSelected = Model.FilterType == EmployerFilterType.EdsUrn ? selected : null;
     var nameAndLocationSearchSelected = Model.FilterType == EmployerFilterType.NameAndLocation ? selected : null;
     var noResults = (Model.EmployerResults == null || !Model.EmployerResults.Any()) && (Model.EmployerResultsPage == null || Model.EmployerResultsPage.ResultsCount == 0);
     var searchPerformed = !string.IsNullOrWhiteSpace(ernSearchSelected) || !string.IsNullOrWhiteSpace(nameAndLocationSearchSelected);
@@ -60,32 +60,32 @@
                 Name and location
             </label>
             @* ReSharper disable once Html.IdNotResolved *@
-            <label data-target="ern-search-panel" for="ern-search" class="block-label @ernSearchSelected">
-                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.Ern, new {id = "ern-search", aria_controls = "ern-search-panel"})
+            <label data-target="edsUrn-search-panel" for="edsUrn-search" class="block-label @ernSearchSelected">
+                @Html.RadioButtonFor(model => model.FilterType, EmployerFilterType.EdsUrn, new {id = "edsUrn-search", aria_controls = "edsUrn-search-panel"})
                 ERN
             </label>
         </div>
 
-        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "ern-search-form"}))
+        @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "edsUrn-search-form"}))
         {
-            @Html.HiddenFor(m => m.ProviderSiteErn)
+            @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
-            @Html.Hidden("FilterType", EmployerFilterType.Ern)
+            @Html.Hidden("FilterType", EmployerFilterType.EdsUrn)
             @Html.HiddenFor(m => m.ComeFromPreview)
 
-            <div id="ern-search-panel" class="toggle-content blocklabel-content">
-                @Html.FormTextFor(model => model.Ern)
+            <div id="edsUrn-search-panel" class="toggle-content blocklabel-content">
+                @Html.FormTextFor(model => model.EdsUrn)
 
-                <button id="ern-search-button" type="submit" class="button">
+                <button id="edsUrn-search-button" type="submit" class="button">
                     Find employer
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, comeFromPreview = Model.ComeFromPreview})">Return to your linked employers</a>
             </div>
         }
 
         @using (Html.BeginForm(null, null, null, FormMethod.Get, new {@action = Url.RouteUrl(RecruitmentRouteNames.SelectNewEmployer) + "#providerSiteResults", @id = "name-location-search-form"}))
         {
-            @Html.HiddenFor(m => m.ProviderSiteErn)
+            @Html.HiddenFor(m => m.ProviderSiteId)
             @Html.HiddenFor(m => m.VacancyGuid)
             @Html.Hidden("FilterType", EmployerFilterType.NameAndLocation)
             @Html.HiddenFor(m => m.ComeFromPreview)
@@ -97,7 +97,7 @@
                 <button id="name-location-search-button" type="submit" class="button">
                     Search
                 </button>
-                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteErn = Model.ProviderSiteErn, vacancyGuid = vacancyGuidValue})">Return to your linked employers</a>
+                <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new {providerSiteId = Model.ProviderSiteId, vacancyGuid = vacancyGuidValue})">Return to your linked employers</a>
             </div>
         }
     </div>
@@ -139,9 +139,9 @@
                                 }
                                 <br />@employerResultsViewModel.Address.AddressLine4 @employerResultsViewModel.Address.Postcode
                             </td>
-                            <td>@employerResultsViewModel.Ern</td>
+                            <td>@employerResultsViewModel.EdsUrn</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteErn = Model.ProviderSiteErn, ern = employerResultsViewModel.Ern, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmNewEmployerSelection, new {providerSiteId = Model.ProviderSiteId, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

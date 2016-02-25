@@ -29,7 +29,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.WebPages;
     
     #line 2 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden
@@ -109,14 +109,14 @@ WriteLiteral("        <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 488), Tuple.Create("\"", 547)
+WriteAttribute("href", Tuple.Create(" href=\"", 474), Tuple.Create("\"", 533)
             
             #line 16 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 495), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 481), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 495), false)
+, 481), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n");
@@ -143,7 +143,7 @@ WriteLiteral(">Return to recruitment home</a>\r\n");
             #line 22 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                           
 
-            if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+            if (Model.Status == VacancyStatus.RejectedByQA)
             {
                 Model.ResubmitOption = false;
                 
@@ -198,7 +198,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 37 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                     if (Model.Status == ProviderVacancyStatuses.RejectedByQA)
+                     if (Model.Status == VacancyStatus.RejectedByQA)
                     {
 
             
@@ -240,14 +240,14 @@ WriteLiteral("                    <a");
 
 WriteLiteral(" id=\"dashboardLink\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1699), Tuple.Create("\"", 1758)
+WriteAttribute("href", Tuple.Create(" href=\"", 1665), Tuple.Create("\"", 1724)
             
             #line 45 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-, Tuple.Create(Tuple.Create("", 1706), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+, Tuple.Create(Tuple.Create("", 1672), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1706), false)
+, 1672), false)
 );
 
 WriteLiteral(">Save and exit</a>\r\n                </div>\r\n            </section>\r\n");

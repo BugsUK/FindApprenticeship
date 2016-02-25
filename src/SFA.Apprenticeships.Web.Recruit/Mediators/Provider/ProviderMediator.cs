@@ -80,9 +80,9 @@
             return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.Ok, providerViewModel);
         }
 
-        public MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string ern)
+        public MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string edsUrn)
         {
-            var providerSite = _providerProvider.GetProviderSiteViewModel(ukprn, ern);
+            var providerSite = _providerProvider.GetProviderSiteViewModel(ukprn, edsUrn);
 
             return GetMediatorResponse(ProviderMediatorCodes.GetSite.Ok, providerSite);
         }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Application.Location
+﻿namespace SFA.Apprenticeships.Application.Location
 {
-    using Domain.Entities.Locations;
+    using System.Collections.Generic;
+    using Domain.Entities.Raa.Locations;
 
     public interface IPostalAddressLookupProvider
     {

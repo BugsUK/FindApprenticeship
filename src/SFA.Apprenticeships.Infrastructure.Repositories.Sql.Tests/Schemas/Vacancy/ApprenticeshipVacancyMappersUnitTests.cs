@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -32,9 +30,9 @@
             var x = new ApprenticeshipVacancyMappers();
 
             var vacancy =
-                new Fixture().Build<ApprenticeshipVacancy>()
+                new Fixture().Build<Domain.Entities.Raa.Vacancies.Vacancy>()
                     //                    .With(av => av.EntityId, Guid.Empty)
-                    .With(av => av.Status, ProviderVacancyStatuses.PendingQA)
+                    .With(av => av.Status, VacancyStatus.PendingQA)
                     .With(av => av.VacancyType, VacancyType.Apprenticeship)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
@@ -42,7 +40,7 @@
 
 
             // Act / Assert no exception
-            x.Map<ApprenticeshipVacancy, Vacancy>(vacancy);
+            x.Map<Domain.Entities.Raa.Vacancies.Vacancy, Vacancy>(vacancy);
         }
 
         [Test]
@@ -53,7 +51,7 @@
             var vacancy = CreateValidDatabaseVacancy();
 
             // Act / Assert no exception
-            mapper.Map<Vacancy, ApprenticeshipVacancy>(vacancy);
+            mapper.Map<Vacancy, Domain.Entities.Raa.Vacancies.Vacancy>(vacancy);
         }
 
         [Test]
@@ -61,17 +59,17 @@
         {
             // Arrange
             var mapper = new ApprenticeshipVacancyMappers();
-            var domainVacancy1 = new Fixture().Create<ApprenticeshipVacancy>();
+            var domainVacancy1 = new Fixture().Create<Domain.Entities.Raa.Vacancies.Vacancy>();
 
             // Act
 
-            var databaseVacancy = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy1);
-            var domainVacancy2 = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy);
+            var databaseVacancy = mapper.Map<Domain.Entities.Raa.Vacancies.Vacancy, Vacancy>(domainVacancy1);
+            var domainVacancy2 = mapper.Map<Vacancy, Domain.Entities.Raa.Vacancies.Vacancy>(databaseVacancy);
 
             // Assert
             domainVacancy2.ShouldBeEquivalentTo(domainVacancy1, options =>
                 ExcludeHardOnes(options)
-                .Excluding(x => x.LocationAddresses)); // Manually mapped 
+                /*.Excluding(x => x.LocationAddresses)*/); // Manually mapped 
         }
 
         [Test]
@@ -80,12 +78,12 @@
         {
             // Arrange
             var mapper = new ApprenticeshipVacancyMappers();
-            var domainVacancy1 = new Fixture().Create<ApprenticeshipVacancy>();
+            var domainVacancy1 = new Fixture().Create<Domain.Entities.Raa.Vacancies.Vacancy>();
 
             // Act
 
-            var databaseVacancy = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy1);
-            var domainVacancy2 = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy);
+            var databaseVacancy = mapper.Map<Domain.Entities.Raa.Vacancies.Vacancy, Vacancy>(domainVacancy1);
+            var domainVacancy2 = mapper.Map<Vacancy, Domain.Entities.Raa.Vacancies.Vacancy>(databaseVacancy);
 
             // Assert
             domainVacancy2.ShouldBeEquivalentTo(domainVacancy1);
@@ -100,8 +98,8 @@
 
             // Act
 
-            var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
-            var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
+            var domainVacancy = mapper.Map<Vacancy, Domain.Entities.Raa.Vacancies.Vacancy>(databaseVacancy1);
+            var databaseVacancy2 = mapper.Map<Domain.Entities.Raa.Vacancies.Vacancy, Vacancy>(domainVacancy);
 
             // Assert
             databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options =>
@@ -118,8 +116,8 @@
 
             // Act
 
-            var domainVacancy = mapper.Map<Vacancy, ApprenticeshipVacancy>(databaseVacancy1);
-            var databaseVacancy2 = mapper.Map<ApprenticeshipVacancy, Vacancy>(domainVacancy);
+            var domainVacancy = mapper.Map<Vacancy, Domain.Entities.Raa.Vacancies.Vacancy>(databaseVacancy1);
+            var databaseVacancy2 = mapper.Map<Domain.Entities.Raa.Vacancies.Vacancy, Vacancy>(domainVacancy);
 
             // Assert
             databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1);

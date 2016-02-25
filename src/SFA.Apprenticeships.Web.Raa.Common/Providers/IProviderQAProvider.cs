@@ -4,6 +4,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     public interface IProviderQAProvider
     {
-        ProviderSiteEmployerLinkViewModel ConfirmProviderSiteEmployerLink(ProviderSiteEmployerLinkViewModel viewModel);
+        VacancyPartyViewModel ConfirmVacancyParty(VacancyPartyViewModel viewModel);
     }
 }

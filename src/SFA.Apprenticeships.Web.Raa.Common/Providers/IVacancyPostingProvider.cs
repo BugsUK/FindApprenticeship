@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using FluentValidation.Results;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -13,7 +12,7 @@
     {
         NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid, int? numberOfPositions);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
@@ -21,7 +20,7 @@
 
         TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
 
         VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
 
@@ -29,7 +28,7 @@
 
         VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
-        VacancySummaryViewModel UpdateVacancy(VacancySummaryViewModel viewModel);
+        FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
@@ -45,13 +44,13 @@
 
         StandardViewModel GetStandard(int? standardId);
 
-        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(string ukprn, string providerSiteErn, VacanciesSummarySearchViewModel vacanciesSummarySearch);
+        VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        ProviderSiteEmployerLinkViewModel CloneVacancy(long vacancyReferenceNumber);
+        VacancyPartyViewModel CloneVacancy(long vacancyReferenceNumber);
 
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(Guid vacancyReferenceNumber);
 
