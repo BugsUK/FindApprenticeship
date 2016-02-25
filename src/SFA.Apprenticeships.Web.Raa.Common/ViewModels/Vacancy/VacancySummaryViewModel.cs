@@ -10,7 +10,7 @@
     public class VacancySummaryViewModel
     {
         public int VacancyId { get; set; }
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
         public VacancyType VacancyType { get; set; }
         public VacancyStatus Status { get; set; }
         public string Title { get; set; }

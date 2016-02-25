@@ -14,7 +14,7 @@
     {
         public const string PartialView = "Vacancy/VacancyPreview";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 

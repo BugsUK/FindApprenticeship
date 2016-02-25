@@ -16,7 +16,7 @@
     {
         private const int EmployerId = 1;
         private const int ProviderSiteId = 2;
-        private const long VacancyReferenceNumber = 1;
+        private const int VacancyReferenceNumber = 1;
 
         private readonly Vacancy _existingVacancy = new Vacancy()
         {
@@ -97,7 +97,7 @@
         [SetUp]
         public void SetUp()
         {
-            MockVacancyPostingService.Setup(mock => mock.GetVacancy(It.IsAny<long>()))
+            MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(_existingVacancy);
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);

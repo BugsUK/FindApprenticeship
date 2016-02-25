@@ -209,6 +209,10 @@
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1F500137-C8E9-49AA-886E-1922D9D870EB}</Project>
       <Name>SFA.Infrastructure</Name>

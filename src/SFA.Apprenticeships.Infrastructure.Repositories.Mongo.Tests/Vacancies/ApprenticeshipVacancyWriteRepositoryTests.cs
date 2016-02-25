@@ -1,15 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Vacancies
 {
     using System;
-    using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
-    using Tests;
     using Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
@@ -18,7 +14,7 @@
 
     public class ApprenticeshipVacancyWriteRepositoryTests : RepositoryIntegrationTest
     {
-        private const long IntegrationTestVacancyReferenceNumber = long.MaxValue;
+        private const int IntegrationTestVacancyReferenceNumber = int.MaxValue;
 
         [TearDown]
         public void TearDown()

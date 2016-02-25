@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using Entities.Raa.Locations;
     using Entities.Raa.Vacancies;
     using Queries;
 
@@ -10,7 +9,7 @@
     {
         Vacancy Get(int vacancyId);
 
-        Vacancy GetByReferenceNumber(long vacancyReferenceNumber);
+        Vacancy GetByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
 
@@ -29,8 +28,10 @@
 
         void Delete(int vacancyId);
 
-        Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
+
+        Vacancy Update(Vacancy vacancy);
     }
 }

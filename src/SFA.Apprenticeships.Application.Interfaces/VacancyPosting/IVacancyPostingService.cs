@@ -11,11 +11,11 @@
 
         Vacancy SaveVacancy(Vacancy vacancy);
 
-        long GetNextVacancyReferenceNumber();
+        int GetNextVacancyReferenceNumber();
 
         Vacancy GetVacancy(int vacancyId);
 
-        Vacancy GetVacancy(long vacancyReferenceNumber);
+        Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetVacancy(Guid vacancyGuid);
         
@@ -25,12 +25,16 @@
 
         List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
-        Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
+
         List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
+
         void DeleteVacancyLocationsFor(int vacancyId);
+
+        Vacancy UpdateVacancy(Vacancy vacancy);
     }
 }

@@ -28,7 +28,7 @@
             CurrentPage = currentPage;
         }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
         public VacancyApplicationsFilterTypes FilterType { get; set; }
         public int PageSize { get; set; }
         public List<SelectListItem> PageSizes { get; set; }

@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     {
         public const string PartialView = "Vacancy/BasicVacancyDetails";
 
-        public long? VacancyReferenceNumber { get; set; }
+        public int? VacancyReferenceNumber { get; set; }
 
         //TODO: probably remove
         public string Ukprn { get; set; }

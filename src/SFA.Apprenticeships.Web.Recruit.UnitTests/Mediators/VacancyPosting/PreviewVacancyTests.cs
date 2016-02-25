@@ -32,7 +32,7 @@
                 }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -53,7 +53,7 @@
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -72,7 +72,7 @@
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 1;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -91,7 +91,7 @@
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -111,7 +111,7 @@
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -132,7 +132,7 @@
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 1;
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act

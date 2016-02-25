@@ -16,7 +16,7 @@
         public void ShouldSetStateToPendingQAWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var apprenticeshipVacancy = new Vacancy
             {
@@ -24,7 +24,7 @@
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
@@ -43,7 +43,7 @@
         public void ShouldSetDateSubmittedToUtcNowWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var now = DateTime.Now;
 
@@ -53,7 +53,7 @@
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
@@ -73,7 +73,7 @@
         public void ShouldIncrementSubmissionCountWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var apprenticeshipVacancy = new Vacancy
             {
@@ -82,7 +82,7 @@
                 SubmissionCount = 2
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
             MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))

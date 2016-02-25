@@ -295,7 +295,7 @@
         public void ApproveVacancy()
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            int vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
                 .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
@@ -306,7 +306,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder()
                     .With(configurationService)
@@ -317,7 +317,7 @@
             vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
                     r.SaveVacancy(
@@ -333,7 +333,7 @@
         public void ApproveMultilocationVacancy(int locationAddressCount)
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            int vacancyReferenceNumber = 1;
             var locationAddresses = new Fixture().Build<VacancyLocation>()
                 .CreateMany(locationAddressCount).ToList();
 
@@ -344,13 +344,13 @@
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber))
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(vacancy);
             vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
             var fixture = new Fixture {RepeatCount = locationAddressCount - 1};
-            var vacancyNumbers = fixture.Create<List<long>>();
+            var vacancyNumbers = fixture.Create<List<int>>();
             vacancyPostingService.Setup(r => r.GetNextVacancyReferenceNumber()).ReturnsInOrder(vacancyNumbers.ToArray());
 
             var vacancyProvider =
@@ -363,7 +363,7 @@
 
             //Assert
             //get the submitted vacancy once
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber), Times.Once);
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber), Times.Once);
             //save the original vacancy with a status of Live and itself as a parent vacancy
             vacancyPostingService.Verify(
                 r =>
@@ -418,7 +418,7 @@
         public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
+            int vacancyReferenceNumber = 1;
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = vacancyReferenceNumber
@@ -429,7 +429,7 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
                     .With(configurationService)
@@ -440,7 +440,7 @@
             vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
                     r.SaveVacancy(
@@ -700,7 +700,7 @@
         public void ReserveForQA_UsernameIsSavedFromCurrentPrinciple()
         {
             //Arrange
-            const long vacancyReferenceNumber = 123456L;
+            const int vacancyReferenceNumber = 123456;
             const string username = "qa@test.com";
             var reservedVacancy =
                 new Fixture().Build<Vacancy>()
@@ -754,7 +754,7 @@
         [Test]
         public void ShouldSaveCommentsWhenUpdatingVacancySummaryViewModel()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             const string closingDateComment = "Closing date comment";
             const string workingWeekComment = "Working week comment";
             const string wageComment = "Wage comment";
@@ -767,7 +767,7 @@
             configService.Setup(m => m.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration() {BlacklistedCategoryCodes = string.Empty});
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).With(configService).Build();
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
-            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new Vacancy());
+            vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(new Vacancy());
             vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
@@ -779,7 +779,7 @@
 
             provider.UpdateVacancyWithComments(viewModel);
 
-            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
                     vp.SaveVacancy(
@@ -796,14 +796,14 @@
         [Test]
         public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             const string firstQuestionComment = "First question comment";
             const string secondQuestionComment = "Second question comment";
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
 
-            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new Vacancy());
+            vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(new Vacancy());
             vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
@@ -816,7 +816,7 @@
 
             provider.UpdateVacancyWithComments(viewModel);
 
-            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
                     vp.SaveVacancy(
@@ -827,7 +827,7 @@
 
         }
 
-        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(long vacancyReferenceNumber)
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             return new FurtherVacancyDetailsViewModel
             {

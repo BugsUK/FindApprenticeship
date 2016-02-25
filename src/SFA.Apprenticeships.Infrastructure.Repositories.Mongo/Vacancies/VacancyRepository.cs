@@ -42,7 +42,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
         }
 
-        public Vacancy GetByReferenceNumber(long vacancyReferenceNumber)
+        public Vacancy GetByReferenceNumber(int vacancyReferenceNumber)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancy with Vacancy Reference Number={0}", vacancyReferenceNumber);
 
@@ -137,14 +137,14 @@
             return vacancies;
         }
 
-        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);
 
             var args = new FindAndModifyArgs
             {
                 Query = new QueryBuilder<Vacancy>().And(Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber), Query<Vacancy>.EQ(d => d.OfflineVacancy, true)),
-                Update = Update.Inc("OfflineApplicationClickThroughCount", 1),
+                Update = MongoDB.Driver.Builders.Update.Inc("OfflineApplicationClickThroughCount", 1),
                 VersionReturned = FindAndModifyDocumentVersion.Modified
             };
 
@@ -184,6 +184,17 @@
             return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
         }
 
+        public Vacancy Update(Vacancy entity)
+        {
+            _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.VacancyId);
+
+            var mongoEntity = SaveEntity(entity);
+
+            _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.VacancyId);
+
+            return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+        }
+
         private MongoApprenticeshipVacancy SaveEntity(Vacancy entity)
         {
             if (entity.VacancyId == 0 && entity.VacancyReferenceNumber != 0)
@@ -200,7 +211,7 @@
             return mongoEntity;
         }
         
-        public Vacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug($"Calling Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 
@@ -212,7 +223,7 @@
             {
                 Query = Query<Vacancy>.EQ(d => d.VacancyReferenceNumber, vacancyReferenceNumber),
                 Update =
-                    Update.Set("Status", VacancyStatus.ReservedForQA)
+                    MongoDB.Driver.Builders.Update.Set("Status", VacancyStatus.ReservedForQA)
                         .Set("QAUserName", username)
                         .Set("DateStartedToQA", DateTime.UtcNow),
                 SortBy = SortBy.Null,

@@ -119,9 +119,9 @@
         [Test]
         public void GetVacancyByReferenceNumberShouldCallRepository()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
 
-            _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             _apprenticeshipVacancyReadRepository.Verify(r => r.GetByReferenceNumber(vacancyReferenceNumber));
         }

@@ -1,137 +1,133 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
     using System;
-    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
+    using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
+    using Domain.Entities.Raa.Vacancies;
 
     [TestFixture]
     public class TestBase
     {
-        protected static readonly int VacancyId_VacancyA = 1;
-        protected static readonly int VacancyId_VacancyAParent = 2;
-        protected const int VacancyReferenceNumber_VacancyA = 1;
-        protected const int VacancyPartyId_EmployerA = 3;
-        protected const int VacancyPartyId_ProviderA = 4;
-        protected const int FrameworkId_Framework1 = 1;
-        protected const int FrameworkId_Framework2 = 2;
-        protected const int StandardId_Standard1 = 1;
-        protected const string VacancyTypeCode_Apprenticeship = "A";
-        protected const string VacancyStatusCode_Live = "LIV";
-        protected const string VacancyStatusCode_Parent = "PAR";
-        protected const string VacancyLocationTypeCode_Specific = "S";
-        protected const string TrainingTypeCode_Framework = "F";
-        protected const string TrainingTypeCode_Standard = "S";
-        protected const string LevelCode_Intermediate = "2";
-        protected const string WageTypeCode_Custom = "CUS";
-        protected const string WageIntervalCode_Weekly = "W";
-        protected const string DurationTypeCode_Years = "Y";
-        protected const string Ukprn = "Ukrpn provider 1";
-        protected const string EmployerErn = "Employer 1 edsUrn";
-        protected const string ProviderSiteErn = "Provider 1 site edsUrn";
+        protected static readonly Guid VacancyIdVacancyA = Guid.NewGuid();
+        protected const int VacancyReferenceNumberVacancyA = 1;
+        protected const int FrameworkIdFramework1 = 1;
+        protected const string FramworkCodeNameFramework1 = "F01";
+        protected const int FrameworkIdFramework2 = 2;
+        protected const int StandardIdStandard1 = 1;
+        protected int VacancyReferenceNumber = 10;
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
-            var result = new Fixture().Build<Vacancy>()
-                .With(v => v.WageTypeCode, WageTypeCode_Custom)
-                .With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
-                .With(v => v.DurationTypeCode, DurationTypeCode_Years)
-                .With(v => v.TrainingTypeCode, TrainingTypeCode_Framework)
-                .With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
-                .With(v => v.LevelCode, LevelCode_Intermediate)
-                .With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
+            var fixture = new Fixture();
+
+            var result = fixture.Build<Vacancy>()
+                //.With(v => v.WageTypeCode, WageTypeCode_Custom)
+                //.With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
+                //.With(v => v.DurationTypeCode, DurationTypeCode_Years)
+                //.With(v => v.TrainingTypeCode, TrainingTypeCode_Framework)
+                //.With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
+                //.With(v => v.LevelCode, LevelCode_Intermediate)
+                //.With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
                 .Create();
 
-            if (result.FrameworkId.GetHashCode() % 2 == 1)
-            {
-                result.TrainingTypeCode = TrainingTypeCode_Framework;
-                result.FrameworkId = FrameworkId_Framework1;
-                result.StandardId = null;
-            }
-            else
-            {
-                result.TrainingTypeCode = TrainingTypeCode_Standard;
-                result.FrameworkId = null;
-                result.StandardId = StandardId_Standard1;
-            }
+            //if (fixture.Create<bool>())
+            //{
+            //    result.TrainingTypeCode = TrainingTypeCode_Framework;
+            //    result.FrameworkId = FrameworkIdFramework1;
+            //    result.StandardId = null;
+            //}
+            //else
+            //{
+            //    result.TrainingTypeCode = TrainingTypeCode_Standard;
+            //    result.FrameworkId = null;
+            //    result.StandardId = StandardIdStandard1;
+            //}
+
+            //result.VacancyLocationTypeCode = fixture.Create<bool>() ? VacancyLocationType.Employer : VacancyLocationType.Specific;
 
             return result;
         }
 
-        protected Domain.Entities.Raa.Vacancies.Vacancy CreateValidDomainVacancy()
+        protected DomainVacancy CreateValidDomainVacancy()
         {
-            var result = new Fixture().Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+            var fixture = new Fixture();
+
+            fixture.Customizations.Add(
+                new StringGenerator(() =>
+                    Guid.NewGuid().ToString().Substring(0, 10)));
+
+            var result = fixture.Build<DomainVacancy>()
                 .With(av => av.Status, VacancyStatus.PendingQA)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
+                .With(av => av.DateQAApproved, null)
+                .With(av => av.VacancyReferenceNumber, VacancyReferenceNumber++)
+                .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
+                .With(av => av.ParentVacancyReferenceNumber, 0)
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;
+                result.FrameworkCodeName = FramworkCodeNameFramework1;
                 result.StandardId = null;
             }
             else
             {
                 result.TrainingType = TrainingType.Standards;
                 result.FrameworkCodeName = null;
-                result.StandardId = StandardId_Standard1;
+                result.StandardId = StandardIdStandard1;
             }
 
+            //result.ProviderSiteEmployerLink.Employer.Ern = "101";
+            //result.ProviderSiteEmployerLink.Employer.Address.Postcode = "CV1 2WT";
+            //result.Ukprn = "202"; //TODO: check with database values.
+
             return result;
+        }
+
+        protected Tuple<DomainVacancy, DomainVacancy> CreateValidParentChildDomainVacancies()
+        {
+            var parentVacancy = CreateValidDomainVacancy();
+
+            var childVacancy = CreateValidDomainVacancy();
+            childVacancy.ParentVacancyReferenceNumber = parentVacancy.VacancyReferenceNumber;
+
+            return new Tuple<DomainVacancy, DomainVacancy>(parentVacancy, childVacancy);
         }
 
         protected EquivalencyAssertionOptions<Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Vacancy> options)
         {
             return options
                 // TODO: Not in Domain object yet
-                .Excluding(v => v.VacancyLocationTypeCode)
-                .Excluding(v => v.AV_ContactName)
-                .Excluding(v => v.AV_WageText)
-                .Excluding(v => v.AV_InterviewStartDate)
-
-                // TODO: Rather hard / out of scope?
-                .Excluding(v => v.ParentVacancyId)
-                .Excluding(v => v.EmployerVacancyPartyId)
-                .Excluding(v => v.OwnerVacancyPartyId)
-                .Excluding(v => v.ManagerVacancyPartyId)
-                .Excluding(v => v.DeliveryProviderVacancyPartyId)
-                .Excluding(v => v.ContractOwnerVacancyPartyId)
-                .Excluding(v => v.OriginalContractOwnerVacancyPartyId)
-
-                // TODO: Might be easier?
-                .Excluding(v => v.FrameworkId)
-                .Excluding(v => v.SectorId)
-                .Excluding(v => v.StartDate)
-
+                //.Excluding(v => v.AV_ContactName)
+                //.Excluding(v => v.AV_WageText)
                 ;
         }
 
-        protected EquivalencyAssertionOptions<Domain.Entities.Raa.Vacancies.Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Domain.Entities.Raa.Vacancies.Vacancy> options)
+        protected EquivalencyAssertionOptions<DomainVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<DomainVacancy> options)
         {
             return options
-                // TODO: Not in database object yet
-                .Excluding(v => v.IsEmployerLocationMainApprenticeshipLocation)
-
-                // TODO: Rather hard / out of scope?
-                .Excluding(v => v.Address)
-
                 // TODO: Might be easier?
                 .Excluding(v => v.FrameworkCodeName)
-                .Excluding(v => v.SectorCodeName)
-                // .Excluding(v => v.Ukprn)
-                // .Excluding(v => v.VacancyParty)
-                .Excluding(v => v.DateStartedToQA)
-                .Excluding(v => v.VacancyManagerId)
-                .Excluding(v => v.LastEditedById)
-                .Excluding(v => v.ParentVacancyReferenceNumber)
-                .Excluding(v => v.CreatedDateTime)
-                .Excluding(v => v.UpdatedDateTime)
-                .Excluding(v => v.VacancyGuid)
+                //.Excluding(v => v.Ukprn)
+                //.Excluding(v => v.ProviderSiteEmployerLink)
+                //.Excluding(v => v.VacancyManagerId)
+                //.Excluding(v => v.LastEditedById)
+                ;
+        }
+
+        protected EquivalencyAssertionOptions<DomainVacancy> ForShallowSave(EquivalencyAssertionOptions<DomainVacancy> options)
+        {
+            return options
+                // TODO: Might be easier?
+                .Excluding(v => v.FrameworkCodeName)
+                //.Excluding(v => v.Ukprn)
+                //.Excluding(v => v.ProviderSiteEmployerLink)
                 ;
         }
     }

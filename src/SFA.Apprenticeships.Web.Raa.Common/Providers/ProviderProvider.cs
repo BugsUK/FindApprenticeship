@@ -101,7 +101,7 @@
         private Vacancy GetVacancy(VacancyPartyViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyGuid) ??
-                          _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+                          _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             return vacancy;
         }

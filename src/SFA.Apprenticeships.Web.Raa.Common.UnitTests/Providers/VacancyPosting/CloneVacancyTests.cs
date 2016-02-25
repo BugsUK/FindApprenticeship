@@ -14,12 +14,12 @@
         [Test]
         public void CloneVacancyShouldSaveTheClonedVacancy()
         {
-            const long initialVacancyReferenceNumber = 1;
+            const int initialVacancyReferenceNumber = 1;
             const string initialVacancyTitle = "title";
-            const long newVacancyReferenceNumber = 2;
+            const int newVacancyReferenceNumber = 2;
             var dateTimeNow = DateTime.UtcNow;
 
-            MockVacancyPostingService.Setup(s => s.GetVacancy(initialVacancyReferenceNumber))
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(initialVacancyReferenceNumber))
                 .Returns(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle));
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
             MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
@@ -36,7 +36,7 @@
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => CheckClonedVacancy(v, newVacancyReferenceNumber, dateTimeNow))));
         }
 
-        private bool CheckClonedVacancy(Vacancy clonedVacancy, long newVacancyReferenceNumber, DateTime dateTimeNow)
+        private bool CheckClonedVacancy(Vacancy clonedVacancy, int newVacancyReferenceNumber, DateTime dateTimeNow)
         {
             clonedVacancy.Title.Should().StartWith("(Copy of) ");
             clonedVacancy.CreatedDateTime.Should().Be(dateTimeNow);
@@ -69,7 +69,7 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private Vacancy GetLiveVacancyWithComments(long initialVacancyReferenceNumber, string initialVacancyTitle)
+        private Vacancy GetLiveVacancyWithComments(int initialVacancyReferenceNumber, string initialVacancyTitle)
         {
             return new Vacancy
             {
