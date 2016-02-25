@@ -359,18 +359,6 @@ AND    @RowCount = 1
             return null;
         }
 
-        public Vacancy ShallowSave(Vacancy entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Vacancy ReplaceLocationInformation(long vacancyReferenceNumber,
-            bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions, IEnumerable<VacancyLocation> vacancyLocationAddresses,
-            string locationAddressesComment, string additionalLocationInformation, string additionalLocationInformationComment)
-        {
-            throw new NotImplementedException();
-        }
-
         public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
         {
             throw new NotImplementedException();

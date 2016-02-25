@@ -89,7 +89,7 @@
                         viewModel.IsEmployerLocationMainApprenticeshipLocation.Value;
                 if (viewModel.NumberOfPositions != null) vacancy.NumberOfPositions = viewModel.NumberOfPositions.Value;
 
-                _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+                _vacancyPostingService.SaveVacancy(vacancy);
             }
 
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);

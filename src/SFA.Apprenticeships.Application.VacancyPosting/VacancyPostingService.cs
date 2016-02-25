@@ -20,19 +20,21 @@
         private readonly IReferenceNumberRepository _referenceNumberRepository;
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
+        private readonly IVacancyLocationWriteRepository _vacancyLocationWriteRepository;
 
         public VacancyPostingService(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IReferenceNumberRepository referenceNumberRepository,
             IProviderUserReadRepository providerUserReadRepository, 
-            IVacancyLocationReadRepository vacancyLocationReadRepository)
+            IVacancyLocationReadRepository vacancyLocationReadRepository, IVacancyLocationWriteRepository vacancyLocationWriteRepository)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
             _referenceNumberRepository = referenceNumberRepository;
             _providerUserReadRepository = providerUserReadRepository;
             _vacancyLocationReadRepository = vacancyLocationReadRepository;
+            _vacancyLocationWriteRepository = vacancyLocationWriteRepository;
         }
 
         public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
@@ -49,10 +51,10 @@
                 }
             }
 
-            return SaveApprenticeshipVacancy(vacancy);
+            return SaveVacancy(vacancy);
         }
 
-        public Vacancy SaveApprenticeshipVacancy(Vacancy vacancy)
+        public Vacancy SaveVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
 
@@ -74,32 +76,6 @@
             }
 
             _vacancyWriteRepository.Save(vacancy);
-
-            return _vacancyReadRepository.Get(vacancy.VacancyId);
-        }
-
-        public Vacancy ShallowSaveApprenticeshipVacancy(Vacancy vacancy)
-        {
-            Condition.Requires(vacancy);
-
-            // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
-
-            if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
-            {
-                var username = Thread.CurrentPrincipal.Identity.Name;
-                var lastEditedBy = _providerUserReadRepository.Get(username);
-                if (lastEditedBy != null)
-                {
-                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
-                }
-            }
-
-            _vacancyWriteRepository.ShallowSave(vacancy);
 
             return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
@@ -144,16 +120,7 @@
             return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
         }
 
-        public void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
-            IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment, string additionalLocationInformation,
-            string additionalLocationInformationComment)
-        {
-            _vacancyWriteRepository.ReplaceLocationInformation(vacancyReferenceNumber,
-                isEmployerLocationMainApprenticeshipLocation, numberOfPositions, vacancyLocationAddresses,
-                locationAddressesComment, additionalLocationInformation, additionalLocationInformationComment);
-        }
-
-        public List<VacancyLocation> GetLocationAddresses(int vacancyId)
+        public List<VacancyLocation> GetVacancyLocations(int vacancyId)
         {
             return _vacancyLocationReadRepository.GetForVacancyId(vacancyId);
         }
@@ -161,6 +128,16 @@
         public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
         {
             _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
+        }
+
+        public List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations)
+        {
+            return _vacancyLocationWriteRepository.Save(vacancyLocations);
+        }
+
+        public void DeleteVacancyLocationsFor(int vacancyId)
+        {
+            _vacancyLocationWriteRepository.DeleteFor(vacancyId);
         }
     }
 }

@@ -72,7 +72,7 @@
                         .Create();
                 });
 
-            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av );
+            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av );
 
             var mapper = new Mock<IMapper>();
             mapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
@@ -91,7 +91,7 @@
 
             //Assert
             vacancyPostingService.Verify(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
+            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
             result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
             result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
@@ -171,7 +171,7 @@
                         .Create();
                 });
 
-            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
+            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
             var mapper = new Mock<IMapper>();
             mapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
@@ -190,7 +190,7 @@
 
             //Assert
             vacancyPostingService.Verify(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
+            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
             result.VacancyReferenceNumber.Should().Be(trainingDetailsViewModel.VacancyReferenceNumber);
             result.ApprenticeshipLevelComment.Should().Be(trainingDetailsViewModel.ApprenticeshipLevelComment);
             result.FrameworkCodeNameComment.Should().Be(trainingDetailsViewModel.FrameworkCodeNameComment);
@@ -221,7 +221,7 @@
             vacancyPostingService.Setup(
                 vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
 
-            vacancyPostingService.Setup(vps => vps.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
+            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
@@ -234,7 +234,7 @@
 
             //Assert
             vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
+            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
             result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
             result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
             result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
@@ -298,7 +298,7 @@
             long vacancyReferenceNumber = 1;
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                //.With(x => x.LocationAddresses, null)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
                 .Create();
 
             var configurationService = new Mock<IConfigurationService>();
@@ -320,7 +320,7 @@
             vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
-                    r.ShallowSaveApprenticeshipVacancy(
+                    r.SaveVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
@@ -339,16 +339,17 @@
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
                 .Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
             vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber))
                 .Returns(vacancy);
-            vacancyPostingService.Setup(s => s.GetLocationAddresses(vacancy.VacancyId)).Returns(locationAddresses);
+            vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
-            var fixture = new Fixture {RepeatCount = locationAddressCount};
+            var fixture = new Fixture {RepeatCount = locationAddressCount - 1};
             var vacancyNumbers = fixture.Create<List<long>>();
             vacancyPostingService.Setup(r => r.GetNextVacancyReferenceNumber()).ReturnsInOrder(vacancyNumbers.ToArray());
 
@@ -363,25 +364,36 @@
             //Assert
             //get the submitted vacancy once
             vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber), Times.Once);
-            //save the original vacancy with a status of ParentVacancy
+            //save the original vacancy with a status of Live and itself as a parent vacancy
             vacancyPostingService.Verify(
                 r =>
-                    r.ShallowSaveApprenticeshipVacancy(
+                    r.SaveVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == VacancyStatus.ParentVacancy)));
+                                av.Status == VacancyStatus.Live &&
+                                av.ParentVacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.IsEmployerLocationMainApprenticeshipLocation.Value == true &&
+                                av.Address.Postcode == locationAddresses.First().Address.Postcode && 
+                                av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 && 
+                                av.Address.AddressLine2 == locationAddresses.First().Address.AddressLine2 && 
+                                av.Address.AddressLine3 == locationAddresses.First().Address.AddressLine3 && 
+                                av.Address.AddressLine4 == locationAddresses.First().Address.AddressLine4 && 
+                                av.Address.AddressLine5 == locationAddresses.First().Address.AddressLine5 &&
+                                av.NumberOfPositions == locationAddresses.First().NumberOfPositions)));
 
             //save new vacancies with a status of Live
             foreach (var number in vacancyNumbers)
             {
                 vacancyPostingService.Verify(r =>
                     r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
-                    && av.Status == VacancyStatus.Live)), Times.Once);
+                    && av.Status == VacancyStatus.Live &&
+                    av.ParentVacancyReferenceNumber == vacancyReferenceNumber &&
+                    av.IsEmployerLocationMainApprenticeshipLocation.Value == true)), Times.Once);
             }
 
             //save new vacancies with only one of the new addresses and the position count
-            foreach (var location in locationAddresses)
+            foreach (var location in locationAddresses.Skip(1))
             {
                 vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av
                     => av.Address.Postcode == location.Address.Postcode
@@ -389,18 +401,17 @@
                        && av.Address.AddressLine2 == location.Address.AddressLine2
                        && av.Address.AddressLine3 == location.Address.AddressLine3
                        && av.Address.AddressLine4 == location.Address.AddressLine4
-                       && av.Address.AddressLine4 == location.Address.AddressLine4
-                       && av.NumberOfPositions == location.NumberOfPositions
-                       && av.Status == VacancyStatus.Live
-                       && av.ParentVacancyReferenceNumber == vacancyReferenceNumber
+                       && av.Address.AddressLine5 == location.Address.AddressLine5
                        && av.NumberOfPositions == location.NumberOfPositions)));
             }
 
             //save the submitted vacancy once
-            vacancyPostingService.Verify( r => r.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+            vacancyPostingService.Verify( r => r.SaveVacancy(It.IsAny<Vacancy>()), Times.Once);
             
             //Create each child vacancy once
-            vacancyPostingService.Verify( r => r.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Exactly(locationAddressCount));
+            vacancyPostingService.Verify( r => r.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Exactly(locationAddressCount - 1));
+
+            vacancyPostingService.Verify(s => s.DeleteVacancyLocationsFor(vacancy.VacancyId));
         }
 
         [Test]
@@ -432,7 +443,7 @@
             vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
-                    r.ShallowSaveApprenticeshipVacancy(
+                    r.SaveVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
@@ -757,7 +768,7 @@
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).With(configService).Build();
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new Vacancy());
-            vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
             viewModel.DurationComment = durationComment;
@@ -771,7 +782,7 @@
             vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
-                    vp.ShallowSaveApprenticeshipVacancy(
+                    vp.SaveVacancy(
                         It.Is<Vacancy>(
                             v =>
                                 v.ClosingDateComment == closingDateComment &&
@@ -793,7 +804,7 @@
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
 
             vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new Vacancy());
-            vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
             var viewModel = new VacancyQuestionsViewModel
@@ -808,7 +819,7 @@
             vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
-                    vp.ShallowSaveApprenticeshipVacancy(
+                    vp.SaveVacancy(
                         It.Is<Vacancy>(
                             v =>
                                 v.FirstQuestionComment == firstQuestionComment &&

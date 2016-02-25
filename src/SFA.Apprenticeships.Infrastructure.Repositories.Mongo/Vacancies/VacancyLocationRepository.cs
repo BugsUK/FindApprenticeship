@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
@@ -39,13 +40,28 @@
             return locationAddresses.Select(SaveEntity).Select(e => _mapper.Map<MongoVacancyLocation, VacancyLocation>(e)).ToList();
         }
 
+        public void DeleteFor(int vacancyId)
+        {
+            _logger.Debug("Calling repository to delete vacancy locations for vacancy with Id={0}", vacancyId);
+
+            Collection.Remove(Query<MongoVacancyLocation>.EQ(e => e.VacancyId, vacancyId));
+
+            _logger.Debug("Deleted vacancy locations for vacancy with Id={0}", vacancyId);
+        }
+
         private MongoVacancyLocation SaveEntity(VacancyLocation entity)
         {
+            if (entity.VacancyLocationGuid == Guid.Empty)
+            {
+                entity.VacancyLocationGuid = Guid.NewGuid();
+                entity.VacancyLocationId = entity.VacancyLocationGuid.GetHashCode();
+            }
+
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<VacancyLocation, MongoVacancyLocation>(entity);
-
+            
             Collection.Save(mongoEntity);
             return mongoEntity;
         }
