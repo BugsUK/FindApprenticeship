@@ -1,9 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Mappers.Resolvers
 {
     using AutoMapper;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Infrastructure.Presentation;
     using ViewModels.Vacancy;
+    using Web.Common.ViewModels.Locations;
 
     /// <summary>
     /// This is meant to replace
@@ -26,7 +28,8 @@
                 VacancyRequirementsProspectsViewModel = context.Engine.Map<Vacancy, VacancyRequirementsProspectsViewModel>(source),
                 VacancyQuestionsViewModel = context.Engine.Map<Vacancy, VacancyQuestionsViewModel>(source),
                 OfflineApplicationClickThroughCount = source.OfflineApplicationClickThroughCount,
-                VacancyType = source.VacancyType
+                VacancyType = source.VacancyType,
+                Address = context.Engine.Map<PostalAddress, AddressViewModel>(source.Address)
             };
 
             if (source.Status.IsStateInQa())

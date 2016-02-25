@@ -62,7 +62,7 @@
             MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
-                    s.SaveApprenticeshipVacancy(
+                    s.SaveVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Once);
 
 
@@ -115,7 +115,7 @@
             MockProviderService.Verify(s => s.SaveVacancyParty(providerSiteEmployerLink), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
-                    s.SaveApprenticeshipVacancy(
+                    s.SaveVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
 
 

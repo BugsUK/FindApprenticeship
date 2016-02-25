@@ -22,6 +22,7 @@
         private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
         private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
         private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
+        private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
         private IVacancyPostingService _vacancyPostingService;
 
         private readonly ProviderUser _vacancyManager = new ProviderUser
@@ -41,7 +42,7 @@
         {
             _vacancyPostingService = new VacancyPostingService(_apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
-                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object);
+                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, _vacancyLocationAddressWriteRepository.Object);
 
             _providerUserReadRepository.Setup(r => r.Get(_vacancyManager.Username)).Returns(_vacancyManager);
             _providerUserReadRepository.Setup(r => r.Get(_lastEditedBy.Username)).Returns(_lastEditedBy);
@@ -87,7 +88,7 @@
                 VacancyReferenceNumber = 1
             };
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.SaveVacancy(vacancy);
 
             _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
         }
@@ -102,7 +103,7 @@
                 VacancyReferenceNumber = 1
             };
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.SaveVacancy(vacancy);
 
             _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
@@ -133,26 +134,6 @@
             _vacancyPostingService.GetVacancy(vacancyId);
 
             _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyId));
-        }
-
-        [Test]
-        public void ReplaceLocationInformationShouldCallRepository()
-        {
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
-            int? numberOfPositions = null;
-            IEnumerable<VacancyLocation> vacancyLocationAddresses = new []{new VacancyLocation(), new VacancyLocation(), new VacancyLocation()};
-            const string locationAddressesComment = "location addresses comment";
-            const string additionalLocationInformation = "additional location information";
-            const string additionalLocationInformationComment = "additional location information";
-            const long vacancyReferenceNumber = 1L;
-
-            _vacancyPostingService.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
-                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
-                additionalLocationInformationComment);
-
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
-                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
-                additionalLocationInformationComment));
         }
     }
 }

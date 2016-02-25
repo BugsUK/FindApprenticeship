@@ -8,6 +8,7 @@
     using System.Linq;
     using Domain.Entities.Raa.Vacancies;
     using VacancyPosting;
+    using Web.Common.ViewModels.Locations;
 
     public class VacancyViewModel
     {
@@ -61,6 +62,8 @@
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
         public string EmployerName { get; set; }
+
+        public AddressViewModel Address { get; set; }
 
         public bool IsUnapprovedMultiLocationParentVacancy
         {

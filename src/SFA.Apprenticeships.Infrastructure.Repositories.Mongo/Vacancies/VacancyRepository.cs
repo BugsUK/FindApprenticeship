@@ -6,7 +6,6 @@
     using System.Threading;
     using Common;
     using Common.Configuration;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -181,40 +180,6 @@
             var mongoEntity = SaveEntity(entity);
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.VacancyId);
-
-            return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
-        }
-
-        public Vacancy ShallowSave(Vacancy entity)
-        {
-            _logger.Debug("Called Mongodb to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
-
-            var mongoEntity = SaveEntity(entity);
-
-            _logger.Debug("Shallow saved apprenticeship vacancy with to Mongodb with id={0}", entity.VacancyId);
-
-            return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
-        }
-
-        public Vacancy ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation,
-            int? numberOfPositions, IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment,
-            string additionalLocationInformation, string additionalLocationInformationComment)
-        {
-            _logger.Debug($"Calling Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
-
-            var vacancy = GetByReferenceNumber(vacancyReferenceNumber);
-
-            vacancy.IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = numberOfPositions;
-            vacancy.LocationAddressesComment = locationAddressesComment;
-            vacancy.AdditionalLocationInformation = additionalLocationInformation;
-            vacancy.AdditionalLocationInformationComment = additionalLocationInformationComment;
-            //TODO: Move this call into IVacancyLocationAddressesRepo
-            //vacancy.LocationAddresses = vacancyLocationAddresses.ToList();
-
-            var mongoEntity = SaveEntity(vacancy);
-
-            _logger.Info($"Called Mongodb to replace location information of the vacancy with reference number: {vacancyReferenceNumber}");
 
             return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
         }
