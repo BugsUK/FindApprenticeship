@@ -18,12 +18,14 @@
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
+    using Application.Interfaces.VacancyPosting;
     using Application.Location;
     using Application.ReferenceData;
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Application.Vacancy.SiteMap;
+    using Application.VacancyPosting;
     using Common.Configuration;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;

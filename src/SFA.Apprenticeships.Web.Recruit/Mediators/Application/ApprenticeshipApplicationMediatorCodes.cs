@@ -27,5 +27,10 @@
             public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
         }
+
+        public class ConfirmSuccessful
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok";
+        }
     }
 }

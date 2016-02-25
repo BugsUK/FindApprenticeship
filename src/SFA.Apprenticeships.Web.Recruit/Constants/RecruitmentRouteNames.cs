@@ -56,7 +56,7 @@
         public const string SearchExistingEmployerByErn = "SearchExistingEmployerByErn";
         public const string SearchExistingEmployerByNameAndOrLocation = "SearchExistingEmployerByNameAndOrLocation";
         public const string AddEmployer = "AddEmployer";
-        public const string ComfirmEmployer = "ConfirmEmployer";
+        public const string ConfirmEmployer = "ConfirmEmployer";
 
         // Vacancy posting - new employer
         public const string SelectNewEmployer = "SelectNewEmployer";
@@ -66,6 +66,9 @@
         // Applications
         public const string VacancyApplications = "VacancyApplications";
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
+        public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
+        public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
+
         public const string ManageDates = "ManageDates";
     }
 }
