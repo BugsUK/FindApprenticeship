@@ -21,6 +21,6 @@
 
         }
 
-        public Guid ApplicationId { get; }
+        public Guid ApplicationId { get; set; }
     }
 }

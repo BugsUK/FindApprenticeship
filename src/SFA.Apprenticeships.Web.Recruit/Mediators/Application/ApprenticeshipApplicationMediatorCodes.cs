@@ -32,5 +32,10 @@
         {
             public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok";
         }
+
+        public class AppointCandidate
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok";
+        }
     }
 }

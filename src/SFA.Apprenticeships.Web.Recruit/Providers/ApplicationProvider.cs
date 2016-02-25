@@ -96,13 +96,28 @@
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
+        public ApplicationSelectionViewModel AppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var applicationId = apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId;
+
+            _apprenticeshipApplicationService.AppointCandidate(applicationId);
+
+            return apprenticeshipApplicationViewModel.ApplicationSelection;
+        }
+
+        #region Helpers
+
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+
             return viewModel;
         }
+
+        #endregion
     }
 }

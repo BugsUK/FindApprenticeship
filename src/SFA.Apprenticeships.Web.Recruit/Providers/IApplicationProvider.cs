@@ -13,5 +13,7 @@
         ApprenticeshipApplicationViewModel GetApprenticeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes);
+
+        ApplicationSelectionViewModel AppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
     }
 }

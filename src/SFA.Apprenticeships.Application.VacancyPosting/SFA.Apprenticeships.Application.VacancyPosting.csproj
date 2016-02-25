@@ -103,6 +103,10 @@
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
+      <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
+      <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>

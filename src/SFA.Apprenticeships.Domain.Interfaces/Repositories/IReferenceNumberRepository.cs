@@ -1,7 +1,9 @@
-﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories
+﻿namespace SFA.Apprenticeships.Domain.Interfaces.Repositories
 {
     public interface IReferenceNumberRepository
     {
         long GetNextVacancyReferenceNumber();
+
+        long GetNextLegacyApplicationId();
     }
 }

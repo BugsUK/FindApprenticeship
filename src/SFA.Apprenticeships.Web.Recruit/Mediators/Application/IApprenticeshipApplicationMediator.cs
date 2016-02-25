@@ -11,5 +11,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         MediatorResponse<ApprenticeshipApplicationViewModel> ReviewRejectCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ReviewSaveAndExit(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
         MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessful(ApplicationSelectionViewModel applicationSelectionViewModel);
+        MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel);
     }
 }

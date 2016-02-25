@@ -9,15 +9,24 @@
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
 {
     @Html.AntiForgeryToken()
-
     @Html.HiddenFor(m => m.ApplicationSelection.ApplicationId)
+    @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
+    @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
+    @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
 
     <div>
+        <div class="hgroup">
+            <h1 class="heading-xlarge med-btm-margin">Send outcome</h1>
+        </div>
+
+        <p>Confirm @Model.ApplicantDetails.Name's application has been successful. Your decision can't be reversed.</p>
+        <p>An automated message will now be sent to the candidate to inform them they have been selected for this role.</p>
+
         <section>
             <div class="form-group">
-                <button type="submit" class="button" name="Review" value="AppointCandidate">Appoint candidate</button>
+                <button type="submit" class="button" name="AppointCandidate" value="ConfirmSuccessfulAppointCandidate">Appoint candidate</button>
                 <p class="med-btm-margin">
-                    <button type="submit" class="button-link" name="Review" value="CancelAppointCandidate">Cancel</button>
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, new {Model.ApplicationSelection.ApplicationId})
                 </p>
             </div>
         </section>

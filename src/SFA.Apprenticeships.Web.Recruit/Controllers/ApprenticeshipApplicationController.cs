@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Mediators;
@@ -135,6 +136,22 @@
             {
                 case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok:
                     return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "AppointCandidate")]
+        public ActionResult ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulAppointCandidate(apprenticeshipApplicationViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok:
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

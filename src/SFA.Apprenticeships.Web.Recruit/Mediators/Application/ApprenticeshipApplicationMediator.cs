@@ -103,7 +103,14 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
         {
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.Review.Ok, viewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var viewModel = _applicationProvider.AppointCandidate(apprenticeshipApplicationViewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok, viewModel);
         }
     }
 }

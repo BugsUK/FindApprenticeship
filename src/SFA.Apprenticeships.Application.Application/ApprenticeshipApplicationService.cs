@@ -2,6 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
+    using Applications.Entities;
+    using Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Interfaces.Applications;
@@ -12,12 +14,18 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IGetApplicationForReviewStrategy _getApplicationForReviewStrategy;
         private readonly IUpdateApplicationNotesStrategy _updateApplicationNotesStrategy;
+        private readonly IApplicationStatusUpdateStrategy _applicationStatusUpdateStrategy;
 
-        public ApprenticeshipApplicationService(IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository, IGetApplicationForReviewStrategy getApplicationForReviewStrategy, IUpdateApplicationNotesStrategy updateApplicationNotesStrategy)
+        public ApprenticeshipApplicationService(
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
+            IGetApplicationForReviewStrategy getApplicationForReviewStrategy,
+            IUpdateApplicationNotesStrategy updateApplicationNotesStrategy,
+            IApplicationStatusUpdateStrategy applicationStatusUpdateStrategy)
         {
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _getApplicationForReviewStrategy = getApplicationForReviewStrategy;
             _updateApplicationNotesStrategy = updateApplicationNotesStrategy;
+            _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
         }
 
         public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
@@ -47,7 +55,26 @@
 
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
+
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
+        }
+
+        public void AppointCandidate(Guid applicationId)
+        {
+            var apprenticeshipApplication = GetApplication(applicationId);
+
+            var applicationStatusSummary = new ApplicationStatusSummary
+            {               
+                ApplicationId = Guid.Empty, // CRITICAL: make the update look like it came from legacy AVMS application
+                ApplicationStatus = ApplicationStatuses.Successful,
+                LegacyApplicationId = apprenticeshipApplication.LegacyApplicationId,
+                LegacyCandidateId = 0, // not required
+                LegacyVacancyId = 1, // not required
+                VacancyStatus = apprenticeshipApplication.VacancyStatus,
+                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
+            };
+
+            _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
         }
     }
 }
