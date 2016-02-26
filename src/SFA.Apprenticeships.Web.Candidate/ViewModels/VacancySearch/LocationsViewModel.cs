@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch
 {
     using System.Collections.Generic;
+    using Common.ViewModels;
 
     public class LocationsViewModel : ViewModelBase
     {

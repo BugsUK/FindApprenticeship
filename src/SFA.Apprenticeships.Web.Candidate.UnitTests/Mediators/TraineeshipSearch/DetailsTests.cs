@@ -7,10 +7,10 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
     using System.Globalization;
     using Candidate.Mediators.Search;
     using Candidate.Providers;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Configuration;
     using Common.Constants;
     using Common.Providers;
+    using Common.ViewModels.VacancySearch;
     using Constants;
     using Domain.Entities.Vacancies;
     using SFA.Infrastructure.Interfaces;

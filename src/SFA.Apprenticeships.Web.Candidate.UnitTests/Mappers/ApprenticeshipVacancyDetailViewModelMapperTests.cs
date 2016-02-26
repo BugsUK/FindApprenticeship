@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mappers
 {
-    using Candidate.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using NUnit.Framework;
     using Candidate.Mappers;
+    using Common.ViewModels.VacancySearch;
 
     [TestFixture]
     public class ApprenticeshipVacancyDetailViewModelMapperTests

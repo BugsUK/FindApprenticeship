@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using System.Linq;
+    using Common.ViewModels.Candidate;
     using Domain.Entities.Applications;
     using Helpers;
-    using ViewModels.Candidate;
 
     public static class CandidateViewModelResolver
     {

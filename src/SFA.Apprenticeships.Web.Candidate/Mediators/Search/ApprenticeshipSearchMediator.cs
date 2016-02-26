@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
+    using Common.ViewModels.VacancySearch;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Applications;

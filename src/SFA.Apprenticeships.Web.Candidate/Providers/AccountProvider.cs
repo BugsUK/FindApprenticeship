@@ -216,7 +216,7 @@
             registrationDetails.LastName = model.Lastname;
             registrationDetails.DateOfBirth = new DateTime(
                 // ReSharper disable PossibleInvalidOperationException
-                model.DateOfBirth.Year.Value, model.DateOfBirth.Month.Value, model.DateOfBirth.Day.Value);
+                model.DateOfBirthOfBirth.Year.Value, model.DateOfBirthOfBirth.Month.Value, model.DateOfBirthOfBirth.Day.Value);
             // ReSharper restore PossibleInvalidOperationException
             registrationDetails.Address = _mapper.Map<AddressViewModel, Address>(model.Address);
             registrationDetails.PhoneNumber = model.PhoneNumber;

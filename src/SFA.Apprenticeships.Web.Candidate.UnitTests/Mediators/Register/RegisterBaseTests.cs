@@ -3,6 +3,7 @@
     using Candidate.Mediators.Register;
     using Candidate.Providers;
     using Candidate.Validators;
+    using Common.Validators;
     using Moq;
     using NUnit.Framework;
 

@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using Application.Interfaces.Communications;
+    using Common.ViewModels.Candidate;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using ViewModels;
     using ViewModels.Account;
-    using ViewModels.Candidate;
     using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;

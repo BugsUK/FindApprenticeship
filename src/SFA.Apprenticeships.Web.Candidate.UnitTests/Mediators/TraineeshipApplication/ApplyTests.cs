@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipAppli
     using System;
     using System.Globalization;
     using Candidate.Mediators.Application;
-    using Candidate.ViewModels.Applications;
+    using Common.ViewModels.Applications;
     using Moq;
     using NUnit.Framework;
 

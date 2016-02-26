@@ -2,7 +2,8 @@
 {
     using System.Web.Mvc;
     using Application.Interfaces.Vacancies;
-    
+    using Common.ViewModels;
+
     public enum SearchAction
     {
         Search,

@@ -11,6 +11,7 @@
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
+    using Common.Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies.Apprenticeships;

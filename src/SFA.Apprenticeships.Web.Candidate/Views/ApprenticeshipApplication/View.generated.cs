@@ -39,18 +39,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.Helpers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Common.ViewModels;
+    using SFA.Apprenticeships.Web.Common.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/View.cshtml")]
-    public partial class View : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.ApprenticeshipApplicationViewModel>
+    public partial class View : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.Applications.ApprenticeshipApplicationViewModel>
     {
         public View()
         {
@@ -242,14 +245,14 @@ WriteLiteral(">\r\n            <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1950), Tuple.Create("\"", 2006)
+WriteAttribute("href", Tuple.Create(" href=\"", 1947), Tuple.Create("\"", 2003)
             
             #line 48 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 1957), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 1954), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 1957), false)
+, 1954), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n        </p>\r\n    </div>\r\n</div>\r\n\r\n");
@@ -344,14 +347,14 @@ WriteLiteral(">\r\n    <p>\r\n        <a");
 
 WriteLiteral(" id=\"return-to-my-applications\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2820), Tuple.Create("\"", 2876)
+WriteAttribute("href", Tuple.Create(" href=\"", 2817), Tuple.Create("\"", 2873)
             
             #line 70 "..\..\Views\ApprenticeshipApplication\View.cshtml"
-, Tuple.Create(Tuple.Create("", 2827), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
+, Tuple.Create(Tuple.Create("", 2824), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.MyApplications)
             
             #line default
             #line hidden
-, 2827), false)
+, 2824), false)
 );
 
 WriteLiteral(">Return to my applications</a>\r\n    </p>\r\n</div>");

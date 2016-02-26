@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Home
     using System.Web.Mvc;
     using SFA.Infrastructure.Interfaces;
     using Common.Constants;
+    using Common.Constants.Pages;
     using Constants.Pages;
     using Providers;
     using Validators;

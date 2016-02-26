@@ -3,6 +3,7 @@
     using System;
     using System.ComponentModel.DataAnnotations;
     using System.Security.Policy;
+    using Common.ViewModels;
     using Constants.ViewModels;
 
     public class SavedSearchViewModel : ViewModelBase

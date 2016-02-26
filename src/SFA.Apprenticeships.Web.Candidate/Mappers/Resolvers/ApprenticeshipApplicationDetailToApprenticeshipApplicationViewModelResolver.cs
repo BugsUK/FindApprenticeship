@@ -2,10 +2,10 @@
 {
     using System;
     using AutoMapper;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
     using Domain.Entities.Applications;
     using Helpers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
 
     public class ApprenticeshipApplicationDetailToApprenticeshipApplicationViewModelResolver :
         ITypeConverter<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>

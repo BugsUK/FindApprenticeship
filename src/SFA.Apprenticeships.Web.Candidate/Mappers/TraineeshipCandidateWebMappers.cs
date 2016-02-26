@@ -3,13 +3,14 @@
     using Application.Interfaces.Search;
     using Domain.Entities.Locations;
     using Application.Interfaces.Vacancies;
+    using Common.ViewModels.Applications;
     using Common.ViewModels.Locations;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Mappers;
     using Resolvers;
     using ViewModels.VacancySearch;
-    using ViewModels.Applications;
 
     public class TraineeshipCandidateWebMappers : MapperEngine
     {

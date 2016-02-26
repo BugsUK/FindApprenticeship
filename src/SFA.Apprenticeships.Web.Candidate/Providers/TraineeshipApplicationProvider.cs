@@ -4,11 +4,13 @@
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Vacancies;
     using Application.Interfaces.Candidates;
+    using Common.Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;
+    using Common.ViewModels.Applications;
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.

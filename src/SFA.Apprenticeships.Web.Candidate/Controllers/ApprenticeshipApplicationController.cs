@@ -10,10 +10,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.ViewModels.Applications;
     using Constants;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Application;
     using ViewModels.Applications;
     using ViewModels.VacancySearch;

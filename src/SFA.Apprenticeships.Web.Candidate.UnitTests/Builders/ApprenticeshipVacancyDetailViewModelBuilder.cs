@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
-    using Candidate.ViewModels.VacancySearch;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
 
     public class ApprenticeshipVacancyDetailViewModelBuilder

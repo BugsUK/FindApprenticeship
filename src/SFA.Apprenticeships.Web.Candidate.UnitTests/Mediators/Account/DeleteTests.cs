@@ -3,9 +3,9 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using FluentAssertions;

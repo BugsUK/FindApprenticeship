@@ -17,11 +17,11 @@
     using Domain.Entities.Users;
     using Constants.Pages;
     using ViewModels;
-    using ViewModels.Candidate;
     using ViewModels.Home;
     using ViewModels.Login;
     using ViewModels.Register;
     using Common.Constants;
+    using Common.ViewModels.Candidate;
     using Domain.Entities.Communication;
     using Helpers;
     using Mappers;

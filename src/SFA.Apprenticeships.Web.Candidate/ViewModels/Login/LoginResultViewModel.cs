@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Login
 {
+    using Common.ViewModels;
     using Domain.Entities.Users;
 
     public class LoginResultViewModel : ViewModelBase

@@ -26,7 +26,7 @@
     {
         internal static void AddCommonRules(this AbstractValidator<SettingsViewModel> validator)
         {
-            validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelClientValidator());
+            validator.RuleFor(x => x.DateOfBirthOfBirth).SetValidator(new DateOfBirthViewModelClientValidator());
             validator.RuleFor(x => x.Address).SetValidator(new AddressViewModelValidator());
 
             validator.RuleFor(x => x.Firstname)
@@ -58,7 +58,7 @@
 
         internal static void AddServerRules(this AbstractValidator<SettingsViewModel> validator)
         {
-            validator.RuleFor(x => x.DateOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
+            validator.RuleFor(x => x.DateOfBirthOfBirth).SetValidator(new DateOfBirthViewModelServerValidator());
         }
     }
 }

@@ -3,6 +3,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
 {
     using System;
+    using Common.ViewModels.Applications;
     using ViewModels.Applications;
 
     public interface ITraineeshipApplicationMediator

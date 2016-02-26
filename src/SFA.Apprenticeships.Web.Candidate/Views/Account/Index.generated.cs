@@ -56,13 +56,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.Helpers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Common.ViewModels;
+    using SFA.Apprenticeships.Web.Common.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
     
     #line 5 "..\..\Views\Account\Index.cshtml"

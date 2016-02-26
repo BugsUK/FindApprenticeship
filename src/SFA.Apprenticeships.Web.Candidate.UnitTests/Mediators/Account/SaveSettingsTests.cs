@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                     AddressLine4 = "Add4",
                     Postcode = "N7 8LS"
                 },
-                DateOfBirth = new DateViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
+                DateOfBirthOfBirth = new DateOfBirthViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
                 PhoneNumber = "079824524523",
                 Firstname = "FN",
                 Lastname = "LN",
@@ -124,7 +124,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Account
                     AddressLine4 = "Add4",
                     Postcode = "N7 8LS"
                 },
-                DateOfBirth = new DateViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
+                DateOfBirthOfBirth = new DateOfBirthViewModel { Day = DateTime.UtcNow.Day, Month = DateTime.UtcNow.Month, Year = DateTime.UtcNow.Year },
                 PhoneNumber = "079824524523",
                 Firstname = "FN",
                 Lastname = "LN"

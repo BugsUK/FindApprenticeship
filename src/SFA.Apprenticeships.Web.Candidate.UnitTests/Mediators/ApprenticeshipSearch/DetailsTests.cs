@@ -4,8 +4,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 {
     using System;
     using Candidate.Mediators.Search;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.ViewModels.VacancySearch;
     using Constants;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;

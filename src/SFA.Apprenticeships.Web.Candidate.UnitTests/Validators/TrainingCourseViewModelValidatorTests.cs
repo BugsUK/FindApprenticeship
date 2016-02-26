@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Validators
 {
-    using Candidate.Validators;
-    using Candidate.ViewModels.Candidate;
+    using Common.Validators;
+    using Common.ViewModels.Candidate;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
 

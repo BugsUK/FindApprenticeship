@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Common.ViewModels;
 
     public class TraineeshipSearchResponseViewModel : ViewModelBase
     {

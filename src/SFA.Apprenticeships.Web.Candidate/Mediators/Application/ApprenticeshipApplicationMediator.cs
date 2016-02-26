@@ -7,8 +7,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Application
     using System.Linq;
     using System.Web.Security;
     using Common.Constants;
+    using Common.Constants.Pages;
     using Common.Models.Application;
     using Common.Providers;
+    using Common.Validators;
+    using Common.ViewModels.Applications;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;

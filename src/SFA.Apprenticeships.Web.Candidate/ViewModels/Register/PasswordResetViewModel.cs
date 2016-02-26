@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Register
 {
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels;
     using Constants.ViewModels;
     using Domain.Entities.Users;
     using FluentValidation.Attributes;

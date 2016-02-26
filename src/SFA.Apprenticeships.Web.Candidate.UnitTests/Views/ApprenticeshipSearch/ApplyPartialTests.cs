@@ -4,8 +4,8 @@
     using System.Collections;
     using System.Collections.Specialized;
     using System.Web;
-    using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using FluentAssertions;

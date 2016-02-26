@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Validators
 {
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using Common.Validators;
+    using Common.ViewModels.Candidate;
 
     public class TraineeshipViewModelClientValidator : CandidateViewModelClientValidatorBase<TraineeshipCandidateViewModel>
     {

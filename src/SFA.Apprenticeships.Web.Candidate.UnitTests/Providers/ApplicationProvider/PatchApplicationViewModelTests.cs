@@ -2,8 +2,8 @@
 {
     using System;
     using Builders;
-    using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.Candidate;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
     using FluentAssertions;
     using NUnit.Framework;
 

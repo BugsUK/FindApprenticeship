@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSearch
 {
-    using System;
     using Candidate.Mediators.Search;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
     using Common.UnitTests.Mediators;
-    using Domain.Entities.Vacancies;
+    using Common.ViewModels.VacancySearch;
     using Moq;
     using NUnit.Framework;
 

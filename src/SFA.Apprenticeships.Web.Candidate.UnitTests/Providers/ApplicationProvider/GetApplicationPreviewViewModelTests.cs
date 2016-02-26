@@ -3,7 +3,7 @@
     using System;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
-    using Candidate.ViewModels.VacancySearch;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies;

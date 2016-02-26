@@ -5,7 +5,7 @@
     using FluentValidation;
     using ViewModels;
 
-    public class DateOfBirthViewModelClientValidator : AbstractValidator<DateViewModel>
+    public class DateOfBirthViewModelClientValidator : AbstractValidator<DateOfBirthViewModel>
     {
         public DateOfBirthViewModelClientValidator()
         {
@@ -13,7 +13,7 @@
         }
     }
 
-    public class DateOfBirthViewModelServerValidator : AbstractValidator<DateViewModel>
+    public class DateOfBirthViewModelServerValidator : AbstractValidator<DateOfBirthViewModel>
     {
         public DateOfBirthViewModelServerValidator()
         {
@@ -24,7 +24,7 @@
 
     internal static class DateOfBirthValidaitonRules
     {
-        internal static void AddCommonRules(this AbstractValidator<DateViewModel> validator)
+        internal static void AddCommonRules(this AbstractValidator<DateOfBirthViewModel> validator)
         {
             validator.RuleFor(x => x.Day)
                 .InclusiveBetween(1, 31)
@@ -45,14 +45,14 @@
                 .WithMessage(DateViewModelMessages.YearMessages.RequiredErrorText);
         }
 
-        internal static void AddServerRules(this AbstractValidator<DateViewModel> validator)
+        internal static void AddServerRules(this AbstractValidator<DateOfBirthViewModel> validator)
         {
             validator.RuleFor(x => x.Day)
                 .Must(BeValidDate)
                 .WithMessage(DateViewModelMessages.MustBeValidDate);
         }
 
-        private static bool BeValidDate(DateViewModel instance, int? day)
+        private static bool BeValidDate(DateOfBirthViewModel instance, int? day)
         {
             if (!instance.Year.HasValue || !instance.Month.HasValue || !instance.Day.HasValue)
             {

@@ -22,7 +22,7 @@
                 {
                     GeoPoint = new GeoPointViewModel()
                 },
-                DateOfBirth = new DateViewModel
+                DateOfBirthOfBirth = new DateOfBirthViewModel
                 {
                     Day = 01,
                     Month = 01,

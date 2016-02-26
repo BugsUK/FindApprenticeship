@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Applications
 {
+    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
 

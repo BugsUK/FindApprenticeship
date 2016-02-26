@@ -2,15 +2,15 @@
 {
     using System.Collections.Generic;
     using AutoMapper;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Entities.Users;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Helpers;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
-    using ViewModels.VacancySearch;
 
     public class ApprenticeshipApplicationViewModelToApprenticeshipApplicationDetailResolver :
         ITypeConverter<ApprenticeshipApplicationViewModel, ApprenticeshipApplicationDetail>

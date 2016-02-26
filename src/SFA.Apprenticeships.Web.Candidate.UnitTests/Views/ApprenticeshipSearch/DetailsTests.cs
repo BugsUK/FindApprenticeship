@@ -5,10 +5,9 @@
     using System.Collections.Specialized;
     using System.Globalization;
     using System.Web;
-    using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.ApprenticeshipSearch;
-    using Common.Framework;
     using Common.ViewModels.Locations;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Infrastructure.Presentation;

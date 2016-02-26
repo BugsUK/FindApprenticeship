@@ -8,12 +8,11 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
+    using Common.ViewModels.Applications;
     using Constants;
     using SFA.Infrastructure.Interfaces;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Application;
-    using ViewModels.Applications;
 
     [UserJourneyContext(UserJourney.Traineeship, Order = 2)]
     public class TraineeshipApplicationController : CandidateControllerBase

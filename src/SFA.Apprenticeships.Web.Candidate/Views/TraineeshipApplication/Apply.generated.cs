@@ -33,18 +33,21 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.Helpers;
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Common.ViewModels;
+    using SFA.Apprenticeships.Web.Common.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/Apply.cshtml")]
-    public partial class Apply : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.Applications.TraineeshipApplicationViewModel>
+    public partial class Apply : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.Applications.TraineeshipApplicationViewModel>
     {
         public Apply()
         {
@@ -200,14 +203,14 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1209), Tuple.Create("\"", 1299)
+WriteAttribute("href", Tuple.Create(" href=\"", 1206), Tuple.Create("\"", 1296)
             
             #line 24 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1216), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1213), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1216), false)
+, 1213), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

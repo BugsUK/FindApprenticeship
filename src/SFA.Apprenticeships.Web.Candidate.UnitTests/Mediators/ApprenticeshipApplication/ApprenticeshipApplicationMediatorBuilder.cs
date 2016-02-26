@@ -5,6 +5,7 @@
     using Candidate.Validators;
     using Common.Configuration;
     using Common.Providers;
+    using Common.Validators;
     using SFA.Infrastructure.Interfaces;
     using Moq;
 

@@ -11,6 +11,7 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
     using Candidate.Validators;
     using Candidate.ViewModels.Home;
     using Common.Constants;
+    using Common.Constants.Pages;
     using Constants.Pages;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;

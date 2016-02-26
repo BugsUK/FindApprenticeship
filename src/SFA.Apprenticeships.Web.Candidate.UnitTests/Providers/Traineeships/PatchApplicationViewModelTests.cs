@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using Builders;
-    using Candidate.ViewModels.Candidate;
-    using Constants.Pages;
+    using Common.Constants.Pages;
+    using Common.ViewModels.Candidate;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

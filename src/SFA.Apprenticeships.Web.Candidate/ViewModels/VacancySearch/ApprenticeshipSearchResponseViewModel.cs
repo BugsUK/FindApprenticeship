@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Common.ViewModels;
     using Domain.Entities.Vacancies.Apprenticeships;
 
     public class ApprenticeshipSearchResponseViewModel : ViewModelBase

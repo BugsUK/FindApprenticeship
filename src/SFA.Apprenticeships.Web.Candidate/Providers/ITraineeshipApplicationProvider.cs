@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using FluentValidation.Results;
+    using Common.ViewModels.Applications;
     using ViewModels.Applications;
 
     public interface ITraineeshipApplicationProvider

@@ -2,10 +2,10 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-    using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.Candidate;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Models.Application;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
+    using Common.ViewModels.VacancySearch;
     using Domain.Entities.Vacancies;
 
     public class TraineeshipApplicationViewModelBuilder

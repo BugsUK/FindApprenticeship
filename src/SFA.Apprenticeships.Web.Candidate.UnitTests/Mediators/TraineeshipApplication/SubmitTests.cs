@@ -6,12 +6,12 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipAppli
     using System.Collections.Generic;
     using Builders;
     using Candidate.Mediators.Application;
-    using Candidate.ViewModels.Applications;
-    using Candidate.ViewModels.Candidate;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.Constants.Pages;
     using Common.Models.Application;
-    using Constants.Pages;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
+    using Common.ViewModels.VacancySearch;
     using Moq;
     using NUnit.Framework;
 

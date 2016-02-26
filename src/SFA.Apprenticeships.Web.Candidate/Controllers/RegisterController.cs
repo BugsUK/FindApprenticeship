@@ -9,16 +9,15 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using Common.Attributes;
     using Common.Configuration;
     using Common.Constants;
+    using Common.ViewModels.Candidate;
     using Constants;
     using Constants.Pages;
     using Domain.Entities.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Register;
     using Providers;
-    using ViewModels.Candidate;
     using ViewModels.Register;
 
     public class RegisterController : CandidateControllerBase

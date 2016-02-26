@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Common.ViewModels.Applications;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;

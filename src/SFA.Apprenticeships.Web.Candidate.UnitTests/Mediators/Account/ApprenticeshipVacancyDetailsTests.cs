@@ -3,8 +3,8 @@
     using System;
     using Candidate.Mediators.Account;
     using Candidate.Providers;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Constants;
+    using Common.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Vacancies;
     using FluentAssertions;

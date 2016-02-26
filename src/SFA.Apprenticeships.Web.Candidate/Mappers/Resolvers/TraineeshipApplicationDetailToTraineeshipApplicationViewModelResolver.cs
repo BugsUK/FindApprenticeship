@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using AutoMapper;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
     using Helpers;
     using Domain.Entities.Applications;
-    using ViewModels.Applications;
-    using ViewModels.Candidate;
 
     public class TraineeshipApplicationDetailToTraineeshipApplicationViewModelResolver :
         ITypeConverter<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>

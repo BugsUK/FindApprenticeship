@@ -36,8 +36,8 @@
                         Uprn = viewModel.Address.Uprn
                     },
                     DateOfBirth = 
-                        new DateTime(viewModel.DateOfBirth.Year.Value, viewModel.DateOfBirth.Month.Value,
-                            viewModel.DateOfBirth.Day.Value)
+                        new DateTime(viewModel.DateOfBirthOfBirth.Year.Value, viewModel.DateOfBirthOfBirth.Month.Value,
+                            viewModel.DateOfBirthOfBirth.Day.Value)
                 },
                 CommunicationPreferences = new CommunicationPreferences
                 {

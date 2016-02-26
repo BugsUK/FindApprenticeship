@@ -9,7 +9,6 @@
     using Common.Configuration;
     using Common.Constants;
     using Common.Controllers;
-    using Constants;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Logging;
     using NLog.Contrib;

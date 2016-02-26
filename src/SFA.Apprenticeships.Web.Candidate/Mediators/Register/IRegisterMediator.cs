@@ -3,7 +3,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.Mediators.Register
 {
     using System;
-    using ViewModels.Candidate;
+    using Common.ViewModels.Candidate;
     using ViewModels.Register;
 
     public interface IRegisterMediator

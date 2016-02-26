@@ -3,8 +3,8 @@
     using System.Collections.Generic;
     using Candidate.ViewModels;
     using Candidate.ViewModels.Account;
-    using Candidate.ViewModels.Candidate;
     using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
 
     public class SettingsViewModelBuilder
     {
@@ -176,7 +176,7 @@
             {
                 Firstname = _firstname,
                 Lastname = _lastname,
-                DateOfBirth = new DateViewModel
+                DateOfBirthOfBirth = new DateOfBirthViewModel
                 {
                     Day = 01,
                     Month = 01,

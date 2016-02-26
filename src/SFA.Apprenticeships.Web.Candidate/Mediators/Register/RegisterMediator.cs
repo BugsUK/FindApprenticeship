@@ -4,13 +4,14 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Register
 {
     using System;
     using Common.Constants;
+    using Common.Validators;
+    using Common.ViewModels.Candidate;
     using Constants.Pages;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
     using Providers;
     using Validators;
     using ViewModels;
-    using ViewModels.Candidate;
     using ViewModels.Register;
 
     public class RegisterMediator : MediatorBase, IRegisterMediator

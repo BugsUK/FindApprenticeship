@@ -20,7 +20,7 @@
                     Firstname = registrationDetails.FirstName,
                     Lastname = registrationDetails.LastName,
                     Address = context.Engine.Map<Address, AddressViewModel>(registrationDetails.Address),
-                    DateOfBirth = new DateViewModel
+                    DateOfBirthOfBirth = new DateOfBirthViewModel
                     {
                         Day = registrationDetails.DateOfBirth.Day,
                         Month = registrationDetails.DateOfBirth.Month,

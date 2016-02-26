@@ -3,8 +3,8 @@
     using System;
     using Application.Interfaces.Candidates;
     using Candidate.Providers;
-    using Candidate.ViewModels.VacancySearch;
     using Common.Models.Application;
+    using Common.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;

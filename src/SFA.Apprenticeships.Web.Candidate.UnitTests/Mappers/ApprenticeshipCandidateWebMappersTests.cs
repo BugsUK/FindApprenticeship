@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mappers
 {
     using Candidate.Mappers;
-    using Candidate.ViewModels.Candidate;
+    using Common.ViewModels.Candidate;
     using Domain.Entities.Candidates;
     using FluentAssertions;
     using NUnit.Framework;

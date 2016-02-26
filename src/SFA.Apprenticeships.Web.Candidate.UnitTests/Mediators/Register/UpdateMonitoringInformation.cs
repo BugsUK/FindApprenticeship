@@ -4,12 +4,12 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Register
 {
     using System;
     using Candidate.Mediators.Register;
-    using Candidate.ViewModels.Candidate;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Constants.Pages;
     using Common.Constants;
+    using Common.ViewModels.Candidate;
 
     [TestFixture]
     public class UpdateMonitoringInformation : RegisterBaseTests

@@ -3,9 +3,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common.Providers;
+    using Common.ViewModels.Candidate;
     using SFA.Infrastructure.Interfaces;
     using Search;
-    using ViewModels.Candidate;
 
     public abstract class ApplicationMediatorBase : SearchMediatorBase
     {

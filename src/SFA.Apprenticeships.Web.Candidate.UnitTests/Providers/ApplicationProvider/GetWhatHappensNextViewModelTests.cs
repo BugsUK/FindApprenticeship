@@ -7,7 +7,7 @@
     using Application.Interfaces.Vacancies;
     using Builders;
     using Candidate.Providers;
-    using Candidate.ViewModels.VacancySearch;
+    using Common.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;

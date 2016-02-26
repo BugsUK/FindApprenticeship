@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Validators
 {
-    using Candidate.ViewModels.Candidate;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Candidate.Validators;
+    using Common.Validators;
+    using Common.ViewModels.Candidate;
 
     [TestFixture]
     public class AboutYouViewModelValidatorTests

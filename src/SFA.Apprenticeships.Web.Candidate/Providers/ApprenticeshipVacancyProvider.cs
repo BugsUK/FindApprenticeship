@@ -9,6 +9,7 @@
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
+    using Common.ViewModels.VacancySearch;
     using Constants.Pages;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Locations;

@@ -2,8 +2,8 @@
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-    using Candidate;
     using Common.ViewModels.Applications;
+    using Common.ViewModels.Candidate;
     using Common.ViewModels.Locations;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
@@ -35,7 +35,7 @@
         [Display(Name = SettingsViewModelMessages.LastnameMessages.LabelText)]
         public string Lastname { get; set; }
 
-        public DateViewModel DateOfBirth { get; set; }
+        public DateOfBirthViewModel DateOfBirthOfBirth { get; set; }
 
         public AddressViewModel Address { get; set; }
 

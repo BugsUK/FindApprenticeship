@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
-    using Candidate.ViewModels.Candidate;
+    using Common.ViewModels.Candidate;
 
     public class WorkExperienceViewModelBuilder
     {

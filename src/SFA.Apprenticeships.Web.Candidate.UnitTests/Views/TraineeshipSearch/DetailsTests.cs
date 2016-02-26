@@ -2,9 +2,9 @@
 {
     using System;
     using System.Globalization;
-    using Candidate.ViewModels.VacancySearch;
     using Candidate.Views.TraineeshipSearch;
     using Common.ViewModels.Locations;
+    using Common.ViewModels.VacancySearch;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;
