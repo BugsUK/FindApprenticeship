@@ -96,13 +96,13 @@
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public ApplicationSelectionViewModel AppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public ApplicationSelectionViewModel AppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var applicationId = apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId;
+            var applicationId = applicationSelectionViewModel.ApplicationId;
 
             _apprenticeshipApplicationService.AppointCandidate(applicationId);
 
-            return apprenticeshipApplicationViewModel.ApplicationSelection;
+            return applicationSelectionViewModel;
         }
 
         #region Helpers

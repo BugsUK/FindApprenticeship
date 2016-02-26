@@ -106,11 +106,15 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok, viewModel);
         }
 
-        public MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        public MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var viewModel = _applicationProvider.AppointCandidate(apprenticeshipApplicationViewModel);
+            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.AppointCandidate(applicationSelectionViewModel);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok, viewModel);
+            var candidateName = applicationViewModel.ApplicantDetails.Name;
+            var message = string.Format(ApplicationViewModelMessages.SuccessfulApplicationFormat, candidateName);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok, viewModel, message, UserMessageLevel.Info);
         }
     }
 }

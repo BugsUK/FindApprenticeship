@@ -3,6 +3,7 @@
     using System;
     using System.Web.Mvc;
     using Common.Attributes;
+    using Common.Constants;
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
@@ -146,11 +147,16 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "AppointCandidate")]
         public ActionResult ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulAppointCandidate(apprenticeshipApplicationViewModel);
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulAppointCandidate(apprenticeshipApplicationViewModel.ApplicationSelection);
 
             switch (response.Code)
             {
                 case ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                    }
+
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
 
                 default:

@@ -5,6 +5,7 @@
     public class ApplicationViewModelMessages
     {
         public const string UpdateNotesFailed = "An error occured when trying to save. Please try again later";
+        public const string SuccessfulApplicationFormat = "{0}'s application has been successful";
 
         public class Notes
         {
