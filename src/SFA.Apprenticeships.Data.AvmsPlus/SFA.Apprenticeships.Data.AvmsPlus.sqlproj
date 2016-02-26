@@ -122,6 +122,8 @@
     <Folder Include="Schemas" />
     <Folder Include="Publish" />
     <Folder Include="Sync" />
+    <Folder Include="UserProfile" />
+    <Folder Include="Reference" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -848,7 +850,6 @@
     <Build Include="Schemas\Provider.sql" />
     <PostDeploy Include="PostDeployment.sql" />
     <None Include="Scripts\Data\dbo.County.Upsert.sql" />
-    <Build Include="dbo\Tables\AgencyUser.sql" />
     <None Include="Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.LocalAuthority.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql" />
@@ -868,6 +869,19 @@
     <None Include="Scripts\Data\dbo.VacancyTextFieldValue.Upsert.sql" />
     <Build Include="Schemas\Sync.sql" />
     <Build Include="Sync\Sync.SyncParams.sql" />
+    <Build Include="UserProfile\UserProfile.AgencyUser.sql" />
+    <Build Include="dbo\Tables\VacancyType.sql" />
+    <None Include="Scripts\Data\dbo.VacancyType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipFrameworkStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.OccupationStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql" />
+    <Build Include="Schemas\Reference.sql" />
+    <Build Include="Reference\Reference.Sector.sql" />
+    <Build Include="Reference\Reference.Standard.sql" />
+    <None Include="Scripts\Data\Reference.Sector.Upsert.sql" />
+    <None Include="Scripts\Data\Reference.Standard.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

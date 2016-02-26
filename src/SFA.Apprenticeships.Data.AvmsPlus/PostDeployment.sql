@@ -24,6 +24,11 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.VacancyStatusType.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyTextFieldValue.Upsert.sql"
 :r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
+:r ".\Scripts\Data\dbo.VacancyType.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApprenticeshipFrameworkStatusType.Upsert.sql"
+:r ".\Scripts\Data\Reference.Sector.Upsert.sql"
+:r ".\Scripts\Data\Reference.Standard.Upsert.sql"
 
 -- Test Data
 :r ".\Scripts\TestData\dbo.TestProviders.Upsert.sql"

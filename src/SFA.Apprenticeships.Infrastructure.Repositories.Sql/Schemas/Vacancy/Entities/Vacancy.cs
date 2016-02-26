@@ -13,6 +13,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int VacancyOwnerRelationshipId { get; set; }
 
+        public int VacancyTypeId { get; set; }
+
         public int VacancyReferenceNumber { get; set; }
 
         public string ContactName { get; set; }

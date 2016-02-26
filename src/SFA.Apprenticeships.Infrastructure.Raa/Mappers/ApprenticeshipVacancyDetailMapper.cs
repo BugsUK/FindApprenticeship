@@ -5,12 +5,14 @@
     using System.Linq;
     using System.Text;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
+    using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class ApprenticeshipVacancyDetailMapper
     {
@@ -60,7 +62,7 @@
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
-                //VacancyAddress = vacancy.ProviderSiteEmployerLink.Employer.Address,
+                VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
                 //TODO: How is this captured in RAA?
@@ -128,6 +130,35 @@
             }
 
             return detail;
+        }
+
+        private static Address GetVacancyAddress(PostalAddress address)
+        {
+            return new Address
+            {
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2,
+                AddressLine3 = address.AddressLine3,
+                AddressLine4 = address.AddressLine4,
+                Postcode = address.Postcode,
+                GeoPoint = GetGeoPoint(address.GeoPoint)
+            };
+        }
+
+        private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
+        {
+            var vacancyGeoPoint = new GeoPoint();
+            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            {
+                vacancyGeoPoint.Latitude = 52.4009991288043;
+                vacancyGeoPoint.Longitude = -1.50812239495425;
+            }
+            else
+            {
+                vacancyGeoPoint.Longitude = geoPoint.Longitude;
+                vacancyGeoPoint.Latitude = geoPoint.Latitude;
+            }
+            return vacancyGeoPoint;
         }
 
         private static string GetContactInformation(Vacancy vacancy)

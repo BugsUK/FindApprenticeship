@@ -13,9 +13,6 @@
         private const string DatabaseProjectName = "SFA.Apprenticeships.Data.AvmsPlus";
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();
         private static DatabaseConfigurationProvider _instance;
-        private string _dacpacFilePath;
-        private string _targetConnectionString;
-        private string _databaseTargetName;
 
         public static DatabaseConfigurationProvider Instance
         {
@@ -30,11 +27,11 @@
             }
         }
 
-        public string DacPacFilePath => _dacpacFilePath;
+        public string DacPacFilePath { get; }
 
-        public string TargetConnectionString => _targetConnectionString;
+        public string TargetConnectionString { get; }
 
-        public string DatabaseTargetName => _databaseTargetName;
+        public string DatabaseTargetName { get; }
 
         private DatabaseConfigurationProvider()
         {
@@ -44,17 +41,17 @@
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
 
-            _databaseTargetName = $"AvmsPlus-{environment}";
-            _targetConnectionString = $"Server=SQLSERVERTESTING;Database={_databaseTargetName};Trusted_Connection=True;";
+            DatabaseTargetName = $"AvmsPlus-{environment}";
+            TargetConnectionString = $"Server=SQLSERVERTESTING;Database={DatabaseTargetName};Trusted_Connection=True;";
 
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
             var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";
-            _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
-            if (!File.Exists(_dacpacFilePath))
+            DacPacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+            if (!File.Exists(DacPacFilePath))
             {
                 //For NCrunch on Dave's machine
                 databaseProjectPath = $"C:\\_Git\\Beta\\src\\{DatabaseProjectName}";
-                _dacpacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
+                DacPacFilePath = Path.Combine(databaseProjectPath + dacPacRelativePath);
             }
         }
     }

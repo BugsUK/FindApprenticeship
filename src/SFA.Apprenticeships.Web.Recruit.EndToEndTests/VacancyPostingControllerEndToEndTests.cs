@@ -62,12 +62,12 @@
         public void GetConfirmEmployerShouldReturnAPoviderSiteEmployerViewModelWithMainLocationAsTrue()
         {
             const int providerSiteId = 101282923;
-            const int employerId = 100608868;
+            const string edsUrn = "100608868";
             var vacancyGuid = Guid.NewGuid();
 
             var vacancyPostingController = Container.GetInstance<VacancyPostingController>();
 
-            var result = vacancyPostingController.ConfirmEmployer(providerSiteId, employerId, vacancyGuid, false, null);
+            var result = vacancyPostingController.ConfirmEmployer(providerSiteId, edsUrn, vacancyGuid, false, null);
             result.Should().BeOfType<ViewResult>();
             var view = result as ViewResult;
             view.Model.Should().BeOfType<VacancyPartyViewModel>();
@@ -147,7 +147,7 @@
             var viewModel = new LocationSearchViewModel
             {
                 ProviderSiteEdsUrn = providerSiteErn,
-                EmployerErn = edsUrn,
+                EmployerEdsUrn = edsUrn,
                 AdditionalLocationInformation = additionalLocationInformation,
                 Addresses = new List<VacancyLocationAddressViewModel> {address1},
                 VacancyGuid = vacancyGuid

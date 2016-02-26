@@ -125,6 +125,7 @@
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
+    <Compile Include="Schemas\Provider\ProviderUserRepository.cs" />
     <Compile Include="Schemas\Reference\Entities\LocalAuthority.cs" />
     <Compile Include="Schemas\Reference\Entities\Region.cs" />
     <Compile Include="Schemas\Reference\Entities\County.cs" />

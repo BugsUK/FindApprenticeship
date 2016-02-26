@@ -24,6 +24,8 @@
         [Required]
         public int ProviderUserStatusId { get; set; }
 
+        public int? PreferredProviderSiteId { get; set; }
+
         [Required]
         public int ProviderId { get; set; }
 
@@ -32,8 +34,6 @@
 
         [Required]
         public string Fullname { get; set; }
-
-        public int? PreferredSiteErn { get; set; }
 
         [Required]
         public string Email { get; set; }

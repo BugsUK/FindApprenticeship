@@ -81,6 +81,7 @@
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
                 .MapMemberFrom(v => v.VacancyId, av => av.VacancyId)
+                .MapMemberFrom(v => v.VacancyTypeId, av => av.VacancyType)
 
                 .MapMemberFrom(v => v.AddressLine1, av => av.Address.AddressLine1)
                 .MapMemberFrom(v => v.AddressLine2, av => av.Address.AddressLine2)
@@ -145,6 +146,7 @@
                 .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
                 .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
+                .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
                 .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
                 .MapMemberFrom(av => av.Title, v => v.Title)

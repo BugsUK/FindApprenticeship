@@ -72,7 +72,7 @@
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
-            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<int>()))
+            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<string>()))
                 .Returns(new VacancyParty());
 
             MockMapper.Setup(

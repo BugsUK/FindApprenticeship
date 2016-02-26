@@ -129,6 +129,7 @@
     <Compile Include="Vacancies\VacancySearchSortType.cs" />
     <Compile Include="Vacancies\IVacancySearchService.cs" />
     <Compile Include="Vacancies\TraineeshipSearchResponse.cs" />
+    <Compile Include="Vacancies\ICandidateVacancyService.cs" />
     <Compile Include="VacancyPosting\IVacancyPostingService.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -85,7 +85,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
             #line hidden
             
             #line 9 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                                                                 
+                                                                        
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
@@ -114,14 +114,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 815), Tuple.Create("\"", 839)
+WriteAttribute("value", Tuple.Create(" value=\"", 827), Tuple.Create("\"", 851)
             
             #line 21 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                     , Tuple.Create(Tuple.Create("", 823), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                     , Tuple.Create(Tuple.Create("", 835), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 823), false)
+, 835), false)
 );
 
 WriteLiteral(">");

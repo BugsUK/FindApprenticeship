@@ -150,9 +150,9 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetProviderEmployers.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyPartyViewModel> GetEmployer(int providerSiteId, int employerId, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
+        public MediatorResponse<VacancyPartyViewModel> GetEmployer(int providerSiteId, string edsUrn, Guid vacancyGuid, bool? comeFromPreview, bool? useEmployerLocation)
         {
-            var viewModel = _providerProvider.GetVacancyPartyViewModel(providerSiteId, employerId);
+            var viewModel = _providerProvider.GetVacancyPartyViewModel(providerSiteId, edsUrn);
             viewModel.VacancyGuid = vacancyGuid;
             viewModel.ComeFromPreview = comeFromPreview ?? false;
 
@@ -186,7 +186,7 @@
 
             if (!validationResult.IsValid)
             {
-                var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId, viewModel.Employer.EmployerId);
+                var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId, viewModel.Employer.EdsUrn);
                 existingViewModel.EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl;
                 existingViewModel.EmployerDescription = viewModel.EmployerDescription;
                 existingViewModel.IsEmployerLocationMainApprenticeshipLocation =
@@ -419,8 +419,7 @@
         {
             newVacancyViewModel.OwnerParty =
                 _providerProvider.GetVacancyPartyViewModel(
-                    newVacancyViewModel.OwnerParty.ProviderSiteId,
-                    newVacancyViewModel.OwnerParty.Employer.EmployerId);
+                    newVacancyViewModel.OwnerParty.VacancyPartyId);
         }
 
         private void UpdateCommentsFor(NewVacancyViewModel newVacancyViewModel)

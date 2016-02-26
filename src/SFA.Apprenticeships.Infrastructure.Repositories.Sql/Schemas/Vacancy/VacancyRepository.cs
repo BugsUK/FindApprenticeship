@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using Common;
+    using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -94,8 +95,42 @@
             MapAdditionalQuestions(dbVacancy, result);
             MapTextFields(dbVacancy, result);
             MapIsEmployerLocationMainApprenticeshipLocation(dbVacancy, result);
+            MapApprenticeshipType(dbVacancy, result);
+            MapFrameworkId(dbVacancy, result);
 
             return result;
+        }
+
+        private void MapFrameworkId(Vacancy dbVacancy, DomainVacancy result)
+        {
+            if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
+            {
+                result.FrameworkCodeName =
+                    _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+SELECT CodeName
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
+                        new
+                        {
+                            ApprenticeshipFrameworkId = dbVacancy.ApprenticeshipFrameworkId.Value
+                        }).Single();
+            }
+        }
+
+        private void MapApprenticeshipType(Vacancy dbVacancy, DomainVacancy result)
+        {
+            if (dbVacancy.ApprenticeshipType.HasValue)
+            {
+                result.ApprenticeshipLevel =
+                    (ApprenticeshipLevel) _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT EducationLevel
+FROM   dbo.ApprenticeshipType
+WHERE  ApprenticeshipTypeId = @ApprenticeshipTypeId",
+                        new
+                        {
+                            ApprenticeshipTypeId = dbVacancy.ApprenticeshipType.Value
+                        }).Single();
+            }
         }
 
         private void MapIsEmployerLocationMainApprenticeshipLocation(Vacancy dbVacancy, DomainVacancy result)
@@ -275,7 +310,7 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
 
-            // UpdateEntityTimestamps(entity); // Do we need this?
+            UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
@@ -295,7 +330,7 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
 
-            // UpdateEntityTimestamps(entity); // Do we need this?
+            UpdateEntityTimestamps(entity); // Do we need this?
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
@@ -308,7 +343,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
-            return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+            return MapVacancy(dbVacancy);
         }
 
         public void Delete(int vacancyId)
@@ -324,91 +359,25 @@ FETCH NEXT @PageSize ROWS ONLY
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)
         {
             PopulateCountyId(entity, dbVacancy);
-            PopulateVacancyOwnerRelationshipId(entity, dbVacancy);
-            // PopulateVacancyManagerId(entity, dbVacancy);
             PopulateVacancyLocationTypeId(entity, dbVacancy);
-            // PopulateWageUnitId(entity, dbVacancy);
             PopulateApprenticeshipTypeId(entity, dbVacancy);
+            PopulateFrameworkId(entity, dbVacancy);
         }
 
-        public DomainVacancy ShallowUpdate(DomainVacancy entity)
+        private void PopulateFrameworkId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            _logger.Debug("Calling database to shallow update apprenticeship vacancy with id={0}", entity.VacancyId);
-
-            // UpdateEntityTimestamps(entity); // Do we need this?
-
-            var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
-
-            PopulateIds(entity, dbVacancy);
-
-            // TODO: This should be in a single call to the database (to avoid a double latency hit)
-            // This should be done as a single method in _getOpenConnection
-
-            if (!_getOpenConnection.UpdateSingle(dbVacancy))
-                throw new Exception("Failed to update record");
-
-            SaveTextFieldsFor(entity.VacancyId, entity);
-            SaveAdditionalQuestionsFor(entity.VacancyId, entity);
-
-            _logger.Debug("Shallow updated apprenticeship vacancy with to database with id={0}", entity.VacancyId);
-
-            return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+            if (!string.IsNullOrWhiteSpace(entity.FrameworkCodeName))
+            {
+                dbVacancy.ApprenticeshipFrameworkId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT ApprenticeshipFrameworkId
+FROM   dbo.ApprenticeshipFramework
+WHERE  CodeName = @FrameworkCodeName",
+                    new
+                    {
+                        FrameworkCodeName = entity.FrameworkCodeName
+                    }).Single();
+            }
         }
-
-        private void PopulateVacancyOwnerRelationshipId(DomainVacancy entity, Vacancy dbVacancy)
-        {
-            //TODO: Fix this
-            /*
-            var ids = _getOpenConnection.Query<dynamic>(@"
-SELECT
- ps.ProviderSiteID as ProviderSiteID,
- e.EmployerId FROM dbo.ProviderSite AS ps
-INNER JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
-INNER JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId
-WHERE ps.EDSURN = @ProviderSiteErn
-AND ps.TrainingProviderStatusTypeId = 1
-AND e.EmployerStatusTypeId = 1
-AND e.EdsUrn = @EmployerEdsUrn",
-                new
-                {
-                    //ProviderSiteErn = entity.ProviderSiteEmployerLink.ProviderSiteErn, // how we make this query?
-                    //EmployerEdsUrn = entity.ProviderSiteEmployerLink.Employer.Ern
-                }).Single();
-
-            var vacancyOwnerRelationshipId = _getOpenConnection.Query<int>(@"
-SELECT VacancyOwnerRelationshipId
-FROM dbo.VacancyOwnerRelationship
-WHERE EmployerId = @EmployerId AND ProviderSiteID = @ProviderSiteId",
-                new
-                {
-                    EmployerId = ids.EmployerId,
-                    ProviderSiteId = ids.ProviderSiteID
-                }).Single();
-
-            dbVacancy.VacancyOwnerRelationshipId = vacancyOwnerRelationshipId;*/
-        }
-
-        // TODO I think we don't need this.
-        /*private void PopulateVacancyManagerId(DomainVacancy entity, Vacancy dbVacancy)
-        {
-            var ids = _getOpenConnection.Query<dynamic>(@"
-SELECT
- ps.ProviderSiteID as ProviderSiteID
- FROM dbo.ProviderSite AS ps
-INNER JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId
-INNER JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId
-WHERE ps.EDSURN = @ProviderSiteErn
-AND ps.TrainingProviderStatusTypeId = 1
-AND e.EmployerStatusTypeId = 1
-AND e.EdsUrn = @EmployerEdsUrn",
-                new
-                {
-                    ProviderSiteErn = entity.va .ProviderSiteEmployerLink.ProviderSiteErn,
-                    EmployerEdsUrn = entity.ProviderSiteEmployerLink.Employer.Ern
-                }).Single();
-
-            dbVacancy.VacancyManagerID = ids.ProviderSiteID;
-        }*/
 
         private void PopulateCountyId(DomainVacancy entity, Vacancy dbVacancy)
         {
@@ -421,7 +390,7 @@ WHERE  CodeName = @CountyCodeName",
                     new
                     {
                         CountyCodeName = entity.Address.County
-                    }).Single(); // There's a better way to do this?
+                    }).Single(); 
             }
         }
 
@@ -698,15 +667,15 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
         private void UpdateEntityTimestamps(DomainVacancy entity)
         {
             // determine whether this is a "new" entity being saved for the first time
-            //if (entity.DateCreated == DateTime.MinValue)
-            //{
-            //    entity.DateCreated = DateTime.UtcNow;
-            //    entity.DateUpdated = null;
-            //}
-            //else
-            //{
-            //    entity.DateUpdated = DateTime.UtcNow;
-            //}
+            if (entity.CreatedDateTime == DateTime.MinValue)
+            {
+                entity.CreatedDateTime = DateTime.UtcNow;
+                entity.UpdatedDateTime = null;
+            }
+            else
+            {
+                entity.UpdatedDateTime = DateTime.UtcNow;
+            }
         }
     }
 }

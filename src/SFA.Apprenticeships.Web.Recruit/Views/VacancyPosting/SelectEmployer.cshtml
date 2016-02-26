@@ -133,7 +133,7 @@
                             </td>
                             <td>@employerResultsViewModel.EdsUrn</td>
                             <td>
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteId = Model.ProviderSiteId, employerId = employerResultsViewModel.EmployerId, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployerSelection, new {providerSiteId = Model.ProviderSiteId, edsUrn = employerResultsViewModel.EdsUrn, vacancyGuid = vacancyGuidValue, comeFromPreview = Model.ComeFromPreview})">Select employer</a>
                             </td>
                         </tr>
                     }

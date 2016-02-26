@@ -36,10 +36,16 @@
             return _providerUserReadRepository.GetForProvider(ukprn);
         }
 
-        public ProviderUser SaveUser(ProviderUser providerUser)
+        public ProviderUser CreateUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, verification code, send email etc
-            return _providerUserWriteRepository.Save(providerUser);
+            return _providerUserWriteRepository.Create(providerUser);
+        }
+
+        public ProviderUser UpdateUser(ProviderUser providerUser)
+        {
+            //Check if email is being updated and set pending, verification code, send email etc
+            return _providerUserWriteRepository.Update(providerUser);
         }
 
         public AgencyUser GetAgencyUser(string username)

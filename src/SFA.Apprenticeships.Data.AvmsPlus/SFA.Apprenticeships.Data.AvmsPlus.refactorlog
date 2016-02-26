@@ -56,4 +56,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="LastSyncVersion" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="9ebd543f-8b83-45d5-9f02-18adfe62b916" ChangeDateTime="02/24/2016 14:00:06">
+    <Property Name="ElementName" Value="[Provider].[ProviderUser].[PreferredSiteErn]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[Provider].[ProviderUser]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PreferredProviderSiteId" />
+  </Operation>
 </Operations>

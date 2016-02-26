@@ -23,9 +23,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 
         VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
-        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
-
-        IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
         Employer GetEmployer(int employerId);
 

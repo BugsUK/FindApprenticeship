@@ -17,6 +17,7 @@
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
+        private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
         private const int VacancyPartyId = 4;
@@ -55,6 +56,7 @@
                     Employer = new EmployerViewModel
                     {
                         EmployerId = EmployerId,
+                        EdsUrn = EdsUrn,
                         Address = new AddressViewModel()
                     }
                 },
@@ -87,7 +89,7 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EmployerId))
+            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
                 .Returns(_vacancyParty);
@@ -228,7 +230,7 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EmployerId), Times.Never);
+            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EdsUrn), Times.Never);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
@@ -267,7 +269,8 @@
             var locationSearchViewModel = new LocationSearchViewModel
             {
                 ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId
+                EmployerId = EmployerId,
+                EmployerEdsUrn = EdsUrn
             };
             var provider = GetVacancyPostingProvider();
 
@@ -290,7 +293,8 @@
             var locationSearchViewModel = new LocationSearchViewModel
             {
                 ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId
+                EmployerId = EmployerId,
+                EmployerEdsUrn = EdsUrn
             };
             var provider = GetVacancyPostingProvider();
 

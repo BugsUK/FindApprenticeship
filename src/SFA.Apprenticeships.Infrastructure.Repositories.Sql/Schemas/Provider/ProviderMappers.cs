@@ -1,70 +1,58 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
     using System;
-    using Domain.Entities.Raa.Parties;
+    using AutoMapper;
     using Vacancy;
+    using Domain = Domain.Entities.Raa.Users;
+    using Database = Entities;
 
-    public class ProviderMappers : MapperEngine
+    // TODO: SQL: AG: need to understand MapperEngine usage here (and in AgencyUserMappers).
+    public class ProviderUserMappers : MapperEngine
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<Provider, Entities.Provider>()
-                .ForMember(destintation => destintation.FullName, opt =>
-                    opt.MapFrom(source => source.Name))
+            // ProviderUser -> Entities.ProviderUser
+            Mapper.CreateMap<Domain.ProviderUser, Database.ProviderUser>()
+                //.ForMember(destination => destination.PreferredProviderSiteId, opt =>
+                //    opt.MapFrom(source => source.PreferredProviderSiteId))
 
+                .ForMember(destination => destination.ProviderUserStatusId, opt =>
+                    opt.MapFrom(source => (int)source.Status))
+
+                .ForMember(destination => destination.EmailVerifiedDateTime, opt =>
+                    opt.MapFrom(source => source.EmailVerifiedDate));
+
+            // Entities.ProviderUser -> ProviderUser
+            Mapper.CreateMap<Database.ProviderUser, Domain.ProviderUser>()
+                /*
                 .ForMember(destination => destination.Ukprn, opt =>
-                    opt.MapFrom(source => Convert.ToInt32(source.Ukprn)));
+                    opt.MapFrom(source => Convert.ToString(source.Ukprn)))
+                */
 
-            Mapper.CreateMap<Entities.Provider, Provider>()
-                .ForMember(destintation => destintation.Name, opt =>
-                    opt.MapFrom(source => source.FullName))
+                .ForMember(destination => destination.Status, opt =>
+                    opt.ResolveUsing<ProviderUserStatusResolver>()
+                        .FromMember(source => source.ProviderUserStatusId))
 
-                .ForMember(destination => destination.Ukprn, opt =>
-                    opt.MapFrom(source => Convert.ToString(source.Ukprn)));
+                .ForMember(destination => destination.EmailVerifiedDate, opt =>
+                    opt.MapFrom(source => source.EmailVerifiedDateTime));
         }
     }
 
-    // TODO: SQL: AG: remove dead code below.
+    public class ProviderUserStatusResolver : ValueResolver<int, Domain.ProviderUserStatus>
+    {
+        protected override Domain.ProviderUserStatus ResolveCore(int providerUserStatusId)
+        {
+            switch (providerUserStatusId)
+            {
+                case 10:
+                    return Domain.ProviderUserStatus.Registered;
+                case 20:
+                    return Domain.ProviderUserStatus.EmailVerified;
+            }
 
-    /*
-    public class GuidToIntConverter :
-        ITypeConverter<Guid, int>
-    {
-        public int Convert(ResolutionContext context)
-        {
-            var source = (Guid)context.SourceValue;
-            return source.ResolveToInt();
+            throw new ArgumentOutOfRangeException(
+                nameof(providerUserStatusId),
+                $"Unknown Provider User Status: {providerUserStatusId}");
         }
     }
-    public class IntToGuidConverter :
-        ITypeConverter<int, Guid>
-    {
-        public Guid Convert(ResolutionContext context)
-        {
-            var source = (int)context.SourceValue;
-            return source.ResolveToGuid();
-        }
-    }
-    public static class GuidToIntResolverHelper
-    {
-        public static int ResolveToInt(this Guid guid)
-        {
-            //return int.Parse(guid.ToString().Replace("-", ""));
-            byte[] b = guid.ToByteArray();
-            int bint = BitConverter.ToInt32(b, 0);
-            return bint;
-        }
-    }
-    public static class IntToGuidResolverHelper
-    {
-        public static Guid ResolveToGuid(this int source)
-        {
-            //var stringValue = source.ToString("00000000-0000-0000-0000-000000000000");
-            //return new Guid(stringValue);
-            byte[] bytes = new byte[16];
-            BitConverter.GetBytes(source).CopyTo(bytes, 0);
-            return new Guid(bytes);
-        }
-    }
-    */
 }
