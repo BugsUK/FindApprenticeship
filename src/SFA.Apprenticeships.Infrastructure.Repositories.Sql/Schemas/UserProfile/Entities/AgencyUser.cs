@@ -10,7 +10,7 @@
 
         public Guid AgencyUserGuid { get; set; }
 
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreatedDateTime { get; set; }
 
         public DateTime? UpdatedDateTime { get; set; }
 

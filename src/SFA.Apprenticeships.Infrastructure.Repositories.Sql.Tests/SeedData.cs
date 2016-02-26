@@ -7,6 +7,7 @@
     using Sql.Schemas.Vacancy.Entities;
     using Schemas.Vacancy;
     using Sql.Schemas.Reference.Entities;
+    using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;
     using ProviderUser = Sql.Schemas.Provider.Entities.ProviderUser;
 
     //using Sql.Schemas.Provider.Entities;
@@ -51,7 +52,7 @@
         #endregion
 
         #region AgencyUsers
-        public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "userRoleTeam", AgencyUserGuid = Guid.NewGuid(), CreatedDateTime = DateTime.Now};
+        public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "myusername", AgencyUserGuid = Guid.NewGuid(), CreatedDateTime = DateTime.Now};
         #endregion
 
         #region Vacancies
