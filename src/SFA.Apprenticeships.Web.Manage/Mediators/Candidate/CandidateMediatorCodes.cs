@@ -7,5 +7,10 @@
             public const string FailedValidation = "CandidateMediatorCodes.Search.FailedValidation";
             public const string Ok = "CandidateMediatorCodes.Search.Ok";
         }
+
+        public class GetCandidateApplications
+        {
+            public const string Ok = "CandidateMediatorCodes.GetCandidateApplications.Ok";
+        }
     }
 }

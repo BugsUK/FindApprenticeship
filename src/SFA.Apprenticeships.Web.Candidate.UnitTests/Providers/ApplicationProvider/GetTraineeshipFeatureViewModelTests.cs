@@ -16,12 +16,12 @@
         public void GivenException_ThenExceptionIsRethrown()
         {
             var candidateId = Guid.NewGuid();
-            var candidateService = new Mock<ICandidateService>();
+            var candidateApplicationService = new Mock<ICandidateApplicationService>();
 
-            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, true)).Throws<Exception>();
+            candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, true)).Throws<Exception>();
 
             Action action = () => new ApprenticeshipApplicationProviderBuilder()
-                .With(candidateService).Build()
+                .With(candidateApplicationService).Build()
                 .GetTraineeshipFeatureViewModel(candidateId);;
 
             action.ShouldThrow<Exception>();
@@ -31,14 +31,14 @@
         public void GivenSuccess_ThenViewModelIsReturned()
         {
             var candidateId = Guid.NewGuid();
-            var candidateService = new Mock<ICandidateService>();
+            var candidateApplicationService = new Mock<ICandidateApplicationService>();
 
-            candidateService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, true)).Returns(new ApprenticeshipApplicationSummary[0]);
-            candidateService.Setup(cs => cs.GetTraineeshipApplications(candidateId)).Returns(new TraineeshipApplicationSummary[0]);
-            candidateService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build());
+            candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(candidateId, true)).Returns(new ApprenticeshipApplicationSummary[0]);
+            candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(candidateId)).Returns(new TraineeshipApplicationSummary[0]);
+            candidateApplicationService.Setup(cs => cs.GetCandidate(candidateId)).Returns(new CandidateBuilder(candidateId).Build());
 
             var returnedViewModel = new ApprenticeshipApplicationProviderBuilder()
-                .With(candidateService).Build()
+                .With(candidateApplicationService).Build()
                 .GetTraineeshipFeatureViewModel(candidateId);
             returnedViewModel.Should().NotBeNull();
         }

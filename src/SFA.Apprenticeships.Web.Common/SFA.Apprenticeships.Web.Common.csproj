@@ -217,8 +217,11 @@
     <Compile Include="Models\Common\LastViewedVacancy.cs" />
     <Compile Include="Providers\Azure\AccessControlService\AuthorizationErrorProvider.cs" />
     <Compile Include="Providers\Azure\AccessControlService\IAuthorizationErrorProvider.cs" />
+    <Compile Include="Providers\CandidateApplicationsProvider.cs" />
     <Compile Include="Providers\CookieAuthorizationDataProvider.cs" />
+    <Compile Include="Providers\ICandidateApplicationsProvider.cs" />
     <Compile Include="Providers\ICookieAuthorizationDataProvider.cs" />
+    <Compile Include="Providers\NullUserDataProvider.cs" />
     <Compile Include="Providers\RobotCrawlerProvider.cs" />
     <Compile Include="Providers\IRobotCrawlerProvider.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />

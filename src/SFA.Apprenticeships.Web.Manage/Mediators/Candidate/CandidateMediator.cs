@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Candidate
 {
+    using System;
     using Common.Mediators;
     using Providers;
     using Raa.Common.Factories;
@@ -41,6 +42,13 @@
             var resultsViewModel = _candidateProvider.SearchCandidates(viewModel);
 
             return GetMediatorResponse(CandidateMediatorCodes.Search.Ok, resultsViewModel);
+        }
+
+        public MediatorResponse<CandidateApplicationsViewModel> GetCandidateApplications(Guid candidateId)
+        {
+            var viewModel = _candidateProvider.GetCandidateApplications(candidateId);
+
+            return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApplications.Ok, viewModel);
         }
     }
 }

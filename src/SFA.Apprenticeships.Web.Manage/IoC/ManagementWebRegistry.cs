@@ -2,6 +2,9 @@
 {
     using System.Web;
     using Application.Candidate;
+    using Application.Candidate.Strategies;
+    using Application.Candidate.Strategies.Apprenticeships;
+    using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Interfaces.Candidates;
@@ -28,6 +31,7 @@
     using Application.Interfaces.ReferenceData;
     using Application.Location;
     using Application.ReferenceData;
+    using Common.Providers;
     using Mappers;
     using Mediators.Candidate;
     using Raa.Common.Providers;
@@ -62,6 +66,7 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
+            For<ICandidateApplicationsProvider>().Use<CandidateApplicationsProvider>();
         }
 
         private void RegisterServices()
@@ -72,6 +77,7 @@
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
+            For<ICandidateApplicationService>().Use<CandidateApplicationService>();
         }
 
         private void RegisterStrategies()
@@ -89,6 +95,9 @@
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
+            For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
+            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
+            For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
         }
 
         private void RegisterMediators()

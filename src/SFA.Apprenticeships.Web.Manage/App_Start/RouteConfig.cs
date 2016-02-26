@@ -163,6 +163,18 @@
                defaults: new { controller = "Candidate", action = "Candidate" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateApprenticeshipApplication,
+               url: "candidate/apprenticeship",
+               defaults: new { controller = "Candidate", action = "Apprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateTraineeshipApplication,
+               url: "candidate/traineeship",
+               defaults: new { controller = "Candidate", action = "Traineeship" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

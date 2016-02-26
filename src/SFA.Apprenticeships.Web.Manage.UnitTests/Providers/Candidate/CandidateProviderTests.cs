@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Common.Providers;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Repositories;
@@ -26,7 +27,7 @@
         {
             _candidateSearchService = new Mock<ICandidateSearchService>();
 
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers());
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationsProvider>().Object, new Mock<ICandidateApplicationService>().Object);
         }
 
         [Test]

@@ -5,9 +5,15 @@
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Candidates;
+    using Common.Providers;
     using Common.ViewModels;
+    using Common.ViewModels.Applications;
+    using Common.ViewModels.MyApplications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Factory;
+    using Infrastructure.Presentation;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
@@ -17,11 +23,15 @@
 
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
+        private readonly ICandidateApplicationsProvider _candidateApplicationsProvider;
+        private readonly ICandidateApplicationService _candidateApplicationService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationsProvider candidateApplicationsProvider, ICandidateApplicationService candidateApplicationService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
+            _candidateApplicationsProvider = candidateApplicationsProvider;
+            _candidateApplicationService = candidateApplicationService;
         }
 
         public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel)
@@ -43,6 +53,17 @@
             };
 
             return results;
+        }
+
+        public CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId)
+        {
+            var candidate = _candidateApplicationService.GetCandidate(candidateId);
+
+            return new CandidateApplicationsViewModel
+            {
+                CandidateName = new Name(candidate.RegistrationDetails.FirstName, candidate.RegistrationDetails.MiddleNames, candidate.RegistrationDetails.LastName).GetDisplayText(),
+                CandidateApplications = _candidateApplicationsProvider.GetCandidateApplications(candidateId, MyApplicationRoutesFactory.GetMyApplicationRoutes())
+            };
         }
     }
 }

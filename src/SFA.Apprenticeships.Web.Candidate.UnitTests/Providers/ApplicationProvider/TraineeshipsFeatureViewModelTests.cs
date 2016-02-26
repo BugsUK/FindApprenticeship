@@ -21,7 +21,8 @@
         const int UnsuccessfulApplications = 3;
 
         private Mock<ILogService> _logService;
-        private Mock<ICandidateService> _candidateService;
+        //private Mock<ICandidateService> _candidateService;
+        private Mock<ICandidateApplicationService> _candidateApplicationService;
         private Mock<IConfigurationService> _configurationService;
         private Mock<IUserDataProvider> _userDataProvider;
         private Mock<IReferenceDataService> _referenceDataService;
@@ -32,7 +33,8 @@
         public void SetUp()
         {
             _logService = new Mock<ILogService>();
-            _candidateService = new Mock<ICandidateService>();
+            var candidateService = new Mock<ICandidateService>();
+            _candidateApplicationService = new Mock<ICandidateApplicationService>();
             _configurationService = new Mock<IConfigurationService>();
             _userDataProvider = new Mock<IUserDataProvider>();
             _referenceDataService = new Mock<IReferenceDataService>();
@@ -40,21 +42,24 @@
             _configurationService.Setup(cm => cm.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { UnsuccessfulApplicationsToShowTraineeshipsPrompt = UnsuccessfulApplications });
 
-            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, _candidateService.Object,
-                null, _configurationService.Object, _logService.Object, _userDataProvider.Object, _referenceDataService.Object);
+            var candidateApplicationsProvider = new CandidateApplicationsProvider(_candidateApplicationService.Object,
+                _userDataProvider.Object, _configurationService.Object, _logService.Object);
+
+            _apprenticeshipApplicationProvider = new ApprenticeshipApplicationProvider(null, candidateService.Object,
+                null, _logService.Object, _referenceDataService.Object, candidateApplicationsProvider);
         }
 
         [Test]
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_ShouldSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
                 Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
@@ -69,15 +74,15 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndOneSuccessfulApplication_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
             var apprenticeshipApplicationSummaries = GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications);
             apprenticeshipApplicationSummaries.AddRange(GetSuccessfulApplicationSummaries(1));
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
                 Returns(apprenticeshipApplicationSummaries);
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
@@ -92,7 +97,7 @@
         public void GivenAUserHasMoreThanNUnsuccessfulApplications_AndUserHasOptedNotToAllowTraineeshipsPrompt_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate
                 {
                     CommunicationPreferences = new CommunicationPreferences
@@ -101,10 +106,10 @@
                     }
                 });
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true)).
                 Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
@@ -121,13 +126,13 @@
             //Arrange
             const int unsuccessfulApplicationsThreshold = UnsuccessfulApplications - 1;
 
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
                 .Returns(GetUnsuccessfulApplicationSummaries(unsuccessfulApplicationsThreshold));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(0));
 
             //Act
@@ -142,13 +147,13 @@
         public void GivenIveAppliedForAtLeastOneTraineeship_ShouldntSeeTheTraineeshipsPrompt()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
+            _candidateApplicationService.Setup(cs => cs.GetCandidate(It.IsAny<Guid>()))
                 .Returns(new Candidate());
 
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
                 .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
-            
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
+
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>()))
                 .Returns(GetTraineeshipApplicationSummaries(1));
 
             //Act
@@ -163,10 +168,10 @@
         public void GivenException_ThenExceptionIsRethrown()
         {
             //Arrange
-            _candidateService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
+            _candidateApplicationService.Setup(cs => cs.GetApprenticeshipApplications(It.IsAny<Guid>(), true))
                 .Returns(GetUnsuccessfulApplicationSummaries(UnsuccessfulApplications));
 
-            _candidateService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).Throws<Exception>();
+            _candidateApplicationService.Setup(cs => cs.GetTraineeshipApplications(It.IsAny<Guid>())).Throws<Exception>();
 
             //Act
             Action action = () => _apprenticeshipApplicationProvider.GetMyApplications(Guid.NewGuid());

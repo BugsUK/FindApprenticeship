@@ -66,9 +66,9 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult Candidate(Guid id)
         {
-            var viewModel = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel(), DateTime.UtcNow, new MyApplicationRoutes());
+            var response = _candidateMediator.GetCandidateApplications(id);
 
-            return View(viewModel);
+            return View(response.ViewModel);
         }
     }
 }
