@@ -12,24 +12,6 @@
     public class EmployerServiceTests
     {
         [Test]
-        [ExpectedException]
-        public void ShouldThrowAnExceptionIfErnIsNullWhenGettingAnEmployer()
-        {
-            var service = GetService();
-
-            service.GetEmployer(null);
-        }
-
-        [Test]
-        [ExpectedException]
-        public void ShouldThrowAnExceptionIfErnIsEmptyWhenGettingAnEmployer()
-        {
-            var service = GetService();
-
-            service.GetEmployer(string.Empty);
-        }
-
-        [Test]
         public void GetEmployersShouldCalOrganisationService()
         {
             var organisationServie = new Mock<IOrganisationService>();
