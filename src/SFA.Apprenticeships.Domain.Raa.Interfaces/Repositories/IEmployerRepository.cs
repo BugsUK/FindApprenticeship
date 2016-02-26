@@ -5,17 +5,17 @@
 
     public interface IEmployerReadRepository
     {
-        //    Employer Get(int employerId);
+        Employer Get(int employerId);
 
-        //Employer GetByEdsUrn(string edsUrn);
+        Employer GetByEdsUrn(string edsUrn);
 
-        //List<Employer> GetByIds(IEnumerable<int> employerIds);
+        List<Employer> GetByIds(IEnumerable<int> employerIds);
     }
 
     public interface IEmployerWriteRepository
     {
-        //void Delete(int employerId);
+        void Delete(int employerId);
 
-        //Employer Save(Employer entity);
+        Employer Save(Employer entity);
     }
 }

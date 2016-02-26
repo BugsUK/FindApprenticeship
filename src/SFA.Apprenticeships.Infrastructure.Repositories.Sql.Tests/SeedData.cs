@@ -51,7 +51,7 @@
         #endregion
 
         #region AgencyUsers
-        //public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "userRoleTeam" };
+        public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "userRoleTeam", AgencyUserGuid = Guid.NewGuid(), CreatedDateTime = DateTime.Now};
         #endregion
 
         #region Vacancies
@@ -242,9 +242,9 @@
             ProviderUser1
         };
 
-        //public static object[] AgencyUsers => new object[]
-        //{
-        //    AgencyUser1
-        //};
+        public static object[] AgencyUsers => new object[]
+        {
+            AgencyUser1
+        };
     }
 }

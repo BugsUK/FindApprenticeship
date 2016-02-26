@@ -2,7 +2,7 @@
 {
     using Domain.Raa.Interfaces.Repositories;
 
-    public class EmployerRepository: IEmployerReadRepository, IEmployerWriteRepository
+    public class EmployerRepository//: IEmployerReadRepository, IEmployerWriteRepository
     {
     }
 }

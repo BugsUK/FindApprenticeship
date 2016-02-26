@@ -40,14 +40,14 @@
             return mongoEntity == null ? null : _mapper.Map<MongoAgencyUser, AgencyUser>(mongoEntity);
         }
 
-        public void Delete(int agencyUserId)
-        {
-            _logger.Debug("Calling repository to delete agency user with Id={0}", agencyUserId);
+        //public void Delete(int agencyUserId)
+        //{
+        //    _logger.Debug("Calling repository to delete agency user with Id={0}", agencyUserId);
 
-            Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.AgencyUserId, agencyUserId));
+        //    Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.AgencyUserId, agencyUserId));
 
-            _logger.Debug("Deleted agency user with Id={0}", agencyUserId);
-        }
+        //    _logger.Debug("Deleted agency user with Id={0}", agencyUserId);
+        //}
 
         public AgencyUser Save(AgencyUser entity)
         {

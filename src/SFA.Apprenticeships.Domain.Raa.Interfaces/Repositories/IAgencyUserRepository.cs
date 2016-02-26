@@ -9,8 +9,6 @@
 
     public interface IAgencyUserWriteRepository
     {
-        void Delete(int agencyUserId);
-
         AgencyUser Save(AgencyUser entity);
     }
 }

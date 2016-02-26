@@ -138,6 +138,8 @@
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
+    <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
+    <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\VacancyRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\DurationType.cs" />
@@ -178,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Schemas\dbo\Entities\" />
