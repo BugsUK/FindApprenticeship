@@ -29,10 +29,6 @@
                 @Html.DisplayFor(m => m.ApplicantDetails, "ApplicantDetails")
             </div>
             <div class="grid grid-1-3">
-                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">Appoint candidate</button>
-                <p class="med-btm-margin">
-                    <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
-                </p>
             </div>
         </div>
         @Html.DisplayFor(m => m.AboutYou, "AboutYou")
@@ -78,7 +74,9 @@
                 </div>
             </div>
             <div class="form-group">
-                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">Appoint candidate</button>
+                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">
+                    Inform @Model.ApplicantDetails.Name their application has been successful
+                </button>
                 <p class="med-btm-margin">
                     <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
                     <button type="submit" class="button-link" name="Review" value="ReviewSaveAndExit">Save and exit</button>
