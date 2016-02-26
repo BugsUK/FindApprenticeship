@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Provider
 {
     using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories;
+    using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Organisations;
     using Moq;

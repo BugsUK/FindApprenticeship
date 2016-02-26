@@ -64,8 +64,12 @@
         //{
         //    _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
 
-        //    SetCreatedDateTime(entity);
-        //    SetUpdatedDateTime(entity);
+            if (entity.EmployerGuid == Guid.Empty)
+            {
+                entity.EmployerGuid = Guid.NewGuid();
+                entity.EmployerId = entity.EmployerGuid.GetHashCode();
+            }
+
 
         //    var mongoEntity = _mapper.Map<Employer, MongoEmployer>(entity);
 

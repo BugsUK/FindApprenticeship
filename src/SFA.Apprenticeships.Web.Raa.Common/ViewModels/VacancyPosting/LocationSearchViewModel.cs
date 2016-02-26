@@ -27,7 +27,7 @@
 
         public int ProviderSiteId { get; set; }
 
-        public string EmployerErn { get; set; }
+        public string EmployerEdsUrn { get; set; }
 
         public int EmployerId { get; set; }
 
@@ -55,5 +55,7 @@
 
         [Display(Name = LocationSearchViewModelMessages.AdditionalLocationInformationComment.LabelText)]
         public string AdditionalLocationInformationComment { get; set; }
+
+        public int VacancyPartyId { get; set; }
     }
 }

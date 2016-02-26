@@ -5,17 +5,19 @@
 
     public interface IProviderUserReadRepository
     {
-        ProviderUser Get(int providerUserId);
+        // TODO: SQL: AG: rename Get methods to be specific.
+        ProviderUser Get(int id);
 
         ProviderUser Get(string username);
 
+        // TODO: SQL: rename to GetByUkprn?
         IEnumerable<ProviderUser> GetForProvider(string ukprn);
     }
 
     public interface IProviderUserWriteRepository
     {
-        void Delete(int providerUserId);
+        ProviderUser Create(ProviderUser providerUser);
 
-        ProviderUser Save(ProviderUser entity);
+        ProviderUser Update(ProviderUser providerUser);
     }
 }

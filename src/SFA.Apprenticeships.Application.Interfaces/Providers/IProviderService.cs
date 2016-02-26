@@ -27,7 +27,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         VacancyParty GetVacancyParty(int vacancyPartyId);
 
-        VacancyParty GetVacancyParty(int providerSiteId, int employerId);
+        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
 

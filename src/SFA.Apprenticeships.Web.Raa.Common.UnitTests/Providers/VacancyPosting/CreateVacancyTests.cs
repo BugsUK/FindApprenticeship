@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
@@ -16,6 +17,7 @@
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
+        private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
         private const int VacancyPartyId = 4;
@@ -54,6 +56,7 @@
                     Employer = new EmployerViewModel
                     {
                         EmployerId = EmployerId,
+                        EdsUrn = EdsUrn,
                         Address = new AddressViewModel()
                     }
                 },
@@ -64,9 +67,9 @@
                 .Returns(_existingVacancy);
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
@@ -86,7 +89,7 @@
                             }
                     }
                 });
-            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EmployerId))
+            MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
                 .Returns(_vacancyParty);
@@ -109,7 +112,7 @@
                 mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Never);
             MockVacancyPostingService.Verify(mock =>
-                mock.ShallowSaveApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+                mock.SaveVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -227,7 +230,7 @@
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EmployerId), Times.Never);
+            MockProviderService.Verify(s => s.GetVacancyParty(ProviderSiteId, EdsUrn), Times.Never);
             result.Should()
                 .Match<NewVacancyViewModel>(
                     r =>
@@ -266,9 +269,15 @@
             var locationSearchViewModel = new LocationSearchViewModel
             {
                 ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId
+                EmployerId = EmployerId,
+                EmployerEdsUrn = EdsUrn
             };
             var provider = GetVacancyPostingProvider();
+
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
             provider.CreateVacancy(locationSearchViewModel);
@@ -284,9 +293,15 @@
             var locationSearchViewModel = new LocationSearchViewModel
             {
                 ProviderSiteId = ProviderSiteId,
-                EmployerId = EmployerId
+                EmployerId = EmployerId,
+                EmployerEdsUrn = EdsUrn
             };
             var provider = GetVacancyPostingProvider();
+
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
             provider.CreateVacancy(locationSearchViewModel);

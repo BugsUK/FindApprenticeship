@@ -88,9 +88,11 @@
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
-                _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerId);
+                _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerEdsUrn);
 
-            var apprenticeshipVacancy = new Vacancy
+            locationSearchViewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
+
+            var vacancy = new Vacancy
             {
                 VacancyGuid = locationSearchViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -100,22 +102,26 @@
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
             };
 
-            /*locationSearchViewModel.Addresses.ForEach(a => apprenticeshipVacancy.LocationAddresses.Add(new VacancyLocation
+            if (locationSearchViewModel.Addresses.Count == 1)
             {
-                Address = new PostalAddress
-                {
-                    AddressLine1 = a.Address.AddressLine1,
-                    AddressLine2 = a.Address.AddressLine2,
-                    AddressLine3 = a.Address.AddressLine3,
-                    AddressLine4 = a.Address.AddressLine4,
-                    Postcode = a.Address.Postcode,
-                    //Uprn = a.Address.Uprn
-                },
-                NumberOfPositions = a.NumberOfPositions.Value
-            }));*/
+                //Set address
+                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
+                _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(apprenticeshipVacancy);
-            
+            }
+            else
+            {
+                vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+                var vacancyLocations =
+                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        locationSearchViewModel.Addresses);
+                foreach (var vacancyLocation in vacancyLocations)
+                {
+                    vacancyLocation.VacancyId = vacancy.VacancyId;
+                }
+                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+            }
+
             return locationSearchViewModel;
         }
 
@@ -130,7 +136,7 @@
                 var viewModel = new LocationSearchViewModel
                 {
                     ProviderSiteEdsUrn = providerSite.EdsUrn,
-                    EmployerErn = employer.EdsUrn,
+                    EmployerEdsUrn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     AdditionalLocationInformation = vacancy.AdditionalLocationInformation,
@@ -142,7 +148,7 @@
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
                 };
 
-                var locationAddresses = _vacancyPostingService.GetLocationAddresses(vacancy.VacancyId);
+                var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
                 locationAddresses?.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
                 {
                     Address = new AddressViewModel
@@ -166,7 +172,7 @@
                     ProviderSiteId = providerSite.ProviderSiteId,
                     ProviderSiteEdsUrn = providerSite.EdsUrn,
                     EmployerId = employer.EmployerId,
-                    EmployerErn = employer.EdsUrn,
+                    EmployerEdsUrn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
                     Addresses = new List<VacancyLocationAddressViewModel>()
@@ -210,6 +216,7 @@
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
                 _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
@@ -224,7 +231,8 @@
                 OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions,
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
-                VacancyType = newVacancyViewModel.VacancyType
+                VacancyType = newVacancyViewModel.VacancyType,
+                Address = employer.Address
             });
 
             return vacancy;
@@ -271,7 +279,7 @@
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
 
@@ -314,7 +322,7 @@
             vacancy.ContactNumber = viewModel.ContactNumber;
             vacancy.ContactEmail = viewModel.ContactEmail;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
 
@@ -351,7 +359,7 @@
             
             vacancy.LongDescription = viewModel.LongDescription;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
@@ -374,7 +382,7 @@
             vacancy.ThingsToConsider = viewModel.ThingsToConsider;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -394,7 +402,7 @@
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
@@ -411,7 +419,7 @@
 
             try
             {
-                vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+                vacancy = _vacancyPostingService.SaveVacancy(vacancy);
             }
             catch (CustomException)
             {
@@ -470,6 +478,11 @@
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
             }
+
+            viewModel.NewVacancyViewModel.LocationAddresses =
+                _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                    _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId));
+
             return viewModel;
         }
 
@@ -485,7 +498,7 @@
             }
             vacancy.SubmissionCount++;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
             
             //TODO: should we return this VM or the one returned by GetVacancy?
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
@@ -673,6 +686,11 @@
                 vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
             }
 
+            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))
+            {
+                vacancyViewModel.LocationAddresses = _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(_vacancyPostingService.GetVacancyLocations(vacancyViewModel.VacancyId));
+            }
+
             var vacanciesSummary = new VacanciesSummaryViewModel
             {
                 VacanciesSummarySearch = vacanciesSummarySearch,
@@ -737,6 +755,7 @@
             vacancy.ContactDetailsComment = null;
             vacancy.NumberOfPositionsComment = null;
 
+            vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
@@ -861,6 +880,7 @@
             newVacancy.DateQAApproved = approvalTime;
             newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
+            newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
@@ -869,25 +889,30 @@
         {
             var qaApprovalDate = _dateTimeService.UtcNow();
             var submittedVacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            var vacancyLocationAddresses = _vacancyPostingService.GetLocationAddresses(submittedVacancy.VacancyId);
-            
-            if (vacancyLocationAddresses != null
-                && vacancyLocationAddresses.Any())
+
+            if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
-                foreach (var locationAddress in vacancyLocationAddresses)
+                var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
+
+                var vacancyLocation = vacancyLocationAddresses.First();
+                submittedVacancy.Address = vacancyLocation.Address;
+                submittedVacancy.ParentVacancyReferenceNumber = vacancyReferenceNumber;
+                submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
+                submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
+
+                foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
                 {
                     CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                 }
 
                 submittedVacancy.Status = VacancyStatus.ParentVacancy;
-            }
-            else
-            {
-                submittedVacancy.Status = VacancyStatus.Live;    
+                _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
             }
 
+            submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.ShallowSaveApprenticeshipVacancy(submittedVacancy);
+            _vacancyPostingService.SaveVacancy(submittedVacancy);
+
         }
 
         public void RejectVacancy(long vacancyReferenceNumber)
@@ -896,7 +921,7 @@
             vacancy.Status = VacancyStatus.RejectedByQA;
             vacancy.QAUserName = null;
 
-            _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.SaveVacancy(vacancy);
         }
 
         public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
@@ -917,6 +942,10 @@
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider, vacancyManager, vacancy);
+
+            viewModel.NewVacancyViewModel.LocationAddresses =
+               _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                   _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId));
 
             return viewModel;
         }
@@ -952,7 +981,7 @@
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
@@ -979,7 +1008,7 @@
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1009,7 +1038,7 @@
             vacancy.ContactEmail = viewModel.ContactEmail;
             vacancy.ContactDetailsComment = viewModel.ContactDetailsComment;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
             var sectorsAndFrameworks = GetSectorsAndFrameworks();
@@ -1050,7 +1079,7 @@
                 vacancy.NumberOfPositionsComment = null;
             }
             
-            vacancy = _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1071,7 +1100,7 @@
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -1086,7 +1115,7 @@
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
-            vacancy = _vacancyPostingService.ShallowSaveApprenticeshipVacancy(vacancy);
+            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
@@ -1107,9 +1136,41 @@
                 NumberOfPositions = a.NumberOfPositions.Value
             });
 
-            _vacancyPostingService.ReplaceLocationInformation(viewModel.VacancyReferenceNumber, viewModel.IsEmployerLocationMainApprenticeshipLocation,
-                null, addresses, viewModel.LocationAddressesComment, viewModel.AdditionalLocationInformation,
-                viewModel.AdditionalLocationInformationComment);
+            var vacancyParty =
+                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
+            viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
+
+            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+
+            vacancy.IsEmployerLocationMainApprenticeshipLocation =
+                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.NumberOfPositions = null;
+            vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
+            vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
+            vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
+
+            
+            if (addresses.Count() == 1)
+            {
+                //Set address
+                vacancy.Address = addresses.Single().Address;
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
+                _vacancyPostingService.SaveVacancy(vacancy);
+
+            }
+            else
+            {
+                _vacancyPostingService.SaveVacancy(vacancy);
+                var vacancyLocations =
+                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        viewModel.Addresses);
+                foreach (var vacancyLocation in vacancyLocations)
+                {
+                    vacancyLocation.VacancyId = vacancy.VacancyId;
+                }
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
+                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+            }
 
             return viewModel;
         }
@@ -1119,8 +1180,14 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
-                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber, null, null,
-                    new List<VacancyLocation>(), null, null, null);
+                vacancy.IsEmployerLocationMainApprenticeshipLocation = null;
+                vacancy.NumberOfPositions = null;
+                vacancy.LocationAddressesComment = null;
+                vacancy.AdditionalLocationInformation = null;
+                vacancy.AdditionalLocationInformationComment = null;
+                _vacancyPostingService.SaveVacancy(vacancy);
+
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
 
@@ -1129,9 +1196,10 @@
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
             if (vacancy != null)
             {
-                _vacancyPostingService.ReplaceLocationInformation(vacancy.VacancyReferenceNumber,
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation, vacancy.NumberOfPositions, new List<VacancyLocation>(), vacancy.LocationAddressesComment,
-                    null, vacancy.AdditionalLocationInformationComment);
+                vacancy.AdditionalLocationInformation = null;
+                _vacancyPostingService.SaveVacancy(vacancy);
+                
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
 

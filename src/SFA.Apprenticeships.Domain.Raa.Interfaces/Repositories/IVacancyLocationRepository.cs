@@ -11,5 +11,6 @@
     public interface IVacancyLocationWriteRepository
     {
         List<VacancyLocation> Save(List<VacancyLocation> locationAddresses);
+        void DeleteFor(int vacancyId);
     }
 }

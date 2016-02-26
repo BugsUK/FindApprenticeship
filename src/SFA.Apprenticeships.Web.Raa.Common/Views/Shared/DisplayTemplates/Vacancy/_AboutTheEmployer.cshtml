@@ -59,11 +59,11 @@
                             <div id="vacancy-address" itemscope itemtype="http://schema.org/PostalAddress">
                                 <h3 class="bold-small">Address</h3>
                                 <div itemprop="address">
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine1</p>
-                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.OwnerParty.Employer.Address.AddressLine4</p>
-                                    <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.OwnerParty.Employer.Address.Postcode</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
                                 </div>
                             </div>
                         }
@@ -178,7 +178,7 @@
             {
                 <div id="vacancy-map" class="ad-details__map">
                     <div class="map-overlay" onclick=" style.pointerEvents='none' "></div>
-                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.NewVacancyViewModel.OwnerParty.Employer.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+                    <iframe width="700" height="250" title="Map of location" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(Model.Address.Postcode),+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
                     <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
                 </div>
             }

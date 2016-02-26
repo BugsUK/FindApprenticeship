@@ -38,6 +38,7 @@
                 ClosingDate = context.Engine.Map<DateTime?, DateViewModel>(source.ClosingDate),
                 DateSubmitted = source.DateSubmitted,
                 SubmissionCount = source.SubmissionCount,
+                IsEmployerLocationMainApprenticeshipLocation = source.IsEmployerLocationMainApprenticeshipLocation
             };
 
             return destination;

@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 providerUser.EmailVerificationCode = null;
                 providerUser.EmailVerifiedDate = DateTime.UtcNow;
                 providerUser.Status = ProviderUserStatus.EmailVerified;
-                _userProfileService.SaveUser(providerUser);
+                _userProfileService.UpdateUser(providerUser);
 
                 return true;
             }
@@ -60,25 +60,43 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
-            var providerUser = _userProfileService.GetProviderUser(username) ?? new ProviderUser();
+            var isNewProvider = false;
+            var providerUser = _userProfileService.GetProviderUser(username);
+
+            if (providerUser == null)
+            {
+                providerUser = new ProviderUser();
+                isNewProvider = true;
+            }
 
             var emailChanged = !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
 
             //TODO: Probably put this in a strategy in the service and add the verify email code
             providerUser.Username = username;
-            providerUser.Ukprn = ukprn;
             providerUser.Email = providerUserViewModel.EmailAddress;
             providerUser.Fullname = providerUserViewModel.Fullname;
             providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            providerUser.PreferredProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
+            int? defaultProviderSiteId = null;
+            if (providerUserViewModel.DefaultProviderSiteId > 0)
+            {
+                defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
+            }
+            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
             providerUser.Status = providerUser.Status;
 
-            _userProfileService.SaveUser(providerUser);
+            if (isNewProvider)
+            {
+                _userProfileService.CreateUser(providerUser);
+            }
+            else
+            {
+                _userProfileService.UpdateUser(providerUser);
+            }
 
             if (emailChanged)
             {
                 // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
-                // verification code and updating the user again so take care must be taken around other calls to UserProfileService.SaveUser().
+                // verification code and updating the user again so take care must be taken around other calls to UserProfileService.CreateUser().
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
@@ -94,7 +112,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var viewModel = new ProviderUserViewModel
             {
-                DefaultProviderSiteId = providerUser.PreferredProviderSiteId,
+                DefaultProviderSiteId = providerUser.PreferredProviderSiteId ?? 0,
                 EmailAddress = providerUser.Email,
                 EmailAddressVerified = providerUser.Status == ProviderUserStatus.EmailVerified,
                 Fullname = providerUser.Fullname,

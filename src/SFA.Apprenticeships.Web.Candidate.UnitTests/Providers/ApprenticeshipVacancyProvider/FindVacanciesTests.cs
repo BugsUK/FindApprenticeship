@@ -6,7 +6,6 @@
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
-    using Application.Interfaces.VacancyPosting;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
@@ -24,7 +23,7 @@
         private Mock<ICandidateService> _candidateService; 
         private ApprenticeshipCandidateWebMappers _apprenticeshipMapper;
         private Mock<ILogService> _logService;
-        private Mock<IVacancyPostingService> _vacancyPostingService;
+        private Mock<ICandidateVacancyService> _candidateVacancyService;
 
         [SetUp]
         public void Setup()
@@ -33,7 +32,7 @@
             _candidateService = new Mock<ICandidateService>();
             _apprenticeshipMapper = new ApprenticeshipCandidateWebMappers();
             _logService = new Mock<ILogService>();
-            _vacancyPostingService = new Mock<IVacancyPostingService>();
+            _candidateVacancyService = new Mock<ICandidateVacancyService>();
         }
 
         [TestCase]
@@ -137,7 +136,7 @@
                 _candidateService.Object,
                 _apprenticeshipMapper,
                 _logService.Object,
-                _vacancyPostingService.Object);
+                _candidateVacancyService.Object);
             return searchProvider;
         }
     }

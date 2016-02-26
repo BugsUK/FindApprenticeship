@@ -15,9 +15,7 @@ namespace SFA.Apprenticeships.Application.Organisation
 
         //TODO: VacancyParty provider
         VacancyParty GetVacancyParty(int providerSiteId, int employerId);
-
-        VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
         
-        IEnumerable<VacancyParty> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest);
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
     }
 }

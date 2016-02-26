@@ -9,9 +9,7 @@
     {
         Vacancy CreateApprenticeshipVacancy(Vacancy vacancy);
 
-        Vacancy SaveApprenticeshipVacancy(Vacancy vacancy);
-
-        Vacancy ShallowSaveApprenticeshipVacancy(Vacancy vacancy);
+        Vacancy SaveVacancy(Vacancy vacancy);
 
         long GetNextVacancyReferenceNumber();
 
@@ -29,12 +27,9 @@
 
         Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
 
-        void ReplaceLocationInformation(long vacancyReferenceNumber, bool? isEmployerLocationMainApprenticeshipLocation, int? numberOfPositions,
-            IEnumerable<VacancyLocation> vacancyLocationAddresses, string locationAddressesComment,
-            string additionalLocationInformation, string additionalLocationInformationComment);
+        List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
-        List<VacancyLocation> GetLocationAddresses(int vacancyId);
-
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
+        void DeleteVacancyLocationsFor(int vacancyId);
     }
 }

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Employer
 {
     using Application.Employer;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
     using Infrastructure.Interfaces;
     using Interfaces.Organisations;
@@ -45,8 +46,10 @@
         {
             var organisationService = orgService ?? new Mock<IOrganisationService>();
             var logService = new Mock<ILogService>();
+            var employerReadRepository = new Mock<IEmployerReadRepository>();
+            var employerWriteRepository = new Mock<IEmployerWriteRepository>();
 
-            return new EmployerService(organisationService.Object, logService.Object);
+            return new EmployerService(organisationService.Object, logService.Object, employerReadRepository.Object, employerWriteRepository.Object);
         }
     }
 }

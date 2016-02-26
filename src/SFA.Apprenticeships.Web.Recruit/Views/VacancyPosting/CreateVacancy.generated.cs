@@ -114,14 +114,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 799), Tuple.Create("\"", 823)
+WriteAttribute("value", Tuple.Create(" value=\"", 797), Tuple.Create("\"", 821)
             
             #line 21 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 807), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                   , Tuple.Create(Tuple.Create("", 805), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 807), false)
+, 805), false)
 );
 
 WriteLiteral(">");

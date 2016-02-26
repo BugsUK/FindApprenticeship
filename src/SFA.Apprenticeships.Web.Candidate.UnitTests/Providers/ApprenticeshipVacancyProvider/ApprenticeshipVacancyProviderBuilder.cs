@@ -3,7 +3,6 @@
     using Application.Interfaces.Candidates;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
-    using Application.Interfaces.VacancyPosting;
     using Candidate.Mappers;
     using Candidate.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -16,7 +15,7 @@
 
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _vacancySearchService;
         private Mock<ICandidateService> _candidateService;
-        private readonly Mock<IVacancyPostingService> _vacancyPostingService;
+        private readonly Mock<ICandidateVacancyService> _candidateVacancyService;
 
         public ApprenticeshipVacancyProviderBuilder()
         {
@@ -25,7 +24,7 @@
 
             _vacancySearchService = new Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             _candidateService = new Mock<ICandidateService>();
-            _vacancyPostingService = new Mock<IVacancyPostingService>();
+            _candidateVacancyService = new Mock<ICandidateVacancyService>();
         }
 
         public ApprenticeshipVacancyProviderBuilder With(Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> vacancySearchService)
@@ -42,7 +41,7 @@
 
         public ApprenticeshipVacancyProvider Build()
         {
-            var provider = new ApprenticeshipVacancyProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger, _vacancyPostingService.Object);
+            var provider = new ApprenticeshipVacancyProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger, _candidateVacancyService.Object);
             return provider;
         }
     }

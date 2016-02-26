@@ -51,7 +51,7 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetLocationAddresses(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
@@ -71,7 +71,15 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetLocationAddresses(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyParty());
+
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
+
             var provider = GetVacancyPostingProvider();
 
             var locationSearchViewModel = GetLocationSearchViewModel(aNewAdditionalLocationInformation,
@@ -81,9 +89,17 @@
 
             MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
-                        null, It.Is<IEnumerable<VacancyLocation>>(l => l.Count() == 3), aNewLocationAddressesComment,
-                        aNewAdditionalLocationInformation, aNewAdditionalLocationInformationComment ));
+                    s.SaveVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation &&
+                        v.NumberOfPositions == null &&
+                        v.LocationAddressesComment == aNewLocationAddressesComment &&
+                        v.AdditionalLocationInformation == aNewAdditionalLocationInformation &&
+                        v.AdditionalLocationInformationComment == aNewAdditionalLocationInformationComment)));
+                    
+                    
+
+            MockVacancyPostingService.Verify(
+                s =>
+                    s.DeleteVacancyLocationsFor(It.IsAny<int>()));
         }
 
         [Test]
@@ -94,15 +110,22 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetLocationAddresses(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
             provider.RemoveVacancyLocationInformation(vacancyGuid);
 
             MockVacancyPostingService.Verify(
+                 s =>
+                     s.SaveVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
+                         v.NumberOfPositions == null &&
+                         v.LocationAddressesComment == null &&
+                         v.AdditionalLocationInformation == null &&
+                         v.AdditionalLocationInformationComment == null)));
+
+            MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, null, null,
-                        It.Is<IEnumerable<VacancyLocation>>(l => !l.Any()), null, null, null));
+                    s.DeleteVacancyLocationsFor(It.IsAny<int>()));
         }
 
         [Test]
@@ -117,15 +140,22 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, numberOfPositions, isEmployerLocationMainApprenticeshipLocation, aComment, aComment, string.Empty);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetLocationAddresses(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
             provider.RemoveLocationAddresses(vacancyGuid);
 
             MockVacancyPostingService.Verify(
+                 s =>
+                     s.SaveVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
+                         v.NumberOfPositions == vacancyWithLocationAddresses.Vacancy.NumberOfPositions &&
+                         v.LocationAddressesComment == vacancyWithLocationAddresses.Vacancy.LocationAddressesComment &&
+                         v.AdditionalLocationInformation == null &&
+                         v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));
+
+            MockVacancyPostingService.Verify(
                 s =>
-                    s.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation, numberOfPositions,
-                        It.Is<IEnumerable<VacancyLocation>>(l => !l.Any()), aComment, null, aComment));
+                    s.DeleteVacancyLocationsFor(It.IsAny<int>()));
         }
 
         private static LocationSearchViewModel GetLocationSearchViewModel(string aNewAdditionalLocationInformation,
