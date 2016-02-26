@@ -28,13 +28,6 @@
             _dacpacFilePath = DatabaseConfigurationProvider.Instance.DacPacFilePath;
         }
 
-        public DatabaseInitialiser(string dacpacFilePath, string targetConnectionString, string databaseTargetName)
-        {
-            _dacpacFilePath = dacpacFilePath;
-            _targetConnectionString = targetConnectionString;
-            _databaseTargetName = databaseTargetName;
-        }
-
         public void Publish(bool dropDatabase)
         {
             var dacServices = new DacServices(_targetConnectionString);

@@ -122,6 +122,8 @@
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
+    <Compile Include="Schemas\dbo\EmployerMappers.cs" />
+    <Compile Include="Schemas\dbo\EmployerRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
@@ -142,6 +144,8 @@
     <Compile Include="Schemas\Vacancy\Entities\AdditionalQuestion.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyTextField.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyTextFieldValue.cs" />
+    <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
+    <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
     <Compile Include="Schemas\Vacancy\VacancyRepository.cs" />
     <Compile Include="Schemas\Vacancy\Entities\DurationType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\TrainingType.cs" />
@@ -185,6 +189,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Schemas\dbo\Entities\" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

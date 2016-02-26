@@ -876,8 +876,6 @@
     <None Include="Scripts\Data\dbo.OccupationStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql" />
     <Build Include="Schemas\Reference.sql" />
-    <Build Include="Reference\Reference.Sector.sql" />
-    <Build Include="Reference\Reference.Standard.sql" />
     <None Include="Scripts\Data\Reference.Sector.Upsert.sql" />
     <None Include="Scripts\Data\Reference.Standard.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql" />
