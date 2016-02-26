@@ -755,6 +755,7 @@
             vacancy.ContactDetailsComment = null;
             vacancy.NumberOfPositionsComment = null;
 
+            vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
