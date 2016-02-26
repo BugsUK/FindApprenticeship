@@ -3,6 +3,7 @@
     using System;
     using Candidate.Views.Account;
     using Common.ViewModels.Applications;
+    using Common.Views.Shared.DisplayTemplates;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
@@ -75,7 +76,7 @@
                 new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetTraineeships(traineeshipCount)).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var traineeshipsCount = view.GetElementbyId("traineeship-applications-count");
@@ -102,7 +103,7 @@
                 new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetTraineeships(3)).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             foreach (var application in myApplications.TraineeshipApplications)

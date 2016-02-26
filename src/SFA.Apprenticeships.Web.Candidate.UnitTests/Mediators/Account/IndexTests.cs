@@ -6,6 +6,8 @@
     using Candidate.Providers;
     using Common.ViewModels.Applications;
     using Common.ViewModels.MyApplications;
+    using Constants;
+    using Factory;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -16,7 +18,7 @@
         [Test]
         public void SuccessTest()
         {
-            var emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel(), null, new MyApplicationRoutes());
+            var emptyMyApplicationsView = new MyApplicationsViewModel(new List<MyApprenticeshipApplicationViewModel>(), new List<MyTraineeshipApplicationViewModel>(), new TraineeshipFeatureViewModel(), null, MyApplicationRoutesFactory.GetMyApplicationRoutes());
             var apprenticeshipApplicationProviderMock = new Mock<IApprenticeshipApplicationProvider>();
             apprenticeshipApplicationProviderMock.Setup(x => x.GetMyApplications(It.IsAny<Guid>())).Returns(emptyMyApplicationsView);
             var accountMediator = new AccountMediatorBuilder().With(apprenticeshipApplicationProviderMock).Build();

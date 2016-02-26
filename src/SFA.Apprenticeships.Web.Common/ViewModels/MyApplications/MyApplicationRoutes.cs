@@ -2,6 +2,7 @@
 {
     public class MyApplicationRoutes
     {
+        public string ApprenticeshipSearch { get; set; }
         public string ApprenticeshipView { get; set; } 
         public string ApprenticeshipArchive { get; set; } 
         public string NextSteps { get; set; } 

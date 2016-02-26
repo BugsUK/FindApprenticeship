@@ -4,7 +4,15 @@
 
 @model SFA.Apprenticeships.Web.Common.ViewModels.MyApplications.MyApplicationsViewModel
 
-@if (Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any())
+@if (!(Model.AllApprenticeshipApplications.Any() || Model.TraineeshipApplications.Any()))
+{
+    <div class="text">
+        <p id="empty-application-history-text">Your application history is currently empty. This is because you haven’t submitted or saved any apprenticeship applications yet.</p>
+        <p>Once you start, applications will be recorded and you’ll be able to track your progress.</p>
+        <div class="get-started">@Html.RouteLink("Find an apprenticeship", Model.Routes.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" })</div>
+    </div>
+}
+else
 {
     <ul class="list-nav">
         @if (Model.SuccessfulApprenticeshipApplications.Any())

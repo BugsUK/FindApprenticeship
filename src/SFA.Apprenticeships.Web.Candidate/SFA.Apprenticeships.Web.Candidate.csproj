@@ -888,6 +888,7 @@
     <Compile Include="Constants\ViewModels\TrainingCourseViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\UnsubscribeController.cs" />
+    <Compile Include="Factory\MyApplicationRoutesFactory.cs" />
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
