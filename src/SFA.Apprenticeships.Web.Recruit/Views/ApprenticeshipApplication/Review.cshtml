@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Recruit.Constants
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Web.Recruit.Constants
 
 @model SFA.Apprenticeships.Web.Recruit.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
 
@@ -15,6 +16,16 @@
     @Html.HiddenFor(m => m.ApplicationSelection.VacancyReferenceNumber)
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
+
+    if (Model.Status == ApplicationStatuses.Successful)
+    {
+        <div role="alert" class="panel-info">
+            <p><i class="fa fa-flag the-icon"></i>This candidate was made successful</p>
+            <p>
+                @Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
+            </p>
+        </div>
+    }
 
     <div>
         <div class="hgroup">
@@ -35,53 +46,67 @@
         @Html.DisplayFor(m => m.Education, "Education")
         @Html.DisplayFor(m => m.WorkExperience, "WorkExperience")
         @Html.DisplayFor(m => m.TrainingCourses, "TrainingCourses")
-        <fieldset class="fieldset-with-border">
-            <legend class="heading-large">
-                Answers to employer questions
-            </legend>
-            @if (Model.Vacancy.HasQuestions)
-            {
-                if (Model.Vacancy.HasFirstQuestion)
+
+
+        @if (Model.Vacancy.HasQuestions ||
+            Model.ApplicantDetails.DisabilityStatus.HasValue ||
+            Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
+        {
+            <fieldset class="fieldset-with-border">
+                @if (Model.Vacancy.HasQuestions)
+                {
+                    <legend class="heading-large">
+                        Answers to employer questions
+                    </legend>
+
+                    if (Model.Vacancy.HasFirstQuestion)
+                    {
+                        <div class="form-group">
+                            <label for="add-question1" class="form-label">@Model.Vacancy.FirstQuestion</label>
+                            <span class="form-prepopped" id="add-question1">@Model.VacancyQuestionAnswers.FirstQuestionAnswer</span>
+                        </div>
+                    }
+                    if (Model.Vacancy.HasSecondQuestion)
+                    {
+                        <div class="form-group">
+                            <label for="add-question2" class="form-label">@Model.Vacancy.SecondQuestion</label>
+                            <span class="form-prepopped" id="add-question2">@Model.VacancyQuestionAnswers.SecondQuestionAnswer</span>
+                        </div>
+                    }
+                }
+
+                @Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus)
+
+                @if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
                 {
                     <div class="form-group">
-                        <label for="add-question1" class="form-label">@Model.Vacancy.FirstQuestion</label>
-                        <span class="form-prepopped" id="add-question1">@Model.VacancyQuestionAnswers.FirstQuestionAnswer</span>
+                        <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
+                        <span class="form-prepopped" id="">@Model.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer</span>
                     </div>
                 }
-                if (Model.Vacancy.HasSecondQuestion)
-                {
-                    <div class="form-group">
-                        <label for="add-question2" class="form-label">@Model.Vacancy.SecondQuestion</label>
-                        <span class="form-prepopped" id="add-question2">@Model.VacancyQuestionAnswers.SecondQuestionAnswer</span>
-                    </div>
-                }
-            }
-            @Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus)
-            @if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
-            {
+            </fieldset>
+        }
+
+        @if (Model.Status != ApplicationStatuses.Successful)
+        {
+            <section>
                 <div class="form-group">
-                    <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
-                    <span class="form-prepopped" id="">@Model.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer</span>
-                </div>
-            }
-        </fieldset>
-        <section>
-            <div class="form-group">
-                <div class="detail-content qa-comment">
-                    <div class="blocklabel-single-container">
-                        @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new {@class = "width-all-1-1 form-textarea-medium", type = "text"})
+                    <div class="detail-content qa-comment">
+                        <div class="blocklabel-single-container">
+                            @Html.FormTextAreaFor(m => m.Notes, controlHtmlAttributes: new { @class = "width-all-1-1 form-textarea-medium", type = "text" })
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">
-                    Inform @Model.ApplicantDetails.Name their application has been successful
-                </button>
-                <p class="med-btm-margin">
-                    <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
-                    <button type="submit" class="button-link" name="Review" value="ReviewSaveAndExit">Save and exit</button>
-                </p>
-            </div>
-        </section>
+                <div class="form-group">
+                    <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">
+                        Inform @Model.ApplicantDetails.Name their application has been successful
+                    </button>
+                    <p class="med-btm-margin">
+                        <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
+                        <button type="submit" class="button-link" name="Review" value="ReviewSaveAndExit">Save and exit</button>
+                    </p>
+                </div>
+            </section>
+        }
     </div>
 }

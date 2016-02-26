@@ -58,7 +58,6 @@
 
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
-
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
         }
 

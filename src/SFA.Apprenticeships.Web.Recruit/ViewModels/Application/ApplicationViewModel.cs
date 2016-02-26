@@ -3,9 +3,12 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Applications;
 
     public class ApplicationViewModel
     {
+        public ApplicationStatuses Status { get; set; }
+
         public ApplicationSelectionViewModel ApplicationSelection { get; set; }
 
         public ApplicationVacancyViewModel Vacancy { get; set; }
