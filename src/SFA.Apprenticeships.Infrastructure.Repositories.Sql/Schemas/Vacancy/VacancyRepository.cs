@@ -9,20 +9,24 @@
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
+    using Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
+    using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
         private readonly IMapper _mapper;
+        private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
 
         private readonly IGetOpenConnection _getOpenConnection;
 
-        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
+        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger) // Use IDateTimeService
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
+            _dateTimeService = dateTimeService;
             _logger = logger;
         }
 
@@ -55,31 +59,41 @@
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyGuid={0}",
                 vacancyGuid);
 
-            var dbVacancy = _getOpenConnection.Query<Vacancy>(
-                "SELECT * FROM dbo.Vacancy WHERE VacancyGuid = @VacancyGuid",
-                new { VacancyGuid = vacancyGuid }).SingleOrDefault();
+            var dbVacancy = GetVacancyByVacancyGuid(vacancyGuid);
 
             return MapVacancy(dbVacancy);
         }
 
+        private Vacancy GetVacancyByVacancyGuid(Guid vacancyGuid)
+        {
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyGuid = @VacancyGuid",
+                new {VacancyGuid = vacancyGuid}).SingleOrDefault();
+            return dbVacancy;
+        }
+
+
         public List<DomainVacancy> GetByIds(IEnumerable<int> vacancyIds)
         {
-            _logger.Debug("Calling database to get apprenticeship vacancy with Ids={0}", string.Join(", ", vacancyIds));
+            var vacancyIdsArray
+                = vacancyIds as int[] ?? vacancyIds.ToArray();
+            _logger.Debug("Calling database to get apprenticeship vacancy with Ids={0}", string.Join(", ", vacancyIdsArray));
 
             var vacancies =
                 _getOpenConnection.Query<Vacancy>("SELECT * FROM dbo.Vacancy WHERE VacancyId IN @VacancyIds",
-                    new { VacancyIds = vacancyIds });
+                    new { VacancyIds = vacancyIdsArray });
 
             return vacancies.Select(MapVacancy).ToList();
         }
 
         public List<DomainVacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
-            _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIds));
+            var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
+            _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
 
             var vacancies =
                 _getOpenConnection.Query<Vacancy>("SELECT * FROM dbo.Vacancy WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
-                    new { VacancyOwnerRelationshipIds = ownerPartyIds });
+                    new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
 
             return vacancies.Select(MapVacancy).ToList();
         }
@@ -154,7 +168,7 @@ SELECT QuestionId, Question
 FROM   dbo.AdditionalQuestion
 WHERE  VacancyId = @VacancyId
 ORDER BY QuestionId ASC
-", new {VacancyId = dbVacancy.VacancyId});
+", new {dbVacancy.VacancyId});
 
             foreach (var question in results)
             {
@@ -200,38 +214,8 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             }).SingleOrDefault();
 
         }
-
-        /*public List<DomainVacancy> GetForProvider(string ukPrn, string providerSiteErn)
-        {
-            const string parentVacancyStatusCode = "PAR";
-            _logger.Debug(
-                "Calling database to get apprenticeship vacancies with Vacancy UkPrn = {0}, providerSiteErn = {1}",
-                ukPrn, providerSiteErn);
-
-            var dbVacancies = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
-SELECT *
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.ManagerVacancyPartyId IN (
-    SELECT VacancyPartyId
-    FROM   Vacancy.VacancyParty p
-    WHERE  p.UKPrn = @UkPrn
-    AND    p.EdsErn = @ProviderSiteErn
-)
-AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
-                new
-                {
-                    UkPrn = ukPrn,
-                    ProviderSiteErn = providerSiteErn,
-                    VacancyStatusCodes = new[] {parentVacancyStatusCode}
-                });
-
-            _logger.Debug(
-                $"Found {dbVacancies.Count} apprenticeship vacancies with ukprn = {ukPrn}, providerSiteErn = {providerSiteErn}");
-
-            return dbVacancies.Select(MapVacancy).ToList();
-        }*/
-
-        public List<DomainVacancy> GetWithStatus(params Domain.Entities.Raa.Vacancies.VacancyStatus[] desiredStatuses)
+        
+        public List<DomainVacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
             return new List<DomainVacancy>();
 
@@ -259,18 +243,17 @@ AND Vacancy.VacancyStatusCode NOT IN @VacancyStatusCodes",
         {
             _logger.Debug("Calling database to find apprenticeship vacancies");
             var liveStatus =
-                _mapper.Map<Domain.Entities.Raa.Vacancies.VacancyStatus, string>(
-                    Domain.Entities.Raa.Vacancies.VacancyStatus.Live);
+                _mapper.Map<VacancyStatus, string>(VacancyStatus.Live);
 
             var paramObject =
                 new
                 {
-                    FrameworkCodeName = query.FrameworkCodeName,
-                    LiveDate = query.LiveDate,
-                    LatestClosingDate = query.LatestClosingDate,
+                    query.FrameworkCodeName,
+                    query.LiveDate,
+                    query.LatestClosingDate,
                     VacancyStatusCode = liveStatus,
-                    CurrentPage = query.CurrentPage,
-                    PageSize = query.PageSize
+                    query.CurrentPage,
+                    query.PageSize
                 };
 
             var coreQuery = @"
@@ -286,7 +269,7 @@ WHERE  Vacancy.VacancyStatusCode = @VacancyStatusCode
                 // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 
             // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???
-            var data = _getOpenConnection.QueryMultiple<int, Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
+            var data = _getOpenConnection.QueryMultiple<int, Vacancy>(@"
 SELECT COUNT(*)
 " + coreQuery + @"
 
@@ -321,10 +304,15 @@ FETCH NEXT @PageSize ROWS ONLY
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity); // TODO: check if we need it
 
+            CreateVacancyHistoryRow(dbVacancy.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange,
+                (int)entity.Status);
+
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
             return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
         }
+
+        
 
         public DomainVacancy Update(DomainVacancy entity)
         {
@@ -336,14 +324,46 @@ FETCH NEXT @PageSize ROWS ONLY
 
             PopulateIds(entity, dbVacancy);
 
+            var previousVacancyState = GetVacancyByVacancyGuid(entity.VacancyGuid);
+
             _getOpenConnection.UpdateSingle(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity); // TODO: check if we need it
 
+            UpdateVacancyHistory(previousVacancyState, dbVacancy);
+
             _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
             return MapVacancy(dbVacancy);
+        }
+
+        private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
+        {
+            if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
+            {
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
+            }
+        }
+
+        private void CreateVacancyHistoryRow(int vacancyId, string userName, VacancyHistoryEventType vacancyHistoryEventType, int vacancyStatus)
+        {
+            var vacancyHistory = new VacancyHistory
+            {
+                VacancyId = vacancyId,
+                Comment = "Status Change",
+                UserName = userName,
+                VacancyHistoryEventTypeId = (int) vacancyHistoryEventType,
+                VacancyHistoryEventSubTypeId = vacancyStatus,
+                HistoryDate = _dateTimeService.UtcNow
+            };
+
+            _getOpenConnection.Insert(vacancyHistory);
+        }
+
+        private static string GetUserName()
+        {
+            return Thread.CurrentPrincipal.Identity.Name;
         }
 
         public void Delete(int vacancyId)
@@ -540,89 +560,6 @@ when not matched then
             });
         }
 
-        /*private void UpdateTextFieldsFor(int vacancyId, ApprenticeshipVacancy entity)
-        {
-            if (!string.IsNullOrWhiteSpace(entity.TrainingProvided))
-            {
-                UpdateTextField(vacancyId, "TBP", entity.TrainingProvided);
-            }
-            else
-            {
-                DeleteTextField(vacancyId, "TBP");
-            }
-            
-            UpdateTextField(vacancyId, "QR", entity.DesiredQualifications);
-            UpdateTextField(vacancyId, "SR", entity.DesiredSkills);
-            UpdateTextField(vacancyId, "PQ", entity.PersonalQualities);
-            UpdateTextField(vacancyId, "OII", entity.ThingsToConsider);
-            UpdateTextField(vacancyId, "FP", entity.FutureProspects);
-        }
-
-        private void UpdateTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
-        {
-            var vacancyTextFieldValueId = _getOpenConnection.Query<int>($@"
-	            SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
-	            WHERE CodeName = '{vacancyTextFieldCodeName}'
-            ").Single(); // TODO: Hardcode the ID?
-
-            _getOpenConnection.MutatingQuery<VacancyTextField>(@"
-UPDATE [dbo].[VacancyTextField] 
-SET Value = @Value
-WHERE VacancyId = @VacancyId AND Field = @FieldId
-
-SELECT * 
-FROM [dbo].[VacancyTextField] 
-WHERE VacancyId = @VacancyId AND Field = @FieldId",
-                new
-                {
-                    VacancyId = vacancyId,
-                    FieldId = vacancyTextFieldValueId,
-                    Value = value
-                });
-        }
-        */
-        /*
-        private int PopulateVacancyPartyIds(DomainVacancy vacancy, Entities.Vacancy dbVacancy)
-        {
-            var results = _getOpenConnection.QueryMultiple<dynamic, int>(@"
-SELECT VacancyPartyId, PostalAddressId
-FROM   Vacancy.VacancyParty
-WHERE  EdsErn = @EdsErn
-
-SELECT VacancyPartyId
-FROM   Vacancy.VacancyParty
-WHERE  UKPrn = @UKPrn
-", new { EdsErn = vacancy.ProviderSiteEmployerLink.Employer.Ern, UkPrn = vacancy.Ukprn });
-
-            //dbVacancy.EmployerVacancyPartyId = results.Item1.Single().VacancyPartyId; 
-            //dbVacancy.ContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: Test
-            //dbVacancy.DeliveryProviderVacancyPartyId = results.Item2.Single();
-            //dbVacancy.ManagerVacancyPartyId = results.Item2.Single();
-            //dbVacancy.OwnerVacancyPartyId = results.Item2.Single();
-            //dbVacancy.OriginalContractOwnerVacancyPartyId = results.Item2.Single(); // TODO: ???
-
-            return results.Item1.Single().PostalAddressId;
-        }
-
-        private void PopulateFrameworkId(ApprenticeshipVacancy vacancy, Entities.Vacancy dbVacancy)
-        {
-            // TODO: use query cached?
-            var framework = _getOpenConnection.Query<int>(@"
-SELECT FrameworkId
-FROM Reference.Framework
-WHERE CodeName = @FrameworkCodeName
-", new { vacancy.FrameworkCodeName });
-
-            //if (framework.Any())
-            //{
-            //    dbVacancy.FrameworkId = framework.First();
-            //}
-            //else
-            //{
-            //    dbVacancy.FrameworkId = null;
-            //}
-        }*/
-
         public DomainVacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug(
@@ -648,7 +585,7 @@ DECLARE @RowCount INT = @@RowCount
 
 SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
 --AND    @RowCount = 1 -- what does it mean?
-", new {UserName = userName, TimeStartedToQA = DateTime.UtcNow, VacancyReferenceNumber = vacancyReferenceNumber})
+", new {UserName = userName, TimeStartedToQA = _dateTimeService.UtcNow, VacancyReferenceNumber = vacancyReferenceNumber})
                 .SingleOrDefault();
 
             if (dbVacancy == null)
@@ -667,14 +604,14 @@ SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNu
         private void UpdateEntityTimestamps(DomainVacancy entity)
         {
             // determine whether this is a "new" entity being saved for the first time
-            if (entity.CreatedDateTime == DateTime.MinValue)
+            if (entity.CreatedDateTime == _dateTimeService.MinValue)
             {
-                entity.CreatedDateTime = DateTime.UtcNow;
+                entity.CreatedDateTime = _dateTimeService.UtcNow;
                 entity.UpdatedDateTime = null;
             }
             else
             {
-                entity.UpdatedDateTime = DateTime.UtcNow;
+                entity.UpdatedDateTime = _dateTimeService.UtcNow;
             }
         }
     }

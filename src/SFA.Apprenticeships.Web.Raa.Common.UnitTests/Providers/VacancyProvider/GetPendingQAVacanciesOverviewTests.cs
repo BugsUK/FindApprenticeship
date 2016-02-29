@@ -35,7 +35,7 @@
         {
             var utcNow = new DateTime(2016, 01, 29, 11, 39, 34, DateTimeKind.Utc);
             _dateTimeService = new Mock<IDateTimeService>();
-            _dateTimeService.Setup(s => s.UtcNow()).Returns(utcNow);
+            _dateTimeService.Setup(s => s.UtcNow).Returns(utcNow);
 
             var submittedTodayDate = utcNow.Date;
             var vacanciesSubmittedToday = new Fixture().Build<Vacancy>()

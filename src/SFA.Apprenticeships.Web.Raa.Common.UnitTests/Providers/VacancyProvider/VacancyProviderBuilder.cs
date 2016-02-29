@@ -28,7 +28,7 @@
 
         public VacancyProviderBuilder()
         {
-            _dateTimeService.Setup(s => s.UtcNow()).Returns(DateTime.UtcNow);
+            _dateTimeService.Setup(s => s.UtcNow).Returns(DateTime.UtcNow);
         }
 
         public IVacancyQAProvider Build()

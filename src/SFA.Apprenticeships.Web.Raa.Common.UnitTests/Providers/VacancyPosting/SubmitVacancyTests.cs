@@ -58,7 +58,7 @@
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
             MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
-            MockTimeService.Setup(ts => ts.UtcNow()).Returns(now);
+            MockTimeService.Setup(ts => ts.UtcNow).Returns(now);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
 

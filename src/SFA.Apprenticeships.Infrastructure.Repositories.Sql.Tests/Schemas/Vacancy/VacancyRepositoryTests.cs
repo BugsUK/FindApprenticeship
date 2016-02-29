@@ -29,10 +29,11 @@
         public void SimpleGetTest()
         {
             var logger = new Mock<ILogService>();
+            var dateTimeService = new Mock<IDateTimeService>();
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                logger.Object);
+                dateTimeService.Object, logger.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                logger.Object);
+                dateTimeService.Object, logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -79,8 +80,9 @@
         public void SimpleSaveAndUpdateTest()
         {
             var logger = new Mock<ILogService>();
+            var dateTimeService = new Mock<IDateTimeService>();
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                logger.Object);
+                dateTimeService.Object, logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();

@@ -27,7 +27,7 @@
             MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
                 .Returns(new Fixture().Build<Employer>().Create());
 
-            MockTimeService.Setup(s => s.UtcNow()).Returns(dateTimeNow);
+            MockTimeService.Setup(s => s.UtcNow).Returns(dateTimeNow);
             
             var provider = GetVacancyPostingProvider();
 

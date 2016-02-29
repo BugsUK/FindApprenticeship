@@ -142,6 +142,7 @@
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\Entities\AdditionalQuestion.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyTextField.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyTextFieldValue.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />

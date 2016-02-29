@@ -492,7 +492,7 @@
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             vacancy.Status = VacancyStatus.PendingQA;
-            vacancy.DateSubmitted = _dateTimeService.UtcNow();
+            vacancy.DateSubmitted = _dateTimeService.UtcNow;
             if (!vacancy.DateFirstSubmitted.HasValue)
             {
                 vacancy.DateFirstSubmitted = vacancy.DateSubmitted;
@@ -622,7 +622,7 @@
             var submitted = vacancies.Where(v => v.Status == VacancyStatus.PendingQA || v.Status == VacancyStatus.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == VacancyStatus.RejectedByQA).ToList();
             //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow().Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
+            var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
             var newApplications = vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
@@ -720,7 +720,7 @@
             vacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             vacancy.Title = $"(Copy of) {vacancy.Title}";
             vacancy.Status = VacancyStatus.Draft;
-            vacancy.CreatedDateTime = _dateTimeService.UtcNow();
+            vacancy.CreatedDateTime = _dateTimeService.UtcNow;
             vacancy.UpdatedDateTime = null;
             vacancy.DateSubmitted = null;
             vacancy.DateFirstSubmitted = null;
@@ -773,7 +773,7 @@
         {
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
-            var utcNow = _dateTimeService.UtcNow();
+            var utcNow = _dateTimeService.UtcNow;
 
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
             var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
@@ -863,7 +863,7 @@
 
         private bool AUserHasLeftTheVacancyUnattended(Vacancy vacancy, int timeout)
         {
-            return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow() - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
+            return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
@@ -888,7 +888,7 @@
 
         public void ApproveVacancy(int vacancyReferenceNumber)
         {
-            var qaApprovalDate = _dateTimeService.UtcNow();
+            var qaApprovalDate = _dateTimeService.UtcNow;
             var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
