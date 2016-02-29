@@ -566,7 +566,6 @@
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <Content Include="Views\VacancyPosting\TrainingDetails.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\Qualifications.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\MyApplications.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessful.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
