@@ -6,6 +6,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Schemas.Provider;
     using Schemas.Reference;
+    using Schemas.UserProfile;
     using SFA.Infrastructure.Interfaces;
     using StructureMap.Configuration.DSL;
 
@@ -19,11 +20,14 @@
             //Mappers
             For<IMapper>().Use<ReferenceMappers>().Name = "ReferenceMappers";
             For<IMapper>().Use<ProviderUserMappers>().Name = "ProviderUserMappers";
+            For<IMapper>().Use<AgencyUserMappers>().Name = "AgencyUserMappers";
 
             //Repositories
             For<IReferenceRepository>().Use<ReferenceRepository>().Ctor<IMapper>().Named("ReferenceMappers");
             For<IProviderUserReadRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
             For<IProviderUserWriteRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
+            For<IAgencyUserReadRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
+            For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
         }
     }
 }

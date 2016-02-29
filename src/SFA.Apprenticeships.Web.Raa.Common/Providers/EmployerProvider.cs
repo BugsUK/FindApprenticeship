@@ -28,12 +28,5 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             searchViewModel.EmployerResultsPage = resultsViewModelPage;
             return searchViewModel;
         }
-
-        public EmployerViewModel GetEmployerViewModel(string edsUrn)
-        {
-            var employer = _employerService.GetEmployer(edsUrn);
-
-            return employer.Convert();
-        }
     }
 }

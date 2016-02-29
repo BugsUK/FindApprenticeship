@@ -70,8 +70,6 @@
                 entity.EmployerId = entity.EmployerGuid.GetHashCode();
             }
 
-            SetCreatedDateTime(entity);
-            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<Employer, MongoEmployer>(entity);
 

@@ -36,7 +36,7 @@ public class TestAssemblySetsup
 
             //dbInitialiser.Seed(SeedData.Providers);
             dbInitialiser.Seed(SeedData.ProviderUsers);
-            //dbInitialiser.Seed(SeedData.AgencyUsers);
+            dbInitialiser.Seed(SeedData.AgencyUsers);
             //dbInitialiser.Seed(SeedData.Vacancies());
         }
     }
