@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
@@ -8,6 +9,10 @@
     public class ApplicationViewModel
     {
         public ApplicationStatuses Status { get; set; }
+
+        public DateTime? SuccessfulDateTime { get; set; }
+
+        public DateTime? UnsuccessfulDateTime { get; set; }
 
         public ApplicationSelectionViewModel ApplicationSelection { get; set; }
 

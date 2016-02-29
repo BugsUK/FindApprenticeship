@@ -20,7 +20,13 @@
     if (Model.Status == ApplicationStatuses.Successful)
     {
         <div role="alert" class="panel-info">
-            <p><i class="fa fa-flag the-icon"></i>This candidate was made successful</p>
+            <p>
+                <i class="fa fa-flag the-icon"></i>This candidate was made successful
+                @if (Model.SuccessfulDateTime.HasValue)
+                {
+                    <span>on @Html.DisplayFor(m => m.SuccessfulDateTime.Value)</span>
+                }
+            </p>
             <p>
                 @Html.RouteLink("Return to vacancy applications", RecruitmentRouteNames.VacancyApplications, new { Model.Vacancy.VacancyReferenceNumber })
             </p>
