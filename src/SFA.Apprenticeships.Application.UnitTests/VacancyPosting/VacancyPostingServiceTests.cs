@@ -1,11 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
     using System.Threading;
     using Application.VacancyPosting;
     using Domain.Entities.Raa;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.UnitTests.Builder;
@@ -55,8 +52,11 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
@@ -70,8 +70,11 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
@@ -85,8 +88,11 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 
@@ -100,8 +106,10 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 

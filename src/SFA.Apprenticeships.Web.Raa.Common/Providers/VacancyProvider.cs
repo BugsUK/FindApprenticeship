@@ -1009,7 +1009,7 @@
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1039,7 +1039,7 @@
             vacancy.ContactEmail = viewModel.ContactEmail;
             vacancy.ContactDetailsComment = viewModel.ContactDetailsComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
             var sectorsAndFrameworks = GetSectorsAndFrameworks();
@@ -1080,7 +1080,7 @@
                 vacancy.NumberOfPositionsComment = null;
             }
             
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1101,7 +1101,7 @@
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -1116,7 +1116,7 @@
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;

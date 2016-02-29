@@ -112,7 +112,7 @@
                 mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Never);
             MockVacancyPostingService.Verify(mock =>
-                mock.SaveVacancy(It.IsAny<Vacancy>()), Times.Once);
+                mock.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }

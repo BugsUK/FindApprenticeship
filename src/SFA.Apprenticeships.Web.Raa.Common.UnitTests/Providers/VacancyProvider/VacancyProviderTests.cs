@@ -56,7 +56,7 @@
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
             
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
-            vacancyPostingService.Setup(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value)).Returns(
+            vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value)).Returns(
                 (long refNo) =>
                 {
                     return new Fixture().Build<Vacancy>()
@@ -65,14 +65,14 @@
                         .With(av => av.OfflineApplicationUrlComment, Guid.NewGuid().ToString())
                         .With(av => av.ShortDescriptionComment, Guid.NewGuid().ToString())
                         .With(av => av.TitleComment, Guid.NewGuid().ToString())
-                        .With(av => av.OfflineApplicationUrl, string.Format("http://www.google.com/{0}", Guid.NewGuid()))
+                        .With(av => av.OfflineApplicationUrl, $"http://www.google.com/{Guid.NewGuid()}")
                         .With(av => av.OfflineApplicationInstructions, Guid.NewGuid().ToString())
                         .With(av => av.ShortDescription, Guid.NewGuid().ToString())
                         .With(av => av.Title, Guid.NewGuid().ToString())
                         .Create();
                 });
 
-            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av );
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av );
 
             var mapper = new Mock<IMapper>();
             mapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
@@ -90,8 +90,8 @@
             var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
 
             //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
+            vacancyPostingService.Verify(vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
+            vacancyPostingService.Verify(vps => vps.UpdateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
             result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
             result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
             result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
@@ -157,7 +157,7 @@
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
 
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
-            vacancyPostingService.Setup(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value)).Returns(
+            vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(trainingDetailsViewModel.VacancyReferenceNumber.Value)).Returns(
                 (long refNo) =>
                 {
                     return new Fixture().Build<Vacancy>()
@@ -171,7 +171,7 @@
                         .Create();
                 });
 
-            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
             var mapper = new Mock<IMapper>();
             mapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
@@ -189,8 +189,8 @@
             var result = vacancyProvider.UpdateVacancyWithComments(trainingDetailsViewModel);
 
             //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
+            vacancyPostingService.Verify(vps => vps.GetVacancyByReferenceNumber(trainingDetailsViewModel.VacancyReferenceNumber.Value), Times.Once);
+            vacancyPostingService.Verify(vps => vps.UpdateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
             result.VacancyReferenceNumber.Should().Be(trainingDetailsViewModel.VacancyReferenceNumber);
             result.ApprenticeshipLevelComment.Should().Be(trainingDetailsViewModel.ApprenticeshipLevelComment);
             result.FrameworkCodeNameComment.Should().Be(trainingDetailsViewModel.FrameworkCodeNameComment);
@@ -219,9 +219,9 @@
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
 
             vacancyPostingService.Setup(
-                vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
+                vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
 
-            vacancyPostingService.Setup(vps => vps.SaveVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
@@ -233,8 +233,8 @@
             var result = vacancyProvider.UpdateVacancyWithComments(vacancyVm);
 
             //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber), Times.Once);
-            vacancyPostingService.Verify(vps => vps.SaveVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
+            vacancyPostingService.Verify(vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber), Times.Once);
+            vacancyPostingService.Verify(vps => vps.UpdateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
             result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
             result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
             result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
@@ -804,7 +804,7 @@
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
 
             vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(new Vacancy());
-            vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
+            vacancyPostingService.Setup(vp => vp.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
             var viewModel = new VacancyQuestionsViewModel
@@ -819,7 +819,7 @@
             vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
-                    vp.SaveVacancy(
+                    vp.UpdateVacancy(
                         It.Is<Vacancy>(
                             v =>
                                 v.FirstQuestionComment == firstQuestionComment &&
