@@ -880,6 +880,11 @@
     <None Include="Scripts\Data\Reference.Standard.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql" />
+    <Build Include="Reference\Reference.Standard.sql" />
+    <Build Include="Reference\Reference.Level.sql" />
+    <Build Include="Reference\Reference.Sector.sql" />
+    <None Include="Scripts\Data\Reference.Level.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
