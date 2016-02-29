@@ -1,16 +1,16 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
     using Application.Interfaces.VacancyPosting;
-    using Common.ViewModels;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
-    using Raa.Common.Factories;
-    using Raa.Common.ViewModels.Application;
-    using Raa.Common.ViewModels.Application.Apprenticeship;
+    using Factories;
+    using ViewModels.Application;
+    using ViewModels.Application.Apprenticeship;
+    using Web.Common.ViewModels;
 
     public class ApplicationProvider : IApplicationProvider
     {

@@ -186,7 +186,9 @@
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
+    <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
     <Compile Include="Providers\ILocationsProvider.cs" />
     <Compile Include="Providers\IProviderQAProvider.cs" />
@@ -274,6 +276,41 @@
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AboutYou.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicantDetails.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisabilityStatusQuestion.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\Education.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Education.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Qualifications.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingCourses.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\WorkExperience.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkExperience.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -382,6 +419,34 @@
     <Content Include="Views\Shared\DisplayTemplates\Vacancy\TrainingDetails.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TrainingDetails.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AboutYou.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AboutYou.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\Education.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Education.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\Qualifications.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Qualifications.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TrainingCourses.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkExperience.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DisabilityStatusQuestion.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ApplicantDetails.generated.cs</LastGenOutput>
     </Content>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml">
       <Generator>RazorGenerator</Generator>

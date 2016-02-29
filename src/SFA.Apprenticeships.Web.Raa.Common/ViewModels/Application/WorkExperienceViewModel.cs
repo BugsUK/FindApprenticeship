@@ -4,6 +4,8 @@
 
     public class WorkExperienceViewModel
     {
+        public const string PartialView = "Application/WorkExperience";
+
         public string Employer { get; set; }
         public string JobTitle { get; set; }
         public string Description { get; set; }

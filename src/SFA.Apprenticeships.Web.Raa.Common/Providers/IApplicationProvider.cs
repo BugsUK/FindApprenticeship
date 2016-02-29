@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
-    using Raa.Common.ViewModels.Application;
-    using Raa.Common.ViewModels.Application.Apprenticeship;
+    using ViewModels.Application;
+    using ViewModels.Application.Apprenticeship;
 
     public interface IApplicationProvider
     {

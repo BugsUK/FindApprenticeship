@@ -4,6 +4,8 @@
 
     public class TrainingCourseViewModel
     {
+        public const string PartialView = "Application/TrainingCourses";
+
         public string Provider { get; set; }
         public string Title { get; set; }
         public DateTime FromDate { get; set; }

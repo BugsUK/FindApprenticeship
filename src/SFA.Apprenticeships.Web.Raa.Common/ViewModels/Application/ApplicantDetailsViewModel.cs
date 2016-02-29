@@ -6,6 +6,8 @@
 
     public class ApplicantDetailsViewModel
     {
+        public const string PartialView = "Application/ApplicantDetails";
+
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public AddressViewModel Address { get; set; }
