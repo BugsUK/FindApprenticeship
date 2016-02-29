@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.MyApplications
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications
 {
     using System;
     using System.ComponentModel.DataAnnotations;

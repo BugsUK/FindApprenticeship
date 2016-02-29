@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Account
 {
     using System.ComponentModel.DataAnnotations;
-    using Common.ViewModels.Applications;
+    using Applications;
     using Constants.ViewModels;
     using FluentValidation.Attributes;
     using Validators;

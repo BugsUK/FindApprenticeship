@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.Applications
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.Applications
 {
     public class TraineeshipFeatureViewModel
     {

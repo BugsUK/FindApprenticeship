@@ -1,12 +1,13 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Configuration;
-    using Constants;
+    using Common.Configuration;
+    using Common.Constants;
+    using Common.Providers;
     using Domain.Entities.Applications;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Applications;
@@ -27,7 +28,7 @@
             _logService = logService;
         }
 
-        public MyApplicationsViewModel GetCandidateApplications(Guid candidateId, MyApplicationRoutes routes)
+        public MyApplicationsViewModel GetCandidateApplications(Guid candidateId)
         {
             _logService.Debug("Calling CandidateApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
                 candidateId);
@@ -64,7 +65,7 @@
                     lastApplicationStatusNotificationDateTime = new DateTime(long.Parse(lastApplicationStatusNotification), DateTimeKind.Utc);
                 }
 
-                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime, routes);
+                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime);
             }
             catch (Exception e)
             {

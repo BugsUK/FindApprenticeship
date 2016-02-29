@@ -58,23 +58,23 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Account
     using SFA.Apprenticeships.Web.Candidate.ViewModels;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
+    
+    #line 5 "..\..\Views\Account\Index.cshtml"
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications;
+    
+    #line default
+    #line hidden
     using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
     using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-    
-    #line 5 "..\..\Views\Account\Index.cshtml"
-    using SFA.Apprenticeships.Web.Common.ViewModels.MyApplications;
-    
-    #line default
-    #line hidden
     using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Account/Index.cshtml")]
-    public partial class Index : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.MyApplications.MyApplicationsViewModel>
+    public partial class Index : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel>
     {
         public Index()
         {
@@ -167,14 +167,14 @@ WriteLiteral(">\r\n            <p>\r\n                Have you considered a trai
 
 WriteLiteral(" id=\"traineeship-overview-link\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1483), Tuple.Create("\"", 1565)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1489), Tuple.Create("\"", 1571)
             
             #line 33 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1511), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
+, Tuple.Create(Tuple.Create("", 1517), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipOverview)
             
             #line default
             #line hidden
-, 1511), false)
+, 1517), false)
 );
 
 WriteLiteral("\r\n                   onlick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS.d" +
@@ -188,14 +188,14 @@ WriteLiteral(" id=\"dismiss-traineeship-prompts-link\"");
 
 WriteLiteral(" \r\n                   class=\"notInterested link-unimp icon-black\"");
 
-WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1929), Tuple.Create("\"", 2017)
+WriteAttribute("href", Tuple.Create(" \r\n                   href=\"", 1935), Tuple.Create("\"", 2023)
             
             #line 39 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 1957), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
+, Tuple.Create(Tuple.Create("", 1963), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissTraineeshipPrompts)
             
             #line default
             #line hidden
-, 1957), false)
+, 1963), false)
 );
 
 WriteLiteral("\r\n                   onclick=\"Webtrends.multiTrack({ element: this, argsa: [\'DCS." +
@@ -293,14 +293,14 @@ WriteLiteral(".\r\n                </p>\r\n");
             #line hidden
 WriteLiteral("            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 3016), Tuple.Create("\"", 3173)
+WriteAttribute("href", Tuple.Create(" href=\"", 3022), Tuple.Create("\"", 3179)
             
             #line 59 "..\..\Views\Account\Index.cshtml"
-, Tuple.Create(Tuple.Create("", 3023), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
+, Tuple.Create(Tuple.Create("", 3029), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.DismissApplicationNotifications, new { Lastupdated = Model.ApplicationStatusNotificationsLastUpdatedDateTimeTicks })
             
             #line default
             #line hidden
-, 3023), false)
+, 3029), false)
 );
 
 WriteLiteral(" class=\"notInterested link-unimp icon-black\"");

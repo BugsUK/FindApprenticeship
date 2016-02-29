@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
     using System;
+    using Candidate.ViewModels.Applications;
     using Candidate.Views.Account;
-    using Common.ViewModels.Applications;
-    using Common.Views.Shared.DisplayTemplates;
+    using Candidate.Views.Shared.DisplayTemplates;
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;

@@ -175,6 +175,12 @@
                defaults: new { controller = "Candidate", action = "Traineeship" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewVacancy,
+               url: "vacancy",
+               defaults: new { controller = "Vacancy", action = "View" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

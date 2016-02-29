@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +8,7 @@
 
     public interface ICandidateApplicationsProvider
     {
-        MyApplicationsViewModel GetCandidateApplications(Guid candidateId, MyApplicationRoutes routes);
+        MyApplicationsViewModel GetCandidateApplications(Guid candidateId);
 
         TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId);
 

@@ -1,17 +1,16 @@
-﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.MyApplications
+﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
     using System;
-    using System.ComponentModel.DataAnnotations;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
 
-    public class MyApprenticeshipApplicationViewModel
+    public class CandidateApprenticeshipApplicationViewModel
     {
-        public MyApprenticeshipApplicationViewModel()
+        public CandidateApprenticeshipApplicationViewModel()
         {    
         }
 
-        public MyApprenticeshipApplicationViewModel(ApprenticeshipApplicationSummary applicationSummary)
+        public CandidateApprenticeshipApplicationViewModel(ApprenticeshipApplicationSummary applicationSummary)
         {
             VacancyId = applicationSummary.LegacyVacancyId;
             Title = applicationSummary.Title;
@@ -71,12 +70,8 @@
 
         public bool IsArchived { get; set; }
 
-        [UIHint("Date")]
-        [DataType(DataType.DateTime)]
         public DateTime? DateApplied { get; set; }
 
-        [UIHint("Date")]
-        [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
         public DateTime DateUpdated { get; set; }

@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Common.ViewModels.MyApplications;
+    using Candidate.ViewModels.MyApplications;
     using Domain.Entities.Applications;
 
     public static class DashboardTestsHelper

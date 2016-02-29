@@ -1,13 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
-    using System.Collections.Generic;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
-    using Common.ViewModels.Applications;
-    using Common.ViewModels.MyApplications;
     using Constants;
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;

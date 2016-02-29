@@ -66,7 +66,6 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
-            For<ICandidateApplicationsProvider>().Use<CandidateApplicationsProvider>();
         }
 
         private void RegisterServices()

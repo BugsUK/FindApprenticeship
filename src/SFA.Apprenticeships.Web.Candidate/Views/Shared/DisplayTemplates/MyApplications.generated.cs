@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
+namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates
 {
     using System;
     using System.Collections.Generic;
@@ -45,14 +45,24 @@ namespace SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates
     
     #line default
     #line hidden
-    using SFA.Apprenticeships.Web.Common;
+    using SFA.Apprenticeships.Web.Candidate;
+    using SFA.Apprenticeships.Web.Candidate.Constants;
+    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
+    using SFA.Apprenticeships.Web.Candidate.Helpers;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
+    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
+    using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/MyApplications.cshtml")]
-    public partial class MyApplications_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Common.ViewModels.MyApplications.MyApplicationsViewModel>
+    public partial class MyApplications_ : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications.MyApplicationsViewModel>
     {
         public MyApplications_()
         {
@@ -88,7 +98,7 @@ WriteLiteral(">");
 
             
             #line 12 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                            Write(Html.RouteLink("Find an apprenticeship", Model.Routes.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" }));
+                            Write(Html.RouteLink("Find an apprenticeship", @CandidateRouteNames.ApprenticeshipSearch, null, new { @id = "find-apprenticeship-button", @class = "button" }));
 
             
             #line default
@@ -482,7 +492,7 @@ WriteLiteral(">");
 
             
             #line 82 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                         Write(Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId }));
+                                                         Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
 
             
             #line default
@@ -497,14 +507,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-successful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4664), Tuple.Create("\"", 4757)
+WriteAttribute("href", Tuple.Create(" href=\"", 4682), Tuple.Create("\"", 4782)
             
             #line 84 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                               , Tuple.Create(Tuple.Create("", 4671), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@Model.Routes.ApprenticeshipArchive, new { id = application.VacancyId })
+                                               , Tuple.Create(Tuple.Create("", 4689), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 4671), false)
+, 4689), false)
 );
 
 WriteLiteral("><i");
@@ -695,7 +705,7 @@ WriteLiteral(">");
 
             
             #line 124 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                         Write(Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId }));
+                                                         Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
 
             
             #line default
@@ -832,7 +842,7 @@ WriteLiteral(@">
 
             
             #line 158 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                       Write(Html.RouteLink("see the next steps page", @Model.Routes.NextSteps));
+                                                       Write(Html.RouteLink("see the next steps page", @CandidateRouteNames.NextSteps));
 
             
             #line default
@@ -958,7 +968,7 @@ WriteLiteral(">");
 
             
             #line 183 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                             Write(Html.RouteLink("View application", @Model.Routes.ApprenticeshipView, new { id = application.VacancyId }));
+                                                             Write(Html.RouteLink("View application", @CandidateRouteNames.ApprenticeshipView, new { id = application.VacancyId }));
 
             
             #line default
@@ -973,14 +983,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black archive-unsuccessful\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 11482), Tuple.Create("\"", 11575)
+WriteAttribute("href", Tuple.Create(" href=\"", 11528), Tuple.Create("\"", 11628)
             
             #line 185 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 11489), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@Model.Routes.ApprenticeshipArchive, new { id = application.VacancyId })
+                                                    , Tuple.Create(Tuple.Create("", 11535), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipArchive, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 11489), false)
+, 11535), false)
 );
 
 WriteLiteral("><i");
@@ -1292,14 +1302,14 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 258 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                       Write(Html.RouteLink("Apply", @Model.Routes.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" }));
+                                       Write(Html.RouteLink("Apply", @CandidateRouteNames.ApprenticeshipApply, new { id = application.VacancyId }, new { @class = "resume-link" }));
 
             
             #line default
             #line hidden
             
             #line 258 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                                                                                                                                           
+                                                                                                                                                                                  
                                         }
                                         else
                                         {
@@ -1346,14 +1356,14 @@ WriteLiteral(" title=\"Remove from my applications\"");
 
 WriteLiteral(" class=\"icon-black delete-draft\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 17223), Tuple.Create("\"", 17315)
+WriteAttribute("href", Tuple.Create(" href=\"", 17283), Tuple.Create("\"", 17382)
             
             #line 274 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                    , Tuple.Create(Tuple.Create("", 17230), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@Model.Routes.ApprenticeshipDelete, new { id = application.VacancyId })
+                                    , Tuple.Create(Tuple.Create("", 17290), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(@CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })
             
             #line default
             #line hidden
-, 17230), false)
+, 17290), false)
 );
 
 WriteLiteral("><i");
@@ -1519,7 +1529,7 @@ WriteLiteral(">");
 
             
             #line 306 "..\..\Views\Shared\DisplayTemplates\MyApplications.cshtml"
-                                                     Write(Html.RouteLink("View application", @Model.Routes.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId }));
+                                                     Write(Html.RouteLink("View application", @CandidateRouteNames.TraineeshipView, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId }));
 
             
             #line default

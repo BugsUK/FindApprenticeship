@@ -2,7 +2,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Builders
 {
     using Candidate.ViewModels.Account;
-    using Common.ViewModels.Applications;
+    using Candidate.ViewModels.Applications;
 
     public class VerifyMobileViewModelBuilder
     {

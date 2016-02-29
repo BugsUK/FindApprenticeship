@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Views.Dashboard
 {
-    using Common.ViewModels.MyApplications;
-    using Common.Views.Shared.DisplayTemplates;
+    using Candidate.ViewModels.MyApplications;
+    using Candidate.Views.Shared.DisplayTemplates;
     using HtmlAgilityPack;
     using RazorGenerator.Testing;
 

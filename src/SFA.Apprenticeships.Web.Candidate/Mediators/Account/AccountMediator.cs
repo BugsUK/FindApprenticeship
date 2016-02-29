@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
     using System.Linq;
     using Common.Configuration;
     using Common.Constants;
-    using Common.ViewModels.MyApplications;
     using Constants.Pages;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
@@ -15,6 +14,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Account
     using Providers;
     using Validators;
     using ViewModels.Account;
+    using ViewModels.MyApplications;
 
     public class AccountMediator : MediatorBase, IAccountMediator
     {

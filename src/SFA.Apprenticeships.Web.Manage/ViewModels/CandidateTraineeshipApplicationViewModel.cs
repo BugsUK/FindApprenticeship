@@ -1,0 +1,20 @@
+﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
+{
+    using System;
+    using Domain.Entities.Vacancies;
+
+    public class CandidateTraineeshipApplicationViewModel
+    {
+        public int VacancyId { get; set; }
+
+        public VacancyStatuses VacancyStatus { get; set; }
+
+        public string Title { get; set; }
+
+        public string EmployerName { get; set; }
+
+        public bool IsArchived { get; set; }
+
+        public DateTime? DateApplied { get; set; }
+    }
+}

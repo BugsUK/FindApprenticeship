@@ -2,8 +2,8 @@
 {
     using System.Linq;
     using Candidate.ViewModels.Applications;
+    using Candidate.ViewModels.MyApplications;
     using Candidate.ViewModels.VacancySearch;
-    using Common.ViewModels.MyApplications;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;

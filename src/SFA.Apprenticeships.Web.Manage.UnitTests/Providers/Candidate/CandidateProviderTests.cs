@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Candidates;
-    using Common.Providers;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
     using Domain.Interfaces.Repositories;
@@ -14,6 +13,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     [TestFixture]
@@ -27,7 +27,7 @@
         {
             _candidateSearchService = new Mock<ICandidateSearchService>();
 
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationsProvider>().Object, new Mock<ICandidateApplicationService>().Object);
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<ILogService>().Object);
         }
 
         [Test]

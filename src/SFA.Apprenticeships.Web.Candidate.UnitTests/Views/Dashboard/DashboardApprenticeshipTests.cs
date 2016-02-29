@@ -2,7 +2,7 @@
 {
     using System;
     using Candidate.Views.Account;
-    using Common.Views.Shared.DisplayTemplates;
+    using Candidate.Views.Shared.DisplayTemplates;
     using Domain.Entities.Applications;
     using FluentAssertions;
     using NUnit.Framework;

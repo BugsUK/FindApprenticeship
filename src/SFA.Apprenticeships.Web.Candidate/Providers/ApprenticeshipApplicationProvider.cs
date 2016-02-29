@@ -6,7 +6,6 @@
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
-    using Common.Providers;
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
@@ -17,9 +16,7 @@
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;
-    using Common.ViewModels.Applications;
-    using Common.ViewModels.MyApplications;
-    using Factory;
+    using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;
 
@@ -518,7 +515,7 @@
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
-            return _candidateApplicationsProvider.GetCandidateApplications(candidateId, MyApplicationRoutesFactory.GetMyApplicationRoutes());
+            return _candidateApplicationsProvider.GetCandidateApplications(candidateId);
         }
 
         public SavedVacancyViewModel SaveVacancy(Guid candidateId, int vacancyId)

@@ -788,6 +788,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Date.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\MyApplications.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MyApplications.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -888,7 +892,6 @@
     <Compile Include="Constants\ViewModels\TrainingCourseViewModelMessages.cs" />
     <Compile Include="Controllers\SiteMapController.cs" />
     <Compile Include="Controllers\UnsubscribeController.cs" />
-    <Compile Include="Factory\MyApplicationRoutesFactory.cs" />
     <Compile Include="IoC\IoC.cs" />
     <Compile Include="IoC\StructureMapScopeModule.cs" />
     <Compile Include="Extensions\HttpExtensions.cs" />
@@ -904,7 +907,9 @@
     <Compile Include="Mediators\Unsubscribe\UnsubscribeMediator.cs" />
     <Compile Include="Mediators\Unsubscribe\UnsubscribeMediatorCodes.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\CandidateApplicationsProvider.cs" />
     <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\ICandidateApplicationsProvider.cs" />
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
     <Compile Include="Validators\ApprenticeshipApplicationPreviewViewModelValidator.cs" />
@@ -937,11 +942,15 @@
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Applications\ApprenticeshipApplicationPreviewViewModel.cs" />
+    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Home\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
     <Compile Include="ViewModels\UserNameAvailability.cs" />
@@ -1281,6 +1290,11 @@
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.generated.cs">
       <DependentUpon>_disability.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\MyApplications.generated.cs">
+      <DependentUpon>MyApplications.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Common.ViewModels.MyApplications
+﻿namespace SFA.Apprenticeships.Web.Candidate.ViewModels.MyApplications
 {
     using System;
     using System.Collections.Generic;
@@ -14,8 +14,7 @@
             IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
             IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications,
             TraineeshipFeatureViewModel traineeshipFeature,
-            DateTime? lastApplicationStatusNotification, 
-            MyApplicationRoutes routes)
+            DateTime? lastApplicationStatusNotification)
         {
             AllApprenticeshipApplications = apprenticeshipApplications
                 .Where(a => !a.IsArchived)
@@ -28,8 +27,6 @@
             TraineeshipFeature = traineeshipFeature;
 
             LastApplicationStatusNotification = lastApplicationStatusNotification;
-
-            Routes = routes;
         }
 
         public DateTime? LastApplicationStatusNotification { get; private set; }
@@ -110,7 +107,5 @@
         public string DeletedVacancyId { get; set; }
 
         public string DeletedVacancyTitle { get; set; }
-
-        public MyApplicationRoutes Routes { get; private set; }
     }
 }
