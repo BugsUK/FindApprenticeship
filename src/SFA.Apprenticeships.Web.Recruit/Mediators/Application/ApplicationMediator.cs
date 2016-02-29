@@ -2,7 +2,7 @@
 {
     using Common.Mediators;
     using Providers;
-    using ViewModels.Application;
+    using Raa.Common.ViewModels.Application;
 
     public class ApplicationMediator : MediatorBase, IApplicationMediator
     {

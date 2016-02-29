@@ -6,8 +6,8 @@
     using Common.Validators.Extensions;
     using Constants;
     using Mediators.Application;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public class ApprenticeshipApplicationController : RecruitmentControllerBase
     {

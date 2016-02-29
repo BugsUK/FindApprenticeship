@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
     public class ApplicationVacancyViewModel
     {

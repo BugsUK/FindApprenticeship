@@ -9,8 +9,8 @@
     using Domain.Entities.Users;
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public class RecruitMappers : MapperEngine
     {

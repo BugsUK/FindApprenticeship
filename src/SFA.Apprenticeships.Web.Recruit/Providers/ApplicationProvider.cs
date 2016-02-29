@@ -9,8 +9,8 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Factories;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public class ApplicationProvider : IApplicationProvider
     {

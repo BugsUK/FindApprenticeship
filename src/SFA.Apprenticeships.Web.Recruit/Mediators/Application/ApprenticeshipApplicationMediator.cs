@@ -3,11 +3,11 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
     using System;
     using Common.Constants;
     using Common.Mediators;
-    using Constants.ViewModels;
     using Providers;
-    using Validators;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.Constants.ViewModels;
+    using Raa.Common.Validators.Application;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public class ApprenticeshipApplicationMediator : MediatorBase, IApprenticeshipApplicationMediator
     {

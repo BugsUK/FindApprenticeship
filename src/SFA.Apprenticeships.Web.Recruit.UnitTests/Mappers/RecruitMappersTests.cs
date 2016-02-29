@@ -6,8 +6,8 @@
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Raa.Common.ViewModels.Application;
     using Recruit.Mappers;
-    using ViewModels.Application;
 
     [TestFixture]
     public class RecruitMappersTests

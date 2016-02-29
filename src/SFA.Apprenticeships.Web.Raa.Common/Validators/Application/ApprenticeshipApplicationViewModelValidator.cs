@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Validators
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Application
 {
     using Constants.ViewModels;
     using FluentValidation;

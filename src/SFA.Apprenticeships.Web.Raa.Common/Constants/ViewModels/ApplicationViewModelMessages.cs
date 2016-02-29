@@ -1,6 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.Constants.ViewModels
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Constants.ViewModels
 {
-    using Common.Constants;
+    using Web.Common.Constants;
 
     public class ApplicationViewModelMessages
     {

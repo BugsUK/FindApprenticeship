@@ -157,6 +157,7 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
@@ -198,6 +199,7 @@
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Factories\SelectListItemsFactory.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
@@ -217,6 +219,21 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
+    <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\EducationViewModel.cs" />
+    <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
+    <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
+    <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />

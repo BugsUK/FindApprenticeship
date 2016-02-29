@@ -1,7 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application.Apprenticeship
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship
 {
     using FluentValidation.Attributes;
-    using Validators;
+    using Validators.Application;
 
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     public class ApprenticeshipApplicationViewModel : ApplicationViewModel

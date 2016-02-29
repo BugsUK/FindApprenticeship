@@ -1,9 +1,9 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
 {
     using System;
-    using Common.ViewModels;
-    using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Web.Common.ViewModels;
+    using Web.Common.ViewModels.Locations;
 
     public class VacancyApplicationsViewModel
     {

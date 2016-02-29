@@ -1,8 +1,8 @@
 namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
 {
     using Common.Mediators;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public interface IApprenticeshipApplicationMediator
     {
