@@ -12,5 +12,15 @@
         {
             public const string Ok = "CandidateMediatorCodes.GetCandidateApplications.Ok";
         }
+
+        public class GetCandidateApprenticeshipApplication
+        {
+            public const string Ok = "CandidateMediatorCodes.GetCandidateApprenticeshipApplication.Ok";
+        }
+
+        public class GetCandidateTraineeshipApplication
+        {
+            public const string Ok = "CandidateMediatorCodes.GetCandidateTraineeshipApplication.Ok";
+        }
     }
 }

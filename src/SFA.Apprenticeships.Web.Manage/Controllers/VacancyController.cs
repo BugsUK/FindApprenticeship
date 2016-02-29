@@ -37,20 +37,7 @@
             var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
             var vacancyViewModel = response.ViewModel;
 
-            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(ManagementRouteNames.TrainingDetails,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.QuestionsLink = Url.RouteUrl(ManagementRouteNames.Questions,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.EmployerLink = Url.RouteUrl(ManagementRouteNames.EmployerInformation,
-                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
-            vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations,
-                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            SetLinks(vacancyViewModel);
 
             vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
 
@@ -69,6 +56,39 @@
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
+        }
+
+        private void SetLinks(VacancyViewModel vacancyViewModel)
+        {
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(ManagementRouteNames.TrainingDetails,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(ManagementRouteNames.Questions,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.EmployerLink = Url.RouteUrl(ManagementRouteNames.EmployerInformation,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+            vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations,
+                new {vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber});
+        }
+
+        // GET: Vacancy
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
+        public ActionResult View(int vacancyId)
+        {
+            var response = _vacancyMediator.GetVacancyViewModel(vacancyId);
+            var vacancyViewModel = response.ViewModel;
+
+            SetLinks(vacancyViewModel);
+
+            vacancyViewModel.IsEditable = false;
+
+            return View(vacancyViewModel);
         }
 
         [HttpGet]

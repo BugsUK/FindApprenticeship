@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Candidate
 {
     using System;
+    using Application.Interfaces.Applications;
     using Common.Mediators;
     using Providers;
     using Raa.Common.Factories;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application.Traineeship;
     using Validators;
     using ViewModels;
 
@@ -49,6 +52,20 @@
             var viewModel = _candidateProvider.GetCandidateApplications(candidateId);
 
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApplications.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> GetCandidateApprenticeshipApplication(Guid applicationId)
+        {
+            var viewModel = _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
+
+            return GetMediatorResponse(CandidateMediatorCodes.GetCandidateApprenticeshipApplication.Ok, viewModel);
+        }
+
+        public MediatorResponse<TraineeshipApplicationViewModel> GetCandidateTraineeshipApplication(Guid applicationId)
+        {
+            var viewModel = _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
+
+            return GetMediatorResponse(CandidateMediatorCodes.GetCandidateTraineeshipApplication.Ok, viewModel);
         }
     }
 }

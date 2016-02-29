@@ -67,5 +67,23 @@
 
             return View(response.ViewModel);
         }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Apprenticeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Traineeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateTraineeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
     }
 }

@@ -86,10 +86,10 @@ else
                                             }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { id = application.VacancyId })</td>
+                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
                                             <td class="ta-center">
                                                 <a title="Remove from my applications" class="icon-black archive-successful" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
@@ -128,10 +128,10 @@ else
                                             }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { id = application.VacancyId })</td>
+                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
                                             <td class="ta-center">
                                                 Applied<br />
                                                 @{
@@ -187,10 +187,10 @@ else
                                                 }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
-                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { id = application.VacancyId })</td>
+                                            <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
                                             <td class="ta-center">
                                                 <a title="Remove from my applications" class="icon-black archive-unsuccessful" href="#"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                             </td>
@@ -249,7 +249,7 @@ else
                                         }
                                             else
                                             {
-                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId }, new { @class = "link-unimp" })
 
                                                 if (application.VacancyStatus == VacancyStatuses.Live)
                                                 {
@@ -310,10 +310,10 @@ else
                                         }
                                             else
                                             {
-                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { id = application.VacancyId }, new { @class = "link-unimp" })
+                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId }, new { @class = "link-unimp" })
                                             }
                                         </td>
-                                        <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateTraineeshipApplication, new { id = application.VacancyId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
+                                        <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>
                                         <td class="ta-center">
                                             Applied<br />
                                             @Html.DisplayFor(m => application.DateApplied)

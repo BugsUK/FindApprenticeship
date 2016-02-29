@@ -230,6 +230,7 @@
     <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\EducationViewModel.cs" />
     <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Traineeship\TraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />

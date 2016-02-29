@@ -4,12 +4,19 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.VacancyPosting;
     using Common.ViewModels;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Presentation;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application.Traineeship;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
@@ -20,13 +27,17 @@
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
         private readonly ICandidateApplicationService _candidateApplicationService;
+        private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly IVacancyPostingService _vacancyPostingService;
         private readonly ILogService _logService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, ILogService logService)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, IVacancyPostingService vacancyPostingService, ILogService logService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
             _candidateApplicationService = candidateApplicationService;
+            _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _vacancyPostingService = vacancyPostingService;
             _logService = logService;
         }
 
@@ -72,6 +83,7 @@
                 var traineeshipApplications = traineeshipApplicationSummaries
                     .Select(each => new CandidateTraineeshipApplicationViewModel
                     {
+                        ApplicationId = each.ApplicationId,
                         VacancyId = each.LegacyVacancyId,
                         VacancyStatus = each.VacancyStatus,
                         Title = each.Title,
@@ -97,5 +109,31 @@
                 throw;
             }
         }
+
+        public ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId)
+        {
+            var application = _apprenticeshipApplicationService.GetApplication(applicationId);
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
+
+            return viewModel;
+        }
+
+        public TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId)
+        {
+            throw new NotImplementedException();
+        }
+
+        #region Helpers
+
+        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+            viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+
+            return viewModel;
+        }
+
+        #endregion
     }
 }

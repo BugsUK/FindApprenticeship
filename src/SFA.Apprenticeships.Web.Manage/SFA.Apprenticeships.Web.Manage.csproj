@@ -529,6 +529,9 @@
     <Content Include="Views\AgencyUser\_DashboardHelpDesk.cshtml" />
     <Content Include="Views\Candidate\Search.cshtml" />
     <Content Include="Views\Candidate\Candidate.cshtml" />
+    <Content Include="Views\Vacancy\View.cshtml" />
+    <Content Include="Views\Candidate\Apprenticeship.cshtml" />
+    <Content Include="Views\Candidate\Traineeship.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
