@@ -6,6 +6,5 @@
     [Validator(typeof(ApprenticeshipApplicationViewModelClientValidator))]
     public class ApprenticeshipApplicationViewModel : ApplicationViewModel
     {
-
     }
 }

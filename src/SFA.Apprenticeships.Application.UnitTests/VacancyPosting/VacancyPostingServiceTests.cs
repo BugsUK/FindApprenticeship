@@ -1,14 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
     using System.Threading;
     using Application.VacancyPosting;
     using Domain.Entities.Raa;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.UnitTests.Builder;
+    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
     using Moq;
@@ -23,6 +21,7 @@
         private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
         private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
         private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
+
         private IVacancyPostingService _vacancyPostingService;
 
         private readonly ProviderUser _vacancyManager = new ProviderUser

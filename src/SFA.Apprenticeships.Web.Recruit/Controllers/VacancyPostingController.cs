@@ -123,7 +123,7 @@
                 _vacancyPostingMediator.ClearLocationInformation(vacancyGuid);
             }
 
-            return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer,
+            return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer,
                 new
                 {
                     providerSiteId,
@@ -142,7 +142,7 @@
                 _vacancyPostingMediator.ClearLocationInformation(vacancyGuid);
             }
 
-            return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer,
+            return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer,
                 new
                 {
                     providerSiteId,
@@ -693,7 +693,7 @@
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
-            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, employerId = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, edsUrn = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
             vacancyViewModel.LocationsLink = Url.RouteUrl(RecruitmentRouteNames.AddLocations, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, employerId = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
 
             ModelState.Clear();
@@ -827,7 +827,7 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CloneVacancy.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ComfirmEmployer, new { providerSiteId = response.ViewModel.ProviderSiteId, edsUrn = response.ViewModel.Employer.EdsUrn, vacancyGuid = response.ViewModel.VacancyGuid });
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid });
                 case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:

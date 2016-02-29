@@ -81,6 +81,7 @@
         {
             var application = _apprenticeshipApplicationService.GetApplication(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
+
             return viewModel;
         }
 
@@ -88,6 +89,7 @@
         {
             var application = _apprenticeshipApplicationService.GetApplicationForReview(applicationSelectionViewModel.ApplicationId);
             var viewModel = ConvertToApprenticeshipApplicationViewModel(application, applicationSelectionViewModel);
+
             return viewModel;
         }
 
@@ -96,13 +98,28 @@
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
+        public ApplicationSelectionViewModel AppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+
+            _apprenticeshipApplicationService.AppointCandidate(applicationId);
+
+            return applicationSelectionViewModel;
+        }
+
+        #region Helpers
+
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+
             return viewModel;
         }
+
+        #endregion
     }
 }

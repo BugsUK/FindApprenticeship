@@ -57,7 +57,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -120,6 +120,42 @@
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmSuccessful(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessful(applicationSelectionViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "AppointCandidate")]
+        public ActionResult ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulAppointCandidate(apprenticeshipApplicationViewModel.ApplicationSelection);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                    }
+
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

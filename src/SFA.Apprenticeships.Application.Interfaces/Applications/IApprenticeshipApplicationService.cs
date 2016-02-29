@@ -17,5 +17,7 @@
         ApprenticeshipApplicationDetail GetApplicationForReview(Guid applicationId);
 
         void UpdateApplicationNotes(Guid applicationId, string notes);
+
+        void AppointCandidate(Guid applicationId);
     }
 }

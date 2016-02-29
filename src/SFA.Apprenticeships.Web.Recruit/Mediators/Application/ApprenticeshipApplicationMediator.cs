@@ -39,6 +39,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             try
             {
                 _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok, apprenticeshipApplicationViewModel);
             }
             catch (Exception)
@@ -60,6 +61,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             try
             {
                 _applicationProvider.UpdateApprenticeshipApplicationViewModelNotes(apprenticeshipApplicationViewModel.ApplicationSelection.ApplicationId, apprenticeshipApplicationViewModel.Notes);
+
                 return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok, apprenticeshipApplicationViewModel);
             }
             catch (Exception)
@@ -95,6 +97,24 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
             viewModel.Notes = viewModel.Notes;
             return viewModel;
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessful(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.AppointCandidate(applicationSelectionViewModel);
+
+            var candidateName = applicationViewModel.ApplicantDetails.Name;
+            var message = string.Format(ApplicationViewModelMessages.SuccessfulApplicationFormat, candidateName);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok, viewModel, message, UserMessageLevel.Info);
         }
     }
 }

@@ -57,5 +57,5 @@
             viewModel.DateApplied.Should().Be(source.DateApplied.Value);
             viewModel.Status.Should().Be(source.Status);
         }
-    }
+   }
 }

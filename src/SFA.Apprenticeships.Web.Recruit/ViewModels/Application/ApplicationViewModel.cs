@@ -1,11 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Application
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
+    using Domain.Entities.Applications;
 
     public class ApplicationViewModel
     {
+        public ApplicationStatuses Status { get; set; }
+
+        public DateTime? SuccessfulDateTime { get; set; }
+
+        public DateTime? UnsuccessfulDateTime { get; set; }
+
         public ApplicationSelectionViewModel ApplicationSelection { get; set; }
 
         public ApplicationVacancyViewModel Vacancy { get; set; }
