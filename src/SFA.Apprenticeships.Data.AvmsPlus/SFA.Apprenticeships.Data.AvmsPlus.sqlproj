@@ -885,6 +885,7 @@
     <None Include="Scripts\Data\Reference.EducationLevel.Upsert.sql" />
     <None Include="Scripts\Data\Reference.StandardSector.Upsert.sql" />
     <Build Include="Reference\Reference.StandardSector.sql" />
+    <None Include="Scripts\Data\dbo.VacancyReferralCommentsFieldType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

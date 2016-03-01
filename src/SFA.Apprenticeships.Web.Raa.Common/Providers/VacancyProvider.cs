@@ -18,6 +18,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
@@ -79,7 +80,10 @@
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var employer = _employerService.GetEmployer(vacancy.OwnerPartyId);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
+            viewModel.OwnerParty = _mapper.Map<Employer, VacancyPartyViewModel>(employer);
+            
             viewModel.VacancyGuid = vacancy.VacancyGuid;
             return viewModel;
         }
