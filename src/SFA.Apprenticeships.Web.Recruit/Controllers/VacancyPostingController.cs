@@ -579,7 +579,7 @@
                         });
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
                     var routeName = RecruitmentRouteNames.VacancyQuestions;
-                    if (response.ViewModel.Status == VacancyStatus.RejectedByQA || response.ViewModel.ComeFromPreview)
+                    if (response.ViewModel.Status == VacancyStatus.Referred || response.ViewModel.ComeFromPreview)
                     {
                         routeName = RecruitmentRouteNames.PreviewVacancy;
                     }

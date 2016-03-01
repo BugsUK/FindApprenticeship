@@ -3,28 +3,29 @@
     using System;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
-    using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
+    using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
 
     //TODO: This is only used by FAA for conversions - move to that project when found
     public static class VacancyExtensions
     {
-        public static Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel GetApprenticeshipLevel(this ApprenticeshipLevel apprenticeshipLevel)
+        public static ApprenticeshipLevel GetApprenticeshipLevel(
+            this Domain.Entities.Raa.Vacancies.ApprenticeshipLevel apprenticeshipLevel)
         {
             switch (apprenticeshipLevel)
             {
-                case ApprenticeshipLevel.Unknown:
-                    return Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel.Unknown;
-                case ApprenticeshipLevel.Intermediate:
-                    return Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel.Intermediate;
-                case ApprenticeshipLevel.Advanced:
-                    return Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel.Advanced;
-                case ApprenticeshipLevel.Higher:
-                    return Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel.Higher;
-                case ApprenticeshipLevel.FoundationDegree:
-                case ApprenticeshipLevel.Degree:
-                case ApprenticeshipLevel.Masters:
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Unknown:
+                    return ApprenticeshipLevel.Unknown;
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Intermediate:
+                    return ApprenticeshipLevel.Intermediate;
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Advanced:
+                    return ApprenticeshipLevel.Advanced;
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Higher:
+                    return ApprenticeshipLevel.Higher;
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.FoundationDegree:
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Degree:
+                case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Masters:
                     //TODO: Check what degree should map to
-                    return Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel.Higher;
+                    return ApprenticeshipLevel.Higher;
                 default:
                     throw new ArgumentException("Apprenticeship Level: " + apprenticeshipLevel + " was not recognized");
             }
@@ -35,24 +36,24 @@
             return LegacyWageType.Text;
         }
 
-        public static Domain.Entities.Vacancies.VacancyStatuses GetVacancyStatuses(this VacancyStatus VacancyStatuses)
+        public static VacancyStatuses GetVacancyStatuses(this VacancyStatus vacancyStatuses)
         {
-            switch (VacancyStatuses)
+            switch (vacancyStatuses)
             {
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.Unknown:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Unknown;
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.Draft:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Unavailable;
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.PendingQA:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Unavailable;
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.Live:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Live;
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.ReservedForQA:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Unavailable;
-                case Domain.Entities.Raa.Vacancies.VacancyStatus.RejectedByQA:
-                    return Domain.Entities.Vacancies.VacancyStatuses.Unavailable;
+                case VacancyStatus.Unknown:
+                    return VacancyStatuses.Unknown;
+                case VacancyStatus.Draft:
+                    return VacancyStatuses.Unavailable;
+                case VacancyStatus.PendingQA:
+                    return VacancyStatuses.Unavailable;
+                case VacancyStatus.Live:
+                    return VacancyStatuses.Live;
+                case VacancyStatus.ReservedForQA:
+                    return VacancyStatuses.Unavailable;
+                case VacancyStatus.Referred:
+                    return VacancyStatuses.Unavailable;
                 default:
-                    throw new ArgumentException("Provider Vacancy Status: " + VacancyStatuses + " was not recognized");
+                    throw new ArgumentException("Provider Vacancy Status: " + vacancyStatuses + " was not recognized");
             }
         }
     }

@@ -60,7 +60,7 @@
         [TestCase(VacancyStatus.Closed)]
         [TestCase(VacancyStatus.Draft)]
         [TestCase(VacancyStatus.PendingQA)]
-        [TestCase(VacancyStatus.RejectedByQA)]
+        [TestCase(VacancyStatus.Referred)]
         [TestCase(VacancyStatus.ReservedForQA)]
         [TestCase(VacancyStatus.Unknown)]
         public void DoNothingWithVacancyThatIsNotLive(VacancyStatus status)

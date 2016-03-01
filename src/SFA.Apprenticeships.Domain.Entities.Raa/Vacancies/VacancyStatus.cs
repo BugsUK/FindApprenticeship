@@ -5,13 +5,16 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
     {
         Unknown = 0,
         Draft = 1,
-        PendingQA = 2,
-        Live = 3,
-        ReservedForQA = 4,
-        RejectedByQA = 5,
+        Live = 2,
+        Referred = 3,
+        Deleted = 4,
+        Submitted = 5,
         Closed = 6,
-        Completed = 7,
-        Withdrawn = 8,
-        ParentVacancy = 9
+        Withdrawn = 7,
+        Completed = 8,
+        PostedInError = 9,
+        PendingQA = 10,
+        ReservedForQA = 11,
+        ParentVacancy = 12 //TODO probably could be removed
     }
 }

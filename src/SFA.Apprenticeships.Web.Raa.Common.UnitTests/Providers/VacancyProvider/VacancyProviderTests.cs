@@ -498,7 +498,7 @@
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == VacancyStatus.RejectedByQA &&
+                                av.Status == VacancyStatus.Referred &&
                                 av.QAUserName == null)));
         }
 

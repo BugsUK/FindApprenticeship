@@ -299,7 +299,7 @@
         public MediatorResponse<VacancyPartyViewModel> CloneVacancy(int vacancyReferenceNumber)
         {
             var existingVacancy = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
-            if (existingVacancy.Status == VacancyStatus.RejectedByQA)
+            if (existingVacancy.Status == VacancyStatus.Referred)
             {
                 return GetMediatorResponse<VacancyPartyViewModel>(VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState);
             }
@@ -786,7 +786,7 @@
             var viewModelToValidate = _vacancyPostingProvider.GetVacancy(vacancyReferenceNumber);
             viewModelToValidate.ResubmitOption = resubmitOptin;
             
-            var resubmission = viewModelToValidate.Status == Domain.Entities.Raa.Vacancies.VacancyStatus.RejectedByQA;
+            var resubmission = viewModelToValidate.Status == VacancyStatus.Referred;
 
             var validationResult = _vacancyViewModelValidator.Validate(viewModelToValidate, ruleSet: RuleSets.ErrorsAndResubmission);
 

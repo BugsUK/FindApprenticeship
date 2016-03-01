@@ -240,26 +240,21 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
         
         public List<DomainVacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
-            return new List<DomainVacancy>();
+            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
-            //            Dapper.SqlMapper.AddTypeMap(typeof(string), System.Data.DbType.AnsiString);
-            //            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+            var dbVacancies = _getOpenConnection.Query<Vacancy>(@"
+            SELECT *
+            FROM   dbo.Vacancy
+            WHERE  VacancyStatusId IN @VacancyStatusCodeIds", new
+            {
+                VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
+            });
 
-            //            var statuses = desiredStatuses.Select(_mapper.Map<ProviderVacancyStatuses, string>).ToList();
 
-            //            var dbVacancies = _getOpenConnection.Query<Repositories.Sql.Schemas.Vacancy.Entities.Vacancy>(@"
-            //SELECT *
-            //FROM   Vacancy.Vacancy
-            //WHERE  Vacancy.VacancyStatusCode IN @VacancyStatusCodes", new
-            //            {
-            //                VacancyStatusCodes = statuses
-            //            });
+            _logger.Debug(
+                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
 
-            //            // throw new NotSupportedException("This is likely to use excessive memory. Return type should be IEnumerable.");
-            //            _logger.Debug(
-            //                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
-
-            //            return dbVacancies.Select(MapVacancy).ToList();
+            return dbVacancies.Select(MapVacancy).ToList();
         }
 
         public List<DomainVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)

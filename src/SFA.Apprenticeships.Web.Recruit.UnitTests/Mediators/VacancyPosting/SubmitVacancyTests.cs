@@ -27,7 +27,7 @@
         [Test]
         public void ShouldResubmitVacancy()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
@@ -42,7 +42,7 @@
         [Test]
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);

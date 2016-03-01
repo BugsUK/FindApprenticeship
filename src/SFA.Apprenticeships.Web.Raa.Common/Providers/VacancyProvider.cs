@@ -620,7 +620,7 @@
 
             var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
             var submitted = vacancies.Where(v => v.Status == VacancyStatus.PendingQA || v.Status == VacancyStatus.ReservedForQA).ToList();
-            var rejected = vacancies.Where(v => v.Status == VacancyStatus.RejectedByQA).ToList();
+            var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
             //TODO: Agree on closing soon range and make configurable
             var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
@@ -919,7 +919,7 @@
         public void RejectVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            vacancy.Status = VacancyStatus.RejectedByQA;
+            vacancy.Status = VacancyStatus.Referred;
             vacancy.QAUserName = null;
 
             _vacancyPostingService.SaveVacancy(vacancy);

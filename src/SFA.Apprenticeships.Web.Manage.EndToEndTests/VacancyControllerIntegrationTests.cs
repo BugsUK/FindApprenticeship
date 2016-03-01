@@ -547,7 +547,7 @@
                 Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
-            vacancyInDb.Status.Should().Be(VacancyStatus.RejectedByQA);
+            vacancyInDb.Status.Should().Be(VacancyStatus.Referred);
         }
 
         [Test, Category("Integration")]

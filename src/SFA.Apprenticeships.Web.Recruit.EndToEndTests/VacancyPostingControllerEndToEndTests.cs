@@ -262,7 +262,7 @@
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
 
-            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title, VacancyStatus.RejectedByQA);
+            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title, VacancyStatus.Referred);
 
             InitializeDatabaseWithVacancy(vacancy);
 

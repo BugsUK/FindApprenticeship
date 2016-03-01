@@ -13,13 +13,13 @@
         public static bool IsStateEditable(this VacancyStatus status)
         {
             return status == VacancyStatus.Unknown || status == VacancyStatus.Draft ||
-                   status == VacancyStatus.RejectedByQA;
+                   status == VacancyStatus.Referred;
         }
 
         public static bool IsStateReviewable(this VacancyStatus status)
         {
             return status == VacancyStatus.PendingQA || status == VacancyStatus.ReservedForQA || 
-                   status == VacancyStatus.RejectedByQA;
+                   status == VacancyStatus.Referred;
         }
 
         public static bool IsStateInQa(this VacancyStatus status)

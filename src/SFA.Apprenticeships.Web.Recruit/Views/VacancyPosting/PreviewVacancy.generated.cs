@@ -143,7 +143,7 @@ WriteLiteral(">Return to recruitment home</a>\r\n");
             #line 22 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
                                                           
 
-            if (Model.Status == VacancyStatus.RejectedByQA)
+            if (Model.Status == VacancyStatus.Referred)
             {
                 Model.ResubmitOption = false;
                 
@@ -198,7 +198,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 37 "..\..\Views\VacancyPosting\PreviewVacancy.cshtml"
-                     if (Model.Status == VacancyStatus.RejectedByQA)
+                     if (Model.Status == VacancyStatus.Referred)
                     {
 
             

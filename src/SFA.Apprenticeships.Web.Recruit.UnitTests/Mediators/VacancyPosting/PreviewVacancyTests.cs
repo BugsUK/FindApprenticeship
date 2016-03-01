@@ -86,7 +86,7 @@
         [TestCase(VacancyStatus.Draft)]
         [TestCase(VacancyStatus.PendingQA)]
         [TestCase(VacancyStatus.ReservedForQA)]
-        [TestCase(VacancyStatus.RejectedByQA)]
+        [TestCase(VacancyStatus.Referred)]
         public void CannotHaveApplications(VacancyStatus status)
         {
             //Arrange
