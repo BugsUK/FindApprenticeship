@@ -1,4 +1,4 @@
-﻿MERGE INTO [Reference].[Sector] AS Target 
+﻿MERGE INTO [Reference].[StandardSector] AS Target 
 USING (VALUES 
   (1, N'Actuarial'), 
   (2, N'Aerospace'), 
@@ -30,17 +30,15 @@ USING (VALUES
   (28, N'Non-destructive Testing'),
   (29, N'Energy Management')
 ) 
-AS Source (SectorId, FullName) 
-ON Target.SectorId = Source.SectorId 
+AS Source (StandardSectorId, FullName) 
+ON Target.StandardSectorId = Source.StandardSectorId 
 -- update matched rows 
 WHEN MATCHED THEN 
 UPDATE SET FullName = Source.FullName 
 -- insert new rows 
 WHEN NOT MATCHED BY TARGET THEN 
-INSERT (SectorId, FullName) 
-VALUES (SectorId, FullName) 
+INSERT (StandardSectorId, FullName) 
+VALUES (StandardSectorId, FullName) 
 -- delete rows that are in the target but not the source 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;
-
-SELECT * FROM Reference.Sector

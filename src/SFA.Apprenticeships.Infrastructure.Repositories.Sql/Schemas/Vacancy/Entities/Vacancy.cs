@@ -245,5 +245,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         // public string ContactDetailsComment { get; set; } // Not considered in AVMS
 
         public bool EditedInRaa { get; set; }
+
+        public int? SectorId { get; set; }
     }
 }

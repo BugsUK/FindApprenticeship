@@ -66,6 +66,7 @@
 	[QAUserName]					   NVARCHAR (MAX)	NULL,
 	[TrainingTypeId]				   INT				NULL,
 	[VacancyTypeId]					   INT				NULL,
+	[SectorId]						   INT				NULL,
 	[EditedInRaa]					   BIT				NOT NULL
 	
 

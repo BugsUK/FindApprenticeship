@@ -876,15 +876,15 @@
     <None Include="Scripts\Data\dbo.OccupationStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql" />
     <Build Include="Schemas\Reference.sql" />
-    <None Include="Scripts\Data\Reference.Sector.Upsert.sql" />
     <None Include="Scripts\Data\Reference.Standard.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql" />
     <None Include="Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql" />
     <Build Include="Reference\Reference.Standard.sql" />
-    <Build Include="Reference\Reference.Level.sql" />
-    <Build Include="Reference\Reference.Sector.sql" />
-    <None Include="Scripts\Data\Reference.Level.Upsert.sql" />
+    <Build Include="Reference\Reference.EducationLevel.sql" />
+    <None Include="Scripts\Data\Reference.EducationLevel.Upsert.sql" />
+    <None Include="Scripts\Data\Reference.StandardSector.Upsert.sql" />
+    <Build Include="Reference\Reference.StandardSector.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

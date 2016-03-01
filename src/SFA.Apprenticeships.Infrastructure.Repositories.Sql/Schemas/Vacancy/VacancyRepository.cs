@@ -13,9 +13,11 @@
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
+        private const int TraineeshipFrameworkId = 999;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
@@ -102,15 +104,14 @@
         {
             if (dbVacancy == null)
                 return null;
-
-            // Locations and providersiteemployerlink
-
+            
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
             MapAdditionalQuestions(dbVacancy, result);
             MapTextFields(dbVacancy, result);
             MapIsEmployerLocationMainApprenticeshipLocation(dbVacancy, result);
             MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
+            MapSectorId(dbVacancy, result);
 
             return result;
         }
@@ -135,15 +136,18 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
             {
-                result.ApprenticeshipLevel =
-                    (ApprenticeshipLevel) _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
-SELECT EducationLevel
-FROM   dbo.ApprenticeshipType
-WHERE  ApprenticeshipTypeId = @ApprenticeshipTypeId",
+                var educationLevelCodeName =
+                    _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+SELECT el.CodeName
+FROM   Reference.EducationLevel as el JOIN dbo.ApprenticeshipType as at ON el.EducationLevelId = at.EducationLevelId
+WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
                         new
                         {
                             ApprenticeshipTypeId = dbVacancy.ApprenticeshipType.Value
                         }).Single();
+
+                result.ApprenticeshipLevel =
+                    (ApprenticeshipLevel) Enum.Parse(typeof (ApprenticeshipLevel), educationLevelCodeName);
             }
         }
 
@@ -159,6 +163,25 @@ WHERE  VacancyLocationTypeId = @VacancyLocationTypeId",
                 }).Single();
 
             result.IsEmployerLocationMainApprenticeshipLocation = locationTypeCodeName != "MUL"; // Probably is not true
+        }
+
+        private void MapSectorId(Vacancy dbVacancy, DomainVacancy result)
+        {
+            if (dbVacancy.SectorId.HasValue)
+            {
+                result.SectorCodeName = _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+SELECT CodeName
+FROM   dbo.ApprenticeshipOccupation
+WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
+                    new
+                    {
+                        ApprenticeshipOccupationId = dbVacancy.SectorId
+                    }).Single();
+            }
+            else
+            {
+                result.SectorCodeName = null;
+            }
         }
 
         private void MapAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
@@ -382,6 +405,26 @@ FETCH NEXT @PageSize ROWS ONLY
             PopulateVacancyLocationTypeId(entity, dbVacancy);
             PopulateApprenticeshipTypeId(entity, dbVacancy);
             PopulateFrameworkId(entity, dbVacancy);
+            PopulateSectorId(entity, dbVacancy);
+        }
+
+        private void PopulateSectorId(DomainVacancy entity, Vacancy dbVacancy)
+        {
+            if (!string.IsNullOrWhiteSpace(entity.SectorCodeName))
+            {
+                dbVacancy.SectorId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+SELECT ApprenticeshipOccupationId
+FROM   dbo.ApprenticeshipOccupation
+WHERE  CodeName = @SectorCodeName",
+                    new
+                    {
+                        entity.SectorCodeName
+                    }).Single();
+            }
+            else
+            {
+                dbVacancy.SectorId = null;
+            }
         }
 
         private void PopulateFrameworkId(DomainVacancy entity, Vacancy dbVacancy)
@@ -394,8 +437,17 @@ FROM   dbo.ApprenticeshipFramework
 WHERE  CodeName = @FrameworkCodeName",
                     new
                     {
-                        FrameworkCodeName = entity.FrameworkCodeName
+                        entity.FrameworkCodeName
                     }).Single();
+            }
+            else
+            {
+                dbVacancy.ApprenticeshipFrameworkId = null;
+            }
+
+            if (entity.VacancyType == VacancyType.Traineeship)
+            {
+                dbVacancy.ApprenticeshipFrameworkId = TraineeshipFrameworkId;
             }
         }
 
@@ -444,11 +496,11 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
         {
             dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
 SELECT ApprenticeshipTypeId
-FROM   dbo.ApprenticeshipType
-WHERE  EducationLevel = @EducationLevel",
+FROM   dbo.ApprenticeshipType at JOIN Reference.EducationLevel el ON at.EducationLevelId = el.EducationLevelId
+WHERE  el.CodeName = @EducationLevel",
                 new
                 {
-                    EducationLevel = entity.ApprenticeshipLevel
+                    EducationLevel = (int)entity.ApprenticeshipLevel
                 }).Single(); // There's a better way to do this?
         }
 

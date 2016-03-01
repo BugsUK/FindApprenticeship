@@ -69,15 +69,15 @@ USING (VALUES
   (67, 28, 67, N'Non-destructive Testing Engineering Technician', '3'),
   (68, 29, 68, N'Junior Energy Manager', '3')
 ) 
-AS Source (StandardId, SectorId, LarsCode, FullName, LevelCode) 
+AS Source (StandardId, StandardSectorId, LarsCode, FullName, LevelCode) 
 ON Target.StandardId = Source.StandardId 
 -- update matched rows 
 WHEN MATCHED THEN 
-UPDATE SET SectorId = Source.SectorId, LarsCode = Source.LarsCode, FullName = Source.FullName, LevelCode = Source.LevelCode
+UPDATE SET StandardSectorId = Source.StandardSectorId, LarsCode = Source.LarsCode, FullName = Source.FullName, LevelCode = Source.LevelCode
 -- insert new rows 
 WHEN NOT MATCHED BY TARGET THEN 
-INSERT (StandardId, SectorId, LarsCode, FullName, LevelCode) 
-VALUES (StandardId, SectorId, LarsCode, FullName, LevelCode) 
+INSERT (StandardId, StandardSectorId, LarsCode, FullName, LevelCode) 
+VALUES (StandardId, StandardSectorId, LarsCode, FullName, LevelCode) 
 -- delete rows that are in the target but not the source 
 WHEN NOT MATCHED BY SOURCE THEN 
 DELETE;

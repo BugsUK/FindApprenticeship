@@ -19,6 +19,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.VacancyLocationType.Upsert.sql"
 :r ".\Scripts\Data\dbo.WageUnit.Upsert.sql"
 :r ".\Scripts\Data\dbo.DurationType.Upsert.sql"
+:r ".\Scripts\Data\Reference.EducationLevel.Upsert.sql" -- Needs to be before ApprenticeshipType
 :r ".\Scripts\Data\dbo.ApprenticeshipType.Upsert.sql"
 :r ".\Scripts\Data\dbo.TrainingType.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyStatusType.Upsert.sql"
@@ -26,10 +27,10 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.VacancyType.Upsert.sql"
 :r ".\Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql"
 :r ".\Scripts\Data\dbo.ApprenticeshipFrameworkStatusType.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql"
 :r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
-:r ".\Scripts\Data\Reference.Sector.Upsert.sql"
-:r ".\Scripts\Data\Reference.Level.Upsert.sql"
+:r ".\Scripts\Data\Reference.StandardSector.Upsert.sql"
 :r ".\Scripts\Data\Reference.Standard.Upsert.sql"
 
 
