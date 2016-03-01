@@ -95,7 +95,7 @@ WriteLiteral(">");
 
             
             #line 10 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                Write(Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer));
+                                                Write(Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer ?? "-"));
 
             
             #line default
@@ -144,7 +144,7 @@ WriteLiteral(">");
 
             
             #line 17 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                Write(Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer));
+                                                Write(Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer ?? "-"));
 
             
             #line default

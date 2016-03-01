@@ -30,9 +30,23 @@
         <p class="text" id="vacancy-summary">@Model.Vacancy.ShortDescription</p>
     </div>
     <div class="grid grid-1-3 para-btm-margin">
-        <p class="small-btm-margin">This is a submitted application.</p>
+        @if (Model.Status == ApplicationStatuses.Draft)
+        {
+            <p class="small-btm-margin">This is a draft application.</p>
+        }
+        else
+        {
+            <p class="small-btm-margin">This is a submitted application.</p>
+        }
         <p class="small-btm-margin">
-            Candidate applied on @Html.DisplayFor(m => m.DateApplied, "Date").
+            @if (Model.Status == ApplicationStatuses.Draft)
+            {
+                <span>Draft created on @Html.DisplayFor(m => m.DateCreated, "Date").</span>
+            }
+            else
+            {
+                <span>Candidate applied on @Html.DisplayFor(m => m.DateApplied, "Date").</span>
+            }
             @if (Model.Status == ApplicationStatuses.Successful)
             {
                 <span class="inl-block">This application was successful.</span>
@@ -47,7 +61,7 @@
             }
         </p>
         <p class="hide-print">
-            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "return-to-my-applications" })
+            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new {id = Model.ApplicantDetails.CandidateId}, new {@class = "return-to-my-applications"})
         </p>
     </div>
 </div>

@@ -70,7 +70,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                 Write(Model.Institution);
+                                                  Write(Model.Institution ?? "-");
 
             
             #line default
@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 15 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                     Write(Model.FromYear);
+                                                      Write(Model.FromYear == 0 ? "-" : Model.FromYear.ToString());
 
             
             #line default
@@ -128,7 +128,7 @@ WriteLiteral(">");
 
             
             #line 19 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                   Write(Model.ToYear);
+                                                    Write(Model.ToYear == 0 ? "-" : Model.ToYear.ToString());
 
             
             #line default

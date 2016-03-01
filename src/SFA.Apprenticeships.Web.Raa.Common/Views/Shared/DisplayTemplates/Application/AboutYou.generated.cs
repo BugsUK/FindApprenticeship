@@ -70,7 +70,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                               Write(Model.Strengths);
+                                                Write(Model.Strengths ?? "-");
 
             
             #line default
@@ -96,7 +96,7 @@ WriteLiteral(">");
 
             
             #line 13 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                                  Write(Model.Improvements);
+                                                   Write(Model.Improvements ?? "-");
 
             
             #line default
@@ -121,7 +121,7 @@ WriteLiteral(">");
 
             
             #line 17 "..\..\Views\Shared\DisplayTemplates\Application\AboutYou.cshtml"
-                                                           Write(Model.HobbiesAndInterests);
+                                                            Write(Model.HobbiesAndInterests ?? "-");
 
             
             #line default
