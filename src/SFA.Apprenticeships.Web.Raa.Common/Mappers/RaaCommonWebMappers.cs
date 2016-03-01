@@ -88,7 +88,8 @@
             Mapper.CreateMap<Address, AddressViewModel>();
             Mapper.CreateMap<Domain.Entities.Locations.GeoPoint, GeoPointViewModel>();
 
-            Mapper.CreateMap<Vacancy, ApplicationVacancyViewModel>();
+            Mapper.CreateMap<Vacancy, ApplicationVacancyViewModel>()
+                .ForMember(v => v.EmployerName, opt => opt.Ignore());
 
             Mapper.CreateMap<ApprenticeshipApplicationDetail, ApplicantDetailsViewModel>()
                 .ForMember(v => v.Name, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()))

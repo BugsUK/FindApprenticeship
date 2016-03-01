@@ -5,6 +5,8 @@
     using System.Linq;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Candidates;
     using Domain.Entities.Locations;
@@ -29,7 +31,7 @@
         {
             _candidateSearchService = new Mock<ICandidateSearchService>();
 
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<ILogService>().Object);
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<IProviderService>().Object, new Mock<IEmployerService>().Object, new Mock<ILogService>().Object);
         }
 
         [Test]
