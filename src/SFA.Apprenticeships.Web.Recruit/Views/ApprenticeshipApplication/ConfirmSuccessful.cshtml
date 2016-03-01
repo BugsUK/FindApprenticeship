@@ -26,7 +26,7 @@
             <div class="form-group">
                 <button type="submit" class="button" name="AppointCandidate" value="ConfirmSuccessfulAppointCandidate">Confirm</button>
                 <p class="med-btm-margin">
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, new {Model.ApplicationSelection.ApplicationId})
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection)
                 </p>
             </div>
         </section>
