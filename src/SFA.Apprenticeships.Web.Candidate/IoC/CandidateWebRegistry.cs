@@ -27,6 +27,7 @@
     using Application.Vacancy.SiteMap;
     using Application.VacancyPosting;
     using Common.Configuration;
+    using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using SFA.Infrastructure.Interfaces;
@@ -94,6 +95,8 @@
                 .Ctor<IMapper>().Named("TraineeshipCandidateWebMappers");
 
             For<ISiteMapVacancyProvider>().Use<SiteMapVacancyProvider>();
+
+            For<ICandidateApplicationsProvider>().Use<CandidateApplicationsProvider>();
         }
 
         private void RegisterServices()
@@ -102,6 +105,7 @@
             For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
             For<ICandidateService>().Use<CandidateService>();
+            For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
             For<ICommunicationService>().Use<CommunicationService>();
@@ -180,6 +184,7 @@
             For<IUnsubscribeStrategy>().Use<UnsubscribeStrategy>();
             For<IApprenticeshipVacancySuggestionsStrategy>().Use<ApprenticeshipVacancySuggestionsStrategy>();
             For<IGetCandidateByUsernameStrategy>().Use<GetCandidateByUsernameStrategy>();
+            For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);

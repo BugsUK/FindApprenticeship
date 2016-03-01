@@ -102,7 +102,7 @@
                                 </td>
                                 <td>@candidate.DateOfBirth.ToDateOfBirthString()</td>
                                 <td>
-                                    <a href="#">Select candidate</a>
+                                    @Html.RouteLink("Select candidate", ManagementRouteNames.ViewCandidate, new { id = candidate.Id })
                                 </td>
                             </tr>
                         }

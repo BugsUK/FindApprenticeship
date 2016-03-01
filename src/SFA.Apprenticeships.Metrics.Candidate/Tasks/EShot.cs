@@ -74,7 +74,7 @@
             var textWriter = new StreamWriter(fileName);
             var csv = new CsvWriter(textWriter);
             csv.Configuration.CultureInfo = CultureInfo.GetCultureInfo("en-GB");
-            csv.WriteRecords(eShotMetrics.Values.Where(m => m.AllowMarketingEmails || m.AllowMarketingEmails));
+            csv.WriteRecords(eShotMetrics.Values.Where(m => m.AllowMarketingEmails || m.AllowMarketingTexts));
             textWriter.Flush();
             textWriter.Close();
         }

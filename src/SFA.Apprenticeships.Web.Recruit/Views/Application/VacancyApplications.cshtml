@@ -1,7 +1,7 @@
 ﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.ViewModels.Application
-@using SFA.Apprenticeships.Web.Recruit.ViewModels.Application.Apprenticeship
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
+
 @model VacancyApplicationsViewModel
 
 @{
@@ -51,36 +51,46 @@
             <div class="panel-indent text">
                 @{
                     var daysTillClose = (Model.ClosingDate - DateTime.UtcNow).Days;
+
                     if (daysTillClose == 0)
                     {
-                        <p>This vacancy is closing today.</p>
+                        <p>This vacancy is closing today</p>
                     }
                     if (daysTillClose == 1)
                     {
-                        <p>This vacancy is due to close in 1 day.</p>
+                        <p>This vacancy is due to close in 1 day</p>
                     }
                     if (daysTillClose > 1 && daysTillClose <= 5)
                     {
-                        <p>This vacancy is due to close in @daysTillClose days.</p>
+                        <p>This vacancy is due to close in @daysTillClose days</p>
                     }
+                }
+
+                @if (Model.SuccessfulApplicationsCount == 1)
+                {
+                    <p>You've made 1 candidate successful</p>
+                }
+                else if (Model.SuccessfulApplicationsCount > 1)
+                {
+                    <p>You've made @Model.SuccessfulApplicationsCount candidates successful</p>
                 }
 
                 @if (Model.UnsuccessfulApplicationsCount == 1)
                 {
-                    <p>You've rejected 1 application.</p>
+                    <p>You've rejected 1 application</p>
                 }
                 else if (Model.UnsuccessfulApplicationsCount > 1)
                 {
-                    <p>You've rejected @Model.UnsuccessfulApplicationsCount applications.</p>
+                    <p>You've rejected @Model.UnsuccessfulApplicationsCount applications</p>
                 }
 
                 @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)
                 {
-                    <p>There is still 1 application to send an outcome to.</p>
+                    <p>There is still 1 application to send a decision to</p>
                 }
                 else if (Model.NewApplicationsCount + Model.ViewedApplicationsCount > 1)
                 {
-                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send an outcome to.</p>
+                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send a decision to</p>
                 }
             </div>
         </section>

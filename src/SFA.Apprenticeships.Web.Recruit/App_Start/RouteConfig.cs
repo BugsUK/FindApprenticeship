@@ -200,7 +200,7 @@
                 );
 
             routes.MapRoute(
-                name: RecruitmentRouteNames.ComfirmEmployer,
+                name: RecruitmentRouteNames.ConfirmEmployer,
                 url: "vacancy/employer/confirm",
                 defaults: new {controller = "VacancyPosting", action = "ConfirmEmployer"}
                 );
@@ -283,8 +283,19 @@
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
                );
 
-            routes.LowercaseUrls = true;
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication,
+               url: "application/confirmsuccessful",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessful" }
+               );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication,
+               url: "application/confirmunsuccessful",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessful" }
+               );
+
+            routes.LowercaseUrls = true;
         }
     }
 }

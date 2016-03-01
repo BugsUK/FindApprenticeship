@@ -15,5 +15,7 @@
         public DateTime? UpdatedDateTime { get; set; }
 
         public string Username { get; set; }
+
+        public string RoleId { get; set; }
     }
 }

@@ -100,6 +100,18 @@
                 //SubCategoryCode = vacancy.FrameworkCodeName
             };
 
+            // TODO: need to remove this hack.
+            if (detail.VacancyAddress == null)
+            {
+                detail.VacancyAddress = new Address
+                {
+                    AddressLine1 = "Skills Funding Agency",
+                    AddressLine2 = "Quinton Road",
+                    AddressLine3 = "Coventry",
+                    Postcode = "CV1 2WT"                    
+                };
+            }
+
             if (detail.VacancyAddress.GeoPoint == null)
             {
                 //TODO: Store geopoints for employers

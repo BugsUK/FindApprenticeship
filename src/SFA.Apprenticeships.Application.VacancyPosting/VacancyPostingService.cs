@@ -10,6 +10,7 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
 

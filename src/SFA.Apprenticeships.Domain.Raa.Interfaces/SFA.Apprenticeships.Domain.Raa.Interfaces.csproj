@@ -89,7 +89,6 @@
     <Compile Include="Repositories\IProviderRepository.cs" />
     <Compile Include="Repositories\IVacancyLocationRepository.cs" />
     <Compile Include="Repositories\IVacancyPartyRepository.cs" />
-    <Compile Include="Repositories\IReferenceNumberRepository.cs" />
     <Compile Include="Repositories\IVacancyRepository.cs" />
     <Compile Include="Repositories\IEmployerRepository.cs" />
     <Compile Include="Repositories\IProviderUserRepository.cs" />

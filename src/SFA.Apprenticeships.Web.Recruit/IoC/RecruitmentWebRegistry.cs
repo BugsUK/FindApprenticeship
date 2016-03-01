@@ -26,7 +26,6 @@
     using Mediators.Provider;
     using Mediators.ProviderUser;
     using Mediators.VacancyPosting;
-    using Providers;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
     using StructureMap;

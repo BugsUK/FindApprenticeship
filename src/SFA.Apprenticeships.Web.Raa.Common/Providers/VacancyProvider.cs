@@ -80,10 +80,11 @@
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var employer = _employerService.GetEmployer(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            viewModel.OwnerParty = _mapper.Map<Employer, VacancyPartyViewModel>(employer);
-            
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            viewModel.OwnerParty = vacancyParty.Convert(employer);
+
             viewModel.VacancyGuid = vacancy.VacancyGuid;
             return viewModel;
         }
@@ -1202,7 +1203,7 @@
             if (vacancy != null)
             {
                 vacancy.AdditionalLocationInformation = null;
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
                 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }

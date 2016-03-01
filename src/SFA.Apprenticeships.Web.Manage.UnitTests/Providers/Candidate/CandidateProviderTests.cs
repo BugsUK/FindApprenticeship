@@ -13,6 +13,7 @@
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     [TestFixture]
@@ -26,7 +27,7 @@
         {
             _candidateSearchService = new Mock<ICandidateSearchService>();
 
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers());
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<ILogService>().Object);
         }
 
         [Test]

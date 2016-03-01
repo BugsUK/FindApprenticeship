@@ -30,5 +30,9 @@
         //Helpdesk
         public const string Candidates = "Candidates";
         public const string SearchCandidates = "SearchCandidates";
+        public const string ViewCandidate = "ViewCandidate";
+        public const string ViewCandidateApprenticeshipApplication = "ViewCandidateApprenticeshipApplication";
+        public const string ViewCandidateTraineeshipApplication = "ViewCandidateTraineeshipApplication";
+        public const string ViewVacancy = "ViewVacancy";
     }
 }

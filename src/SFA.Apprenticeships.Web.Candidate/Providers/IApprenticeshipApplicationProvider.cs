@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using FluentValidation.Results;
     using ViewModels.Applications;
     using ViewModels.MyApplications;
     using ViewModels.VacancySearch;

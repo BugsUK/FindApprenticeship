@@ -357,6 +357,7 @@
     <Compile Include="Views\Dashboard\DashboardApprenticeshipTests.cs" />
     <Compile Include="Views\Dashboard\DashboardTestsHelper.cs" />
     <Compile Include="Views\Dashboard\DashboardTraineeshipTests.cs" />
+    <Compile Include="Views\Dashboard\MyApplicationsViewBuilder.cs" />
     <Compile Include="Views\Dashboard\IndexViewBuilder.cs" />
     <Compile Include="Views\Dashboard\MyApplicationsViewModelBuilder.cs" />
     <Compile Include="Views\Dashboard\Us636ViewSubmittedApplicationsTests.cs" />

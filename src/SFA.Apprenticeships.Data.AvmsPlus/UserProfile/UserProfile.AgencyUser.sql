@@ -5,6 +5,7 @@
     [CreatedDateTime] DATETIME2 NOT NULL, 
     [UpdatedDateTime] DATETIME2 NULL, 
     [Username] NVARCHAR(100) NOT NULL, 
+    [RoleId] NVARCHAR(20) NULL, 
     CONSTRAINT PK_UserProfile_AgencyUser PRIMARY KEY (AgencyUserId)
 )
 

@@ -4,7 +4,6 @@ using SFA.Infrastructure.Interfaces;
 using SFA.Apprenticeships.Web.Common.Converters;
 using SFA.Apprenticeships.Web.Raa.Common.Configuration;
 using SFA.Apprenticeships.Web.Raa.Common.Converters;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy;
 using SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers

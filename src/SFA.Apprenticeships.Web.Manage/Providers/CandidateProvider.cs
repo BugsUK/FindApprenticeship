@@ -7,7 +7,9 @@
     using Application.Interfaces.Candidates;
     using Common.ViewModels;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
+    using Infrastructure.Presentation;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
@@ -17,11 +19,15 @@
 
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
+        private readonly ICandidateApplicationService _candidateApplicationService;
+        private readonly ILogService _logService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, ILogService logService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
+            _candidateApplicationService = candidateApplicationService;
+            _logService = logService;
         }
 
         public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel)
@@ -43,6 +49,53 @@
             };
 
             return results;
+        }
+
+        public CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId)
+        {
+            _logService.Debug("Calling CandidateApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
+                candidateId);
+
+            try
+            {
+                var candidate = _candidateApplicationService.GetCandidate(candidateId);
+                var candidateName =
+                    new Name(candidate.RegistrationDetails.FirstName, candidate.RegistrationDetails.MiddleNames,
+                        candidate.RegistrationDetails.LastName).GetDisplayText();
+
+                var apprenticeshipApplicationSummaries = _candidateApplicationService.GetApprenticeshipApplications(candidateId);
+                var apprenticeshipApplications = apprenticeshipApplicationSummaries
+                    .Select(each => new CandidateApprenticeshipApplicationViewModel(each))
+                    .ToList();
+
+                var traineeshipApplicationSummaries = _candidateApplicationService.GetTraineeshipApplications(candidateId);
+                var traineeshipApplications = traineeshipApplicationSummaries
+                    .Select(each => new CandidateTraineeshipApplicationViewModel
+                    {
+                        VacancyId = each.LegacyVacancyId,
+                        VacancyStatus = each.VacancyStatus,
+                        Title = each.Title,
+                        EmployerName = each.EmployerName,
+                        IsArchived = each.IsArchived,
+                        DateApplied = each.DateApplied
+                    })
+                    .ToList();
+
+                return new CandidateApplicationsViewModel
+                {
+                    CandidateName = candidateName,
+                    CandidateApprenticeshipApplications = apprenticeshipApplications,
+                    CandidateTraineeshipApplications = traineeshipApplications
+                };
+            }
+            catch (Exception e)
+            {
+                var message = $"Get MyApplications failed for candidate ID: {candidateId}.";
+
+                _logService.Error(message, e);
+
+                throw;
+            }
         }
     }
 }

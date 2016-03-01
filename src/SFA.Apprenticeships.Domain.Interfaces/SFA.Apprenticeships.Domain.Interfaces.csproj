@@ -92,6 +92,7 @@
     <Compile Include="Messaging\StorageQueueMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\IAuditRepository.cs" />
+    <Compile Include="Repositories\IReferenceNumberRepository.cs" />
     <Compile Include="Repositories\ISavedSearchAlertRepository.cs" />
     <Compile Include="Repositories\IApplicationStatusAlertRepository.cs" />
     <Compile Include="Repositories\IContactMessageRepository.cs" />

@@ -3,8 +3,8 @@
     using FluentAssertions;
     using FluentValidation.TestHelper;
     using NUnit.Framework;
-    using Recruit.Validators;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.Validators.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     [TestFixture]
     public class ApprenticeshipApplicationViewModelServerValidatorTests
