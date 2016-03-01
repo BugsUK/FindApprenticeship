@@ -91,9 +91,9 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">From</label>\r\n            <span");
+WriteLiteral(">Started</label>\r\n            <span");
 
 WriteLiteral(" class=\"form-prepopped\"");
 
@@ -116,9 +116,9 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">To</label>\r\n            <span");
+WriteLiteral(">Finished</label>\r\n            <span");
 
 WriteLiteral(" class=\"form-prepopped\"");
 

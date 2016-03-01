@@ -532,6 +532,7 @@
     <Content Include="Views\Vacancy\View.cshtml" />
     <Content Include="Views\Candidate\Apprenticeship.cshtml" />
     <Content Include="Views\Candidate\Traineeship.cshtml" />
+    <Content Include="Views\Candidate\DisplayTemplates\ApplicantDetails.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

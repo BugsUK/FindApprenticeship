@@ -10,6 +10,8 @@
     {
         public ApplicationStatuses Status { get; set; }
 
+        public DateTime? DateApplied { get; set; }
+
         public DateTime? SuccessfulDateTime { get; set; }
 
         public DateTime? UnsuccessfulDateTime { get; set; }

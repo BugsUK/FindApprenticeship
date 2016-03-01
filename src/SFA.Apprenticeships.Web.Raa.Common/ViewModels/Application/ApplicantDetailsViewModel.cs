@@ -8,6 +8,7 @@
     {
         public const string PartialView = "Application/ApplicantDetails";
 
+        public Guid CandidateId { get; set; }
         public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
         public AddressViewModel Address { get; set; }

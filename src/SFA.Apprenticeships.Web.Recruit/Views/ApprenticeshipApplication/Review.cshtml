@@ -56,45 +56,13 @@
         @Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
         @Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
 
-
-        @if (Model.Vacancy.HasQuestions ||
-            Model.ApplicantDetails.DisabilityStatus.HasValue ||
-            Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
-        {
-            <fieldset class="fieldset-with-border">
-                @if (Model.Vacancy.HasQuestions)
-                {
-                    <legend class="heading-large">
-                        Answers to employer questions
-                    </legend>
-
-                    if (Model.Vacancy.HasFirstQuestion)
-                    {
-                        <div class="form-group">
-                            <label for="add-question1" class="form-label">@Model.Vacancy.FirstQuestion</label>
-                            <span class="form-prepopped" id="add-question1">@Model.VacancyQuestionAnswers.FirstQuestionAnswer</span>
-                        </div>
-                    }
-                    if (Model.Vacancy.HasSecondQuestion)
-                    {
-                        <div class="form-group">
-                            <label for="add-question2" class="form-label">@Model.Vacancy.SecondQuestion</label>
-                            <span class="form-prepopped" id="add-question2">@Model.VacancyQuestionAnswers.SecondQuestionAnswer</span>
-                        </div>
-                    }
-                }
-
-                @Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus, "Application/DisabilityStatusQuestion")
-
-                @if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
-                {
-                    <div class="form-group">
-                        <label for="question4" class="form-label">Is there anything we can do to support your interview?</label>
-                        <span class="form-prepopped" id="">@Model.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer</span>
-                    </div>
-                }
-            </fieldset>
-        }
+        <section class="section-border">
+            <h2 class="heading-large">
+                Answers to employer questions
+            </h2>
+            @Html.DisplayFor(m => m, "Application/EmployerQuestionAnswers")
+            @Html.DisplayFor(m => m, "Application/MonitoringInformation")
+        </section>
 
         @if (Model.Status != ApplicationStatuses.Successful)
         {

@@ -1,0 +1,21 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+
+@if (Model != null && (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion) || !string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion)))
+{
+    <div class="text">
+        @if (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion))
+        {
+            <div class="form-group">
+                <p class="form-label text">@Html.Raw(Model.Vacancy.FirstQuestion)</p>
+                <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer)</span>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion))
+        {
+            <div class="form-group">
+                <p class="form-label text">@Html.Raw(Model.Vacancy.SecondQuestion)</p>
+                <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer)</span>
+            </div>
+        }
+    </div>
+}

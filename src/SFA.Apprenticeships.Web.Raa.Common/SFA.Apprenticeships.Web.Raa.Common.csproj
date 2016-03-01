@@ -297,6 +297,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Education.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswers.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonitoringInformation.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -449,6 +459,14 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ApplicantDetails.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswers.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_QuestionsForCandidates.generated.cs</LastGenOutput>

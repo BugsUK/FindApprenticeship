@@ -4,6 +4,8 @@
     {
         public long VacancyReferenceNumber { get; set; }
         public string Title { get; set; }
+        public string EmployerName { get; set; }
+        public string Description { get; set; }
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
 
