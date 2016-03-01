@@ -101,6 +101,7 @@
 
                 return new CandidateApplicationsViewModel
                 {
+                    CandidateId = candidateId,
                     CandidateName = candidateName,
                     CandidateApprenticeshipApplications = apprenticeshipApplications,
                     CandidateTraineeshipApplications = traineeshipApplications

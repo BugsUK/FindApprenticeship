@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Applications;
 
     public class CandidateApplicationsViewModel
     {
+        public Guid CandidateId { get; set; }
         public string CandidateName { get; set; }
         public IEnumerable<CandidateApprenticeshipApplicationViewModel> CandidateApprenticeshipApplications;
         public IEnumerable<CandidateTraineeshipApplicationViewModel> CandidateTraineeshipApplications;

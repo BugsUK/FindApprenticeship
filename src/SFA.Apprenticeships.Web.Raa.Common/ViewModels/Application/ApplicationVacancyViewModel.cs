@@ -2,6 +2,7 @@
 {
     public class ApplicationVacancyViewModel
     {
+        public int VacancyId { get; set; }
         public long VacancyReferenceNumber { get; set; }
         public string Title { get; set; }
         public string EmployerName { get; set; }

@@ -61,7 +61,8 @@
             }
         </p>
         <p class="hide-print">
-            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new {id = Model.ApplicantDetails.CandidateId}, new {@class = "return-to-my-applications"})
+            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new {id = Model.ApplicantDetails.CandidateId}, new {@class = "inl-block" })
+            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewVacancy, new { vacancyId = Model.Vacancy.VacancyId, candidateId = Model.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
         </p>
     </div>
 </div>

@@ -79,7 +79,7 @@
         // GET: Vacancy
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult View(int vacancyId)
+        public ActionResult View(int vacancyId, Guid candidateId)
         {
             var response = _vacancyMediator.GetVacancyViewModel(vacancyId);
             var vacancyViewModel = response.ViewModel;
