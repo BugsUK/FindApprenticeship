@@ -67,6 +67,8 @@
 	[TrainingTypeId]				   INT				NULL,
 	[VacancyTypeId]					   INT				NULL,
 	[SectorId]						   INT				NULL,
+	[CreatedDateTime]				   DATETIME			NOT NULL,
+	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL
 	
 

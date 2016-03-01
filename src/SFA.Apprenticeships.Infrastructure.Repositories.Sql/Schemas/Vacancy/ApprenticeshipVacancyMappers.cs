@@ -140,6 +140,8 @@
                 .MapMemberFrom(v => v.QAUserName, av => av.QAUserName)
                 .MapMemberFrom(v => v.TrainingTypeId, av => av.TrainingType)
                 .MapMemberFrom(v => v.WageUnitId, av => av.WageUnit)
+                .MapMemberFrom(v => v.CreatedDateTime, av => av.CreatedDateTime)
+                .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .End();
 
             Mapper.CreateMap<Vacancy, DomainVacancy>()
@@ -223,6 +225,8 @@
                 .IgnoreMember(av => av.DateSubmitted)
                 .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
                 .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
+                .MapMemberFrom(av => av.CreatedDateTime, v => v.CreatedDateTime)
+                .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
                 
                 .AfterMap((v, av) =>
                 {

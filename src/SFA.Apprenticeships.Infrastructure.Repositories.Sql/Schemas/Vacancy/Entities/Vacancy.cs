@@ -247,5 +247,9 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
         public bool EditedInRaa { get; set; }
 
         public int? SectorId { get; set; }
+
+        public DateTime CreatedDateTime { get; set; }
+
+        public DateTime? UpdatedDateTime { get; set; }
     }
 }

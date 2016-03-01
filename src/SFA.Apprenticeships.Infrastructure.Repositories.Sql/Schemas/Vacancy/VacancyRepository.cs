@@ -112,6 +112,8 @@
             MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
+            MapDateFirstSubmitted(dbVacancy, result);
+            MapDateSubmitted(dbVacancy, result);
 
             return result;
         }
@@ -214,6 +216,38 @@ ORDER BY QuestionId ASC
             result.PersonalQualities = GetTextField(dbVacancy.VacancyId, "PQ");
             result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, "OII");
             result.FutureProspects = GetTextField(dbVacancy.VacancyId, "FP");
+        }
+
+        private void MapDateFirstSubmitted(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.PendingQA
+                }
+                ).SingleOrDefault();
+        }
+
+        private void MapDateSubmitted(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.DateSubmitted = _getOpenConnection.Query<DateTime>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate desc
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.PendingQA
+                }
+                ).SingleOrDefault();
         }
 
         private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)
@@ -616,25 +650,26 @@ when not matched then
 
             // TODO: Add QAUserName / TimeStartedToQA. Perhaps a name without QA in would be better?
             // TODO: Possibly need MutatingQueryMulti to get address etc??? Or use join as only one record
-            var dbVacancy = _getOpenConnection.MutatingQuery<Entities.Vacancy>(@"
-UPDATE Vacancy.Vacancy
+            var dbVacancy = _getOpenConnection.MutatingQuery<Vacancy>(@"
+UPDATE dbo.Vacancy
 SET    QAUserName             = @UserName,
-       TimeStartedToQA        = @TimeStartedToQA,
-       VacancyStatusCode      = 'RES'
+       StartedToQADateTime    = @StartedToQADateTime,
+       VacancyStatusId        = @VacancyStatusId
 WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
 AND    (QAUserName IS NULL OR (QAUserName = @UserName))
 -- AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
 
-DECLARE @RowCount INT = @@RowCount
-
--- IF RowCount > 1
---     RAISERROR etc etc.
-
-SELECT * FROM Vacancy.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
---AND    @RowCount = 1 -- what does it mean?
-", new {UserName = userName, TimeStartedToQA = _dateTimeService.UtcNow, VacancyReferenceNumber = vacancyReferenceNumber})
+SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+",
+                new
+                {
+                    UserName = userName,
+                    StartedToQADateTime = _dateTimeService.UtcNow,
+                    VacancyStatusId = VacancyStatus.ReservedForQA,
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                })
                 .SingleOrDefault();
-
+            // What should happen if QAUserName != UserName. Should we throw an exception?
             if (dbVacancy == null)
             {
                 _logger.Warn(
