@@ -46,6 +46,11 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerReadRepository.Get(providerSite.ProviderId);
         }
 
+        public Provider GetProvider(int providerId)
+        {
+            return _providerReadRepository.Get(providerId);
+        }
+
         public Provider GetProvider(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();

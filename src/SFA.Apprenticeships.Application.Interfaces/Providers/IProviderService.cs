@@ -13,6 +13,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     {
         Provider GetProviderViaOwnerParty(int vacancyPartyId);
 
+        Provider GetProvider(int providerId);
+
         Provider GetProvider(string ukprn);
 
         IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds);
