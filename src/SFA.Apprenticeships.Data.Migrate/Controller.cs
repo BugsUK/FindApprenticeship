@@ -6,7 +6,6 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using System.Collections;
 
     public class Controller
     {
@@ -97,6 +96,14 @@
 
         public void ApplyToTables(Action<ITableSpec> action)
         {
+            if (_tables.Count() == 1)
+            {
+                // Special case for testing - ignore dependencies
+                action(_tables.Single());
+                return;
+            }
+
+
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, Task>(tableSpec, new Task(() => { try { action(tableSpec); } catch (Exception ex) { if (!(ex is FatalException)) _log.Error(ex); throw; } }))
                 ).ToDictionary(i => i.Key, i => i.Value);

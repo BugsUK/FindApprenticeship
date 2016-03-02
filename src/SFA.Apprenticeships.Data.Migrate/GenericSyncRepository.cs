@@ -11,6 +11,9 @@ namespace SFA.Apprenticeships.Data.Migrate
     using SFA.Infrastructure.Interfaces;
     using System.Threading.Tasks;
 
+    // TODO: Move SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common back into its own project so that the false dependencies on
+    // SFA.Apprenticeships.Avms.Domain.Entities and SFA.Apprenticeships.Domain.Interfaces can be removed.
+
     public class GenericSyncRespository : IGenericSyncRespository
     {
         private IGetOpenConnection _sourceDatabase;
@@ -288,13 +291,6 @@ SELECT @Errors
 
             protected void UpdateLastSyncVersion()
             {
-                /*
-                CREATE SCHEMA Sync
-                GO
-                CREATE TABLE Sync.SyncParams (LastSyncVersion INT)
-                GO
-                INSERT INTO SYNC.SyncParams VALUES (NULL)
-                */
                 _targetDatabase.MutatingQuery<int>($"UPDATE Sync.SyncParams SET LastSyncVersion = @lastSyncVersion", new { lastSyncVersion = _nextSyncVersion });
             }
 

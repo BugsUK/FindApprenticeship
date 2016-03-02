@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvmsSyncRepository.cs" />
+    <Compile Include="DapperSqlMapper.cs" />
     <Compile Include="IAvmsSyncRepository.cs" />
     <Compile Include="MutateTarget.cs" />
     <Compile Include="IMutateTarget.cs" />
@@ -67,9 +68,7 @@
     <Compile Include="Tables.cs" />
     <Compile Include="IGenericSyncRepository.cs" />
     <Compile Include="GenericSyncRepository.cs" />
-    <Compile Include="NewDBDatabaseRepository.cs" />
     <Compile Include="Controller.cs" />
-    <Compile Include="INewDBRepository.cs" />
     <Compile Include="MigrateFromAvmsConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,10 +77,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Avms.Domain.Entities\SFA.Apprenticeships.Avms.Domain.Entities.csproj">
-      <Project>{2bce308b-c935-41d9-adb1-2fbf78415abf}</Project>
-      <Name>SFA.Apprenticeships.Avms.Domain.Entities</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
