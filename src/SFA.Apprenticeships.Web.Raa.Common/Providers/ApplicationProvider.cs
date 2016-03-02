@@ -102,7 +102,7 @@
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
 
-            _apprenticeshipApplicationService.AppointCandidate(applicationId);
+            _apprenticeshipApplicationService.SetSuccessfulDecision(applicationId);
 
             return applicationSelectionViewModel;
         }
@@ -111,7 +111,7 @@
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
 
-            _apprenticeshipApplicationService.RejectCandidate(applicationId);
+            _apprenticeshipApplicationService.SetUnsuccessfulDecision(applicationId);
 
             return applicationSelectionViewModel;
         }

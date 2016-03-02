@@ -18,8 +18,8 @@
 
         void UpdateApplicationNotes(Guid applicationId, string notes);
 
-        void AppointCandidate(Guid applicationId);
+        void SetSuccessfulDecision(Guid applicationId);
 
-        void RejectCandidate(Guid applicationId);
+        void SetUnsuccessfulDecision(Guid applicationId);
     }
 }

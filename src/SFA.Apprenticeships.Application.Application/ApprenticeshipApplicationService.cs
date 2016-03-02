@@ -61,7 +61,19 @@
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public void AppointCandidate(Guid applicationId)
+        public void SetSuccessfulDecision(Guid applicationId)
+        {
+            SetDecision(applicationId, ApplicationStatuses.Successful);
+        }
+
+        public void SetUnsuccessfulDecision(Guid applicationId)
+        {
+            SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
+        }
+
+        #region Helpers
+
+        private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
         {
             var apprenticeshipApplication = GetApplication(applicationId);
             var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
@@ -70,7 +82,7 @@
             {
                 // CRITICAL: make the update look like it came from legacy AVMS application
                 ApplicationId = Guid.Empty,
-                ApplicationStatus = ApplicationStatuses.Successful,
+                ApplicationStatus = applicationStatus,
                 LegacyApplicationId = nextLegacyApplicationId,
                 LegacyCandidateId = 0, // not required
                 LegacyVacancyId = 0, // not required
@@ -81,24 +93,6 @@
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
         }
 
-        public void RejectCandidate(Guid applicationId)
-        {
-            var apprenticeshipApplication = GetApplication(applicationId);
-            var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
-
-            var applicationStatusSummary = new ApplicationStatusSummary
-            {
-                // CRITICAL: make the update look like it came from legacy AVMS application
-                ApplicationId = Guid.Empty,
-                ApplicationStatus = ApplicationStatuses.Unsuccessful,
-                LegacyApplicationId = nextLegacyApplicationId,
-                LegacyCandidateId = 0, // not required
-                LegacyVacancyId = 0, // not required
-                VacancyStatus = apprenticeshipApplication.VacancyStatus,
-                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
-            };
-
-            _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
-        }
+        #endregion
     }
 }
