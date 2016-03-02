@@ -65,7 +65,7 @@
 	[DurationValue]					   INT				NULL,
 	[QAUserName]					   NVARCHAR (MAX)	NULL,
 	[TrainingTypeId]				   INT				NULL,
-	[EditedInRaa]					   BIT				NOT NULL
+	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
@@ -111,6 +111,12 @@ CREATE NONCLUSTERED INDEX [idx_Vacancy_VacancyOwnerRelationshipId]
 
 
 GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_EditedInRaa]
+	ON [dbo].[Vacancy]([EditedInRaa] ASC)
+
+
+GO
+
 CREATE TRIGGER uDeleteVacancySearch
    ON  Vacancy
    AFTER DELETE

@@ -63,4 +63,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="PreferredProviderSiteId" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="83772482-b03c-41fa-8992-e6f3626c53df" ChangeDateTime="03/01/2016 14:15:10">
+    <Property Name="ElementName" Value="[dbo].[VacancyOwnerRelationship].[OwnedByUs]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[VacancyOwnerRelationship]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="EditedInRaa" />
+  </Operation>
 </Operations>
