@@ -610,7 +610,7 @@
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
             vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(new Vacancy());
-            vacancyPostingService.Setup(vp => vp.SaveVacancy(It.IsAny<Vacancy>()))
+            vacancyPostingService.Setup(vp => vp.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
             viewModel.DurationComment = durationComment;
@@ -624,7 +624,7 @@
             vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
-                    vp.SaveVacancy(
+                    vp.UpdateVacancy(
                         It.Is<Vacancy>(
                             v =>
                                 v.ClosingDateComment == closingDateComment &&
