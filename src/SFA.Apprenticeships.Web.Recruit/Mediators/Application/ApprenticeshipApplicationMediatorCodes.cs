@@ -28,14 +28,24 @@
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
         }
 
-        public class ConfirmSuccessful
+        public class ConfirmSuccessfulDecision
         {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok";
         }
 
-        public class AppointCandidate
+        public class SendSuccessfulDecision
         {
-            public const string Ok = "ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok";
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok";
+        }
+
+        public class ConfirmUnsuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok";
+        }
+
+        public class SendUnsuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
         }
     }
 }

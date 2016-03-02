@@ -77,11 +77,11 @@
 
                 @if (Model.UnsuccessfulApplicationsCount == 1)
                 {
-                    <p>You've rejected 1 application</p>
+                    <p>You've made 1 candidate unsuccessful</p>
                 }
                 else if (Model.UnsuccessfulApplicationsCount > 1)
                 {
-                    <p>You've rejected @Model.UnsuccessfulApplicationsCount applications</p>
+                    <p>You've made @Model.UnsuccessfulApplicationsCount candidates unsuccessful</p>
                 }
 
                 @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)

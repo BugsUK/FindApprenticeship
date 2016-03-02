@@ -3,7 +3,7 @@
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Send successful decision";
+    ViewBag.Title = "Recruit an Apprentice - Send unsuccessful decision";
 }
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
@@ -16,17 +16,19 @@
 
     <div>
         <div class="hgroup">
-            <h1 class="heading-xlarge med-btm-margin">Send successful decision</h1>
+            <h1 class="heading-xlarge med-btm-margin">Send unsuccessful decision</h1>
         </div>
 
-        <p>Confirm @Model.ApplicantDetails.Name's application has been successful. Your decision can't be reversed.</p>
-        <p>An automated message will now be sent to the candidate to inform them they have been selected for this role.</p>
+        <p>Confirm @Model.ApplicantDetails.Name's application has been unsuccessful. Your decision can't be reversed.</p>
+        <p>An automated message will now be sent to the candidate to inform them they have not been selected for this role.</p>
 
         <section>
             <div class="form-group">
-                <button type="submit" class="button" name="AppointCandidate" value="ConfirmSuccessfulAppointCandidate">Confirm</button>
+                <button type="submit" class="button" name="SendUnsuccessfulDecision" value="SendUnsuccessfulDecision">
+                    Confirm
+                </button>
                 <p class="med-btm-margin">
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, new {Model.ApplicationSelection.ApplicationId})
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection)
                 </p>
             </div>
         </section>

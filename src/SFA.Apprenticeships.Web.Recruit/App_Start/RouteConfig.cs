@@ -285,14 +285,14 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication,
-               url: "application/confirmsuccessful",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessful" }
+               url: "application/confirmsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessfulDecision" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication,
-               url: "application/confirmunsuccessful",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessful" }
+               url: "application/confirmunsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessfulDecision" }
                );
 
             routes.LowercaseUrls = true;
