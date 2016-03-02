@@ -100,7 +100,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             return vacancyReferenceNumbers.Select(vacancyReferenceNumber => new DashboardVacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Status = VacancyStatus.PendingQA
+                Status = VacancyStatus.Submitted
             });
         }
     }

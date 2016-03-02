@@ -59,7 +59,7 @@
 
         [TestCase(VacancyStatus.Closed)]
         [TestCase(VacancyStatus.Draft)]
-        [TestCase(VacancyStatus.PendingQA)]
+        [TestCase(VacancyStatus.Submitted)]
         [TestCase(VacancyStatus.Referred)]
         [TestCase(VacancyStatus.ReservedForQA)]
         [TestCase(VacancyStatus.Unknown)]

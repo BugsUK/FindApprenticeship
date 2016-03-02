@@ -6,7 +6,7 @@
     {
         public static bool IsStateReadOnly(this VacancyStatus status)
         {
-            return status == VacancyStatus.PendingQA || status == VacancyStatus.Live ||
+            return status == VacancyStatus.Submitted || status == VacancyStatus.Live ||
                    status == VacancyStatus.ReservedForQA || status == VacancyStatus.Closed;
         }
 
@@ -18,13 +18,13 @@
 
         public static bool IsStateReviewable(this VacancyStatus status)
         {
-            return status == VacancyStatus.PendingQA || status == VacancyStatus.ReservedForQA || 
+            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA || 
                    status == VacancyStatus.Referred;
         }
 
         public static bool IsStateInQa(this VacancyStatus status)
         {
-            return status == VacancyStatus.PendingQA || status == VacancyStatus.ReservedForQA;
+            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA;
         }
 
         public static bool CanHaveApplicationsOrClickThroughs(this VacancyStatus status)

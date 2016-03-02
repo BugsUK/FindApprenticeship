@@ -44,7 +44,7 @@
                     return VacancyStatuses.Unknown;
                 case VacancyStatus.Draft:
                     return VacancyStatuses.Unavailable;
-                case VacancyStatus.PendingQA:
+                case VacancyStatus.Submitted:
                     return VacancyStatuses.Unavailable;
                 case VacancyStatus.Live:
                     return VacancyStatuses.Live;

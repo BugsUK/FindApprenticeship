@@ -66,7 +66,7 @@
                 new Fixture().Build<Vacancy>()
                     .With(av => av.VacancyId, 0)
                     .With(av => av.VacancyReferenceNumber, IntegrationTestVacancyReferenceNumber)
-                    .With(av => av.Status, VacancyStatus.PendingQA)
+                    .With(av => av.Status, VacancyStatus.Submitted)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
                     .Create();
@@ -82,7 +82,7 @@
             //Assert
             savedVacancy.Should().NotBeNull();
             savedVacancy.VacancyReferenceNumber.Should().Be(IntegrationTestVacancyReferenceNumber);
-            savedVacancy.Status.Should().Be(VacancyStatus.PendingQA);
+            savedVacancy.Status.Should().Be(VacancyStatus.Submitted);
             savedVacancy.QAUserName.Should().BeNullOrEmpty();
             savedVacancy.DateStartedToQA.Should().Be(null);
 

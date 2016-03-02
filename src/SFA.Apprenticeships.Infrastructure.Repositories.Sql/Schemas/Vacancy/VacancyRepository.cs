@@ -114,6 +114,7 @@
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
+            MapComments(dbVacancy, result);
 
             return result;
         }
@@ -218,6 +219,56 @@ ORDER BY QuestionId ASC
             result.FutureProspects = GetTextField(dbVacancy.VacancyId, "FP");
         }
 
+        private void MapComments(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.TitleComment = GetComment(dbVacancy.VacancyId, "TIT");
+            result.ApprenticeshipLevelComment = GetComment(dbVacancy.VacancyId, "ALE");
+            result.ClosingDateComment = GetComment(dbVacancy.VacancyId, "CLD");
+            result.ContactDetailsComment = GetComment(dbVacancy.VacancyId, "CDE");
+            result.DesiredQualificationsComment = GetComment(dbVacancy.VacancyId, "QUA");
+            result.DesiredSkillsComment = GetComment(dbVacancy.VacancyId, "SKL");
+            result.DurationComment = GetComment(dbVacancy.VacancyId, "EAD");
+            result.EmployerDescriptionComment = GetComment(dbVacancy.VacancyId, "EDE");
+            result.EmployerWebsiteUrlComment = GetComment(dbVacancy.VacancyId, "EWB");
+            result.FirstQuestionComment = GetComment(dbVacancy.VacancyId, "QU1");
+            result.SecondQuestionComment = GetComment(dbVacancy.VacancyId, "QU2");
+            result.FrameworkCodeNameComment = GetComment(dbVacancy.VacancyId, "APF");
+            result.FutureProspectsComment = GetComment(dbVacancy.VacancyId, "FUT");
+            result.LongDescriptionComment = GetComment(dbVacancy.VacancyId, "FDE");
+            result.NumberOfPositionsComment = GetComment(dbVacancy.VacancyId, "NPO");
+            result.OfflineApplicationInstructionsComment = GetComment(dbVacancy.VacancyId, "OAI");
+            result.OfflineApplicationUrlComment = GetComment(dbVacancy.VacancyId, "OAU");
+            result.PersonalQualitiesComment = GetComment(dbVacancy.VacancyId, "PER");
+            result.PossibleStartDateComment = GetComment(dbVacancy.VacancyId, "PSD");
+            result.SectorCodeNameComment = GetComment(dbVacancy.VacancyId, "APO");
+            result.ShortDescriptionComment = GetComment(dbVacancy.VacancyId, "SDE");
+            result.StandardIdComment = GetComment(dbVacancy.VacancyId, "SID");
+            result.ThingsToConsiderComment = GetComment(dbVacancy.VacancyId, "IOI");
+            result.TrainingProvidedComment = GetComment(dbVacancy.VacancyId, "TRP");
+            result.WageComment = GetComment(dbVacancy.VacancyId, "WWG");
+            result.WorkingWeekComment = GetComment(dbVacancy.VacancyId, "WWK");
+        }
+
+        private string GetComment(int vacancyId, string vacancyReferralCommentTypeCodeName)
+        {
+            var vacancyReferralCommentTypeId =
+                _getOpenConnection.Query<int>(
+                    $@"
+	SELECT TOP 1 VacancyReferralCommentsFieldTypeId FROM dbo.VacancyReferralCommentsFieldType
+	WHERE CodeName = '{vacancyReferralCommentTypeCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            return _getOpenConnection.Query<string>(@"
+SELECT Comments
+FROM   dbo.VacancyReferralComments
+WHERE  VacancyId = @VacancyId AND FieldTypeId = @FieldTypeId
+", new
+            {
+                VacancyId = vacancyId,
+                FieldTypeId = vacancyReferralCommentTypeId
+            }).SingleOrDefault();
+        }
+
         private void MapDateFirstSubmitted(Vacancy dbVacancy, DomainVacancy result)
         {
             result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
@@ -229,7 +280,7 @@ order by HistoryDate
                 new
                 {
                     VacancyId = dbVacancy.VacancyId,
-                    VacancyStatus = VacancyStatus.PendingQA
+                    VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
         }
@@ -245,7 +296,7 @@ order by HistoryDate desc
                 new
                 {
                     VacancyId = dbVacancy.VacancyId,
-                    VacancyStatus = VacancyStatus.PendingQA
+                    VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
         }
@@ -269,7 +320,6 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                 VacancyId = vacancyId,
                 Field = vacancyTextFieldValueId
             }).SingleOrDefault();
-
         }
         
         public List<DomainVacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
@@ -343,9 +393,9 @@ FETCH NEXT @PageSize ROWS ONLY
 
         public DomainVacancy Save(DomainVacancy entity)
         {
-            _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
+            _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
-            UpdateEntityTimestamps(entity); // Do we need this?
+            UpdateEntityTimestamps(entity);
 
             var dbVacancy = _mapper.Map<DomainVacancy, Vacancy>(entity);
 
@@ -354,12 +404,12 @@ FETCH NEXT @PageSize ROWS ONLY
             dbVacancy.VacancyId = (int) _getOpenConnection.Insert(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
-            SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity); // TODO: check if we need it
+            SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
 
             CreateVacancyHistoryRow(dbVacancy.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange,
                 (int)entity.Status);
 
-            _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
+            _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
 
             return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
         }
@@ -381,7 +431,8 @@ FETCH NEXT @PageSize ROWS ONLY
             _getOpenConnection.UpdateSingle(dbVacancy);
 
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
-            SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity); // TODO: check if we need it
+            SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
+            SaveCommentsFor(dbVacancy.VacancyId, entity);
 
             UpdateVacancyHistory(previousVacancyState, dbVacancy);
 
@@ -392,6 +443,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
         private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
         {
+            // don't save for reservedForQA
             if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
             {
                 CreateVacancyHistoryRow(actualVacancyState.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
@@ -498,18 +550,9 @@ WHERE  CodeName = @CountyCodeName",
         private void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
             // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
-            string vacancyLocationTypeCodeName = null;
-
-            if (entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                entity.IsEmployerLocationMainApprenticeshipLocation.Value == true)
-            {
-                vacancyLocationTypeCodeName = "STD";
-            }
-            else if (entity.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                     entity.IsEmployerLocationMainApprenticeshipLocation.Value == false)
-            {
-                vacancyLocationTypeCodeName = "MUL";
-            }
+            var vacancyLocationTypeCodeName = entity.IsEmployerLocationMainApprenticeshipLocation.Value == true
+                ? "STD"
+                : "MUL";
 
             dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
 SELECT VacancyLocationTypeId
@@ -561,10 +604,18 @@ WHERE  el.CodeName = @EducationLevel",
             {
                 UpsertAdditionalQuestion(vacancyId, 1, entity.FirstQuestion);
             }
+            else
+            {
+                DeleteAdditionalQuestion(vacancyId, 1);
+            }
 
             if (!string.IsNullOrWhiteSpace(entity.SecondQuestion))
             {
                 UpsertAdditionalQuestion(vacancyId, 2, entity.SecondQuestion);
+            }
+            else
+            {
+                DeleteAdditionalQuestion(vacancyId, 2);
             }
         }
 
@@ -587,6 +638,19 @@ when not matched then
                 VacancyId = vacancyId,
                 QuestionId = questionId,
                 Question = question
+            });
+        }
+
+        private void DeleteAdditionalQuestion(int vacancyId, int additionalQuestionId)
+        {
+            var sql = @"
+    DELETE from dbo.AdditionalQuestion
+    WHERE VacancyId = @VacancyId and QuestionId = @QuestionId";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                QuestionId = additionalQuestionId
             });
         }
 
@@ -641,12 +705,104 @@ when not matched then
             });
         }
 
+        private void SaveCommentsFor(int vacancyId, DomainVacancy entity)
+        {
+            SaveComment(vacancyId, "TIT", entity.TitleComment);
+            SaveComment(vacancyId, "ALE", entity.ApprenticeshipLevelComment); // New
+            SaveComment(vacancyId, "CLD", entity.ClosingDateComment);
+            SaveComment(vacancyId, "CDE", entity.ContactDetailsComment); // Maybe CFS
+            SaveComment(vacancyId, "QUA", entity.DesiredQualificationsComment);
+            SaveComment(vacancyId, "SKL", entity.DesiredSkillsComment);
+            SaveComment(vacancyId, "EAD", entity.DurationComment);
+            SaveComment(vacancyId, "EDE", entity.EmployerDescriptionComment);
+            SaveComment(vacancyId, "EWB", entity.EmployerWebsiteUrlComment);
+            SaveComment(vacancyId, "QU1", entity.FirstQuestionComment);
+            SaveComment(vacancyId, "QU2", entity.SecondQuestionComment);
+            SaveComment(vacancyId, "APF", entity.FrameworkCodeNameComment);
+            SaveComment(vacancyId, "FUT", entity.FutureProspectsComment);
+            SaveComment(vacancyId, "FDE", entity.LongDescriptionComment);
+            SaveComment(vacancyId, "NPO", entity.NumberOfPositionsComment); // New
+            SaveComment(vacancyId, "OAI", entity.OfflineApplicationInstructionsComment); // New
+            SaveComment(vacancyId, "OAU", entity.OfflineApplicationUrlComment); // New
+            SaveComment(vacancyId, "PER", entity.PersonalQualitiesComment);
+            SaveComment(vacancyId, "PSD", entity.PossibleStartDateComment);
+            SaveComment(vacancyId, "APO", entity.SectorCodeNameComment); // Or needs a new one?
+            SaveComment(vacancyId, "SDE", entity.ShortDescriptionComment);
+            SaveComment(vacancyId, "SID", entity.StandardIdComment); // New
+            SaveComment(vacancyId, "IOI", entity.ThingsToConsiderComment); // Or REA?
+            SaveComment(vacancyId, "TRP", entity.TrainingProvidedComment);
+            SaveComment(vacancyId, "WWG", entity.WageComment);
+            SaveComment(vacancyId, "WWK", entity.WorkingWeekComment);
+        }
+
+        private void SaveComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)
+        {
+            if (!string.IsNullOrWhiteSpace(comment))
+            {
+                UpsertComment(vacancyId, vacancyReferralCommentsFieldTypeCodeName, comment);
+            }
+            else
+            {
+                DeleteComment(vacancyId, vacancyReferralCommentsFieldTypeCodeName);
+            }
+        }
+
+        private void UpsertComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)
+        {
+            var vacancyReferralCommentsFieldTypeId =
+                _getOpenConnection.Query<int>(
+                    $@"
+	SELECT TOP 1 VacancyReferralCommentsFieldTypeId FROM dbo.VacancyReferralCommentsFieldType
+	WHERE CodeName = '{
+                        vacancyReferralCommentsFieldTypeCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            const string sql = @"
+merge dbo.VacancyReferralComments as target
+using (values (@Comments))
+    as source (Comments)
+    on target.VacancyId = @VacancyId and FieldTypeId = @FieldTypeId
+when matched then
+    update
+    set Comments = source.Comments
+when not matched then
+    insert ( VacancyId, FieldTypeId, Comments)
+    values ( @VacancyId, @FieldTypeId, @Comments);";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                FieldTypeId = vacancyReferralCommentsFieldTypeId,
+                Comments = comment
+            });
+        }
+
+        private void DeleteComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName)
+        {
+            var vacancyReferralCommentsFieldTypeCodeNameId =
+                _getOpenConnection.Query<int>(
+                    $@"
+	SELECT TOP 1 VacancyReferralCommentsFieldTypeId FROM dbo.VacancyReferralCommentsFieldType
+	WHERE CodeName = '{vacancyReferralCommentsFieldTypeCodeName}'
+").Single(); // TODO: Hardcode the ID?
+
+            var sql = @"
+    DELETE from dbo.VacancyReferralComments
+    WHERE VacancyId = @VacancyId and FieldTypeId = @FieldTypeId";
+
+            _getOpenConnection.MutatingQuery<object>(sql, new
+            {
+                VacancyId = vacancyId,
+                FieldTypeId = vacancyReferralCommentsFieldTypeCodeNameId
+            });
+        }
+
         public DomainVacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             _logger.Debug(
                 $"Calling database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 
-            var userName = Thread.CurrentPrincipal.Identity.Name;
+            var userName = Thread.CurrentPrincipal.Identity.Name; // use function/service
 
             // TODO: Add QAUserName / TimeStartedToQA. Perhaps a name without QA in would be better?
             // TODO: Possibly need MutatingQueryMulti to get address etc??? Or use join as only one record

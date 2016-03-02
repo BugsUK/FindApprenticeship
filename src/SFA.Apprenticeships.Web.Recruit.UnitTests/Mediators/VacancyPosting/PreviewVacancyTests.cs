@@ -84,7 +84,7 @@
 
         [TestCase(VacancyStatus.Unknown)]
         [TestCase(VacancyStatus.Draft)]
-        [TestCase(VacancyStatus.PendingQA)]
+        [TestCase(VacancyStatus.Submitted)]
         [TestCase(VacancyStatus.ReservedForQA)]
         [TestCase(VacancyStatus.Referred)]
         public void CannotHaveApplications(VacancyStatus status)

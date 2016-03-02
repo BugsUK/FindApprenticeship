@@ -496,7 +496,7 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
-            vacancy.Status = VacancyStatus.PendingQA;
+            vacancy.Status = VacancyStatus.Submitted;
             vacancy.DateSubmitted = _dateTimeService.UtcNow;
             if (!vacancy.DateFirstSubmitted.HasValue)
             {
@@ -624,7 +624,7 @@
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
             var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
-            var submitted = vacancies.Where(v => v.Status == VacancyStatus.PendingQA || v.Status == VacancyStatus.ReservedForQA).ToList();
+            var submitted = vacancies.Where(v => v.Status == VacancyStatus.Submitted || v.Status == VacancyStatus.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
             //TODO: Agree on closing soon range and make configurable
             var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
@@ -776,7 +776,7 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
             var utcNow = _dateTimeService.UtcNow;
 
@@ -858,7 +858,7 @@
 
         private static bool NoUserHasStartedToQATheVacancy(Vacancy vacancy)
         {
-            return vacancy.Status == VacancyStatus.PendingQA && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
+            return vacancy.Status == VacancyStatus.Submitted && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
         }
 
         private bool CurrentUserHasStartedToQATheVacancy(Vacancy vacancy)
@@ -911,13 +911,12 @@
                     CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                 }
 
-                submittedVacancy.Status = VacancyStatus.ParentVacancy;
                 _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
             }
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.SaveVacancy(submittedVacancy);
+            _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
         }
 
@@ -927,7 +926,7 @@
             vacancy.Status = VacancyStatus.Referred;
             vacancy.QAUserName = null;
 
-            _vacancyPostingService.SaveVacancy(vacancy);
+            _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
         public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
@@ -987,7 +986,7 @@
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;

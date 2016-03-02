@@ -35,7 +35,7 @@
             MockVacancyPostingService.Verify(
                 ps =>
                     ps.UpdateVacancy(
-                        It.Is<Vacancy>(v => v.Status == VacancyStatus.PendingQA)));
+                        It.Is<Vacancy>(v => v.Status == VacancyStatus.Submitted)));
         }
 
         [Test]

@@ -30,6 +30,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql"
 :r ".\Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql"
+:r ".\Scripts\Data\dbo.VacancyReferralCommentsFieldType.Upsert.sql"
 :r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
 :r ".\Scripts\Data\Reference.StandardSector.Upsert.sql"
 :r ".\Scripts\Data\Reference.Standard.Upsert.sql"

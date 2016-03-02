@@ -216,7 +216,7 @@
             };
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
@@ -290,7 +290,7 @@
             };
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
@@ -353,7 +353,7 @@
             };
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
@@ -397,12 +397,12 @@
                     DateSubmitted = DateTime.Now,
                     OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumber,
-                    Status = VacancyStatus.PendingQA
+                    Status = VacancyStatus.Submitted
                 }
             };
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
             providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
@@ -436,7 +436,7 @@
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(new List<Vacancy>
                 {
                     new Vacancy
@@ -444,7 +444,7 @@
                         ClosingDate = DateTime.Now,
                         DateSubmitted = DateTime.Now,
                         OwnerPartyId = ownerPartyId,
-                        Status = VacancyStatus.PendingQA
+                        Status = VacancyStatus.Submitted
                     }
                 });
 
@@ -461,7 +461,7 @@
             vacancyProvider.GetPendingQAVacancies();
 
             //Assert
-            vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA));
+            vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
             providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
 
@@ -825,7 +825,7 @@
 
             var appVacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyVm.VacancyReferenceNumber)
-                .With(x => x.Status, VacancyStatus.PendingQA)
+                .With(x => x.Status, VacancyStatus.Submitted)
                 .Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();

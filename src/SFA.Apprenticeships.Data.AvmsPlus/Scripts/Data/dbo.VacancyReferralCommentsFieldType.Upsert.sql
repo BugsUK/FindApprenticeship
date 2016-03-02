@@ -30,13 +30,17 @@ USING (VALUES
 	(25, 'PSD', 'PSD', 'Possible Start Date'),
 	(26, 'EAI', 'EAI', 'Employer''s Application Instructions'),
 	(27, 'AWA', 'AWA', 'Application Website Address'),
-	(28, 'DRA', 'DRA', 'Display Recruitment Agency Name')
+	(28, 'DRA', 'DRA', 'Display Recruitment Agency Name'),
+	(29, 'NPO', 'NPO', 'Number of Positions'),
+	(30, 'OAI', 'OAI', 'Offline Application Instructions'),
+	(31, 'OAU', 'OAU', 'Offline Application Url'),
+	(32, 'SID', 'SID', 'Standard Id'),
+	(33, 'ALE', 'ALE', 'Apprenticeship Level'),
+	(34, 'CDE', 'CDE', 'Contact Details')
 ) 
 
-
-
 AS Source (VacancyReferralCommentsFieldTypeId, CodeName, ShortName, FullName) 
-ON Target.VacancyReferralCommentsFieldTypeId = Source.WageUnitId 
+ON Target.VacancyReferralCommentsFieldTypeId = Source.VacancyReferralCommentsFieldTypeId 
 -- update matched rows 
 WHEN MATCHED THEN 
 UPDATE SET CodeName = Source.CodeName, ShortName = Source.ShortName, FullName = Source.FullName

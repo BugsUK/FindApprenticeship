@@ -32,7 +32,7 @@
 
             var vacancy =
                 new Fixture().Build<DomainVacancy>()
-                    .With(av => av.Status, VacancyStatus.PendingQA)
+                    .With(av => av.Status, VacancyStatus.Submitted)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
                     .Create();

@@ -13,8 +13,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         Withdrawn = 7,
         Completed = 8,
         PostedInError = 9,
-        PendingQA = 10,
-        ReservedForQA = 11,
-        ParentVacancy = 12 //TODO probably could be removed
+        ReservedForQA = 10 
     }
 }

@@ -219,7 +219,7 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.PendingQA)
+        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.Submitted)
         {
             return new MongoApprenticeshipVacancy
             {

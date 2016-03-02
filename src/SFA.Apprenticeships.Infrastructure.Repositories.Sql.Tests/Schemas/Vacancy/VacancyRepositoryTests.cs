@@ -56,7 +56,7 @@
 
             writeRepository.Save(vacancy);
 
-            var entity = readRepository.GetByReferenceNumber((int) vacancy.VacancyReferenceNumber);
+            var entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
 
             entity.ShouldBeEquivalentTo(vacancy, options =>
                 ForShallowSave(options)

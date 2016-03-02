@@ -60,7 +60,7 @@
                     Guid.NewGuid().ToString().Substring(0, 10)));
 
             var result = fixture.Build<DomainVacancy>()
-                .With(av => av.Status, VacancyStatus.PendingQA)
+                .With(av => av.Status, VacancyStatus.Submitted)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
