@@ -86,11 +86,11 @@
 
                 @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)
                 {
-                    <p>There is still 1 application to send an outcome to</p>
+                    <p>There is still 1 application to send a decision to</p>
                 }
                 else if (Model.NewApplicationsCount + Model.ViewedApplicationsCount > 1)
                 {
-                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send an outcome to</p>
+                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send a decision to</p>
                 }
             </div>
         </section>

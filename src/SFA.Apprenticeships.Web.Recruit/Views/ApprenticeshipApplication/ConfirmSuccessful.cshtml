@@ -3,7 +3,7 @@
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
 
 @{
-    ViewBag.Title = "Recruit an Apprentice - Send outcome";
+    ViewBag.Title = "Recruit an Apprentice - Send successful decision";
 }
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, FormMethod.Post))
@@ -16,7 +16,7 @@
 
     <div>
         <div class="hgroup">
-            <h1 class="heading-xlarge med-btm-margin">Send outcome</h1>
+            <h1 class="heading-xlarge med-btm-margin">Send successful decision</h1>
         </div>
 
         <p>Confirm @Model.ApplicantDetails.Name's application has been successful. Your decision can't be reversed.</p>
@@ -24,9 +24,9 @@
 
         <section>
             <div class="form-group">
-                <button type="submit" class="button" name="AppointCandidate" value="ConfirmSuccessfulAppointCandidate">Appoint candidate</button>
+                <button type="submit" class="button" name="AppointCandidate" value="ConfirmSuccessfulAppointCandidate">Confirm</button>
                 <p class="med-btm-margin">
-                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, new {Model.ApplicationSelection.ApplicationId})
+                    @Html.RouteLink("Cancel", RecruitmentRouteNames.ReviewApprenticeshipApplication, Model.ApplicationSelection)
                 </p>
             </div>
         </section>
