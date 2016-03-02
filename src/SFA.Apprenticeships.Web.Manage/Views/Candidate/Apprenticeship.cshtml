@@ -1,0 +1,83 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application
+@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel
+
+@{
+    ViewBag.Title = "Candidate application";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="grid-wrapper">
+    <div class="grid grid-2-3">
+        <h1 class="heading-xlarge">Your application - @Model.ApplicantDetails.Name</h1>
+    </div>
+    <div class="grid grid-1-3">
+        <div class="page-link hide-nojs">
+            <p>
+                <a class="print-trigger" href=""><i class="fa fa-print"></i>Print this page</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="grid-wrapper">
+    <div class="grid grid-2-3">
+        <div class="hgroup-medium">
+            <h2 class="heading-medium" id="vacancy-title">@Model.Vacancy.Title</h2>
+            <p class="subtitle" id="vacancy-employer">@Model.Vacancy.EmployerName</p>
+        </div>
+        <p class="text" id="vacancy-summary">@Model.Vacancy.ShortDescription</p>
+    </div>
+    <div class="grid grid-1-3 para-btm-margin">
+        @if (Model.Status == ApplicationStatuses.Draft)
+        {
+            <p class="small-btm-margin">This is a draft application.</p>
+        }
+        else
+        {
+            <p class="small-btm-margin">This is a submitted application.</p>
+        }
+        <p class="small-btm-margin">
+            @if (Model.Status == ApplicationStatuses.Draft)
+            {
+                <span>Draft created on @Html.DisplayFor(m => m.DateCreated, "Date").</span>
+            }
+            else
+            {
+                <span>Candidate applied on @Html.DisplayFor(m => m.DateApplied, "Date").</span>
+            }
+            @if (Model.Status == ApplicationStatuses.Successful)
+            {
+                <span class="inl-block">This application was successful.</span>
+            }
+            else if (Model.Status == ApplicationStatuses.Unsuccessful)
+            {
+                <span class="inl-block">This application was unsuccessful.</span>
+            }
+            else if (Model.Status == ApplicationStatuses.ExpiredOrWithdrawn)
+            {
+                <span class="inl-block">This apprenticeship expired or was withdrawn.</span>
+            }
+        </p>
+        <p class="hide-print">
+            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new {id = Model.ApplicantDetails.CandidateId}, new {@class = "inl-block" })
+            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = Model.Vacancy.VacancyId, applicationId = Model.ApplicationSelection.ApplicationId }, new { @class = "inl-block" })
+        </p>
+    </div>
+</div>
+
+@Html.DisplayFor(m => m.ApplicantDetails, "ApplicantDetails")
+@Html.DisplayFor(m => m.Education, EducationViewModel.PartialView)
+@Html.DisplayFor(m => m.Qualifications, QualificationViewModel.PartialView)
+@Html.DisplayFor(m => m.WorkExperience, WorkExperienceViewModel.PartialView)
+@Html.DisplayFor(m => m.TrainingCourses, TrainingCourseViewModel.PartialView)
+@Html.DisplayFor(m => m.AboutYou, AboutYouViewModel.PartialView)
+
+<section class="section-border">
+    <h2 class="heading-large">
+        Additional questions
+    </h2>
+    @Html.DisplayFor(m => m, "Application/EmployerQuestionAnswers")
+    @Html.DisplayFor(m => m, "Application/MonitoringInformation")
+</section>

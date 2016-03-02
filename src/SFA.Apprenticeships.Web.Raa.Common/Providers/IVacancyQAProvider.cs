@@ -35,7 +35,7 @@
         TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-
+        
         VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
@@ -53,5 +53,7 @@
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
+
+        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
     }
 }

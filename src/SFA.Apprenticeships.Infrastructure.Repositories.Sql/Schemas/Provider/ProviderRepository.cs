@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
-    using Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Entities.Raa.Parties;
-    using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
     
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
@@ -39,6 +38,11 @@
         }
 
         public Provider GetViaUkprn(string ukprn)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<Provider> GetByIds(IEnumerable<int> providerIds)
         {
             throw new NotImplementedException();
         }

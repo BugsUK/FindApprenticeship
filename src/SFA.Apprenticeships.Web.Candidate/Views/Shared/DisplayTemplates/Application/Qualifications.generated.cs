@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared.DisplayTemplates.Applic
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Application/Qualifications.cshtml")]
@@ -202,8 +203,8 @@ WriteLiteral(">Subject</span>\r\n                        </th>\r\n              
 
 WriteLiteral(" class=\"heading-span\"");
 
-WriteLiteral(">Grade</span>\r\n                        </th>\r\n                        <th>l\r\n    " +
-"                        <span");
+WriteLiteral(">Grade</span>\r\n                        </th>\r\n                        <th>\r\n     " +
+"                       <span");
 
 WriteLiteral(" class=\"heading-span\"");
 
@@ -231,14 +232,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 1886), Tuple.Create("\"", 1907)
+WriteAttribute("value", Tuple.Create(" value=\"", 1885), Tuple.Create("\"", 1906)
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 1894), Tuple.Create<System.Object, System.Int32>(item.Subject
+                              , Tuple.Create(Tuple.Create("", 1893), Tuple.Create<System.Object, System.Int32>(item.Subject
             
             #line default
             #line hidden
-, 1894), false)
+, 1893), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
@@ -248,14 +249,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2091), Tuple.Create("\"", 2168)
+WriteAttribute("value", Tuple.Create(" value=\"", 2090), Tuple.Create("\"", 2167)
             
             #line 53 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 2099), Tuple.Create<System.Object, System.Int32>(QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted)
+                              , Tuple.Create(Tuple.Create("", 2098), Tuple.Create<System.Object, System.Int32>(QualificationPresenter.GetDisplayGrade(item.Grade, item.IsPredicted)
             
             #line default
             #line hidden
-, 2099), false)
+, 2098), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                            <td>\r\n" +
@@ -265,14 +266,14 @@ WriteLiteral(" class=\"form-control qual-input-edit form-prepopped\"");
 
 WriteLiteral(" type=\"text\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 2352), Tuple.Create("\"", 2370)
+WriteAttribute("value", Tuple.Create(" value=\"", 2351), Tuple.Create("\"", 2369)
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Application\Qualifications.cshtml"
-                              , Tuple.Create(Tuple.Create("", 2360), Tuple.Create<System.Object, System.Int32>(item.Year
+                              , Tuple.Create(Tuple.Create("", 2359), Tuple.Create<System.Object, System.Int32>(item.Year
             
             #line default
             #line hidden
-, 2360), false)
+, 2359), false)
 );
 
 WriteLiteral(" readonly>\r\n                            </td>\r\n                        </tr>\r\n");

@@ -176,9 +176,15 @@
                );
 
             routes.MapRoute(
-               name: ManagementRouteNames.ViewVacancy,
-               url: "vacancy",
-               defaults: new { controller = "Vacancy", action = "View" }
+               name: ManagementRouteNames.ViewCandidateApprenticeshipVacancy,
+               url: "candidate/apprenticeship/vacancy",
+               defaults: new { controller = "Candidate", action = "ApprenticeshipVacancy" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateTraineeshipVacancy,
+               url: "candidate/apprenticeship/vacancy",
+               defaults: new { controller = "Candidate", action = "TraineeshipVacancy" }
                );
 
             routes.LowercaseUrls = true;

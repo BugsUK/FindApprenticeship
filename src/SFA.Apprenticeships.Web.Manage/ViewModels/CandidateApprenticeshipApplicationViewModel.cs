@@ -12,6 +12,7 @@
 
         public CandidateApprenticeshipApplicationViewModel(ApprenticeshipApplicationSummary applicationSummary)
         {
+            ApplicationId = applicationSummary.ApplicationId;
             VacancyId = applicationSummary.LegacyVacancyId;
             Title = applicationSummary.Title;
             EmployerName = applicationSummary.EmployerName;
@@ -25,6 +26,8 @@
             DateUpdated = applicationSummary.DateUpdated;
             IsPositiveAboutDisability = applicationSummary.IsPositiveAboutDisability;
         }
+
+        public Guid ApplicationId { get; set; }
 
         public int VacancyId { get; set; }
 

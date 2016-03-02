@@ -9,6 +9,7 @@
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div>
+    @Html.DisplayFor(m => m, "Vacancy/VacancyPreviewHeader")
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
     @if (Model.Status.IsStateReadOnly())

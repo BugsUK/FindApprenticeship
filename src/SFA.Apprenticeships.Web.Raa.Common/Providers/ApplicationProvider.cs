@@ -4,6 +4,8 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
     using Domain.Entities.Applications;
     using Domain.Entities.Raa.Vacancies;
@@ -17,14 +19,18 @@
         private readonly IConfigurationService _configurationService;
         private readonly IVacancyPostingService _vacancyPostingService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly IMapper _mapper;
         private readonly ILogService _logService;
 
-        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, IMapper mapper, ILogService logService)
+        public ApplicationProvider(IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IApprenticeshipApplicationService apprenticeshipApplicationService, IProviderService providerService, IEmployerService employerService, IMapper mapper, ILogService logService)
         {
             _configurationService = configurationService;
             _vacancyPostingService = vacancyPostingService;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _providerService = providerService;
+            _employerService = employerService;
             _mapper = mapper;
             _logService = logService;
         }
@@ -121,10 +127,13 @@
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
 
             viewModel.ApplicationSelection = applicationSelectionViewModel;
             viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+            viewModel.Vacancy.EmployerName = employer.Name;
 
             return viewModel;
         }

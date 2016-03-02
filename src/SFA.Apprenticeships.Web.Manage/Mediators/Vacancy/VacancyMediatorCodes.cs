@@ -106,5 +106,10 @@
         {
             public const string Ok = "VacancyMediatorCodes.SelectStandardAsTrainingType.Ok";
         }
+
+        public class GetVacancyViewModel
+        {
+            public const string Ok = "VacancyMediatorCodes.GetVacancyViewModel.Ok";
+        }
     }
 }

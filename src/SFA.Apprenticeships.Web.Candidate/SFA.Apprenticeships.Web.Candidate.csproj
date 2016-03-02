@@ -1567,6 +1567,10 @@
       <Project>{c91e4093-3348-43ed-b386-cf70000ffcb3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{dd096f97-415d-4676-9f90-7aee60213f49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -1574,6 +1578,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{a64fc67f-c873-4422-93dd-fbd8a6370ec3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1b92e84d-f15a-4521-bdb9-2be321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920f5834-459d-4e20-9b17-aad52d2cc8fe}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
@@ -1623,6 +1635,10 @@
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{c7cb47e8-c024-4dc0-9bdc-e325d3bfeadc}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
@@ -1650,6 +1666,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
+      <Project>{24bdbcac-42ee-4253-8e8a-34ff5f0f41e7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>

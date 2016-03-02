@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
     using Application.ReferenceData;
@@ -12,12 +14,16 @@
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
     {
         private readonly IVacancyReadRepository _vacancyReadRepository;
+        private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
 
-        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public ApprenticeshipVacancyDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService)
         {
             _vacancyReadRepository = vacancyReadRepository;
+            _providerService = providerService;
+            _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
         }
@@ -35,8 +41,12 @@
                 return null;
             }
 
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+            var provider = _providerService.GetProvider(providerSite.ProviderId);
             var categories = _referenceDataProvider.GetCategories();
-            return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, categories, _logService);
+            return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
         }
     }
 }

@@ -57,5 +57,7 @@
         MediatorResponse<TrainingDetailsViewModel> SelectFrameworkAsTrainingType(TrainingDetailsViewModel viewModel);
 
         MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
+
+        MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber);
     }
 }

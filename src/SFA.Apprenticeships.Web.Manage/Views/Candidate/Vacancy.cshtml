@@ -1,0 +1,11 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateVacancy
+@{
+    ViewBag.Title = "QA a Vacancy - View vacancy";
+}
+
+<div>
+    @Html.Partial("VacancyHeader", Model)
+    @Html.DisplayFor(m => m.Vacancy, VacancyViewModel.PartialView)
+    @Html.Partial("_Apply", Model)
+</div>

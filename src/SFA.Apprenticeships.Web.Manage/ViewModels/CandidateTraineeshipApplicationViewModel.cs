@@ -5,6 +5,8 @@
 
     public class CandidateTraineeshipApplicationViewModel
     {
+        public Guid ApplicationId { get; set; }
+
         public int VacancyId { get; set; }
 
         public VacancyStatuses VacancyStatus { get; set; }
