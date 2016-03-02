@@ -36,7 +36,7 @@
 
         public VacancyStatus Status { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyPartyViewModelMessages.EmployerDescriptionComment.LabelText)]
         public string EmployerDescriptionComment { get; set; }

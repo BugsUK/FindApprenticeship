@@ -32,7 +32,7 @@
         // GET: Vacancy
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult Review(long vacancyReferenceNumber)
+        public ActionResult Review(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
             var vacancyViewModel = response.ViewModel;
@@ -60,7 +60,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult BasicDetails(long vacancyReferenceNumber)
+        public ActionResult BasicDetails(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetBasicDetails(vacancyReferenceNumber);
 
@@ -108,7 +108,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        public ActionResult TrainingDetails(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetTrainingDetails(vacancyReferenceNumber);
 
@@ -178,7 +178,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult Summary(long vacancyReferenceNumber)
+        public ActionResult Summary(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
@@ -225,7 +225,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult RequirementsAndProspects(long vacancyReferenceNumber)
+        public ActionResult RequirementsAndProspects(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
 
@@ -271,7 +271,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
-        public ActionResult Questions(long vacancyReferenceNumber)
+        public ActionResult Questions(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
@@ -318,7 +318,7 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQAAction")]
         [HttpPost]
-        public ActionResult Approve(long vacancyReferenceNumber)
+        public ActionResult Approve(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.ApproveVacancy(vacancyReferenceNumber);
 
@@ -336,7 +336,7 @@
 
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyQAAction")]
         [HttpPost]
-        public ActionResult Reject(long vacancyReferenceNumber)
+        public ActionResult Reject(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.RejectVacancy(vacancyReferenceNumber);
 
@@ -353,7 +353,7 @@
         }
 
         [HttpGet]
-        public ActionResult EmployerInformation(long vacancyReferenceNumber, bool? useEmployerLocation)
+        public ActionResult EmployerInformation(int vacancyReferenceNumber, bool? useEmployerLocation)
         {
             var response = _vacancyMediator.GetEmployerInformation(vacancyReferenceNumber, useEmployerLocation);
 
@@ -398,7 +398,7 @@
         }
 
         [HttpGet]
-        public ActionResult Locations(long vacancyReferenceNumber)
+        public ActionResult Locations(int vacancyReferenceNumber)
         {
             var response = _vacancyMediator.GetLocationAddressesViewModel(vacancyReferenceNumber);
 

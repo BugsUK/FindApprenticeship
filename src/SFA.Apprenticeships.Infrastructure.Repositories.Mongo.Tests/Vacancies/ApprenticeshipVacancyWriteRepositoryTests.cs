@@ -1,15 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Tests.Vacancies
 {
     using System;
-    using System.Collections.Generic;
     using System.Security.Principal;
     using System.Threading;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
-    using Tests;
     using Mongo.Vacancies.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
@@ -18,7 +14,7 @@
 
     public class ApprenticeshipVacancyWriteRepositoryTests : RepositoryIntegrationTest
     {
-        private const long IntegrationTestVacancyReferenceNumber = long.MaxValue;
+        private const int IntegrationTestVacancyReferenceNumber = int.MaxValue;
 
         [TearDown]
         public void TearDown()
@@ -48,7 +44,7 @@
                     .Create();
 
             //Act
-            writer.Save(vacancy);
+            writer.Create(vacancy);
             var savedVacancy = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
             writer.Delete(savedVacancy.VacancyId);
             var deletedApplication = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
@@ -70,7 +66,7 @@
                 new Fixture().Build<Vacancy>()
                     .With(av => av.VacancyId, 0)
                     .With(av => av.VacancyReferenceNumber, IntegrationTestVacancyReferenceNumber)
-                    .With(av => av.Status, VacancyStatus.PendingQA)
+                    .With(av => av.Status, VacancyStatus.Submitted)
                     .With(av => av.QAUserName, null)
                     .With(av => av.DateStartedToQA, null)
                     .Create();
@@ -79,14 +75,14 @@
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(qaUserName), null);
 
             //Act
-            writer.Save(vacancy);
+            writer.Create(vacancy);
             var savedVacancy = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
             var reservedVacancy = writer.ReserveVacancyForQA(IntegrationTestVacancyReferenceNumber);
 
             //Assert
             savedVacancy.Should().NotBeNull();
             savedVacancy.VacancyReferenceNumber.Should().Be(IntegrationTestVacancyReferenceNumber);
-            savedVacancy.Status.Should().Be(VacancyStatus.PendingQA);
+            savedVacancy.Status.Should().Be(VacancyStatus.Submitted);
             savedVacancy.QAUserName.Should().BeNullOrEmpty();
             savedVacancy.DateStartedToQA.Should().Be(null);
 

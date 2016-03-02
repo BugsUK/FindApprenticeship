@@ -37,7 +37,7 @@
 
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyApplicationsSearch.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
             var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(vacancy);
 
             var applications = _apprenticeshipApplicationService.GetSubmittedApplicationSummaries((int)vacancyApplicationsSearch.VacancyReferenceNumber);

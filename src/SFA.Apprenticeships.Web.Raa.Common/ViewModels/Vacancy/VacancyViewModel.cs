@@ -14,7 +14,7 @@
     {
         public const string PartialView = "Vacancy/VacancyPreview";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 
@@ -63,26 +63,12 @@
 
         public AddressViewModel Address { get; set; }
 
-        public bool IsUnapprovedMultiLocationParentVacancy
-        {
-            get
-            {
-                return
-                    Status != VacancyStatus.ParentVacancy
-                    && NewVacancyViewModel.LocationAddresses != null
-                    && NewVacancyViewModel.LocationAddresses.Count() > 1;
-            }
-        }
+        public bool IsUnapprovedMultiLocationParentVacancy => NewVacancyViewModel.LocationAddresses != null
+                                                              && NewVacancyViewModel.LocationAddresses.Count() > 1;
 
-        public bool IsApprovedMultiLocationChildVacancy
-        {
-            get
-            {
-                return Status == VacancyStatus.Live
-                       && NewVacancyViewModel.LocationAddresses != null
-                       && NewVacancyViewModel.LocationAddresses.Count() == 1;
-            }
-        }
+        public bool IsApprovedMultiLocationChildVacancy => Status == VacancyStatus.Live
+                                                           && NewVacancyViewModel.LocationAddresses != null
+                                                           && NewVacancyViewModel.LocationAddresses.Count() == 1;
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 

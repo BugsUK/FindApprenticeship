@@ -63,7 +63,7 @@
                 OfflineVacancy = false,
             };
 
-            MockVacancyPostingService.Setup(mock => mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
+            MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingVacancy);
             MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
@@ -109,10 +109,10 @@
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
-                mock.GetVacancy(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
+                mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value), Times.Once);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Never);
             MockVacancyPostingService.Verify(mock =>
-                mock.SaveVacancy(It.IsAny<Vacancy>()), Times.Once);
+                mock.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -130,7 +130,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
-                mock.GetVacancy(It.IsAny<long>()), Times.Never);
+                mock.GetVacancyByReferenceNumber(It.IsAny<int>()), Times.Never);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Once);
             MockVacancyPostingService.Verify(mock =>
                 mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);

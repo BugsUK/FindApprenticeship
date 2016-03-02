@@ -12,21 +12,21 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(long vacancyReferenceNumber);
+        void ApproveVacancy(int vacancyReferenceNumber);
 
-        void RejectVacancy(long vacancyReferenceNumber);
+        void RejectVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber);
+        VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
-        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
         FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
@@ -35,7 +35,7 @@
         TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-
+        
         VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
@@ -54,6 +54,6 @@
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
-        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
+        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
     }
 }

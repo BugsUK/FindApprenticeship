@@ -8,28 +8,28 @@
 
     public interface IVacancyMediator
     {
-        MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber);
+        MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber);
+        MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber);
+        MediatorResponse<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
         MediatorResponse<FurtherVacancyDetailsViewModel> UpdateVacancy(FurtherVacancyDetailsViewModel viewModel);
 
-        MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber);
+        MediatorResponse<NewVacancyViewModel> GetBasicDetails(int vacancyReferenceNumber);
 
-        MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(long vacancyReferenceNumber);
+        MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(int vacancyReferenceNumber);
 
         MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
         MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(
-            long vacancyReferenceNumber);
+            int vacancyReferenceNumber);
 
-        MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(long vacancyReferenceNumber,
+        MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(int vacancyReferenceNumber,
             bool? useEmployerLocation);
 
         MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel);
@@ -42,7 +42,7 @@
         MediatorResponse<VacancyPartyViewModel> UpdateEmployerInformation(
             VacancyPartyViewModel viewModel);
 
-        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(long vacancyReferenceNumber);
+        MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int vacancyReferenceNumber);
 
         MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel);
 
@@ -58,6 +58,6 @@
 
         MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
-        MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber);
+        MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber);
     }
 }

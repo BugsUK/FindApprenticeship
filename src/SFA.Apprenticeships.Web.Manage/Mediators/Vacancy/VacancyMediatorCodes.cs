@@ -16,9 +16,9 @@
 
         public class GetVacancy
         {
-            public const string NotAvailable = "VacancyMediatorCodes.GetVacancy.NotAvailable";
-            public const string Ok = "VacancyMediatorCodes.GetVacancy.Ok";
-            public const string FailedValidation = "VacancyMediatorCodes.GetVacancy.FailedValidation";
+            public const string NotAvailable = "VacancyMediatorCodes.GetVacancyByReferenceNumber.NotAvailable";
+            public const string Ok = "VacancyMediatorCodes.GetVacancyByReferenceNumber.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.GetVacancyByReferenceNumber.FailedValidation";
         }
 
         public class GetVacancySummaryViewModel

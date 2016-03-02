@@ -52,15 +52,15 @@
 
             //Assert
             _apprenticeshipVacancyReadRepository.Verify(m => m.Get(message.VacancyId), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Save(It.Is<Vacancy>(av => av.VacancyId == message.VacancyId)), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Save(It.Is<Vacancy>(av => av.Status == VacancyStatus.Closed)), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Save(It.IsAny<Vacancy>()), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.Is<Vacancy>(av => av.VacancyId == message.VacancyId)), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.Is<Vacancy>(av => av.Status == VacancyStatus.Closed)), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.IsAny<Vacancy>()), Times.Once);
         }
 
         [TestCase(VacancyStatus.Closed)]
         [TestCase(VacancyStatus.Draft)]
-        [TestCase(VacancyStatus.PendingQA)]
-        [TestCase(VacancyStatus.RejectedByQA)]
+        [TestCase(VacancyStatus.Submitted)]
+        [TestCase(VacancyStatus.Referred)]
         [TestCase(VacancyStatus.ReservedForQA)]
         [TestCase(VacancyStatus.Unknown)]
         public void DoNothingWithVacancyThatIsNotLive(VacancyStatus status)
@@ -79,7 +79,7 @@
 
             //Assert
             _apprenticeshipVacancyReadRepository.Verify(m => m.Get(message.VacancyId), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Save(It.IsAny<Vacancy>()), Times.Never());
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.IsAny<Vacancy>()), Times.Never());
         }
     }
 }

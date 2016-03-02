@@ -68,9 +68,9 @@
                 .With(av => av.ClosingDate, DateTime.Now.AddDays(100))
                 .Create();
 
-            writer.Save(expiredLiveVacancy);
-            writer.Save(expiredQaVacancy);
-            writer.Save(futureLiveVacancy);
+            writer.Create(expiredLiveVacancy);
+            writer.Create(expiredQaVacancy);
+            writer.Create(futureLiveVacancy);
 
             var yesterday = DateTime.UtcNow.AddDays(-1);
             var endOfDay = new DateTime(yesterday.Year, yesterday.Month, yesterday.Day, 23, 59, 59);

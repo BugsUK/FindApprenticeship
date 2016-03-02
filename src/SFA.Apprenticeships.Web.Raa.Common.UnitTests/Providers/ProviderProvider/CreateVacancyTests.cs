@@ -64,7 +64,7 @@
             MockProviderService.Verify(s => s.SaveVacancyParty(vacancyParty), Times.Once);
             MockVacancyPostingService.Verify(
                 s =>
-                    s.SaveVacancy(
+                    s.UpdateVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Once);
 
 

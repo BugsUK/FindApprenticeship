@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
-    using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -16,7 +15,7 @@
         public void ShouldSetStateToPendingQAWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var apprenticeshipVacancy = new Vacancy
             {
@@ -24,8 +23,8 @@
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new ProviderSite {Address = new PostalAddress()});
@@ -35,15 +34,15 @@
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveVacancy(
-                        It.Is<Vacancy>(v => v.Status == VacancyStatus.PendingQA)));
+                    ps.UpdateVacancy(
+                        It.Is<Vacancy>(v => v.Status == VacancyStatus.Submitted)));
         }
 
         [Test]
         public void ShouldSetDateSubmittedToUtcNowWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var now = DateTime.Now;
 
@@ -53,19 +52,19 @@
                 IsEmployerLocationMainApprenticeshipLocation = true
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
             MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
-            MockTimeService.Setup(ts => ts.UtcNow()).Returns(now);
+            MockTimeService.Setup(ts => ts.UtcNow).Returns(now);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveVacancy(
+                    ps.UpdateVacancy(
                         It.Is<Vacancy>(v => v.DateSubmitted == now)));
         }
 
@@ -73,7 +72,7 @@
         public void ShouldIncrementSubmissionCountWhenSumbittingTheVacancy()
         {
             var vacancyPostingProvider = GetVacancyPostingProvider();
-            const long referenceNumber = 1;
+            const int referenceNumber = 1;
 
             var apprenticeshipVacancy = new Vacancy
             {
@@ -82,8 +81,8 @@
                 SubmissionCount = 2
             };
 
-            MockVacancyPostingService.Setup(ps => ps.GetVacancy(It.IsAny<long>())).Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(ps => ps.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(ps => ps.GetVacancyByReferenceNumber(It.IsAny<int>())).Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(ps => ps.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
@@ -93,7 +92,7 @@
 
             MockVacancyPostingService.Verify(
                 ps =>
-                    ps.SaveVacancy(
+                    ps.UpdateVacancy(
                         It.Is<Vacancy>(v => v.SubmissionCount == 3)));
         }
     }

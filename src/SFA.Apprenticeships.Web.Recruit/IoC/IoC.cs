@@ -42,7 +42,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
             });
             var configurationService = container.GetInstance<IConfigurationService>();
             var cacheConfig = configurationService.Get<CacheConfiguration>();
-            
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
@@ -55,6 +54,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddCachingRegistry(cacheConfig);
 
                 //// service layer
+                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();

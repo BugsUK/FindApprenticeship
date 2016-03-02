@@ -4,6 +4,8 @@
 
     public interface IDateTimeService
     {
-        DateTime UtcNow();
+        DateTime UtcNow { get; }
+
+        DateTime MinValue { get; }
     }
 }

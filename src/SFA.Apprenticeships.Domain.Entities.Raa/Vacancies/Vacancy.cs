@@ -94,7 +94,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         }
 
         public int VacancyId { get; set; }
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
         public Guid VacancyGuid { get; set; }
         public string Title { get; set; }
         public string TitleComment { get; set; }
