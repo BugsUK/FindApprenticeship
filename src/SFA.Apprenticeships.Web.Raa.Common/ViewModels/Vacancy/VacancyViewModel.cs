@@ -61,8 +61,6 @@
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
-        public string EmployerName { get; set; }
-
         public AddressViewModel Address { get; set; }
 
         public bool IsUnapprovedMultiLocationParentVacancy
@@ -105,5 +103,7 @@
                         NewVacancyViewModel.LocationAddresses.Count == 1);
             }
         }
+
+        public bool IsCandidateView { get; set; }
     }
 }

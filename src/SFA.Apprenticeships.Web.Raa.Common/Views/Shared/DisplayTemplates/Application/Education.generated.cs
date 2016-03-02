@@ -70,7 +70,7 @@ WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                 Write(Model.Institution);
+                                                  Write(Model.Institution ?? "-");
 
             
             #line default
@@ -91,9 +91,9 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-from\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">From</label>\r\n            <span");
+WriteLiteral(">Started</label>\r\n            <span");
 
 WriteLiteral(" class=\"form-prepopped\"");
 
@@ -103,7 +103,7 @@ WriteLiteral(">");
 
             
             #line 15 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                     Write(Model.FromYear);
+                                                      Write(Model.FromYear == 0 ? "-" : Model.FromYear.ToString());
 
             
             #line default
@@ -116,9 +116,9 @@ WriteLiteral(">\r\n            <label");
 
 WriteLiteral(" for=\"school-to\"");
 
-WriteLiteral(" class=\"form-label\"");
+WriteLiteral(" class=\"form-hint\"");
 
-WriteLiteral(">To</label>\r\n            <span");
+WriteLiteral(">Finished</label>\r\n            <span");
 
 WriteLiteral(" class=\"form-prepopped\"");
 
@@ -128,7 +128,7 @@ WriteLiteral(">");
 
             
             #line 19 "..\..\Views\Shared\DisplayTemplates\Application\Education.cshtml"
-                                                   Write(Model.ToYear);
+                                                    Write(Model.ToYear == 0 ? "-" : Model.ToYear.ToString());
 
             
             #line default

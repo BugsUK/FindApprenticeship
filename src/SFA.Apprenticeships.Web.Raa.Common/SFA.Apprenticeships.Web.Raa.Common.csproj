@@ -230,6 +230,7 @@
     <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\EducationViewModel.cs" />
     <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Traineeship\TraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
     <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
@@ -296,6 +297,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Education.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswers.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonitoringInformation.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -331,6 +342,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>LocationSearch.cshtml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.generated.cs">
+      <DependentUpon>VacancyPreviewHeader.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -353,6 +369,26 @@
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.generated.cs">
       <DependentUpon>EmployerQuestions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.generated.cs">
+      <DependentUpon>_VacancyDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.generated.cs">
+      <DependentUpon>_OfflineVacancy.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.generated.cs">
+      <DependentUpon>_TrainingProvider.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.generated.cs">
+      <DependentUpon>_AboutTraineeships.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -448,6 +484,34 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>ApplicantDetails.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswers.generated.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyPreviewHeader.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_VacancyDetails.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_OfflineVacancy.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_TrainingProvider.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AboutTraineeships.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_QuestionsForCandidates.generated.cs</LastGenOutput>

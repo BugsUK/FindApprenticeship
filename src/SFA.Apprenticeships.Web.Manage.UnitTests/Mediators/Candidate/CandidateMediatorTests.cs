@@ -6,6 +6,7 @@
     using Manage.Validators;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Providers;
     using ViewModels;
 
     [TestFixture]
@@ -19,7 +20,7 @@
         {
             _candidateProvider = new Mock<ICandidateProvider>();
 
-            _mediator = new CandidateMediator(_candidateProvider.Object, new CandidateSearchViewModelServerValidator());
+            _mediator = new CandidateMediator(_candidateProvider.Object, new Mock<IVacancyQAProvider>().Object, new CandidateSearchViewModelServerValidator());
         }
 
         [Test]

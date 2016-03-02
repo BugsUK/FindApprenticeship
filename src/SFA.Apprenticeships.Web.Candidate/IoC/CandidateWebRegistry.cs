@@ -12,14 +12,20 @@
     using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Employer;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Organisations;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Application.Location;
+    using Application.Organisation;
+    using Application.Provider;
     using Application.ReferenceData;
     using Application.UserAccount;
     using Application.UserAccount.Strategies;
@@ -111,6 +117,9 @@
             For<ICommunicationService>().Use<CommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<ICandidateVacancyService>().Use<CandidateVacancyService>();
+            For<IProviderService>().Use<ProviderService>();
+            For<IOrganisationService>().Use<OrganisationService>();
+            For<IEmployerService>().Use<EmployerService>();
         }
 
         private void RegisterStrategies()

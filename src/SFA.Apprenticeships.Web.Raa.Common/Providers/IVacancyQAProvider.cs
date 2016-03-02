@@ -53,5 +53,7 @@
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
+
+        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
     }
 }

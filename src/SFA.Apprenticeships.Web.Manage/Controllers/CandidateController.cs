@@ -67,5 +67,47 @@
 
             return View(response.ViewModel);
         }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Apprenticeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Traineeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateTraineeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ApprenticeshipVacancy(int vacancyId, Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipVacancyViewModel(vacancyId, applicationId);
+            var candidateVacancyViewModel = response.ViewModel;
+
+            SetLinks(candidateVacancyViewModel.Vacancy);
+
+            return View("Vacancy", candidateVacancyViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult TraineeshipVacancy(int vacancyId, Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateTraineeshipVacancyViewModel(vacancyId, applicationId);
+            var candidateVacancyViewModel = response.ViewModel;
+
+            SetLinks(candidateVacancyViewModel.Vacancy);
+
+            return View("Vacancy", candidateVacancyViewModel);
+        }
     }
 }

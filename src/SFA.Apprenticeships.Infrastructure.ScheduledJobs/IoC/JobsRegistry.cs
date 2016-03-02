@@ -8,13 +8,20 @@
     using Application.Communications;
     using Application.Communications.Housekeeping;
     using Application.Communications.Strategies;
+    using Application.Employer;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
+    using Application.Interfaces.Organisations;
+    using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Location;
+    using Application.Organisation;
+    using Application.Provider;
     using Application.ReferenceData;
     using Application.Vacancies;
     using Consumers;
     using Domain.Interfaces.Repositories;
+    using EmployerDataService.Providers;
     using Processes.Vacancies;
     using Repositories.Mongo.Audit;
     using StructureMap.Configuration.DSL;
@@ -35,6 +42,9 @@
             For<SavedSearchControlQueueConsumer>().Use<SavedSearchControlQueueConsumer>();
 
             For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IProviderService>().Use<ProviderService>();
+            For<IOrganisationService>().Use<OrganisationService>();
+            For<IEmployerService>().Use<EmployerService>();
 
             For<IApprenticeshipSummaryUpdateProcessor>().Use<ApprenticeshipSummaryUpdateProcessor>();
             For<ITraineeshipsSummaryUpdateProcessor>().Use<TraineeshipsSummaryUpdateProcessor>();

@@ -2,6 +2,7 @@
 {
     using Domain.Entities.Raa.Parties;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Organisations;
     using Moq;

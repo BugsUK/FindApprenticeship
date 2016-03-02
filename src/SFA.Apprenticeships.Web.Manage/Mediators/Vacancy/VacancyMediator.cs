@@ -195,6 +195,13 @@
             return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
         }
 
+        public MediatorResponse<VacancyViewModel> GetVacancyViewModel(long vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyQaProvider.GetVacancy(vacancyReferenceNumber);
+            vacancyViewModel.IsEditable = false;
+            return GetMediatorResponse(VacancyMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
+        }
+
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);

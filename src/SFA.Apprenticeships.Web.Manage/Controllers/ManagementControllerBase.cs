@@ -5,7 +5,9 @@
     using System.Linq;
     using System.Web.Mvc;
     using Common.Constants;
+    using Constants;
     using NLog.Contrib;
+    using Raa.Common.ViewModels.Vacancy;
 
     [OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class ManagementControllerBase : Common.Controllers.ControllerBase
@@ -40,6 +42,24 @@
             MappedDiagnosticsLogicalContext.Set("CurrentUICulture", CultureInfo.CurrentUICulture.ToString());
             var headers = Request.Headers.AllKeys.Select(key => string.Format("{0}={1}", key, Request.Headers[key]));
             MappedDiagnosticsLogicalContext.Set("Headers", string.Join(",", headers));
+        }
+
+        protected void SetLinks(VacancyViewModel vacancyViewModel)
+        {
+            vacancyViewModel.BasicDetailsLink = Url.RouteUrl(ManagementRouteNames.BasicDetails,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.TrainingDetailsLink = Url.RouteUrl(ManagementRouteNames.TrainingDetails,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.SummaryLink = Url.RouteUrl(ManagementRouteNames.Summary,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(ManagementRouteNames.RequirementsAndProspoects,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.QuestionsLink = Url.RouteUrl(ManagementRouteNames.Questions,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(ManagementRouteNames.EmployerInformation,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
+            vacancyViewModel.LocationsLink = Url.RouteUrl(ManagementRouteNames.AddLocations,
+                new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber });
         }
     }
 }
