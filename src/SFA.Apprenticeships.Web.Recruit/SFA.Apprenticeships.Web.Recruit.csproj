@@ -540,7 +540,8 @@
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <Content Include="Views\VacancyPosting\TrainingDetails.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessful.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessfulDecision.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmUnsuccessfulDecision.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

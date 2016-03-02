@@ -19,14 +19,17 @@
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
 
-    if (Model.Status == ApplicationStatuses.Successful)
+    if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
     {
+        var decision = Model.Status == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
+        var decisionDateTime = Model.Status == ApplicationStatuses.Successful ? Model.SuccessfulDateTime : Model.UnsuccessfulDateTime;
+
         <div role="alert" class="panel-info">
             <p>
-                <i class="fa fa-flag the-icon"></i>This candidate was made successful
-                @if (Model.SuccessfulDateTime.HasValue)
+                <i class="fa fa-flag the-icon"></i>This candidate was made @decision
+                @if (decisionDateTime.HasValue)
                 {
-                    <span>on @Html.DisplayFor(m => m.SuccessfulDateTime.Value)</span>
+                    <span>on @Html.DisplayFor(m => decisionDateTime.Value)</span>
                 }
             </p>
             <p>
@@ -64,7 +67,7 @@
             @Html.DisplayFor(m => m, "Application/MonitoringInformation")
         </section>
 
-        @if (Model.Status != ApplicationStatuses.Successful)
+        @if (!(Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful))
         {
             <section>
                 <div class="form-group">
@@ -76,10 +79,10 @@
                 </div>
                 <div class="form-group">
                     <button type="submit" class="button" name="Review" value="ReviewAppointCandidate">
-                        Inform @Model.ApplicantDetails.Name their application has been successful
+                        Send successful decision
                     </button>
                     <p class="med-btm-margin">
-                        <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Reject candidate</button>
+                        <button type="submit" class="button-link" name="Review" value="ReviewRejectCandidate">Send unsuccessful decision</button>
                         <button type="submit" class="button-link" name="Review" value="ReviewSaveAndExit">Save and exit</button>
                     </p>
                 </div>

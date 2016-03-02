@@ -14,6 +14,8 @@
 
         void UpdateApprenticeshipApplicationViewModelNotes(Guid applicationId, string notes);
 
-        ApplicationSelectionViewModel AppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel);
+        ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+
+        ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
     }
 }
