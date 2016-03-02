@@ -16,7 +16,10 @@
 
 @Html.Partial("DisplayTemplates/Vacancy/_RequirementsAndProspects", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
 
-@Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+@if (!Model.IsCandidateView)
+{
+    @Html.Partial("DisplayTemplates/Vacancy/_QuestionsForCandidates", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+}
 
 @if (Model.VacancyType == VacancyType.Apprenticeship)
 {

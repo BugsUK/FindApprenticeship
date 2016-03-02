@@ -1,0 +1,21 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Applications
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Web.Manage.Constants
+@model SFA.Apprenticeships.Web.Manage.ViewModels.CandidateVacancy
+
+<p id="date-applied" class="no-btm-margin">
+    @if (Model.Application.Status == ApplicationStatuses.Draft)
+    {
+        <span>Draft created on @Html.DisplayFor(m => m.Application.DateCreated, "Date").</span>
+    }
+    else
+    {
+        <span>Candidate applied on @Html.DisplayFor(m => m.Application.DateApplied, "Date").</span>
+    }
+</p>
+<p class="hide-print">
+    @Html.RouteLink("View candidate's application", Model.Vacancy.VacancyType == VacancyType.Apprenticeship ? ManagementRouteNames.ViewCandidateApprenticeshipApplication : ManagementRouteNames.ViewCandidateTraineeshipVacancy, new {applicationId = Model.Application.ApplicationSelection.ApplicationId}, new {@class = "inl-block"})<br/>
+    @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new { id = Model.Application.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
+</p>
+
+<p id="vacancy-closing-date" class="copy-16">Closing date: @Model.Vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>

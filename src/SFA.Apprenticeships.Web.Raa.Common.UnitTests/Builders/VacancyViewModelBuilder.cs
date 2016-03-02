@@ -57,6 +57,7 @@
             viewModel.VacancyRequirementsProspectsViewModel.VacancyType = vacancyType;
             viewModel.Status = status;
             viewModel.VacancyType = vacancyType;
+            viewModel.IsCandidateView = false;
             return viewModel;
         }
 

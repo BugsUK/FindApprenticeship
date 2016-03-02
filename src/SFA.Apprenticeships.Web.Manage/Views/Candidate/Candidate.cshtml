@@ -86,7 +86,7 @@ else
                                                 }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId, candidateId = Model.CandidateId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
@@ -126,7 +126,7 @@ else
                                                 }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId, candidateId = Model.CandidateId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
@@ -185,7 +185,7 @@ else
                                                 }
                                                 else
                                                 {
-                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId, candidateId = Model.CandidateId }, new { @class = "link-unimp" })
+                                                    @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                                 }
                                             </td>
                                             <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateApprenticeshipApplication, new { applicationId = application.ApplicationId })</td>
@@ -245,7 +245,7 @@ else
                                             }
                                             else
                                             {
-                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId, candidateId = Model.CandidateId }, new { @class = "link-unimp" })
+                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateApprenticeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
 
                                                 if (application.VacancyStatus == VacancyStatuses.Live)
                                                 {
@@ -304,7 +304,7 @@ else
                                             }
                                             else
                                             {
-                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewVacancy, new { vacancyId = application.VacancyId, candidateId = Model.CandidateId }, new { @class = "link-unimp" })
+                                                @Html.RouteLink(application.Title + " with " + @application.EmployerName, @ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = application.VacancyId, applicationId = application.ApplicationId }, new { @class = "link-unimp" })
                                             }
                                         </td>
                                         <td class="ta-center">@Html.RouteLink("View application", @ManagementRouteNames.ViewCandidateTraineeshipApplication, new { applicationId = application.ApplicationId }, new { id = "traineeship-view-link-" + application.VacancyId })</td>

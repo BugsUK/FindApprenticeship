@@ -33,6 +33,7 @@
         public const string ViewCandidate = "ViewCandidate";
         public const string ViewCandidateApprenticeshipApplication = "ViewCandidateApprenticeshipApplication";
         public const string ViewCandidateTraineeshipApplication = "ViewCandidateTraineeshipApplication";
-        public const string ViewVacancy = "ViewVacancy";
+        public const string ViewCandidateApprenticeshipVacancy = "ViewCandidateApprenticeshipVacancy";
+        public const string ViewCandidateTraineeshipVacancy = "ViewCandidateTraineeshipVacancy";
     }
 }

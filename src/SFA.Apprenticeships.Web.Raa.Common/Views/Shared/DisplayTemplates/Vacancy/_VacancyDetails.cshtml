@@ -138,17 +138,20 @@
     </div>
     <div class="grid grid-2-3">
         <div class="text @editableItemClass" itemprop="responsibilities">
-            <h3 class="bold-small" id="long-description-header">
-                @if (Model.VacancyType == VacancyType.Traineeship)
-                {
-                    <span>Work placement</span>
-                }
-                else
-                {
-                    <span>Vacancy description</span>
-                }
-                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
-            </h3>
+            @if (!Model.IsCandidateView)
+            {
+                <h3 class="bold-small" id="long-description-header">
+                    @if (Model.VacancyType == VacancyType.Traineeship)
+                    {
+                        <span>Work placement</span>
+                    }
+                    else
+                    {
+                        <span>Vacancy description</span>
+                    }
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
+                </h3>
+            }
             <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
             @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
         </div>
