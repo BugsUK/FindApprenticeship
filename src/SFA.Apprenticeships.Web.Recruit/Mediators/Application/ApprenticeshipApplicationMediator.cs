@@ -99,22 +99,40 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.Application
             return viewModel;
         }
 
-        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessful(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok, viewModel);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok, viewModel);
         }
 
-        public MediatorResponse<ApplicationSelectionViewModel> ConfirmSuccessfulAppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public MediatorResponse<ApplicationSelectionViewModel> SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
-            var viewModel = _applicationProvider.AppointCandidate(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.SendSuccessfulDecision(applicationSelectionViewModel);
 
             var candidateName = applicationViewModel.ApplicantDetails.Name;
-            var message = string.Format(ApplicationViewModelMessages.SuccessfulApplicationFormat, candidateName);
+            var message = string.Format(ApplicationViewModelMessages.SuccessfulDecisionFormat, candidateName);
 
-            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok, viewModel, message, UserMessageLevel.Info);
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
+        }
+
+        public MediatorResponse<ApprenticeshipApplicationViewModel> ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var viewModel = _applicationProvider.GetApprenticeshipApplicationViewModelForReview(applicationSelectionViewModel);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok, viewModel);
+        }
+
+        public MediatorResponse<ApplicationSelectionViewModel> SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationViewModel = _applicationProvider.GetApprenticeshipApplicationViewModel(applicationSelectionViewModel);
+            var viewModel = _applicationProvider.SendUnsuccessfulDecision(applicationSelectionViewModel);
+
+            var candidateName = applicationViewModel.ApplicantDetails.Name;
+            var message = string.Format(ApplicationViewModelMessages.UnsuccessfulDecisionFormat, candidateName);
+
+            return GetMediatorResponse(ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok, viewModel, message, UserMessageLevel.Info);
         }
     }
 }

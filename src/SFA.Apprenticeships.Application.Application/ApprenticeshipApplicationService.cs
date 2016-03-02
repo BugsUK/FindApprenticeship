@@ -67,12 +67,33 @@
             var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
 
             var applicationStatusSummary = new ApplicationStatusSummary
-            {               
-                ApplicationId = Guid.Empty, // CRITICAL: make the update look like it came from legacy AVMS application
+            {
+                // CRITICAL: make the update look like it came from legacy AVMS application
+                ApplicationId = Guid.Empty,
                 ApplicationStatus = ApplicationStatuses.Successful,
                 LegacyApplicationId = nextLegacyApplicationId,
                 LegacyCandidateId = 0, // not required
-                LegacyVacancyId = 1, // not required
+                LegacyVacancyId = 0, // not required
+                VacancyStatus = apprenticeshipApplication.VacancyStatus,
+                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
+            };
+
+            _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
+        }
+
+        public void RejectCandidate(Guid applicationId)
+        {
+            var apprenticeshipApplication = GetApplication(applicationId);
+            var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
+
+            var applicationStatusSummary = new ApplicationStatusSummary
+            {
+                // CRITICAL: make the update look like it came from legacy AVMS application
+                ApplicationId = Guid.Empty,
+                ApplicationStatus = ApplicationStatuses.Unsuccessful,
+                LegacyApplicationId = nextLegacyApplicationId,
+                LegacyCandidateId = 0, // not required
+                LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
                 ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
             };

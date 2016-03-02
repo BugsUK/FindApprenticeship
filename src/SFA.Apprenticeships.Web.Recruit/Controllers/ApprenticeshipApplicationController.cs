@@ -88,7 +88,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -127,13 +127,13 @@
         }
 
         [HttpGet]
-        public ActionResult ConfirmSuccessful(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ActionResult ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmSuccessful(applicationSelectionViewModel);
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulDecision(applicationSelectionViewModel);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessful.Ok:
+                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok:
                     return View(response.ViewModel);
 
                 default:
@@ -142,14 +142,50 @@
         }
 
         [HttpPost]
-        [MultipleFormActionsButton(SubmitButtonActionName = "AppointCandidate")]
-        public ActionResult ConfirmSuccessfulAppointCandidate(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendSuccessfulDecision")]
+        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
         {
-            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulAppointCandidate(apprenticeshipApplicationViewModel.ApplicationSelection);
+            var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
 
             switch (response.Code)
             {
-                case ApprenticeshipApplicationMediatorCodes.AppointCandidate.Ok:
+                case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                    }
+
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
+        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
                     if (response.Message != null)
                     {
                         SetUserMessage(response.Message.Text, response.Message.Level);

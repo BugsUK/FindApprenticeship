@@ -19,5 +19,7 @@
         void UpdateApplicationNotes(Guid applicationId, string notes);
 
         void AppointCandidate(Guid applicationId);
+
+        void RejectCandidate(Guid applicationId);
     }
 }

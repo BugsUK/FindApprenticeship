@@ -19,14 +19,17 @@
     @Html.HiddenFor(m => m.ApplicationSelection.FilterType)
     @Html.HiddenFor(m => m.ApplicationSelection.PageSize)
 
-    if (Model.Status == ApplicationStatuses.Successful)
+    if (Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful)
     {
+        var decision = Model.Status == ApplicationStatuses.Successful ? "successful" : "unsuccessful";
+        var decisionDateTime = Model.Status == ApplicationStatuses.Successful ? Model.SuccessfulDateTime : Model.UnsuccessfulDateTime;
+
         <div role="alert" class="panel-info">
             <p>
-                <i class="fa fa-flag the-icon"></i>This candidate was made successful
-                @if (Model.SuccessfulDateTime.HasValue)
+                <i class="fa fa-flag the-icon"></i>This candidate was made @decision
+                @if (decisionDateTime.HasValue)
                 {
-                    <span>on @Html.DisplayFor(m => m.SuccessfulDateTime.Value)</span>
+                    <span>on @Html.DisplayFor(m => decisionDateTime.Value)</span>
                 }
             </p>
             <p>
@@ -95,7 +98,7 @@
             </fieldset>
         }
 
-        @if (Model.Status != ApplicationStatuses.Successful)
+        @if (!(Model.Status == ApplicationStatuses.Successful || Model.Status == ApplicationStatuses.Unsuccessful))
         {
             <section>
                 <div class="form-group">

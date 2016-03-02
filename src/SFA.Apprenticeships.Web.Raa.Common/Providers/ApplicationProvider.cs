@@ -98,11 +98,20 @@
             _apprenticeshipApplicationService.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public ApplicationSelectionViewModel AppointCandidate(ApplicationSelectionViewModel applicationSelectionViewModel)
+        public ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var applicationId = applicationSelectionViewModel.ApplicationId;
 
             _apprenticeshipApplicationService.AppointCandidate(applicationId);
+
+            return applicationSelectionViewModel;
+        }
+
+        public ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var applicationId = applicationSelectionViewModel.ApplicationId;
+
+            _apprenticeshipApplicationService.RejectCandidate(applicationId);
 
             return applicationSelectionViewModel;
         }
