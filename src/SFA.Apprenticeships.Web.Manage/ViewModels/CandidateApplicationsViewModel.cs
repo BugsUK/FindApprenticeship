@@ -31,7 +31,8 @@
             {
                 return CandidateApprenticeshipApplications.Where(each =>
                     each.ApplicationStatus == ApplicationStatuses.Submitting ||
-                    each.ApplicationStatus == ApplicationStatuses.Submitted);
+                    each.ApplicationStatus == ApplicationStatuses.Submitted ||
+                    each.ApplicationStatus == ApplicationStatuses.InProgress);
             }
         }
 

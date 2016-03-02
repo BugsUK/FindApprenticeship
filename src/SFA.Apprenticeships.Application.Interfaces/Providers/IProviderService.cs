@@ -15,6 +15,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         Provider GetProvider(string ukprn);
 
+        IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds);
+
         void SaveProvider(Provider provider);
 
         ProviderSite GetProviderSite(int providerSiteId);
@@ -23,6 +25,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
+        IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
+
         void SaveProviderSites(IEnumerable<ProviderSite> providerSites);
 
         VacancyParty GetVacancyParty(int vacancyPartyId);
@@ -30,6 +34,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
+
+        IEnumerable<VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds);
 
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 

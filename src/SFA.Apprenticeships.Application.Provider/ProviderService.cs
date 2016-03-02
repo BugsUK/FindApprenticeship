@@ -7,7 +7,6 @@ namespace SFA.Apprenticeships.Application.Provider
     using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
     using Interfaces.Organisations;
@@ -67,6 +66,11 @@ namespace SFA.Apprenticeships.Application.Provider
             return provider;
         }
 
+        public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)
+        {
+            return _providerReadRepository.GetByIds(providerIds);
+        }
+
         public void SaveProvider(Provider provider)
         {
             _providerWriteRepository.Save(provider);
@@ -116,6 +120,11 @@ namespace SFA.Apprenticeships.Application.Provider
             providerSites = _organisationService.GetProviderSites(ukprn);
 
             return providerSites;
+        }
+
+        public IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
+        {
+            return _providerSiteReadRepository.GetByIds(providerSiteIds);
         }
 
         public void SaveProviderSites(IEnumerable<ProviderSite> providerSites)
@@ -175,6 +184,11 @@ namespace SFA.Apprenticeships.Application.Provider
         public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
         {
             return _vacancyPartyWriteRepository.Save(vacancyParty);
+        }
+
+        public IEnumerable<VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds);
         }
 
         public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)

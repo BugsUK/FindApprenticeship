@@ -14,8 +14,7 @@
     }
 </p>
 <p class="hide-print">
-    @Html.RouteLink("View candidate's application", Model.Vacancy.VacancyType == VacancyType.Apprenticeship ? ManagementRouteNames.ViewCandidateApprenticeshipApplication : ManagementRouteNames.ViewCandidateTraineeshipVacancy, new {applicationId = Model.Application.ApplicationSelection.ApplicationId}, new {@class = "inl-block"})<br/>
-    @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new { id = Model.Application.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
+    @Html.RouteLink("View candidate's application", Model.Vacancy.VacancyType == VacancyType.Apprenticeship ? ManagementRouteNames.ViewCandidateApprenticeshipApplication : ManagementRouteNames.ViewCandidateTraineeshipVacancy, new {applicationId = Model.Application.ApplicationSelection.ApplicationId}, new {@class = "inl-block"})
 </p>
-
+@Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new { id = Model.Application.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
 <p id="vacancy-closing-date" class="copy-16">Closing date: @Model.Vacancy.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate.Date.ToFriendlyClosingToday()</p>

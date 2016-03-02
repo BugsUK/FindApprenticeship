@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
     using SFA.Infrastructure.Interfaces;
     using Application.ReferenceData;
     using Application.Vacancies;
@@ -18,12 +20,16 @@
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
     {
         private readonly IVacancyReadRepository _vacancyReadRepository;
+        private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly IReferenceDataProvider _referenceDataProvider;
         private readonly ILogService _logService;
 
-        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IReferenceDataProvider referenceDataProvider, ILogService logService)
+        public VacancyIndexDataProvider(IVacancyReadRepository vacancyReadRepository, IProviderService providerService, IEmployerService employerService, IReferenceDataProvider referenceDataProvider, ILogService logService)
         {
             _vacancyReadRepository = vacancyReadRepository;
+            _providerService = providerService;
+            _employerService = employerService;
             _referenceDataProvider = referenceDataProvider;
             _logService = logService;
         }
@@ -38,8 +44,18 @@
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
             var vacancies = _vacancyReadRepository.GetWithStatus(VacancyStatus.Live);
+            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct()).ToDictionary(vp => vp.VacancyPartyId, vp => vp);
+            var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
+            var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
+            var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories();
-            var vacancySummaries = vacancies.Select(v => ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v, categories, _logService));
+            var vacancySummaries =
+                vacancies.Select(
+                    v =>
+                        ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
+                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                            categories, _logService));
             return new VacancySummaries(vacancySummaries, new List<TraineeshipSummary>());
         }
     }
