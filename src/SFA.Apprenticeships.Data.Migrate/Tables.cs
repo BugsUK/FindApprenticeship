@@ -203,10 +203,15 @@
 
         public bool TransformVacancy(dynamic oldRecord, dynamic newRecord)
         {
-            if (oldRecord != null && oldRecord.OwnedByUs)
+            if (oldRecord != null && oldRecord.EditedInRaa)
             {
                 _log.Warn($"Ignored change to Vacancy from AVMS with VacancyId = {newRecord.VacancyId}");
                 return false;
+            }
+
+            if (oldRecord == null)
+            {
+                newRecord.VacancyGuid = (object)Guid.NewGuid();
             }
 
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
@@ -245,7 +250,7 @@
 
         public bool CanMutateVacancyOwnerRelationship(dynamic oldRecord, dynamic newRecord)
         {
-            if (oldRecord != null && oldRecord.OwnedByUs)
+            if (oldRecord != null && oldRecord.EditedInRaa)
             {
                 _log.Warn($"Ignored change to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {newRecord.VacancyOwnerRelationshipId}");
                 return false;
