@@ -57,7 +57,7 @@
 
         public Vacancy SaveVacancy(Vacancy vacancy)
         {
-            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Save(v));
+            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Create(v));
         }
 
         public Vacancy UpdateVacancy(Vacancy vacancy)

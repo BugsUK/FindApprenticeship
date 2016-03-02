@@ -23,6 +23,7 @@
         private readonly ILogService _logger;
 
         private readonly IGetOpenConnection _getOpenConnection;
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger) // Use IDateTimeService
         {
@@ -124,7 +125,7 @@
             if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
             {
                 result.FrameworkCodeName =
-                    _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+                    _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT CodeName
 FROM   dbo.ApprenticeshipFramework
 WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
@@ -140,7 +141,7 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
             if (dbVacancy.ApprenticeshipType.HasValue)
             {
                 var educationLevelCodeName =
-                    _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+                    _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT el.CodeName
 FROM   Reference.EducationLevel as el JOIN dbo.ApprenticeshipType as at ON el.EducationLevelId = at.EducationLevelId
 WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
@@ -156,7 +157,7 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
 
         private void MapIsEmployerLocationMainApprenticeshipLocation(Vacancy dbVacancy, DomainVacancy result)
         {
-            var locationTypeCodeName = _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+            var locationTypeCodeName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT CodeName
 FROM   dbo.VacancyLocationType
 WHERE  VacancyLocationTypeId = @VacancyLocationTypeId",
@@ -172,7 +173,7 @@ WHERE  VacancyLocationTypeId = @VacancyLocationTypeId",
         {
             if (dbVacancy.SectorId.HasValue)
             {
-                result.SectorCodeName = _getOpenConnection.QueryCached<string>(TimeSpan.FromHours(1), @"
+                result.SectorCodeName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT CodeName
 FROM   dbo.ApprenticeshipOccupation
 WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
@@ -211,42 +212,42 @@ ORDER BY QuestionId ASC
 
         private void MapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.TrainingProvided = GetTextField(dbVacancy.VacancyId, "TBP");
-            result.DesiredQualifications = GetTextField(dbVacancy.VacancyId, "QR");
-            result.DesiredSkills = GetTextField(dbVacancy.VacancyId, "SR");
-            result.PersonalQualities = GetTextField(dbVacancy.VacancyId, "PQ");
-            result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, "OII");
-            result.FutureProspects = GetTextField(dbVacancy.VacancyId, "FP");
+            result.TrainingProvided = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.TrainingProvided);
+            result.DesiredQualifications = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredQualifications);
+            result.DesiredSkills = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredSkills);
+            result.PersonalQualities = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.PersonalQualities);
+            result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.ThingsToConsider);
+            result.FutureProspects = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.FutureProspects);
         }
 
         private void MapComments(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.TitleComment = GetComment(dbVacancy.VacancyId, "TIT");
-            result.ApprenticeshipLevelComment = GetComment(dbVacancy.VacancyId, "ALE");
-            result.ClosingDateComment = GetComment(dbVacancy.VacancyId, "CLD");
-            result.ContactDetailsComment = GetComment(dbVacancy.VacancyId, "CDE");
-            result.DesiredQualificationsComment = GetComment(dbVacancy.VacancyId, "QUA");
-            result.DesiredSkillsComment = GetComment(dbVacancy.VacancyId, "SKL");
-            result.DurationComment = GetComment(dbVacancy.VacancyId, "EAD");
-            result.EmployerDescriptionComment = GetComment(dbVacancy.VacancyId, "EDE");
-            result.EmployerWebsiteUrlComment = GetComment(dbVacancy.VacancyId, "EWB");
-            result.FirstQuestionComment = GetComment(dbVacancy.VacancyId, "QU1");
-            result.SecondQuestionComment = GetComment(dbVacancy.VacancyId, "QU2");
-            result.FrameworkCodeNameComment = GetComment(dbVacancy.VacancyId, "APF");
-            result.FutureProspectsComment = GetComment(dbVacancy.VacancyId, "FUT");
-            result.LongDescriptionComment = GetComment(dbVacancy.VacancyId, "FDE");
-            result.NumberOfPositionsComment = GetComment(dbVacancy.VacancyId, "NPO");
-            result.OfflineApplicationInstructionsComment = GetComment(dbVacancy.VacancyId, "OAI");
-            result.OfflineApplicationUrlComment = GetComment(dbVacancy.VacancyId, "OAU");
-            result.PersonalQualitiesComment = GetComment(dbVacancy.VacancyId, "PER");
-            result.PossibleStartDateComment = GetComment(dbVacancy.VacancyId, "PSD");
-            result.SectorCodeNameComment = GetComment(dbVacancy.VacancyId, "APO");
-            result.ShortDescriptionComment = GetComment(dbVacancy.VacancyId, "SDE");
-            result.StandardIdComment = GetComment(dbVacancy.VacancyId, "SID");
-            result.ThingsToConsiderComment = GetComment(dbVacancy.VacancyId, "IOI");
-            result.TrainingProvidedComment = GetComment(dbVacancy.VacancyId, "TRP");
-            result.WageComment = GetComment(dbVacancy.VacancyId, "WWG");
-            result.WorkingWeekComment = GetComment(dbVacancy.VacancyId, "WWK");
+            result.TitleComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.TitleComment);
+            result.ApprenticeshipLevelComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ApprenticeshipLevelComment);
+            result.ClosingDateComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ClosingDateComment);
+            result.ContactDetailsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ContactDetailsComment);
+            result.DesiredQualificationsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DesiredQualificationsComment);
+            result.DesiredSkillsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DesiredSkillsComment);
+            result.DurationComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DurationComment);
+            result.EmployerDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.EmployerDescriptionComment);
+            result.EmployerWebsiteUrlComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.EmployerWebsiteUrlComment);
+            result.FirstQuestionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FirstQuestionComment);
+            result.SecondQuestionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.SecondQuestionComment);
+            result.FrameworkCodeNameComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FrameworkCodeNameComment);
+            result.FutureProspectsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FutureProspectsComment);
+            result.LongDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.LongDescriptionComment);
+            result.NumberOfPositionsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.NumberOfPositionsComment);
+            result.OfflineApplicationInstructionsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.OfflineApplicationInstructionsComment);
+            result.OfflineApplicationUrlComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.OfflineApplicationUrlComment);
+            result.PersonalQualitiesComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.PersonalQualitiesComment);
+            result.PossibleStartDateComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.PossibleStartDateComment);
+            result.SectorCodeNameComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.SectorCodeNameComment);
+            result.ShortDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ShortDescriptionComment);
+            result.StandardIdComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.StandardIdComment);
+            result.ThingsToConsiderComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ThingsToConsiderComment);
+            result.TrainingProvidedComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.TrainingProvidedComment);
+            result.WageComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WageComment);
+            result.WorkingWeekComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WorkingWeekComment);
         }
 
         private string GetComment(int vacancyId, string vacancyReferralCommentTypeCodeName)
@@ -391,7 +392,7 @@ FETCH NEXT @PageSize ROWS ONLY
             return dbVacancies.Select(MapVacancy).ToList();
         }
 
-        public DomainVacancy Save(DomainVacancy entity)
+        public DomainVacancy Create(DomainVacancy entity)
         {
             _logger.Debug("Calling database to save apprenticeship vacancy with id={0}", entity.VacancyId);
 
@@ -414,11 +415,9 @@ FETCH NEXT @PageSize ROWS ONLY
             return _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
         }
 
-        
-
         public DomainVacancy Update(DomainVacancy entity)
         {
-            _logger.Debug("Calling database to shallow save apprenticeship vacancy with id={0}", entity.VacancyId);
+            _logger.Debug("Calling database to update apprenticeship vacancy with id={0}", entity.VacancyId);
 
             UpdateEntityTimestamps(entity); // Do we need this?
 
@@ -436,14 +435,13 @@ FETCH NEXT @PageSize ROWS ONLY
 
             UpdateVacancyHistory(previousVacancyState, dbVacancy);
 
-            _logger.Debug("Shallow saved apprenticeship vacancy with to database with id={0}", entity.VacancyId);
+            _logger.Debug("Updated apprenticeship vacancy with to database with id={0}", entity.VacancyId);
 
             return MapVacancy(dbVacancy);
         }
 
         private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
         {
-            // don't save for reservedForQA
             if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
             {
                 CreateVacancyHistoryRow(actualVacancyState.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
@@ -493,7 +491,7 @@ FETCH NEXT @PageSize ROWS ONLY
         {
             if (!string.IsNullOrWhiteSpace(entity.SectorCodeName))
             {
-                dbVacancy.SectorId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+                dbVacancy.SectorId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT ApprenticeshipOccupationId
 FROM   dbo.ApprenticeshipOccupation
 WHERE  CodeName = @SectorCodeName",
@@ -512,7 +510,7 @@ WHERE  CodeName = @SectorCodeName",
         {
             if (!string.IsNullOrWhiteSpace(entity.FrameworkCodeName))
             {
-                dbVacancy.ApprenticeshipFrameworkId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+                dbVacancy.ApprenticeshipFrameworkId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT ApprenticeshipFrameworkId
 FROM   dbo.ApprenticeshipFramework
 WHERE  CodeName = @FrameworkCodeName",
@@ -536,7 +534,7 @@ WHERE  CodeName = @FrameworkCodeName",
         {
             if (entity.Address?.County != null)
             {
-                dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+                dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
 FROM   dbo.County
 WHERE  CodeName = @CountyCodeName",
@@ -554,7 +552,7 @@ WHERE  CodeName = @CountyCodeName",
                 ? "STD"
                 : "MUL";
 
-            dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+            dbVacancy.VacancyLocationTypeId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT VacancyLocationTypeId
 FROM   dbo.VacancyLocationType
 WHERE  CodeName = @VacancyLocationTypeCodeName",
@@ -566,7 +564,7 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
 
         private void PopulateApprenticeshipTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(TimeSpan.FromHours(1), @"
+            dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT ApprenticeshipTypeId
 FROM   dbo.ApprenticeshipType at JOIN Reference.EducationLevel el ON at.EducationLevelId = el.EducationLevelId
 WHERE  el.CodeName = @EducationLevel",
@@ -578,12 +576,12 @@ WHERE  el.CodeName = @EducationLevel",
 
         private void SaveTextFieldsFor(int vacancyId, DomainVacancy entity)
         {
-            SaveTextField(vacancyId, "TBP", entity.TrainingProvided);
-            SaveTextField(vacancyId, "QR", entity.DesiredQualifications);
-            SaveTextField(vacancyId, "SR", entity.DesiredSkills);
-            SaveTextField(vacancyId, "PQ", entity.PersonalQualities);
-            SaveTextField(vacancyId, "OII", entity.ThingsToConsider);
-            SaveTextField(vacancyId, "FP", entity.FutureProspects);
+            SaveTextField(vacancyId, TextFieldCodeName.TrainingProvided, entity.TrainingProvided);
+            SaveTextField(vacancyId, TextFieldCodeName.DesiredQualifications, entity.DesiredQualifications);
+            SaveTextField(vacancyId, TextFieldCodeName.DesiredSkills, entity.DesiredSkills);
+            SaveTextField(vacancyId, TextFieldCodeName.PersonalQualities, entity.PersonalQualities);
+            SaveTextField(vacancyId, TextFieldCodeName.ThingsToConsider, entity.ThingsToConsider);
+            SaveTextField(vacancyId, TextFieldCodeName.FutureProspects, entity.FutureProspects);
         }
 
         private void SaveTextField(int vacancyId, string vacancyTextFieldCodeName, string value)
@@ -707,32 +705,32 @@ when not matched then
 
         private void SaveCommentsFor(int vacancyId, DomainVacancy entity)
         {
-            SaveComment(vacancyId, "TIT", entity.TitleComment);
-            SaveComment(vacancyId, "ALE", entity.ApprenticeshipLevelComment); // New
-            SaveComment(vacancyId, "CLD", entity.ClosingDateComment);
-            SaveComment(vacancyId, "CDE", entity.ContactDetailsComment); // Maybe CFS
-            SaveComment(vacancyId, "QUA", entity.DesiredQualificationsComment);
-            SaveComment(vacancyId, "SKL", entity.DesiredSkillsComment);
-            SaveComment(vacancyId, "EAD", entity.DurationComment);
-            SaveComment(vacancyId, "EDE", entity.EmployerDescriptionComment);
-            SaveComment(vacancyId, "EWB", entity.EmployerWebsiteUrlComment);
-            SaveComment(vacancyId, "QU1", entity.FirstQuestionComment);
-            SaveComment(vacancyId, "QU2", entity.SecondQuestionComment);
-            SaveComment(vacancyId, "APF", entity.FrameworkCodeNameComment);
-            SaveComment(vacancyId, "FUT", entity.FutureProspectsComment);
-            SaveComment(vacancyId, "FDE", entity.LongDescriptionComment);
-            SaveComment(vacancyId, "NPO", entity.NumberOfPositionsComment); // New
-            SaveComment(vacancyId, "OAI", entity.OfflineApplicationInstructionsComment); // New
-            SaveComment(vacancyId, "OAU", entity.OfflineApplicationUrlComment); // New
-            SaveComment(vacancyId, "PER", entity.PersonalQualitiesComment);
-            SaveComment(vacancyId, "PSD", entity.PossibleStartDateComment);
-            SaveComment(vacancyId, "APO", entity.SectorCodeNameComment); // Or needs a new one?
-            SaveComment(vacancyId, "SDE", entity.ShortDescriptionComment);
-            SaveComment(vacancyId, "SID", entity.StandardIdComment); // New
-            SaveComment(vacancyId, "IOI", entity.ThingsToConsiderComment); // Or REA?
-            SaveComment(vacancyId, "TRP", entity.TrainingProvidedComment);
-            SaveComment(vacancyId, "WWG", entity.WageComment);
-            SaveComment(vacancyId, "WWK", entity.WorkingWeekComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.TitleComment, entity.TitleComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.ApprenticeshipLevelComment, entity.ApprenticeshipLevelComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.ClosingDateComment, entity.ClosingDateComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.ContactDetailsComment, entity.ContactDetailsComment); // Maybe CFS
+            SaveComment(vacancyId, ReferralCommentCodeName.DesiredQualificationsComment, entity.DesiredQualificationsComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.DesiredSkillsComment, entity.DesiredSkillsComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.DurationComment, entity.DurationComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.EmployerDescriptionComment, entity.EmployerDescriptionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.EmployerWebsiteUrlComment, entity.EmployerWebsiteUrlComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.FirstQuestionComment, entity.FirstQuestionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.SecondQuestionComment, entity.SecondQuestionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.FrameworkCodeNameComment, entity.FrameworkCodeNameComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.FutureProspectsComment, entity.FutureProspectsComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.LongDescriptionComment, entity.LongDescriptionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.NumberOfPositionsComment, entity.NumberOfPositionsComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.OfflineApplicationInstructionsComment, entity.OfflineApplicationInstructionsComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.OfflineApplicationUrlComment, entity.OfflineApplicationUrlComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.PersonalQualitiesComment, entity.PersonalQualitiesComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.PossibleStartDateComment, entity.PossibleStartDateComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.SectorCodeNameComment, entity.SectorCodeNameComment); // Or needs a new one?
+            SaveComment(vacancyId, ReferralCommentCodeName.ShortDescriptionComment, entity.ShortDescriptionComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.StandardIdComment, entity.StandardIdComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.ThingsToConsiderComment, entity.ThingsToConsiderComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.TrainingProvidedComment, entity.TrainingProvidedComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.WageComment, entity.WageComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.WorkingWeekComment, entity.WorkingWeekComment);
         }
 
         private void SaveComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)

@@ -44,7 +44,7 @@
                     .Create();
 
             //Act
-            writer.Save(vacancy);
+            writer.Create(vacancy);
             var savedVacancy = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
             writer.Delete(savedVacancy.VacancyId);
             var deletedApplication = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
@@ -75,7 +75,7 @@
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(qaUserName), null);
 
             //Act
-            writer.Save(vacancy);
+            writer.Create(vacancy);
             var savedVacancy = reader.GetByReferenceNumber(IntegrationTestVacancyReferenceNumber);
             var reservedVacancy = writer.ReserveVacancyForQA(IntegrationTestVacancyReferenceNumber);
 

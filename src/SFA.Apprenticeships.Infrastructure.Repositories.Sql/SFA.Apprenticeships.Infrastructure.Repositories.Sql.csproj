@@ -141,26 +141,15 @@
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\AdditionalQuestion.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyTextField.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyTextFieldValue.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
     <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
+    <Compile Include="Schemas\Vacancy\ReferralCommentCodeName.cs" />
+    <Compile Include="Schemas\Vacancy\TextFieldCodeName.cs" />
     <Compile Include="Schemas\Vacancy\VacancyRepository.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\DurationType.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\TrainingType.cs" />
     <Compile Include="Schemas\Vacancy\Entities\Vacancy.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyLocation.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyLocationType.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyParty.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyPartyRelationship.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyPartyRelationshipType.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyPartyType.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyStatus.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\VacancyType.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\WageInterval.cs" />
-    <Compile Include="Schemas\Vacancy\Entities\WageType.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">

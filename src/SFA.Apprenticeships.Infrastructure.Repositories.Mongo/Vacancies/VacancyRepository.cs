@@ -173,7 +173,7 @@
             _logger.Debug("Deleted apprenticeship vacancy with Id={0}", vacancyId);
         }
 
-        public Vacancy Save(Vacancy entity)
+        public Vacancy Create(Vacancy entity)
         {
             _logger.Debug("Called Mongodb to save apprenticeship vacancy with id={0}", entity.VacancyId);
 

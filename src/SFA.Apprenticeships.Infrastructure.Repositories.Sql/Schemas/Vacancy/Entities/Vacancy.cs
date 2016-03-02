@@ -49,72 +49,45 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public int? ApprenticeshipFrameworkId { get; set; }
 
-        //public string FrameworkIdComment { get; set; }
-
         public int? StandardId { get; set; }
-
-        //public string StandardIdComment { get; set; }
 
         [Required]
         public string Title { get; set; }
 
-        //public string TitleComment { get; set; }
-
-        public int? ApprenticeshipType { get; set; } // equivalent to LevelCode (old-new schema)
-
-        //public string LevelCodeComment { get; set; }
+        public int? ApprenticeshipType { get; set; }
 
         public string ShortDescription { get; set; }
 
-        // public string ShortDescriptionComment { get; set; }
-
-        public string Description { get; set; } // equivalent to LongDescription (old-new schema)
-
-        //public string LongDescriptionComment { get; set; }
+        public string Description { get; set; }
 
         [Column(TypeName = "money")]
-        public decimal? WeeklyWage { get; set; } // equivalent (more or less) to WageValue
+        public decimal? WeeklyWage { get; set; }
 
-        public int WageType { get; set; } // equivalent to WageTypeCode
+        public int WageType { get; set; }
 
         public string WageText { get; set; }
-
-        // public string WageIntervalCode { get; set; }
-
-        // public string WageComment { get; set; }
 
         public int WageUnitId { get; set; }
 
         [Column(TypeName = "smallint")]
-        public short? NumberOfPositions { get; set; } // was int
-
-        // public string NumberOfPositionsComment { get; set; }
+        public short? NumberOfPositions { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? ApplicationClosingDate { get; set; } // was ClosingDate
-
-        // public string ClosingDateComment { get; set; }
+        public DateTime? ApplicationClosingDate { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? InterviewsFromDate { get; set; } // was AV_InterviewStartDate
+        public DateTime? InterviewsFromDate { get; set; }
 
         [Column(TypeName = "datetime2")]
-        public DateTime? ExpectedStartDate { get; set; } // was PossibleStartDate
+        public DateTime? ExpectedStartDate { get; set; }
 
-        // public string PossibleStartDateComment { get; set; }
-
-        public int? DurationValue { get; set; } //Was short
+        public int? DurationValue { get; set; }
 
         public string ExpectedDuration { get; set; }
 
-        //[StringLength(1)]
         public int DurationTypeId { get; set; }
 
-        //public string DurationComment { get; set; }
-
-        public string WorkingWeek { get; set; } // was WorkingWeekText
-
-        //public string WorkingWeekComment { get; set; }
+        public string WorkingWeek { get; set; }
 
         public int? NumberOfViews { get; set; }
 
@@ -122,127 +95,55 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string EmployerDescription { get; set; }
 
-        //public string EmployerDescriptionComment { get; set; }
-
-        public string EmployersWebsite { get; set; } // was EmployerWebsite -> change to employerwebsite?
+        public string EmployersWebsite { get; set; }
 
         public int? MaxNumberofApplications { get; set; }
 
-        public bool? ApplyOutsideNAVMS { get; set; }        // Equivalent to IsDirectApplication
+        public bool? ApplyOutsideNAVMS { get; set; }
 
-        public string EmployersApplicationInstructions { get; set; } // Equivalent to DirectApplicationInstructions
+        public string EmployersApplicationInstructions { get; set; }
 
-        // public string DirectApplicationInstructionsComment { get; set; }
-
-        public string EmployersRecruitmentWebsite { get; set; } // equivalent to DirectApplicationUrl
-
-        // public string DirectApplicationUrlComment { get; set; }
-
-        // public string EmployerWebsiteUrlComment { get; set; }
+        public string EmployersRecruitmentWebsite { get; set; }
 
         public string BeingSupportedBy { get; set; }
 
         public DateTime? LockedForSupportUntil { get; set; }
 
-        public int? NoOfOfflineApplicants { get; set; } // What's the difference with NoOfOfflineSystemApplicants?
+        public int? NoOfOfflineApplicants { get; set; }
 
-        public int? MasterVacancyId { get; set; }   // equivalent to ParentVacancyId
+        public int? MasterVacancyId { get; set; }
 
-        public int? VacancyLocationTypeId { get; set; } // equivalent to VacancyLocationTypeCode
+        public int? VacancyLocationTypeId { get; set; }
 
-        public int? NoOfOfflineSystemApplicants { get; set; } // equivalent to OfflineApplicationClickThroughCount
+        public int? NoOfOfflineSystemApplicants { get; set; }
 
-        public int? VacancyManagerID { get; set; } // Probably equivalent to ManagerVacancyPartyId, or VacancyManagerID
+        public int? VacancyManagerID { get; set; }
 
-        public int? DeliveryOrganisationID { get; set; } // Probably equivalent to DeliveryProviderVacancyPartyId
+        public int? DeliveryOrganisationID { get; set; }
 
-        public int? ContractOwnerID { get; set; } // Probably equivalent to OwnerVacancyPartyId
+        public int? ContractOwnerID { get; set; }
 
         public bool SmallEmployerWageIncentive { get; set; }
 
-        public int? OriginalContractOwnerId { get; set; } //Probably equivalent to OriginalContractOwnerVacancyPartyId
+        public int? OriginalContractOwnerId { get; set; }
 
         public bool VacancyManagerAnonymous { get; set; }
 
-        //[Required]
-        //[StringLength(1)]
-        //public string VacancyTypeCode { get; set; }  // In AVMS this is merged with apprenticeship type
-
-
-        // public int EmployerVacancyPartyId { get; set; }
-
-        // public int OwnerVacancyPartyId { get; set; } -> probably goes to ContractOwnerID
-
-        // public int ManagerVacancyPartyId { get; set; } -> probably goes to VacancyManagerID
-
-        // public int DeliveryProviderVacancyPartyId { get; set; } -> probably goes to DeliveryOrganisationID
-
-        // public int ContractOwnerVacancyPartyId { get; set; } -> probably goes to ContractOwnerID
-
-        // public int? OriginalContractOwnerVacancyPartyId { get; set; } -> probably goes to OriginalContractOwnerId
-
-
-        //[Required]
-        //[StringLength(1)]
-        //public string TrainingTypeCode { get; set; } // Framework or standard. Not considered in AVMS
-
         public int TrainingTypeId { get; set; }
 
-        public decimal? HoursPerWeek { get; set; } // Not considered in AVMS
+        public decimal? HoursPerWeek { get; set; }
 
         public string AdditionalLocationInformation { get; set; }
 
-        // public string AdditionalLocationInformationComment { get; set; }
+        public string QAUserName { get; set; }
 
-        // public string DesiredSkills { get; set; } // Get from VacancyTextField table
+        public int SubmissionCount { get; set; }
 
-        // public string DesiredSkillsComment { get; set; }
+        public DateTime? StartedToQADateTime { get; set; }
 
-        // public string FutureProspects { get; set; }  // Get from VacancyTextField table
+        public string ContactNumber { get; set; }
 
-        // public string FutureProspectsComment { get; set; }
-
-        // public string PersonalQualities { get; set; }  // Get from VacancyTextField table
-
-        // public string PersonalQualitiesComment { get; set; }
-
-        // public string ThingsToConsider { get; set; }  // Get from VacancyTextField table
-
-        // public string ThingsToConsiderComment { get; set; }
-
-        // public string DesiredQualifications { get; set; }  // Get from VacancyTextField table
-
-        // public string DesiredQualificationsComment { get; set; }
-
-        // public string FirstQuestion { get; set; } // Get from AdditionalQuestion table
-
-        // public string FirstQuestionComment { get; set; }
-
-        // public string SecondQuestion { get; set; } // Get from AdditionalQuestion table
-
-        // public string SecondQuestionComment { get; set; }
-
-        public string QAUserName { get; set; } // Not considered in AVMS
-
-        // public string LocationAddressesComment { get; set; }
-
-        public int SubmissionCount { get; set; } // Not considered in AVMS
-
-        public DateTime? StartedToQADateTime { get; set; }  // Not considered in AVMS
-
-        // public Guid LastEditedById { get; set; } // Can be inferred from VacancyHistory?
-
-        // public Guid VacancyManagerId { get; set; } -> probably goes to VacancyManagerID
-
-        // public string TrainingProvided { get; set; } // Get from VacancyTextField table
-
-        // public string TrainingProvidedComment { get; set; }
-
-        public string ContactNumber { get; set; } // Added to AVMS
-
-        public string ContactEmail { get; set; } // Added to AVMS
-
-        // public string ContactDetailsComment { get; set; } // Not considered in AVMS
+        public string ContactEmail { get; set; }
 
         public bool EditedInRaa { get; set; }
 

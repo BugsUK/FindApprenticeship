@@ -24,7 +24,7 @@
 
     public interface IVacancyWriteRepository
     {
-        Vacancy Save(Vacancy vacancy);
+        Vacancy Create(Vacancy vacancy);
 
         void Delete(int vacancyId);
 

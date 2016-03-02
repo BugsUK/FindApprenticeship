@@ -70,7 +70,7 @@
             //save the original vacancy with a status of Live and itself as a parent vacancy
             vacancyPostingService.Verify(
                 r =>
-                    r.SaveVacancy(
+                    r.UpdateVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
@@ -111,7 +111,7 @@
             }
 
             //save the submitted vacancy once
-            vacancyPostingService.Verify(r => r.SaveVacancy(It.IsAny<Vacancy>()), Times.Once);
+            vacancyPostingService.Verify(r => r.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             //Create each child vacancy once
             vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()),
@@ -168,7 +168,7 @@
             vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
-                    r.SaveVacancy(
+                    r.UpdateVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
@@ -494,7 +494,7 @@
             vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
-                    r.SaveVacancy(
+                    r.UpdateVacancy(
                         It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&

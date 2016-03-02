@@ -58,11 +58,11 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -76,11 +76,11 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
         }
 
         [Test]
@@ -94,11 +94,11 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -111,11 +111,11 @@
                 VacancyReferenceNumber = 1,
                 VacancyId = 1
             };
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Save(vacancy)).Returns(vacancy);
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
 
         [Test]
