@@ -297,7 +297,7 @@
                 ;
 
             Mapper.CreateMap<DomainVacancyLocation, DbVacancyLocation>()
-                .IgnoreMember(dbvl => dbvl.DirectApplicationUrl)
+                .IgnoreMember(dbvl => dbvl.EmployersWebsite)
                 .MapMemberFrom(dbvl => dbvl.AddressLine1, dvl => dvl.Address.AddressLine1)
                 .MapMemberFrom(dbvl => dbvl.AddressLine2, dvl => dvl.Address.AddressLine2)
                 .MapMemberFrom(dbvl => dbvl.AddressLine3, dvl => dvl.Address.AddressLine3)

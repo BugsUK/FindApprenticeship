@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Common;
     using Domain.Entities.Raa.Locations;
     using Domain.Raa.Interfaces.Repositories;
@@ -23,17 +24,39 @@
 
         public List<VacancyLocation> GetForVacancyId(int vacancyId)
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("Calling database to get vacancy with locations for vacancy with Id={0}", vacancyId);
+
+            var vacancyLocations =
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId",
+                    new { VacancyId = vacancyId });
+
+            return
+                _mapper.Map<IList<Entities.VacancyLocation>, IList<VacancyLocation>>(vacancyLocations)
+                    .ToList();
         }
 
         public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
         {
-            throw new System.NotImplementedException();
+            var vacanyLocations = _mapper.Map<IList<VacancyLocation>, IList<Entities.VacancyLocation>>(locationAddresses);
+
+            foreach (var vacancyLocation in vacanyLocations)
+            {
+                _getOpenConnection.Insert(vacancyLocation);
+            }
+
+            return locationAddresses;
         }
 
         public void DeleteFor(int vacancyId)
         {
-            throw new System.NotImplementedException();
+            var vacancyLocations =
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId",
+                    new { VacancyId = vacancyId });
+
+            foreach (var vacancyLocation in vacancyLocations)
+            {
+                _getOpenConnection.DeleteSingle(vacancyLocation);
+            }
         }
     }
 }

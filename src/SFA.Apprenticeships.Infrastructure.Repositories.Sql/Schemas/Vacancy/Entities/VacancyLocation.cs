@@ -21,7 +21,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string AddressLine5 { get; set; }
 
-        public string DirectApplicationUrl { get; set; }
+        public string EmployersWebsite { get; set; }
 
         public string Town { get; set; }
 

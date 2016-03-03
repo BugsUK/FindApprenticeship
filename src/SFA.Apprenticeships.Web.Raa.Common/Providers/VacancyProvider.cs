@@ -1160,12 +1160,12 @@
                 //Set address
                 vacancy.Address = addresses.Single().Address;
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
 
             }
             else
             {
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
                 var vacancyLocations =
                     _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         viewModel.Addresses);

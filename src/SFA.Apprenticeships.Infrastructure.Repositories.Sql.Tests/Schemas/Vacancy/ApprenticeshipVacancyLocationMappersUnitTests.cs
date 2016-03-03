@@ -71,7 +71,7 @@
 
             // Assert
             databaseVacancyLocation2.ShouldBeEquivalentTo(databaseVacancyLocation1, options => options
-                .Excluding(vl => vl.DirectApplicationUrl)
+                .Excluding(vl => vl.EmployersWebsite)
                 .Excluding(vl => vl.CountyId)
                 .Excluding(vl => vl.LocalAuthorityId)
                 .Excluding(vl => vl.GeocodeEasting)
