@@ -6,11 +6,11 @@
 
     public class MongoVacancyLocation : VacancyLocation
     {
-        [BsonId]
-        public Guid Id
-        {
-            get { return VacancyLocationGuid; }
-            set { VacancyLocationGuid = value; }
-        }
+        //[BsonId]
+        //public Guid Id
+        //{
+        //    get { return VacancyLocationGuid; }
+        //    set { VacancyLocationGuid = value; }
+        //}
     }
 }

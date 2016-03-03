@@ -27,7 +27,6 @@
             Mapper.CreateMap<Domain.Entities.Raa.Locations.GeoPoint, GeoPointViewModel>();
             Mapper.CreateMap<PostalAddress, AddressViewModel>()
                 .ForMember(dest => dest.Uprn, opt => opt.Ignore());
-            //TODO: Bring PostalAddressViewModel over from SQL branch and fix mapping
             Mapper.CreateMap<AddressViewModel, PostalAddress>()
                 .ForMember(dest => dest.PostalAddressId, opt => opt.Ignore())
                 .ForMember(dest => dest.AddressLine5, opt => opt.Ignore())
@@ -52,10 +51,7 @@
             Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>();
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
                 .ForMember(dest => dest.VacancyId, opt => opt.Ignore())
-                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore())
-                .ForMember(dest => dest.VacancyLocationGuid, opt => opt.Ignore())
-                .ForMember(dest => dest.CreatedDateTime, opt => opt.Ignore())
-                .ForMember(dest => dest.UpdatedDateTime, opt => opt.Ignore());
+                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore());
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();

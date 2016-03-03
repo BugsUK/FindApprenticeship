@@ -2,7 +2,7 @@
 {
     using System;
     using AutoMapper;
-    using Vacancy;
+    using Infrastructure.Common.Mappers;
     using Domain = Domain.Entities.Raa.Users;
     using Database = Entities;
 

@@ -2,7 +2,7 @@
 {
     using AutoMapper;
     using Domain.Entities.Raa.Users;
-    using Vacancy;
+    using Infrastructure.Common.Mappers;
     using AgencyUser = Domain.Entities.Raa.Users.AgencyUser;
 
     public class AgencyUserMappers : MapperEngine
