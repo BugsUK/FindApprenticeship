@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.UnsubscribeStrategy
 {
     using System;
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

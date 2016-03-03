@@ -49,14 +49,21 @@
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
             var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories();
-            var vacancySummaries =
-                vacancies.Select(
+            var apprenticeshipSummaries =
+                vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
                     v =>
                         ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
                             employers[vacancyParties[v.OwnerPartyId].EmployerId],
                             providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
                             categories, _logService));
-            return new VacancySummaries(vacancySummaries, new List<TraineeshipSummary>());
+            var traineeshipSummaries =
+                vacancies.Where(v => v.VacancyType == VacancyType.Traineeship).Select(
+                    v =>
+                        TraineeshipSummaryMapper.GetTraineeshipSummary(v,
+                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                            categories, _logService));
+            return new VacancySummaries(apprenticeshipSummaries, traineeshipSummaries);
         }
     }
 }

@@ -3,9 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidates.Configuration;
-    using Application.Communications.Housekeeping;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Communications.Housekeeping;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;

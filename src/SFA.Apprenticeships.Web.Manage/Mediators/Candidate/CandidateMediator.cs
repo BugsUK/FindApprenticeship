@@ -80,7 +80,7 @@
 
         public MediatorResponse<CandidateVacancy> GetCandidateTraineeshipVacancyViewModel(int vacancyId, Guid applicationId)
         {
-            var applicationViewModel = _candidateProvider.GetCandidateApprenticeshipApplication(applicationId);
+            var applicationViewModel = _candidateProvider.GetCandidateTraineeshipApplication(applicationId);
             var viewModel = GetCandidateVacancy(vacancyId, applicationViewModel);
             return GetMediatorResponse(CandidateMediatorCodes.GetCandidateTraineeshipVacancyViewModel.Ok, viewModel);
         }

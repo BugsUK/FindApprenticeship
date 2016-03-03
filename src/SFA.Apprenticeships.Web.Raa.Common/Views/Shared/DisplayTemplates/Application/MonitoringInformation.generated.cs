@@ -35,7 +35,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Appli
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/DisplayTemplates/Application/MonitoringInformation.cshtml")]
-    public partial class MonitoringInformation : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.Apprenticeship.ApprenticeshipApplicationViewModel>
+    public partial class MonitoringInformation : System.Web.Mvc.WebViewPage<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.ApplicationViewModel>
     {
         public MonitoringInformation()
         {
@@ -75,14 +75,14 @@ WriteLiteral(">Is there anything we can do to support your interview?</p>\r\n");
             #line hidden
 WriteLiteral("        <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 439), Tuple.Create("\"", 530)
+WriteAttribute("id", Tuple.Create(" id=\"", 410), Tuple.Create("\"", 501)
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 444), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
+, Tuple.Create(Tuple.Create("", 415), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
             
             #line default
             #line hidden
-, 444), false)
+, 415), false)
 );
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");
@@ -109,14 +109,14 @@ WriteLiteral("</span>\r\n");
             #line hidden
 WriteLiteral("        <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 700), Tuple.Create("\"", 791)
+WriteAttribute("id", Tuple.Create(" id=\"", 671), Tuple.Create("\"", 762)
             
             #line 13 "..\..\Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml"
-, Tuple.Create(Tuple.Create("", 705), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
+, Tuple.Create(Tuple.Create("", 676), Tuple.Create<System.Object, System.Int32>(Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)
             
             #line default
             #line hidden
-, 705), false)
+, 676), false)
 );
 
 WriteLiteral(" class=\"form-prepopped prewrap\"");

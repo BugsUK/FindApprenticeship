@@ -5,7 +5,7 @@ using SFA.Apprenticeships.Domain.Interfaces.Repositories;
 
 namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
-    using Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Configuration;
     using Configuration;
 
     public class HardDeleteStrategyBuilder

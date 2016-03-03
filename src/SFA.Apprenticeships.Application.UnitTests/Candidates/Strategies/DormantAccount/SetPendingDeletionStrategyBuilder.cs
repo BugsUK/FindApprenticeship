@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.DormantAccount
 {
-    using Application.Candidates.Configuration;
-    using Application.Candidates.Strategies;
-    using Application.Candidates.Strategies.DormantAccount;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates.Strategies.DormantAccount;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
 

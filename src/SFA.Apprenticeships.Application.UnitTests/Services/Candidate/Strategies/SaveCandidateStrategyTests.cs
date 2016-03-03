@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;

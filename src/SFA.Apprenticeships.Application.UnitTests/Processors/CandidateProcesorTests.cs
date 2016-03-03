@@ -3,12 +3,12 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidates;
-    using Application.Candidates.Configuration;
-    using Application.Candidates.Entities;
+    using Apprenticeships.Application.Candidates;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Entities;
     using Candidates.Configuration;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;

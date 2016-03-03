@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.Factories
 {
-    using System;
-    using Application.Vacancies.Factories;
+    using Apprenticeships.Application.Vacancies.Factories;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;

@@ -119,6 +119,7 @@
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
+    <Compile Include="Application\ApprenticeshipApplicationServiceTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
     <Compile Include="Candidates\Configuration\HousekeepingConfigurationBuilder.cs" />
@@ -206,6 +207,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
       <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>

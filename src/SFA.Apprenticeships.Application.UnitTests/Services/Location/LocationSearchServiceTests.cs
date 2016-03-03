@@ -1,9 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
 {
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-    using Application.Location;
+    using Apprenticeships.Application.Location;
 
     [TestFixture]
     public class LocationSearchServiceTests

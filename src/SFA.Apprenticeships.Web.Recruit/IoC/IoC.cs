@@ -65,7 +65,6 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<PostcodeRegistry>();
                 x.AddRegistry<ApplicationServicesRegistry>();
-                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

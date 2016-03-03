@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.SavedSearchProcessorTests
 {
     using System.Linq;
-    using Application.Vacancies.Entities;
+    using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

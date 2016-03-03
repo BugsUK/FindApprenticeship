@@ -92,6 +92,8 @@
     </Compile>
     <Compile Include="Extensions\VacancyExtensions.cs" />
     <Compile Include="IoC\RaaRegistry.cs" />
+    <Compile Include="Mappers\TraineeshipVacancyDetailMapper.cs" />
+    <Compile Include="Mappers\TraineeshipSummaryMapper.cs" />
     <Compile Include="Mappers\ApprenticeshipSummaryMapper.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyDetailMapper.cs" />
     <Compile Include="NullApplicationStatusesProvider.cs" />

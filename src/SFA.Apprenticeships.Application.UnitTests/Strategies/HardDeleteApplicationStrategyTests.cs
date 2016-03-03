@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Strategies
 {
     using System;
-    using Application.Applications.Strategies;
+    using Apprenticeships.Application.Applications.Strategies;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

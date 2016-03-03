@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.VacancyStatusProcessorTests
 {
-    using Application.Vacancies;
-    using Application.Vacancies.Entities;
+    using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancies.Entities;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;

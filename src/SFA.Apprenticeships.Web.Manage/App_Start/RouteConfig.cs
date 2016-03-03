@@ -183,7 +183,7 @@
 
             routes.MapRoute(
                name: ManagementRouteNames.ViewCandidateTraineeshipVacancy,
-               url: "candidate/apprenticeship/vacancy",
+               url: "candidate/traineeship/vacancy",
                defaults: new { controller = "Candidate", action = "TraineeshipVacancy" }
                );
 

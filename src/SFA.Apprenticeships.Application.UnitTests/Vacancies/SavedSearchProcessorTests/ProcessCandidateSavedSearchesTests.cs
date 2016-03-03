@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Vacancies.Entities;
-    using Application.Vacancies.Extensions;
+    using Apprenticeships.Application.Vacancies.Entities;
+    using Apprenticeships.Application.Vacancies.Extensions;
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Entities.Communication;

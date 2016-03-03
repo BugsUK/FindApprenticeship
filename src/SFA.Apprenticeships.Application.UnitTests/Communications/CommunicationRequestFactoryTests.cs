@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Communications;
+    using Apprenticeships.Application.Communications;
     using Domain.Entities.Communication;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Vacancies.Apprenticeships;
