@@ -28,5 +28,7 @@
         public const string TrainingProvidedComment = "TRP";
         public const string WageComment = "WWG";
         public const string WorkingWeekComment = "WWK";
+        public const string LocationAddressesComment = "LAD";
+        public const string AdditionalLocationInformationComment = "ALI";
     }
 }
