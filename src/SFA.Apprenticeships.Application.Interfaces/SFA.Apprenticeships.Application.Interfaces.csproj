@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ErrorCodes.cs" />
+    <Compile Include="Applications\ITraineeshipApplicationService.cs" />
     <Compile Include="Applications\IApprenticeshipApplicationService.cs" />
     <Compile Include="Candidates\ErrorCodes.cs" />
     <Compile Include="Candidates\ICandidateApplicationService.cs" />

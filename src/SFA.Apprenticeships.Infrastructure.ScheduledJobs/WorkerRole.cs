@@ -31,6 +31,8 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Mongo.Providers.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Mongo.Vacancies.IoC;
+    using Repositories.Sql.Configuration;
+    using Repositories.Sql.IoC;
     using StructureMap;
     using TacticalDataServices.IoC;
     using VacancyIndexer.IoC;
@@ -143,6 +145,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
             _container = new Container(x =>
             {
@@ -169,6 +172,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
+                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
             });
 
             _logger = _container.GetInstance<ILogService>();

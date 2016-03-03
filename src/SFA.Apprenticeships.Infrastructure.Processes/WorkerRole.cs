@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Common.IoC;
     using Communication.IoC;
     using Elastic.Common.IoC;
+    using EmployerDataService.IoC;
     using IoC;
     using LegacyWebServices.IoC;
     using LocationLookup.IoC;
@@ -26,9 +27,14 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Mongo.Authentication.IoC;
     using Repositories.Mongo.Candidates.IoC;
     using Repositories.Mongo.Communication.IoC;
+    using Repositories.Mongo.Employers.IoC;
+    using Repositories.Mongo.Providers.IoC;
     using Repositories.Mongo.Users.IoC;
     using Repositories.Mongo.Vacancies.IoC;
+    using Repositories.Sql.Configuration;
+    using Repositories.Sql.IoC;
     using StructureMap;
+    using TacticalDataServices.IoC;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
 
@@ -94,6 +100,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
+            var sqlConfiguration = configurationService.Get<SqlConfiguration>();
 
             _container = new Container(x =>
             {
@@ -123,6 +130,11 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                     y.AddAllTypesOf<IHousekeepingChainOfResponsibility>();
                 });
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
+                x.AddRegistry<EmployerDataServicesRegistry>();
+                x.AddRegistry<TacticalDataServicesRegistry>();
+                x.AddRegistry<ProviderRepositoryRegistry>();
+                x.AddRegistry<EmployerRepositoryRegistry>();
+                x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
             });
 
             _logger = _container.GetInstance<ILogService>();
