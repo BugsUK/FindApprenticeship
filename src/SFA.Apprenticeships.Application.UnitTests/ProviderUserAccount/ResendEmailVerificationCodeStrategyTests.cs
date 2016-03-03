@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Users;
     using Domain.Raa.Interfaces.Repositories;

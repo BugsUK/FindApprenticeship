@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
     using System.Threading;
-    using Application.VacancyPosting;
+    using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;

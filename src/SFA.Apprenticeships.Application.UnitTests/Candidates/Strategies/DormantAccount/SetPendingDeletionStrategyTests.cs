@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.DormantAccount
 {
     using System;
-    using Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates.Strategies;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;

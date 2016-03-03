@@ -1,10 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies.ActivationReminder
 {
-    using Application.Candidates.Configuration;
-    using Application.Candidates.Strategies;
-    using Application.Candidates.Strategies.ActivationReminder;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
 

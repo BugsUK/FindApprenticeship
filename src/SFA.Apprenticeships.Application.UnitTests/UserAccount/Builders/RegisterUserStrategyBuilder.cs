@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.UserAccount.Builders
 {
-    using Application.UserAccount.Configuration;
-    using Application.UserAccount.Strategies;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.UserAccount.Configuration;
+    using Apprenticeships.Application.UserAccount.Strategies;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
 

@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Applications.Housekeeping;
-    using Application.Candidates.Configuration;
+    using Apprenticeships.Application.Applications.Housekeeping;
+    using Apprenticeships.Application.Candidates.Configuration;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;

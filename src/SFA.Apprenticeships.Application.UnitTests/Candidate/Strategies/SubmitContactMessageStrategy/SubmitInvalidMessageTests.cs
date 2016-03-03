@@ -2,9 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;

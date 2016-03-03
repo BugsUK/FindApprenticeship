@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies
 {
-    using Application.Candidate;
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Builders;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Messaging;
