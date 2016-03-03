@@ -4,13 +4,13 @@
     {
         public const string PartialView = "_ApplicationsLink";
 
-        public ApplicationsLinkViewModel(long vacancyReferenceNumber, int applicationCount)
+        public ApplicationsLinkViewModel(int vacancyReferenceNumber, int applicationCount)
         {
             VacancyReferenceNumber = vacancyReferenceNumber;
             ApplicationCount = applicationCount;
         }
 
-        public long VacancyReferenceNumber { get; private set; }
+        public int VacancyReferenceNumber { get; private set; }
         public int ApplicationCount { get; private set; }
     }
 }

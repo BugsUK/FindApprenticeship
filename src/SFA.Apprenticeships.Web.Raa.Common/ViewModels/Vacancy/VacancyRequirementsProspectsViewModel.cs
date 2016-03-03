@@ -11,7 +11,7 @@
     {
         public const string PartialView = "Vacancy/RequirementsProspects";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         [Display(Name = VacancyViewModelMessages.DesiredSkills.LabelText)]
         public string DesiredSkills { get; set; }

@@ -219,7 +219,7 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.PendingQA)
+        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.Submitted)
         {
             return new MongoApprenticeshipVacancy
             {
@@ -262,7 +262,7 @@
             const int vacancyReferenceNumber = 1;
             const string title = "Vacancy title";
 
-            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title, VacancyStatus.RejectedByQA);
+            var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title, VacancyStatus.Referred);
 
             InitializeDatabaseWithVacancy(vacancy);
 

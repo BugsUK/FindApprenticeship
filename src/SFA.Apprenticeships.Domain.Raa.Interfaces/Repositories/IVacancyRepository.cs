@@ -9,7 +9,7 @@
     {
         Vacancy Get(int vacancyId);
 
-        Vacancy GetByReferenceNumber(long vacancyReferenceNumber);
+        Vacancy GetByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
 
@@ -24,12 +24,14 @@
 
     public interface IVacancyWriteRepository
     {
-        Vacancy Save(Vacancy vacancy);
+        Vacancy Create(Vacancy vacancy);
 
         void Delete(int vacancyId);
 
-        Vacancy ReserveVacancyForQA(long vacancyReferenceNumber);
+        Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
+
+        Vacancy Update(Vacancy vacancy);
     }
 }

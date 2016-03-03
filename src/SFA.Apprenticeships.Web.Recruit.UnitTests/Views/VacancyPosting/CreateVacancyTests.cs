@@ -40,7 +40,7 @@
             var details = new CreateVacancy();
 
             var viewModel = new Fixture().Build<NewVacancyViewModel>()
-                .With(v => v.Status, VacancyStatus.RejectedByQA)
+                .With(v => v.Status, VacancyStatus.Referred)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);

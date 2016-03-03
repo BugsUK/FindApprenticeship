@@ -123,6 +123,7 @@
     <Folder Include="Publish" />
     <Folder Include="Sync" />
     <Folder Include="UserProfile" />
+    <Folder Include="Reference" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -869,6 +870,22 @@
     <Build Include="Schemas\Sync.sql" />
     <Build Include="Sync\Sync.SyncParams.sql" />
     <Build Include="UserProfile\UserProfile.AgencyUser.sql" />
+    <Build Include="dbo\Tables\VacancyType.sql" />
+    <None Include="Scripts\Data\dbo.VacancyType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipFrameworkStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.OccupationStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipOccupationStatusType.Upsert.sql" />
+    <Build Include="Schemas\Reference.sql" />
+    <None Include="Scripts\Data\Reference.Standard.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipOccupation.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql" />
+    <Build Include="Reference\Reference.Standard.sql" />
+    <Build Include="Reference\Reference.EducationLevel.sql" />
+    <None Include="Scripts\Data\Reference.EducationLevel.Upsert.sql" />
+    <None Include="Scripts\Data\Reference.StandardSector.Upsert.sql" />
+    <Build Include="Reference\Reference.StandardSector.sql" />
+    <None Include="Scripts\Data\dbo.VacancyReferralCommentsFieldType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

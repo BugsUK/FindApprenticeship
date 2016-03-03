@@ -35,7 +35,7 @@
             RuleFor(x => x.ResubmitOption)
                 .Equal(true)
                 .WithMessage(VacancyViewModelMessages.ResubmitOptin.RequiredErrorText)
-                .When(x => x.Status == VacancyStatus.RejectedByQA);
+                .When(x => x.Status == VacancyStatus.Referred);
         }
     }
 }

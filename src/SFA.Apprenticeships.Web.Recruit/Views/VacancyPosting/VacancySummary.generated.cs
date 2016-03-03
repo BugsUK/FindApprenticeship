@@ -90,7 +90,7 @@ Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
 
-    if (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview)
+    if (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "VacancySummaryAndPreview";

@@ -57,6 +57,16 @@
 
         public Vacancy SaveVacancy(Vacancy vacancy)
         {
+            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Create(v));
+        }
+
+        public Vacancy UpdateVacancy(Vacancy vacancy)
+        {
+            return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
+        }
+
+        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation )
+        {
             Condition.Requires(vacancy);
 
             // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
@@ -76,17 +86,17 @@
                 }
             }
 
-            _vacancyWriteRepository.Save(vacancy);
+            vacancy = operation(vacancy);
 
             return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
 
-        public long GetNextVacancyReferenceNumber()
+        public int GetNextVacancyReferenceNumber()
         {
             return _referenceNumberRepository.GetNextVacancyReferenceNumber();
         }
 
-        public Vacancy GetVacancy(long vacancyReferenceNumber)
+        public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
             return _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
         }
@@ -116,7 +126,7 @@
             return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
         }
 
-        public Vacancy ReserveVacancyForQA(long vacancyReferenceNumber)
+        public Vacancy ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             return _vacancyWriteRepository.ReserveVacancyForQA(vacancyReferenceNumber);
         }
