@@ -62,7 +62,7 @@
         </p>
         <p class="hide-print">
             @Html.RouteLink("Return to candidate's applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
-            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = Model.Vacancy.vacancyReferenceNumber, applicationId = Model.ApplicationSelection.ApplicationId }, new { @class = "inl-block" })
+            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = Model.Vacancy.VacancyReferenceNumber, applicationId = Model.ApplicationSelection.ApplicationId }, new { @class = "inl-block" })
         </p>
     </div>
 </div>
