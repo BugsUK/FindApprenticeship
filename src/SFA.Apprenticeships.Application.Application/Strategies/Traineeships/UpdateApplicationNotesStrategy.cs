@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Application.Application.Strategies.Traineeships
 
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
-            //_traineeshipApplicationWriteRepository.UpdateApplicationNotes(applicationId, notes);
+            _traineeshipApplicationWriteRepository.UpdateApplicationNotes(applicationId, notes);
         }
     }
 }

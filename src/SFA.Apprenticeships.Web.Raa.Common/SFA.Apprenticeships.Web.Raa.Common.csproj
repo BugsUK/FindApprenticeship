@@ -201,6 +201,7 @@
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Factories\SelectListItemsFactory.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />

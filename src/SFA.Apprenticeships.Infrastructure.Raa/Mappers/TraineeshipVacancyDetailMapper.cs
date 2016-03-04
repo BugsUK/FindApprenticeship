@@ -44,8 +44,7 @@
                 //VacancyOwner = vacancy.,
                 //VacancyManager = vacancy.,
                 //LocalAuthority = vacancy.,
-                //TODO: Map once Vicenc has finished with multi location work
-                NumberOfPositions = 1,
+                NumberOfPositions = vacancy.NumberOfPositions ?? 0,
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
@@ -84,7 +83,6 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                //TODO: How do we determine this in RAA?
             };
 
             return detail;

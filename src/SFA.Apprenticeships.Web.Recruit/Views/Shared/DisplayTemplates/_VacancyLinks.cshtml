@@ -1,15 +1,19 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.VacancyLinksViewModel
 
+@{
+    var vacancyTypeText = ViewData["vacancyTypeText"];
+}
+
 @if (Model.Status.CanManageVacancyDates())
 {
     <p class="small-btm-margin">
-        @Html.RouteLink("Manage vacancy dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
+        @Html.RouteLink("Manage " + vacancyTypeText + " dates", RecruitmentRouteNames.ManageDates, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }, new { @class = "disp-block" })
     </p>
 }
 @if (Model.Status.CanWithdrawVacancy())
 {
     <p class="small-btm-margin">
-        <a href="">Withdraw this vacancy</a>
+        <a href="">Withdraw this @vacancyTypeText</a>
     </p>
 }
