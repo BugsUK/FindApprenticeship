@@ -69,7 +69,8 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
 
             if (options.Reset)
                 controller.Reset();
-            controller.DoAll();
+
+            controller.DoAll(new System.Threading.CancellationTokenSource());
         }
     }
 

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>SFA.Apprenticeships.Data.Migrate</RootNamespace>
     <AssemblyName>SFA.Apprenticeships.Data.Migrate</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -60,7 +61,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvmsSyncRepository.cs" />
-    <Compile Include="DapperSqlMapper.cs" />
     <Compile Include="IAvmsSyncRepository.cs" />
     <Compile Include="MutateTarget.cs" />
     <Compile Include="IMutateTarget.cs" />

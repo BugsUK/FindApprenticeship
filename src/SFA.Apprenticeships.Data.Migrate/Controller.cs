@@ -25,11 +25,11 @@
             _tables = tables;
         }
 
-        public void DoAll()
+        public void DoAll(CancellationTokenSource cancellationToken)
         {
             _log.Info("DoAll Started");
 
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -64,7 +64,7 @@
                 Thread.Sleep(10000);
             }
 
-            _log.Info("DoAll Finished");
+            _log.Info("DoAll Cancelled");
         }
 
         public void Reset()
