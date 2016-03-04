@@ -82,7 +82,7 @@ Write(Html.DisplayFor(m => m, VacancyQuestionsViewModel.PartialView));
             #line 8 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
                                                                    
 
-    var saveButtonText = (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and preview vacancy";
+    var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and preview vacancy";
 
 
             

@@ -132,12 +132,12 @@
     <Compile Include="Schemas\UserProfile\AgencyUserRepositoryTests.cs" />
     <Compile Include="Schemas\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
-    <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyRepositoryTests.cs" />
+    <Compile Include="Schemas\Vacancy\VacancyRepositoryTests.cs" />
     <Compile Include="Common\Formatters.cs" />
     <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappersUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedData.cs" />
-    <Compile Include="TestAssemblySetsup.cs" />
+    <Compile Include="TestAssemblySetup.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -186,34 +186,28 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Scripts\InsertContactPreferenceType.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertEmployer.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertEmployerContact.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertPerson.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertPersonTitleType.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertPersonType.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertVacancyOwnerRelationship.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertVacancyProvisionRelationshipStatusType.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\InsertVacancyStatusType.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Scripts\InsertVacancyTextFieldValue.sql">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

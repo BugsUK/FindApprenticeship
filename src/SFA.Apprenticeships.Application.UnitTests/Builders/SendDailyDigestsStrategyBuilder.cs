@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.Communications.Strategies;
+    using Apprenticeships.Application.Communications.Strategies;
     using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
 
     public class SendDailyDigestsStrategyBuilder

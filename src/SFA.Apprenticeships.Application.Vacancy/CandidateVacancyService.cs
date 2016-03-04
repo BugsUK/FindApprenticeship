@@ -12,7 +12,7 @@
             _vacancyWriteRepository = vacancyWriteRepository;
         }
 
-        public void IncrementOfflineApplicationClickThrough(long vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
             _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
         }

@@ -54,7 +54,7 @@
             _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
         }
 
-        public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(long vacancyReferenceNumber)
+        public MediatorResponse<DashboardVacancySummaryViewModel> ApproveVacancy(int vacancyReferenceNumber)
         {
             //TODO: There should be validation here
             _vacancyQaProvider.ApproveVacancy(vacancyReferenceNumber);
@@ -69,7 +69,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.ApproveVacancy.Ok, vacancies.First());
         }
 
-        public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(long vacancyReferenceNumber)
+        public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(int vacancyReferenceNumber)
         {
             //TODO: There should be validation here
             _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber);
@@ -84,7 +84,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, vacancies.First());
         }
 
-        public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
@@ -104,7 +104,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancy.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetVacancySummaryViewModel(vacancyReferenceNumber);
 
@@ -140,7 +140,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> GetBasicDetails(long vacancyReferenceNumber)
+        public MediatorResponse<NewVacancyViewModel> GetBasicDetails(int vacancyReferenceNumber)
         {
             var newVacancyViewModel = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
@@ -155,7 +155,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetBasicVacancyDetails.Ok, newVacancyViewModel);
         }
 
-        public MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(long vacancyReferenceNumber)
+        public MediatorResponse<TrainingDetailsViewModel> GetTrainingDetails(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetTrainingDetailsViewModel(vacancyReferenceNumber);
 
@@ -195,7 +195,14 @@
             return GetMediatorResponse(VacancyMediatorCodes.SelectStandardAsTrainingType.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyQaProvider.GetVacancy(vacancyReferenceNumber);
+            vacancyViewModel.IsEditable = false;
+            return GetMediatorResponse(VacancyMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
+        }
+
+        public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);
 
@@ -209,7 +216,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyQuestionsViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<VacancyRequirementsProspectsViewModel> GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber);
 
@@ -223,7 +230,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyRequirementsProspectsViewModel.Ok, vacancyViewModel);
         }
 
-        public MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(long vacancyReferenceNumber, bool? useEmployerLocation)
+        public MediatorResponse<VacancyPartyViewModel> GetEmployerInformation(int vacancyReferenceNumber, bool? useEmployerLocation)
         {
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 
@@ -358,7 +365,7 @@
             return GetMediatorResponse(VacancyMediatorCodes.UpdateEmployerInformation.Ok, viewModel);
         }
 
-        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(long vacancyReferenceNumber)
+        public MediatorResponse<LocationSearchViewModel> GetLocationAddressesViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyQaProvider.GetNewVacancyViewModel(vacancyReferenceNumber);
 

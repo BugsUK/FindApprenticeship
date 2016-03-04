@@ -1,0 +1,27 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model VacancyViewModel
+
+@{
+    var editableItemClass = ViewData["editableItemClass"];
+}
+
+@if (Model.NewVacancyViewModel.OfflineVacancy.Value)
+{
+    <section class="section-border" id="offline-vacancy" style="">
+        <div class="@editableItemClass">
+            <h2 class="heading-large">
+                Employer's application instructions
+                @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment, Model.BasicDetailsLink))
+            </h2>
+            <p id="application-instructions" class="preserve-formatting">@Model.NewVacancyViewModel.OfflineApplicationInstructions</p>
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationInstructions, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationInstructionsComment))
+        </div>
+        <div class="@editableItemClass">
+            <p class="no-btm-margin">This apprenticeship requires you to apply through the employer's website.</p>
+            <a id="external-employer-website" rel="external" href="@Model.NewVacancyViewModel.OfflineApplicationUrl" target="_blank">@Model.NewVacancyViewModel.OfflineApplicationUrl</a>
+            @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.NewVacancyViewModel.OfflineApplicationUrlComment, Model.BasicDetailsLink))
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OfflineApplicationUrl, Model.BasicDetailsLink, Model.NewVacancyViewModel.OfflineApplicationUrlComment))
+        </div>
+    </section>
+}

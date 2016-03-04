@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.UserAccount;
-    using SFA.Infrastructure.Interfaces;
+    using Apprenticeships.Application.UserAccount;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     

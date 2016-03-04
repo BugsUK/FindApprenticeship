@@ -2,7 +2,7 @@
 {
     public interface IReferenceNumberRepository
     {
-        long GetNextVacancyReferenceNumber();
+        int GetNextVacancyReferenceNumber();
 
         int GetNextLegacyApplicationId();
     }

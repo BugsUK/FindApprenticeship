@@ -2,7 +2,7 @@
 {
     public class QualificationViewModel
     {
-        public const string PartialView = "Application/Qualification";
+        public const string PartialView = "Application/Qualifications";
 
         public string QualificationType { get; set; }
         public string Subject { get; set; }

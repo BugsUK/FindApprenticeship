@@ -337,6 +337,7 @@
     <Compile Include="ViewModels\CandidateSearchResultsViewModel.cs" />
     <Compile Include="ViewModels\CandidateSearchViewModel.cs" />
     <Compile Include="ViewModels\CandidateSummaryViewModel.cs" />
+    <Compile Include="ViewModels\CandidateVacancy.cs" />
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\CandidateTraineeshipApplicationViewModel.cs" />
@@ -511,17 +512,17 @@
     <Content Include="Content\_assets\scss\_components.scss" />
     <Content Include="Content\_assets\scss\_modules.scss" />
     <Content Include="Content\_assets\scss\modules\_vacancy.scss" />
-    <Content Include="Views\Vacancy\_CommentIcon.cshtml" />
-    <Content Include="Views\Vacancy\_EditLink.cshtml" />
-    <Content Include="Views\Vacancy\_ValidationResultIcons.cshtml" />
-    <Content Include="Views\Vacancy\_ApplicationsLink.cshtml" />
+    <Content Include="Views\Shared\_CommentIcon.cshtml" />
+    <Content Include="Views\Shared\_EditLink.cshtml" />
+    <Content Include="Views\Shared\_ValidationResultIcons.cshtml" />
+    <Content Include="Views\Shared\_ApplicationsLink.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
     <Content Include="Views\Vacancy\EmployerInformation.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>EmployerInformation.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\Vacancy\Locations.cshtml" />
-    <Content Include="Views\Vacancy\_ContactDetailsAndVacancyHistory.cshtml" />
+    <Content Include="Views\Shared\_ContactDetailsAndVacancyHistory.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <Content Include="Views\Vacancy\TrainingDetails.cshtml" />
@@ -529,6 +530,12 @@
     <Content Include="Views\AgencyUser\_DashboardHelpDesk.cshtml" />
     <Content Include="Views\Candidate\Search.cshtml" />
     <Content Include="Views\Candidate\Candidate.cshtml" />
+    <Content Include="Views\Candidate\Vacancy.cshtml" />
+    <Content Include="Views\Candidate\Apprenticeship.cshtml" />
+    <Content Include="Views\Candidate\Traineeship.cshtml" />
+    <Content Include="Views\Candidate\DisplayTemplates\ApplicantDetails.cshtml" />
+    <Content Include="Views\Candidate\VacancyHeader.cshtml" />
+    <Content Include="Views\Candidate\_Apply.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

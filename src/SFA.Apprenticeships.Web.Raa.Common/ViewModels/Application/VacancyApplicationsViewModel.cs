@@ -9,6 +9,8 @@
     {
         public VacancyApplicationsSearchViewModel VacancyApplicationsSearch { get; set; }
 
+        public VacancyType VacancyType { get; set; }
+
         public string Title { get; set; }
 
         public string EmployerName { get; set; }

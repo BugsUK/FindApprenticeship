@@ -8,6 +8,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
@@ -41,6 +42,13 @@
             var mongoEntity = Collection.AsQueryable().SingleOrDefault(e => e.ProviderSiteId == providerSiteId && e.EmployerId == employerId);
 
             return mongoEntity == null ? null : _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
+        }
+
+        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds)
+        {
+            var mongoEntities = Collection.Find(Query.In("VacancyPartyId", new BsonArray(vacancyPartyIds)));
+
+            return mongoEntities.Select(e => _mapper.Map<MongoVacancyParty, VacancyParty>(e)).ToList();
         }
 
         public IEnumerable<VacancyParty> GetForProviderSite(int providerSiteId)

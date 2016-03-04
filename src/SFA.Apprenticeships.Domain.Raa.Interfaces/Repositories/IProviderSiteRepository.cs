@@ -8,6 +8,7 @@
         ProviderSite Get(int providerSiteId);
         ProviderSite GetByEdsUrn(string edsUrn);
         IEnumerable<ProviderSite> GetForProvider(string ukprn);
+        IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
     }
 
     public interface IProviderSiteWriteRepository

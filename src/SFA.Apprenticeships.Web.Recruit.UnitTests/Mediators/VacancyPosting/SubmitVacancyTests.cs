@@ -16,7 +16,7 @@
             var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Draft, VacancyType.Apprenticeship);
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
-            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<long>())).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
             var mediator = GetMediator();
 
             var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, false);
@@ -27,11 +27,11 @@
         [Test]
         public void ShouldResubmitVacancy()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = true;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);
-            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<long>())).Returns(vvm);
+            VacancyPostingProvider.Setup(p => p.SubmitVacancy(It.IsAny<int>())).Returns(vvm);
             var mediator = GetMediator();
 
             var result = mediator.SubmitVacancy(vvm.VacancyReferenceNumber, true);
@@ -42,7 +42,7 @@
         [Test]
         public void ShouldReturnValidationErrorIfNotOptedIn()
         {
-            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.RejectedByQA, VacancyType.Apprenticeship);
+            var vvm = new VacancyViewModelBuilder().BuildValid(VacancyStatus.Referred, VacancyType.Apprenticeship);
             vvm.ResubmitOption = false;
 
             VacancyPostingProvider.Setup(p => p.GetVacancy(vvm.VacancyReferenceNumber)).Returns(vvm);

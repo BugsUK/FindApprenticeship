@@ -35,36 +35,36 @@
         {
             var utcNow = new DateTime(2016, 01, 29, 11, 39, 34, DateTimeKind.Utc);
             _dateTimeService = new Mock<IDateTimeService>();
-            _dateTimeService.Setup(s => s.UtcNow()).Returns(utcNow);
+            _dateTimeService.Setup(s => s.UtcNow).Returns(utcNow);
 
             var submittedTodayDate = utcNow.Date;
             var vacanciesSubmittedToday = new Fixture().Build<Vacancy>()
-                .With(v => v.Status, VacancyStatus.PendingQA)
+                .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
                 .CreateMany(ExpectedSubmittedTodayCount).ToList();
 
             var vacanciesSubmittedYesterdayUpperBoundary = new Fixture().Build<Vacancy>()
-                .With(v => v.Status, VacancyStatus.PendingQA)
+                .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddSeconds(-1))
                 .With(v => v.SubmissionCount, 1)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
             var vacanciesSubmittedYesterdayLowerBoundary = new Fixture().Build<Vacancy>()
-                .With(v => v.Status, VacancyStatus.PendingQA)
+                .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, utcNow.Date.AddDays(-1))
                 .With(v => v.SubmissionCount, 1)
                 .CreateMany(ExpectedSubmittedYesterdayCount / 2).ToList();
 
             var submittedMoreThan48HoursDate = utcNow.AddHours(-48).AddSeconds(-1);
             var vacanciesSubmittedMoreThan48Hours = new Fixture().Build<Vacancy>()
-                .With(v => v.Status, VacancyStatus.PendingQA)
+                .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, submittedMoreThan48HoursDate)
                 .With(v => v.SubmissionCount, 1)
                 .CreateMany(ExpectedSubmittedMoreThan48HoursCount).ToList();
 
             var resubmittedDate = utcNow.Date.AddDays(-1).AddSeconds(-1);
             var vacanciesResubmittedHours = new Fixture().Build<Vacancy>()
-                .With(v => v.Status, VacancyStatus.PendingQA)
+                .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, resubmittedDate)
                 .With(v => v.SubmissionCount, 3)
                 .CreateMany(ExpectedResubmittedCount).ToList();
@@ -76,7 +76,7 @@
             vacancies.AddRange(vacanciesResubmittedHours);
 
             _vacancyPostingService = new Mock<IVacancyPostingService>();
-            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA)).Returns(vacancies);
+            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(vacancies);
 
             _providerService = new Mock<IProviderService>();
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());

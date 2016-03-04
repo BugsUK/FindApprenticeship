@@ -1,0 +1,15 @@
+﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.ApplicationViewModel
+
+@Html.DisplayFor(m => m.ApplicantDetails.DisabilityStatus, "Application/DisabilityStatusQuestion")
+
+<div class="form-group">
+    <p class="form-label">Is there anything we can do to support your interview?</p>
+    @if (Model.VacancyQuestionAnswers.HasAnythingWeCanDoToSupportYourInterviewAnswer)
+    {
+        <span id="@Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)" class="form-prepopped prewrap">@Html.DisplayFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)</span>
+    }
+    else
+    {
+        <span id="@Html.IdFor(m => m.VacancyQuestionAnswers.AnythingWeCanDoToSupportYourInterviewAnswer)" class="form-prepopped prewrap">I don't have any interview support requirements</span>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
     using System.Threading;
-    using Application.VacancyPosting;
+    using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
@@ -43,8 +43,8 @@
                 _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
                 _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, _vacancyLocationAddressWriteRepository.Object);
 
-            _providerUserReadRepository.Setup(r => r.Get(_vacancyManager.Username)).Returns(_vacancyManager);
-            _providerUserReadRepository.Setup(r => r.Get(_lastEditedBy.Username)).Returns(_lastEditedBy);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
         }
 
         [Test]
@@ -54,12 +54,15 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -69,12 +72,15 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
         }
 
         [Test]
@@ -84,12 +90,15 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -99,12 +108,14 @@
             Thread.CurrentPrincipal = principal;
             var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
 
         [Test]
@@ -118,9 +129,9 @@
         [Test]
         public void GetVacancyByReferenceNumberShouldCallRepository()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
 
-            _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             _apprenticeshipVacancyReadRepository.Verify(r => r.GetByReferenceNumber(vacancyReferenceNumber));
         }

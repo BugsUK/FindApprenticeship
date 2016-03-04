@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Strategies
 {
     using System;
-    using Application.Candidate.Strategies.Traineeships;
+    using Apprenticeships.Application.Candidate.Strategies.Traineeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.Vacancies.Traineeships;

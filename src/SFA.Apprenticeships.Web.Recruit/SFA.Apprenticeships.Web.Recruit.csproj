@@ -302,9 +302,13 @@
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\TraineeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Mappers\RecruitMappers.cs" />
@@ -540,7 +544,9 @@
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <Content Include="Views\VacancyPosting\TrainingDetails.cshtml" />
-    <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessful.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessfulDecision.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmUnsuccessfulDecision.cshtml" />
+    <Content Include="Views\TraineeshipApplication\Review.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

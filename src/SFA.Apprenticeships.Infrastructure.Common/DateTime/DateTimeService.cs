@@ -5,9 +5,8 @@
 
     public class DateTimeService : IDateTimeService
     {
-        public DateTime UtcNow()
-        {
-            return DateTime.UtcNow;
-        }
+        public DateTime UtcNow => DateTime.UtcNow;
+
+        public DateTime MinValue => DateTime.MinValue;
     }
 }

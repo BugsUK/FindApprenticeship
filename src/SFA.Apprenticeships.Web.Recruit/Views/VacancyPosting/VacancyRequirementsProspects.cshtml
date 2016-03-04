@@ -8,7 +8,7 @@
 {
     @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
-    var saveButtonText = (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 
     <div class="grid grid-1-2">
         <button id="VacancyRequirementsProspectsButton" type="submit" class="button" name="VacancyRequirementsProspects" value="VacancyRequirementsProspects">@saveButtonText</button>

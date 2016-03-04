@@ -73,7 +73,7 @@ WriteLiteral("\r\n");
   
     ViewBag.Title = "Recruit an Apprentice - Check employer information";
 
-    var saveButtonText = (Model.Status == VacancyStatus.RejectedByQA || Model.ComeFromPreview) &&
+    var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) &&
         Model.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
         Model.IsEmployerLocationMainApprenticeshipLocation.Value == true ? "Save and return to Preview" : "Save and continue";
 
@@ -146,7 +146,7 @@ WriteLiteral("        ");
 
             
             #line 29 "..\..\Views\VacancyPosting\ConfirmEmployer.cshtml"
-   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteErn = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
+   Write(Html.RouteLink("Choose a different employer", RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview }, new { @class = "button-link" }));
 
             
             #line default

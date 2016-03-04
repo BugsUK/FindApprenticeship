@@ -44,10 +44,12 @@
         public void DoSaveWithoutRoleOrTeam()
         {
             //Arrange
-            var newAgencyUser = new Domain.Entities.Raa.Users.AgencyUser();
-            newAgencyUser.Username = Guid.NewGuid().ToString();
-            newAgencyUser.Role = null;
-            newAgencyUser.Team = null;
+            var newAgencyUser = new Domain.Entities.Raa.Users.AgencyUser
+            {
+                Username = Guid.NewGuid().ToString(),
+                Role = null,
+                Team = null
+            };
 
             //Act
             var result = _repoUnderTest.Save(newAgencyUser);

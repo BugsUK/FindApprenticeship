@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Builders
 {
     using System;
-    using Application.Applications.Entities;
+    using Apprenticeships.Application.Applications.Entities;
     using Domain.Entities.Applications;
 
     public class ApplicationStatusSummaryBuilder

@@ -23,7 +23,7 @@
         [Test]
         public void ShouldMapVacancyReferenceNumber()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
 
             //Arrange
             var source = new Fixture().Build<Vacancy>()

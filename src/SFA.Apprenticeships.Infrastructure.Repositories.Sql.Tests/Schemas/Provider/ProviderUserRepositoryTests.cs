@@ -33,7 +33,7 @@
             // Arrange.
 
             // Act.
-            var providerUser = _repository.Get(SeedData.ProviderUser1.ProviderUserId);
+            var providerUser = _repository.GetById(SeedData.ProviderUser1.ProviderUserId);
 
             // Assert.            
             providerUser.Should().NotBeNull();
@@ -45,7 +45,7 @@
             // Arrange.
 
             // Act.
-            var providerUser = _repository.Get(SeedData.ProviderUser1.Username);
+            var providerUser = _repository.GetByUsername(SeedData.ProviderUser1.Username);
 
             // Assert.            
             providerUser.Should().NotBeNull();

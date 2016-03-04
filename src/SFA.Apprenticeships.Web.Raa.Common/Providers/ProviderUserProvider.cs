@@ -6,24 +6,29 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using Application.Interfaces.Providers;
     using Domain.Entities.Raa.Users;
 
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
+        private readonly IProviderService _providerService;
         private readonly IProviderUserAccountService _providerUserAccountService;
 
         public ProviderUserProvider(
             IUserProfileService userProfileService,
+            IProviderService providerService,
             IProviderUserAccountService providerUserAccountService)
         {
             _userProfileService = userProfileService;
+            _providerService = providerService;
             _providerUserAccountService = providerUserAccountService;
         }
 
         public ProviderUserViewModel GetUserProfileViewModel(string username)
         {
             var providerUser = _userProfileService.GetProviderUser(username);
+
             if (providerUser != null)
             {
                 return Convert(providerUser);
@@ -42,65 +47,63 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (code.Equals(providerUser.EmailVerificationCode, StringComparison.CurrentCultureIgnoreCase))
+            if (!code.Equals(providerUser.EmailVerificationCode, StringComparison.CurrentCultureIgnoreCase))
             {
-                //TODO: Probably put all this in a strategy in the service
-                providerUser.EmailVerificationCode = null;
-                providerUser.EmailVerifiedDate = DateTime.UtcNow;
-                providerUser.Status = ProviderUserStatus.EmailVerified;
-                _userProfileService.UpdateUser(providerUser);
-
-                return true;
+                return false;
             }
 
-            return false;
+            providerUser.Status = ProviderUserStatus.EmailVerified;
+            providerUser.EmailVerificationCode = null;
+            providerUser.EmailVerifiedDate = DateTime.UtcNow;
 
-            //End Stub
+            _userProfileService.UpdateProviderUser(providerUser);
+
+            return true;
         }
 
-        public ProviderUserViewModel SaveProviderUser(string username, string ukprn, ProviderUserViewModel providerUserViewModel)
+        public ProviderUserViewModel SaveProviderUser(
+            string username, string ukprn, ProviderUserViewModel providerUserViewModel)
         {
-            var isNewProvider = false;
             var providerUser = _userProfileService.GetProviderUser(username);
 
-            if (providerUser == null)
+            var isNewProviderUser = providerUser == null;
+
+            if (isNewProviderUser)
             {
-                providerUser = new ProviderUser();
-                isNewProvider = true;
+                var provider = _providerService.GetProvider(ukprn);
+
+                providerUser = new ProviderUser
+                {
+                    ProviderId = provider.ProviderId,
+                    ProviderUserGuid = Guid.NewGuid(),
+                    Status = ProviderUserStatus.Registered
+                };
             }
 
-            var emailChanged = !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
+            var shouldSendEmailVerificationCode = isNewProviderUser || !string.Equals(providerUser.Email, providerUserViewModel.EmailAddress, StringComparison.CurrentCultureIgnoreCase);
 
-            //TODO: Probably put this in a strategy in the service and add the verify email code
             providerUser.Username = username;
-            providerUser.Email = providerUserViewModel.EmailAddress;
-            providerUser.Fullname = providerUserViewModel.Fullname;
-            providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
-            int? defaultProviderSiteId = null;
-            if (providerUserViewModel.DefaultProviderSiteId > 0)
-            {
-                defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId;
-            }
-            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
             providerUser.Status = providerUser.Status;
+            providerUser.Fullname = providerUserViewModel.Fullname;
+            providerUser.Email = providerUserViewModel.EmailAddress;
+            providerUser.PhoneNumber = providerUserViewModel.PhoneNumber;
 
-            if (isNewProvider)
-            {
-                _userProfileService.CreateUser(providerUser);
-            }
-            else
-            {
-                _userProfileService.UpdateUser(providerUser);
-            }
+            var defaultProviderSiteId = providerUserViewModel.DefaultProviderSiteId > 0
+                ? providerUserViewModel.DefaultProviderSiteId
+                : default(int?);
 
-            if (emailChanged)
+            providerUser.PreferredProviderSiteId = defaultProviderSiteId;
+
+            var savedProviderUser = isNewProviderUser
+                ? _userProfileService.CreateProviderUser(providerUser)
+                : _userProfileService.UpdateProviderUser(providerUser);
+
+            if (shouldSendEmailVerificationCode)
             {
-                // TODO: AG: US824: call to this service must be moved. Note that this service is responsible for generating the email
-                // verification code and updating the user again so take care must be taken around other calls to UserProfileService.CreateUser().
                 _providerUserAccountService.SendEmailVerificationCode(username);
             }
 
-            return GetUserProfileViewModel(providerUser.Username);
+            return Convert(savedProviderUser);
         }
 
         public void ResendEmailVerificationCode(string username)

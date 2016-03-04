@@ -5,6 +5,7 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -13,7 +14,7 @@
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(Vacancy vacancy, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(Vacancy vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             
@@ -37,10 +38,8 @@
                 ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
                 Description = vacancy.ShortDescription,
                 NumberOfPositions = vacancy.NumberOfPositions,
-                //TODO: Get Employer
-                //EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
-                //TODO: Get provider
-                //ProviderName = vacancy.VacancyParty.,
+                EmployerName = employer.Name,
+                ProviderName = provider.Name,
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 Location = location,

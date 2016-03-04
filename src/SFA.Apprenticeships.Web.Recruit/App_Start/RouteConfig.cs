@@ -279,20 +279,26 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
-               url: "application/review",
+               url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication,
-               url: "application/confirmsuccessful",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessful" }
+               url: "apprenticeshipapplication/confirmsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessfulDecision" }
                );
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication,
-               url: "application/confirmunsuccessful",
-               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessful" }
+               url: "apprenticeshipapplication/confirmunsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessfulDecision" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewTraineeshipApplication,
+               url: "traineeshipapplication/review",
+               defaults: new { controller = "TraineeshipApplication", action = "Review" }
                );
 
             routes.LowercaseUrls = true;

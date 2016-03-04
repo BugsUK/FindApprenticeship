@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.UserAccount
 {
     using System;
-    using Application.UserAccount.Strategies;
+    using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
