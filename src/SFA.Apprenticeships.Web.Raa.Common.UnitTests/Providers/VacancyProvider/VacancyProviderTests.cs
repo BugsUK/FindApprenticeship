@@ -37,12 +37,14 @@
         {
             //Arrange
             var vacancyReferenceNumber = 1;
+            var parentVacancyId = 2;
             var locationAddresses = new Fixture().Build<VacancyLocation>()
                 .CreateMany(locationAddressCount).ToList();
 
             var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
                 .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x=> x.VacancyId, parentVacancyId)
                 .Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
@@ -75,7 +77,7 @@
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
                                 av.Status == VacancyStatus.Live &&
-                                av.ParentVacancyId == vacancyReferenceNumber &&
+                                av.ParentVacancyId == parentVacancyId &&
                                 av.IsEmployerLocationMainApprenticeshipLocation.Value &&
                                 av.Address.Postcode == locationAddresses.First().Address.Postcode &&
                                 av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 &&
@@ -92,7 +94,7 @@
                     r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
                                                                        && av.Status == VacancyStatus.Live &&
                                                                        av.ParentVacancyId ==
-                                                                       vacancyReferenceNumber &&
+                                                                       parentVacancyId &&
                                                                        av.IsEmployerLocationMainApprenticeshipLocation
                                                                            .Value)), Times.Once);
             }
