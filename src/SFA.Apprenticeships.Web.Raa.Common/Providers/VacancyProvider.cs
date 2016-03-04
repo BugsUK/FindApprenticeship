@@ -60,18 +60,20 @@
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var vacancyPartyViewModel = vacancyParty.Convert(employer);
+
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
+                vacancyViewModel.OwnerParty = vacancyPartyViewModel;    
                 return vacancyViewModel;
             }
-
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-
+            
             return new NewVacancyViewModel
             {
-                OwnerParty = vacancyParty.Convert(employer),
+                OwnerParty = vacancyPartyViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
             };
