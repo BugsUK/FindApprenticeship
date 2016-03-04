@@ -19,6 +19,8 @@
 
         public VacancyStatuses VacancyStatus { get; set; }
 
+        public ApplicationStatuses Status { get; set; }
+
         public int LegacyVacancyId { get; set; }
 
         public int LegacyApplicationId { get; set; }

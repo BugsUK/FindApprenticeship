@@ -6,7 +6,7 @@
 
     public interface ITraineeshipApplicationService
     {
-        IList<TraineeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
+        IEnumerable<TraineeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
 
         int GetApplicationCount(int vacancyId);
 

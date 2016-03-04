@@ -115,6 +115,7 @@
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
+            MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
 
             return result;
@@ -300,6 +301,22 @@ order by HistoryDate desc
                 {
                     VacancyId = dbVacancy.VacancyId,
                     VacancyStatus = VacancyStatus.Submitted
+                }
+                ).SingleOrDefault();
+        }
+
+        private void MapDateQAApproved(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate desc
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Live
                 }
                 ).SingleOrDefault();
         }

@@ -10,7 +10,7 @@
 
 <div class="grid-wrapper">
     <div class="grid grid-2-3">
-        <h1 class="heading-xlarge">Your application - @Model.ApplicantDetails.Name</h1>
+        <h1 class="heading-xlarge">Your application<br />(@Model.ApplicantDetails.Name)</h1>
     </div>
     <div class="grid grid-1-3">
         <div class="page-link hide-nojs">
@@ -61,8 +61,8 @@
             }
         </p>
         <p class="hide-print">
-            @Html.RouteLink("Return to candidate's dashboard", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
-            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = Model.Vacancy.vacancyReferenceNumber, applicationId = Model.ApplicationSelection.ApplicationId }, new { @class = "inl-block" })
+            @Html.RouteLink("Return to candidate's applications", ManagementRouteNames.ViewCandidate, new { id = Model.ApplicantDetails.CandidateId }, new { @class = "inl-block" })
+            @Html.RouteLink("View vacancy", ManagementRouteNames.ViewCandidateTraineeshipVacancy, new { vacancyId = Model.Vacancy.VacancyReferenceNumber, applicationId = Model.ApplicationSelection.ApplicationId }, new { @class = "inl-block" })
         </p>
     </div>
 </div>

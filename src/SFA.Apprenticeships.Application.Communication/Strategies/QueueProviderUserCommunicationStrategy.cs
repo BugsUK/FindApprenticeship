@@ -21,7 +21,7 @@
 
         public void Send(string username, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
-            var providerUser = _providerUserReadRepository.Get(username);
+            var providerUser = _providerUserReadRepository.GetByUsername(username);
 
             tokens = tokens.Union(new[]
                 {

@@ -3,6 +3,7 @@
     using System;
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
+    using ViewModels.Application.Traineeship;
 
     public interface IApplicationProvider
     {
@@ -17,5 +18,11 @@
         ApplicationSelectionViewModel SendSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
 
         ApplicationSelectionViewModel SendUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel);
+
+        TraineeshipApplicationViewModel GetTraineeshipApplicationViewModel(ApplicationSelectionViewModel applicationSelectionViewModel);
+
+        TraineeshipApplicationViewModel GetTraineeshipApplicationViewModelForReview(ApplicationSelectionViewModel applicationSelectionViewModel);
+
+        void UpdateTraineeshipApplicationViewModelNotes(Guid applicationId, string notes);
     }
 }

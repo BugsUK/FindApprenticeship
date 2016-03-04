@@ -18,7 +18,6 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
@@ -39,10 +38,11 @@
         private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -53,6 +53,7 @@
             _configurationService = configurationService;
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _traineeshipApplicationService = traineeshipApplicationService;
             _userProfileService = userProfileService;
         }
 
@@ -60,18 +61,20 @@
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var vacancyPartyViewModel = vacancyParty.Convert(employer);
+
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
+                vacancyViewModel.OwnerParty = vacancyPartyViewModel;    
                 return vacancyViewModel;
             }
-
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-
+            
             return new NewVacancyViewModel
             {
-                OwnerParty = vacancyParty.Convert(employer),
+                OwnerParty = vacancyPartyViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
             };
@@ -482,7 +485,14 @@
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-                viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
+                if (viewModel.VacancyType == VacancyType.Apprenticeship)
+                {
+                    viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                }
+                else if(viewModel.VacancyType == VacancyType.Traineeship)
+                {
+                    viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                }
             }
 
             viewModel.NewVacancyViewModel.LocationAddresses =
@@ -689,7 +699,14 @@
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
             {
-                vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
+                if (vacancyViewModel.VacancyType == VacancyType.Apprenticeship)
+                {
+                    vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                }
+                else if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
+                {
+                    vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                }
             }
 
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))

@@ -16,9 +16,9 @@
 
         IEnumerable<ProviderUser> GetProviderUsers(string ukprn);
 
-        ProviderUser CreateUser(ProviderUser providerUser);
+        ProviderUser CreateProviderUser(ProviderUser providerUser);
 
-        ProviderUser UpdateUser(ProviderUser providerUser);
+        ProviderUser UpdateProviderUser(ProviderUser providerUser);
 
         AgencyUser GetAgencyUser(string username);
 
