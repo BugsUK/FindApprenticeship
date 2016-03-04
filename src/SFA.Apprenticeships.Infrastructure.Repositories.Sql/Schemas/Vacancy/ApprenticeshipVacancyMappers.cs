@@ -125,7 +125,7 @@
                 .IgnoreMember(v => v.LockedForSupportUntil)
                 .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)
                 .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0))
-                .IgnoreMember(v => v.MasterVacancyId) //db lookup
+                .MapMemberFrom(v => v.MasterVacancyId, av => av.ParentVacancyId)
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
@@ -166,7 +166,7 @@
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.EmployersApplicationInstructions)
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
-                .IgnoreMember(av => av.ParentVacancyReferenceNumber) // db lookup
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID.Value)
                 .IgnoreMember(av => av.TrainingType)

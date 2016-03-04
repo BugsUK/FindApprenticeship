@@ -56,7 +56,7 @@
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, VacancyReferenceNumber++)
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
-                .With(av => av.ParentVacancyReferenceNumber, 0)
+                .With(av => av.ParentVacancyId, 0)
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
@@ -84,7 +84,7 @@
             var parentVacancy = CreateValidDomainVacancy();
 
             var childVacancy = CreateValidDomainVacancy();
-            childVacancy.ParentVacancyReferenceNumber = parentVacancy.VacancyReferenceNumber;
+            childVacancy.ParentVacancyId = parentVacancy.VacancyReferenceNumber;
 
             return new Tuple<DomainVacancy, DomainVacancy>(parentVacancy, childVacancy);
         }

@@ -884,7 +884,7 @@
             newVacancy.VacancyGuid = Guid.NewGuid();
             newVacancy.Address = address.Address;
             newVacancy.DateQAApproved = approvalTime;
-            newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+            newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
@@ -902,7 +902,7 @@
 
                 var vacancyLocation = vacancyLocationAddresses.First();
                 submittedVacancy.Address = vacancyLocation.Address;
-                submittedVacancy.ParentVacancyReferenceNumber = vacancyReferenceNumber;
+                submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
                 submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
                 submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 

@@ -75,7 +75,7 @@
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
                                 av.Status == VacancyStatus.Live &&
-                                av.ParentVacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.ParentVacancyId == vacancyReferenceNumber &&
                                 av.IsEmployerLocationMainApprenticeshipLocation.Value &&
                                 av.Address.Postcode == locationAddresses.First().Address.Postcode &&
                                 av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 &&
@@ -91,7 +91,7 @@
                 vacancyPostingService.Verify(r =>
                     r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
                                                                        && av.Status == VacancyStatus.Live &&
-                                                                       av.ParentVacancyReferenceNumber ==
+                                                                       av.ParentVacancyId ==
                                                                        vacancyReferenceNumber &&
                                                                        av.IsEmployerLocationMainApprenticeshipLocation
                                                                            .Value)), Times.Once);
