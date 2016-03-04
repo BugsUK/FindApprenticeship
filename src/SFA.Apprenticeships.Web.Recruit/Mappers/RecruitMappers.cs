@@ -23,7 +23,7 @@
                 .ForMember(v => v.UnsuccessfulApplicationsCount, opt => opt.Ignore())
                 .ForMember(v => v.ApplicationSummaries, opt => opt.Ignore());
             
-            Mapper.CreateMap<ApprenticeshipApplicationSummary, ApplicationSummaryViewModel>()
+            Mapper.CreateMap<ApplicationSummary, ApplicationSummaryViewModel>()
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()));
         }
     }

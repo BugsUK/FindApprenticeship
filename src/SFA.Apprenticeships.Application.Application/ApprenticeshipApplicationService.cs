@@ -31,7 +31,7 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
         }
 
-        public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }

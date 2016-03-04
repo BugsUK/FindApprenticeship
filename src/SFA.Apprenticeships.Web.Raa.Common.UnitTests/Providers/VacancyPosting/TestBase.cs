@@ -23,6 +23,7 @@
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
         private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService;
+        private Mock<ITraineeshipApplicationService> _traineeshipApplicationService;
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
@@ -42,6 +43,7 @@
 
             MockTimeService = new Mock<IDateTimeService>();
             _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -55,6 +57,7 @@
                 MockTimeService.Object,
                 MockMapper.Object,
                 _apprenticeshipApplicationService.Object,
+                _traineeshipApplicationService.Object,
                 _mockUserProfileService.Object);
         }
     }

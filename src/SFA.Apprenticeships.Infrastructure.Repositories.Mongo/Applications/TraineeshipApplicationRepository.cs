@@ -52,6 +52,24 @@
             return _mapper.Map<MongoTraineeshipApplicationDetail, TraineeshipApplicationDetail>(mongoEntity);
         }
 
+        public void UpdateApplicationNotes(Guid applicationId, string notes)
+        {
+            _logger.Debug("Calling repository to update traineeship application notes for application with Id={0}", applicationId);
+
+            var result = Collection.Update(Query<TraineeshipApplicationDetail>.EQ(e => e.EntityId, applicationId), Update<TraineeshipApplicationDetail>.Set(e => e.Notes, notes).Set(e => e.DateUpdated, DateTime.UtcNow));
+
+            if (result.Ok)
+            {
+                _logger.Debug("Called repository to update traineeship application notes for application with Id={0} successfully", applicationId);
+            }
+            else
+            {
+                var message = $"Call to repository to update traineeship application notes for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+                _logger.Error(message);
+                throw new Exception(message);
+            }
+        }
+
         public TraineeshipApplicationDetail Get(Guid id, bool errorIfNotFound)
         {
             _logger.Debug("Calling repository to get TraineeshipApplicationDetail with Id={0}", id);
@@ -137,6 +155,28 @@
             _logger.Debug("Called repository to get traineeship applications submitted on or before: {0}", dateApplied);
 
             return applicationIds;
+        }
+
+        public int GetApplicationCount(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get traineeship applications count for vacancy with id: {0}", vacancyId);
+
+            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
+
+            _logger.Debug("Called repository to get traineeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
+
+            return count;
+        }
+
+        public int GetNewApplicationCount(int vacancyId)
+        {
+            _logger.Debug("Calling repository to get new traineeship applications count for vacancy with id: {0}", vacancyId);
+
+            var count = Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
+
+            _logger.Debug("Called repository to get new traineeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
+
+            return count;
         }
 
         public TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
