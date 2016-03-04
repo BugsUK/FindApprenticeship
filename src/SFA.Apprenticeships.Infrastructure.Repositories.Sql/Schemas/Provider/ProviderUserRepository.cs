@@ -24,7 +24,7 @@
             _logger = logger;
         }
 
-        public ProviderUser Get(int id)
+        public ProviderUser GetById(int id)
         {
             _logger.Debug("Getting provider user with Id={0}", id);
 
@@ -46,7 +46,7 @@
             return MapProviderUser(dbProviderUser);
         }
 
-        public ProviderUser Get(string username)
+        public ProviderUser GetByUsername(string username)
         {
             _logger.Debug("Getting provider user with username=\"{0}\"", username);
 
@@ -68,7 +68,7 @@
             return MapProviderUser(dbProviderUser);
         }
 
-        public IEnumerable<ProviderUser> GetForProvider(string ukprn)
+        public IEnumerable<ProviderUser> GetAllByUkprn(string ukprn)
         {
             _logger.Debug("Getting provider users for provider with Ukprn=\"{0}\"", ukprn);
 

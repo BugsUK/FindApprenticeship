@@ -50,7 +50,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(UnverifiedUsername))
+                .Setup(mock => mock.GetByUsername(UnverifiedUsername))
                 .Returns(new ProviderUser());
 
             // Act.
@@ -58,7 +58,7 @@
 
             // Assert.
             _mockProviderUserReadRepository.Verify(mock =>
-                mock.Get(UnverifiedUsername), Times.Once);
+                mock.GetByUsername(UnverifiedUsername), Times.Once);
         }
 
         [Test]
@@ -68,7 +68,7 @@
             var action = new Action(() => _strategy.ResendEmailVerificationCode(InvalidUsername));
 
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(InvalidUsername))
+                .Setup(mock => mock.GetByUsername(InvalidUsername))
                 .Returns(default(ProviderUser));
 
             // Act / Assert.
@@ -80,7 +80,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(UnverifiedUsername))
+                .Setup(mock => mock.GetByUsername(UnverifiedUsername))
                 .Returns(new ProviderUser
                 {
                     Username = UnverifiedUsername,
@@ -121,7 +121,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(VerifiedUsername))
+                .Setup(mock => mock.GetByUsername(VerifiedUsername))
                 .Returns(new ProviderUser
                 {
                     Status = ProviderUserStatus.EmailVerified

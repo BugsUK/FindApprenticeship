@@ -4,16 +4,13 @@
 
     public class ProviderUser : ICreatableEntity, IUpdatableEntity
     {
-        public ProviderUser()
-        {
-            Status = ProviderUserStatus.Registered;
-        }
-
         public int ProviderUserId { get; set; }
 
         public Guid ProviderUserGuid { get; set; }
 
         public int ProviderId { get; set; }
+
+        public ProviderUserStatus Status { get; set; }
 
         public string Username { get; set; }
 
@@ -28,8 +25,6 @@
         public int? PreferredProviderSiteId { get; set; }
 
         public string PhoneNumber { get; set; }
-
-        public ProviderUserStatus Status { get; set; }
 
         public DateTime CreatedDateTime { get; set; }
 

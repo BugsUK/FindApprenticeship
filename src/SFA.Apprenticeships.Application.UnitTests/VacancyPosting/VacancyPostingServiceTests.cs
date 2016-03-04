@@ -43,8 +43,8 @@
                 _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
                 _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, _vacancyLocationAddressWriteRepository.Object);
 
-            _providerUserReadRepository.Setup(r => r.Get(_vacancyManager.Username)).Returns(_vacancyManager);
-            _providerUserReadRepository.Setup(r => r.Get(_lastEditedBy.Username)).Returns(_lastEditedBy);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
         }
 
         [Test]
