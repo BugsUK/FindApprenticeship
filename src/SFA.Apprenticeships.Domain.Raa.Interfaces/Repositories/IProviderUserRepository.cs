@@ -5,13 +5,11 @@
 
     public interface IProviderUserReadRepository
     {
-        // TODO: SQL: AG: rename Get methods to be specific.
-        ProviderUser Get(int id);
+        ProviderUser GetById(int id);
 
-        ProviderUser Get(string username);
+        ProviderUser GetByUsername(string username);
 
-        // TODO: SQL: rename to GetByUkprn?
-        IEnumerable<ProviderUser> GetForProvider(string ukprn);
+        IEnumerable<ProviderUser> GetAllByUkprn(string ukprn);
     }
 
     public interface IProviderUserWriteRepository

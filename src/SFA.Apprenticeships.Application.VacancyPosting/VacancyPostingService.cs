@@ -45,7 +45,7 @@
             if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
             {
                 var username = Thread.CurrentPrincipal.Identity.Name;
-                var vacancyManager = _providerUserReadRepository.Get(username);
+                var vacancyManager = _providerUserReadRepository.GetByUsername(username);
                 if (vacancyManager != null)
                 {
                     vacancy.VacancyManagerId = vacancyManager.ProviderUserId;
@@ -79,7 +79,7 @@
             if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
             {
                 var username = Thread.CurrentPrincipal.Identity.Name;
-                var lastEditedBy = _providerUserReadRepository.Get(username);
+                var lastEditedBy = _providerUserReadRepository.GetByUsername(username);
                 if (lastEditedBy != null)
                 {
                     vacancy.LastEditedById = lastEditedBy.ProviderUserId;

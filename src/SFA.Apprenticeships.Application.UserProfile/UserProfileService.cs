@@ -23,26 +23,26 @@
 
         public ProviderUser GetProviderUser(int providerUserId)
         {
-            return _providerUserReadRepository.Get(providerUserId);
+            return _providerUserReadRepository.GetById(providerUserId);
         }
 
         public ProviderUser GetProviderUser(string username)
         {
-            return _providerUserReadRepository.Get(username);
+            return _providerUserReadRepository.GetByUsername(username);
         }
 
         public IEnumerable<ProviderUser> GetProviderUsers(string ukprn)
         {
-            return _providerUserReadRepository.GetForProvider(ukprn);
+            return _providerUserReadRepository.GetAllByUkprn(ukprn);
         }
 
-        public ProviderUser CreateUser(ProviderUser providerUser)
+        public ProviderUser CreateProviderUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, verification code, send email etc
             return _providerUserWriteRepository.Create(providerUser);
         }
 
-        public ProviderUser UpdateUser(ProviderUser providerUser)
+        public ProviderUser UpdateProviderUser(ProviderUser providerUser)
         {
             //Check if email is being updated and set pending, verification code, send email etc
             return _providerUserWriteRepository.Update(providerUser);

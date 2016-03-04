@@ -29,7 +29,7 @@
 
         public void SendEmailVerificationCode(string username)
         {
-            var providerUser = _providerUserReadRepository.Get(username);
+            var providerUser = _providerUserReadRepository.GetByUsername(username);
 
             if (providerUser == null)
             {
