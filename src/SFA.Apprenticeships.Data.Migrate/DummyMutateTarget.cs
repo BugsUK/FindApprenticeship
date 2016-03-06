@@ -2,7 +2,6 @@
 {
     using SFA.Infrastructure.Interfaces;
     using System;
-    using System.Collections.Generic;
 
     public class DummyMutateTarget : IMutateTarget
     {

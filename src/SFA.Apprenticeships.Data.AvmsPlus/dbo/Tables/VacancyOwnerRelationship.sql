@@ -10,6 +10,7 @@
     [EmployerWebsite]            NVARCHAR (256) NULL,
     [EmployerLogoAttachmentId]   INT            NULL,
     [NationWideAllowed]          BIT            DEFAULT ((0)) NOT NULL,
+    [EditedInRaa]                BIT            NOT NULL DEFAULT 0, 
     CONSTRAINT [PK_Contract] PRIMARY KEY CLUSTERED ([VacancyOwnerRelationshipId] ASC),
     CONSTRAINT [FK_Contract_Employer] FOREIGN KEY ([EmployerId]) REFERENCES [dbo].[Employer] ([EmployerId]),
     CONSTRAINT [FK_VacancyOwnerRelationship_ProviderSite] FOREIGN KEY ([ProviderSiteID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
@@ -30,3 +31,8 @@ CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_StatusTypeId]
     ON [dbo].[VacancyOwnerRelationship]([StatusTypeId] ASC)
     INCLUDE([EmployerId]);
 
+
+GO
+CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_EditedInRaa]
+	ON [dbo].[VacancyOwnerRelationship]([EditedInRaa] ASC)
+GO

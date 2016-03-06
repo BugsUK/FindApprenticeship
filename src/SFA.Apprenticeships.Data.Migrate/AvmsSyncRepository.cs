@@ -36,17 +36,8 @@ namespace SFA.Apprenticeships.Data.Migrate
             if (DateTime.UtcNow > _vacanciesOwnedByUsLastFullyUpdatedUtc + _cacheTime)
             {
                 _log.Debug("Refreshing _vacanciesOwnedByUs");
-                /*
-                ALTER TABLE Vacancy ADD OwnedByUs BIT NOT NULL DEFAULT 0 -- 18 seconds
 
-                CREATE NONCLUSTERED INDEX [idx_Vacancy_OwnedByUs] ON [dbo].[Vacancy]
-                (
-	                [OwnedByUs] ASC
-                )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-                GO
-                */
-
-                _vacanciesOwnedByUs = new HashSet<int>(_targetDatabase.Query<int>("SELECT VacancyId FROM Vacancy WHERE OwnedByUs = 1"));
+                _vacanciesOwnedByUs = new HashSet<int>(_targetDatabase.Query<int>("SELECT VacancyId FROM Vacancy WHERE EditedInRaa = 1"));
                 _vacanciesOwnedByUsLastFullyUpdatedUtc = DateTime.UtcNow;
             }
 
@@ -58,17 +49,8 @@ namespace SFA.Apprenticeships.Data.Migrate
             if (DateTime.UtcNow > _vacancyOwnerRelationshipsOwnedByUsLastFullyUpdatedUtc + _cacheTime)
             {
                 _log.Debug("Refreshing _vacancyOwnerRelationshipsOwnedByUs");
-                /*
-                ALTER TABLE VacancyOwnerRelationship ADD OwnedByUs BIT NOT NULL DEFAULT 0 -- 18 seconds
 
-                CREATE NONCLUSTERED INDEX [idx_VacancyOwnerRelationship_OwnedByUs] ON [dbo].[VacancyOwnerRelationship]
-                (
-	                [OwnedByUs] ASC
-                )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, DROP_EXISTING = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON)
-                GO
-                */
-
-                _vacancyOwnerRelationshipsOwnedByUs = new HashSet<int>(_targetDatabase.Query<int>("SELECT VacancyOwnerRelationshipId FROM VacancyOwnerRelationship WHERE OwnedByUs = 1"));
+                _vacancyOwnerRelationshipsOwnedByUs = new HashSet<int>(_targetDatabase.Query<int>("SELECT VacancyOwnerRelationshipId FROM VacancyOwnerRelationship WHERE EditedInRaa = 1"));
                 _vacancyOwnerRelationshipsOwnedByUsLastFullyUpdatedUtc = DateTime.UtcNow;
             }
 
