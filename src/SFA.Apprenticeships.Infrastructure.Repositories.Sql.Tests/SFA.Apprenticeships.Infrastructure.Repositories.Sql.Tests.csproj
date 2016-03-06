@@ -130,6 +130,7 @@
     <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappersTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepositoryTests.cs" />
+    <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyLocationMappersUnitTests.cs" />
     <Compile Include="Schemas\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
     <Compile Include="Schemas\Vacancy\VacancyRepositoryTests.cs" />
@@ -165,6 +166,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
       <Project>{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}</Project>

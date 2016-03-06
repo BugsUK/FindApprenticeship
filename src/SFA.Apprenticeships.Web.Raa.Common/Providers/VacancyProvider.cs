@@ -901,7 +901,7 @@
             newVacancy.VacancyGuid = Guid.NewGuid();
             newVacancy.Address = address.Address;
             newVacancy.DateQAApproved = approvalTime;
-            newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+            newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
@@ -919,7 +919,7 @@
 
                 var vacancyLocation = vacancyLocationAddresses.First();
                 submittedVacancy.Address = vacancyLocation.Address;
-                submittedVacancy.ParentVacancyReferenceNumber = vacancyReferenceNumber;
+                submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
                 submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
                 submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
@@ -1177,12 +1177,12 @@
                 //Set address
                 vacancy.Address = addresses.Single().Address;
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
 
             }
             else
             {
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
                 var vacancyLocations =
                     _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         viewModel.Addresses);
