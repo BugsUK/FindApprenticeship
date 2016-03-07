@@ -36,6 +36,12 @@
       <Certificate name="NasClientCertificate" thumbprint="B4CB6B341C2261DAEAA59685D60B71A9C56BC21B" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
+  <Role name="SFA.Apprenticeships.Infrastructure.Migrate">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
   <NetworkConfiguration>
     <VirtualNetworkSite name="nasprod" />
     <AddressAssignments>
@@ -55,6 +61,11 @@
         </Subnets>
       </InstanceAddress>
       <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.LogEventIndexer">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Migrate">
         <Subnets>
           <Subnet name="BackendServices" />
         </Subnets>
