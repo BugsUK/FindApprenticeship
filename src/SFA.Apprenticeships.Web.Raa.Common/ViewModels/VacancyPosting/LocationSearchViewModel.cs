@@ -5,8 +5,11 @@
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
+    using FluentValidation.Attributes;
+    using Validators.VacancyPosting;
     using Web.Common.ViewModels;
 
+    [Validator(typeof (LocationSearchViewModelClientValidator))]
     public class LocationSearchViewModel
     {
         public const string PartialView = "Vacancy/LocationSearch";

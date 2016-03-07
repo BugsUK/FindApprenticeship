@@ -30,7 +30,7 @@
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator;
         private readonly VacancyRequirementsProspectsViewModelServerValidator _vacancyRequirementsProspectsViewModelServerValidator;
         private readonly VacancyPartyViewModelValidator _vacancyPartyViewModelValidator;
-        private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator;
+        private readonly LocationSearchViewModelServerValidator _locationSearchViewModelServerValidator;
 
         public VacancyMediator(IVacancyQAProvider vacancyQaProvider,
             VacancyViewModelValidator vacancyViewModelValidator,
@@ -39,7 +39,7 @@
             VacancyQuestionsViewModelServerValidator vacancyQuestionsViewModelServerValidator,
             VacancyRequirementsProspectsViewModelServerValidator vacancyRequirementsProspectsViewModelServerValidator, 
             VacancyPartyViewModelValidator vacancyPartyViewModelValidator, 
-            IProviderQAProvider providerQaProvider, LocationSearchViewModelValidator locationSearchViewModelValidator, ILocationsProvider locationsProvider, TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator)
+            IProviderQAProvider providerQaProvider, LocationSearchViewModelServerValidator locationSearchViewModelServerValidator, ILocationsProvider locationsProvider, TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator)
         {
             _vacancyQaProvider = vacancyQaProvider;
             _vacancyViewModelValidator = vacancyViewModelValidator;
@@ -49,7 +49,7 @@
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;
             _vacancyPartyViewModelValidator = vacancyPartyViewModelValidator;
             _providerQaProvider = providerQaProvider;
-            _locationSearchViewModelValidator = locationSearchViewModelValidator;
+            _locationSearchViewModelServerValidator = locationSearchViewModelServerValidator;
             _locationsProvider = locationsProvider;
             _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
         }
@@ -379,7 +379,7 @@
 
         public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)
         {
-            var validationResult = _locationSearchViewModelValidator.Validate(viewModel);
+            var validationResult = _locationSearchViewModelServerValidator.Validate(viewModel);
 
             if (!validationResult.IsValid)
             {
