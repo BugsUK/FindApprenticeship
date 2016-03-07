@@ -9,6 +9,8 @@
 
         VacancyParty Get(int providerSiteId, int employerId);
 
+        IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds);
+
         IEnumerable<VacancyParty> GetForProviderSite(int providerSiteId);
     }
 

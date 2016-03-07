@@ -8,6 +8,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
@@ -54,6 +55,13 @@
             _logger.Debug("Found {1} provider sites for provider with UKPRN={0}", ukprn, entities.Count);
 
             return entities;
+        }
+
+        public IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
+        {
+            var mongoEntities = Collection.Find(Query.In("ProviderSiteId", new BsonArray(providerSiteIds)));
+
+            return mongoEntities.Select(e => _mapper.Map<MongoProviderSite, ProviderSite>(e)).ToList();
         }
 
         public void Delete(int providerSiteId)

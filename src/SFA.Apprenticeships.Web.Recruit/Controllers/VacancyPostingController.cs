@@ -10,7 +10,6 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
-    using Domain.Entities;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;
@@ -197,7 +196,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewCreateVacancy(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewCreateVacancy(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetNewVacancyViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -286,7 +285,7 @@
         #region Training Details
 
         [HttpGet]
-        public ActionResult TrainingDetails(long vacancyReferenceNumber)
+        public ActionResult TrainingDetails(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
@@ -316,7 +315,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewTrainingDetails(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewTrainingDetails(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetTrainingDetailsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -405,7 +404,7 @@
         #region Vacancy Details
 
         [HttpGet]
-        public ActionResult VacancySummary(long vacancyReferenceNumber)
+        public ActionResult VacancySummary(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, false, false);
             var viewModel = response.ViewModel;
@@ -421,7 +420,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancySummary(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewVacancySummary(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancySummaryViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -503,7 +502,7 @@
         #region Requirements and Prospects
 
         [HttpGet]
-        public ActionResult VacancyRequirementsProspects(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult VacancyRequirementsProspects(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -519,7 +518,7 @@
         }
 
         [HttpGet]
-        public ActionResult ReviewVacancyRequirementsProspects(long vacancyReferenceNumber)
+        public ActionResult ReviewVacancyRequirementsProspects(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancyRequirementsProspectsViewModel(vacancyReferenceNumber, true, true);
             var viewModel = response.ViewModel;
@@ -579,7 +578,7 @@
                         });
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
                     var routeName = RecruitmentRouteNames.VacancyQuestions;
-                    if (response.ViewModel.Status == VacancyStatus.RejectedByQA || response.ViewModel.ComeFromPreview)
+                    if (response.ViewModel.Status == VacancyStatus.Referred || response.ViewModel.ComeFromPreview)
                     {
                         routeName = RecruitmentRouteNames.PreviewVacancy;
                     }
@@ -598,7 +597,7 @@
         #region Vacancy Questions
 
         [HttpGet]
-        public ActionResult VacancyQuestions(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult VacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, false, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -613,7 +612,7 @@
             }
         }
 
-        public ActionResult ReviewVacancyQuestions(long vacancyReferenceNumber, bool? comeFromPreview)
+        public ActionResult ReviewVacancyQuestions(int vacancyReferenceNumber, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetVacancyQuestionsViewModel(vacancyReferenceNumber, true, comeFromPreview);
             var viewModel = response.ViewModel;
@@ -682,7 +681,7 @@
 
         [HttpGet]
         [OutputCache(Duration = 0)]
-        public ActionResult PreviewVacancy(long vacancyReferenceNumber)
+        public ActionResult PreviewVacancy(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetPreviewVacancyViewModel(vacancyReferenceNumber);
 
@@ -693,7 +692,7 @@
             vacancyViewModel.SummaryLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancySummary, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.RequirementsProspectsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyRequirementsProspects, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
             vacancyViewModel.QuestionsLink = Url.RouteUrl(RecruitmentRouteNames.ReviewVacancyQuestions, new { vacancyReferenceNumber = vacancyViewModel.VacancyReferenceNumber, comeFromPreview = true });
-            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, edsUrn = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId , vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
+            vacancyViewModel.EmployerLink = Url.RouteUrl(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, edsUrn = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EdsUrn, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
             vacancyViewModel.LocationsLink = Url.RouteUrl(RecruitmentRouteNames.AddLocations, new { providerSiteId = vacancyViewModel.ProviderSite.ProviderSiteId, employerId = vacancyViewModel.NewVacancyViewModel.OwnerParty.Employer.EmployerId, vacancyGuid = vacancyViewModel.NewVacancyViewModel.VacancyGuid, comeFromPreview = true });
 
             ModelState.Clear();
@@ -720,7 +719,7 @@
         }
         
         [HttpPost]
-        public ActionResult SubmitVacancy(long vacancyReferenceNumber, bool resubmitoption)
+        public ActionResult SubmitVacancy(int vacancyReferenceNumber, bool resubmitoption)
         {
             var response = _vacancyPostingMediator.SubmitVacancy(vacancyReferenceNumber, resubmitoption);
             var vacancyViewModel = response.ViewModel;
@@ -750,7 +749,7 @@
         }
 
         [HttpGet]
-        public ActionResult VacancySubmitted(long vacancyReferenceNumber, bool resubmitted)
+        public ActionResult VacancySubmitted(int vacancyReferenceNumber, bool resubmitted)
         {
             var response = _vacancyPostingMediator.GetSubmittedVacancyViewModel(vacancyReferenceNumber, resubmitted);
             var viewModel = response.ViewModel;
@@ -827,7 +826,7 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.CloneVacancy.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid });
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = response.ViewModel.ProviderSiteId, edsUrn = response.ViewModel.Employer.EdsUrn, vacancyGuid = response.ViewModel.VacancyGuid });
                 case VacancyPostingMediatorCodes.CloneVacancy.VacancyInIncorrectState:
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
@@ -964,7 +963,7 @@
         }
 
         [HttpGet]
-        public ActionResult ManageDates(long vacancyReferenceNumber)
+        public ActionResult ManageDates(int vacancyReferenceNumber)
         {
             var response = _vacancyPostingMediator.GetVacancyDatesViewModel(vacancyReferenceNumber);
 

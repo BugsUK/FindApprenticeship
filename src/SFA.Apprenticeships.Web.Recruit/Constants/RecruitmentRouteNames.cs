@@ -65,9 +65,12 @@
 
         // Applications
         public const string VacancyApplications = "VacancyApplications";
+        // Apprenticeships
         public const string ReviewApprenticeshipApplication = "ReviewApprenticeshipApplication";
         public const string ConfirmSuccessfulApprenticeshipApplication = "ConfirmSuccessfulApprenticeshipApplication";
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
+        // Traineeships
+        public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
 
         public const string ManageDates = "ManageDates";
     }

@@ -79,7 +79,7 @@
             {
                 case VacancyStatus.Live:
                     vacancy.Status = VacancyStatus.Closed;
-                    _vacancyWriteRepository.Save(vacancy);
+                    _vacancyWriteRepository.Create(vacancy);
                     break;
                 default:
                     return;

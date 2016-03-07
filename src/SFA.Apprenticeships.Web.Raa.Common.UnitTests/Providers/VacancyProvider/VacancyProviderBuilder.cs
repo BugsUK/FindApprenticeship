@@ -23,19 +23,20 @@
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
         private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+        private Mock<ITraineeshipApplicationService> _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
         private Mock<ILogService> _logService = new Mock<ILogService>();
         private Mock<IMapper> _mapper = new Mock<IMapper>();
 
         public VacancyProviderBuilder()
         {
-            _dateTimeService.Setup(s => s.UtcNow()).Returns(DateTime.UtcNow);
+            _dateTimeService.Setup(s => s.UtcNow).Returns(DateTime.UtcNow);
         }
 
         public IVacancyQAProvider Build()
         {
             return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
                 _referenceDataService.Object, _providerService.Object, _employerService.Object, _dateTimeService.Object, 
-                _mapper.Object, _apprenticeshipApplicationService.Object, _userProfileService.Object);
+                _mapper.Object, _apprenticeshipApplicationService.Object, _traineeshipApplicationService.Object, _userProfileService.Object);
         }
         
         public VacancyProviderBuilder With(

@@ -91,7 +91,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var details = new VacancySummary();
 
             var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
-                .With(v => v.Status, VacancyStatus.RejectedByQA)
+                .With(v => v.Status, VacancyStatus.Referred)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);

@@ -3,10 +3,10 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidate.Strategies;
-    using Application.UserAccount.Configuration;
+    using Apprenticeships.Application.Candidate.Strategies;
+    using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;

@@ -1,0 +1,180 @@
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@using SFA.Apprenticeships.Infrastructure.Presentation
+@using SFA.Apprenticeships.Web.Raa.Common.Extensions
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model VacancyViewModel
+
+@{
+    var editableItemClass = ViewData["editableItemClass"];
+    var editableApprenticeshipLevel = string.IsNullOrWhiteSpace(Model.StandardName);
+    var editableApprenticeshipLevelClass = (!Model.IsEditable || !editableApprenticeshipLevel) ? "" : "editable-item";
+}
+
+<section class="section-border grid-wrapper" id="vacancy-info">
+    <h2 class="heading-large">
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <span>Traineeship details</span>
+        }
+        else
+        {
+            <span>Apprenticeship summary</span>
+        }
+    </h2>
+    <div class="grid grid-1-3">
+        <div class="inner-block-padr">
+
+            @if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                <div>
+                    <h3 class="bold-small">Training provider</h3>
+                    <p id="vacancy-provider-name">@Model.ProviderSite.Name</p>
+                </div>
+
+                <div class="@editableItemClass">
+                    <h3 class="bold-small">
+                        Traineeship sector
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.SectorCodeName, Model.TrainingDetailsViewModel.SectorCodeNameComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="traineeship-sector">@Html.DisplayFor(m => m.SectorName)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.SectorCodeName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.SectorCodeNameComment))
+                </div>
+            }
+
+            @Html.Partial("DisplayTemplates/Vacancy/_WorkingWeekAndWage", Model, new ViewDataDictionary { { "editableItemClass", editableItemClass } })
+
+            <div class="@editableItemClass">
+                <h3 class="bold-small">
+                    @if (Model.VacancyType == VacancyType.Traineeship)
+                    {
+                        <span>Expected duration</span>
+                    }
+                    else
+                    {
+                        <span>Expected apprenticeship duration</span>
+                    }
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment))
+                </h3>
+                <p id="vacancy-expected-duration">@Model.FurtherVacancyDetailsViewModel.DurationTypeDisplayText</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.Duration, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.DurationComment))
+            </div>
+
+            <div class="@editableItemClass">
+                <h3 class="bold-small">
+                    Possible start date
+                    @Html.Partial(ValidationResultViewModel.PartialView, Html.GetValidationResultViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, ViewData.ModelState, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment))
+                </h3>
+                <p id="vacancy-start-date">
+                    @Html.DisplayFor(m => Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate.Date)
+                </p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDateComment))
+            </div>
+
+            @if (Model.VacancyType == VacancyType.Apprenticeship)
+            {
+                <div class="@editableApprenticeshipLevelClass">
+                    <h3 class="bold-small">
+                        Apprenticeship level
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment, Model.TrainingDetailsLink))
+                    </h3>
+                    <p id="vacancy-type" itemprop="employmentType">
+                        @Html.DisplayFor(m => m.TrainingDetailsViewModel.ApprenticeshipLevel) Level Apprenticeship
+                    </p>
+                    @if (editableApprenticeshipLevel)
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ApprenticeshipLevel, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ApprenticeshipLevelComment))
+                    }
+                </div>
+            }
+
+            @if (Model.Status.CanShowVacancyReferencenumber())
+            {
+                <div>
+                    <h3 class="bold-small">Reference number</h3>
+                    <p id="vacancy-reference-id">@Model.VacancyReferenceNumber.GetVacancyReference()</p>
+                </div>
+            }
+
+            @if (Model.IsSingleLocation)
+            {
+                var positions = Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NewVacancyViewModel.NumberOfPositions : Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions;
+
+                <div class="@editableItemClass">
+                    <h3 class="bold-small">Positions</h3>
+                    <p id="vacancy-reference-id">@positions available</p>
+
+                    @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    }
+                    else
+                    {
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.LocationsLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    }
+                </div>
+            }
+
+            @if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                <div class="text @editableItemClass">
+                    <h3 class="bold-small">
+                        Contact details for candidate
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsViewModel.ContactDetailsComment, Model.TrainingDetailsLink))
+                    </h3>
+                    @if (string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactName) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactNumber) && string.IsNullOrEmpty(Model.TrainingDetailsViewModel.ContactEmail))
+                    {
+                        <span>None specified. This message will not appear on the vacancy when it goes live</span>
+                    }
+                    else
+                    {
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactName</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactNumber</p>
+                        <p class="small-btm-margin">@Model.TrainingDetailsViewModel.ContactEmail</p>
+                    }
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.ContactName, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.ContactDetailsComment))
+                </div>
+            }
+        </div>
+    </div>
+    <div class="grid grid-2-3">
+        <div class="text @editableItemClass" itemprop="responsibilities">
+            @if (!Model.IsCandidateView)
+            {
+                <h3 class="bold-small" id="long-description-header">
+                    @if (Model.VacancyType == VacancyType.Traineeship)
+                    {
+                        <span>Work placement</span>
+                    }
+                    else
+                    {
+                        <span>Vacancy description</span>
+                    }
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment, Model.SummaryLink))
+                </h3>
+            }
+            <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FurtherVacancyDetailsViewModel.LongDescription)</p>
+            @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.LongDescription, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.LongDescriptionComment))
+        </div>
+        @if (Model.VacancyType == VacancyType.Traineeship)
+        {
+            <div class="@editableItemClass">
+                <h3 class="heading-small">
+                    Training to be provided
+                    @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
+                </h3>
+                <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Model.TrainingDetailsViewModel.TrainingProvided</p>
+                @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
+            </div>
+            <div class="@editableItemClass">
+                <div class="text">
+                    <h3 class="heading-small">
+                        Future prospects
+                        @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment, Model.RequirementsProspectsLink))
+                    </h3>
+                    <p id="vacancy-future-prospects" itemprop="incentives" class="preserve-formatting">@Html.Raw(Model.VacancyRequirementsProspectsViewModel.FutureProspects)</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.VacancyRequirementsProspectsViewModel.FutureProspects, Model.RequirementsProspectsLink, Model.VacancyRequirementsProspectsViewModel.FutureProspectsComment))
+                </div>
+            </div>
+        }
+    </div>
+</section>

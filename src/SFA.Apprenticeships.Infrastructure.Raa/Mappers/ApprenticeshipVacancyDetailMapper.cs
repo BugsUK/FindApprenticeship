@@ -6,6 +6,7 @@
     using System.Text;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
@@ -16,7 +17,7 @@
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
@@ -44,16 +45,15 @@
                 //VacancyOwner = vacancy.,
                 //VacancyManager = vacancy.,
                 //LocalAuthority = vacancy.,
-                //TODO: Map once Vicenc has finished with multi location work
-                NumberOfPositions = 1,
+                NumberOfPositions = vacancy.NumberOfPositions ?? 0,
                 RealityCheck = vacancy.ThingsToConsider,
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                //EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
+                EmployerName = employer.Name,
                 //TODO: How is this captured in RAA?
                 //AnonymousEmployerName = vacancy.,
-                //EmployerDescription = vacancy.ProviderSiteEmployerLink.Description,
-                //EmployerWebsite = vacancy.ProviderSiteEmployerLink.WebsiteUrl,
+                EmployerDescription = vacancyParty.EmployerDescription,
+                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
@@ -71,8 +71,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
-                //TODO: Get provider
-                //ProviderName = vacancy.VacancyParty.,
+                ProviderName = provider.Name,
                 //TradingName = vacancy.,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
@@ -87,36 +86,8 @@
                 SkillsRequired = vacancy.DesiredSkills,
                 //TODO: How do we determine this in RAA?
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-
-
-                //TODO: Get provider
-                //ProviderName = vacancy.VacancyParty.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
-                //TODO: Store geopoints for employers
-                //Location = vacancy.VacancyParty.Employer.Address.GeoPoint,
-                //Location = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }, //Coventry
-                //SubCategoryCode = vacancy.FrameworkCodeName
+                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel()
             };
-
-            // TODO: need to remove this hack.
-            if (detail.VacancyAddress == null)
-            {
-                detail.VacancyAddress = new Address
-                {
-                    AddressLine1 = "Skills Funding Agency",
-                    AddressLine2 = "Quinton Road",
-                    AddressLine3 = "Coventry",
-                    Postcode = "CV1 2WT"                    
-                };
-            }
-
-            if (detail.VacancyAddress.GeoPoint == null)
-            {
-                //TODO: Store geopoints for employers
-                detail.VacancyAddress.GeoPoint = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }; //Coventry
-            }
 
             var frameworkCodeName = vacancy.FrameworkCodeName;
             if (!string.IsNullOrEmpty(frameworkCodeName))

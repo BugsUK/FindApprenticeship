@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidates;
-    using Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates;
+    using Apprenticeships.Application.Candidates.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;

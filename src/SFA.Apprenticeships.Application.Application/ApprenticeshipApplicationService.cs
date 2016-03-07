@@ -31,7 +31,7 @@
             _applicationStatusUpdateStrategy = applicationStatusUpdateStrategy;
         }
 
-        public IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
+        public IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetSubmittedApplicationSummaries(vacancyId);
         }
@@ -61,23 +61,38 @@
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
         }
 
-        public void AppointCandidate(Guid applicationId)
+        public void SetSuccessfulDecision(Guid applicationId)
+        {
+            SetDecision(applicationId, ApplicationStatuses.Successful);
+        }
+
+        public void SetUnsuccessfulDecision(Guid applicationId)
+        {
+            SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
+        }
+
+        #region Helpers
+
+        private void SetDecision(Guid applicationId, ApplicationStatuses applicationStatus)
         {
             var apprenticeshipApplication = GetApplication(applicationId);
             var nextLegacyApplicationId = _referenceNumberRepository.GetNextLegacyApplicationId();
 
             var applicationStatusSummary = new ApplicationStatusSummary
-            {               
-                ApplicationId = Guid.Empty, // CRITICAL: make the update look like it came from legacy AVMS application
-                ApplicationStatus = ApplicationStatuses.Successful,
+            {
+                // CRITICAL: make the update look like it came from legacy AVMS application
+                ApplicationId = Guid.Empty,
+                ApplicationStatus = applicationStatus,
                 LegacyApplicationId = nextLegacyApplicationId,
                 LegacyCandidateId = 0, // not required
-                LegacyVacancyId = 1, // not required
+                LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
                 ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
             };
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
         }
+
+        #endregion
     }
 }

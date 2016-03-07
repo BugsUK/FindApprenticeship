@@ -7,9 +7,9 @@
             return "VAC" + vacancyReferenceNumber.ToString("D9");
         }
 
-        public static string GetVacancyReference(this long vacancyReferenceNumber)
+        public static string GetVacancyReference(this int? vacancyReferenceNumber)
         {
-            return "VAC" + vacancyReferenceNumber.ToString("D9");
+            return "VAC" + vacancyReferenceNumber?.ToString("D9");
         }
     }
 }

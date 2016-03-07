@@ -17,9 +17,14 @@
                 {
                     apprenticeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
 
-                    if (apprenticeshipApplication.Status == ApplicationStatuses.Successful)
+                    switch (apprenticeshipApplication.Status)
                     {
-                        apprenticeshipApplication.SuccessfulDateTime = DateTime.UtcNow;
+                        case ApplicationStatuses.Successful:
+                            apprenticeshipApplication.SuccessfulDateTime = DateTime.UtcNow;
+                            break;
+                        case ApplicationStatuses.Unsuccessful:
+                            apprenticeshipApplication.UnsuccessfulDateTime = DateTime.UtcNow;
+                            break;
                     }
 
                     // Application status has changed, ensure it appears on the candidate's dashboard.

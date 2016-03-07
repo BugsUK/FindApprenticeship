@@ -4,12 +4,21 @@
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+    using Application.Interfaces.Applications;
     using Application.Interfaces.Candidates;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.VacancyPosting;
     using Common.ViewModels;
+    using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Infrastructure.Presentation;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application.Traineeship;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
@@ -20,13 +29,23 @@
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
         private readonly ICandidateApplicationService _candidateApplicationService;
+        private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
+        private readonly IVacancyPostingService _vacancyPostingService;
+        private readonly IProviderService _providerService;
+        private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, ILogService logService)
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
             _candidateApplicationService = candidateApplicationService;
+            _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _traineeshipApplicationService = traineeshipApplicationService;
+            _vacancyPostingService = vacancyPostingService;
+            _providerService = providerService;
+            _employerService = employerService;
             _logService = logService;
         }
 
@@ -72,6 +91,7 @@
                 var traineeshipApplications = traineeshipApplicationSummaries
                     .Select(each => new CandidateTraineeshipApplicationViewModel
                     {
+                        ApplicationId = each.ApplicationId,
                         VacancyId = each.LegacyVacancyId,
                         VacancyStatus = each.VacancyStatus,
                         Title = each.Title,
@@ -83,6 +103,7 @@
 
                 return new CandidateApplicationsViewModel
                 {
+                    CandidateId = candidateId,
                     CandidateName = candidateName,
                     CandidateApprenticeshipApplications = apprenticeshipApplications,
                     CandidateTraineeshipApplications = traineeshipApplications
@@ -97,5 +118,49 @@
                 throw;
             }
         }
+
+        public ApprenticeshipApplicationViewModel GetCandidateApprenticeshipApplication(Guid applicationId)
+        {
+            var application = _apprenticeshipApplicationService.GetApplication(applicationId);
+            var viewModel = ConvertToApprenticeshipApplicationViewModel(application);
+
+            return viewModel;
+        }
+
+        public TraineeshipApplicationViewModel GetCandidateTraineeshipApplication(Guid applicationId)
+        {
+            var application = _traineeshipApplicationService.GetApplication(applicationId);
+            var viewModel = ConvertToTraineeshipApplicationViewModel(application);
+
+            return viewModel;
+        }
+
+        #region Helpers
+
+        private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
+            viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+            viewModel.Vacancy.EmployerName = employer.Name;
+
+            return viewModel;
+        }
+
+        private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
+            viewModel.Vacancy = _mapper.Map<Vacancy, ApplicationVacancyViewModel>(vacancy);
+            viewModel.Vacancy.EmployerName = employer.Name;
+
+            return viewModel;
+        }
+
+        #endregion
     }
 }

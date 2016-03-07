@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.Candidates.Configuration;
-    using Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Strategies;
     using Configuration;
     using Domain.Entities.UnitTests.Builder;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;

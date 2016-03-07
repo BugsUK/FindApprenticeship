@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Employer
 {
-    using Application.Employer;
+    using Apprenticeships.Application.Employer;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
     using Infrastructure.Interfaces;

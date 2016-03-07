@@ -55,7 +55,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 SubmissionCount = SubmissionCount,
                 VacancyManagerId = VacancyManagerId,
                 LastEditedById = LastEditedById,
-                ParentVacancyReferenceNumber = ParentVacancyReferenceNumber,
+                ParentVacancyId = ParentVacancyId,
                 TrainingType = TrainingType,
                 ApprenticeshipLevel = ApprenticeshipLevel,
                 ApprenticeshipLevelComment = ApprenticeshipLevelComment,
@@ -94,7 +94,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         }
 
         public int VacancyId { get; set; }
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
         public Guid VacancyGuid { get; set; }
         public string Title { get; set; }
         public string TitleComment { get; set; }
@@ -140,7 +140,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         //Id if the Provider User who created the vacancy
         public int VacancyManagerId { get; set; }
         public int LastEditedById { get; set; }
-        public long ParentVacancyReferenceNumber { get; set; }
+        public int? ParentVacancyId { get; set; }
         public TrainingType TrainingType { get; set; }
         public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         public string ApprenticeshipLevelComment { get; set; }

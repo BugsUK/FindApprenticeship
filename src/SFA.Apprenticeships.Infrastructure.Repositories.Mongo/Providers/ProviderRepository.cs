@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Parties;
     using Common;
     using Common.Configuration;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
@@ -37,6 +40,13 @@
             var mongoEntity = Collection.FindOne(Query<MongoProvider>.EQ(e => e.Ukprn, ukprn));
 
             return mongoEntity == null ? null : _mapper.Map<MongoProvider, Provider>(mongoEntity);
+        }
+
+        public IEnumerable<Provider> GetByIds(IEnumerable<int> providerIds)
+        {
+            var mongoEntities = Collection.Find(Query.In("ProviderId", new BsonArray(providerIds)));
+
+            return mongoEntities.Select(e => _mapper.Map<MongoProvider, Provider>(e)).ToList();
         }
 
         public void Delete(int providerId)

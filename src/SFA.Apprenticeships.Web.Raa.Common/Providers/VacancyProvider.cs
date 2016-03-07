@@ -38,10 +38,11 @@
         private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
+        private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -52,6 +53,7 @@
             _configurationService = configurationService;
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
+            _traineeshipApplicationService = traineeshipApplicationService;
             _userProfileService = userProfileService;
         }
 
@@ -59,27 +61,33 @@
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var vacancyPartyViewModel = vacancyParty.Convert(employer);
+
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
+                vacancyViewModel.OwnerParty = vacancyPartyViewModel;    
                 return vacancyViewModel;
             }
-
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-
+            
             return new NewVacancyViewModel
             {
-                OwnerParty = vacancyParty.Convert(employer),
+                OwnerParty = vacancyPartyViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
                 NumberOfPositions = numberOfPositions
             };
         }
 
-        public NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber)
+        public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            viewModel.OwnerParty = vacancyParty.Convert(employer);
+
             viewModel.VacancyGuid = vacancy.VacancyGuid;
             return viewModel;
         }
@@ -232,7 +240,8 @@
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
-                Address = employer.Address
+                Address = employer.Address,
+                // VacancyManagerId = vacancyParty.ProviderSiteId //TODO VGA: is this correct?
             });
 
             return vacancy;
@@ -268,7 +277,7 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
-            var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyReferenceNumber.Value);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value);
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
@@ -279,7 +288,7 @@
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             newVacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
 
@@ -291,9 +300,9 @@
             return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
         }
 
-        public TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber)
+        public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
             if (viewModel.VacancyType == VacancyType.Traineeship)
             {
@@ -310,7 +319,7 @@
 
         public TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             vacancy.TrainingType = viewModel.TrainingType;
             vacancy.FrameworkCodeName = GetFrameworkCodeName(viewModel);
@@ -322,23 +331,23 @@
             vacancy.ContactNumber = viewModel.ContactNumber;
             vacancy.ContactEmail = viewModel.ContactEmail;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
 
             return viewModel;
         }
 
-        public FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber)
+        public FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
         }
 
         public FurtherVacancyDetailsViewModel UpdateVacancy(FurtherVacancyDetailsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
@@ -359,22 +368,22 @@
             
             vacancy.LongDescription = viewModel.LongDescription;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber)
+        public VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
         }
 
         public VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.FutureProspects = viewModel.FutureProspects;
@@ -382,27 +391,27 @@
             vacancy.ThingsToConsider = viewModel.ThingsToConsider;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
         }
 
-        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber)
+        public VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
         }
 
         public VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
@@ -410,7 +419,7 @@
 
         public VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.ClosingDate = viewModel.ClosingDate.Date;
             vacancy.PossibleStartDate = viewModel.PossibleStartDate.Date;
@@ -419,7 +428,7 @@
 
             try
             {
-                vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+                vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
             }
             catch (CustomException)
             {
@@ -434,9 +443,9 @@
             return result;
         }
 
-        public VacancyViewModel GetVacancy(long vacancyReferenceNumber)
+        public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (vacancy == null)
                 return null;
@@ -476,7 +485,14 @@
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
             {
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-                viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)viewModel.VacancyReferenceNumber);
+                if (viewModel.VacancyType == VacancyType.Apprenticeship)
+                {
+                    viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                }
+                else if(viewModel.VacancyType == VacancyType.Traineeship)
+                {
+                    viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                }
             }
 
             viewModel.NewVacancyViewModel.LocationAddresses =
@@ -486,21 +502,21 @@
             return viewModel;
         }
 
-        public VacancyViewModel SubmitVacancy(long vacancyReferenceNumber)
+        public VacancyViewModel SubmitVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
-            vacancy.Status = VacancyStatus.PendingQA;
-            vacancy.DateSubmitted = _dateTimeService.UtcNow();
+            vacancy.Status = VacancyStatus.Submitted;
+            vacancy.DateSubmitted = _dateTimeService.UtcNow;
             if (!vacancy.DateFirstSubmitted.HasValue)
             {
                 vacancy.DateFirstSubmitted = vacancy.DateSubmitted;
             }
             vacancy.SubmissionCount++;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
             
-            //TODO: should we return this VM or the one returned by GetVacancy?
+            //TODO: should we return this VM or the one returned by GetVacancyByReferenceNumber?
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
 
             return viewModel;
@@ -618,10 +634,10 @@
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
             var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
-            var submitted = vacancies.Where(v => v.Status == VacancyStatus.PendingQA || v.Status == VacancyStatus.ReservedForQA).ToList();
-            var rejected = vacancies.Where(v => v.Status == VacancyStatus.RejectedByQA).ToList();
+            var submitted = vacancies.Where(v => v.Status == VacancyStatus.Submitted || v.Status == VacancyStatus.ReservedForQA).ToList();
+            var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
             //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow().Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow()).ToList();
+            var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
             var newApplications = vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
@@ -683,7 +699,14 @@
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
             {
-                vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount((int)vacancyViewModel.VacancyReferenceNumber);
+                if (vacancyViewModel.VacancyType == VacancyType.Apprenticeship)
+                {
+                    vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                }
+                else if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
+                {
+                    vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                }
             }
 
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))
@@ -710,16 +733,16 @@
             return vacanciesSummary; 
         }
 
-        public VacancyPartyViewModel CloneVacancy(long vacancyReferenceNumber)
+        public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             //TODO: control vacancy doesn't exist
 
             vacancy.VacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             vacancy.Title = $"(Copy of) {vacancy.Title}";
             vacancy.Status = VacancyStatus.Draft;
-            vacancy.CreatedDateTime = _dateTimeService.UtcNow();
+            vacancy.CreatedDateTime = _dateTimeService.UtcNow;
             vacancy.UpdatedDateTime = null;
             vacancy.DateSubmitted = null;
             vacancy.DateFirstSubmitted = null;
@@ -770,9 +793,9 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.PendingQA, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
-            var utcNow = _dateTimeService.UtcNow();
+            var utcNow = _dateTimeService.UtcNow;
 
             var submittedToday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted >= utcNow.Date).ToList();
             var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
@@ -852,7 +875,7 @@
 
         private static bool NoUserHasStartedToQATheVacancy(Vacancy vacancy)
         {
-            return vacancy.Status == VacancyStatus.PendingQA && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
+            return vacancy.Status == VacancyStatus.Submitted && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
         }
 
         private bool CurrentUserHasStartedToQATheVacancy(Vacancy vacancy)
@@ -862,7 +885,7 @@
 
         private bool AUserHasLeftTheVacancyUnattended(Vacancy vacancy, int timeout)
         {
-            return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow() - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
+            return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
         }
 
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
@@ -878,17 +901,17 @@
             newVacancy.VacancyGuid = Guid.NewGuid();
             newVacancy.Address = address.Address;
             newVacancy.DateQAApproved = approvalTime;
-            newVacancy.ParentVacancyReferenceNumber = vacancy.VacancyReferenceNumber;
+            newVacancy.ParentVacancyId = vacancy.VacancyId;
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public void ApproveVacancy(long vacancyReferenceNumber)
+        public void ApproveVacancy(int vacancyReferenceNumber)
         {
-            var qaApprovalDate = _dateTimeService.UtcNow();
-            var submittedVacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var qaApprovalDate = _dateTimeService.UtcNow;
+            var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
@@ -896,7 +919,7 @@
 
                 var vacancyLocation = vacancyLocationAddresses.First();
                 submittedVacancy.Address = vacancyLocation.Address;
-                submittedVacancy.ParentVacancyReferenceNumber = vacancyReferenceNumber;
+                submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
                 submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
                 submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
@@ -905,26 +928,25 @@
                     CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
                 }
 
-                submittedVacancy.Status = VacancyStatus.ParentVacancy;
                 _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
             }
 
             submittedVacancy.Status = VacancyStatus.Live;
             submittedVacancy.DateQAApproved = qaApprovalDate;
-            _vacancyPostingService.SaveVacancy(submittedVacancy);
+            _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
         }
 
-        public void RejectVacancy(long vacancyReferenceNumber)
+        public void RejectVacancy(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
-            vacancy.Status = VacancyStatus.RejectedByQA;
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            vacancy.Status = VacancyStatus.Referred;
             vacancy.QAUserName = null;
 
-            _vacancyPostingService.SaveVacancy(vacancy);
+            _vacancyPostingService.UpdateVacancy(vacancy);
         }
 
-        public VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber)
+        public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
             //TODO: Cope with null, interprit as already reserved etc.
@@ -953,7 +975,7 @@
         public FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
@@ -981,7 +1003,7 @@
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
             return viewModel;
@@ -992,7 +1014,7 @@
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
 
@@ -1008,7 +1030,7 @@
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1019,7 +1041,7 @@
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             //update properties
             vacancy.TrainingType = viewModel.TrainingType;
@@ -1038,7 +1060,7 @@
             vacancy.ContactEmail = viewModel.ContactEmail;
             vacancy.ContactDetailsComment = viewModel.ContactDetailsComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, TrainingDetailsViewModel>(vacancy);
             var sectorsAndFrameworks = GetSectorsAndFrameworks();
@@ -1055,7 +1077,7 @@
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber.Value);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
             
             //update properties
@@ -1079,7 +1101,7 @@
                 vacancy.NumberOfPositionsComment = null;
             }
             
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return viewModel;
@@ -1087,7 +1109,7 @@
 
         public VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.DesiredSkillsComment = viewModel.DesiredSkillsComment;
@@ -1100,7 +1122,7 @@
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
             return viewModel;
@@ -1108,14 +1130,14 @@
 
         public VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
-            vacancy = _vacancyPostingService.SaveVacancy(vacancy);
+            vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return viewModel;
@@ -1140,7 +1162,7 @@
                 _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
             viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
-            var vacancy = _vacancyPostingService.GetVacancy(viewModel.VacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
@@ -1155,12 +1177,12 @@
                 //Set address
                 vacancy.Address = addresses.Single().Address;
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
 
             }
             else
             {
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
                 var vacancyLocations =
                     _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         viewModel.Addresses);
@@ -1197,15 +1219,15 @@
             if (vacancy != null)
             {
                 vacancy.AdditionalLocationInformation = null;
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
                 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
         }
 
-        public VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber)
+        public VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber)
         {
-            var vacancy = _vacancyPostingService.GetVacancy(vacancyReferenceNumber);
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             return _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
         }

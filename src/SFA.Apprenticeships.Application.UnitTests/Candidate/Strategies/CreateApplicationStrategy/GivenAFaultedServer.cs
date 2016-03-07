@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.CreateApplicationStrategy
 {
     using System;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Interfaces.Repositories;
     using Moq;

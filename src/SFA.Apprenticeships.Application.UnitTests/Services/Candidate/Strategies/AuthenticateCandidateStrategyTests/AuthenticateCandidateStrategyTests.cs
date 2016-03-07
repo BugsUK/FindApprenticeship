@@ -1,16 +1,15 @@
-﻿
-namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies.AuthenticateCandidateStrategyTests
+﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies.AuthenticateCandidateStrategyTests
 {
     using System;
-    using Application.UserAccount.Configuration;
-    using Application.UserAccount.Strategies;
+    using Apprenticeships.Application.UserAccount.Configuration;
+    using Apprenticeships.Application.UserAccount.Strategies;
     using Moq;
     using NUnit.Framework;
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Entities.UnitTests.Builder;
     using Interfaces.Users;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
 
     [TestFixture]

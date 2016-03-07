@@ -17,9 +17,14 @@
         IEnumerable<TraineeshipApplicationSummary> GetApplicationSummaries(int vacancyId);
 
         IEnumerable<Guid> GetApplicationsSubmittedOnOrBefore(DateTime dateApplied);
+
+        int GetApplicationCount(int vacancyId);
+
+        int GetNewApplicationCount(int vacancyId);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>
     {
+        void UpdateApplicationNotes(Guid applicationId, string notes);
     }
 }

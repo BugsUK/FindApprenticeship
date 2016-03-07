@@ -4,6 +4,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
     using SFA.Infrastructure.Interfaces;
+    using Sql.Schemas.Vacancy;
     using StructureMap.Configuration.DSL;
 
     public class VacancyRepositoryRegistry : Registry
@@ -11,7 +12,7 @@
         public VacancyRepositoryRegistry()
         {
             // Apprenticeships.
-            For<IMapper>().Use<ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
+            For<IMapper>().Use<Sql.Schemas.Vacancy.ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
 
             For<IVacancyReadRepository>()
                 .Use<VacancyRepository>()

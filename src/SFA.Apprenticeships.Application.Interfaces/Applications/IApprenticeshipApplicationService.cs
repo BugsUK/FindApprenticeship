@@ -6,7 +6,7 @@
 
     public interface IApprenticeshipApplicationService
     {
-        IList<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
+        IEnumerable<ApprenticeshipApplicationSummary> GetSubmittedApplicationSummaries(int vacancyId);
 
         int GetApplicationCount(int vacancyId);
 
@@ -18,6 +18,8 @@
 
         void UpdateApplicationNotes(Guid applicationId, string notes);
 
-        void AppointCandidate(Guid applicationId);
+        void SetSuccessfulDecision(Guid applicationId);
+
+        void SetUnsuccessfulDecision(Guid applicationId);
     }
 }

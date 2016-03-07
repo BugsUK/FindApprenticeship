@@ -13,7 +13,7 @@
         [Test]
         public void ShouldUpdateClosingDate()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
@@ -25,9 +25,9 @@
             };
 
             var apprenticeshipVacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber};
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
@@ -36,13 +36,13 @@
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.SaveVacancy(It.Is<Vacancy>(v => v.ClosingDate == closingDate)));
+            MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.ClosingDate == closingDate)));
         }
 
         [Test]
         public void ShouldUpdatePossibleStartDate()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var closingDate = DateTime.Today.AddDays(20);
             var possibleStartDate = DateTime.Today.AddDays(30);
 
@@ -54,9 +54,9 @@
             };
 
             var apprenticeshipVacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber };
-            MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyReferenceNumber))
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(apprenticeshipVacancy);
-            MockVacancyPostingService.Setup(s => s.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
                 .Returns(apprenticeshipVacancy);
             MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
                 .Returns(viewModel);
@@ -65,7 +65,7 @@
 
             provider.UpdateVacancy(viewModel);
 
-            MockVacancyPostingService.Verify(s => s.SaveVacancy(It.Is<Vacancy>(v => v.PossibleStartDate == possibleStartDate)));
+            MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.PossibleStartDate == possibleStartDate)));
         }
     }
 }

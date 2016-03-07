@@ -2,10 +2,10 @@
 {
     using System;
     using System.Linq;
-    using Application.Candidates.Configuration;
-    using Application.Communications.Housekeeping;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Communications.Housekeeping;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

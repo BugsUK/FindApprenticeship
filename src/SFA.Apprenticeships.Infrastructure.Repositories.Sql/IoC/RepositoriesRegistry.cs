@@ -2,7 +2,6 @@
 {
     using Common;
     using Configuration;
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Schemas.Provider;
     using Schemas.Reference;

@@ -10,21 +10,21 @@
 
     public interface IVacancyPostingProvider
     {
-        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
         NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel UpdateVacancy(TrainingDetailsViewModel viewModel);
 
-        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
         VacancyQuestionsViewModel UpdateVacancy(VacancyQuestionsViewModel viewModel);
 
@@ -32,9 +32,9 @@
 
         VacancyRequirementsProspectsViewModel UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel);
 
-        VacancyViewModel GetVacancy(long vacancyReferenceNumber);
+        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel SubmitVacancy(long vacancyReferenceNumber);
+        VacancyViewModel SubmitVacancy(int vacancyReferenceNumber);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -46,7 +46,7 @@
 
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
-        VacancyPartyViewModel CloneVacancy(long vacancyReferenceNumber);
+        VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber);
 
         LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
 
@@ -60,7 +60,7 @@
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
-        VacancyDatesViewModel GetVacancyDatesViewModel(long vacancyReferenceNumber);
+        VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber);
 
         VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
     }
