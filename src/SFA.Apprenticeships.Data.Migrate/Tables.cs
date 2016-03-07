@@ -263,5 +263,86 @@
         {
             return !_avmsSyncRepository.IsVacancyOwnerRelationshipOwnedByTargetDatabase(newRecord.VacancyOwnerRelationshipId);
         }
+
+
+        #region Anonymisation
+
+        // This is based on the anonymisation script used to create the static anonymised database
+
+        public bool AnonymisePerson(dynamic oldRecord, dynamic newRecord)
+        {
+            int id = newRecord.PersonId;
+            var anon = _avmsSyncRepository.GetAnonymousDetails(id);
+
+            newRecord.Title = _avmsSyncRepository.GetPersonTitleTypeIdsByTitleFullName().GetValueOrDefault(anon.TitleWithoutDot, 6);
+            newRecord.OtherTitle = (newRecord.Title == 6) ? anon.TitleWithoutDot : "";
+            newRecord.FirstName = anon.GivenName;
+            newRecord.MiddleNames = (id % 3 == 0) ? "" : anon.MothersMaiden; // TODO - better
+            newRecord.Surname = anon.Surname;
+            newRecord.LandlineNumber = anon.TelephoneNumber + "1"; // TODO
+            newRecord.MobileNumber = anon.TelephoneNumber;
+            newRecord.Email = anon.EmailAddress;
+
+            return true;
+        }
+
+        // Candidate not migrated
+        // Stakeholder not migrated
+        // VacancySearch not migrated
+
+        public bool AnonymiseEmployerContact(dynamic oldRecord, dynamic newRecord)
+        {
+            int id = newRecord.EmployerContactId;
+            var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
+            var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
+
+            newRecord.FaxNumber = anon1.TelephoneNumber; // TODO
+            newRecord.AlternativePhoneNumber = anon2.TelephoneNumber;
+
+            return true;
+        }
+
+        // ApplicationUnsuccessfulReasonType not migrated
+        // CAFFields not migrated
+
+        public bool AnonymiseVacancy(dynamic oldRecord, dynamic newRecord)
+        {
+            var anon = _avmsSyncRepository.GetAnonymousDetails((int)newRecord.VacancyId);
+
+            newRecord.ContactName = $"{anon.GivenName} {anon.Surname}";
+
+            return true;
+        }
+
+        public bool AnonymiseProviderSite(dynamic oldRecord, dynamic newRecord)
+        {
+            int id = newRecord.ProviderSiteId;
+            var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
+            var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
+
+            newRecord.ContactDetailsAsARecruitmentAgency = $"{anon1.GivenName} {anon1.Surname} on {anon1.TelephoneNumber}";
+            newRecord.ContactDetailsForCandidate = $"{anon1.GivenName} on {anon2.TelephoneNumber}";
+
+            return true;
+        }
+
+        // NASSupportContact not migrated
+        // Application not migrated
+        // AdditionalAnswer not migrated
+
+
+        #endregion
+    }
+
+    public static class IDictionaryExtensions
+    {
+        public static V GetValueOrDefault<K, V>(this IDictionary<K,V> dict, K key, V defaultValue)
+        {
+            V value;
+            if (dict.TryGetValue(key, out value))
+                return value;
+            else
+                return defaultValue;
+        }
     }
 }
