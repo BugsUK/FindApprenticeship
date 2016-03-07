@@ -364,8 +364,6 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
         public List<DomainVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
         {
             _logger.Debug("Calling database to find apprenticeship vacancies");
-            var liveStatus =
-                _mapper.Map<VacancyStatus, string>(VacancyStatus.Live);
 
             var paramObject =
                 new
@@ -373,21 +371,21 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                     query.FrameworkCodeName,
                     query.LiveDate,
                     query.LatestClosingDate,
-                    VacancyStatusCode = liveStatus,
+                    VacancyStatusCode = (int)VacancyStatus.Live,
                     query.CurrentPage,
                     query.PageSize
                 };
 
             var coreQuery = @"
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.VacancyStatusCode = @VacancyStatusCode
+FROM   dbo.Vacancy
+WHERE  VacancyStatusCode = @VacancyStatusCode
 " +
                             (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
                                 ? ""
-                                : "AND Vacancy.FrameworkId = (SELECT FrameworkId FROM Reference.Framework where CodeName = @FrameworkCodeName) ") +
+                                : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
                             @"
-" + (query.LiveDate.HasValue ? "AND Vacancy.PublishedDateTime >= @LiveDate" : "") + @" 
-" + (query.LatestClosingDate.HasValue ? "AND Vacancy.ClosingDate <= @LatestClosingDate" : "");
+" + (query.LiveDate.HasValue ? "AND PublishedDateTime >= @LiveDate" : "") + @"  
+" + (query.LatestClosingDate.HasValue ? "AND ClosingDate <= @LatestClosingDate" : ""); // check these dates
                 // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 
             // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???
@@ -397,7 +395,7 @@ SELECT COUNT(*)
 
 SELECT *
 " + coreQuery + @"
-ORDER BY Vacancy.VacancyReferenceNumber
+ORDER BY VacancyReferenceNumber
 OFFSET ((@CurrentPage - 1) * @PageSize) ROWS
 FETCH NEXT @PageSize ROWS ONLY
 ", paramObject);
