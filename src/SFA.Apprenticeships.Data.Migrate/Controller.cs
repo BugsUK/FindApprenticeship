@@ -95,7 +95,7 @@
         {
             _log.Info("============ DoFullScanForAll");
             var context = _syncRepository.StartFullTransactionlessSync();
-            ApplyToTables(tableSpec => DoInitial(tableSpec, context));
+            ApplyToTablesUnthreaded(tableSpec => DoInitial(tableSpec, context));
             context.Success();
         }
 
