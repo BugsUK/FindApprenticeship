@@ -18,6 +18,8 @@
 
         private TableSpecList _tables;
 
+        private readonly DateTime _unixEpoc = new DateTime(1970, 01, 01);
+
         public AvmsToAvmsPlusTables(ILogService log, IAvmsSyncRespository avmsSyncRepository, bool full = true)
         {
             _log = log;
@@ -227,6 +229,8 @@
             newRecord.DeliveryOrganisationID  = null;
             newRecord.ContractOwnerID         = null;
             newRecord.OriginalContractOwnerId = null;
+
+            newRecord.CreatedDateTime = _unixEpoc;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;
