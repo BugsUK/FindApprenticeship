@@ -56,7 +56,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate
             }
             catch (Exception ex)
             {
-                _logService.Error(ex);
+                _logService.Error("Unhandled exception from controller.DoAll method", ex);
                 throw;
             }
         }

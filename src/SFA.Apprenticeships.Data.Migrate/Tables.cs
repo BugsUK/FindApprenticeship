@@ -80,7 +80,7 @@
                 var LocalAuthority = _tables.AddNew("LocalAuthority", OwnedByAv, County);
 
                 // Other tables
-                var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, OwnedByAv, MimeType);
+                var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, TransformAttachedDocument, MimeType);
                 var Person                            = _tables.AddNew("Person",                          OwnedByAv, PersonTitleType, PersonType);
                 var EmployerContact                   = _tables.AddNew("EmployerContact",                 OwnedByAv, ContactPreferenceType, County, LocalAuthority, Person);
                 var Employer                          = _tables.AddNew("Employer",                        OwnedByAv, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
@@ -256,6 +256,12 @@
                 return false;
             }
 
+            return true;
+        }
+
+        public bool TransformAttachedDocument(dynamic oldRecord, dynamic newRecord)
+        {
+            newRecord.Attachment = new byte[0];
             return true;
         }
 
