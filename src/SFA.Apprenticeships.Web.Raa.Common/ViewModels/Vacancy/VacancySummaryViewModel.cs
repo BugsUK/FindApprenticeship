@@ -26,5 +26,6 @@
         public int SubmissionCount { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
+        public int? ParentVacancyId { get; set; }
     }
 }

@@ -7,6 +7,7 @@
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Entities.Raa.Vacancies;
+    using Sql.Schemas.Vacancy.Entities;
 
     [TestFixture]
     public class TestBase
@@ -24,29 +25,17 @@
             var fixture = new Fixture();
 
             var result = fixture.Build<Vacancy>()
-                //.With(v => v.WageTypeCode, WageTypeCode_Custom)
-                //.With(v => v.WageIntervalCode, WageIntervalCode_Weekly)
-                //.With(v => v.DurationTypeCode, DurationTypeCode_Years)
-                //.With(v => v.TrainingTypeCode, TrainingTypeCode_Framework)
-                //.With(v => v.VacancyStatusCode, VacancyStatusCode_Live)
-                //.With(v => v.LevelCode, LevelCode_Intermediate)
-                //.With(v => v.VacancyTypeCode, VacancyTypeCode_Apprenticeship) // TODO: This is cheating the test as not mapped
                 .Create();
 
-            //if (fixture.Create<bool>())
-            //{
-            //    result.TrainingTypeCode = TrainingTypeCode_Framework;
-            //    result.FrameworkId = FrameworkIdFramework1;
-            //    result.StandardId = null;
-            //}
-            //else
-            //{
-            //    result.TrainingTypeCode = TrainingTypeCode_Standard;
-            //    result.FrameworkId = null;
-            //    result.StandardId = StandardIdStandard1;
-            //}
+            return result;
+        }
 
-            //result.VacancyLocationTypeCode = fixture.Create<bool>() ? VacancyLocationType.Employer : VacancyLocationType.Specific;
+        protected VacancyLocation CreateValidDatabaseVacancyLocation()
+        {
+            var fixture = new Fixture();
+
+            var result = fixture.Build<VacancyLocation>()
+                .Create();
 
             return result;
         }
@@ -67,7 +56,7 @@
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, VacancyReferenceNumber++)
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
-                .With(av => av.ParentVacancyReferenceNumber, 0)
+                .With(av => av.ParentVacancyId, 0)
                 .Create();
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
@@ -95,7 +84,7 @@
             var parentVacancy = CreateValidDomainVacancy();
 
             var childVacancy = CreateValidDomainVacancy();
-            childVacancy.ParentVacancyReferenceNumber = parentVacancy.VacancyReferenceNumber;
+            childVacancy.ParentVacancyId = parentVacancy.VacancyReferenceNumber;
 
             return new Tuple<DomainVacancy, DomainVacancy>(parentVacancy, childVacancy);
         }

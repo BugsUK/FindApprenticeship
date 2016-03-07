@@ -3,39 +3,40 @@
     using System;
     using System.Linq.Expressions;
     using AutoMapper;
-    using AutoMapper.Mappers;
-    using Domain.Entities.Raa.Locations;
+    using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
+    using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
+    using DbPostalAddress = Address.Entities.PostalAddress;
     using Domain.Entities.Raa.Vacancies;
+    using Infrastructure.Common.Mappers;
     using Presentation;
-    using SFA.Infrastructure.Interfaces;
-    using GeoPoint = Domain.Entities.Locations.GeoPoint;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
-    using Vacancy = Entities.Vacancy;
+    using DbVacancy = Entities.Vacancy;
+    using DbVacancyLocation = Entities.VacancyLocation;
 
-    /// <summary>
-    /// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
-    /// But don't want to move it to SFA.Infrastructure project because that would then depend on AutoMapper
-    /// </summary>
-    public abstract class MapperEngine : IMapper
-    {
-        private readonly IMappingEngine _mappingEngine;
+    ///// <summary>
+    ///// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
+    ///// But don't want to move it to SFA.Infrastructure project because that would then depend on AutoMapper
+    ///// </summary>
+    //public abstract class MapperEngine : IMapper
+    //{
+    //    private readonly IMappingEngine _mappingEngine;
 
-        protected MapperEngine()
-        {
-            Mapper = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
-            _mappingEngine = new MappingEngine(Mapper);
-            Initialise();
-        }
+    //    protected MapperEngine()
+    //    {
+    //        Mapper = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
+    //        _mappingEngine = new MappingEngine(Mapper);
+    //        Initialise();
+    //    }
 
-        public ConfigurationStore Mapper { get; private set; }
+    //    public ConfigurationStore Mapper { get; private set; }
 
-        public TDestination Map<TSource, TDestination>(TSource sourceObject)
-        {
-            return _mappingEngine.Map<TDestination>(sourceObject);
-        }
+    //    public TDestination Map<TSource, TDestination>(TSource sourceObject)
+    //    {
+    //        return _mappingEngine.Map<TDestination>(sourceObject);
+    //    }
 
-        public abstract void Initialise();
-    }
+    //    public abstract void Initialise();
+    //}
 
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {
@@ -69,7 +70,7 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<DomainVacancy, Vacancy>()
+            Mapper.CreateMap<DomainVacancy, DbVacancy>()
                 .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
@@ -101,15 +102,14 @@
                 .IgnoreMember(v => v.GeocodeEasting) // Encoding user story
                 .IgnoreMember(v => v.GeocodeNorthing) // Encoding user story
                 .MapMemberFrom(v => v.Title, av => av.Title)
-                .IgnoreMember(v => v.ApprenticeshipType) // DB Lookup from ApprenticeshipLevel? yes
+                .IgnoreMember(v => v.ApprenticeshipType) 
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(v => v.Description, av => av.LongDescription)
-                .MapMemberFrom(v => v.WeeklyWage, av => av.Wage) // In migrated vacancies WageUnit will always be Week
+                .MapMemberFrom(v => v.WeeklyWage, av => av.Wage)
                 .MapMemberFrom(v => v.WageType, av => av.WageType)
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => new Wage(av.WageType, av.Wage, av.WageUnit).GetDisplayText(av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
-                // .MapMemberFrom(v => v.InterviewsFromDate, av => av.InterviewStartDate)
                 .MapMemberFrom(v => v.ExpectedStartDate, av => av.PossibleStartDate)
                 .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
@@ -125,7 +125,7 @@
                 .IgnoreMember(v => v.LockedForSupportUntil)
                 .MapMemberFrom(v => v.NoOfOfflineApplicants, av => av.OfflineApplicationClickThroughCount)
                 .ForMember(v => v.NoOfOfflineSystemApplicants, opt => opt.UseValue(0))
-                .IgnoreMember(v => v.MasterVacancyId) //db lookup
+                .MapMemberFrom(v => v.MasterVacancyId, av => av.ParentVacancyId)
                 .ForMember(v => v.SmallEmployerWageIncentive, opt => opt.UseValue(false))
                 .ForMember(v => v.VacancyManagerAnonymous, opt => opt.UseValue(false))
                 .IgnoreMember(v => v.ApprenticeshipFrameworkId) // Change domain entity to use an id
@@ -142,9 +142,11 @@
                 .MapMemberFrom(v => v.WageUnitId, av => av.WageUnit)
                 .MapMemberFrom(v => v.CreatedDateTime, av => av.CreatedDateTime)
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
+                .IgnoreMember(v => v.SectorId)
+                .IgnoreMember(v => v.InterviewsFromDate)
                 .End();
 
-            Mapper.CreateMap<Vacancy, DomainVacancy>()
+            Mapper.CreateMap<DbVacancy, DomainVacancy>()
                 .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
                 .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
@@ -158,14 +160,13 @@
                 .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
-                //.MapMemberFrom(av => av.InterviewStartDate, v => v.InterviewsFromDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
                 .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
                 .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
                 .MapMemberFrom(av => av.OfflineApplicationInstructions, v => v.EmployersApplicationInstructions)
                 .MapMemberFrom(av => av.OfflineApplicationUrl, v => v.EmployersRecruitmentWebsite)
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
-                .IgnoreMember(av => av.ParentVacancyReferenceNumber) // db lookup
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
                 .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID.Value)
                 .IgnoreMember(av => av.TrainingType)
@@ -227,10 +228,12 @@
                 .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
                 .MapMemberFrom(av => av.CreatedDateTime, v => v.CreatedDateTime)
                 .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
-                
+                .IgnoreMember(av => av.SectorCodeName)
+                .IgnoreMember(av => av.SectorCodeNameComment)
+                .IgnoreMember(dvl => dvl.Address)
                 .AfterMap((v, av) =>
                 {
-                    av.Address = new PostalAddress
+                    av.Address = new DomainPostalAddress
                     {
                         AddressLine1 = v.AddressLine1,
                         AddressLine2 = v.AddressLine2,
@@ -253,7 +256,7 @@
 
                 .End();
 
-            Mapper.CreateMap<PostalAddress, Schemas.Address.Entities.PostalAddress>()
+            Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()
                 .MapMemberFrom(a => a.Latitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Latitude)
                 .MapMemberFrom(a => a.Longitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Longitude)
 
@@ -268,17 +271,73 @@
                 .MapMemberFrom(a => a.DateValidated, a => (DateTime?)null) // Why?
                 .MapMemberFrom(a => a.CountyId, a => (int?)null) // done via database lookup -> TODO
 
+
                 //        .ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO
                 ;
 
-            Mapper.CreateMap<Schemas.Address.Entities.PostalAddress, PostalAddress>()
+            Mapper.CreateMap<DbPostalAddress, DomainPostalAddress>()
                 //.ForMember(a => a.Uprn, opt => opt.Ignore()) // TODO: What is this??
-                .MapMemberFrom(a => a.GeoPoint, a => (a.Latitude == null || a.Longitude == null) ? null : new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
+                //.MapMemberFrom(a => a.GeoPoint, a => (a.Latitude == null || a.Longitude == null) ? null : new GeoPoint() { Latitude = (double)a.Latitude, Longitude = (double)a.Longitude })
                 .MapMemberFrom(a => a.Town, a => a.PostTown)
                 .IgnoreMember(a => a.County) // Done by database lookup -> TODO
                                              // TODO: Hacks
                                              //.MapMemberFrom(a => a.AddressLine4, a => (a.AddressLine4 + " " + a.AddressLine5).TrimEnd())
+                .IgnoreMember(dpa => dpa.GeoPoint)
+                .AfterMap((dbpa, dpa) =>
+                {
+                    if (dbpa.Latitude.HasValue && dbpa.Longitude.HasValue)
+                    {
+                        dpa.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
+                        {
+                            Latitude = (double)dbpa.Latitude.Value,
+                            Longitude = (double)dbpa.Longitude.Value
+                        };
+                    }
+                })
                 ;
+
+            Mapper.CreateMap<DomainVacancyLocation, DbVacancyLocation>()
+                .IgnoreMember(dbvl => dbvl.EmployersWebsite)
+                .MapMemberFrom(dbvl => dbvl.AddressLine1, dvl => dvl.Address.AddressLine1)
+                .MapMemberFrom(dbvl => dbvl.AddressLine2, dvl => dvl.Address.AddressLine2)
+                .MapMemberFrom(dbvl => dbvl.AddressLine3, dvl => dvl.Address.AddressLine3)
+                .MapMemberFrom(dbvl => dbvl.AddressLine4, dvl => dvl.Address.AddressLine4)
+                .MapMemberFrom(dbvl => dbvl.AddressLine5, dvl => dvl.Address.AddressLine5)
+                .MapMemberFrom(dbvl => dbvl.PostCode, dvl => dvl.Address.Postcode)
+                .MapMemberFrom(dbvl => dbvl.Town, dvl => dvl.Address.Town)
+                .MapMemberFrom(dbvl => dbvl.Latitude, dvl => (decimal) dvl.Address.GeoPoint.Latitude)
+                // use a converter?
+                .MapMemberFrom(dbvl => dbvl.Longitude, dvl => (decimal) dvl.Address.GeoPoint.Longitude)
+                // use a converter?
+                .IgnoreMember(dbvl => dbvl.CountyId)
+                .IgnoreMember(dbvl => dbvl.LocalAuthorityId)
+                .IgnoreMember(dbvl => dbvl.GeocodeNorthing)
+                .IgnoreMember(dbvl => dbvl.GeocodeEasting);
+
+            Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
+                .IgnoreMember(dvl => dvl.Address)
+                .AfterMap((dbvl, dvl) =>
+                {
+                    dvl.Address = new DomainPostalAddress
+                    {
+                        AddressLine1 = dbvl.AddressLine1,
+                        AddressLine2 = dbvl.AddressLine2,
+                        AddressLine3 = dbvl.AddressLine3,
+                        AddressLine4 = dbvl.AddressLine4,
+                        AddressLine5 = dbvl.AddressLine5,
+                        Postcode = dbvl.PostCode,
+                        Town = dbvl.Town
+                    };
+
+                    if (dbvl.Latitude.HasValue && dbvl.Longitude.HasValue)
+                    {
+                        dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
+                        {
+                            Latitude = (double)dbvl.Latitude.Value,
+                            Longitude = (double)dbvl.Longitude.Value
+                        };
+                    }
+                });
         }
     }
 

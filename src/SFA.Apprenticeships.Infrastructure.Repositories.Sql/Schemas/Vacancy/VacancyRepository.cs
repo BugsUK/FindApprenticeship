@@ -25,7 +25,7 @@
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
-        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger) // Use IDateTimeService
+        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
@@ -249,6 +249,8 @@ ORDER BY QuestionId ASC
             result.TrainingProvidedComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.TrainingProvidedComment);
             result.WageComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WageComment);
             result.WorkingWeekComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WorkingWeekComment);
+            result.LocationAddressesComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.LocationAddressesComment);
+            result.AdditionalLocationInformationComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.AdditionalLocationInformationComment);
         }
 
         private string GetComment(int vacancyId, string vacancyReferralCommentTypeCodeName)
@@ -362,8 +364,6 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
         public List<DomainVacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
         {
             _logger.Debug("Calling database to find apprenticeship vacancies");
-            var liveStatus =
-                _mapper.Map<VacancyStatus, string>(VacancyStatus.Live);
 
             var paramObject =
                 new
@@ -371,21 +371,24 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                     query.FrameworkCodeName,
                     query.LiveDate,
                     query.LatestClosingDate,
-                    VacancyStatusCode = liveStatus,
+                    VacancyStatusId = (int)VacancyStatus.Live,
                     query.CurrentPage,
                     query.PageSize
                 };
 
             var coreQuery = @"
-FROM   Vacancy.Vacancy
-WHERE  Vacancy.VacancyStatusCode = @VacancyStatusCode
+FROM   dbo.Vacancy
+WHERE  VacancyStatusId = @VacancyStatusId
 " +
                             (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
                                 ? ""
-                                : "AND Vacancy.FrameworkId = (SELECT FrameworkId FROM Reference.Framework where CodeName = @FrameworkCodeName) ") +
+                                : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
                             @"
-" + (query.LiveDate.HasValue ? "AND Vacancy.PublishedDateTime >= @LiveDate" : "") + @" 
-" + (query.LatestClosingDate.HasValue ? "AND Vacancy.ClosingDate <= @LatestClosingDate" : "");
+" + (query.LiveDate.HasValue ? @"AND (select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatusId
+order by HistoryDate desc) >= @LiveDate" : "") + @"  
+" + (query.LatestClosingDate.HasValue ? "AND ClosingDate <= @LatestClosingDate" : ""); // check these dates
                 // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 
             // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???
@@ -395,7 +398,7 @@ SELECT COUNT(*)
 
 SELECT *
 " + coreQuery + @"
-ORDER BY Vacancy.VacancyReferenceNumber
+ORDER BY VacancyReferenceNumber
 OFFSET ((@CurrentPage - 1) * @PageSize) ROWS
 FETCH NEXT @PageSize ROWS ONLY
 ", paramObject);
@@ -748,6 +751,8 @@ when not matched then
             SaveComment(vacancyId, ReferralCommentCodeName.TrainingProvidedComment, entity.TrainingProvidedComment);
             SaveComment(vacancyId, ReferralCommentCodeName.WageComment, entity.WageComment);
             SaveComment(vacancyId, ReferralCommentCodeName.WorkingWeekComment, entity.WorkingWeekComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.LocationAddressesComment, entity.LocationAddressesComment);
+            SaveComment(vacancyId, ReferralCommentCodeName.AdditionalLocationInformationComment, entity.AdditionalLocationInformationComment);
         }
 
         private void SaveComment(int vacancyId, string vacancyReferralCommentsFieldTypeCodeName, string comment)

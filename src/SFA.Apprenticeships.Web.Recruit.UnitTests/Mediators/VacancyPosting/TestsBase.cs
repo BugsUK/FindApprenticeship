@@ -41,7 +41,7 @@
                 new VacancyViewModelValidator(), 
                 new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
-                new LocationSearchViewModelValidator(),
+                new LocationSearchViewModelServerValidator(),
                 new Mock<IAddressLookupProvider>().Object,
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),

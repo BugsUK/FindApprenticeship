@@ -36,7 +36,9 @@ USING (VALUES
 	(31, 'OAU', 'OAU', 'Offline Application Url'),
 	(32, 'SID', 'SID', 'Standard Id'),
 	(33, 'ALE', 'ALE', 'Apprenticeship Level'),
-	(34, 'CDE', 'CDE', 'Contact Details')
+	(34, 'CDE', 'CDE', 'Contact Details'),
+	(35, 'LAD', 'LAD', 'Location Addresses'),
+	(36, 'ALI', 'ALI', 'Additional Location Information')
 ) 
 
 AS Source (VacancyReferralCommentsFieldTypeId, CodeName, ShortName, FullName) 

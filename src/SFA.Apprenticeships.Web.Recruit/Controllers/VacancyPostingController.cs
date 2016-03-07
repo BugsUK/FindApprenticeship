@@ -10,7 +10,6 @@
     using Common.Mediators;
     using Common.Validators.Extensions;
     using Constants;
-    using Domain.Entities;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Mvc;

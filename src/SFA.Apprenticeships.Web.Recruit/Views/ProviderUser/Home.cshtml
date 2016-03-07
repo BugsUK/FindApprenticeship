@@ -306,12 +306,14 @@
                                         @vacancy.EmployerName
                                     </td>
                                     <td class="vac-ref-number" data-label="Vacancy ref">
-                                    @if (vacancy.LocationAddresses != null && vacancy.LocationAddresses.Any())
+                                    @if (vacancy.ParentVacancyId != null && 
+                                        vacancy.Status == VacancyStatus.Live)
                                     {
-                                        @vacancy.LocationAddresses.First().Address.AddressLine4<br/>
-                                        @vacancy.LocationAddresses.First().Address.AddressLine1Ellipsis
+
+                                        @vacancy.Location.AddressLine4<br/>
+                                        @vacancy.Location.AddressLineEllipsis
                                     }
-                                    else if(vacancy.Location != null)
+                                    else
                                     {
                                         @vacancy.Location.AddressLine4
                                     }

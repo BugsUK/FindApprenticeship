@@ -13,7 +13,7 @@
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
     <button type="submit" class="button" name="AddLocations" value="Locations">@saveButtonText</button>
-    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ConfirmEmployer, new { providerSiteErn = Model.ProviderSiteEdsUrn, edsUrn = Model.EmployerEdsUrn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true })
+    @Html.RouteLink("Return to previous page", RecruitmentRouteNames.ConfirmEmployer, new { providerSiteId = Model.ProviderSiteId, edsUrn = Model.EmployerEdsUrn, vacancyGuid = Model.VacancyGuid, comeFromPreview = Model.ComeFromPreview, useEmployerLocation = true })
 }
 
 @section scripts {
