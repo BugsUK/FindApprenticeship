@@ -371,20 +371,23 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                     query.FrameworkCodeName,
                     query.LiveDate,
                     query.LatestClosingDate,
-                    VacancyStatusCode = (int)VacancyStatus.Live,
+                    VacancyStatusId = (int)VacancyStatus.Live,
                     query.CurrentPage,
                     query.PageSize
                 };
 
             var coreQuery = @"
 FROM   dbo.Vacancy
-WHERE  VacancyStatusCode = @VacancyStatusCode
+WHERE  VacancyStatusId = @VacancyStatusId
 " +
                             (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
                                 ? ""
                                 : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
                             @"
-" + (query.LiveDate.HasValue ? "AND PublishedDateTime >= @LiveDate" : "") + @"  
+" + (query.LiveDate.HasValue ? @"AND (select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatusId
+order by HistoryDate desc) >= @LiveDate" : "") + @"  
 " + (query.LatestClosingDate.HasValue ? "AND ClosingDate <= @LatestClosingDate" : ""); // check these dates
                 // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 

@@ -3,6 +3,7 @@
     using System;
     using Common;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
@@ -83,7 +84,7 @@
             var dateTimeService = new Mock<IDateTimeService>();
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 dateTimeService.Object, logger.Object);
-
+            
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
 
@@ -103,7 +104,45 @@
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
             vacancy.TrainingProvided = null;
-            writeRepository.Create(vacancy);
+            writeRepository.Update(vacancy);
+        }
+
+        [Test, Category("Integration")]
+        public void FindTest()
+        {
+            var logger = new Mock<ILogService>();
+            var dateTimeService = new Mock<IDateTimeService>();
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                dateTimeService.Object, logger.Object);
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                dateTimeService.Object, logger.Object);
+
+            const string title = "Vacancy title";
+            var vacancyGuid = Guid.NewGuid();
+
+            var fixture = new Fixture();
+            fixture.Customizations.Add(
+                new StringGenerator(() =>
+                    Guid.NewGuid().ToString().Substring(0, 10)));
+
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyGuid = vacancyGuid;
+            vacancy.Title = title;
+            vacancy.Status = VacancyStatus.Live;
+            vacancy.TrainingProvided = null;
+
+            var entity = writeRepository.Create(vacancy);
+            vacancy.VacancyId = entity.VacancyId;
+            vacancy.TrainingProvided = null;
+
+            var totalResultsCount = 0;
+            var findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            {
+                CurrentPage = 1,
+                LatestClosingDate = DateTime.UtcNow.AddHours(2),
+                LiveDate = DateTime.UtcNow.AddHours(-2)
+            }, out totalResultsCount);
         }
     }
 }
