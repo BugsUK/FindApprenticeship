@@ -50,7 +50,15 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate
                 );
 
 
-            controller.DoAll(_cancelSource);
+            try
+            {
+                controller.DoAll(_cancelSource);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error(ex);
+                throw;
+            }
         }
 
         public override void OnStop()
