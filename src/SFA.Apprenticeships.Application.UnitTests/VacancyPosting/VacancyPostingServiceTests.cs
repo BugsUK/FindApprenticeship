@@ -27,7 +27,8 @@
         private readonly ProviderUser _vacancyManager = new ProviderUser
         {
             ProviderUserId = 1,
-            Username = "vacancy@manager.com"
+            Username = "vacancy@manager.com",
+            PreferredProviderSiteId = 10
         };
 
         private readonly ProviderUser _lastEditedBy = new ProviderUser
@@ -80,7 +81,7 @@
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.ProviderUserId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.PreferredProviderSiteId.Value)));
         }
 
         [Test]
