@@ -113,12 +113,12 @@
                 var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, NotOwnedByVacancyOwner, Vacancy, VacancyReferralCommentsFieldType);
 
 
-                if (false) // TODO: Stakeholder
+                /*if (false) // TODO: Stakeholder
                 {
                     var Organisation      = _tables.AddNew("Organisation",                                        OwnedByAv);
                     var StakeholderStatus = _tables.AddNew("StakeHolderStatus",                                   OwnedByAv);
                     var Stakeholder       = _tables.AddNew("StakeHolder",       new string[] { "StakeHolderID" }, OwnedByAv, Person, Organisation, StakeholderStatus, County, LocalAuthority);
-                }
+                }*/
 
                 /* Other tables from diagram not required here
                 var VacancySearch = tables.AddNew("VacancySearch", OwnedByAv);
