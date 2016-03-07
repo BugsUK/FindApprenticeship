@@ -46,9 +46,9 @@
             {
                 var username = Thread.CurrentPrincipal.Identity.Name;
                 var vacancyManager = _providerUserReadRepository.GetByUsername(username);
-                if (vacancyManager != null)
+                if (vacancyManager?.PreferredProviderSiteId != null)
                 {
-                    vacancy.VacancyManagerId = vacancyManager.ProviderUserId;
+                    vacancy.VacancyManagerId = vacancyManager.PreferredProviderSiteId.Value;
                 }
             }
 
