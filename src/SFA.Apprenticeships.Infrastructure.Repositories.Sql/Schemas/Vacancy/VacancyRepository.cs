@@ -291,7 +291,7 @@ order by HistoryDate
 
         private void MapDateSubmitted(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.DateSubmitted = _getOpenConnection.Query<DateTime>(@"
+            result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
@@ -371,24 +371,25 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                     query.FrameworkCodeName,
                     query.LiveDate,
                     query.LatestClosingDate,
-                    VacancyStatusId = (int)VacancyStatus.Live,
+                    VacancyStatusCodeIds = query.DesiredStatuses.Select(s => (int)s),
+                    LiveStatusId = (int)VacancyStatus.Live,
                     query.CurrentPage,
                     query.PageSize
                 };
 
             var coreQuery = @"
-FROM   dbo.Vacancy
-WHERE  VacancyStatusId = @VacancyStatusId
+FROM   dbo.Vacancy as vac
+WHERE  VacancyStatusId IN @VacancyStatusCodeIds
 " +
                             (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
                                 ? ""
                                 : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
                             @"
 " + (query.LiveDate.HasValue ? @"AND (select top 1 HistoryDate
-from dbo.VacancyHistory
-where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatusId
+from dbo.VacancyHistory as vh
+where vh.VacancyId = vac.VacancyId and VacancyHistoryEventSubTypeId = @LiveStatusId
 order by HistoryDate desc) >= @LiveDate" : "") + @"  
-" + (query.LatestClosingDate.HasValue ? "AND ClosingDate <= @LatestClosingDate" : ""); // check these dates
+" + (query.LatestClosingDate.HasValue ? "AND ApplicationClosingDate <= @LatestClosingDate" : ""); // check these dates
                 // Vacancy.PublishedDateTime >= @LiveDate was Vacancy.DateSubmitted >= @LiveDate
 
             // TODO: Vacancy.DateSubmitted should be DateLive (or DatePublished)???

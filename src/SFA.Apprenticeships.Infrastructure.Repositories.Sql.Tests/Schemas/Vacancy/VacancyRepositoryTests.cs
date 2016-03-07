@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
     using System;
+    using System.Collections.Generic;
     using Common;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
@@ -19,22 +20,28 @@
         private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
         private IGetOpenConnection _connection;
 
+        private Mock<IDateTimeService> _dateTimeService;
+
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
             _connection =
                 new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
+
+            _dateTimeService = new Mock<IDateTimeService>();
+            _dateTimeService.Setup(d => d.MinValue).Returns(DateTime.MinValue);
+            _dateTimeService.Setup(d => d.UtcNow).Returns(DateTime.UtcNow);
         }
 
         [Test, Category("Integration")]
         public void SimpleGetTest()
         {
             var logger = new Mock<ILogService>();
-            var dateTimeService = new Mock<IDateTimeService>();
+            
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, logger.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -53,6 +60,8 @@
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
             vacancy.OwnerPartyId = 1;
+            vacancy.FrameworkCodeName = null;
+            vacancy.SectorCodeName = "ALB";
 
 
             writeRepository.Create(vacancy);
@@ -81,9 +90,8 @@
         public void SimpleSaveAndUpdateTest()
         {
             var logger = new Mock<ILogService>();
-            var dateTimeService = new Mock<IDateTimeService>();
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, logger.Object);
             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -98,8 +106,13 @@
             vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
-                // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.TrainingProvided = null;
+            // Changed from PendingQA to Draft because PendingQA is not still in the db
+            vacancy.VacancyManagerId = 1;
+            vacancy.Address.Postcode = "CV1 2WT";
+            vacancy.Address.County = "CAM";
+            vacancy.OwnerPartyId = 1;
+            vacancy.FrameworkCodeName = null;
+            vacancy.SectorCodeName = "ALB";
 
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
@@ -111,11 +124,11 @@
         public void FindTest()
         {
             var logger = new Mock<ILogService>();
-            var dateTimeService = new Mock<IDateTimeService>();
+
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, logger.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -125,24 +138,78 @@
                 new StringGenerator(() =>
                     Guid.NewGuid().ToString().Substring(0, 10)));
 
-
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Live;
-            vacancy.TrainingProvided = null;
+            vacancy.VacancyManagerId = 1;
+            vacancy.OwnerPartyId = 1;
+            vacancy.UpdatedDateTime = null;
+            vacancy.CreatedDateTime = DateTime.MinValue;
+            vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
 
             var entity = writeRepository.Create(vacancy);
-            vacancy.VacancyId = entity.VacancyId;
-            vacancy.TrainingProvided = null;
 
             var totalResultsCount = 0;
             var findResults = readRepository.Find(new ApprenticeshipVacancyQuery
             {
                 CurrentPage = 1,
-                LatestClosingDate = DateTime.UtcNow.AddHours(2),
-                LiveDate = DateTime.UtcNow.AddHours(-2)
+                LatestClosingDate = DateTime.UtcNow.AddDays(3),
+                LiveDate = DateTime.UtcNow.AddHours(-2),
+                PageSize = 10,
+                DesiredStatuses = new List<VacancyStatus> { VacancyStatus.Live }
             }, out totalResultsCount);
+
+            findResults.Should().HaveCount(1);
+            totalResultsCount.Should().Be(1);
+
+            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            {
+                CurrentPage = 1,
+                LatestClosingDate = DateTime.UtcNow.AddDays(3),
+                LiveDate = DateTime.UtcNow.AddHours(-2),
+                PageSize = 10,
+                DesiredStatuses = new List<VacancyStatus> { VacancyStatus.Closed }
+            }, out totalResultsCount);
+
+            findResults.Should().HaveCount(0);
+            totalResultsCount.Should().Be(0);
+
+            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            {
+                CurrentPage = 2,
+                LatestClosingDate = DateTime.UtcNow.AddDays(3),
+                LiveDate = DateTime.UtcNow.AddHours(-2),
+                PageSize = 10,
+                DesiredStatuses = new List<VacancyStatus> { VacancyStatus.Live }
+            }, out totalResultsCount);
+
+            findResults.Should().HaveCount(0);
+            totalResultsCount.Should().Be(1);
+
+            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            {
+                CurrentPage = 2,
+                LatestClosingDate = DateTime.UtcNow.AddDays(1),
+                LiveDate = DateTime.UtcNow.AddHours(-2),
+                PageSize = 10,
+                DesiredStatuses = new List<VacancyStatus> { VacancyStatus.Live }
+            }, out totalResultsCount);
+
+            findResults.Should().HaveCount(0);
+            totalResultsCount.Should().Be(0);
+
+            findResults = readRepository.Find(new ApprenticeshipVacancyQuery
+            {
+                CurrentPage = 2,
+                LatestClosingDate = DateTime.UtcNow.AddDays(3),
+                LiveDate = DateTime.UtcNow.AddHours(2),
+                PageSize = 10,
+                DesiredStatuses = new List<VacancyStatus> { VacancyStatus.Live }
+            }, out totalResultsCount);
+
+            findResults.Should().HaveCount(0);
+            totalResultsCount.Should().Be(0);
         }
     }
 }

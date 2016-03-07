@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
 {
     using System;
+    using Domain.Entities.Raa.Locations;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Entities.Raa.Vacancies;
-    using Sql.Schemas.Vacancy.Entities;
+    using VacancyLocation = Sql.Schemas.Vacancy.Entities.VacancyLocation;
 
     [TestFixture]
     public class TestBase
@@ -15,7 +16,7 @@
         protected static readonly Guid VacancyIdVacancyA = Guid.NewGuid();
         protected const int VacancyReferenceNumberVacancyA = 1;
         protected const int FrameworkIdFramework1 = 1;
-        protected const string FramworkCodeNameFramework1 = "F01";
+        protected const string FramworkCodeNameFramework1 = "260";
         protected const int FrameworkIdFramework2 = 2;
         protected const int StandardIdStandard1 = 1;
         protected int VacancyReferenceNumber = 10;
@@ -56,20 +57,29 @@
                 .With(av => av.DateQAApproved, null)
                 .With(av => av.VacancyReferenceNumber, VacancyReferenceNumber++)
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
-                .With(av => av.ParentVacancyId, 0)
+                .With(av => av.ParentVacancyId, null)
+                .With(av => av.UpdatedDateTime, null)
                 .Create();
+
+            result.Address = new PostalAddress
+            {
+                Postcode = "CV1 2WT",
+                County = "CAM"
+            };
 
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;
                 result.FrameworkCodeName = FramworkCodeNameFramework1;
                 result.StandardId = null;
+                result.SectorCodeName = null;
             }
             else
             {
                 result.TrainingType = TrainingType.Standards;
                 result.FrameworkCodeName = null;
                 result.StandardId = StandardIdStandard1;
+                result.SectorCodeName = "ALB";
             }
 
             //result.ProviderSiteEmployerLink.Employer.Ern = "101";
