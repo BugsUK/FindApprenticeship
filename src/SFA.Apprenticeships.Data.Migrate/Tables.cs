@@ -230,7 +230,7 @@
             newRecord.ContractOwnerID         = null;
             newRecord.OriginalContractOwnerId = null;
 
-            newRecord.CreatedDateTime = _unixEpoc;
+            newRecord.CreatedDateTime = (object)_unixEpoc;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;

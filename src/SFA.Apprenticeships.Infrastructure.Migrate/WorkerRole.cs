@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate
                 options,
                 _logService,
                 genericSyncRepository,
-                tableSpec => new MutateTarget(_logService, genericSyncRepository, 5000, tableSpec),
+                tableSpec => new MutateTarget(_logService, genericSyncRepository, 1000, tableSpec),
                 tables
                 );
 
