@@ -137,8 +137,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
         public int SubmissionCount { get; set; }
-        //Id if the Provider User who created the vacancy
-        public int VacancyManagerId { get; set; }
+        public int? VacancyManagerId { get; set; }
         public int LastEditedById { get; set; }
         public int? ParentVacancyId { get; set; }
         public TrainingType TrainingType { get; set; }

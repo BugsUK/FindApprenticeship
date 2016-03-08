@@ -37,7 +37,6 @@
                     .With(av => av.DateStartedToQA, null)
                     .Create();
 
-
             // Act / Assert no exception
             x.Map<DomainVacancy, Vacancy>(vacancy);
         }
@@ -62,7 +61,6 @@
             var domainVacancy1 = new Fixture().Create<DomainVacancy>();
 
             // Act
-
             var databaseVacancy = mapper.Map<DomainVacancy, Vacancy>(domainVacancy1);
             var domainVacancy2 = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
@@ -79,7 +77,6 @@
             var domainVacancy1 = new Fixture().Create<DomainVacancy>();
 
             // Act
-
             var databaseVacancy = mapper.Map<DomainVacancy, Vacancy>(domainVacancy1);
             var domainVacancy2 = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 

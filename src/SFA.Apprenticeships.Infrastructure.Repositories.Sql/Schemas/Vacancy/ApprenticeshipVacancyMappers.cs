@@ -99,7 +99,7 @@
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
                 .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
-                .ForMember(v => v.VacancyManagerID, opt => opt.ResolveUsing<IntToNullableIntConverter>().FromMember(av => av.VacancyManagerId))
+                .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
@@ -173,7 +173,6 @@
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
                 .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
-                .ForMember(av => av.VacancyManagerId, opt => opt.ResolveUsing<NullableIntToIntConverter>().FromMember(av => av.VacancyManagerID))
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
@@ -189,7 +188,7 @@
                 .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .MapMemberFrom(av => av.EmployerWebsiteUrl, v => v.EmployersWebsite)
-                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID.Value)
+                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
                 .IgnoreMember(av => av.TrainingType)
                 .IgnoreMember(av => av.ApprenticeshipLevel)
                 .IgnoreMember(av => av.ApprenticeshipLevelComment)

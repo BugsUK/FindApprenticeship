@@ -18,6 +18,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
     using Infrastructure.Presentation;
@@ -957,7 +958,9 @@
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
-            var vacancyManager = _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
+
+            var vacancyManager = default(ProviderUser); // TODO: AG: _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
+
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
             viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName) ? vacancy.SectorCodeName : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;

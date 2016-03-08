@@ -7,7 +7,7 @@ using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests;
 using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Common;
 
 [SetUpFixture]
-public class TestAssemblySetsup
+public class TestAssemblySetup
 {
     [SetUp]
     public void RunBeforeAnyTestsInThisAssembly()
