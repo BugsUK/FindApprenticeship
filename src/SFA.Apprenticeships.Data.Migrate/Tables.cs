@@ -211,9 +211,15 @@
                 return false;
             }
 
+            var apprenticeshipType = 0;
+
             if (oldRecord == null)
             {
                 newRecord.VacancyGuid = (object)Guid.NewGuid();
+            }
+            else
+            {
+                apprenticeshipType = oldRecord.ApprenticeshipType;
             }
 
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
