@@ -18,6 +18,7 @@
     public class VacancyRepositoryTests : TestBase
     {
         private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
+        private readonly Mock<ILogService> _logger = new Mock<ILogService>();
         private IGetOpenConnection _connection;
 
         private Mock<IDateTimeService> _dateTimeService;
@@ -29,6 +30,11 @@
                 new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             _dateTimeService = new Mock<IDateTimeService>();
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
             _dateTimeService.Setup(d => d.MinValue).Returns(DateTime.MinValue);
             _dateTimeService.Setup(d => d.UtcNow).Returns(DateTime.UtcNow);
         }
@@ -36,12 +42,10 @@
         [Test, Category("Integration")]
         public void SimpleGetTest()
         {
-            var logger = new Mock<ILogService>();
-            
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, _logger.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, _logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -62,7 +66,6 @@
             vacancy.OwnerPartyId = 1;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
-
 
             writeRepository.Create(vacancy);
 
@@ -87,11 +90,56 @@
         }
 
         [Test, Category("Integration")]
+        public void CreatedDateTimeTest()
+        {
+            var now = new DateTime(2016, 3, 16);
+            _dateTimeService.Setup(ds => ds.UtcNow).Returns(now);
+
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+
+            const string title = "Vacancy title";
+            var vacancyGuid = Guid.NewGuid();
+
+            var fixture = new Fixture();
+            fixture.Customizations.Add(
+                new StringGenerator(() =>
+                    Guid.NewGuid().ToString().Substring(0, 10)));
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyGuid = vacancyGuid;
+            vacancy.Title = title;
+            vacancy.Status = VacancyStatus.Draft;
+            // Changed from PendingQA to Draft because PendingQA is not still in the db
+            vacancy.VacancyManagerId = 1;
+            vacancy.Address.Postcode = "CV1 2WT";
+            vacancy.Address.County = "CAM";
+            vacancy.OwnerPartyId = 1;
+            vacancy.FrameworkCodeName = null;
+            vacancy.SectorCodeName = "ALB";
+
+            vacancy = writeRepository.Create(vacancy);
+            vacancy.Status = VacancyStatus.Submitted;
+            vacancy = writeRepository.Update(vacancy);
+            vacancy.Status = VacancyStatus.Referred;
+            vacancy = writeRepository.Update(vacancy);
+            vacancy.Status = VacancyStatus.Submitted;
+            vacancy = writeRepository.Update(vacancy);
+            vacancy.Status = VacancyStatus.Live;
+            vacancy = writeRepository.Update(vacancy);
+
+            var entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
+
+            entity.CreatedDateTime.Should().Be(now);
+        }
+
+        [Test, Category("Integration")]
         public void SimpleSaveAndUpdateTest()
         {
-            var logger = new Mock<ILogService>();
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, _logger.Object);
             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -123,12 +171,10 @@
         [Test, Category("Integration")]
         public void FindTest()
         {
-            var logger = new Mock<ILogService>();
-
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, _logger.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, logger.Object);
+                _dateTimeService.Object, _logger.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();

@@ -114,6 +114,7 @@
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
+            MapCreatedDateTime(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
@@ -301,6 +302,22 @@ order by HistoryDate desc
                 {
                     VacancyId = dbVacancy.VacancyId,
                     VacancyStatus = VacancyStatus.Submitted
+                }
+                ).SingleOrDefault();
+        }
+
+        private void MapCreatedDateTime(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.CreatedDateTime = _getOpenConnection.Query<DateTime>(@"
+select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Draft
                 }
                 ).SingleOrDefault();
         }

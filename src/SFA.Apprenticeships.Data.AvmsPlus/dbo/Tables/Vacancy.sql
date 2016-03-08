@@ -67,7 +67,6 @@
 	[TrainingTypeId]				   INT				NULL,
 	[VacancyTypeId]					   INT				NULL,
 	[SectorId]						   INT				NULL,
-	[CreatedDateTime]				   DATETIME			NOT NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
 	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0
 	
@@ -81,8 +80,8 @@
     CONSTRAINT [FK_Vacancy_MasterVacancyId] FOREIGN KEY ([MasterVacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]),
     CONSTRAINT [FK_Vacancy_Provider_As_ContractOwner] FOREIGN KEY ([ContractOwnerID]) REFERENCES [dbo].[Provider] ([ProviderID]),
     CONSTRAINT [FK_Vacancy_ProviderSite_As_DeliveryOrg] FOREIGN KEY ([DeliveryOrganisationID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
-    CONSTRAINT [FK_Vacancy_ProviderSite_As_VacancyManager] FOREIGN KEY ([VacancyManagerID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
-    -- RESTORE THIS CONSTRAINT [FK_Vacancy_VacancyOwnerRelationship] FOREIGN KEY ([VacancyOwnerRelationshipId]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]),
+    -- RESTORE THIS AFTER MIGRATION -> CONSTRAINT [FK_Vacancy_ProviderSite_As_VacancyManager] FOREIGN KEY ([VacancyManagerID]) REFERENCES [dbo].[ProviderSite] ([ProviderSiteID]),
+    -- RESTORE THIS -> CONSTRAINT [FK_Vacancy_VacancyOwnerRelationship] FOREIGN KEY ([VacancyOwnerRelationshipId]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]),
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
 	CONSTRAINT [FK_Vacancy_DurationType] FOREIGN KEY ([DurationTypeId]) REFERENCES [dbo].[DurationType] ([DurationTypeId]),
     CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
