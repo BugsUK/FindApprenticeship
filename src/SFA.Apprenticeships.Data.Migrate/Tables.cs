@@ -20,6 +20,12 @@
 
         private readonly DateTime _unixEpoc = new DateTime(1970, 01, 01);
 
+        private const int ApprenticeshipTypeUnknown = 0;
+        private const int ApprenticeshipTypeTraineeship = 1;
+        private const int VacancyTypeUnknown = 0;
+        private const int VacancyTypeApprenticeship = 1;
+        private const int VacancyTypeTraineeship = 2;
+
         public AvmsToAvmsPlusTables(ILogService log, IAvmsSyncRespository avmsSyncRepository, bool full = true)
         {
             _log = log;
@@ -211,7 +217,7 @@
                 return false;
             }
 
-            var apprenticeshipType = 0;
+            var vacancyTypeId = VacancyTypeUnknown;
 
             if (oldRecord == null)
             {
@@ -219,8 +225,14 @@
             }
             else
             {
-                apprenticeshipType = oldRecord.ApprenticeshipType;
+                var apprenticeshipType = oldRecord.ApprenticeshipType;
+                if (apprenticeshipType != ApprenticeshipTypeUnknown)
+                {
+                    vacancyTypeId = apprenticeshipType == ApprenticeshipTypeTraineeship ? VacancyTypeTraineeship : VacancyTypeApprenticeship;
+                }
             }
+
+            newRecord.VacancyTypeId = (object) vacancyTypeId;
 
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
 
