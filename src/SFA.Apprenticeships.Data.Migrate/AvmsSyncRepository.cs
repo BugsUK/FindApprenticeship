@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Data.Migrate
     using Dapper;
     using System.Collections.Generic;
     using SFA.Infrastructure.Interfaces;
+    using System.Linq;
 
     public class AvmsSyncRespository : IAvmsSyncRespository
     {
@@ -55,6 +56,51 @@ namespace SFA.Apprenticeships.Data.Migrate
             }
 
             return _vacancyOwnerRelationshipsOwnedByUs.Contains(vacancyOwnerRelationshipId);
+        }
+
+        public AnonDetail GetAnonymousDetails(int id)
+        {
+            // male,England/Wales,Mr.,Luke,C,Cox,"80 Winchester Rd",MESSING,,"CO5 5GX","United Kingdom",LukeCox@armyspy.com,"078 6922 5444",Nicholls,2/22/1990
+            return new AnonDetail()
+            {
+                Gender = "male",
+                Title = "Mr.",
+                GivenName = "Luke",
+                MiddleInitial = "C",
+                Surname = "Cox",
+                StreetAddress = "80 Winchester Rd",
+                City = "MESSING",
+                ZipCode = "CO5 5GX",
+                CountryFull = "United Kingdom",
+                EmailAddress = "LukeCox@armyspy.com",
+                TelephoneNumber = "078 6922 5444",
+                MothersMaiden = "Nicholls",
+                Birthday = "2/22/1990"
+            };
+
+            /*
+            return _fakeNameDatabase.QueryCachedDictionary<int, AnonDetail>(TimeSpan.FromHours(1),
+                "SELECT * FROM FakeNameGeneratorDetails")
+            */
+        }
+
+        public IDictionary<string,int> GetPersonTitleTypeIdsByTitleFullName()
+        {
+            return new Dictionary<string, int>()
+            {
+                { "Mr", 1 },
+                { "Ms", 2 },
+                { "Miss", 3 },
+                { "Mrs", 4 },
+                { "Master", 5 },
+
+            };
+
+            /*
+            return _targetDatabase.QueryCachedDictionary<string, int>(TimeSpan.FromHours(1),
+                "SELECT FullName, PersonTitleTypeId FROM PersonTitleType WHERE PersonTitleTypeId NOT IN (0, 6)")
+                .ToDictionary(v => (string)v.FullName, v => (int)v.PersonTitleTypeId);
+            */
         }
     }
 }

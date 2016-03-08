@@ -19,7 +19,7 @@
         private List<dynamic> _toUpdate;
 
         private int _insertCount;
-        private int _updateCount;
+        public int NumberOfUpdates { get; private set; }
         private int _unchangedCount;
 
         public MutateTarget(ILogService log, IGenericSyncRespository syncRepository, int maxBatchSize, ITableDetails tableDetails)
@@ -33,7 +33,7 @@
             _toUpdate = new List<dynamic>();
 
             _insertCount = 0;
-            _updateCount = 0;
+            NumberOfUpdates = 0;
             _unchangedCount = 0;
         }
 
@@ -51,7 +51,7 @@
             //if (_maxBatchSize == 1)
             //    _log.Debug($"Queuing for update: {record}");
             _toUpdate.Add(record);
-            _updateCount++;
+            NumberOfUpdates++;
             FlushUpdate(false);
         }
         public void NoChange(dynamic record)
@@ -120,7 +120,7 @@
         {
             FlushInsert(true);
             FlushUpdate(true);
-            _log.Info($"Summary for {_tableDetails.Name}: {_insertCount} inserts, {_updateCount} updates, {_unchangedCount} unchanged");
+            _log.Info($"Summary for {_tableDetails.Name}: {_insertCount} inserts, {NumberOfUpdates} updates, {_unchangedCount} unchanged");
         }
 
     }
