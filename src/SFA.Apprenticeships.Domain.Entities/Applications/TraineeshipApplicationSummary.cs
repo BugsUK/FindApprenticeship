@@ -2,5 +2,9 @@
 {
     public class TraineeshipApplicationSummary : ApplicationSummary
     {
+        public TraineeshipApplicationSummary()
+        {
+            Status = ApplicationStatuses.Submitted;
+        }
     }
 }

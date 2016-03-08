@@ -3,15 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Domain.Entities.Providers;
-    using Domain.Interfaces.Repositories;
     using Common;
     using Common.Configuration;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
+    using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class ProviderSiteRepository : GenericMongoClient<MongoProviderSite>, IProviderSiteReadRepository, IProviderSiteWriteRepository
+    public class ProviderSiteRepository : GenericMongoClient2<MongoProviderSite>, IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -24,11 +25,20 @@
             _logger = logger;
         }
 
-        public ProviderSite Get(Guid id)
+        public ProviderSite Get(int providerSiteId)
         {
-            _logger.Debug("Called Mongodb to get provider site with Id={0}", id);
+            _logger.Debug("Called Mongodb to get provider site with Id={0}", providerSiteId);
 
-            var mongoEntity = Collection.FindOneById(id);
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.ProviderSiteId, providerSiteId));
+
+            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+        }
+
+        public ProviderSite GetByEdsUrn(string edsUrn)
+        {
+            _logger.Debug("Called Mongodb to get provider site with ERN={0}", edsUrn);
+
+            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.EdsUrn, edsUrn));
 
             return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
         }
@@ -47,29 +57,28 @@
             return entities;
         }
 
-        public ProviderSite Get(string ern)
+        public IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
         {
-            _logger.Debug("Called Mongodb to get provider site with ERN={0}", ern);
+            var mongoEntities = Collection.Find(Query.In("ProviderSiteId", new BsonArray(providerSiteIds)));
 
-            var mongoEntity = Collection.FindOne(Query<ProviderSite>.EQ(ps => ps.Ern, ern));
-
-            return mongoEntity == null ? null : _mapper.Map<MongoProviderSite, ProviderSite>(mongoEntity);
+            return mongoEntities.Select(e => _mapper.Map<MongoProviderSite, ProviderSite>(e)).ToList();
         }
 
-        public void Delete(Guid id)
+        public void Delete(int providerSiteId)
         {
-            _logger.Debug("Calling repository to delete provider site with Id={0}", id);
+            _logger.Debug("Calling repository to delete provider site with Id={0}", providerSiteId);
 
-            Collection.Remove(Query<MongoProviderSite>.EQ(o => o.Id, id));
+            Collection.Remove(Query<MongoProviderSite>.EQ(o => o.ProviderSiteId, providerSiteId));
 
-            _logger.Debug("Deleted provider with Id={0}", id);
+            _logger.Debug("Deleted provider with Id={0}", providerSiteId);
         }
 
         public ProviderSite Save(ProviderSite entity)
         {
             _logger.Debug("Called Mongodb to save provider site for provider with UKPRN={0}", entity.Ukprn);
 
-            UpdateEntityTimestamps(entity);
+            SetCreatedDateTime(entity);
+            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<ProviderSite, MongoProviderSite>(entity);
 

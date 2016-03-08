@@ -10,6 +10,7 @@
     using Raa.Common.ViewModels.Provider;
     using Constants;
     using Domain.Entities;
+    using Domain.Entities.Raa;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
@@ -96,9 +97,9 @@
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
-        public ActionResult EditSite(string ern)
+        public ActionResult EditSite(string edsUrn)
         {
-            var response = _providerMediator.GetSite(User.GetUkprn(), ern);
+            var response = _providerMediator.GetSite(User.GetUkprn(), edsUrn);
             var providerSiteViewModel = response.ViewModel;
 
             return View(providerSiteViewModel);
@@ -116,7 +117,7 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case ProviderMediatorCodes.UpdateSite.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new { ern = response.ViewModel.Ern });
+                    return RedirectToRoute(RecruitmentRouteNames.EditProviderSite, new { providerSiteId = response.ViewModel.ProviderSiteId });
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

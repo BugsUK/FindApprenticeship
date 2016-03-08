@@ -3,11 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Vacancies;
-    using Application.Vacancies.Entities.SiteMap;
+    using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancies.Entities.SiteMap;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Vacancy;

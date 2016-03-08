@@ -1,336 +1,34 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Principal;
     using System.Threading;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Application.Interfaces.VacancyPosting;
+    using Configuration;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
-    using SFA.Infrastructure.Interfaces;
-    using Domain.Interfaces.Repositories;
     using FluentAssertions;
+    using Manage.UnitTests.Providers.VacancyProvider;
     using Moq;
+    using Moq.Language.Flow;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Application.Interfaces.VacancyPosting;
-    using Common.Configuration;
-    using Common.ViewModels;
-    using Domain.Entities.Locations;
-    using Moq.Language.Flow;
-    using Raa.Common.Configuration;
-    using Raa.Common.ViewModels.Vacancy;
+    using SFA.Infrastructure.Interfaces;
+    using ViewModels.Vacancy;
+    using Web.Common.Configuration;
+    using Web.Common.ViewModels;
 
     [TestFixture]
     public class VacancyProviderTests
     {
-        const int QAVacancyTimeout = 10;
-
-        [Test]
-        public void UpdateVacancyBasicDetailsWithComments()
-        {
-            //Arrange
-            const string ukprn = "ukprn";
-
-            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>().Create();
-
-            var sectorList = new List<Sector>()
-            {
-                new Fixture().Build<Sector>().Create()
-            };
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-            var referenceDataService = new Mock<IReferenceDataService>();
-            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
-            
-            //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
-            vacancyPostingService.Setup(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value)).Returns(
-                (long refNo) =>
-                {
-                    return new Fixture().Build<ApprenticeshipVacancy>()
-                        .With(av => av.VacancyReferenceNumber, newVacancyVM.VacancyReferenceNumber.Value)
-                        .With(av => av.OfflineApplicationInstructionsComment, Guid.NewGuid().ToString())
-                        .With(av => av.OfflineApplicationUrlComment, Guid.NewGuid().ToString())
-                        .With(av => av.ShortDescriptionComment, Guid.NewGuid().ToString())
-                        .With(av => av.TitleComment, Guid.NewGuid().ToString())
-                        .With(av => av.OfflineApplicationUrl, string.Format("http://www.google.com/{0}", Guid.NewGuid()))
-                        .With(av => av.OfflineApplicationInstructions, Guid.NewGuid().ToString())
-                        .With(av => av.ShortDescription, Guid.NewGuid().ToString())
-                        .With(av => av.Title, Guid.NewGuid().ToString())
-                        .Create();
-                });
-
-            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns((ApprenticeshipVacancy av) => av );
-
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<ApprenticeshipVacancy, NewVacancyViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => newVacancyVM);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .With(referenceDataService)
-                    .With(mapper)
-                    .Build();
-
-            //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
-
-            //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
-            result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
-            result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
-            result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
-            result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
-            result.TitleComment.Should().Be(newVacancyVM.TitleComment);
-            result.OfflineApplicationInstructions.Should().Be(newVacancyVM.OfflineApplicationInstructions);
-            result.OfflineApplicationUrl.Should().Be(newVacancyVM.OfflineApplicationUrl);
-            result.ShortDescription.Should().Be(newVacancyVM.ShortDescription);
-            result.Title.Should().Be(newVacancyVM.Title);
-        }
-
-        [Test]
-        public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
-        {
-            //Arrange
-            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.VacancyReferenceNumber, null)
-                .Create();
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .Build();
-
-            //Act
-            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
-
-            //Assert
-            action.ShouldThrow<ArgumentNullException>();
-        }
-
-        [Test]
-        public void UpdateTrainingDetailsWithComments()
-        {
-            //Arrange
-            const string ukprn = "ukprn";
-
-            var trainingDetailsViewModel = new Fixture().Build<TrainingDetailsViewModel>().Create();
-
-            var sectorList = new List<Sector>()
-            {
-                new Fixture().Build<Sector>().Create()
-            };
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-            var referenceDataService = new Mock<IReferenceDataService>();
-            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
-
-            //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
-            vacancyPostingService.Setup(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value)).Returns(
-                (long refNo) =>
-                {
-                    return new Fixture().Build<ApprenticeshipVacancy>()
-                        .With(av => av.VacancyReferenceNumber, trainingDetailsViewModel.VacancyReferenceNumber.Value)
-                        .With(av => av.ApprenticeshipLevelComment, Guid.NewGuid().ToString())
-                        .With(av => av.FrameworkCodeNameComment, Guid.NewGuid().ToString())
-                        .With(av => av.ApprenticeshipLevel, trainingDetailsViewModel.ApprenticeshipLevel)
-                        .With(av => av.FrameworkCodeName, Guid.NewGuid().ToString())
-                        .With(av => av.StandardIdComment, Guid.NewGuid().ToString())
-                        .With(av => av.StandardId, null)
-                        .Create();
-                });
-
-            vacancyPostingService.Setup(vps => vps.SaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns((ApprenticeshipVacancy av) => av);
-
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<ApprenticeshipVacancy, TrainingDetailsViewModel>(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns((ApprenticeshipVacancy av) => trainingDetailsViewModel);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .With(referenceDataService)
-                    .With(mapper)
-                    .Build();
-
-            //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(trainingDetailsViewModel);
-
-            //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(trainingDetailsViewModel.VacancyReferenceNumber.Value), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
-            result.VacancyReferenceNumber.Should().Be(trainingDetailsViewModel.VacancyReferenceNumber);
-            result.ApprenticeshipLevelComment.Should().Be(trainingDetailsViewModel.ApprenticeshipLevelComment);
-            result.FrameworkCodeNameComment.Should().Be(trainingDetailsViewModel.FrameworkCodeNameComment);
-            result.StandardIdComment.Should().Be(trainingDetailsViewModel.StandardIdComment);
-            result.StandardId.Should().Be(trainingDetailsViewModel.StandardId);
-            result.ApprenticeshipLevel.Should().Be(trainingDetailsViewModel.ApprenticeshipLevel);
-            result.FrameworkCodeName.Should().Be(trainingDetailsViewModel.FrameworkCodeName);
-        }
-
-        [Test]
-        public void UpdateVacancyRequirementsAndProspectsWithComments()
-        {
-            //Arrange
-            var vacancyVm = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
-                .Create();
-
-            var appVacancy = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(x => x.VacancyReferenceNumber, vacancyVm.VacancyReferenceNumber)
-                .With(x => x.Status, ProviderVacancyStatuses.PendingQA)
-                .Create();
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            vacancyPostingService.Setup(
-                vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
-
-            vacancyPostingService.Setup(vps => vps.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>())).Returns(appVacancy);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .Build();
-
-            //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(vacancyVm);
-
-            //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancy(vacancyVm.VacancyReferenceNumber), Times.Once);
-            vacancyPostingService.Verify(vps => vps.ShallowSaveApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
-            result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
-            result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
-            result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
-            result.DesiredSkills.Should().Be(vacancyVm.DesiredSkills);
-            result.DesiredSkillsComment.Should().Be(vacancyVm.DesiredSkillsComment);
-            result.FutureProspectsComment.Should().Be(vacancyVm.FutureProspectsComment);
-            result.FutureProspects.Should().Be(vacancyVm.FutureProspects);
-            result.PersonalQualitiesComment.Should().Be(vacancyVm.PersonalQualitiesComment);
-            result.PersonalQualities.Should().Be(vacancyVm.PersonalQualities);
-            result.ThingsToConsiderComment.Should().Be(vacancyVm.ThingsToConsiderComment);
-            result.ThingsToConsider.Should().Be(vacancyVm.ThingsToConsider);
-        }
-
-        [Test]
-        public void GetVacanciesPendingQAShouldCallRepositoryWithPendingQAAsDesiredStatus()
-        {
-            //Arrange
-            var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
-                .Returns(new List<ApprenticeshipVacancy>
-                {
-                    new ApprenticeshipVacancy
-                    {
-                        ClosingDate = DateTime.Now,
-                        DateSubmitted = DateTime.Now,
-                        ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                        {
-                            Employer = new Employer()
-                        },
-                        Ukprn = ukprn,
-                        Status = ProviderVacancyStatuses.PendingQA
-                    }
-                });
-
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
-
-            var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(providerService)
-                    .With(vacancyPostingService)
-                    .With(configurationService)
-                    .Build();
-
-            //Act
-            vacancyProvider.GetPendingQAVacancies();
-
-            //Assert
-            vacancyPostingService.Verify(avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA));
-            providerService.Verify(ps => ps.GetProvider(ukprn), Times.Once);
-        }
-
-        [Test]
-        public void ApproveVacancy()
-        {
-            //Arrange
-            long vacancyReferenceNumber = 1;
-            var vacancy = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.LocationAddresses, null)
-                .Create();
-
-            var configurationService = new Mock<IConfigurationService>();
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
-            var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(configurationService)
-                    .With(vacancyPostingService)
-                    .Build();
-
-            //Act
-            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
-
-            //Assert
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
-            vacancyPostingService.Verify(
-                r =>
-                    r.ShallowSaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(
-                            av =>
-                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == ProviderVacancyStatuses.Live)));
-        }
+        private const int QAVacancyTimeout = 10;
 
         [TestCase(1)]
         [TestCase(10)]
@@ -338,23 +36,26 @@
         public void ApproveMultilocationVacancy(int locationAddressCount)
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
-            var locationAddresses = new Fixture().Build<VacancyLocationAddress>()
+            var vacancyReferenceNumber = 1;
+            var parentVacancyId = 2;
+            var locationAddresses = new Fixture().Build<VacancyLocation>()
                 .CreateMany(locationAddressCount).ToList();
 
-            var vacancy = new Fixture().Build<ApprenticeshipVacancy>()
+            var vacancy = new Fixture().Build<Vacancy>()
                 .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
-                .With(x => x.LocationAddresses, locationAddresses)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, false)
+                .With(x=> x.VacancyId, parentVacancyId)
                 .Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
 
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber))
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber))
                 .Returns(vacancy);
+            vacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(locationAddresses);
 
             //set up so that a bunch of vacancy reference numbers are created that are not the same as the one supplied above
-            var fixture = new Fixture {RepeatCount = locationAddressCount};
-            var vacancyNumbers = fixture.Create<List<long>>();
+            var fixture = new Fixture {RepeatCount = locationAddressCount - 1};
+            var vacancyNumbers = fixture.Create<List<int>>();
             vacancyPostingService.Setup(r => r.GetNextVacancyReferenceNumber()).ReturnsInOrder(vacancyNumbers.ToArray());
 
             var vacancyProvider =
@@ -367,82 +68,313 @@
 
             //Assert
             //get the submitted vacancy once
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber), Times.Once);
-            //save the original vacancy with a status of ParentVacancy
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber), Times.Once);
+            //save the original vacancy with a status of Live and itself as a parent vacancy
             vacancyPostingService.Verify(
                 r =>
-                    r.ShallowSaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(
+                    r.UpdateVacancy(
+                        It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == ProviderVacancyStatuses.ParentVacancy)));
+                                av.Status == VacancyStatus.Live &&
+                                av.ParentVacancyId == parentVacancyId &&
+                                av.IsEmployerLocationMainApprenticeshipLocation.Value &&
+                                av.Address.Postcode == locationAddresses.First().Address.Postcode &&
+                                av.Address.AddressLine1 == locationAddresses.First().Address.AddressLine1 &&
+                                av.Address.AddressLine2 == locationAddresses.First().Address.AddressLine2 &&
+                                av.Address.AddressLine3 == locationAddresses.First().Address.AddressLine3 &&
+                                av.Address.AddressLine4 == locationAddresses.First().Address.AddressLine4 &&
+                                av.Address.AddressLine5 == locationAddresses.First().Address.AddressLine5 &&
+                                av.NumberOfPositions == locationAddresses.First().NumberOfPositions)));
 
             //save new vacancies with a status of Live
             foreach (var number in vacancyNumbers)
             {
                 vacancyPostingService.Verify(r =>
-                    r.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av => av.VacancyReferenceNumber == number
-                    && av.Status == ProviderVacancyStatuses.Live)), Times.Once);
+                    r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
+                                                                       && av.Status == VacancyStatus.Live &&
+                                                                       av.ParentVacancyId ==
+                                                                       parentVacancyId &&
+                                                                       av.IsEmployerLocationMainApprenticeshipLocation
+                                                                           .Value)), Times.Once);
             }
 
             //save new vacancies with only one of the new addresses and the position count
-            foreach (var location in locationAddresses)
+            foreach (var location in locationAddresses.Skip(1))
             {
-                vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<ApprenticeshipVacancy>(av
-                    => av.LocationAddresses.Single().Address.Postcode == location.Address.Postcode
-                       && av.LocationAddresses.Single().Address.AddressLine1 == location.Address.AddressLine1
-                       && av.LocationAddresses.Single().Address.AddressLine2 == location.Address.AddressLine2
-                       && av.LocationAddresses.Single().Address.AddressLine3 == location.Address.AddressLine3
-                       && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
-                       && av.LocationAddresses.Single().Address.AddressLine4 == location.Address.AddressLine4
-                       && av.LocationAddresses.Single().NumberOfPositions == location.NumberOfPositions
-                       && av.Status == ProviderVacancyStatuses.Live
-                       && av.ParentVacancyReferenceNumber == vacancyReferenceNumber
+                vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av
+                    => av.Address.Postcode == location.Address.Postcode
+                       && av.Address.AddressLine1 == location.Address.AddressLine1
+                       && av.Address.AddressLine2 == location.Address.AddressLine2
+                       && av.Address.AddressLine3 == location.Address.AddressLine3
+                       && av.Address.AddressLine4 == location.Address.AddressLine4
+                       && av.Address.AddressLine5 == location.Address.AddressLine5
                        && av.NumberOfPositions == location.NumberOfPositions)));
             }
 
             //save the submitted vacancy once
-            vacancyPostingService.Verify( r => r.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Once);
-            
+            vacancyPostingService.Verify(r => r.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
+
             //Create each child vacancy once
-            vacancyPostingService.Verify( r => r.CreateApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()), Times.Exactly(locationAddressCount));
+            vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()),
+                Times.Exactly(locationAddressCount - 1));
+
+            vacancyPostingService.Verify(s => s.DeleteVacancyLocationsFor(vacancy.VacancyId));
+        }
+
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        {
+            return new FurtherVacancyDetailsViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
+                },
+                Duration = 3,
+                DurationType = DurationType.Years,
+                LongDescription = "A description",
+                WageType = WageType.ApprenticeshipMinimumWage,
+                HoursPerWeek = 30,
+                WorkingWeek = "A working week"
+            };
         }
 
         [Test]
-        public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
+        public void ApproveVacancy()
         {
             //Arrange
-            long vacancyReferenceNumber = 1;
-            var vacancy = new ApprenticeshipVacancy
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
+            var vacancyReferenceNumber = 1;
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .Create();
 
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
             var configurationService = new Mock<IConfigurationService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            vacancyPostingService.Setup(r => r.GetVacancy(vacancyReferenceNumber)).Returns(vacancy);
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
+                new VacancyProviderBuilder()
                     .With(configurationService)
                     .With(vacancyPostingService)
                     .Build();
 
             //Act
-            vacancyProvider.RejectVacancy(vacancyReferenceNumber);
+            vacancyProvider.ApproveVacancy(vacancyReferenceNumber);
 
             //Assert
-            vacancyPostingService.Verify(r => r.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
-                    r.ShallowSaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(
+                    r.UpdateVacancy(
+                        It.Is<Vacancy>(
                             av =>
                                 av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == ProviderVacancyStatuses.RejectedByQA &&
-                                av.QAUserName == null)));
+                                av.Status == VacancyStatus.Live)));
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldReturnAllVacancies()
+        {
+            //Arrange
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            const int ownerPartyId = 42;
+            const int vacancyReferenceNumberOk = 1;
+            const int vacancyReferenceNumberNonOk = 2;
+            const string username = "qa@test.com";
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+
+            var apprenticeshipVacancies = new List<Vacancy>
+            {
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = ownerPartyId,
+                    VacancyReferenceNumber = vacancyReferenceNumberOk,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = DateTime.UtcNow
+                },
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = ownerPartyId,
+                    VacancyReferenceNumber = vacancyReferenceNumberNonOk,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = "qa1@test.com",
+                    DateStartedToQA = DateTime.UtcNow
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .With(configurationService)
+                    .Build();
+
+            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+
+            //Act
+            var vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(2);
+            vacancies.Count(v => v.CanBeReservedForQaByCurrentUser).Should().Be(1);
+            vacancies.Count(v => !v.CanBeReservedForQaByCurrentUser).Should().Be(1);
+            vacancies.Single(v => v.CanBeReservedForQaByCurrentUser)
+                .VacancyReferenceNumber.Should()
+                .Be(vacancyReferenceNumberOk);
+            vacancies.Single(v => !v.CanBeReservedForQaByCurrentUser)
+                .VacancyReferenceNumber.Should()
+                .Be(vacancyReferenceNumberNonOk);
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesShouldNotReturnVacanciesWithQADateBeforeTimeout()
+        {
+            //Arrange
+            const int greaterThanTimeout = 20;
+            const int lesserThanTimeout = 2;
+            const int ownerPartyId = 42;
+            const int vacancyReferenceNumberOk = 1;
+            const int vacancyReferenceNumberNonOk = 2;
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var timeService = new Mock<IDateTimeService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+            timeService.Setup(ts => ts.UtcNow).Returns(DateTime.UtcNow);
+            var apprenticeshipVacancies = new List<Vacancy>
+            {
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = ownerPartyId,
+                    VacancyReferenceNumber = vacancyReferenceNumberOk,
+                    QAUserName = "someUserName",
+                    DateStartedToQA = DateTime.UtcNow.AddMinutes(-greaterThanTimeout),
+                    Status = VacancyStatus.ReservedForQA
+                },
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = 42,
+                    VacancyReferenceNumber = vacancyReferenceNumberNonOk,
+                    QAUserName = "someUserName",
+                    DateStartedToQA = DateTime.UtcNow.AddMinutes(-lesserThanTimeout),
+                    Status = VacancyStatus.ReservedForQA
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(timeService)
+                    .With(vacancyPostingService)
+                    .With(configurationService)
+                    .Build();
+
+            //Act
+            var vacancies = vacancyProvider.GetPendingQAVacancies();
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+            vacancies.First().VacancyReferenceNumber.Should().Be(vacancyReferenceNumberOk);
+            configurationService.Verify(x => x.Get<ManageWebConfiguration>());
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesShouldReturnVacanciesWithCurrentUsersQAUserName()
+        {
+            //Arrange
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            const int ownerPartyId = 42;
+            const int vacancyReferenceNumberOk = 1;
+            const int vacancyReferenceNumberNonOk = 2;
+            const string username = "qa@test.com";
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+
+            var apprenticeshipVacancies = new List<Vacancy>
+            {
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = ownerPartyId,
+                    VacancyReferenceNumber = vacancyReferenceNumberOk,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = DateTime.UtcNow
+                },
+                new Vacancy
+                {
+                    ClosingDate = DateTime.Now,
+                    DateSubmitted = DateTime.Now,
+                    OwnerPartyId = ownerPartyId,
+                    VacancyReferenceNumber = vacancyReferenceNumberNonOk,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = "qa1@test.com",
+                    DateStartedToQA = DateTime.UtcNow
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(configurationService)
+                    .With(vacancyPostingService)
+                    .Build();
+
+            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
+
+            //Act
+            var vacancies = vacancyProvider.GetPendingQAVacancies();
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+            vacancies.First().VacancyReferenceNumber.Should().Be(vacancyReferenceNumberOk);
         }
 
         [Test]
@@ -451,35 +383,31 @@
             //Arrange
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
+            const int ownerPartyId = 42;
             const int vacancyReferenceNumber = 1;
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
+            var apprenticeshipVacancies = new List<Vacancy>
             {
-                new ApprenticeshipVacancy
+                new Vacancy
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
+                    OwnerPartyId = ownerPartyId,
                     VacancyReferenceNumber = vacancyReferenceNumber,
-                    Status = ProviderVacancyStatuses.PendingQA
+                    Status = VacancyStatus.Submitted
                 }
             };
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
                 .Returns(apprenticeshipVacancies);
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -497,256 +425,118 @@
         }
 
         [Test]
-        public void GetPendingQAVacanciesShouldReturnVacanciesWithCurrentUsersQAUserName()
+        public void GetVacanciesPendingQAShouldCallRepositoryWithPendingQAAsDesiredStatus()
         {
             //Arrange
-            var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
-            const int vacancyReferenceNumberOK = 1;
-            const int vacancyReferenceNumberNonOK = 2;
-            const string username = "qa@test.com";
+            const int ownerPartyId = 42;
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
-            {
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberOK,
-                    Status = ProviderVacancyStatuses.ReservedForQA,
-                    QAUserName = username,
-                    DateStartedToQA = DateTime.UtcNow
-                },
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberNonOK,
-                    Status = ProviderVacancyStatuses.ReservedForQA,
-                    QAUserName = "qa1@test.com",
-                    DateStartedToQA = DateTime.UtcNow
-                }
-            };
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
             vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
-                .Returns(apprenticeshipVacancies);
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(new List<Vacancy>
+                {
+                    new Vacancy
+                    {
+                        ClosingDate = DateTime.Now,
+                        DateSubmitted = DateTime.Now,
+                        OwnerPartyId = ownerPartyId,
+                        Status = VacancyStatus.Submitted
+                    }
+                });
 
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(ownerPartyId)).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
                     .With(providerService)
-                    .With(configurationService)
                     .With(vacancyPostingService)
+                    .With(configurationService)
                     .Build();
 
-            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
-
             //Act
-            var vacancies = vacancyProvider.GetPendingQAVacancies();
+            vacancyProvider.GetPendingQAVacancies();
 
             //Assert
-            vacancies.Should().HaveCount(1);
-            vacancies.First().VacancyReferenceNumber.Should().Be(vacancyReferenceNumberOK);
+            vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
+            providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
 
         [Test]
-        public void GetPendingQAVacanciesOverviewShouldReturnAllVacancies()
+        public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
         {
             //Arrange
-            var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            const string ukprn = "ukprn";
-            const int vacancyReferenceNumberOK = 1;
-            const int vacancyReferenceNumberNonOK = 2;
-            const string username = "qa@test.com";
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-
-            var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
+            var vacancyReferenceNumber = 1;
+            var vacancy = new Vacancy
             {
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberOK,
-                    Status = ProviderVacancyStatuses.ReservedForQA,
-                    QAUserName = username,
-                    DateStartedToQA = DateTime.UtcNow
-                },
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberNonOK,
-                    Status = ProviderVacancyStatuses.ReservedForQA,
-                    QAUserName = "qa1@test.com",
-                    DateStartedToQA = DateTime.UtcNow
-                }
+                VacancyReferenceNumber = vacancyReferenceNumber
             };
 
-            vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
-                .Returns(apprenticeshipVacancies);
-
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
-
-            var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(providerService)
-                    .With(vacancyPostingService)
-                    .With(configurationService)
-                    .Build();
-
-            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
-
-            //Act
-            var vacancies = vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies;
-
-            //Assert
-            vacancies.Should().HaveCount(2);
-            vacancies.Count(v => v.CanBeReservedForQaByCurrentUser).Should().Be(1);
-            vacancies.Count(v => !v.CanBeReservedForQaByCurrentUser).Should().Be(1);
-            vacancies.Single(v => v.CanBeReservedForQaByCurrentUser).VacancyReferenceNumber.Should().Be(vacancyReferenceNumberOK);
-            vacancies.Single(v => !v.CanBeReservedForQaByCurrentUser).VacancyReferenceNumber.Should().Be(vacancyReferenceNumberNonOK);
-        }
-
-        [Test]
-        public void GetPendingQAVacanciesShouldNotReturnVacanciesWithQADateBeforeTimeout()
-        {
-            //Arrange
-            const int GreaterThanTimeout = 20;
-            const int LesserThanTimeout = 2;
-            const string ukprn = "ukprn";
-            const int vacancyReferenceNumberOK = 1;
-            const int vacancyReferenceNumberNonOK = 2;
-
-            var apprenticeshipVacancyRepository = new Mock<IApprenticeshipVacancyReadRepository>();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var timeService = new Mock<IDateTimeService>();
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-            timeService.Setup(ts => ts.UtcNow()).Returns(DateTime.UtcNow);
-            var apprenticeshipVacancies = new List<ApprenticeshipVacancy>
-            {
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberOK,
-                    QAUserName = "someUserName",
-                    DateStartedToQA = DateTime.UtcNow.AddMinutes(-GreaterThanTimeout),
-                    Status = ProviderVacancyStatuses.ReservedForQA
-                },
-                new ApprenticeshipVacancy
-                {
-                    ClosingDate = DateTime.Now,
-                    DateSubmitted = DateTime.Now,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLink
-                    {
-                        Employer = new Employer()
-                    },
-                    Ukprn = ukprn,
-                    VacancyReferenceNumber = vacancyReferenceNumberNonOK,
-                    QAUserName = "someUserName",
-                    DateStartedToQA = DateTime.UtcNow.AddMinutes(-LesserThanTimeout),
-                    Status = ProviderVacancyStatuses.ReservedForQA
-                }
-            };
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            vacancyPostingService.Setup(
-                avr => avr.GetWithStatus(ProviderVacancyStatuses.PendingQA, ProviderVacancyStatuses.ReservedForQA))
-                .Returns(apprenticeshipVacancies);
-
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
-
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
             var vacancyProvider =
-                new VacancyProviderBuilder()
-                    .With(providerService)
-                    .With(timeService)
-                    .With(vacancyPostingService)
+                new VacancyProviderBuilder().With(vacancyPostingService)
                     .With(configurationService)
+                    .With(vacancyPostingService)
                     .Build();
 
             //Act
-            var vacancies = vacancyProvider.GetPendingQAVacancies();
+            vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
-            vacancies.Should().HaveCount(1);
-            vacancies.First().VacancyReferenceNumber.Should().Be(vacancyReferenceNumberOK);
-            configurationService.Verify(x => x.Get<ManageWebConfiguration>());
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
+            vacancyPostingService.Verify(
+                r =>
+                    r.UpdateVacancy(
+                        It.Is<Vacancy>(
+                            av =>
+                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.Status == VacancyStatus.Referred &&
+                                av.QAUserName == null)));
         }
 
         [Test]
         public void ReserveForQA_UsernameIsSavedFromCurrentPrinciple()
         {
             //Arrange
-            const long vacancyReferenceNumber = 123456L;
+            const int vacancyReferenceNumber = 123456;
             const string username = "qa@test.com";
             var reservedVacancy =
-                new Fixture().Build<ApprenticeshipVacancy>()
-                    .With(av => av.Status, ProviderVacancyStatuses.ReservedForQA)
+                new Fixture().Build<Vacancy>()
+                    .With(av => av.Status, VacancyStatus.ReservedForQA)
                     .With(av => av.StandardId, null)
                     .Create();
             var vacancyWithReservedStatus = new Fixture().Build<VacancyViewModel>()
-                .With(vvm=> vvm.Status, ProviderVacancyStatuses.ReservedForQA)
+                .With(vvm => vvm.Status, VacancyStatus.ReservedForQA)
                 .Create();
             var providerSite = new Fixture().Build<ProviderSite>().Create();
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             vacancyPostingService.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(reservedVacancy);
             var providerService = new Mock<IProviderService>();
-            providerService.Setup(s => s.GetProviderSite(It.IsAny<string>(), It.IsAny<string>())).Returns(providerSite);
+            providerService.Setup(s => s.GetProviderSite(It.IsAny<int>())).Returns(providerSite);
+            providerService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
+                .Returns(new Fixture().Build<VacancyParty>().Create());
+            var employerService = new Mock<IEmployerService>();
+            employerService.Setup(s => s.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Build<Employer>().Create());
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(s => s.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
             referenceDataService.Setup(s => s.GetCategoryByCode(It.IsAny<string>())).Returns(new Category());
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
             var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<ApprenticeshipVacancy, VacancyViewModel>(reservedVacancy))
+            mapper.Setup(m => m.Map<Vacancy, VacancyViewModel>(reservedVacancy))
                 .Returns(vacancyWithReservedStatus);
 
             var vacancyProvider =
@@ -755,6 +545,7 @@
                     .With(referenceDataService)
                     .With(configurationService)
                     .With(vacancyPostingService)
+                    .With(employerService)
                     .With(mapper)
                     .Build();
 
@@ -765,7 +556,41 @@
 
             //Assert
             vacancyPostingService.Verify();
-            vacancy.Status.Should().Be(ProviderVacancyStatuses.ReservedForQA);
+            vacancy.Status.Should().Be(VacancyStatus.ReservedForQA);
+        }
+
+        [Test]
+        public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()
+        {
+            const int vacancyReferenceNumber = 1;
+            const string firstQuestionComment = "First question comment";
+            const string secondQuestionComment = "Second question comment";
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
+
+            vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber))
+                .Returns(new Vacancy());
+            vacancyPostingService.Setup(vp => vp.UpdateVacancy(It.IsAny<Vacancy>()))
+                .Returns(new Vacancy());
+
+            var viewModel = new VacancyQuestionsViewModel
+            {
+                FirstQuestionComment = firstQuestionComment,
+                SecondQuestionComment = secondQuestionComment,
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            provider.UpdateVacancyWithComments(viewModel);
+
+            vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
+            vacancyPostingService.Verify(
+                vp =>
+                    vp.UpdateVacancy(
+                        It.Is<Vacancy>(
+                            v =>
+                                v.FirstQuestionComment == firstQuestionComment &&
+                                v.SecondQuestionComment == secondQuestionComment)));
         }
 
         [Test]
@@ -781,12 +606,14 @@
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var configService = new Mock<IConfigurationService>();
-            configService.Setup(m => m.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration() {BlacklistedCategoryCodes = string.Empty});
+            configService.Setup(m => m.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = string.Empty});
             var provider = new VacancyProviderBuilder().With(vacancyPostingService).With(configService).Build();
             var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
-            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
-            vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy());
+            vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber))
+                .Returns(new Vacancy());
+            vacancyPostingService.Setup(vp => vp.UpdateVacancy(It.IsAny<Vacancy>()))
+                .Returns(new Vacancy());
             viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
             viewModel.DurationComment = durationComment;
             viewModel.LongDescriptionComment = longDescriptionComment;
@@ -796,11 +623,11 @@
 
             provider.UpdateVacancyWithComments(viewModel);
 
-            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 vp =>
-                    vp.ShallowSaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(
+                    vp.UpdateVacancy(
+                        It.Is<Vacancy>(
                             v =>
                                 v.ClosingDateComment == closingDateComment &&
                                 v.DurationComment == durationComment &&
@@ -811,62 +638,242 @@
         }
 
         [Test]
-        public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()
+        public void UpdateTrainingDetailsWithComments()
         {
-            const int vacancyReferenceNumber = 1;
-            const string firstQuestionComment = "First question comment";
-            const string secondQuestionComment = "Second question comment";
+            //Arrange
+            const string ukprn = "ukprn";
+
+            var trainingDetailsViewModel = new Fixture().Build<TrainingDetailsViewModel>().Create();
+
+            var sectorList = new List<Sector>
+            {
+                new Fixture().Build<Sector>().Create()
+            };
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var provider = new VacancyProviderBuilder().With(vacancyPostingService).Build();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+            var referenceDataService = new Mock<IReferenceDataService>();
+            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
+            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
 
-            vacancyPostingService.Setup(vp => vp.GetVacancy(vacancyReferenceNumber)).Returns(new ApprenticeshipVacancy());
-            vacancyPostingService.Setup(vp => vp.ShallowSaveApprenticeshipVacancy(It.IsAny<ApprenticeshipVacancy>()))
-                .Returns(new ApprenticeshipVacancy());
+            //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
+            vacancyPostingService.Setup(
+                vps => vps.GetVacancyByReferenceNumber(trainingDetailsViewModel.VacancyReferenceNumber.Value)).Returns(
+                    (long refNo) =>
+                    {
+                        return new Fixture().Build<Vacancy>()
+                            .With(av => av.VacancyReferenceNumber, trainingDetailsViewModel.VacancyReferenceNumber.Value)
+                            .With(av => av.ApprenticeshipLevelComment, Guid.NewGuid().ToString())
+                            .With(av => av.FrameworkCodeNameComment, Guid.NewGuid().ToString())
+                            .With(av => av.ApprenticeshipLevel, trainingDetailsViewModel.ApprenticeshipLevel)
+                            .With(av => av.FrameworkCodeName, Guid.NewGuid().ToString())
+                            .With(av => av.StandardIdComment, Guid.NewGuid().ToString())
+                            .With(av => av.StandardId, null)
+                            .Create();
+                    });
 
-            var viewModel = new VacancyQuestionsViewModel
-            {
-                FirstQuestionComment = firstQuestionComment,
-                SecondQuestionComment = secondQuestionComment,
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
-            provider.UpdateVacancyWithComments(viewModel);
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map<Vacancy, TrainingDetailsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) => trainingDetailsViewModel);
 
-            vacancyPostingService.Verify(vp => vp.GetVacancy(vacancyReferenceNumber));
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .With(referenceDataService)
+                    .With(mapper)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancyWithComments(trainingDetailsViewModel);
+
+            //Assert
             vacancyPostingService.Verify(
-                vp =>
-                    vp.ShallowSaveApprenticeshipVacancy(
-                        It.Is<ApprenticeshipVacancy>(
-                            v =>
-                                v.FirstQuestionComment == firstQuestionComment &&
-                                v.SecondQuestionComment == secondQuestionComment)));
-
+                vps => vps.GetVacancyByReferenceNumber(trainingDetailsViewModel.VacancyReferenceNumber.Value),
+                Times.Once);
+            vacancyPostingService.Verify(
+                vps =>
+                    vps.UpdateVacancy(
+                        It.Is<Vacancy>(
+                            av => av.VacancyReferenceNumber == trainingDetailsViewModel.VacancyReferenceNumber.Value)));
+            result.VacancyReferenceNumber.Should().Be(trainingDetailsViewModel.VacancyReferenceNumber);
+            result.ApprenticeshipLevelComment.Should().Be(trainingDetailsViewModel.ApprenticeshipLevelComment);
+            result.FrameworkCodeNameComment.Should().Be(trainingDetailsViewModel.FrameworkCodeNameComment);
+            result.StandardIdComment.Should().Be(trainingDetailsViewModel.StandardIdComment);
+            result.StandardId.Should().Be(trainingDetailsViewModel.StandardId);
+            result.ApprenticeshipLevel.Should().Be(trainingDetailsViewModel.ApprenticeshipLevel);
+            result.FrameworkCodeName.Should().Be(trainingDetailsViewModel.FrameworkCodeName);
         }
 
-        private static VacancySummaryViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        [Test]
+        public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
         {
-            return new VacancySummaryViewModel
+            //Arrange
+            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>()
+                .With(vm => vm.VacancyReferenceNumber, null)
+                .Create();
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
+
+            //Act
+            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+
+            //Assert
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
+        [Test]
+        public void UpdateVacancyBasicDetailsWithComments()
+        {
+            //Arrange
+            const string ukprn = "ukprn";
+
+            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>().Create();
+
+            var sectorList = new List<Sector>
             {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                VacancyDatesViewModel = new VacancyDatesViewModel { 
-                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
-                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
-                },
-                Duration = 3,
-                DurationType = DurationType.Years,
-                LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
-                HoursPerWeek = 30,
-                WorkingWeek = "A working week"
+                new Fixture().Build<Sector>().Create()
             };
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+            var referenceDataService = new Mock<IReferenceDataService>();
+            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
+            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
+
+            //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
+            vacancyPostingService.Setup(
+                vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value)).Returns(
+                    (long refNo) =>
+                    {
+                        return new Fixture().Build<Vacancy>()
+                            .With(av => av.VacancyReferenceNumber, newVacancyVM.VacancyReferenceNumber.Value)
+                            .With(av => av.OfflineApplicationInstructionsComment, Guid.NewGuid().ToString())
+                            .With(av => av.OfflineApplicationUrlComment, Guid.NewGuid().ToString())
+                            .With(av => av.ShortDescriptionComment, Guid.NewGuid().ToString())
+                            .With(av => av.TitleComment, Guid.NewGuid().ToString())
+                            .With(av => av.OfflineApplicationUrl, $"http://www.google.com/{Guid.NewGuid()}")
+                            .With(av => av.OfflineApplicationInstructions, Guid.NewGuid().ToString())
+                            .With(av => av.ShortDescription, Guid.NewGuid().ToString())
+                            .With(av => av.Title, Guid.NewGuid().ToString())
+                            .Create();
+                    });
+
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
+
+            var mapper = new Mock<IMapper>();
+            mapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) => newVacancyVM);
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .With(referenceDataService)
+                    .With(mapper)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+
+            //Assert
+            vacancyPostingService.Verify(
+                vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
+            vacancyPostingService.Verify(
+                vps =>
+                    vps.UpdateVacancy(
+                        It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value)));
+            result.VacancyReferenceNumber.Should().Be(newVacancyVM.VacancyReferenceNumber);
+            result.OfflineApplicationInstructionsComment.Should().Be(newVacancyVM.OfflineApplicationInstructionsComment);
+            result.OfflineApplicationUrlComment.Should().Be(newVacancyVM.OfflineApplicationUrlComment);
+            result.ShortDescriptionComment.Should().Be(newVacancyVM.ShortDescriptionComment);
+            result.TitleComment.Should().Be(newVacancyVM.TitleComment);
+            result.OfflineApplicationInstructions.Should().Be(newVacancyVM.OfflineApplicationInstructions);
+            result.OfflineApplicationUrl.Should().Be(newVacancyVM.OfflineApplicationUrl);
+            result.ShortDescription.Should().Be(newVacancyVM.ShortDescription);
+            result.Title.Should().Be(newVacancyVM.Title);
+        }
+
+        [Test]
+        public void UpdateVacancyRequirementsAndProspectsWithComments()
+        {
+            //Arrange
+            var vacancyVm = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
+                .Create();
+
+            var appVacancy = new Fixture().Build<Vacancy>()
+                .With(x => x.VacancyReferenceNumber, vacancyVm.VacancyReferenceNumber)
+                .With(x => x.Status, VacancyStatus.Submitted)
+                .Create();
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+
+            vacancyPostingService.Setup(
+                vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
+
+            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
+
+            //Act
+            var result = vacancyProvider.UpdateVacancyWithComments(vacancyVm);
+
+            //Assert
+            vacancyPostingService.Verify(vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber),
+                Times.Once);
+            vacancyPostingService.Verify(
+                vps =>
+                    vps.UpdateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
+            result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
+            result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
+            result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
+            result.DesiredSkills.Should().Be(vacancyVm.DesiredSkills);
+            result.DesiredSkillsComment.Should().Be(vacancyVm.DesiredSkillsComment);
+            result.FutureProspectsComment.Should().Be(vacancyVm.FutureProspectsComment);
+            result.FutureProspects.Should().Be(vacancyVm.FutureProspects);
+            result.PersonalQualitiesComment.Should().Be(vacancyVm.PersonalQualitiesComment);
+            result.PersonalQualities.Should().Be(vacancyVm.PersonalQualities);
+            result.ThingsToConsiderComment.Should().Be(vacancyVm.ThingsToConsiderComment);
+            result.ThingsToConsider.Should().Be(vacancyVm.ThingsToConsider);
         }
     }
 
     public static class MoqExtensions
     {
         public static void ReturnsInOrder<T, TResult>(this ISetup<T, TResult> setup,
-          params TResult[] results) where T : class
+            params TResult[] results) where T : class
         {
             setup.Returns(new Queue<TResult>(results).Dequeue);
         }

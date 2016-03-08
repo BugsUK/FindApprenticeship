@@ -3,8 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Location;
-    using Domain.Entities.Locations;
+    using Apprenticeships.Application.Location;
+    using Domain.Entities.Raa.Locations;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

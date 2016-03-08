@@ -5,8 +5,8 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
     using System.Linq;
     using Application.Organisation;
     using Application.ReferenceData;
-    using Common.Configuration;
     using Common.IoC;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using Infrastructure.Caching.Memory.IoC;
@@ -60,52 +60,16 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             }
         }
         
-        [TestCase("902763946"), Category("Integration")]
-        public void ReturnsProviderSiteEmployerLinks(string providerSiteErn)
+        [TestCase(902763946), Category("Integration")]
+        public void ReturnsProviderSiteEmployerLinks(int providerSiteId)
         {
             //Arrange
-            var query = new EmployerSearchRequest(providerSiteErn);
 
             //Act
-            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
+            var links = _legacyProviderProvider.GetVacancyParties(providerSiteId);
 
             //Assert
             links.Count().Should().Be(168);
         }
-
-        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "L E3 ", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "LE3 1HR", 1), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "LE3 1HRz", 0), Category("Integration")]
-        [TestCase("902763946", "Hit Training", "", 1), Category("Integration")]
-        public void ReturnsProviderSiteEmployerLinksByNameAndPostcode(string providerSiteErn, string employerName, string postCode, int expectedResults)
-        {
-            //Arrange
-            var query = new EmployerSearchRequest(providerSiteErn, employerName, postCode);
-
-            //Act
-            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
-
-            //Assert
-            links.Count().Should().Be(expectedResults);
-        }
-
-        [TestCase("902763946", "902763946"), Category("Integration")]
-        [TestCase("902763946", "105108332"), Category("Integration")]
-        [TestCase("902763946", "162258372"), Category("Integration")]
-        public void SearchProviderSiteEmployerLinksByEmployerEdsUrn(string providerSiteErn, string employerEdsUrn)
-        {
-            //Arrange
-            var query= new EmployerSearchRequest(providerSiteErn, employerEdsUrn);
-
-            //Act
-            var links = _legacyProviderProvider.GetProviderSiteEmployerLinks(query);
-
-            //Assert
-            //there should only ever be 1, as employer edsurn is unique
-            links.Count().Should().Be(1);
-        }
-
     }
 }

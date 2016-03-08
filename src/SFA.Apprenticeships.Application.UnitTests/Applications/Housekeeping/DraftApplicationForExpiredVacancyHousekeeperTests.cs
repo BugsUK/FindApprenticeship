@@ -2,13 +2,13 @@
 {
     using System;
     using System.Linq;
-    using Application.Applications.Housekeeping;
-    using Application.Applications.Strategies;
-    using Application.Candidates.Configuration;
+    using Apprenticeships.Application.Applications.Housekeeping;
+    using Apprenticeships.Application.Applications.Strategies;
+    using Apprenticeships.Application.Candidates.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

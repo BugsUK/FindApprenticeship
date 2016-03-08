@@ -119,6 +119,7 @@
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
+    <Compile Include="Application\ApprenticeshipApplicationServiceTests.cs" />
     <Compile Include="Builders\ApplicationStatusSummaryBuilder.cs" />
     <Compile Include="Builders\ApprenticeshipSearchResultsBuilder.cs" />
     <Compile Include="Candidates\Configuration\HousekeepingConfigurationBuilder.cs" />
@@ -207,6 +208,10 @@
       <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
       <Name>SFA.Apprenticeships.Application.Applications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
+      <Project>{7d29ed20-ff3d-4fbb-b253-a44de1e42bcc}</Project>
+      <Name>SFA.Apprenticeships.Application.Application</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
       <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
       <Name>SFA.Apprenticeships.Application.Candidates</Name>
@@ -251,6 +256,10 @@
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
       <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
@@ -262,6 +271,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91db99c3-50a9-4ded-ab90-2ff94d0b130e}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
+      <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
+      <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

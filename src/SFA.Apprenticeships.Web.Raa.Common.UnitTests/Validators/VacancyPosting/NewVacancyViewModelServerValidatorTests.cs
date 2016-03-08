@@ -5,7 +5,7 @@
     using NUnit.Framework;
     using Builders;
     using Common.Validators.Vacancy;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.UnitTests.Validators;
     using Web.Common.Validators;

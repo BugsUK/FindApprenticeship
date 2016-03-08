@@ -15,7 +15,7 @@
 
         private Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> _vacancySearchService;
         private Mock<ICandidateService> _candidateService;
-        private readonly Mock<IOfflineVacancyService> _offlineVacancyService;
+        private readonly Mock<ICandidateVacancyService> _candidateVacancyService;
 
         public ApprenticeshipVacancyProviderBuilder()
         {
@@ -24,7 +24,7 @@
 
             _vacancySearchService = new Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             _candidateService = new Mock<ICandidateService>();
-            _offlineVacancyService = new Mock<IOfflineVacancyService>();
+            _candidateVacancyService = new Mock<ICandidateVacancyService>();
         }
 
         public ApprenticeshipVacancyProviderBuilder With(Mock<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>> vacancySearchService)
@@ -41,7 +41,7 @@
 
         public ApprenticeshipVacancyProvider Build()
         {
-            var provider = new ApprenticeshipVacancyProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger, _offlineVacancyService.Object);
+            var provider = new ApprenticeshipVacancyProvider(_vacancySearchService.Object, _candidateService.Object, _mapper, _logger, _candidateVacancyService.Object);
             return provider;
         }
     }

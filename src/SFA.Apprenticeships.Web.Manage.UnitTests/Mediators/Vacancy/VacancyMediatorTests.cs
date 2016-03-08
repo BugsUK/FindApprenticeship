@@ -1,19 +1,16 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-using SFA.Apprenticeships.Web.Raa.Common.ViewModels;
-
+﻿
 namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Collections.Generic;
     using System.Linq;
     using Common.UnitTests.Mediators;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Manage.Mediators.Vacancy;
-    using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
-    using ViewModels;
 
     [TestFixture]
     public class VacancyMediatorTests
@@ -21,7 +18,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
         [Test]
         public void ShouldUpdateTheStatusOfTheVacancyToLive()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var pendingQAVacancies = GetPendingVacancies(new[]
             {
                 vacancyReferenceNumber
@@ -40,7 +37,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
         public void ShouldUpdateTheStatusOfTheVacancyToDraft()
         {
             //Arrange
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
             var pendingQAVacancies = GetPendingVacancies(new[]
             {
                 vacancyReferenceNumber
@@ -60,9 +57,9 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
         [Test]
         public void ShouldReturnTheNextAvailableVacancyAfterApprovingOne()
         {
-            const long vacancyReferenceNumber = 1;
-            const long nextVacancyReferenceNumber = 2;
-            const long anotherVacancyReferenceNumber = 3;
+            const int vacancyReferenceNumber = 1;
+            const int nextVacancyReferenceNumber = 2;
+            const int anotherVacancyReferenceNumber = 3;
 
             var pendingQAVacancies = GetPendingVacancies(new[]
             {
@@ -84,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
         [Test]
         public void ShouldReturnNoAvailableVacanciesIfThereArentAnyAvailableVacancies()
         {
-            const long vacancyReferenceNumber = 1;
+            const int vacancyReferenceNumber = 1;
 
             List<DashboardVacancySummaryViewModel> pendingQAVacancies = null;
 
@@ -98,12 +95,12 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             result.AssertCode(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies);
         }
 
-        private IEnumerable<DashboardVacancySummaryViewModel> GetPendingVacancies(IEnumerable<long> vacancyReferenceNumbers )
+        private IEnumerable<DashboardVacancySummaryViewModel> GetPendingVacancies(IEnumerable<int> vacancyReferenceNumbers )
         {
             return vacancyReferenceNumbers.Select(vacancyReferenceNumber => new DashboardVacancySummaryViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                Status = ProviderVacancyStatuses.PendingQA
+                Status = VacancyStatus.Submitted
             });
         }
     }

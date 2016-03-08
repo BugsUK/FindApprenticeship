@@ -13,7 +13,7 @@
         {
             var viewModel = new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1, ApplicationStatuses.Successful)).Build();
 
-            var result = new IndexViewBuilder().With(viewModel).Render();
+            var result = new MyApplicationsViewBuilder().With(viewModel).Render();
 
             var dashSuccessful = result.GetElementbyId("dashSuccessful");
             dashSuccessful.Should().NotBeNull();
@@ -42,7 +42,7 @@
         {
             var viewModel = new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1, ApplicationStatuses.Submitted)).Build();
 
-            var result = new IndexViewBuilder().With(viewModel).Render();
+            var result = new MyApplicationsViewBuilder().With(viewModel).Render();
 
             var dashSubmitted = result.GetElementbyId("dashSubmitted");
             dashSubmitted.Should().NotBeNull();
@@ -71,7 +71,7 @@
         {
             var viewModel = new MyApplicationsViewModelBuilder().With(DashboardTestsHelper.GetApprenticeships(1, ApplicationStatuses.Unsuccessful)).Build();
 
-            var result = new IndexViewBuilder().With(viewModel).Render();
+            var result = new MyApplicationsViewBuilder().With(viewModel).Render();
 
             var dashUnsuccessful = result.GetElementbyId("dashUnsuccessful");
             dashUnsuccessful.Should().NotBeNull();

@@ -1,17 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Security.Claims;
-    using System.Security.Principal;
     using System.Threading;
-    using Application.VacancyPosting;
-    using Domain.Entities;
-    using Domain.Entities.Locations;
+    using Apprenticeships.Application.VacancyPosting;
+    using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Users;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.UnitTests.Builder;
-    using Domain.Entities.Users;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
@@ -19,21 +15,25 @@
     [TestFixture]
     public class VacancyPostingServiceTests
     {
-        private readonly Mock<IApprenticeshipVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-        private readonly Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+        private readonly Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
+        private readonly Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
         private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
         private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
+        private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
+        private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
+
         private IVacancyPostingService _vacancyPostingService;
 
         private readonly ProviderUser _vacancyManager = new ProviderUser
         {
-            EntityId = Guid.NewGuid(),
-            Username = "vacancy@manager.com"
+            ProviderUserId = 1,
+            Username = "vacancy@manager.com",
+            PreferredProviderSiteId = 10
         };
 
         private readonly ProviderUser _lastEditedBy = new ProviderUser
         {
-            EntityId = Guid.NewGuid(),
+            ProviderUserId = 2,
             Username = "vacancy@editor.com"
         };
 
@@ -42,10 +42,10 @@
         {
             _vacancyPostingService = new VacancyPostingService(_apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
-                _providerUserReadRepository.Object);
+                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, _vacancyLocationAddressWriteRepository.Object);
 
-            _providerUserReadRepository.Setup(r => r.Get(_vacancyManager.Username)).Returns(_vacancyManager);
-            _providerUserReadRepository.Setup(r => r.Get(_lastEditedBy.Username)).Returns(_lastEditedBy);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
+            _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
         }
 
         [Test]
@@ -53,14 +53,17 @@
         {
             var principal = new ClaimsPrincipalBuilder().WithName(_vacancyManager.Username).WithRole(Roles.Faa).Build();
             Thread.CurrentPrincipal = principal;
-            var vacancy = new ApprenticeshipVacancy
+            var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -68,14 +71,17 @@
         {
             var principal = new ClaimsPrincipalBuilder().WithName(_vacancyManager.Username).WithRole(Roles.Faa).Build();
             Thread.CurrentPrincipal = principal;
-            var vacancy = new ApprenticeshipVacancy
+            var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<ApprenticeshipVacancy>(v => v.VacancyManagerId == _vacancyManager.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.PreferredProviderSiteId.Value)));
         }
 
         [Test]
@@ -83,14 +89,17 @@
         {
             var principal = new ClaimsPrincipalBuilder().WithName(_lastEditedBy.Username).WithRole(Roles.Faa).Build();
             Thread.CurrentPrincipal = principal;
-            var vacancy = new ApprenticeshipVacancy
+            var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(vacancy));
+            _vacancyPostingService.SaveVacancy(vacancy);
+
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
@@ -98,14 +107,16 @@
         {
             var principal = new ClaimsPrincipalBuilder().WithName(_lastEditedBy.Username).WithRole(Roles.Faa).Build();
             Thread.CurrentPrincipal = principal;
-            var vacancy = new ApprenticeshipVacancy
+            var vacancy = new Vacancy
             {
-                VacancyReferenceNumber = 1
+                VacancyReferenceNumber = 1,
+                VacancyId = 1
             };
+            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _vacancyPostingService.SaveApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Save(It.Is<ApprenticeshipVacancy>(v => v.LastEditedById == _lastEditedBy.EntityId)));
+            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
 
         [Test]
@@ -119,41 +130,21 @@
         [Test]
         public void GetVacancyByReferenceNumberShouldCallRepository()
         {
-            const long vacancyId = 1;
+            const int vacancyReferenceNumber = 1;
 
-            _vacancyPostingService.GetVacancy(vacancyId);
+            _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
-            _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyId));
+            _apprenticeshipVacancyReadRepository.Verify(r => r.GetByReferenceNumber(vacancyReferenceNumber));
         }
 
         [Test]
         public void GetVacancyByGuidShouldCallRepository()
         {
-            var vacancyGuid = Guid.NewGuid();
+            var vacancyId = 42;
 
-            _vacancyPostingService.GetVacancy(vacancyGuid);
+            _vacancyPostingService.GetVacancy(vacancyId);
 
-            _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyGuid));
-        }
-
-        [Test]
-        public void ReplaceLocationInformationShouldCallRepository()
-        {
-            const bool isEmployerLocationMainApprenticeshipLocation = false;
-            int? numberOfPositions = null;
-            IEnumerable<VacancyLocationAddress> vacancyLocationAddresses = new []{new VacancyLocationAddress(), new VacancyLocationAddress(), new VacancyLocationAddress()};
-            const string locationAddressesComment = "location addresses comment";
-            const string additionalLocationInformation = "additional location information";
-            const string additionalLocationInformationComment = "additional location information";
-            const long vacancyReferenceNumber = 1L;
-
-            _vacancyPostingService.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
-                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
-                additionalLocationInformationComment);
-
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.ReplaceLocationInformation(vacancyReferenceNumber, isEmployerLocationMainApprenticeshipLocation,
-                numberOfPositions, vacancyLocationAddresses, locationAddressesComment, additionalLocationInformation,
-                additionalLocationInformationComment));
+            _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyId));
         }
     }
 }

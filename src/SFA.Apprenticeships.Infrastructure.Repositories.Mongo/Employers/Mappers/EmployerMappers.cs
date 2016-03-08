@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Employers.Mappers
 {
-    using Domain.Entities.Organisations;
+    using Domain.Entities.Raa.Parties;
     using Infrastructure.Common.Mappers;
-    using Mongo.Employers.Entities;
+    using Entities;
 
     public class EmployerMappers : MapperEngine
     {

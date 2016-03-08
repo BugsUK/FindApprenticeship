@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Locations
 {
     using System;
-    using Common.UnitTests.Mediators;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.VacancyPosting;
-    using Recruit.Mediators.VacancyPosting;
 
     [TestFixture]
     public class LocationsTests : TestsBase
@@ -16,17 +14,17 @@
         {
             var vacancyGuid = Guid.NewGuid();
             const string ukprn = "ukprn";
-            const string ern = "ern";
-            const string providerSiteErn = "providerSiteErn";
+            const int employerId = 5;
+            const int providerSiteId = 44;
 
             VacancyPostingProvider.Setup(
                 p =>
-                    p.LocationAddressesViewModel(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(),
+                    p.LocationAddressesViewModel(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<int>(),
                         It.IsAny<Guid>())).Returns(new LocationSearchViewModel());
 
             var mediator = GetMediator();
 
-            var result = mediator.GetLocationAddressesViewModel(providerSiteErn, ern, ukprn, vacancyGuid, false);
+            var result = mediator.GetLocationAddressesViewModel(providerSiteId, employerId, ukprn, vacancyGuid, false);
 
             result.ViewModel.CurrentPage.Should().Be(1);
         }

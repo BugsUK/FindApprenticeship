@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
         {
             // Arrange.
             var mediator = GetMediator();
-            var user = new ProviderUserViewModel { Fullname = "Full name", EmailAddress = "asdf@asdf.com", PhoneNumber = "0321321321", DefaultProviderSiteErn = "12345678"};
+            var user = new ProviderUserViewModel { Fullname = "Full name", EmailAddress = "asdf@asdf.com", PhoneNumber = "0321321321", DefaultProviderSiteId = 12345678};
 
             // Act.
             var response = mediator.UpdateUser("userName", "00001", user);

@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
     using Domain.Entities.Exceptions;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
@@ -29,7 +29,7 @@
 
         public void SendEmailVerificationCode(string username)
         {
-            var providerUser = _providerUserReadRepository.Get(username);
+            var providerUser = _providerUserReadRepository.GetByUsername(username);
 
             if (providerUser == null)
             {
@@ -39,7 +39,7 @@
             // ReSharper disable once RedundantArgumentDefaultValue
             providerUser.EmailVerificationCode = _codeGenerator.GenerateAlphaNumeric(EmailVerificationCodeLength);
 
-            _providerUserWriteRepository.Save(providerUser);
+            _providerUserWriteRepository.Update(providerUser);
 
             _communicationService.SendMessageToProviderUser(username, MessageTypes.SendProviderUserEmailVerificationCode,
                 new[]

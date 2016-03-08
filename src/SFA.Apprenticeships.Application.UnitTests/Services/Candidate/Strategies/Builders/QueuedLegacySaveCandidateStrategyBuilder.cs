@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies.Builders
 {
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Interfaces.Messaging;
     using Domain.Entities.Candidates;
     using Moq;

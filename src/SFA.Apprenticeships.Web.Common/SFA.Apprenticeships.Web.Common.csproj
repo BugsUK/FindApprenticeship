@@ -108,6 +108,10 @@
       <HintPath>..\packages\NLog.4.0.1\lib\net45\NLog.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\structuremap.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
@@ -171,6 +175,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0.3\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -181,6 +189,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ActionResults\HttpCustomStatusCodeResult.cs" />
+    <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Attributes\ApplyWebTrendsAttribute.cs" />
     <Compile Include="Attributes\AuthorizationDataAttribute.cs" />
     <Compile Include="Attributes\OwinSessionTimeoutAttribute.cs" />
@@ -210,6 +219,7 @@
     <Compile Include="Providers\Azure\AccessControlService\IAuthorizationErrorProvider.cs" />
     <Compile Include="Providers\CookieAuthorizationDataProvider.cs" />
     <Compile Include="Providers\ICookieAuthorizationDataProvider.cs" />
+    <Compile Include="Providers\NullUserDataProvider.cs" />
     <Compile Include="Providers\RobotCrawlerProvider.cs" />
     <Compile Include="Providers\IRobotCrawlerProvider.cs" />
     <Compile Include="SiteMap\ISiteMapGenerator.cs" />
@@ -370,6 +380,7 @@
       <LastGenOutput>Date.generated.cs</LastGenOutput>
     </Content>
     <Content Include="Views\razorgenerator.directives" />
+    <Content Include="Views\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
@@ -397,9 +408,7 @@
       <Name>SFA.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DependencyResolution\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Content\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\css\font-awesome\fonts\fontawesome-webfont.svg" />

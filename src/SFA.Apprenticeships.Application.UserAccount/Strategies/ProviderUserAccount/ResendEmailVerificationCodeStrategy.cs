@@ -3,7 +3,9 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Raa.Users;
     using Domain.Entities.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 
@@ -25,14 +27,14 @@
 
         public void ResendEmailVerificationCode(string username)
         {
-            var providerUser = _providerUserReadRepository.Get(username);
+            var providerUser = _providerUserReadRepository.GetByUsername(username);
 
             if (providerUser == null)
             {
                 throw new CustomException("Unknown username", ErrorCodes.UnknownUserError);
             }
 
-            if (providerUser.Status == ProviderUserStatuses.EmailVerified)
+            if (providerUser.Status == ProviderUserStatus.EmailVerified)
             {
                 _logService.Info("Will not resend provider user email verification code, verification code is blank.");
                 return;

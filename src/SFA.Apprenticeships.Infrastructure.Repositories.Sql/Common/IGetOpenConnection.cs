@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
 {
     public interface IGetOpenConnection
     {
-        SqlConnection GetOpenConnection();
+        IDbConnection GetOpenConnection();
     }
 
     public class GetOpenConnectionFromConnectionString : IGetOpenConnection
@@ -23,7 +23,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             ConnectionString = connectionString;
         }
 
-        public SqlConnection GetOpenConnection()
+        public IDbConnection GetOpenConnection()
         {
             var conn = new SqlConnection(ConnectionString);
             conn.Open();
@@ -63,17 +63,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Common
             {
                 using (var conn = goc.GetOpenConnection())
                 {
-                    try
-                    {
-                        return
-                            (IList<T>)
-                                conn.Query<T>(sql, param, transaction: null, buffered: true,
-                                    commandTimeout: commandTimeout, commandType: commandType);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw ex;
-                    }
+                    return
+                        (IList<T>)
+                            conn.Query<T>(sql, param, transaction: null, buffered: true,
+                                commandTimeout: commandTimeout, commandType: commandType);
                 }
             }
             );

@@ -2,6 +2,8 @@
 {
     public class ProviderSite
     {
+        //TODO: These properties are actually part of the ProviderSiteRelationship table and so should not be on here
+        public int ProviderID { get; set; }
         public int UKPRN { get; set; }
         public int ProviderSiteID { get; set; }
         public string FullName { get; set; }

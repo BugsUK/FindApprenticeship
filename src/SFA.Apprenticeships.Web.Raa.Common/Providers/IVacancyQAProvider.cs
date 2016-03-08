@@ -12,30 +12,30 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(long vacancyReferenceNumber);
+        void ApproveVacancy(int vacancyReferenceNumber);
 
-        void RejectVacancy(long vacancyReferenceNumber);
+        void RejectVacancy(int vacancyReferenceNumber);
 
-        VacancyViewModel ReserveVacancyForQA(long vacancyReferenceNumber);
+        VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        NewVacancyViewModel GetNewVacancyViewModel(long vacancyReferenceNumber);
+        NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
-        TrainingDetailsViewModel GetTrainingDetailsViewModel(long vacancyReferenceNumber);
+        TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
-        VacancySummaryViewModel GetVacancySummaryViewModel(long vacancyReferenceNumber);
+        FurtherVacancyDetailsViewModel GetVacancySummaryViewModel(int vacancyReferenceNumber);
 
-        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(long vacancyReferenceNumber);
+        VacancyRequirementsProspectsViewModel GetVacancyRequirementsProspectsViewModel(int vacancyReferenceNumber);
 
-        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(long vacancyReferenceNumber);
+        VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        VacancySummaryViewModel UpdateVacancyWithComments(VacancySummaryViewModel viewModel);
+        FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
         NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
         TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-
+        
         VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
@@ -48,10 +48,12 @@
 
         NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel existingVacancy);
 
-        LocationSearchViewModel LocationAddressesViewModel(string ukprn, string providerSiteErn, string ern, Guid vacancyGuid);
+        LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
         VacancyViewModel GetVacancy(Guid vacancyGuid);
+
+        VacancyViewModel GetVacancy(int vacancyReferenceNumber);
     }
 }

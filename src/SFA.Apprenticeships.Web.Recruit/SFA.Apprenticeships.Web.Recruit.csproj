@@ -300,12 +300,15 @@
     <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
     <Compile Include="Constants\RecruitmentRouteNames.cs" />
-    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
+    <Compile Include="Mediators\Application\TraineeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApprenticeshipApplicationMediator.cs" />
     <Compile Include="Controllers\VacancyPostingController.cs" />
     <Compile Include="Mappers\RecruitMappers.cs" />
@@ -332,24 +335,6 @@
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediator.cs" />
     <Compile Include="Mediators\VacancyPosting\VacancyPostingMediatorCodes.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorCodes.cs" />
-    <Compile Include="Providers\ApplicationProvider.cs" />
-    <Compile Include="Providers\IApplicationProvider.cs" />
-    <Compile Include="Validators\ApprenticeshipApplicationViewModelValidator.cs" />
-    <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
-    <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
-    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
-    <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
-    <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
-    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Application\EducationViewModel.cs" />
-    <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
-    <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
-    <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
-    <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
-    <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
-    <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
-    <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\AuthorizeResponseViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -554,17 +539,14 @@
     <Content Include="Views\VacancyPosting\_ApplicationsLink.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\Review.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\VacancyLocationAddressViewModel.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\DisabilityStatus.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\TrainingCourses.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\WorkExperience.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\AboutYou.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\Education.cshtml" />
-    <Content Include="Views\Shared\DisplayTemplates\ApplicantDetails.cshtml" />
     <Content Include="Views\VacancyPosting\_ContactDetailsAndVacancyHistory.cshtml" />
     <Content Include="Views\VacancyPosting\ManageDates.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\_VacancyLinks.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Comment.cshtml" />
     <Content Include="Views\VacancyPosting\TrainingDetails.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessfulDecision.cshtml" />
+    <Content Include="Views\ApprenticeshipApplication\ConfirmUnsuccessfulDecision.cshtml" />
+    <Content Include="Views\TraineeshipApplication\Review.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -596,8 +578,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Configuration\" />
-    <Folder Include="ViewModels\Vacancy\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -729,6 +709,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
       <Project>{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}</Project>

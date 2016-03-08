@@ -157,6 +157,36 @@
                defaults: new { controller = "Candidate", action = "Search" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidate,
+               url: "candidate",
+               defaults: new { controller = "Candidate", action = "Candidate" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateApprenticeshipApplication,
+               url: "candidate/apprenticeship",
+               defaults: new { controller = "Candidate", action = "Apprenticeship" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateTraineeshipApplication,
+               url: "candidate/traineeship",
+               defaults: new { controller = "Candidate", action = "Traineeship" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateApprenticeshipVacancy,
+               url: "candidate/apprenticeship/vacancy",
+               defaults: new { controller = "Candidate", action = "ApprenticeshipVacancy" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ViewCandidateTraineeshipVacancy,
+               url: "candidate/traineeship/vacancy",
+               defaults: new { controller = "Candidate", action = "TraineeshipVacancy" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

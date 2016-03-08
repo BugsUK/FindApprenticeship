@@ -31,7 +31,7 @@
         private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly IAuthenticateCandidateStrategy _authenticateCandidateStrategy;
-        private readonly ICandidateReadRepository _candidateReadRepository;
+        private readonly IGetCandidateByIdStrategy _getCandidateByIdStrategy;
         private readonly ICreateApprenticeshipApplicationStrategy _createApplicationStrategy;
         private readonly ICreateTraineeshipApplicationStrategy _createTraineeshipApplicationStrategy;
         private readonly IGetCandidateApprenticeshipApplicationsStrategy _getCandidateApprenticeshipApplicationsStrategy;
@@ -65,7 +65,7 @@
         private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
 
         public CandidateService(
-            ICandidateReadRepository candidateReadRepository,
+            IGetCandidateByIdStrategy getCandidateByIdStrategy,
             IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
@@ -103,7 +103,7 @@
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
             IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
         {
-            _candidateReadRepository = candidateReadRepository;
+            _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
@@ -177,7 +177,7 @@
         public Candidate GetCandidate(Guid id)
         {
             _logger.Debug("Calling CandidateService to get the user with Id={0}.", id);
-            return _candidateReadRepository.Get(id);
+            return _getCandidateByIdStrategy.GetCandidate(id);
         }
 
         public Candidate GetCandidate(string username)

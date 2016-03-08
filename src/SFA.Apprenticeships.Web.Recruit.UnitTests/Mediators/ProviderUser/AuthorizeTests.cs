@@ -8,6 +8,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
     using Common.UnitTests.Mediators;
     using Constants.Messages;
     using Domain.Entities;
+    using Domain.Entities.Raa;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.ProviderUser;

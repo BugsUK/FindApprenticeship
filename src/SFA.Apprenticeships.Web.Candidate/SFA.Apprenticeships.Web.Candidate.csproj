@@ -788,6 +788,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Date.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\MyApplications.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MyApplications.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -903,7 +907,9 @@
     <Compile Include="Mediators\Unsubscribe\UnsubscribeMediator.cs" />
     <Compile Include="Mediators\Unsubscribe\UnsubscribeMediatorCodes.cs" />
     <Compile Include="Providers\ApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\CandidateApplicationsProvider.cs" />
     <Compile Include="Providers\IApprenticeshipVacancyProvider.cs" />
+    <Compile Include="Providers\ICandidateApplicationsProvider.cs" />
     <Compile Include="Providers\ITraineeshipVacancyProvider.cs" />
     <Compile Include="Providers\TraineeshipVacancyProvider.cs" />
     <Compile Include="Validators\ApprenticeshipApplicationPreviewViewModelValidator.cs" />
@@ -936,11 +942,15 @@
     <Compile Include="Constants\Pages\SignOutPageMessages.cs" />
     <Compile Include="Constants\ViewModels\SettingsViewModelMessages.cs" />
     <Compile Include="ViewModels\Applications\ApprenticeshipApplicationPreviewViewModel.cs" />
+    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextApprenticeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\MonitoringInformationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\TrainingCourseViewModel.cs" />
     <Compile Include="ViewModels\Home\FeedbackViewModel.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenCredentialsViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenEmailViewModel.cs" />
     <Compile Include="ViewModels\UserNameAvailability.cs" />
@@ -1044,8 +1054,6 @@
     <Compile Include="ViewModels\Candidate\TraineeshipCandidateViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockState.cs" />
     <Compile Include="ViewModels\Login\LoginResultViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyApplicationsViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\Applications\WhatHappensNextTraineeshipViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EducationViewModel.cs" />
     <Compile Include="ViewModels\Candidate\EmployerQuestionAnswersViewModel.cs" />
@@ -1055,8 +1063,6 @@
     <Compile Include="ViewModels\Candidate\QualificationsViewModel.cs" />
     <Compile Include="ViewModels\DateViewModel.cs" />
     <Compile Include="ViewModels\Login\AccountUnlockViewModel.cs" />
-    <Compile Include="ViewModels\MyApplications\MyTraineeshipApplicationViewModel.cs" />
-    <Compile Include="ViewModels\Applications\TraineeshipFeatureViewModel.cs" />
     <Compile Include="ViewModels\Register\ForgottenPasswordViewModel.cs" />
     <Compile Include="ViewModels\Login\LoginViewModel.cs" />
     <Compile Include="ViewModels\Register\ActivationViewModel.cs" />
@@ -1284,6 +1290,11 @@
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\MonitoringInformation\_disability.generated.cs">
       <DependentUpon>_disability.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\MyApplications.generated.cs">
+      <DependentUpon>MyApplications.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -1556,6 +1567,10 @@
       <Project>{c91e4093-3348-43ed-b386-cf70000ffcb3}</Project>
       <Name>SFA.Apprenticeships.Application.Communication</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj">
+      <Project>{dd096f97-415d-4676-9f90-7aee60213f49}</Project>
+      <Name>SFA.Apprenticeships.Application.Employer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
@@ -1563,6 +1578,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
       <Project>{a64fc67f-c873-4422-93dd-fbd8a6370ec3}</Project>
       <Name>SFA.Apprenticeships.Application.Location</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Organisation\SFA.Apprenticeships.Application.Organisation.csproj">
+      <Project>{1b92e84d-f15a-4521-bdb9-2be321236167}</Project>
+      <Name>SFA.Apprenticeships.Application.Organisation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Provider\SFA.Apprenticeships.Application.Provider.csproj">
+      <Project>{920f5834-459d-4e20-9b17-aad52d2cc8fe}</Project>
+      <Name>SFA.Apprenticeships.Application.Provider</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
@@ -1572,9 +1595,17 @@
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
+      <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
+      <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
@@ -1604,6 +1635,10 @@
       <Project>{F75B0C62-89B5-473D-AF2D-366A5A6722AC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
+      <Project>{c7cb47e8-c024-4dc0-9bdc-e325d3bfeadc}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
       <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
@@ -1631,6 +1666,14 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Mongo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
+      <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
+      <Project>{24bdbcac-42ee-4253-8e8a-34ff5f0f41e7}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
       <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>

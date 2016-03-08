@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Builders
 {
-    using Application.Communications.Strategies;
+    using Apprenticeships.Application.Communications.Strategies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Moq;

@@ -2,7 +2,7 @@
 {
     using Application.Interfaces.Users;
     using Builders;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using Factory;
     using FluentAssertions;
     using Moq;

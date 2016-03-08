@@ -1,27 +1,26 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Provider;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using VacancyPosting;
+    using Web.Common.ViewModels.Locations;
 
     public class VacancyViewModel
     {
         public const string PartialView = "Vacancy/VacancyPreview";
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public NewVacancyViewModel NewVacancyViewModel { get; set; }
 
         public TrainingDetailsViewModel TrainingDetailsViewModel { get; set; }
 
-        public VacancySummaryViewModel VacancySummaryViewModel { get; set; }
+        public FurtherVacancyDetailsViewModel FurtherVacancyDetailsViewModel { get; set; }
 
         public VacancyRequirementsProspectsViewModel VacancyRequirementsProspectsViewModel { get; set; }
 
@@ -37,7 +36,7 @@
 
         public ProviderSiteViewModel ProviderSite { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
         [Display(Name = VacancyViewModelMessages.ResubmitOptin.LabelText)]
         public bool ResubmitOption { get; set; }
@@ -62,26 +61,14 @@
 
         public List<VacancyLocationAddressViewModel> LocationAddresses { get; set; }
 
-        public bool IsUnapprovedMultiLocationParentVacancy
-        {
-            get
-            {
-                return
-                    Status != ProviderVacancyStatuses.ParentVacancy
-                    && NewVacancyViewModel.LocationAddresses != null
-                    && NewVacancyViewModel.LocationAddresses.Count() > 1;
-            }
-        }
+        public AddressViewModel Address { get; set; }
 
-        public bool IsApprovedMultiLocationChildVacancy
-        {
-            get
-            {
-                return Status == ProviderVacancyStatuses.Live
-                       && NewVacancyViewModel.LocationAddresses != null
-                       && NewVacancyViewModel.LocationAddresses.Count() == 1;
-            }
-        }
+        public bool IsUnapprovedMultiLocationParentVacancy => NewVacancyViewModel.LocationAddresses != null
+                                                              && NewVacancyViewModel.LocationAddresses.Count() > 1;
+
+        public bool IsApprovedMultiLocationChildVacancy => Status == VacancyStatus.Live
+                                                           && NewVacancyViewModel.LocationAddresses != null
+                                                           && NewVacancyViewModel.LocationAddresses.Count() == 1;
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 
@@ -102,5 +89,7 @@
                         NewVacancyViewModel.LocationAddresses.Count == 1);
             }
         }
+
+        public bool IsCandidateView { get; set; }
     }
 }

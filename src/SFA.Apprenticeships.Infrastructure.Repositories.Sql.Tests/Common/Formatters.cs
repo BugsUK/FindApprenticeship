@@ -19,7 +19,7 @@
     {
         public string Format(object value)
         {
-            return $"'{((DateTime) value).ToString("O")}'";
+            return $"'{((DateTime)value).ToString("s")}'";
         }
     }
 
@@ -47,9 +47,17 @@
         }
     }
 
+    public class BooleanFormatter : IObjectFormatter
+    {
+        public string Format(object value)
+        {
+            return (bool)value ? "1" : "0";
+        }
+    }
+
     public static class InstanceFormatter
     {
-        private static readonly Type DefaultFormatterType = typeof (DefaultFormatter);
+        private static readonly Type DefaultFormatterType = typeof(DefaultFormatter);
 
         public static string FormatTypeInstance(object value, Type type)
         {
@@ -59,9 +67,9 @@
                                 "Formatter";
 
             var formatterType = Type.GetType(formatterName) ?? DefaultFormatterType;
-            
+
             var instance = Activator.CreateInstance(formatterType);
-            var returnValue = formatterType.GetMethod("Format").Invoke(instance, new[] {value});
+            var returnValue = formatterType.GetMethod("Format").Invoke(instance, new[] { value });
             return returnValue.ToString();
         }
     }

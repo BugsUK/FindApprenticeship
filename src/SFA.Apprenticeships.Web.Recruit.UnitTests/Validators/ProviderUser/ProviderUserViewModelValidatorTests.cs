@@ -2,7 +2,7 @@
 {
     using NUnit.Framework;
     using FluentValidation.TestHelper;
-    using Recruit.Validators.ProviderUser;
+    using Raa.Common.Validators.ProviderUser;
     using Raa.Common.ViewModels.ProviderUser;
 
     [TestFixture]

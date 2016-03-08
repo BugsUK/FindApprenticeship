@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
 
     public interface IPostalAddressDetailsService
     {

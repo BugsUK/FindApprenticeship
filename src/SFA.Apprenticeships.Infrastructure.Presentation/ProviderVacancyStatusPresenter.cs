@@ -1,52 +1,52 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
 
     public static class ProviderVacancyStatusPresenter
     {
-        public static bool IsStateReadOnly(this ProviderVacancyStatuses status)
+        public static bool IsStateReadOnly(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.Live ||
-                   status == ProviderVacancyStatuses.ReservedForQA || status == ProviderVacancyStatuses.Closed;
+            return status == VacancyStatus.Submitted || status == VacancyStatus.Live ||
+                   status == VacancyStatus.ReservedForQA || status == VacancyStatus.Closed;
         }
 
-        public static bool IsStateEditable(this ProviderVacancyStatuses status)
+        public static bool IsStateEditable(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.Unknown || status == ProviderVacancyStatuses.Draft ||
-                   status == ProviderVacancyStatuses.RejectedByQA;
+            return status == VacancyStatus.Unknown || status == VacancyStatus.Draft ||
+                   status == VacancyStatus.Referred;
         }
 
-        public static bool IsStateReviewable(this ProviderVacancyStatuses status)
+        public static bool IsStateReviewable(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.ReservedForQA || 
-                   status == ProviderVacancyStatuses.RejectedByQA;
+            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA || 
+                   status == VacancyStatus.Referred;
         }
 
-        public static bool IsStateInQa(this ProviderVacancyStatuses status)
+        public static bool IsStateInQa(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.PendingQA || status == ProviderVacancyStatuses.ReservedForQA;
+            return status == VacancyStatus.Submitted || status == VacancyStatus.ReservedForQA;
         }
 
-        public static bool CanHaveApplicationsOrClickThroughs(this ProviderVacancyStatuses status)
+        public static bool CanHaveApplicationsOrClickThroughs(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed ||
-                   status == ProviderVacancyStatuses.Completed || status == ProviderVacancyStatuses.Withdrawn;
+            return status == VacancyStatus.Live || status == VacancyStatus.Closed ||
+                   status == VacancyStatus.Completed || status == VacancyStatus.Withdrawn;
         }
 
-        public static bool CanShowVacancyReferencenumber(this ProviderVacancyStatuses status)
+        public static bool CanShowVacancyReferencenumber(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed ||
-                   status == ProviderVacancyStatuses.Completed || status == ProviderVacancyStatuses.Withdrawn;
+            return status == VacancyStatus.Live || status == VacancyStatus.Closed ||
+                   status == VacancyStatus.Completed || status == VacancyStatus.Withdrawn;
         }
 
-        public static bool CanManageVacancyDates(this ProviderVacancyStatuses status)
+        public static bool CanManageVacancyDates(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.Live || status == ProviderVacancyStatuses.Closed;
+            return status == VacancyStatus.Live || status == VacancyStatus.Closed;
         }
 
-        public static bool CanWithdrawVacancy(this ProviderVacancyStatuses status)
+        public static bool CanWithdrawVacancy(this VacancyStatus status)
         {
-            return status == ProviderVacancyStatuses.Live;
+            return status == VacancyStatus.Live;
         }
     }
 }

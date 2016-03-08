@@ -19,9 +19,9 @@
         private readonly VacancyViewModelValidator _vacancyViewModelValidator = new VacancyViewModelValidator();
         private readonly VacancyQuestionsViewModelServerValidator _vacancyQuestionsViewModelServerValidator = new VacancyQuestionsViewModelServerValidator();
         private readonly Mock<IProviderQAProvider> _providerQaProvider = new Mock<IProviderQAProvider>();
-        private readonly LocationSearchViewModelValidator _locationSearchViewModelValidator = new LocationSearchViewModelValidator();
+        private readonly LocationSearchViewModelServerValidator _locationSearchViewModelServerValidator = new LocationSearchViewModelServerValidator();
         private readonly Mock<ILocationsProvider> _locationsProvider = new Mock<ILocationsProvider>();
-        private readonly ProviderSiteEmployerLinkViewModelValidator _providerSiteEmployerLinkViewModelValidator = new ProviderSiteEmployerLinkViewModelValidator();
+        private readonly VacancyPartyViewModelValidator _vacancyPartyViewModelValidator = new VacancyPartyViewModelValidator();
 
         private readonly TrainingDetailsViewModelServerValidator _trainingDetailsViewModelServerValidator = new TrainingDetailsViewModelServerValidator();
 
@@ -30,8 +30,8 @@
             return new VacancyMediator(_vacancyProvider.Object, _vacancyViewModelValidator,
                 _vacancySummaryViewModelServerValidator,
                 _newVacancyViewModelServerValidator, _vacancyQuestionsViewModelServerValidator,
-                _vacancyRequirementsProspectsViewModelServerValidator, _providerSiteEmployerLinkViewModelValidator,
-                _providerQaProvider.Object, _locationSearchViewModelValidator, _locationsProvider.Object, _trainingDetailsViewModelServerValidator);
+                _vacancyRequirementsProspectsViewModelServerValidator, _vacancyPartyViewModelValidator,
+                _providerQaProvider.Object, _locationSearchViewModelServerValidator, _locationsProvider.Object, _trainingDetailsViewModelServerValidator);
         }
 
         public VacancyMediatorBuilder With(Mock<IVacancyQAProvider> provider)

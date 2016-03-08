@@ -200,7 +200,7 @@
                 );
 
             routes.MapRoute(
-                name: RecruitmentRouteNames.ComfirmEmployer,
+                name: RecruitmentRouteNames.ConfirmEmployer,
                 url: "vacancy/employer/confirm",
                 defaults: new {controller = "VacancyPosting", action = "ConfirmEmployer"}
                 );
@@ -279,12 +279,29 @@
 
             routes.MapRoute(
                name: RecruitmentRouteNames.ReviewApprenticeshipApplication,
-               url: "application/review",
+               url: "apprenticeshipapplication/review",
                defaults: new { controller = "ApprenticeshipApplication", action = "Review" }
                );
 
-            routes.LowercaseUrls = true;
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication,
+               url: "apprenticeshipapplication/confirmsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmSuccessfulDecision" }
+               );
 
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication,
+               url: "apprenticeshipapplication/confirmunsuccessfuldecision",
+               defaults: new { controller = "ApprenticeshipApplication", action = "ConfirmUnsuccessfulDecision" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.ReviewTraineeshipApplication,
+               url: "traineeshipapplication/review",
+               defaults: new { controller = "TraineeshipApplication", action = "Review" }
+               );
+
+            routes.LowercaseUrls = true;
         }
     }
 }

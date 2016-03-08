@@ -4,7 +4,7 @@
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Users;
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using ViewModels;
 
     public class AgencyUserProvider : IAgencyUserProvider
@@ -80,6 +80,16 @@
 
         private static AgencyUserViewModel GetAgencyUserViewModel(AgencyUser agencyUser, IEnumerable<Team> teams, IEnumerable<Role> roles)
         {
+            if (agencyUser.Team == null)
+            {
+                agencyUser.Team = teams.First(t => t.IsDefault);
+            }
+
+            if (agencyUser.Role == null)
+            {
+                agencyUser.Role = roles.First(r => r.IsDefault);
+            }
+
             return new AgencyUserViewModel
             {
                 Teams = GetTeamsSelectList(teams, agencyUser.Team.Id),

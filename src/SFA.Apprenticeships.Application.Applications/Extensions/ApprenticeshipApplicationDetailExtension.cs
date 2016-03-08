@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications.Extensions
 {
+    using System;
     using Domain.Entities.Applications;
     using Entities;
 
@@ -15,6 +16,16 @@
                 if (apprenticeshipApplication.Status != applicationStatusSummary.ApplicationStatus)
                 {
                     apprenticeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
+
+                    switch (apprenticeshipApplication.Status)
+                    {
+                        case ApplicationStatuses.Successful:
+                            apprenticeshipApplication.SuccessfulDateTime = DateTime.UtcNow;
+                            break;
+                        case ApplicationStatuses.Unsuccessful:
+                            apprenticeshipApplication.UnsuccessfulDateTime = DateTime.UtcNow;
+                            break;
+                    }
 
                     // Application status has changed, ensure it appears on the candidate's dashboard.
                     apprenticeshipApplication.IsArchived = false;

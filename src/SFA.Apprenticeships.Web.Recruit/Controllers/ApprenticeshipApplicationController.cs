@@ -6,8 +6,8 @@
     using Common.Validators.Extensions;
     using Constants;
     using Mediators.Application;
-    using ViewModels.Application;
-    using ViewModels.Application.Apprenticeship;
+    using Raa.Common.ViewModels.Application;
+    using Raa.Common.ViewModels.Application.Apprenticeship;
 
     public class ApprenticeshipApplicationController : RecruitmentControllerBase
     {
@@ -57,7 +57,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewAppointCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmSuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -88,7 +88,7 @@
                     return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel);
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewRejectCandidate.Ok:
-                    return RedirectToRoute(RecruitmentRouteNames.ReviewApprenticeshipApplication, viewModel.ApplicationSelection);
+                    return RedirectToRoute(RecruitmentRouteNames.ConfirmUnsuccessfulApprenticeshipApplication, viewModel.ApplicationSelection);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -120,6 +120,78 @@
 
                 case ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Ok:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, viewModel.ApplicationSelection);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmSuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmSuccessfulDecision(applicationSelectionViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendSuccessfulDecision")]
+        public ActionResult SendSuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.SendSuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                    }
+
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult ConfirmUnsuccessfulDecision(ApplicationSelectionViewModel applicationSelectionViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.ConfirmUnsuccessfulDecision(applicationSelectionViewModel);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok:
+                    return View(response.ViewModel);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        [MultipleFormActionsButton(SubmitButtonActionName = "SendUnsuccessfulDecision")]
+        public ActionResult SendUnsuccessfulDecision(ApprenticeshipApplicationViewModel apprenticeshipApplicationViewModel)
+        {
+            var response = _apprenticeshipApplicationMediator.SendUnsuccessfulDecision(apprenticeshipApplicationViewModel.ApplicationSelection);
+
+            switch (response.Code)
+            {
+                case ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok:
+                    if (response.Message != null)
+                    {
+                        SetUserMessage(response.Message.Text, response.Message.Level);
+                    }
+
+                    return RedirectToRoute(RecruitmentRouteNames.VacancyApplications, response.ViewModel);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

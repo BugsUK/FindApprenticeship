@@ -1,17 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Application.Application.IoC
 {
+    using Applications.Strategies;
     using Interfaces.Applications;
-    using Strategies.Apprenticeships;
     using StructureMap.Configuration.DSL;
 
     public class ApplicationServicesRegistry : Registry
     {
         public ApplicationServicesRegistry()
         {
-            For<IGetApplicationForReviewStrategy>().Use<GetApplicationForReviewStrategy>();
-            For<IUpdateApplicationNotesStrategy>().Use<UpdateApplicationNotesStrategy>();
+            // Strategies
+            For<Strategies.Apprenticeships.IGetApplicationForReviewStrategy>().Use<Strategies.Apprenticeships.GetApplicationForReviewStrategy>();
+            For<Strategies.Apprenticeships.IUpdateApplicationNotesStrategy>().Use<Strategies.Apprenticeships.UpdateApplicationNotesStrategy>();
+            For<Strategies.Traineeships.IGetApplicationForReviewStrategy>().Use<Strategies.Traineeships.GetApplicationForReviewStrategy>();
+            For<Strategies.Traineeships.IUpdateApplicationNotesStrategy>().Use<Strategies.Traineeships.UpdateApplicationNotesStrategy>();
+            For<IApplicationStatusUpdateStrategy>().Use<ApplicationStatusUpdateStrategy>();
+            For<IApplicationStatusAlertStrategy>().Use<ApplicationStatusAlertStrategy>();
 
+            // Services
             For<IApprenticeshipApplicationService>().Use<ApprenticeshipApplicationService>();
+            For<ITraineeshipApplicationService>().Use<TraineeshipApplicationService>();
         }
     }
 }

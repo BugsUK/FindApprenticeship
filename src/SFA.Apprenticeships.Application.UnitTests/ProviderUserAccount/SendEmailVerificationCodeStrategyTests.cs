@@ -2,10 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
     using Interfaces.Users;
@@ -58,7 +58,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(ValidUsername))
+                .Setup(mock => mock.GetByUsername(ValidUsername))
                 .Returns(new ProviderUser());
 
             // Act.
@@ -66,7 +66,7 @@
 
             // Assert.
             _mockProviderUserReadRepository.Verify(mock =>
-                mock.Get(ValidUsername), Times.Once);
+                mock.GetByUsername(ValidUsername), Times.Once);
         }
 
         [Test]
@@ -74,7 +74,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(InvalidUsername))
+                .Setup(mock => mock.GetByUsername(InvalidUsername))
                 .Returns(default(ProviderUser));
 
             var action = new Action(() => _strategy.SendEmailVerificationCode(InvalidUsername));
@@ -88,7 +88,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(ValidUsername))
+                .Setup(mock => mock.GetByUsername(ValidUsername))
                 .Returns(new ProviderUser());
 
             // Act.
@@ -106,7 +106,7 @@
             var providerUser = new ProviderUser();
 
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(ValidUsername))
+                .Setup(mock => mock.GetByUsername(ValidUsername))
                 .Returns(providerUser);
 
             // Act.
@@ -114,7 +114,7 @@
 
             // Assert.
             _mockProviderUserWriteRepository.Verify(mock =>
-                mock.Save(providerUser), Times.Once);
+                mock.Update(providerUser), Times.Once);
 
             providerUser.EmailVerificationCode.Should().Be(EmailVerificationCode);
         }
@@ -129,7 +129,7 @@
             };
 
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(ValidUsername))
+                .Setup(mock => mock.GetByUsername(ValidUsername))
                 .Returns(providerUser);
 
             var communicationTokens = default(IEnumerable<CommunicationToken>);

@@ -2,7 +2,7 @@
 {
     public class EmployerFilterViewModelMessages
     {
-        public static class Ern
+        public static class EdsUrn
         {
             public const string LabelText = "ERN";
         }

@@ -3,9 +3,7 @@
     using Common.Constants;
     using Common.Mediators;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -23,12 +21,12 @@
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithQuestionOneFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionOneFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -37,7 +35,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong,
+                VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
             });
 
@@ -49,12 +47,12 @@
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionTwo()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithQuestionTwoFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithQuestionTwoFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -63,7 +61,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong,
+                VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
             });
 
@@ -75,12 +73,12 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOnlineToOfflineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AVacancyWithNoQuestionsFilled());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithNoQuestionsFilled());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -89,7 +87,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -99,12 +97,12 @@
         [Test]
         public void ShouldntWarnUserIfTheVacancyWasAlreadyOffline()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AnOfflineVacancy());
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy());
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -113,7 +111,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -123,12 +121,12 @@
         [Test]
         public void ShouldntWarnUserIfSwitchingFromOfflineToOnlineVacancyWithoutHavingAnyQuestionFilled()
         {
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(AnOfflineVacancy);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(AnOfflineVacancy);
             var mediator = GetMediator();
 
             var result = mediator.CreateVacancy(new NewVacancyViewModel
             {
-                ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                OwnerParty = new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel()
                 },
@@ -137,7 +135,7 @@
                 OfflineApplicationInstructions = AString,
                 Title = AString,
                 ShortDescription = AString,
-                VacancyReferenceNumber = ALong
+                VacancyReferenceNumber = AnInt
             });
 
             result.Should()
@@ -149,19 +147,19 @@
         {
             var isEmployerLocationMainApprenticeshipLocation = true;
             var numberOfPositions = 5;
-            var viewModel = new ProviderSiteEmployerLinkViewModel
+            var viewModel = new VacancyPartyViewModel
             {
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = numberOfPositions,
-                ProviderSiteErn = "provider site ern",
+                ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
-                    Ern = "ern"
+                    EmployerId = 7
                 }
             };
 
-            ProviderProvider.Setup(p => p.GetProviderSiteEmployerLinkViewModel(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns(new ProviderSiteEmployerLinkViewModel
+            ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyPartyViewModel
                 {
                     Employer = new EmployerViewModel
                     {
@@ -183,13 +181,13 @@
             {
                 NewVacancyViewModel = new NewVacancyViewModel { 
                     OfflineVacancy = false,
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel
+                    OwnerParty = new VacancyPartyViewModel
                     {
                         Employer = new EmployerViewModel()
                     }
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
-                VacancySummaryViewModel = new VacancySummaryViewModel(),
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel()
             };
         }

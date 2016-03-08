@@ -16,6 +16,6 @@
         public int WithdrawnCount { get; set; }
         public int CompletedCount { get; set; }
         public bool HasVacancies { get; set; }
-        public PageableViewModel<VacancyViewModel> Vacancies { get; set; }
+        public PageableViewModel<VacancySummaryViewModel> Vacancies { get; set; }
     }
 }

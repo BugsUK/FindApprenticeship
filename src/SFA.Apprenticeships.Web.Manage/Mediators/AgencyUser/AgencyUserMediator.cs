@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using Providers;
     using Raa.Common.ViewModels.Vacancy;
     using ViewModels;

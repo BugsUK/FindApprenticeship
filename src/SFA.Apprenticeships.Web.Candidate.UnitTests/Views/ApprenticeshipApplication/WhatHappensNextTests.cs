@@ -4,7 +4,6 @@
     using Candidate.ViewModels.Applications;
     using Candidate.ViewModels.MyApplications;
     using Candidate.ViewModels.VacancySearch;
-    using Common.Framework;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using NUnit.Framework;

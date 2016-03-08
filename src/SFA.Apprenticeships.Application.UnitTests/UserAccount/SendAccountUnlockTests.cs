@@ -2,11 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.UserAccount.Configuration;
-    using Application.UserAccount.Strategies;
+    using Apprenticeships.Application.UserAccount.Configuration;
+    using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mappers
 {
     using Domain.Entities.Candidates;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
     using FluentAssertions;
     using Manage.Mappers;
     using NUnit.Framework;

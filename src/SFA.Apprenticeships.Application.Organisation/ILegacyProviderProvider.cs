@@ -3,18 +3,19 @@
 namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
 
     public interface ILegacyProviderProvider
     {
         Provider GetProvider(string ukprn);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSite GetProviderSite(string ukprn, string edsUrn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+        //TODO: VacancyParty provider
+        VacancyParty GetVacancyParty(int providerSiteId, int employerId);
         
-        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest);
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
     }
 }

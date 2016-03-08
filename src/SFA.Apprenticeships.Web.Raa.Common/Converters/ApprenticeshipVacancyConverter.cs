@@ -4,41 +4,39 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
 
     public static class ApprenticeshipVacancyConverter
     {
-        public static VacancySummaryViewModel ConvertToVacancySummaryViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
+        public static FurtherVacancyDetailsViewModel ConvertToVacancySummaryViewModel(this Vacancy vacancy)
         {
-            var vacancyViewModel = new VacancySummaryViewModel
+            var vacancyViewModel = new FurtherVacancyDetailsViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
-                WorkingWeek = apprenticeshipVacancy.WorkingWeek,
-                HoursPerWeek = apprenticeshipVacancy.HoursPerWeek,
-                WageType = apprenticeshipVacancy.WageType,
-                Wage = apprenticeshipVacancy.Wage,
-                WageUnit = apprenticeshipVacancy.WageUnit,
+                VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                WorkingWeek = vacancy.WorkingWeek,
+                HoursPerWeek = vacancy.HoursPerWeek,
+                WageType = vacancy.WageType,
+                Wage = vacancy.Wage,
+                WageUnit = vacancy.WageUnit,
                 WageUnits = GetWageUnits(),
-                DurationType = apprenticeshipVacancy.DurationType,
-                DurationTypes = GetDurationTypes(apprenticeshipVacancy.VacancyType),
-                Duration = apprenticeshipVacancy.Duration,
-                Status = apprenticeshipVacancy.Status,
+                DurationType = vacancy.DurationType,
+                DurationTypes = GetDurationTypes(vacancy.VacancyType),
+                Duration = vacancy.Duration,
+                Status = vacancy.Status,
                 VacancyDatesViewModel = new VacancyDatesViewModel { 
-                    ClosingDate = new DateViewModel(apprenticeshipVacancy.ClosingDate),
-                    PossibleStartDate = new DateViewModel(apprenticeshipVacancy.PossibleStartDate),
-                    ClosingDateComment = apprenticeshipVacancy.ClosingDateComment,
-                    PossibleStartDateComment = apprenticeshipVacancy.PossibleStartDateComment,
+                    ClosingDate = new DateViewModel(vacancy.ClosingDate),
+                    PossibleStartDate = new DateViewModel(vacancy.PossibleStartDate),
+                    ClosingDateComment = vacancy.ClosingDateComment,
+                    PossibleStartDateComment = vacancy.PossibleStartDateComment,
                 },
-                LongDescription = apprenticeshipVacancy.LongDescription,
-                WageComment = apprenticeshipVacancy.WageComment,
-                DurationComment = apprenticeshipVacancy.DurationComment,
-                LongDescriptionComment = apprenticeshipVacancy.LongDescriptionComment,
-                WorkingWeekComment = apprenticeshipVacancy.WorkingWeekComment,
-                VacancyType = apprenticeshipVacancy.VacancyType
+                LongDescription = vacancy.LongDescription,
+                WageComment = vacancy.WageComment,
+                DurationComment = vacancy.DurationComment,
+                LongDescriptionComment = vacancy.LongDescriptionComment,
+                WorkingWeekComment = vacancy.WorkingWeekComment,
+                VacancyType = vacancy.VacancyType
             };
 
             return vacancyViewModel;
@@ -68,38 +66,38 @@
             return durationTypes;
         }
 
-        public static VacancyRequirementsProspectsViewModel ConvertToVacancyRequirementsProspectsViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
+        public static VacancyRequirementsProspectsViewModel ConvertToVacancyRequirementsProspectsViewModel(this Vacancy vacancy)
         {
             var vacancyViewModel = new VacancyRequirementsProspectsViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
-                DesiredSkills = apprenticeshipVacancy.DesiredSkills,
-                DesiredSkillsComment = apprenticeshipVacancy.DesiredSkillsComment,
-                FutureProspects = apprenticeshipVacancy.FutureProspects,
-                FutureProspectsComment = apprenticeshipVacancy.FutureProspectsComment,
-                PersonalQualities = apprenticeshipVacancy.PersonalQualities,
-                PersonalQualitiesComment = apprenticeshipVacancy.PersonalQualitiesComment,
-                ThingsToConsider = apprenticeshipVacancy.ThingsToConsider,
-                ThingsToConsiderComment = apprenticeshipVacancy.ThingsToConsiderComment,
-                DesiredQualifications = apprenticeshipVacancy.DesiredQualifications,
-                DesiredQualificationsComment = apprenticeshipVacancy.DesiredQualificationsComment,
-                Status = apprenticeshipVacancy.Status,
-                VacancyType = apprenticeshipVacancy.VacancyType
+                VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                DesiredSkills = vacancy.DesiredSkills,
+                DesiredSkillsComment = vacancy.DesiredSkillsComment,
+                FutureProspects = vacancy.FutureProspects,
+                FutureProspectsComment = vacancy.FutureProspectsComment,
+                PersonalQualities = vacancy.PersonalQualities,
+                PersonalQualitiesComment = vacancy.PersonalQualitiesComment,
+                ThingsToConsider = vacancy.ThingsToConsider,
+                ThingsToConsiderComment = vacancy.ThingsToConsiderComment,
+                DesiredQualifications = vacancy.DesiredQualifications,
+                DesiredQualificationsComment = vacancy.DesiredQualificationsComment,
+                Status = vacancy.Status,
+                VacancyType = vacancy.VacancyType
             };
 
             return vacancyViewModel;
         }
 
-        public static VacancyQuestionsViewModel ConvertToVacancyQuestionsViewModel(this ApprenticeshipVacancy apprenticeshipVacancy)
+        public static VacancyQuestionsViewModel ConvertToVacancyQuestionsViewModel(this Vacancy vacancy)
         {
             var vacancyViewModel = new VacancyQuestionsViewModel
             {
-                VacancyReferenceNumber = apprenticeshipVacancy.VacancyReferenceNumber,
-                FirstQuestion = apprenticeshipVacancy.FirstQuestion,
-                SecondQuestion = apprenticeshipVacancy.SecondQuestion,
-                FirstQuestionComment = apprenticeshipVacancy.FirstQuestionComment,
-                SecondQuestionComment = apprenticeshipVacancy.SecondQuestionComment,
-                Status = apprenticeshipVacancy.Status
+                VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
+                FirstQuestion = vacancy.FirstQuestion,
+                SecondQuestion = vacancy.SecondQuestion,
+                FirstQuestionComment = vacancy.FirstQuestionComment,
+                SecondQuestionComment = vacancy.SecondQuestionComment,
+                Status = vacancy.Status
             };
 
             return vacancyViewModel;

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidate.Strategies.SendMobileVerificationCodeStrategy
 {
-    using Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;
