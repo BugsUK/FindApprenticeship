@@ -85,10 +85,10 @@
                 var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, OwnedByAv, MimeType);
                 var Person                            = _tables.AddNew("Person",                          AnonymisePerson,          PersonTitleType, PersonType);
                 var EmployerContact                   = _tables.AddNew("EmployerContact",                 AnonymiseEmployerContact, ContactPreferenceType, County, LocalAuthority, Person);
-                var Employer                          = _tables.AddNew("Employer",                        OwnedByAv, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
+                var Employer                          = _tables.AddNew("Employer",                        TransformEmployer, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
                 var EmployerHistory                   = _tables.AddNew("EmployerHistory",                 OwnedByAv, EmployerHistoryEventType, Employer, County, LocalAuthority);
                 var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            AnonymiseProviderSite, EmployerTrainingProviderStatus, LocalAuthority);
-                var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, OwnedByAv,         ProviderSiteHistoryEventType, ProviderSite);
+                var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, AnonymiseProviderSiteHistory, ProviderSiteHistoryEventType, ProviderSite);
                 var EmployerSicCodes                  = _tables.AddNew("EmployerSICCodes",    new string[] { "EmployerSICCodes" },          OwnedByAv,         Employer, SicCode);
                 var Provider                          = _tables.AddNew("Provider",            new string[] { "ProviderID" },                TransformProvider, EmployerTrainingProviderStatus);
                 var ApprenticeshipOccupation          = _tables.AddNew("ApprenticeshipOccupation",        OwnedByAv, ApprenticeshipOccupationStatusType);
@@ -289,13 +289,20 @@ select top 10 * from VacancyReferralComments
             return true;
         }
 
-        public bool TransformProvider(dynamic oldRecord, dynamic newRecord)
+        public bool TransformEmployer(dynamic oldRecord, dynamic newRecord)
         {
-            // ALTER TABLE Provider ALTER COLUMN UPIN INT NULL
-            newRecord.UPIN = null; // We can't always populate this, so always set it to null to prove it isn't used.
+            // The old values in this field would not be recognised by our system (although they will probably have timed out)
+            newRecord.BeingSupportedBy = null;
+            newRecord.LockedForSupportUntil = null;
+
             return true;
         }
 
+        public bool TransformProvider(dynamic oldRecord, dynamic newRecord)
+        {
+            newRecord.UPIN = null; // We can't always populate this, so always set it to null to prove it isn't used.
+            return true;
+        }
 
         public bool NotOwnedByVacancyOwner(dynamic oldRecord, dynamic newRecord)
         {
@@ -353,6 +360,17 @@ select top 10 * from VacancyReferralComments
                 var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
                 var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
 
+                // Don't think we're using this, so might as well anonymise it
+                newRecord.AddressLine1 = anon1.StreetAddress;
+                newRecord.AddressLine2 = "";
+                newRecord.AddressLine3 = "";
+                newRecord.AddressLine4 = "";
+                newRecord.AddressLine5 = null;
+                newRecord.Town = anon1.City;
+                // TODO: CountyId
+                newRecord.PostCode = anon1.ZipCode;
+                // TODO: LocalAuthorityId
+
                 newRecord.FaxNumber = anon1.TelephoneNumber; // TODO
                 newRecord.AlternatePhoneNumber = anon2.TelephoneNumber;
             }
@@ -375,6 +393,17 @@ select top 10 * from VacancyReferralComments
 
             return true;
         }
+
+        public bool AnonymiseProviderSiteHistory(dynamic oldRecord, dynamic newRecord)
+        {
+            if (_migrateConfig.AnonymiseData)
+            {
+                newRecord.Comment = "[Training provider history]";
+            }
+
+            return true;
+        }
+
 
         public bool AnonymiseVacancy(dynamic oldRecord, dynamic newRecord)
         {
