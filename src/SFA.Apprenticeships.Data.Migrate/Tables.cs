@@ -269,21 +269,17 @@ select top 10 * from VacancyReferralComments
                 return false;
             }
 
-            var vacancyTypeId = VacancyTypeUnknown;
-
             if (oldRecord == null)
             {
                 newRecord.VacancyGuid = (object)Guid.NewGuid(); // Need to manually box object (possible Dapper bug)
             }
-            else
-            {
-                var apprenticeshipType = oldRecord.ApprenticeshipType;
-                if (apprenticeshipType != ApprenticeshipTypeUnknown)
-                {
-                    vacancyTypeId = apprenticeshipType == ApprenticeshipTypeTraineeship ? VacancyTypeTraineeship : VacancyTypeApprenticeship;
-                }
-            }
 
+            var vacancyTypeId = VacancyTypeUnknown;
+            var apprenticeshipType = newRecord.ApprenticeshipType;
+            if (apprenticeshipType != ApprenticeshipTypeUnknown)
+            {
+                vacancyTypeId = apprenticeshipType == ApprenticeshipTypeTraineeship ? VacancyTypeTraineeship : VacancyTypeApprenticeship;
+            }
             newRecord.VacancyTypeId = (object) vacancyTypeId;
 
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead

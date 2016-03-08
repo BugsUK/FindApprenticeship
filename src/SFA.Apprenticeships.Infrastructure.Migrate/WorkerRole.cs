@@ -39,7 +39,7 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate
             var genericSyncRepository = new GenericSyncRespository(_logService, sourceDatabase, targetDatabase);
             var avmsSyncRepository = new AvmsSyncRespository(_logService, sourceDatabase, targetDatabase);
 
-            var tables = new AvmsToAvmsPlusTables(_logService, avmsSyncRepository, true).All;
+            var tables = new AvmsToAvmsPlusTables(_logService, options, avmsSyncRepository, true).All;
 
             var controller = new Controller(
                 options,
