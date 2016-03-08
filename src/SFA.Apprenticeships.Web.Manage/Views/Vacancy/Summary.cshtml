@@ -4,6 +4,8 @@
 
 @using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.AcceptWarnings)
+
     @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
 
     <div class="grid grid-1-2">
