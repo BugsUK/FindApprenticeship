@@ -38,6 +38,28 @@
     //    public abstract void Initialise();
     //}
 
+    public class NullableIntToIntConverter : ValueResolver<int?, int>
+    {
+        protected override int ResolveCore(int? source)
+        {
+            int result = 0;
+            if (source.HasValue)
+            {
+                result = Convert.ToInt32(source.Value);
+            }
+
+            return result;
+        }
+    }
+
+    public class IntToNullableIntConverter : ValueResolver<int, int?>
+    {
+        protected override int? ResolveCore(int source)
+        {
+            return source;
+        }
+    }
+
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {
         protected override int? ResolveCore(short? source)
@@ -77,7 +99,7 @@
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
                 .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
-                .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
+                .ForMember(v => v.VacancyManagerID, opt => opt.ResolveUsing<IntToNullableIntConverter>().FromMember(av => av.VacancyManagerId))
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
                 .MapMemberFrom(v => v.VacancyStatusId, av => av.Status)
                 .MapMemberFrom(v => v.VacancyGuid, av => av.VacancyGuid)
@@ -152,7 +174,7 @@
                 .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
                 .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
                 .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
-                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .ForMember(av => av.VacancyManagerId, opt => opt.ResolveUsing<NullableIntToIntConverter>().FromMember(av => av.VacancyManagerID))
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)

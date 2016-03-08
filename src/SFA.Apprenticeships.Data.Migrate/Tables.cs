@@ -19,6 +19,14 @@
 
         private TableSpecList _tables;
 
+        private readonly DateTime _unixEpoc = new DateTime(1970, 01, 01);
+
+        private const int ApprenticeshipTypeUnknown = 0;
+        private const int ApprenticeshipTypeTraineeship = 1;
+        private const int VacancyTypeUnknown = 0;
+        private const int VacancyTypeApprenticeship = 1;
+        private const int VacancyTypeTraineeship = 2;
+
         public AvmsToAvmsPlusTables(ILogService log, IMigrateConfiguration migrateConfig, IAvmsSyncRespository avmsSyncRepository, bool full = true)
         {
             _log = log;
@@ -82,7 +90,7 @@
                 var LocalAuthority = _tables.AddNew("LocalAuthority", OwnedByAv, County);
 
                 // Other tables
-                var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, OwnedByAv, MimeType);
+                var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, TransformAttachedDocument, MimeType);
                 var Person                            = _tables.AddNew("Person",                          AnonymisePerson,          PersonTitleType, PersonType);
                 var EmployerContact                   = _tables.AddNew("EmployerContact",                 AnonymiseEmployerContact, ContactPreferenceType, County, LocalAuthority, Person);
                 var Employer                          = _tables.AddNew("Employer",                        TransformEmployer, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
@@ -115,12 +123,12 @@
                 var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, NotOwnedByVacancyOwner, Vacancy, VacancyReferralCommentsFieldType);
 
 
-                if (false) // TODO: Stakeholder
+                /*if (false) // TODO: Stakeholder
                 {
                     var Organisation      = _tables.AddNew("Organisation",                                        OwnedByAv);
                     var StakeholderStatus = _tables.AddNew("StakeHolderStatus",                                   OwnedByAv);
                     var Stakeholder       = _tables.AddNew("StakeHolder",       new string[] { "StakeHolderID" }, OwnedByAv, Person, Organisation, StakeholderStatus, County, LocalAuthority);
-                }
+                }*/
 
                 /* Other tables from diagram not required here
                 var VacancySearch = tables.AddNew("VacancySearch", OwnedByAv);
@@ -266,6 +274,14 @@ select top 10 * from VacancyReferralComments
                 newRecord.VacancyGuid = (object)Guid.NewGuid(); // Need to manually box object (possible Dapper bug)
             }
 
+            var vacancyTypeId = VacancyTypeUnknown;
+            var apprenticeshipType = newRecord.ApprenticeshipType;
+            if (apprenticeshipType != ApprenticeshipTypeUnknown)
+            {
+                vacancyTypeId = apprenticeshipType == ApprenticeshipTypeTraineeship ? VacancyTypeTraineeship : VacancyTypeApprenticeship;
+            }
+            newRecord.VacancyTypeId = (object) vacancyTypeId;
+
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
 
             // The old values in this field would not be recognised by our system (although they will probably have timed out)
@@ -279,6 +295,8 @@ select top 10 * from VacancyReferralComments
             newRecord.DeliveryOrganisationID  = null;
             newRecord.ContractOwnerID         = null;
             newRecord.OriginalContractOwnerId = null;
+
+            newRecord.CreatedDateTime = (object)_unixEpoc;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;
@@ -317,6 +335,12 @@ select top 10 * from VacancyReferralComments
                 return false;
             }
 
+            return true;
+        }
+
+        public bool TransformAttachedDocument(dynamic oldRecord, dynamic newRecord)
+        {
+            newRecord.Attachment = new byte[0];
             return true;
         }
 

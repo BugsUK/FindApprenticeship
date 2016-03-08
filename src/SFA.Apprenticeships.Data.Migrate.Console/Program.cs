@@ -78,7 +78,8 @@ AnonymiseData                      = {options.AnonymiseData}
 
             if (options.Reset)
                 controller.Reset();
-            controller.DoAll();
+
+            controller.DoAll(new System.Threading.CancellationTokenSource());
         }
     }
 

@@ -26,11 +26,16 @@
             _tables = tables;
         }
 
-        public void DoAll()
+        /// <summary>
+        /// Run the migration. Will only exit if either it is cancelled (via the cancellation token) or
+        /// an error that is known to be fatal (not transitory and requires attention) occurs
+        /// </summary>
+        /// <param name="cancellationToken"></param>
+        public void DoAll(CancellationTokenSource cancellationToken)
         {
             _log.Info("DoAll Started");
 
-            while (true)
+            while (!cancellationToken.IsCancellationRequested)
             {
                 try
                 {
@@ -65,7 +70,7 @@
                 Thread.Sleep(10000);
             }
 
-            _log.Info("DoAll Finished");
+            _log.Info("DoAll Cancelled");
         }
 
         public void Reset()
@@ -91,7 +96,7 @@
         {
             _log.Info("============ DoFullScanForAll");
             var context = _syncRepository.StartFullTransactionlessSync();
-            ApplyToTables(tableSpec => DoInitial(tableSpec, context));
+            ApplyToTablesUnthreaded(tableSpec => DoInitial(tableSpec, context));
             context.Success();
         }
 
