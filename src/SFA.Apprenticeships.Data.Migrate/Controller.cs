@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -316,10 +317,12 @@
                 }
                 else
                 {
+                    int changesLeftToLog = _migrateConfig.MaxNumberOfChangesToDetailPerTable.GetValueOrDefault(int.MaxValue) - mutateTarget.NumberOfUpdates;
+
                     var sourceRecordDict = (IDictionary<string, object>)sourceRecord;
                     var targetRecordDict = (IDictionary<string, object>)targetRecord;
 
-                    bool changed = false;
+                    List<string> changes = null;
                     foreach (var sourceCol in sourceRecordDict)
                     {
                         var targetColValue = targetRecordDict[sourceCol.Key];
@@ -342,16 +345,28 @@
 
                         if (!equal)
                         {
-                            _log.Info($"At least {sourceCol.Key} varies for {Keys.GetPrimaryKeys(sourceRecord, table)} (Is '{targetColValue ?? "<null>"}', should be '{sourceCol.Value ?? "<null>"}') - updating");
-                            changed = true;
-                            break;
+                            if (changes == null)
+                            {
+                                changes = new List<string>();
+                                if (changesLeftToLog <= 0)
+                                    break;
+                            }
+                            changes.Add($"{sourceCol.Key} '{targetColValue ?? "<null>"}' => '{sourceCol.Value ?? "<null>"}'");
                         }
                     }
 
-                    if (changed)
+                    if (changes != null)
+                    {
+                        if (changesLeftToLog == 0)
+                            _log.Info($"{table.Name}: More records have changes but these will not be reported");
+                        else if (changesLeftToLog > 0)
+                            _log.Info($"{table.Name} {Keys.GetPrimaryKeys(sourceRecord, table)}: {string.Join(", ", changes)}");
                         mutateTarget.Update(sourceRecord);
+                    }
                     else
+                    {
                         mutateTarget.NoChange(sourceRecord);
+                    }
                 }
             }
         }

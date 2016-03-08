@@ -15,12 +15,14 @@
     {
         private ILogService _log;
         private IAvmsSyncRespository _avmsSyncRepository;
+        private IMigrateConfiguration _migrateConfig;
 
         private TableSpecList _tables;
 
-        public AvmsToAvmsPlusTables(ILogService log, IAvmsSyncRespository avmsSyncRepository, bool full = true)
+        public AvmsToAvmsPlusTables(ILogService log, IMigrateConfiguration migrateConfig, IAvmsSyncRespository avmsSyncRepository, bool full = true)
         {
             _log = log;
+            _migrateConfig = migrateConfig;
             _avmsSyncRepository = avmsSyncRepository;
 
             _tables = new TableSpecList();
@@ -81,11 +83,11 @@
 
                 // Other tables
                 var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, OwnedByAv, MimeType);
-                var Person                            = _tables.AddNew("Person",                          OwnedByAv, PersonTitleType, PersonType);
-                var EmployerContact                   = _tables.AddNew("EmployerContact",                 OwnedByAv, ContactPreferenceType, County, LocalAuthority, Person);
+                var Person                            = _tables.AddNew("Person",                          AnonymisePerson,          PersonTitleType, PersonType);
+                var EmployerContact                   = _tables.AddNew("EmployerContact",                 AnonymiseEmployerContact, ContactPreferenceType, County, LocalAuthority, Person);
                 var Employer                          = _tables.AddNew("Employer",                        OwnedByAv, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
                 var EmployerHistory                   = _tables.AddNew("EmployerHistory",                 OwnedByAv, EmployerHistoryEventType, Employer, County, LocalAuthority);
-                var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            OwnedByAv,         EmployerTrainingProviderStatus, LocalAuthority);
+                var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            AnonymiseProviderSite, EmployerTrainingProviderStatus, LocalAuthority);
                 var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, OwnedByAv,         ProviderSiteHistoryEventType, ProviderSite);
                 var EmployerSicCodes                  = _tables.AddNew("EmployerSICCodes",    new string[] { "EmployerSICCodes" },          OwnedByAv,         Employer, SicCode);
                 var Provider                          = _tables.AddNew("Provider",            new string[] { "ProviderID" },                TransformProvider, EmployerTrainingProviderStatus);
@@ -128,6 +130,56 @@
                 var SavedSearchCriteriaVacancyPostedSince = tables.AddNew("SavedSearchCriteriaVacancyPostedSince", OwnedByAv);
                 */
             }
+
+
+            /*
+select top 10 * from VacancyProvisionRelationshipHistoryEventType
+select top 10 * from VacancyProvisionRelationshipStatusType
+select top 10 * from MIMEType
+select top 10 * from EmployerHistoryEventType
+select top 10 * from ProviderSiteHistoryEventType
+select top 10 * from PersonTitleType
+select top 10 * from ContactPreferenceType
+select top 10 * from VacancyHistoryEventType
+select top 10 * from PersonType
+select top 10 * from SICCode
+select top 10 * from EmployerTrainingProviderStatus
+select top 10 * from VacancyTextFieldValue
+select top 10 * from ApprenticeshipType
+select top 10 * from ProviderSiteRelationshipType
+select top 10 * from VacancyStatusType
+select top 10 * from ApprenticeshipOccupationStatusType
+select top 10 * from ApprenticeshipFrameworkStatusType
+select top 10 * from VacancyReferralCommentsFieldType
+select top 10 * from County
+select top 10 * from LocalAuthority
+select top 10 * from AttachedDocument
+select top 10 * from Person
+select top 10 * from EmployerContact
+select top 10 * from Employer
+select top 10 * from EmployerHistory
+select top 10 * from ProviderSite
+select top 10 * from ProviderSiteHistory
+select top 10 * from EmployerSICCodes
+select top 10 * from Provider
+select top 10 * from ApprenticeshipOccupation
+select top 10 * from ApprenticeshipFramework
+select top 10 * from VacancyOwnerRelationship
+select top 10 * from VacancyOwnerRelationshipHistory
+select top 10 * from ProviderSiteRelationship
+select top 10 * from RecruitmentAgentLinkedRelationships
+select top 10 * from SectorSuccessRates
+select top 10 * from SubVacancy
+select top 10 * from ProviderSiteLocalAuthority
+select top 10 * from ProviderSiteFramework
+select top 10 * from ProviderSiteOffer
+select top 10 * from Vacancy
+select top 10 * from VacancyHistory
+select top 10 * from VacancyTextField
+select top 10 * from VacancyLocation
+select top 10 * from AdditionalQuestion
+select top 10 * from VacancyReferralComments
+*/
         }
 
         public IEnumerable<ITableSpec> All { get { return _tables.All; } }
@@ -211,7 +263,7 @@
 
             if (oldRecord == null)
             {
-                newRecord.VacancyGuid = (object)Guid.NewGuid();
+                newRecord.VacancyGuid = (object)Guid.NewGuid(); // Need to manually box object (possible Dapper bug)
             }
 
             //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
@@ -231,6 +283,8 @@
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;
             // newRecord.VacancyManagerAnonymous = false;
+
+            AnonymiseVacancy(oldRecord, newRecord);
 
             return true;
         }
@@ -268,68 +322,73 @@
         #region Anonymisation
 
         // This is based on the anonymisation script used to create the static anonymised database
+        // The following were anonymised there, but not here because they are not being migrated:
+        // Candidate, Stakeholder, VacancySearch, ApplicationUnsuccessfulReasonType, CAFFields, NASSupportContact, Application, AdditionalAnswer
 
         public bool AnonymisePerson(dynamic oldRecord, dynamic newRecord)
         {
-            int id = newRecord.PersonId;
-            var anon = _avmsSyncRepository.GetAnonymousDetails(id);
+            if (_migrateConfig.AnonymiseData)
+            {
+                int id = newRecord.PersonId;
+                var anon = _avmsSyncRepository.GetAnonymousDetails(id);
 
-            newRecord.Title = _avmsSyncRepository.GetPersonTitleTypeIdsByTitleFullName().GetValueOrDefault(anon.TitleWithoutDot, 6);
-            newRecord.OtherTitle = (newRecord.Title == 6) ? anon.TitleWithoutDot : "";
-            newRecord.FirstName = anon.GivenName;
-            newRecord.MiddleNames = (id % 3 == 0) ? "" : anon.MothersMaiden; // TODO - better
-            newRecord.Surname = anon.Surname;
-            newRecord.LandlineNumber = anon.TelephoneNumber + "1"; // TODO
-            newRecord.MobileNumber = anon.TelephoneNumber;
-            newRecord.Email = anon.EmailAddress;
+                newRecord.Title = (object)_avmsSyncRepository.GetPersonTitleTypeIdsByTitleFullName().GetValueOrDefault(anon.TitleWithoutDot, 6); // Need to manually box (possible Dapper bug)
+                newRecord.OtherTitle = (newRecord.Title == 6) ? anon.TitleWithoutDot : "";
+                newRecord.FirstName = anon.GivenName;
+                newRecord.MiddleNames = (id % 3 == 0) ? "" : anon.MothersMaiden; // TODO - better
+                newRecord.Surname = anon.Surname;
+                newRecord.LandlineNumber = anon.TelephoneNumber + "1"; // TODO
+                newRecord.MobileNumber = anon.TelephoneNumber;
+                newRecord.Email = anon.EmailAddress;
+            }
 
             return true;
         }
-
-        // Candidate not migrated
-        // Stakeholder not migrated
-        // VacancySearch not migrated
 
         public bool AnonymiseEmployerContact(dynamic oldRecord, dynamic newRecord)
         {
-            int id = newRecord.EmployerContactId;
-            var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
-            var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
+            if (_migrateConfig.AnonymiseData)
+            {
+                int id = newRecord.EmployerContactId;
+                var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
+                var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
 
-            newRecord.FaxNumber = anon1.TelephoneNumber; // TODO
-            newRecord.AlternativePhoneNumber = anon2.TelephoneNumber;
-
-            return true;
-        }
-
-        // ApplicationUnsuccessfulReasonType not migrated
-        // CAFFields not migrated
-
-        public bool AnonymiseVacancy(dynamic oldRecord, dynamic newRecord)
-        {
-            var anon = _avmsSyncRepository.GetAnonymousDetails((int)newRecord.VacancyId);
-
-            newRecord.ContactName = $"{anon.GivenName} {anon.Surname}";
+                newRecord.FaxNumber = anon1.TelephoneNumber; // TODO
+                newRecord.AlternatePhoneNumber = anon2.TelephoneNumber;
+            }
 
             return true;
         }
 
         public bool AnonymiseProviderSite(dynamic oldRecord, dynamic newRecord)
         {
-            int id = newRecord.ProviderSiteId;
-            var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
-            var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
+            if (_migrateConfig.AnonymiseData)
+            {
+                int id = newRecord.ProviderSiteID;
+                var anon1 = _avmsSyncRepository.GetAnonymousDetails(id);
+                var anon2 = _avmsSyncRepository.GetAnonymousDetails(id + 1);
 
-            newRecord.ContactDetailsAsARecruitmentAgency = $"{anon1.GivenName} {anon1.Surname} on {anon1.TelephoneNumber}";
-            newRecord.ContactDetailsForCandidate = $"{anon1.GivenName} on {anon2.TelephoneNumber}";
+                newRecord.ContactDetailsAsARecruitmentAgency = $"{anon1.GivenName} {anon1.Surname} on {anon1.TelephoneNumber}";
+                newRecord.ContactDetailsForEmployer = $"{anon1.GivenName} on {anon1.TelephoneNumber}";
+                newRecord.ContactDetailsForCandidate = $"{anon1.GivenName} on {anon2.TelephoneNumber}";
+            }
 
             return true;
         }
 
-        // NASSupportContact not migrated
-        // Application not migrated
-        // AdditionalAnswer not migrated
+        public bool AnonymiseVacancy(dynamic oldRecord, dynamic newRecord)
+        {
+            if (_migrateConfig.AnonymiseData)
+            {
+                var anon = _avmsSyncRepository.GetAnonymousDetails((int)newRecord.VacancyId);
 
+                newRecord.ContactName = $"{anon.GivenName} {anon.Surname}";
+            }
+
+            return true;
+        }
+
+        // TODO: Could blank being supported by / until on employer
 
         #endregion
     }

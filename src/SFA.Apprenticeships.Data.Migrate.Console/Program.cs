@@ -37,13 +37,22 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
                     options.TargetConnectionString = persistentConfig.TargetConnectionString;
                 if (options.RecordBatchSize == 0)
                     options.RecordBatchSize = persistentConfig.RecordBatchSize;
+                if (options.MaxNumberOfChangesToDetailPerTable == null)
+                    options.MaxNumberOfChangesToDetailPerTable = persistentConfig.MaxNumberOfChangesToDetailPerTable;
+                if (options.AnonymiseData == false)
+                    options.AnonymiseData = persistentConfig.AnonymiseData;
             }
 
             if (options.Verbose)
             {
-                Console.WriteLine($"SourceConnectionString={options.SourceConnectionString}");
-                Console.WriteLine($"TargetConnectionString={options.TargetConnectionString}");
-                Console.WriteLine($"RecordBatchSize={options.RecordBatchSize}");
+                Console.WriteLine($@"
+SourceConnectionString             = {options.SourceConnectionString}
+TargetConnectionString             = {options.TargetConnectionString}
+RecordBatchSize                    = {options.RecordBatchSize}
+MaxNumberOfChangesToDetailPerTable = {options.MaxNumberOfChangesToDetailPerTable}
+AnonymiseData                      = {options.AnonymiseData}
+");
+
             }
 
 
@@ -53,7 +62,7 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
             var genericSyncRepository = new GenericSyncRespository(log, sourceDatabase, targetDatabase);
             var avmsSyncRepository = new AvmsSyncRespository(log, sourceDatabase, targetDatabase);
 
-            var tables = new AvmsToAvmsPlusTables(log, avmsSyncRepository, true).All;
+            var tables = new AvmsToAvmsPlusTables(log, options, avmsSyncRepository, true).All;
 
             if (options.SingleTable != null)
                 tables = tables.Where(t => t.Name == options.SingleTable);
@@ -75,7 +84,7 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
 
     internal class Options : IMigrateConfiguration
     {
-        [Option('s', "SourceConnectionString", Required=false, HelpText = "e.g. Data Source=10.1.2.3;initial catalog=Avms;user id=<readonlyuser>;password=<password>")]
+        [Option('s', "SourceConnectionString", HelpText = "e.g. Data Source=10.1.2.3;initial catalog=Avms;user id=<readonlyuser>;password=<password>")]
         public string SourceConnectionString { get; set; }
 
         [Option('t', "TargetConnectionString", HelpText = "e.g. Data Source=(local)\\SQLEXPRESS;Initial Catalog=AvmsPlus;Integrated Security=True")]
@@ -89,6 +98,12 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
 
         [Option("SingleTable", HelpText = "Ignore the built in configuration of which tables to synchronise and instead sychronise the single table specified, e.g. Vacancy")]
         public string SingleTable { get; set; }
+
+        [Option("MaxNumberOfChangesToDetailPerTable", HelpText = "Detailing every change found can create a large amount of logging / slow the system down. Set this parameter to limit the number of changes that will be detailed.")]
+        public int? MaxNumberOfChangesToDetailPerTable { get; set; }
+
+        [Option('a', "AnonymiseData", HelpText = "Whether to anonymise personal data during the transfer.")]
+        public bool AnonymiseData { get; set; }
 
         [Option('v', "Verbose", HelpText = "Verbose. WILL USUALLY WRITE PASSWORDS TO OUTPUT")]
         public bool Verbose { get; set; }
