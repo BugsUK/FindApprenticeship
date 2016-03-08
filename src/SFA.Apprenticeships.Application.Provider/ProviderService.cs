@@ -41,9 +41,17 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
         {
+            //TODO: Remove null checks following SQL migration
             var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
-            var providerSite = _providerSiteReadRepository.Get(vacancyParty.ProviderSiteId);
-            return _providerReadRepository.Get(providerSite.ProviderId);
+            if (vacancyParty != null)
+            {
+                var providerSite = _providerSiteReadRepository.Get(vacancyParty.ProviderSiteId);
+                if (providerSite != null)
+                {
+                    return _providerReadRepository.Get(providerSite.ProviderId);
+                }
+            }
+            return new Provider();
         }
 
         public Provider GetProvider(int providerId)
