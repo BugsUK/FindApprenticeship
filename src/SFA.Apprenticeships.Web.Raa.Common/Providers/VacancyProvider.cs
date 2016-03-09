@@ -832,7 +832,7 @@
             return viewModel;
         }
 
-        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(Vacancy vacancy)
+        private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
 
@@ -853,7 +853,7 @@
             };
         }
 
-        private bool CanBeReservedForQaByCurrentUser(Vacancy vacancy)
+        private bool CanBeReservedForQaByCurrentUser(VacancySummary vacancy)
         {
             if (NoUserHasStartedToQATheVacancy(vacancy))
             {
@@ -874,17 +874,17 @@
             return false;
         }
 
-        private static bool NoUserHasStartedToQATheVacancy(Vacancy vacancy)
+        private static bool NoUserHasStartedToQATheVacancy(VacancySummary vacancy)
         {
             return vacancy.Status == VacancyStatus.Submitted && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
         }
 
-        private bool CurrentUserHasStartedToQATheVacancy(Vacancy vacancy)
+        private bool CurrentUserHasStartedToQATheVacancy(VacancySummary vacancy)
         {
             return vacancy.Status == VacancyStatus.ReservedForQA && vacancy.QAUserName == Thread.CurrentPrincipal.Identity.Name;
         }
 
-        private bool AUserHasLeftTheVacancyUnattended(Vacancy vacancy, int timeout)
+        private bool AUserHasLeftTheVacancyUnattended(VacancySummary vacancy, int timeout)
         {
             return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
         }

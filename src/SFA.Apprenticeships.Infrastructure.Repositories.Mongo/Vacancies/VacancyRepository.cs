@@ -60,11 +60,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
-        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
+        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var mongoEntities = Collection.Find(Query.In("VacancyId", new BsonArray(vacancyIds)));
 
-            return mongoEntities.Select(e => _mapper.Map<MongoVacancy, Vacancy>(e)).ToList();
+            return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
@@ -74,12 +74,12 @@
             return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
-        public List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
             var mongoEntities = Collection.Find(Query<Vacancy>.In(v => v.Status, desiredStatuses))
-                .Select(e => _mapper.Map<MongoVacancy, Vacancy>(e))
+                .Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e))
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", mongoEntities.Count, string.Join(",", desiredStatuses)));
@@ -87,7 +87,7 @@
             return mongoEntities;
         }
 
-        public List<Vacancy>Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
+        public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
         {
             _logger.Debug("Calling repository to find apprenticeship vacancies");
 
@@ -127,7 +127,7 @@
                 .SetSortOrder(SortBy.Ascending("VacancyReferenceNumber"))
                 .SetSkip(query.PageSize * (query.CurrentPage - 1))
                 .SetLimit(query.PageSize)
-                .Select(vacancy => _mapper.Map<MongoVacancy, Vacancy>(vacancy))
+                .Select(vacancy => _mapper.Map<MongoVacancy, VacancySummary>(vacancy))
                 .ToList();
 
             totalResultsCount = Convert.ToInt32(Collection.Count(queryBuilder.And(mongoQueryConditions)));

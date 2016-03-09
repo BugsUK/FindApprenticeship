@@ -38,7 +38,7 @@
             _dateTimeService.Setup(s => s.UtcNow).Returns(utcNow);
 
             var submittedTodayDate = utcNow.Date;
-            var vacanciesSubmittedToday = new Fixture().Build<Vacancy>()
+            var vacanciesSubmittedToday = new Fixture().Build<VacancySummary>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)

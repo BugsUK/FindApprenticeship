@@ -113,7 +113,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
-        public DateTime? DateFirstSubmitted { get; set; }
         public int LastEditedById { get; set; }
         public string ApprenticeshipLevelComment { get; set; }
         public string FrameworkCodeNameComment { get; set; }

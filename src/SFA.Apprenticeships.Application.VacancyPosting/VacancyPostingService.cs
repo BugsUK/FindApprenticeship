@@ -111,12 +111,12 @@
             return _vacancyReadRepository.Get(vacancyId);
         }
 
-        public List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
             return _vacancyReadRepository.GetWithStatus(desiredStatuses);
         }
 
-        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
+        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             return _vacancyReadRepository.GetByIds(vacancyIds);
         }

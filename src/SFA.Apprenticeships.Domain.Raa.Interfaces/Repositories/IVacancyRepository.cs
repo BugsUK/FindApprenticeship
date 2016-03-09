@@ -13,13 +13,13 @@
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
         
-        List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
+        List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
-        List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
+        List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<Vacancy> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
+        List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }
 
     public interface IVacancyWriteRepository

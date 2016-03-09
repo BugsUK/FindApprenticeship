@@ -23,6 +23,7 @@
         public bool? OfflineVacancy { get; set; }
         public int OfflineApplicationClickThroughCount { get; set; }
         public DateTime? DateSubmitted { get; set; }
+        public DateTime? DateFirstSubmitted { get; set; }
         public DateTime? DateStartedToQA { get; set; }
         public string QAUserName { get; set; }
         public DateTime? DateQAApproved { get; set; }
