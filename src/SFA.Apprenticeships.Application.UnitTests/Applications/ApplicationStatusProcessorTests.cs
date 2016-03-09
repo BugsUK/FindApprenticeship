@@ -2,14 +2,14 @@
 {
     using System;
     using System.Linq;
-    using Application.Applications;
-    using Application.Applications.Entities;
-    using Application.Applications.Strategies;
+    using Apprenticeships.Application.Applications;
+    using Apprenticeships.Application.Applications.Entities;
+    using Apprenticeships.Application.Applications.Strategies;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

@@ -2,12 +2,12 @@
 {
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Applications;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using Raa.Common.ViewModels.Application;
     using Recruit.Mappers;
-    using ViewModels.Application;
 
     [TestFixture]
     public class RecruitMappersTests
@@ -30,16 +30,14 @@
         public void ShouldMapVacancyApplicationsViewModel()
         {
             //Arrange
-            var source = new Fixture().Build<ApprenticeshipVacancy>().Create();
+            var source = new Fixture().Build<Vacancy>().Create();
 
             //Act
-            var viewModel = _mapper.Map<ApprenticeshipVacancy, VacancyApplicationsViewModel>(source);
+            var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(source);
 
             //Assert
             viewModel.Should().NotBeNull();
             viewModel.Title.Should().Be(source.Title);
-            viewModel.EmployerName.Should().Be(source.ProviderSiteEmployerLink.Employer.Name);
-            viewModel.EmployerGeoPoint.Should().NotBeNull();
             viewModel.ShortDescription.Should().Be(source.ShortDescription);
             viewModel.Status.Should().Be(source.Status);
         }
@@ -59,5 +57,5 @@
             viewModel.DateApplied.Should().Be(source.DateApplied.Value);
             viewModel.Status.Should().Be(source.Status);
         }
-    }
+   }
 }

@@ -157,12 +157,13 @@
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="Configuration\ManageWebConfiguration.cs" />
     <Compile Include="Configuration\RecruitWebConfiguration.cs" />
+    <Compile Include="Constants\ViewModels\ApplicationViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerFilterViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\EmployerViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\LocationSearchViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\NewVacancyViewModelMessages.cs" />
-    <Compile Include="Constants\ViewModels\ProviderSiteEmployerLinkViewModelMessages.cs" />
+    <Compile Include="Constants\ViewModels\VacancyPartyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderSiteViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderUserViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\ProviderViewModelMessages.cs" />
@@ -178,13 +179,16 @@
     <Compile Include="Converters\StandardViewModelConverter.cs" />
     <Compile Include="Extensions\HtmlExtensions.cs" />
     <Compile Include="Mappers\RaaCommonWebMappers.cs" />
-    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyDatesViewModelConverter.cs" />
-    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancySummaryViewModelConverter.cs" />
-    <Compile Include="Mappers\Resolvers\ApprenticeshipVacancyToVacancyViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToVacancyDatesViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToFurtherVacancyDetailsViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToVacancySummaryViewModelConverter.cs" />
+    <Compile Include="Mappers\Resolvers\VacancyToVacancyViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\DateTimeToDateViewModelConverter.cs" />
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\ApplicationProvider.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
+    <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
     <Compile Include="Providers\ILocationsProvider.cs" />
     <Compile Include="Providers\IProviderQAProvider.cs" />
@@ -197,15 +201,17 @@
     <Compile Include="Providers\ProviderUserProvider.cs" />
     <Compile Include="Factories\SelectListItemsFactory.cs" />
     <Compile Include="Providers\VacancyProvider.cs" />
+    <Compile Include="Validators\Application\TraineeshipApplicationViewModelValidator.cs" />
+    <Compile Include="Validators\Application\ApprenticeshipApplicationViewModelValidator.cs" />
     <Compile Include="Validators\Common.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidator.cs" />
     <Compile Include="Validators\ProviderUser\VerifyEmailViewModelValidator.cs" />
-    <Compile Include="Validators\Provider\ProviderSiteEmployerLinkViewModelValidator.cs" />
+    <Compile Include="Validators\Provider\VacancyPartyViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteSearchViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderSiteViewModelValidator.cs" />
     <Compile Include="Validators\Provider\ProviderViewModelValidator.cs" />
     <Compile Include="Validators\VacancyPosting\EmployerSearchViewModelValidator.cs" />
-    <Compile Include="Validators\VacancyPosting\LocationSearchViewModelValidator.cs" />
+    <Compile Include="Validators\VacancyPosting\LocationSearchViewModelServerValidator.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyLocationAddressViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\TrainingDetailsViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyDatesViewModelBusinessRulesExtensions.cs" />
@@ -216,6 +222,22 @@
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelBusinessRulesExtensions.cs" />
     <Compile Include="Validators\Vacancy\VacancySummaryViewModelValidator.cs" />
     <Compile Include="Validators\Vacancy\VacancyViewModelValidator.cs" />
+    <Compile Include="ViewModels\Application\AboutYouViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicantDetailsViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSelectionViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationSummaryViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Application\ApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Apprenticeship\ApprenticeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\EducationViewModel.cs" />
+    <Compile Include="ViewModels\Application\QualificationViewModel.cs" />
+    <Compile Include="ViewModels\Application\Traineeship\TraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\Application\TrainingCourseViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsFilterTypes.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsSearchViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyApplicationsViewModel.cs" />
+    <Compile Include="ViewModels\Application\VacancyQuestionAnswersViewModel.cs" />
+    <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
@@ -229,7 +251,7 @@
     <Compile Include="ViewModels\ProviderUser\VacanciesSummarySearchViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VacanciesSummaryViewModel.cs" />
     <Compile Include="ViewModels\ProviderUser\VerifyEmailViewModel.cs" />
-    <Compile Include="ViewModels\Provider\ProviderSiteEmployerLinkViewModel.cs" />
+    <Compile Include="ViewModels\Provider\VacancyPartyViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchMode.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchResponseViewModel.cs" />
     <Compile Include="ViewModels\Provider\ProviderSiteSearchViewModel.cs" />
@@ -252,9 +274,55 @@
     <Compile Include="ViewModels\Vacancy\VacancyLinksViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyQuestionsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyRequirementsProspectsViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\FurtherVacancyDetailsViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\VacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ValidationResultViewModel.cs" />
+    <Compile Include="Views\Shared\DisplayTemplates\Application\AboutYou.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutYou.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ApplicantDetails.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DisabilityStatusQuestion.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\Education.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Education.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>EmployerQuestionAnswers.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MonitoringInformation.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\Qualifications.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Qualifications.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TrainingCourses.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Application\WorkExperience.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WorkExperience.cshtml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\DateTime.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -274,6 +342,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>LocationSearch.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.generated.cs">
+      <DependentUpon>VacancyPreviewHeader.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreview.generated.cs">
       <AutoGen>True</AutoGen>
@@ -297,6 +370,26 @@
     </Compile>
     <Compile Include="Views\Shared\DisplayTemplates\Vacancy\EmployerQuestions.generated.cs">
       <DependentUpon>EmployerQuestions.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.generated.cs">
+      <DependentUpon>_VacancyDetails.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.generated.cs">
+      <DependentUpon>_OfflineVacancy.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.generated.cs">
+      <DependentUpon>_TrainingProvider.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.generated.cs">
+      <DependentUpon>_AboutTraineeships.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -364,6 +457,62 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>TrainingDetails.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\AboutYou.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>AboutYou.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\Education.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Education.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\Qualifications.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Qualifications.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\TrainingCourses.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>TrainingCourses.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\WorkExperience.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>WorkExperience.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\DisabilityStatusQuestion.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>DisabilityStatusQuestion.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\ApplicantDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>ApplicantDetails.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\DisplayTemplates\Application\MonitoringInformation.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>MonitoringInformation.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>EmployerQuestionAnswers.generated.cs</LastGenOutput>
+    </None>
+    <Content Include="Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>VacancyPreviewHeader.generated.cs</LastGenOutput>
+    </Content>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_VacancyDetails.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_OfflineVacancy.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_OfflineVacancy.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_TrainingProvider.generated.cs</LastGenOutput>
+    </None>
+    <None Include="Views\Shared\DisplayTemplates\Vacancy\_AboutTraineeships.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AboutTraineeships.generated.cs</LastGenOutput>
+    </None>
     <None Include="Views\Shared\DisplayTemplates\Vacancy\_QuestionsForCandidates.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_QuestionsForCandidates.generated.cs</LastGenOutput>
@@ -386,6 +535,10 @@
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
+      <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.Raa</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
       <Project>{4c2be232-4dbd-44d0-b427-0450e2d857a5}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities</Name>
@@ -393,6 +546,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
+      <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
+      <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
@@ -412,7 +569,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="TypeConverters\" />
     <Folder Include="Views\Shared\EditorTemplates\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

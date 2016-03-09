@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
-    using Raa.Common.Providers;
+    using Common.Providers;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
@@ -17,10 +18,12 @@
         private Mock<ILogService> _mockLogService;
         protected Mock<IMapper> MockMapper;
         protected Mock<IProviderService> MockProviderService;
+        protected Mock<IEmployerService> MockEmployerService;
         private Mock<IUserProfileService> _mockUserProfileService;
         protected Mock<IReferenceDataService> MockReferenceDataService;
         protected Mock<IDateTimeService> MockTimeService;
         private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService;
+        private Mock<ITraineeshipApplicationService> _traineeshipApplicationService;
 
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
 
@@ -32,6 +35,7 @@
             MockMapper = new Mock<IMapper>();
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
+            MockEmployerService = new Mock<IEmployerService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
@@ -39,6 +43,7 @@
 
             MockTimeService = new Mock<IDateTimeService>();
             _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -48,9 +53,11 @@
                 MockVacancyPostingService.Object,
                 MockReferenceDataService.Object,
                 MockProviderService.Object,
+                MockEmployerService.Object,
                 MockTimeService.Object,
                 MockMapper.Object,
                 _apprenticeshipApplicationService.Object,
+                _traineeshipApplicationService.Object,
                 _mockUserProfileService.Object);
         }
     }

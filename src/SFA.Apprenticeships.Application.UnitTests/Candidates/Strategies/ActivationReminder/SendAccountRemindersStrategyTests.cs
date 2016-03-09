@@ -3,14 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Application.Candidates.Configuration;
-    using Application.Candidates.Strategies;
-    using Application.Candidates.Strategies.ActivationReminder;
+    using Apprenticeships.Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Strategies;
+    using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;

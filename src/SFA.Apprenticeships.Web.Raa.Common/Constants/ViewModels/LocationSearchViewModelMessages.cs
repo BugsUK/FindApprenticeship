@@ -8,7 +8,7 @@
         {
             public const string LabelText = "Additional location information (optional)";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The title " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "The additional location information " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public class PostCodeSearch
@@ -31,6 +31,8 @@
         public class AdditionalLocationInformationComment
         {
             public const string LabelText = "Additional location information comment";
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The additional location information comment " + Whitelists.FreetextWhitelist.ErrorText;
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     using SFA.Infrastructure.Interfaces;
     using Common.Mappers;
-    using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
     using FluentAssertions;
     using NUnit.Framework;
     using Web.Common.ViewModels.Locations;

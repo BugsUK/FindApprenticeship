@@ -1,15 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.Mappers
 {
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using Infrastructure.Common.Mappers;
-    using Mongo.Vacancies.Entities;
+    using Entities;
 
     public class ApprenticeshipVacancyMappers : MapperEngine
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<ApprenticeshipVacancy, MongoApprenticeshipVacancy>();
-            Mapper.CreateMap<MongoApprenticeshipVacancy, ApprenticeshipVacancy>();
+            Mapper.CreateMap<Vacancy, MongoApprenticeshipVacancy>();
+            Mapper.CreateMap<MongoApprenticeshipVacancy, Vacancy>();
+
+            Mapper.CreateMap<VacancyLocation, MongoVacancyLocation>();
+            Mapper.CreateMap<MongoVacancyLocation, VacancyLocation>();
         }
     }
 }

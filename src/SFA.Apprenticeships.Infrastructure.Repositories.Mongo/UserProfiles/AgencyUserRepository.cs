@@ -1,15 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.UserProfiles
 {
     using System;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
-    using Mongo.Common;
-    using Mongo.Common.Configuration;
-    using Mongo.UserProfiles.Entities;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
+    using Common;
+    using Common.Configuration;
+    using Entities;
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class AgencyUserRepository : GenericMongoClient<MongoAgencyUser>, IAgencyUserReadRepository, IAgencyUserWriteRepository
+    public class AgencyUserRepository : GenericMongoClient2<MongoAgencyUser>, IAgencyUserReadRepository, IAgencyUserWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -40,20 +40,21 @@
             return mongoEntity == null ? null : _mapper.Map<MongoAgencyUser, AgencyUser>(mongoEntity);
         }
 
-        public void Delete(Guid id)
-        {
-            _logger.Debug("Calling repository to delete agency user with Id={0}", id);
+        //public void Delete(int agencyUserId)
+        //{
+        //    _logger.Debug("Calling repository to delete agency user with Id={0}", agencyUserId);
 
-            Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.Id, id));
+        //    Collection.Remove(Query<MongoAgencyUser>.EQ(o => o.AgencyUserId, agencyUserId));
 
-            _logger.Debug("Deleted agency user with Id={0}", id);
-        }
+        //    _logger.Debug("Deleted agency user with Id={0}", agencyUserId);
+        //}
 
         public AgencyUser Save(AgencyUser entity)
         {
             _logger.Debug("Called Mongodb to save agency user with username={0}", entity.Username);
 
-            UpdateEntityTimestamps(entity);
+            SetCreatedDateTime(entity);
+            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<AgencyUser, MongoAgencyUser>(entity);
 

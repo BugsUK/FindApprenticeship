@@ -6,8 +6,7 @@
     using System.Web.Routing;
     using Common.ViewModels;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Manage.Views.Vacancy;
     using Moq;
@@ -15,7 +14,6 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
-    using Raa.Common.Views.Shared.DisplayTemplates;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using RazorGenerator.Testing;
 
@@ -49,7 +47,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -59,7 +57,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -70,7 +68,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -89,7 +87,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -99,7 +97,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -110,7 +108,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -129,7 +127,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -139,7 +137,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -150,7 +148,7 @@
                 },
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA
+                Status = VacancyStatus.ReservedForQA
             };
 
             var view = details.RenderAsHtml(_context, viewModel);
@@ -173,7 +171,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -185,7 +183,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -198,7 +196,7 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA,
+                Status = VacancyStatus.ReservedForQA,
                 VacancyType = VacancyType.Apprenticeship
             };
 
@@ -220,7 +218,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -233,7 +231,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -246,7 +244,7 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.ReservedForQA,
+                Status = VacancyStatus.ReservedForQA,
                 VacancyType = VacancyType.Apprenticeship
             };
 

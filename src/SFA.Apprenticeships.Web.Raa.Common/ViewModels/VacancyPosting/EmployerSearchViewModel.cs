@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
     public enum EmployerFilterType
     {
         Undefined,
-        Ern,
+        EdsUrn,
         NameAndLocation
     }
 
@@ -23,9 +23,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
         public EmployerSearchViewModel(EmployerSearchViewModel viewModel) : this()
         {
-            ProviderSiteErn = viewModel.ProviderSiteErn;
+            ProviderSiteId = viewModel.ProviderSiteId;
             FilterType = viewModel.FilterType;
-            Ern = viewModel.Ern;
+            EdsUrn = viewModel.EdsUrn;
             Name = viewModel.Name;
             Location = viewModel.Location;
             if (viewModel.EmployerResultsPage != null)
@@ -36,12 +36,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
             ComeFromPreview = viewModel.ComeFromPreview;
         }
 
-        public string ProviderSiteErn { get; set; }
+        public int ProviderSiteId { get; set; }
 
         public EmployerFilterType FilterType { get; set; }
 
-        [Display(Name = EmployerSearchViewModelMessages.Ern.LabelText)]
-        public string Ern { get; set; }
+        [Display(Name = EmployerSearchViewModelMessages.EdsUrn.LabelText)]
+        public string EdsUrn { get; set; }
 
         [Display(Name = EmployerSearchViewModelMessages.Name.LabelText)]
         public string Name { get; set; }
@@ -56,9 +56,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.VacancyPosting
 
         public object RouteValues => new
         {
-            ProviderSiteErn,
+            ProviderSiteId,
             FilterType,
-            Ern,
+            EdsUrn,
             Name,
             Location,
             VacancyGuid,

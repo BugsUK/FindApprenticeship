@@ -1,13 +1,12 @@
 ﻿@model HomeViewModel
 
 @functions {
-    private static bool VacancyIsClonable(VacancyViewModel vacancy)
+    private static bool VacancyIsClonable(VacancySummaryViewModel vacancy)
     {
-        return vacancy.Status != ProviderVacancyStatuses.RejectedByQA;
+        return vacancy.Status != VacancyStatus.Referred;
     }
 }
-@using SFA.Apprenticeships.Domain.Entities.Vacancies
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
@@ -36,15 +35,15 @@
             <div class="">
                 @if (Model.ProviderSites.Count == 1)
                 {
-                    <label class="form-label" for="provider-site">Provider site</label>
-                    Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
-                    @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
+                    <p class="form-label">Provider site</p>
+                    Model.ProviderUserViewModel.DefaultProviderSiteId = Convert.ToInt32(Model.ProviderSites[0].Value);
+                    @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteId)
                     <p>@Model.ProviderSites[0].Text</p>
                 }
                 else
                 {
-                    <label class="form-label" for="provider-site">Change provider site</label>
-                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, new {id = "provider-site", @class = "chosen-select grid grid-1-1"})
+                    <p class="form-label">Change provider site</p>
+                    @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, new {id = "provider-site", @class = "chosen-select grid grid-1-1"})
                     <noscript>
                         <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change provider site</button>
                     </noscript>
@@ -278,14 +277,14 @@
                             <tbody>
                             @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
                             {
-                                var isOfflineVacancy = vacancy.NewVacancyViewModel.OfflineVacancy == true;
+                                var isOfflineVacancy = vacancy.OfflineVacancy == true;
                                 <tr>
                                     <td data-label="Vacancy title">
                                         <div class="vac-title">
                                             @{
-                                                var title = string.IsNullOrEmpty(vacancy.NewVacancyViewModel.Title) ? "(No Title)" : vacancy.NewVacancyViewModel.Title;
+                                                var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
                                                 var routeName = RecruitmentRouteNames.PreviewVacancy;
-                                                if (vacancy.Status == ProviderVacancyStatuses.Unknown || vacancy.Status == ProviderVacancyStatuses.Draft)
+                                                if (vacancy.Status == VacancyStatus.Unknown || vacancy.Status == VacancyStatus.Draft)
                                                 {
                                                     routeName = RecruitmentRouteNames.ReviewCreateVacancy;
                                                 }
@@ -304,17 +303,19 @@
                                         </div>
                                     </td>
                                     <td class="vac-employer" data-label="Employer">
-                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Name
+                                        @vacancy.EmployerName
                                     </td>
                                     <td class="vac-ref-number" data-label="Vacancy ref">
-                                    @if (vacancy.IsApprovedMultiLocationChildVacancy)
+                                    @if (vacancy.ParentVacancyId != null && 
+                                        vacancy.Status == VacancyStatus.Live)
                                     {
-                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4<br/>
-                                        @vacancy.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1Ellipsis
+
+                                        @vacancy.Location.AddressLine4<br/>
+                                        @vacancy.Location.AddressLineEllipsis
                                     }
                                     else
                                     {
-                                        @vacancy.NewVacancyViewModel.ProviderSiteEmployerLink.Employer.Address.AddressLine4
+                                        @vacancy.Location.AddressLine4
                                     }
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
@@ -324,7 +325,7 @@
                                             var unit = isOfflineVacancy ? "click-through" : "application";
                                             var units = unit + "s";
 
-                                            if (vacancy.Status == ProviderVacancyStatuses.Live && count == 0 && vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate.Date.CloseToClosingDate())
+                                            if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
                                             {
                                                 <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
@@ -344,9 +345,9 @@
                                     </td>
                                     <td class="vac-status">
                                         @{ Html.RenderPartial("_vacancyStatus", @vacancy.Status); }
-                                        @if (vacancy.Status == ProviderVacancyStatuses.Live)
+                                        @if (vacancy.Status == VacancyStatus.Live)
                                         {
-                                            Html.RenderPartial("_closingDate", @vacancy.VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate);
+                                            Html.RenderPartial("_closingDate", @vacancy.ClosingDate);
                                         }
                                     </td>
                                     <td class="vac-toolbox">

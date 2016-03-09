@@ -4,9 +4,12 @@
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
+    using FluentValidation.Attributes;
+    using Validators.VacancyPosting;
     using Web.Common.ViewModels;
 
+    [Validator(typeof (LocationSearchViewModelClientValidator))]
     public class LocationSearchViewModel
     {
         public const string PartialView = "Vacancy/LocationSearch";
@@ -23,9 +26,13 @@
 
         public List<VacancyLocationAddressViewModel> Addresses { get; set; }
 
-        public string ProviderSiteErn { get; set; }
+        public string ProviderSiteEdsUrn { get; set; }
 
-        public string Ern { get; set; }
+        public int ProviderSiteId { get; set; }
+
+        public string EmployerEdsUrn { get; set; }
+
+        public int EmployerId { get; set; }
 
         public Guid VacancyGuid { get; set; }
 
@@ -36,9 +43,9 @@
 
         public bool ComeFromPreview { get; set; }
 
-        public ProviderVacancyStatuses Status { get; set; }
+        public VacancyStatus Status { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public bool IsEmployerLocationMainApprenticeshipLocation { get; set; }
 		
@@ -51,5 +58,7 @@
 
         [Display(Name = LocationSearchViewModelMessages.AdditionalLocationInformationComment.LabelText)]
         public string AdditionalLocationInformationComment { get; set; }
+
+        public int VacancyPartyId { get; set; }
     }
 }

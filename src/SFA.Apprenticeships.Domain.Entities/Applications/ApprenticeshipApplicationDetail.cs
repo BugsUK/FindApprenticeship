@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
+    using System;
     using Vacancies.Apprenticeships;
 
     public class ApprenticeshipApplicationDetail : ApplicationDetail
@@ -8,6 +9,10 @@
         {
             Vacancy = new ApprenticeshipSummary();
         }
+
+        public DateTime? SuccessfulDateTime { get; set; }
+
+        public DateTime? UnsuccessfulDateTime { get; set; }
 
         public string WithdrawnOrDeclinedReason { get; set; }
 

@@ -20,7 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
         public int WarningsHash { get; set; }
 
-        public long VacancyReferenceNumber { get; set; }
+        public int VacancyReferenceNumber { get; set; }
 
         public UpdateVacancyDatesState State { get; set; }
     }

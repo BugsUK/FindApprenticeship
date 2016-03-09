@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Provider
 {
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Organisations;
     using Moq;
@@ -27,7 +28,7 @@
         public void FromRepository()
         {
             var repository = new Mock<IProviderReadRepository>();
-            repository.Setup(r => r.Get(Ukprn)).Returns(_provider1);
+            repository.Setup(r => r.GetViaUkprn(Ukprn)).Returns(_provider1);
             var service = new ProviderServiceBuilder().With(repository.Object).Build();
 
             var provider = service.GetProvider(Ukprn);
@@ -53,7 +54,7 @@
         public void RepositoryMaster()
         {
             var repository = new Mock<IProviderReadRepository>();
-            repository.Setup(r => r.Get(Ukprn)).Returns(_provider1);
+            repository.Setup(r => r.GetViaUkprn(Ukprn)).Returns(_provider1);
             var organisationService = new Mock<IOrganisationService>();
             organisationService.Setup(r => r.GetProvider(Ukprn)).Returns(_provider2);
             var service = new ProviderServiceBuilder().With(organisationService.Object).With(repository.Object).Build();

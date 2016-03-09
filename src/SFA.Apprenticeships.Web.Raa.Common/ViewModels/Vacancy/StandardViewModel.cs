@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 {
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
 
     public class StandardViewModel
     {

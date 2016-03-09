@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Candidates.Configuration
 {
-    using Application.Candidates.Configuration;
+    using Apprenticeships.Application.Candidates.Configuration;
 
     public class HousekeepingConfigurationBuilder
     {

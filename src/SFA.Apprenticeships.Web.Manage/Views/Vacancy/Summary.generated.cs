@@ -48,7 +48,7 @@ namespace SFA.Apprenticeships.Web.Manage.Views.Vacancy
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Vacancy/Summary.cshtml")]
-    public partial class Summary : System.Web.Mvc.WebViewPage<VacancySummaryViewModel>
+    public partial class Summary : System.Web.Mvc.WebViewPage<FurtherVacancyDetailsViewModel>
     {
         public Summary()
         {
@@ -67,14 +67,29 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 7 "..\..\Views\Vacancy\Summary.cshtml"
-Write(Html.DisplayFor(m => m, VacancySummaryViewModel.PartialView));
+Write(Html.HiddenFor(m => m.AcceptWarnings));
 
             
             #line default
             #line hidden
             
             #line 7 "..\..\Views\Vacancy\Summary.cshtml"
-                                                                 
+                                          
+
+    
+            
+            #line default
+            #line hidden
+            
+            #line 9 "..\..\Views\Vacancy\Summary.cshtml"
+Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
+
+            
+            #line default
+            #line hidden
+            
+            #line 9 "..\..\Views\Vacancy\Summary.cshtml"
+                                                                        
 
 
             
@@ -95,7 +110,7 @@ WriteLiteral(">Save</button>\r\n");
 WriteLiteral("        ");
 
             
-            #line 11 "..\..\Views\Vacancy\Summary.cshtml"
+            #line 13 "..\..\Views\Vacancy\Summary.cshtml"
    Write(Html.RouteLink("Cancel", ManagementRouteNames.ReviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
@@ -104,7 +119,7 @@ WriteLiteral("        ");
 WriteLiteral("\r\n    </div>\r\n");
 
             
-            #line 13 "..\..\Views\Vacancy\Summary.cshtml"
+            #line 15 "..\..\Views\Vacancy\Summary.cshtml"
 }
             
             #line default

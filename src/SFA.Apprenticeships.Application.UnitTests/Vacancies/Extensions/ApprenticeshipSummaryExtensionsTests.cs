@@ -1,11 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies.Extensions
 {
     using System.Linq;
-    using Application.Vacancies.Extensions;
-    using Builders;
+    using Apprenticeships.Application.Vacancies.Extensions;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
-    using Interfaces.Vacancies;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 

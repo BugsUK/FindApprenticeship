@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
 {
-    using Application.Applications.Entities;
+    using Apprenticeships.Application.Applications.Entities;
     using Builders;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Messaging;

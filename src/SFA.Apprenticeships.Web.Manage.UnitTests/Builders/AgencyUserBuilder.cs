@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Builders
 {
-    using Domain.Entities.Users;
+    using Domain.Entities.Raa.Users;
     using Factory;
 
     public class AgencyUserBuilder

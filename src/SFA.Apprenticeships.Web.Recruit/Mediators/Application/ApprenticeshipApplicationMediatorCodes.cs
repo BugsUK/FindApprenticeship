@@ -27,5 +27,25 @@
             public const string FailedValidation = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.FailedValidation";
             public const string Error = "ApprenticeshipApplicationMediatorCodes.ReviewSaveAndExit.Error";
         }
+
+        public class ConfirmSuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmSuccessfulDecision.Ok";
+        }
+
+        public class SendSuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendSuccessfulDecision.Ok";
+        }
+
+        public class ConfirmUnsuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.ConfirmUnsuccessfulDecision.Ok";
+        }
+
+        public class SendUnsuccessfulDecision
+        {
+            public const string Ok = "ApprenticeshipApplicationMediatorCodes.SendUnsuccessfulDecision.Ok";
+        }
     }
 }

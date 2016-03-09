@@ -1,28 +1,28 @@
-﻿@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
-@model ProviderVacancyStatuses
+﻿@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
+@model SFA.Apprenticeships.Domain.Entities.Raa.Vacancies.VacancyStatus
 
 @switch (Model)
 {
-    case ProviderVacancyStatuses.Draft:
+    case VacancyStatus.Draft:
         <span class="tag-draft" style="width: 110px">Draft</span>
         break;
-    case ProviderVacancyStatuses.PendingQA:
-    case ProviderVacancyStatuses.ReservedForQA:
+    case VacancyStatus.Submitted:
+    case VacancyStatus.ReservedForQA:
         <span class="tag-pending" style="width: 110px">Submitted</span>
         break;
-    case ProviderVacancyStatuses.RejectedByQA:
+    case VacancyStatus.Referred:
         <span class="tag-pending" style="width: 110px">Referred</span>
         break;
-    case ProviderVacancyStatuses.Live:
+    case VacancyStatus.Live:
         <span class="tag-live" style="width: 110px">Live</span>
         break;
-    case ProviderVacancyStatuses.Closed:
+    case VacancyStatus.Closed:
         <span class="tag-live" style="width: 110px">Closed</span>
         break;
-    case ProviderVacancyStatuses.Completed:
+    case VacancyStatus.Completed:
         <span class="tag-live" style="width: 110px">Completed</span>
         break;
-    case ProviderVacancyStatuses.Withdrawn:
+    case VacancyStatus.Withdrawn:
         <span class="tag-live" style="width: 110px">Withdrawn</span>
         break;
     default:

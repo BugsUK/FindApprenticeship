@@ -8,14 +8,12 @@
     using FluentAssertions;
     using NUnit.Framework;
     using RazorGenerator.Testing;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using Common.ViewModels.Locations;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Moq;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
-    using Raa.Common.Views.Shared.DisplayTemplates;
     using Raa.Common.Views.Shared.DisplayTemplates.Vacancy;
     using Recruit.Views.VacancyPosting;
 
@@ -48,7 +46,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -58,7 +56,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 { 
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -91,7 +89,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -103,7 +101,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -137,7 +135,7 @@
                 {
                     Address = new AddressViewModel()
                 },
-                VacancySummaryViewModel = new VacancySummaryViewModel
+                FurtherVacancyDetailsViewModel = new FurtherVacancyDetailsViewModel
                 {
                     VacancyDatesViewModel = new VacancyDatesViewModel
                     {
@@ -150,7 +148,7 @@
                 },
                 NewVacancyViewModel = new NewVacancyViewModel
                 {
-                    ProviderSiteEmployerLink = new ProviderSiteEmployerLinkViewModel()
+                    OwnerParty = new VacancyPartyViewModel()
                     {
                         Employer = new EmployerViewModel()
                         {
@@ -163,7 +161,7 @@
                 TrainingDetailsViewModel = new TrainingDetailsViewModel(),
                 VacancyQuestionsViewModel = new VacancyQuestionsViewModel(),
                 VacancyRequirementsProspectsViewModel = new VacancyRequirementsProspectsViewModel(),
-                Status = ProviderVacancyStatuses.Draft,
+                Status = VacancyStatus.Draft,
                 VacancyType = VacancyType.Apprenticeship
             };
 

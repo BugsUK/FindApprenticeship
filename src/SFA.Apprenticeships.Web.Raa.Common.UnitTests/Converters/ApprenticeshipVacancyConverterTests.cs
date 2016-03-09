@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Converters
 {
     using Common.Converters;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -15,7 +13,7 @@
         public void ApprenticeshipDurationTypes()
         {
             //Arrange
-            var vacancy = new Fixture().Build<ApprenticeshipVacancy>().With(v => v.VacancyType, VacancyType.Apprenticeship).Create();
+            var vacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyType, VacancyType.Apprenticeship).Create();
 
             //Act
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
@@ -34,7 +32,7 @@
         public void TraineeshipDurationTypes()
         {
             //Arrange
-            var vacancy = new Fixture().Build<ApprenticeshipVacancy>().With(v => v.VacancyType, VacancyType.Traineeship).Create();
+            var vacancy = new Fixture().Build<Vacancy>().With(v => v.VacancyType, VacancyType.Traineeship).Create();
 
             //Act
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();

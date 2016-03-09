@@ -2,6 +2,7 @@
 {
     using System;
     using Candidate.Views.Account;
+    using Candidate.Views.Shared.DisplayTemplates;
     using Domain.Entities.Applications;
     using FluentAssertions;
     using NUnit.Framework;
@@ -21,7 +22,7 @@
                     .Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("find-apprenticeship-button");
@@ -100,7 +101,7 @@
                     ApplicationStatuses.Successful)).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("successful-applications-count");
@@ -131,7 +132,7 @@
             var myApplications = new MyApplicationsViewModelBuilder().With(apprenticeships).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("submitted-applications-count");
@@ -159,7 +160,7 @@
 
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("unsuccessful-applications-count");
@@ -185,7 +186,7 @@
                     ApplicationStatuses.Draft)).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("draft-applications-count");
@@ -201,6 +202,7 @@
             }
         }
 
+        [Test]
         public void ShouldShowCandidateSupportMessage()
         {
             // Arrange.
@@ -209,7 +211,7 @@
                     ApplicationStatuses.Unsuccessful)).Build();
 
             // Act.
-            var view = new Index().RenderAsHtml(myApplications);
+            var view = new MyApplications_().RenderAsHtml(myApplications);
 
             // Assert.
             var elem = view.GetElementbyId("candidate-support-message");

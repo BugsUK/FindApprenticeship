@@ -4,9 +4,8 @@
     using Builders;
     using Common.UnitTests.Validators;
     using Common.Validators;
-    using Domain.Entities.Vacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Constants.ViewModels;
-    using Domain.Entities.Vacancies.ProviderVacancies;
     using FluentAssertions;
     using FluentValidation;
     using FluentValidation.TestHelper;
@@ -49,7 +48,7 @@
         [TestCase(16, 2, DurationType.Years)]
         public void RuleFour_HoursPerWeek16to30_And_DurationGreaterThanOrEqualTo12months_And_ExpectedDurationGreaterThanOrEqualToMinimumDuration(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
@@ -63,8 +62,8 @@
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
 
         [TestCase(28, 56, DurationType.Weeks, VacancyViewModelMessages.Duration.DurationWarning28Hours)]
@@ -87,7 +86,7 @@
         [TestCase(16, 1, DurationType.Years, VacancyViewModelMessages.Duration.DurationWarning16Hours)]
         public void RuleFour_HoursPerWeek16to30_And_DurationGreaterThanOrEqualTo12months_And_ExpectedDurationLessThanMinimumDuration(decimal hoursPerWeek, int expectedDuration, DurationType durationType, string expectedMessage)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
@@ -101,12 +100,12 @@
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
-            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
             var error = response.Errors.SingleOrDefault(e => e.PropertyName == "Duration");
             error.Should().NotBeNull();
             error?.ErrorMessage.Should().Be(expectedMessage);
-            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "VacancySummaryViewModel.Duration");
+            var aggregateError = aggregateResponse.Errors.SingleOrDefault(e => e.PropertyName == "FurtherVacancyDetailsViewModel.Duration");
             aggregateError.Should().NotBeNull();
             aggregateError?.ErrorMessage.Should().Be(expectedMessage);
         }
@@ -131,7 +130,7 @@
         [TestCase(16, 1, DurationType.Years)]
         public void RuleFour_DoesNotApplyToTraineeships(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
@@ -145,8 +144,8 @@
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
 
         [TestCase(41, 56, DurationType.Weeks)]
@@ -166,7 +165,7 @@
         [TestCase(1, 1, DurationType.Years)]
         public void RuleFour_HoursPerWeekOutside16to30_And_DurationGreaterThanOrEqualTo12months_And_ExpectedDurationLessThanMinimumDuration(decimal hoursPerWeek, int expectedDuration, DurationType durationType)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 HoursPerWeek = hoursPerWeek,
                 Duration = expectedDuration,
@@ -179,10 +178,10 @@
             _aggregateValidator.Validate(vacancyViewModel, ruleSet: RuleSet);
 
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.HoursPerWeek, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.HoursPerWeek, vacancyViewModel, RuleSet);
             //Other errors will superceed this warning so will be valid
             _validator.ShouldNotHaveValidationErrorFor(vm => vm.Duration, viewModel, RuleSet);
-            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.VacancySummaryViewModel, vm => vm.VacancySummaryViewModel.Duration, vacancyViewModel, RuleSet);
+            _aggregateValidator.ShouldNotHaveValidationErrorFor(vm => vm.FurtherVacancyDetailsViewModel, vm => vm.FurtherVacancyDetailsViewModel.Duration, vacancyViewModel, RuleSet);
         }
     }
 }

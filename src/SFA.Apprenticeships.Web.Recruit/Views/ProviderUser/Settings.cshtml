@@ -52,13 +52,13 @@
             <p class="form-label">Your default provider site</p>
             @if (Model.ProviderSites.Count == 1)
             {
-                Model.ProviderUserViewModel.DefaultProviderSiteErn = Model.ProviderSites[0].Value;
-                @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn)
+                Model.ProviderUserViewModel.DefaultProviderSiteId = Convert.ToInt32(Model.ProviderSites[0].Value);
+                @Html.HiddenFor(m => m.ProviderUserViewModel.DefaultProviderSiteId)
                 <p>@Model.ProviderSites[0].Text</p>
             }
             else
             {
-                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteErn, Model.ProviderSites, "", new { @class = "chosen-select", style="min-width: 50%;", data_placeholder="Please select your default provider site" })
+                @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, "", new { @class = "chosen-select", style="min-width: 50%;", data_placeholder="Please select your default provider site" })
             }
         </div>
 

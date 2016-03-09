@@ -20,7 +20,7 @@
         [Test]
         public void DefaultShouldNotHaveAnyValidationErrors()
         {
-            var viewModel = new VacancySummaryViewModel();
+            var viewModel = new FurtherVacancyDetailsViewModel();
 
             var result = _validator.Validate(viewModel);
 
@@ -33,7 +33,7 @@
         [TestCase("<script>", false)]
         public void WorkingWeekInvalidCharacters(string workingWeek, bool expectValid)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WorkingWeek = workingWeek
             };
@@ -54,7 +54,7 @@
         [TestCase("More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters. More than 256 characters.", false)]
         public void WorkingWeekLength(string workingWeek, bool expectValid)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WorkingWeek = workingWeek
             };
@@ -77,7 +77,7 @@
         [TestCase("<script>", false)]
         public void LongDescriptionInvalidCharacters(string longDescription, bool expectValid)
         {
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 LongDescription = longDescription
             };

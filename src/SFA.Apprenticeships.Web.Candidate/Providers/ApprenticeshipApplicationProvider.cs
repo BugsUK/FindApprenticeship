@@ -1,15 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Providers
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
-    using Common.Configuration;
-    using Common.Constants;
-    using Common.Providers;
     using Domain.Entities.Locations;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
@@ -19,38 +15,34 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Constants.Pages;
     using ViewModels.Applications;
-    using ViewModels.MyApplications;
     using Common.Models.Application;
+    using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;
-    using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.
     public class ApprenticeshipApplicationProvider : IApprenticeshipApplicationProvider
     {
         private readonly ILogService _logger;
-        private readonly IUserDataProvider _userDataProvider;
         private readonly IReferenceDataService _referenceDataService;
+        private readonly ICandidateApplicationsProvider _candidateApplicationsProvider;
         private readonly IMapper _apprenticeshipCandidateWebMappers;
         private readonly IApprenticeshipVacancyProvider _apprenticeshipVacancyProvider;
         private readonly ICandidateService _candidateService;
-        private readonly IConfigurationService _configurationService;
 
         public ApprenticeshipApplicationProvider(
             IApprenticeshipVacancyProvider apprenticeshipVacancyProvider,
             ICandidateService candidateService,
-            IMapper apprenticeshipCandidateWebMappers,
-            IConfigurationService configurationService, ILogService logger,
-            IUserDataProvider userDataProvider,
-            IReferenceDataService referenceDataService)
+            IMapper apprenticeshipCandidateWebMappers, ILogService logger,
+            IReferenceDataService referenceDataService,
+            ICandidateApplicationsProvider candidateApplicationsProvider)
         {
             _apprenticeshipVacancyProvider = apprenticeshipVacancyProvider;
             _candidateService = candidateService;
             _apprenticeshipCandidateWebMappers = apprenticeshipCandidateWebMappers;
-            _configurationService = configurationService;
             _logger = logger;
-            _userDataProvider = userDataProvider;
             _referenceDataService = referenceDataService;
+            _candidateApplicationsProvider = candidateApplicationsProvider;
         }
 
         public ApprenticeshipApplicationViewModel GetApplicationViewModel(Guid candidateId, int vacancyId)
@@ -143,7 +135,7 @@
                     };
                 }
 
-                RecalculateSavedAndDraftCount(candidateId, null);
+                _candidateApplicationsProvider.RecalculateSavedAndDraftCount(candidateId, null);
                 var applicationViewModel = _apprenticeshipCandidateWebMappers.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(applicationDetails);
                 return PatchWithVacancyDetail(candidateId, vacancyId, applicationViewModel);
             }
@@ -412,6 +404,11 @@
             return new ApprenticeshipApplicationViewModel();
         }
 
+        public TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId)
+        {
+            return _candidateApplicationsProvider.GetTraineeshipFeatureViewModel(candidateId);
+        }
+
         public WhatHappensNextApprenticeshipViewModel GetWhatHappensNextViewModel(Guid candidateId, int vacancyId, string searchReturnUrl)
         {
             _logger.Debug(
@@ -422,7 +419,7 @@
             {
                 var applicationDetails = _candidateService.GetApplication(candidateId, vacancyId);
                 var candidate = _candidateService.GetCandidate(candidateId);
-                RecalculateSavedAndDraftCount(candidateId, null);
+                _candidateApplicationsProvider.RecalculateSavedAndDraftCount(candidateId, null);
 
                 if (applicationDetails == null || candidate == null)
                 {
@@ -518,71 +515,7 @@
 
         public MyApplicationsViewModel GetMyApplications(Guid candidateId)
         {
-            _logger.Debug("Calling ApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
-                candidateId);
-
-            try
-            {
-                var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
-                RecalculateSavedAndDraftCount(candidateId, apprenticeshipApplicationSummaries);
-
-                var apprenticeshipApplications = apprenticeshipApplicationSummaries
-                    .Select(each => new MyApprenticeshipApplicationViewModel(each))
-                    .ToList();
-
-                var traineeshipApplicationSummaries = _candidateService.GetTraineeshipApplications(candidateId);
-
-                var traineeshipApplications = traineeshipApplicationSummaries
-                    .Select(each => new MyTraineeshipApplicationViewModel
-                    {
-                        VacancyId = each.LegacyVacancyId,
-                        VacancyStatus = each.VacancyStatus,
-                        Title = each.Title,
-                        EmployerName = each.EmployerName,
-                        IsArchived = each.IsArchived,
-                        DateApplied = each.DateApplied
-                    })
-                    .ToList();
-
-                var traineeshipFeatureViewModel = GetTraineeshipFeatureViewModel(candidateId, apprenticeshipApplicationSummaries, traineeshipApplicationSummaries);
-                var lastApplicationStatusNotification = _userDataProvider.Get(UserDataItemNames.LastApplicationStatusNotification);
-                DateTime? lastApplicationStatusNotificationDateTime = null;
-
-                if (!string.IsNullOrWhiteSpace(lastApplicationStatusNotification))
-                {
-                    lastApplicationStatusNotificationDateTime = new DateTime(long.Parse(lastApplicationStatusNotification), DateTimeKind.Utc);
-                }
-
-                return new MyApplicationsViewModel(apprenticeshipApplications, traineeshipApplications, traineeshipFeatureViewModel, lastApplicationStatusNotificationDateTime);
-            }
-            catch (Exception e)
-            {
-                var message = string.Format("Get MyApplications failed for candidate ID: {0}.", candidateId);
-
-                _logger.Error(message, e);
-
-                throw;
-            }
-        }
-
-        public TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId)
-        {
-            try
-            {
-                var apprenticeshipApplicationSummaries = _candidateService.GetApprenticeshipApplications(candidateId);
-                var traineeshipApplicationSummaries = _candidateService.GetTraineeshipApplications(candidateId);
-                var traineeshipFeatureViewModel = GetTraineeshipFeatureViewModel(candidateId, apprenticeshipApplicationSummaries, traineeshipApplicationSummaries);
-
-                return traineeshipFeatureViewModel;
-            }
-            catch (Exception e)
-            {
-                var message = string.Format("Get Traineeship Feature View Model failed for candidate ID: {0}.", candidateId);
-
-                _logger.Error(message, e);
-
-                throw;
-            }
+            return _candidateApplicationsProvider.GetCandidateApplications(candidateId);
         }
 
         public SavedVacancyViewModel SaveVacancy(Guid candidateId, int vacancyId)
@@ -606,27 +539,6 @@
         }
 
         #region Helpers
-
-        private TraineeshipFeatureViewModel GetTraineeshipFeatureViewModel(Guid candidateId, IList<ApprenticeshipApplicationSummary> apprenticeshipApplicationSummaries, IList<TraineeshipApplicationSummary> traineeshipApplicationSummaries)
-        {
-            var candididate = _candidateService.GetCandidate(candidateId);
-
-            var webConfiguration = _configurationService.Get<CommonWebConfiguration>();
-            var unsuccessfulApplicationsToShowTraineeshipsPrompt = webConfiguration.UnsuccessfulApplicationsToShowTraineeshipsPrompt;
-            var allowTraineeshipPrompts = candididate.CommunicationPreferences.AllowTraineeshipPrompts;
-
-            var sufficentUnsuccessfulApprenticeshipApplicationsToPrompt = apprenticeshipApplicationSummaries.Count(each => each.Status == ApplicationStatuses.Unsuccessful) >= unsuccessfulApplicationsToShowTraineeshipsPrompt;
-            var candidateHasSuccessfulApprenticeshipApplication = apprenticeshipApplicationSummaries.Any(each => each.Status == ApplicationStatuses.Successful);
-            var candidateHasAppliedForTraineeship = traineeshipApplicationSummaries.Any();
-
-            var viewModel = new TraineeshipFeatureViewModel
-            {
-                ShowTraineeshipsPrompt = allowTraineeshipPrompts && sufficentUnsuccessfulApprenticeshipApplicationsToPrompt && !candidateHasSuccessfulApprenticeshipApplication && !candidateHasAppliedForTraineeship,
-                ShowTraineeshipsLink = (sufficentUnsuccessfulApprenticeshipApplicationsToPrompt || candidateHasAppliedForTraineeship)
-            };
-
-            return viewModel;
-        }
 
         private ApprenticeshipApplicationViewModel FailedApplicationViewModel(
             int vacancyId,
@@ -665,13 +577,6 @@
             apprenticeshipApplicationViewModel.Candidate.EmployerQuestionAnswers.SupplementaryQuestion2 = vacancyDetailViewModel.SupplementaryQuestion2;
 
             return apprenticeshipApplicationViewModel;
-        }
-
-        private void RecalculateSavedAndDraftCount(Guid candidateId, IList<ApprenticeshipApplicationSummary> summaries)
-        {
-            var apprenticeshipApplicationSummaries = summaries ?? _candidateService.GetApprenticeshipApplications(candidateId) ?? new List<ApprenticeshipApplicationSummary>();
-            var savedOrDraft = apprenticeshipApplicationSummaries.Count(a => a.Status == ApplicationStatuses.Draft || a.Status == ApplicationStatuses.Saved);
-            _userDataProvider.Push(UserDataItemNames.SavedAndDraftCount, savedOrDraft.ToString(CultureInfo.InvariantCulture));
         }
 
         #endregion

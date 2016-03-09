@@ -1,15 +1,12 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Employers;
-
-namespace SFA.Apprenticeships.Application.Organisation
+﻿namespace SFA.Apprenticeships.Application.Organisation
 {
     using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Interfaces.Generic;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Organisations;
 
     public class OrganisationService : IOrganisationService
@@ -40,11 +37,11 @@ namespace SFA.Apprenticeships.Application.Organisation
             return _verifiedOrganisationProvider.GetByReferenceNumber(referenceNumber);
         }
 
-        public IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location)
+        public IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location)
         {
-            if (!string.IsNullOrEmpty(ern))
+            if (!string.IsNullOrEmpty(edsUrn))
             {
-                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(ern);
+                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(edsUrn);
                 if (verifiedOrganisationSummary == null)
                 {
                     return new List<VerifiedOrganisationSummary>();
@@ -59,16 +56,16 @@ namespace SFA.Apprenticeships.Application.Organisation
             return _verifiedOrganisationProvider.Find(name, location, out resultCount);
         }
 
-        public Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location, int currentPage, int pageSize)
+        public Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
             var pageable = new Pageable<VerifiedOrganisationSummary>
             {
                 CurrentPage = currentPage
             };
 
-            if (!string.IsNullOrEmpty(ern))
+            if (!string.IsNullOrEmpty(edsUrn))
             {
-                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(ern);
+                var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(edsUrn);
                 if (verifiedOrganisationSummary == null)
                 {
                     pageable.Page = new List<VerifiedOrganisationSummary>();
@@ -100,14 +97,14 @@ namespace SFA.Apprenticeships.Application.Organisation
             return _legacyProviderProvider.GetProvider(ukprn);
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string ern)
+        public ProviderSite GetProviderSite(string ukprn, string edsUrn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, ern);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsUrn);
 
-            return _legacyProviderProvider.GetProviderSite(ukprn, ern);
+            return _legacyProviderProvider.GetProviderSite(ukprn, edsUrn);
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
@@ -119,43 +116,59 @@ namespace SFA.Apprenticeships.Application.Organisation
             return _legacyProviderProvider.GetProviderSites(ukprn);
         }
 
-        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
+        public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
         {
-            Condition.Requires(providerSiteErn).IsNotNullOrEmpty();
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(providerSiteId);
+            Condition.Requires(employerId);
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with ERN='{0}' and employer with ERN='{1}'.", providerSiteErn, ern);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer link for provider with Id='{0}' and employer with Id='{1}'.", providerSiteId, employerId);
 
-            return _legacyProviderProvider.GetProviderSiteEmployerLink(providerSiteErn, ern);
+            return _legacyProviderProvider.GetVacancyParty(providerSiteId, employerId);
         }
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request)
+        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
         {
-            Condition.Requires(request).IsNotNull();
+            Condition.Requires(providerSiteId);
 
-            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with ERN='{0}'.", request.ProviderSiteErn);
+            _logService.Debug("Calling LegacyProviderProvider to get provider site employer links for provider with Id='{0}'.", providerSiteId);
 
-            return _legacyProviderProvider.GetProviderSiteEmployerLinks(request);
+            return _legacyProviderProvider.GetVacancyParties(providerSiteId);
         }
 
-        public Employer GetEmployer(string ern)
+        public Employer GetEmployer(int employerId)
         {
-            Condition.Requires(ern).IsNotNullOrEmpty();
+            Condition.Requires(employerId);
 
-            _logService.Debug("Calling LegacyEmployerProvider to get employer with ERN='{0}'.", ern);
+            _logService.Debug("Calling LegacyEmployerProvider to get employer with id='{0}'.", employerId);
 
-            return _legacyEmployerProvider.GetEmployer(ern);
+            return _legacyEmployerProvider.GetEmployer(employerId);
         }
 
-        public IEnumerable<Employer> GetEmployers(string ern, string name, string location)
+        public Employer GetEmployer(string edsUrn)
         {
-            var summaries = GetVerifiedOrganisationSummaries(ern, name, location);
+            Condition.Requires(edsUrn).IsNotNullOrEmpty();
+
+            _logService.Debug("Calling LegacyEmployerProvider to get employer with ERN='{0}'.", edsUrn);
+
+            return _legacyEmployerProvider.GetEmployer(edsUrn) ?? Convert(GetVerifiedOrganisationSummary(edsUrn));
+        }
+
+        public IEnumerable<Employer> GetByIds(IEnumerable<int> employerIds)
+        {
+            _logService.Debug("Calling LegacyEmployerProvider to get employers by Ids='{0}'.", employerIds);
+
+            return _legacyEmployerProvider.GetEmployersByIds(employerIds);
+        }
+
+        public IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location)
+        {
+            var summaries = GetVerifiedOrganisationSummaries(edsUrn, name, location);
             return summaries.Select(Convert).ToList();
         }
 
-        public Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize)
+        public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
-            var summariesPage = GetVerifiedOrganisationSummaries(ern, name, location, currentPage, pageSize);
+            var summariesPage = GetVerifiedOrganisationSummaries(edsUrn, name, location, currentPage, pageSize);
             var employersPage = new Pageable<Employer>
             {
                 Page = summariesPage.Page.Select(Convert).ToList(),
@@ -170,9 +183,9 @@ namespace SFA.Apprenticeships.Application.Organisation
         {
             return new Employer
             {
-                Ern = summary.ReferenceNumber,
+                EdsUrn = summary.ReferenceNumber,
                 Name = summary.Name,
-                Address = new Address()
+                Address = new PostalAddress()
                 {
                     AddressLine1 = summary.Address.AddressLine1,
                     AddressLine2 = summary.Address.AddressLine2,
@@ -180,7 +193,7 @@ namespace SFA.Apprenticeships.Application.Organisation
                     AddressLine4 = summary.Address.AddressLine4,
                     GeoPoint = summary.Address.GeoPoint,
                     Postcode = summary.Address.Postcode,
-                    Uprn = summary.Address.ValidationSourceKeyValue
+                    //Uprn = summary.Address.ValidationSourceKeyValue
                 }
             };
         }

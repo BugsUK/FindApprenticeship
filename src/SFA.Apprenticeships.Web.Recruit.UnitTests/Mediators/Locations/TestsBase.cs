@@ -8,7 +8,6 @@
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Validators.VacancyPosting;
     using Recruit.Mediators.VacancyPosting;
-    using Recruit.Validators.VacancyPosting;
 
     public class TestsBase
     {
@@ -40,9 +39,9 @@
                 new VacancyQuestionsViewModelClientValidator(),
                 new VacancyDatesViewModelServerValidator(), 
                 new VacancyViewModelValidator(), 
-                new ProviderSiteEmployerLinkViewModelValidator(),
+                new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
-                new LocationSearchViewModelValidator(),
+                new LocationSearchViewModelServerValidator(),
                 new Mock<IAddressLookupProvider>().Object,
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),

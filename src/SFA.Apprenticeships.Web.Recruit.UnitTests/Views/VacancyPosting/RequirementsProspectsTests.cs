@@ -6,7 +6,7 @@ using SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting;
 
 namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
 {
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Ploeh.AutoFixture;
 
     [TestFixture]
@@ -30,7 +30,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var details = new VacancyRequirementsProspects();
 
             var viewModel = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.RejectedByQA)
+                .With(v => v.Status, VacancyStatus.Referred)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             var details = new VacancyRequirementsProspects();
 
             var viewModel = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.Draft)
+                .With(v => v.Status, VacancyStatus.Draft)
                 .With(v => v.ComeFromPreview, false)
                 .Create();
 

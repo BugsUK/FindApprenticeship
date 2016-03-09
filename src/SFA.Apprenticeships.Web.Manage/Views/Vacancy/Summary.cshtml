@@ -1,10 +1,12 @@
-﻿@model VacancySummaryViewModel
+﻿@model FurtherVacancyDetailsViewModel
 @using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(ManagementRouteNames.Summary, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, VacancySummaryViewModel.PartialView)
+    @Html.HiddenFor(m => m.AcceptWarnings)
+
+    @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
 
     <div class="grid grid-1-2">
         <button type="submit" class="button">Save</button>

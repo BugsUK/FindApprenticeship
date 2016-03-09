@@ -1,11 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using System;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Mediators;
     using Constants;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using ViewModels;
@@ -56,6 +57,57 @@
         public ActionResult SearchCandidates(CandidateSearchResultsViewModel viewModel)
         {
             return RedirectToRoute(ManagementRouteNames.SearchCandidates, viewModel.SearchViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Candidate(Guid id)
+        {
+            var response = _candidateMediator.GetCandidateApplications(id);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Apprenticeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult Traineeship(Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateTraineeshipApplication(applicationId);
+
+            return View(response.ViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ApprenticeshipVacancy(int vacancyId, Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateApprenticeshipVacancyViewModel(vacancyId, applicationId);
+            var candidateVacancyViewModel = response.ViewModel;
+
+            SetLinks(candidateVacancyViewModel.Vacancy);
+
+            return View("Vacancy", candidateVacancyViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult TraineeshipVacancy(int vacancyId, Guid applicationId)
+        {
+            var response = _candidateMediator.GetCandidateTraineeshipVacancyViewModel(vacancyId, applicationId);
+            var candidateVacancyViewModel = response.ViewModel;
+
+            SetLinks(candidateVacancyViewModel.Vacancy);
+
+            return View("Vacancy", candidateVacancyViewModel);
         }
     }
 }

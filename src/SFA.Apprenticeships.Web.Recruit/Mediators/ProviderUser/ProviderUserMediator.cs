@@ -14,8 +14,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Common.Models.Azure.AccessControlService;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
-    using Domain.Entities;
-    using Validators.ProviderUser;
+    using Domain.Entities.Raa;
+    using Raa.Common.Validators.ProviderUser;
     using ViewModels;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
@@ -219,7 +219,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username) ?? new ProviderUserViewModel();
             var provider = _providerProvider.GetProviderViewModel(ukprn);
             var providerSites = GetProviderSites(ukprn);
-            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(ukprn, providerUserViewModel.DefaultProviderSiteErn, vacanciesSummarySearch);
+            var vacanciesSummary = _vacancyProvider.GetVacanciesSummaryForProvider(provider.ProviderId, providerUserViewModel.DefaultProviderSiteId, vacanciesSummarySearch);
 
             var viewModel = new HomeViewModel
             {
@@ -235,9 +235,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         public MediatorResponse<HomeViewModel> ChangeProviderSite(string username, string ukprn, HomeViewModel viewModel)
         {
             var providerUserViewModel = _providerUserProvider.GetUserProfileViewModel(username);
-            if (providerUserViewModel.DefaultProviderSiteErn != viewModel.ProviderUserViewModel.DefaultProviderSiteErn)
+            if (providerUserViewModel.DefaultProviderSiteId != viewModel.ProviderUserViewModel.DefaultProviderSiteId)
             {
-                providerUserViewModel.DefaultProviderSiteErn = viewModel.ProviderUserViewModel.DefaultProviderSiteErn;
+                providerUserViewModel.DefaultProviderSiteId = viewModel.ProviderUserViewModel.DefaultProviderSiteId;
                 providerUserViewModel = _providerUserProvider.SaveProviderUser(username, ukprn, providerUserViewModel);
             }
             var providerSites = GetProviderSites(ukprn);
@@ -254,7 +254,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         {
             var providerSites = _providerProvider.GetProviderSiteViewModels(ukprn);
 
-            var sites = providerSites.Select(ps => new SelectListItem { Value = ps.Ern, Text = ps.DisplayName }).ToList();
+            var sites = providerSites.Select(ps => new SelectListItem { Value = Convert.ToString(ps.ProviderSiteId), Text = ps.DisplayName }).ToList();
 
             return sites;
         }

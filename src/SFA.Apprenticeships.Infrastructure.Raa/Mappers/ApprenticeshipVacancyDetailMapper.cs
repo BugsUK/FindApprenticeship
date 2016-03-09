@@ -5,16 +5,19 @@
     using System.Linq;
     using System.Text;
     using Domain.Entities.Locations;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Extensions;
     using Presentation;
+    using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(ApprenticeshipVacancy vacancy, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
@@ -42,16 +45,15 @@
                 //VacancyOwner = vacancy.,
                 //VacancyManager = vacancy.,
                 //LocalAuthority = vacancy.,
-                //TODO: Map once Vicenc has finished with multi location work
-                NumberOfPositions = 1,
+                NumberOfPositions = vacancy.NumberOfPositions ?? 0,
                 RealityCheck = vacancy.ThingsToConsider,
-                Created = vacancy.DateCreated,
+                Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
-                EmployerName = vacancy.ProviderSiteEmployerLink.Employer.Name,
+                EmployerName = employer.Name,
                 //TODO: How is this captured in RAA?
                 //AnonymousEmployerName = vacancy.,
-                EmployerDescription = vacancy.ProviderSiteEmployerLink.Description,
-                EmployerWebsite = vacancy.ProviderSiteEmployerLink.WebsiteUrl,
+                EmployerDescription = vacancyParty.EmployerDescription,
+                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
@@ -60,7 +62,7 @@
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
-                VacancyAddress = vacancy.ProviderSiteEmployerLink.Employer.Address,
+                VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
                 //TODO: How is this captured in RAA?
@@ -69,8 +71,7 @@
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
-                //TODO: Get provider
-                //ProviderName = vacancy.ProviderSiteEmployerLink.,
+                ProviderName = provider.Name,
                 //TradingName = vacancy.,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
@@ -85,24 +86,8 @@
                 SkillsRequired = vacancy.DesiredSkills,
                 //TODO: How do we determine this in RAA?
                 VacancyLocationType = ApprenticeshipLocationType.NonNational,
-                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-
-
-                //TODO: Get provider
-                //ProviderName = vacancy.ProviderSiteEmployerLink.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
-                //TODO: Store geopoints for employers
-                //Location = vacancy.ProviderSiteEmployerLink.Employer.Address.GeoPoint,
-                //Location = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }, //Coventry
-                //SubCategoryCode = vacancy.FrameworkCodeName
+                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel()
             };
-
-            if (detail.VacancyAddress.GeoPoint == null)
-            {
-                //TODO: Store geopoints for employers
-                detail.VacancyAddress.GeoPoint = new GeoPoint { Latitude = 52.4009991288043, Longitude = -1.50812239495425 }; //Coventry
-            }
 
             var frameworkCodeName = vacancy.FrameworkCodeName;
             if (!string.IsNullOrEmpty(frameworkCodeName))
@@ -130,7 +115,36 @@
             return detail;
         }
 
-        private static string GetContactInformation(ApprenticeshipVacancy vacancy)
+        private static Address GetVacancyAddress(PostalAddress address)
+        {
+            return new Address
+            {
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2,
+                AddressLine3 = address.AddressLine3,
+                AddressLine4 = address.AddressLine4,
+                Postcode = address.Postcode,
+                GeoPoint = GetGeoPoint(address.GeoPoint)
+            };
+        }
+
+        private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
+        {
+            var vacancyGeoPoint = new GeoPoint();
+            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            {
+                vacancyGeoPoint.Latitude = 52.4009991288043;
+                vacancyGeoPoint.Longitude = -1.50812239495425;
+            }
+            else
+            {
+                vacancyGeoPoint.Longitude = geoPoint.Longitude;
+                vacancyGeoPoint.Latitude = geoPoint.Latitude;
+            }
+            return vacancyGeoPoint;
+        }
+
+        private static string GetContactInformation(Vacancy vacancy)
         {
             var sb = new StringBuilder();
             if (!string.IsNullOrEmpty(vacancy.ContactName))

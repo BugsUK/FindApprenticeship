@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
-    using Domain.Entities.Reference;
     using FluentAssertions;
     using Sql.Schemas.Reference;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
+    using Sql.Schemas.Reference.Entities;
 
     [TestFixture]
     public class ReferenceMappersTests

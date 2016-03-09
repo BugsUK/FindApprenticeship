@@ -4,7 +4,6 @@
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
-    using Recruit.Validators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
@@ -40,9 +39,9 @@
                 new VacancyQuestionsViewModelClientValidator(),
                 new VacancyDatesViewModelServerValidator(),
                 new VacancyViewModelValidator(), 
-                new ProviderSiteEmployerLinkViewModelValidator(),
+                new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
-                new LocationSearchViewModelValidator(),
+                new LocationSearchViewModelServerValidator(),
                 new Mock<IAddressLookupProvider>().Object,
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),

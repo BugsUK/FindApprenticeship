@@ -12,8 +12,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
     using Common.Validators;
     using Common.Validators.Extensions;
     using Common.ViewModels;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Ploeh.AutoFixture;
     using Raa.Common.Validators.Vacancy;
     using Recruit.Views.Shared;
@@ -28,7 +27,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
         {
             var details = new VacancySummary();
 
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 WageUnits = ApprenticeshipVacancyConverter.GetWageUnits(),
                 DurationTypes = ApprenticeshipVacancyConverter.GetDurationTypes(VacancyType.Apprenticeship)
@@ -46,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
             //Arrange
             var view = new ValidationSummary();
             var viewModel = new ModelStateDictionary();
-            var viewModelToValidate = new VacancySummaryViewModel
+            var viewModelToValidate = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -91,8 +90,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
         {
             var details = new VacancySummary();
 
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.RejectedByQA)
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Referred)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);
@@ -107,8 +106,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Views.VacancyPosting
         {
             var details = new VacancySummary();
 
-            var viewModel = new Fixture().Build<VacancySummaryViewModel>()
-                .With(v => v.Status, ProviderVacancyStatuses.Draft)
+            var viewModel = new Fixture().Build<FurtherVacancyDetailsViewModel>()
+                .With(v => v.Status, VacancyStatus.Draft)
                 .Create();
 
             var view = details.RenderAsHtml(viewModel);

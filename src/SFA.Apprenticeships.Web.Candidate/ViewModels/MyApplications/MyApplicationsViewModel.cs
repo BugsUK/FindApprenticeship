@@ -8,9 +8,11 @@
 
     public class MyApplicationsViewModel
     {
+        public const string PartialView = "MyApplications";
+
         public MyApplicationsViewModel(
             IEnumerable<MyApprenticeshipApplicationViewModel> apprenticeshipApplications,
-            IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications, 
+            IEnumerable<MyTraineeshipApplicationViewModel> traineeshipApplications,
             TraineeshipFeatureViewModel traineeshipFeature,
             DateTime? lastApplicationStatusNotification)
         {
@@ -41,7 +43,8 @@
             {
                 return AllApprenticeshipApplications.Where(each =>
                     each.ApplicationStatus == ApplicationStatuses.Submitting ||
-                    each.ApplicationStatus == ApplicationStatuses.Submitted);
+                    each.ApplicationStatus == ApplicationStatuses.Submitted ||
+                    each.ApplicationStatus == ApplicationStatuses.InProgress);
             }
         }
 

@@ -34,7 +34,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.WebPages;
     
     #line 3 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
-    using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     
     #line default
     #line hidden
@@ -87,7 +87,7 @@ Write(Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
             #line 9 "..\..\Views\VacancyPosting\VacancyRequirementsProspects.cshtml"
                                                                                
 
-    var saveButtonText = (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
+    var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
 
 
             

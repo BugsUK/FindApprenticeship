@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SFA.Apprenticeships.Web.Raa.Common.ViewModels.Application.TrainingCourseViewModel>
+
+<section class="section-border">
+    <h2 class="heading-large">
+        Training courses
+    </h2>
+
+    @if (!Model.Any())
+    {
+        <p id="no-training-history">Applicant hasn't been on any training courses</p>
+    }
+
+    @foreach (var each in Model)
+    {
+        <div class="grid-3-4 nobreak-print">
+            <div class="grid-wrapper training-history-item">
+
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">Training course</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@each.Provider</span>
+                                    <span class="form-prepopped cell-span training-hyphen">-</span>
+                                    <span class="form-prepopped cell-span">@each.Title</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="grid grid-1-2">
+                    <table class="table-no-btm-border table-compound">
+                        <colgroup>
+                            <col class="t30">
+                            <col class="t30">
+                            <col class="t25">
+                            <col class="t15">
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span class="heading-span">From</span>
+                                </th>
+                                <th>
+                                    <span class="heading-span">To</span>
+                                </th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span class="form-prepopped cell-span">@each.FromDate.GetMonthYearLabel()</span>
+                                </td>
+                                <td>
+                                    <span class="form-prepopped cell-span">@each.ToDate.GetMonthYearLabel()</span>
+                                </td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+</section>

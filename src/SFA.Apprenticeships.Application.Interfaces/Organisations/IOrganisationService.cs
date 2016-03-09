@@ -3,32 +3,36 @@
 namespace SFA.Apprenticeships.Application.Interfaces.Organisations
 {
     using System.Collections.Generic;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Parties;
     using Generic;
 
     public interface IOrganisationService
     {
         VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber);
 
-        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location);
+        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location);
 
-        Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string ern, string name, string location, int currentPage, int pageSize);
+        Pageable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location, int currentPage, int pageSize);
 
+        //TODO: Remove all these methods once we have migrated the data layer
         Provider GetProvider(string ukprn);
 
-        ProviderSite GetProviderSite(string ukprn, string ern);
+        ProviderSite GetProviderSite(string ukprn, string edsUrn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern);
+        VacancyParty GetVacancyParty(int providerSiteId, int employerId);
 
-        IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest request);
+        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
-        Employer GetEmployer(string ern);
+        Employer GetEmployer(int employerId);
 
-        IEnumerable<Employer> GetEmployers(string ern, string name, string location);
+        Employer GetEmployer(string edsUrn);
 
-        Pageable<Employer> GetEmployers(string ern, string name, string location, int currentPage, int pageSize);
+        IEnumerable<Employer> GetByIds(IEnumerable<int> employerIds);
+
+        IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location);
+
+        Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
     }
 }

@@ -2,13 +2,12 @@
 {
     using System;
     using System.Linq;
-    using Application.Vacancies;
-    using Application.Vacancies.Entities;
-    using Domain.Entities.Vacancies.ProviderVacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies.Apprenticeship;
+    using Apprenticeships.Application.Vacancies;
+    using Apprenticeships.Application.Vacancies.Entities;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Queries;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Queries;
+    using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
@@ -18,16 +17,16 @@
     public class QueueVacanciesForClosure
     {
         private IVacancyStatusProcessor _processor;
-        private Mock<IApprenticeshipVacancyReadRepository> _apprenticeshipVacancyReadRepository;
-        private Mock<IApprenticeshipVacancyWriteRepository> _apprenticeshipVacancyWriteRepository;
+        private Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository;
+        private Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository;
         private Mock<IServiceBus> _serviceBus;
         private Mock<ILogService> _logService;
 
         [SetUp]
         public void Setup()
         {
-            _apprenticeshipVacancyReadRepository = new Mock<IApprenticeshipVacancyReadRepository>();
-            _apprenticeshipVacancyWriteRepository = new Mock<IApprenticeshipVacancyWriteRepository>();
+            _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
+            _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
             _serviceBus = new Mock<IServiceBus>();
             _logService = new Mock<ILogService>();
 
@@ -45,9 +44,10 @@
         {
             //Arrange
             var deadline = DateTime.Now;
-            var outParam = It.IsAny<int>();
-            var result = new Fixture().Build<ApprenticeshipVacancy>()
-                .With(x => x.Status, ProviderVacancyStatuses.Live)
+            int outParam;
+
+            var result = new Fixture().Build<Vacancy>()
+                .With(x => x.Status, VacancyStatus.Live)
                 .CreateMany(capacity).ToList();
             _apprenticeshipVacancyReadRepository
                 .Setup(m => m.Find(It.Is<ApprenticeshipVacancyQuery>(q => q.LatestClosingDate == deadline), out outParam))

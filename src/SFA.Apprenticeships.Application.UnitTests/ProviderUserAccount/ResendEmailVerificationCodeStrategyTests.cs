@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using Application.UserAccount.Strategies.ProviderUserAccount;
+    using Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using Domain.Entities.Exceptions;
-    using Domain.Entities.Users;
-    using Domain.Interfaces.Repositories;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 
@@ -50,7 +50,7 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(UnverifiedUsername))
+                .Setup(mock => mock.GetByUsername(UnverifiedUsername))
                 .Returns(new ProviderUser());
 
             // Act.
@@ -58,7 +58,7 @@
 
             // Assert.
             _mockProviderUserReadRepository.Verify(mock =>
-                mock.Get(UnverifiedUsername), Times.Once);
+                mock.GetByUsername(UnverifiedUsername), Times.Once);
         }
 
         [Test]
@@ -68,7 +68,7 @@
             var action = new Action(() => _strategy.ResendEmailVerificationCode(InvalidUsername));
 
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(InvalidUsername))
+                .Setup(mock => mock.GetByUsername(InvalidUsername))
                 .Returns(default(ProviderUser));
 
             // Act / Assert.
@@ -80,11 +80,11 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(UnverifiedUsername))
+                .Setup(mock => mock.GetByUsername(UnverifiedUsername))
                 .Returns(new ProviderUser
                 {
                     Username = UnverifiedUsername,
-                    Status = ProviderUserStatuses.Registered,
+                    Status = ProviderUserStatus.Registered,
                     EmailVerificationCode = EmailVerificationCode
                 });
 
@@ -121,10 +121,10 @@
         {
             // Arrange.
             _mockProviderUserReadRepository
-                .Setup(mock => mock.Get(VerifiedUsername))
+                .Setup(mock => mock.GetByUsername(VerifiedUsername))
                 .Returns(new ProviderUser
                 {
-                    Status = ProviderUserStatuses.EmailVerified
+                    Status = ProviderUserStatus.EmailVerified
                 });
 
             // Act.

@@ -1,5 +1,6 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Recruit.Controllers
+@using Roles = SFA.Apprenticeships.Domain.Entities.Raa.Roles
 
 @if (Request.IsAuthenticated)
 {
@@ -7,7 +8,7 @@
         <div class="small-btm-margin">
             <a id="signout-link" href="@Url.RouteUrl(RecruitmentRouteNames.SignOut)"><i class="fa fa-sign-out"></i>Sign out</a>
         </div>
-        @if (User.IsInRole(SFA.Apprenticeships.Domain.Entities.Roles.VerifiedEmail))
+        @if (User.IsInRole(Roles.VerifiedEmail))
         {
             <div>
                 @if(Request.RawUrl != Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)) {

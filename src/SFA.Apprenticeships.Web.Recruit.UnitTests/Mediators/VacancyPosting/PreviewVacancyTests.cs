@@ -6,8 +6,7 @@
     using Common.Constants;
     using Common.UnitTests.Mediators;
     using Common.ViewModels;
-    using Domain.Entities.Vacancies;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -24,7 +23,7 @@
         {
             //Arrange
             var today = DateTime.Today;
-            var viewModel = new VacancySummaryViewModel
+            var viewModel = new FurtherVacancyDetailsViewModel
             {
                 VacancyDatesViewModel = new VacancyDatesViewModel
                 {
@@ -33,7 +32,7 @@
                 }
             };
             var vacancyViewModel = new VacancyViewModelBuilder().With(viewModel).Build();
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -41,20 +40,20 @@
 
             //Assert
             result.Code.Should().Be(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.FailedValidation);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.ClosingDate").Should().Be(2);
-            result.ValidationResult.Errors.Count(e => e.PropertyName == "VacancySummaryViewModel.VacancyDatesViewModel.PossibleStartDate").Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.ClosingDate").Should().Be(2);
+            result.ValidationResult.Errors.Count(e => e.PropertyName == "FurtherVacancyDetailsViewModel.VacancyDatesViewModel.PossibleStartDate").Should().Be(2);
         }
 
-        [TestCase(ProviderVacancyStatuses.Live)]
-        [TestCase(ProviderVacancyStatuses.Closed)]
-        [TestCase(ProviderVacancyStatuses.Completed)]
-        [TestCase(ProviderVacancyStatuses.Withdrawn)]
-        public void CanHaveApplications_NoApplicationsRouteTest(ProviderVacancyStatuses status)
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        public void CanHaveApplications_NoApplicationsRouteTest(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -64,16 +63,16 @@
             result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoApplications, UserMessageLevel.Info);
         }
 
-        [TestCase(ProviderVacancyStatuses.Live)]
-        [TestCase(ProviderVacancyStatuses.Closed)]
-        [TestCase(ProviderVacancyStatuses.Completed)]
-        [TestCase(ProviderVacancyStatuses.Withdrawn)]
-        public void CanHaveApplications_OneApplicationRouteTest(ProviderVacancyStatuses status)
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        public void CanHaveApplications_OneApplicationRouteTest(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.ApplicationCount = 1;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -83,16 +82,16 @@
             result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
         }
 
-        [TestCase(ProviderVacancyStatuses.Unknown)]
-        [TestCase(ProviderVacancyStatuses.Draft)]
-        [TestCase(ProviderVacancyStatuses.PendingQA)]
-        [TestCase(ProviderVacancyStatuses.ReservedForQA)]
-        [TestCase(ProviderVacancyStatuses.RejectedByQA)]
-        public void CannotHaveApplications(ProviderVacancyStatuses status)
+        [TestCase(VacancyStatus.Unknown)]
+        [TestCase(VacancyStatus.Draft)]
+        [TestCase(VacancyStatus.Submitted)]
+        [TestCase(VacancyStatus.ReservedForQA)]
+        [TestCase(VacancyStatus.Referred)]
+        public void CannotHaveApplications(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -102,17 +101,17 @@
             result.AssertCode(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok);
         }
 
-        [TestCase(ProviderVacancyStatuses.Live)]
-        [TestCase(ProviderVacancyStatuses.Closed)]
-        [TestCase(ProviderVacancyStatuses.Completed)]
-        [TestCase(ProviderVacancyStatuses.Withdrawn)]
-        public void CanHaveClickThroughs_NoClickThroughsRouteTest(ProviderVacancyStatuses status)
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        public void CanHaveClickThroughs_NoClickThroughsRouteTest(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act
@@ -122,18 +121,18 @@
             result.AssertMessage(VacancyPostingMediatorCodes.GetPreviewVacancyViewModel.Ok, VacancyViewModelMessages.NoClickThroughs, UserMessageLevel.Info);
         }
 
-        [TestCase(ProviderVacancyStatuses.Live)]
-        [TestCase(ProviderVacancyStatuses.Closed)]
-        [TestCase(ProviderVacancyStatuses.Completed)]
-        [TestCase(ProviderVacancyStatuses.Withdrawn)]
-        public void CanHaveClickThroughs_OneClickThroughRouteTest(ProviderVacancyStatuses status)
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        public void CanHaveClickThroughs_OneClickThroughRouteTest(VacancyStatus status)
         {
             //Arrange
             var vacancyViewModel = new VacancyViewModelBuilder().BuildValid(status, VacancyType.Apprenticeship);
             vacancyViewModel.NewVacancyViewModel.OfflineVacancy = true;
             vacancyViewModel.OfflineApplicationClickThroughCount = 1;
             vacancyViewModel.ApplicationCount = 0;
-            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<long>())).Returns(vacancyViewModel);
+            VacancyPostingProvider.Setup(p => p.GetVacancy(It.IsAny<int>())).Returns(vacancyViewModel);
             var mediator = GetMediator();
 
             //Act

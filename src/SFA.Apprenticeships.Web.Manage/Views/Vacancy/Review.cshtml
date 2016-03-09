@@ -8,6 +8,7 @@
 @Html.Partial("ValidationSummary", ViewData.ModelState)
 
 <div>
+    @Html.DisplayFor(m => m, "Vacancy/VacancyPreviewHeader")
     @Html.DisplayFor(m => m, VacancyViewModel.PartialView)
 
     @using (Html.BeginRouteForm(ManagementRouteNames.ApproveVacancy, FormMethod.Post))

@@ -1,6 +1,4 @@
 ﻿using System.Diagnostics.Contracts;
-using System.Text;
-using SFA.Apprenticeships.Application.Interfaces.Employers;
 
 namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 {
@@ -12,12 +10,9 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
     using Application.Organisation;
     using Configuration;
     using Dapper;
-    using Domain.Entities.Locations;
-    using Domain.Entities.Organisations;
-    using Domain.Entities.Providers;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using SFA.Infrastructure.Interfaces;
-    using Provider = Domain.Entities.Providers.Provider;
-    using ProviderSite = Domain.Entities.Providers.ProviderSite;
 
     public class LegacyProviderProvider : ILegacyProviderProvider
     {
@@ -52,6 +47,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
             var provider = new Provider
             {
+                ProviderId = legacyProvider.ProviderID,
                 Ukprn = legacyProvider.UKPRN.ToString(),
                 Name = legacyProvider.FullName
             };
@@ -59,20 +55,20 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return provider;
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string ern)
+        public ProviderSite GetProviderSite(string ukprn, string edsUrn)
         {
-            const string sql = @"SELECT p.UKPRN, ps.* 
+            const string sql = @"SELECT ps.ProviderSiteID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                                 WHERE p.UKPRN = @Ukprn AND ps.EDSURN = @Ern 
+                                 WHERE p.UKPRN = @Ukprn AND ps.EDSURN = @EdsUrn 
                                  AND ps.TrainingProviderStatusTypeId = 1";
 
             Models.ProviderSite legacyProviderSite;
 
             using (var connection = GetConnection())
             {
-                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, Ern = ern }).SingleOrDefault();
+                legacyProviderSite = connection.Query<Models.ProviderSite>(sql, new { Ukprn = ukprn, EdsUrn = edsUrn }).SingleOrDefault();
             }
 
             return GetProviderSite(legacyProviderSite);
@@ -80,7 +76,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
-            const string sql = @"SELECT p.UKPRN, ps.* 
+            const string sql = @"SELECT ps.ProviderSiteID, p.ProviderID, p.UKPRN, ps.* 
                                  FROM dbo.Provider AS p 
                                  JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                                  JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
@@ -103,7 +99,7 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
                 return null;
             }
 
-            var address = new Address
+            var address = new PostalAddress
             {
                 AddressLine1 = legacyProviderSite.AddressLine1,
                 AddressLine2 = legacyProviderSite.AddressLine2,
@@ -120,8 +116,10 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
 
             var providerSite = new ProviderSite
             {
+                ProviderSiteId = legacyProviderSite.ProviderSiteID,
+                ProviderId = legacyProviderSite.ProviderID,
                 Ukprn = legacyProviderSite.UKPRN.ToString(),
-                Ern = legacyProviderSite.EDSURN.ToString(),
+                EdsUrn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,
                 EmployerDescription = legacyProviderSite.EmployerDescription,
                 CandidateDescription = legacyProviderSite.CandidateDescription,
@@ -133,123 +131,53 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             return providerSite;
         }
 
-        public ProviderSiteEmployerLink GetProviderSiteEmployerLink(string providerSiteErn, string ern)
+        public VacancyParty GetVacancyParty(int providerSiteId, int employerId)
         {
-            var request = new EmployerSearchRequest(providerSiteErn, ern);
-            var results = GetProviderSiteEmployerLinks(request);
-            return results.SingleOrDefault();
-        }
+            Contract.Requires(providerSiteId != 0);
+            Contract.Requires(employerId != 0);
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(string providerSiteErn)
-        {
-            var request = new EmployerSearchRequest(providerSiteErn);
-            return GetProviderSiteEmployerLinks(request);
-        }
+            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND EmployerId = @employerId AND vor.StatusTypeId = 4"; ;
 
-        public IEnumerable<ProviderSiteEmployerLink> GetProviderSiteEmployerLinks(EmployerSearchRequest searchRequest)
-        {
-            Contract.Requires(searchRequest != null);
-            IList<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
-
-            var queryBuilder = new StringBuilder(@"SELECT ps.EDSURN AS ProviderSiteEdsUrn, vor.ContractHolderIsEmployer, vor.ManagerIsEmployer, vor.StatusTypeId, vor.Notes, vor.EmployerDescription, vor.EmployerWebsite, vor.NationWideAllowed, e.* FROM dbo.ProviderSite AS ps JOIN dbo.VacancyOwnerRelationship AS vor ON ps.ProviderSiteID = vor.ProviderSiteId JOIN dbo.Employer AS e on vor.EmployerId = e.EmployerId WHERE ps.EDSURN = @ProviderSiteErn AND ps.TrainingProviderStatusTypeId = 1 AND e.EmployerStatusTypeId = 1");
-
-            object parameterList;
-
-            if (searchRequest.IsEmployerEdsUrnQuery)
-            {
-                queryBuilder.Append(" AND e.EdsUrn = @EmployerEdsUrn");
-                parameterList = new
-                {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
-                    EmployerEdsUrn = searchRequest.EmployerEdsUrn
-                };
-            }
-            else if (searchRequest.IsNameAndLocationQuery)
-            {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%' AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
-
-                parameterList = new
-                {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
-                    NameSearchParameter = searchRequest.Name,
-                    LocationSearchParameter = searchRequest.Location
-                };
-            }
-            else if (searchRequest.IsNameQuery)
-            {
-                queryBuilder.Append(" AND e.SearchableName LIKE '%' + @NameSearchParameter + '%'");
-                parameterList = new
-                {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
-                    NameSearchParameter = searchRequest.Name
-                };
-            }
-            else if (searchRequest.IsLocationQuery)
-            {
-                queryBuilder.Append(" AND (e.SearchablePostCode LIKE @LocationSearchParameter + '%' OR e.Town LIKE @LocationSearchParameter + '%')");
-
-                parameterList = new
-                {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn,
-                    LocationSearchParameter = searchRequest.Location
-                };
-            }
-            else //it's a standard search by provider Site Urn
-            {
-                parameterList = new
-                {
-                    ProviderSiteErn = searchRequest.ProviderSiteErn
-                };
-            }
+            Models.VacancyOwnerRelationship vacancyOwnerRelationship;
 
             using (var connection = GetConnection())
             {
-                vacancyOwnerRelationships =
-                    connection.Query<Models.VacancyOwnerRelationship, Models.Employer, Models.VacancyOwnerRelationship>(
-                        queryBuilder.ToString(),
-                        (vor, employer) => { vor.Employer = employer; return vor; },
-                        parameterList,
-                        splitOn: "NationWideAllowed,EmployerId").ToList();
+                vacancyOwnerRelationship = connection.Query<Models.VacancyOwnerRelationship>(sql, new { providerSiteId, employerId }).SingleOrDefault();
             }
 
-            return vacancyOwnerRelationships.Select(GetProviderSiteEmployerLink);
+            return GetVacancyParty(vacancyOwnerRelationship);
         }
 
-        private static ProviderSiteEmployerLink GetProviderSiteEmployerLink(Models.VacancyOwnerRelationship vacancyOwnerRelationship)
+        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
+        {
+            Contract.Requires(providerSiteId != 0);
+
+            const string sql = @"SELECT * FROM dbo.VacancyOwnerRelationship AS vor WHERE vor.ProviderSiteID = @ProviderSiteId AND vor.StatusTypeId = 4"; ;
+
+            IEnumerable<Models.VacancyOwnerRelationship> vacancyOwnerRelationships;
+
+            using (var connection = GetConnection())
+            {
+                vacancyOwnerRelationships = connection.Query<Models.VacancyOwnerRelationship>(sql, new { providerSiteId });
+            }
+
+            return vacancyOwnerRelationships.Select(GetVacancyParty);
+        }
+
+        private static VacancyParty GetVacancyParty(Models.VacancyOwnerRelationship vacancyOwnerRelationship)
         {
             if (vacancyOwnerRelationship == null)
             {
                 return null;
             }
 
-            var address = new Address
+            var providerSiteEmployerLink = new VacancyParty
             {
-                AddressLine1 = vacancyOwnerRelationship.Employer.AddressLine1,
-                AddressLine2 = vacancyOwnerRelationship.Employer.AddressLine2,
-                AddressLine3 = vacancyOwnerRelationship.Employer.AddressLine3,
-                AddressLine4 = vacancyOwnerRelationship.Employer.Town,
-                Postcode = vacancyOwnerRelationship.Employer.PostCode,
-                GeoPoint = new GeoPoint
-                {
-                    Latitude = vacancyOwnerRelationship.Employer.Latitude,
-                    Longitude = vacancyOwnerRelationship.Employer.Longitude
-                },
-                //Uprn = 
-            };
-
-            var employer = new Employer
-            {
-                Ern = vacancyOwnerRelationship.Employer.EdsUrn.ToString(),
-                Name = vacancyOwnerRelationship.Employer.FullName,
-                Address = address
-            };
-
-            var providerSiteEmployerLink = new ProviderSiteEmployerLink
-            {
-                ProviderSiteErn = vacancyOwnerRelationship.ProviderSiteEdsUrn.ToString(),
-                Description = CleanDescription(vacancyOwnerRelationship.EmployerDescription),
-                WebsiteUrl = vacancyOwnerRelationship.EmployerWebsite,
-                Employer = employer
+                VacancyPartyId = vacancyOwnerRelationship.VacancyOwnerRelationshipId,
+                ProviderSiteId = vacancyOwnerRelationship.ProviderSiteId,
+                EmployerId = vacancyOwnerRelationship.EmployerId,
+                EmployerDescription = CleanDescription(vacancyOwnerRelationship.EmployerDescription),
+                EmployerWebsiteUrl = vacancyOwnerRelationship.EmployerWebsite
             };
 
             return providerSiteEmployerLink;

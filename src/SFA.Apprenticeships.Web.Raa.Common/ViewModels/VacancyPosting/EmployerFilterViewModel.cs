@@ -8,8 +8,8 @@
     {
         public string ProviderSiteErn { get; set; }
 
-        [Display(Name = EmployerFilterViewModelMessages.Ern.LabelText)]
-        public string Ern { get; set; }
+        [Display(Name = EmployerFilterViewModelMessages.EdsUrn.LabelText)]
+        public string EdsUrn { get; set; }
 
         [Display(Name = EmployerFilterViewModelMessages.Name.LabelText)]
         public string Name { get; set; }

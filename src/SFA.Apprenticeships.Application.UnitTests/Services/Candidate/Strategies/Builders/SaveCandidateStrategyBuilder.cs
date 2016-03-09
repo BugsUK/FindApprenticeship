@@ -1,12 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Services.Candidate.Strategies.Builders
 {
     using System;
-    using Application.Candidate.Strategies;
-    using Application.Candidate.Strategies.Apprenticeships;
+    using Apprenticeships.Application.Candidate.Strategies;
+    using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
-    using Interfaces.Users;
+    using Infrastructure.Interfaces;
     using Moq;
 
     public class SaveCandidateStrategyBuilder

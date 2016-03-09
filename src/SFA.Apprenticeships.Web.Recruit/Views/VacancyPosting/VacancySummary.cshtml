@@ -1,17 +1,17 @@
-﻿@model VacancySummaryViewModel
+﻿@model FurtherVacancyDetailsViewModel
 @using System.Web.Mvc.Html
-@using SFA.Apprenticeships.Domain.Entities.Vacancies.ProviderVacancies
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancySummary, FormMethod.Post))
 {
-    @Html.DisplayFor(m => m, VacancySummaryViewModel.PartialView)
+    @Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView)
 
     var saveButtonText = "Save and continue";
     var saveButtonValue = "VacancySummary";
 
-    if (Model.Status == ProviderVacancyStatuses.RejectedByQA || Model.ComeFromPreview)
+    if (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview)
     {
         saveButtonText = "Save and return to Preview";
         saveButtonValue = "VacancySummaryAndPreview";

@@ -4,9 +4,9 @@
     using Attributes;
     using Common.Mediators;
     using Constants;
-    using Domain.Entities;
+    using Domain.Entities.Raa;
     using Mediators.Application;
-    using ViewModels.Application;
+    using Raa.Common.ViewModels.Application;
 
     [AuthorizeUser(Roles = Roles.Faa)]
     public class ApplicationController : RecruitmentControllerBase

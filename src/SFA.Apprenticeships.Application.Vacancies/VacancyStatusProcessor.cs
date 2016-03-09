@@ -3,28 +3,28 @@
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using Domain.Entities.Vacancies.ProviderVacancies;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Messaging;
-    using Domain.Interfaces.Queries;
-    using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Queries;
+    using Domain.Raa.Interfaces.Repositories;
     using Entities;
     using Infrastructure.Interfaces;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor
     {
-        private readonly IApprenticeshipVacancyReadRepository _apprenticeshipVacancyReadRepository;
-        private readonly IApprenticeshipVacancyWriteRepository _apprenticeshipVacancyWriteRepository;
+        private readonly IVacancyReadRepository _vacancyReadRepository;
+        private readonly IVacancyWriteRepository _vacancyWriteRepository;
         private readonly IServiceBus _serviceBus;
         private readonly ILogService _logService;
 
         public VacancyStatusProcessor(
-            IApprenticeshipVacancyReadRepository apprenticeshipVacancyReadRepository,
-            IApprenticeshipVacancyWriteRepository apprenticeshipVacancyWriteRepository,
+            IVacancyReadRepository vacancyReadRepository,
+            IVacancyWriteRepository vacancyWriteRepository,
             IServiceBus serviceBus,
             ILogService logService)
         {
-            _apprenticeshipVacancyReadRepository = apprenticeshipVacancyReadRepository;
-            _apprenticeshipVacancyWriteRepository = apprenticeshipVacancyWriteRepository;
+            _vacancyReadRepository = vacancyReadRepository;
+            _vacancyWriteRepository = vacancyWriteRepository;
             _serviceBus = serviceBus;
             _logService = logService;
         }
@@ -40,13 +40,13 @@
 
             var query = new ApprenticeshipVacancyQuery() {
                 CurrentPage = 1,
-                DesiredStatuses = new List<ProviderVacancyStatuses>() { ProviderVacancyStatuses.Live },
+                DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live },
                 LatestClosingDate = deadline,
                 PageSize = 1000 };
 
             int resultCount;
 
-            var eligibleVacancies = _apprenticeshipVacancyReadRepository.Find(query, out resultCount);
+            var eligibleVacancies = _vacancyReadRepository.Find(query, out resultCount);
 
             var message = string.Format("Querying vacancies about to close took {0}", stopwatch.Elapsed);
 
@@ -54,7 +54,7 @@
 
             foreach (var vacancy in eligibleVacancies)
             {
-                var eligibleForClosure = new VacancyEligibleForClosure(vacancy.EntityId);
+                var eligibleForClosure = new VacancyEligibleForClosure(vacancy.VacancyId);
                 _serviceBus.PublishMessage(eligibleForClosure);
                 counter ++;
             }
@@ -73,13 +73,13 @@
 
         public void ProcessVacancyClosure(VacancyEligibleForClosure vacancyEligibleForClosure)
         {
-            var vacancy = _apprenticeshipVacancyReadRepository.Get(vacancyEligibleForClosure.EntityId);
+            var vacancy = _vacancyReadRepository.Get(vacancyEligibleForClosure.VacancyId);
             
             switch (vacancy.Status)
             {
-                case ProviderVacancyStatuses.Live:
-                    vacancy.Status = ProviderVacancyStatuses.Closed;
-                    _apprenticeshipVacancyWriteRepository.Save(vacancy);
+                case VacancyStatus.Live:
+                    vacancy.Status = VacancyStatus.Closed;
+                    _vacancyWriteRepository.Create(vacancy);
                     break;
                 default:
                     return;
