@@ -8,13 +8,8 @@
     using Application.Organisation;
     using Configuration;
     using Domain.Entities.Exceptions;
-<<<<<<< HEAD
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
-=======
     using Domain.Entities.Locations;
     using Domain.Entities.Organisations;
->>>>>>> 44d148c00aa02dddea795b8505e8f96fbc449a18
     using EmployerDataService;
     using Mappers;
     using WebServices.Wcf;
@@ -161,20 +156,9 @@
             var postCodeToSearch = employerToMap.Address.PostCode;
             var addressLine1 = employerToMap.Address.PAON?.Items.FirstOrDefault()?.ToString();
             PostalAddress verifiedAddress = null;
-<<<<<<< HEAD
-
-            if (!string.IsNullOrWhiteSpace(addressLine1))
-            {
-                var addresses = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1)?.ToList();
-                if (addresses != null && addresses.Count() == 1)
-                {
-                    verifiedAddress = addresses.Single();
-                }
-=======
             if(!string.IsNullOrWhiteSpace(addressLine1))
             {
                 verifiedAddress = _postalAddressSearchService.GetValidatedAddress(postCodeToSearch, addressLine1);
->>>>>>> 44d148c00aa02dddea795b8505e8f96fbc449a18
             }
 
             if (verifiedAddress == null)
