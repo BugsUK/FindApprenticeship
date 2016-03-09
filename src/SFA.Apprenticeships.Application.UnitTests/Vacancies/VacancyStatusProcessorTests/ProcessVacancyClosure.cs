@@ -52,9 +52,9 @@
 
             //Assert
             _apprenticeshipVacancyReadRepository.Verify(m => m.Get(message.VacancyId), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.Is<Vacancy>(av => av.VacancyId == message.VacancyId)), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.Is<Vacancy>(av => av.Status == VacancyStatus.Closed)), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.IsAny<Vacancy>()), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Update(It.Is<Vacancy>(av => av.VacancyId == message.VacancyId)), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Update(It.Is<Vacancy>(av => av.Status == VacancyStatus.Closed)), Times.Once);
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Update(It.IsAny<Vacancy>()), Times.Once);
         }
 
         [TestCase(VacancyStatus.Closed)]
@@ -79,7 +79,7 @@
 
             //Assert
             _apprenticeshipVacancyReadRepository.Verify(m => m.Get(message.VacancyId), Times.Once);
-            _apprenticeshipVacancyWriteRepository.Verify(m => m.Create(It.IsAny<Vacancy>()), Times.Never());
+            _apprenticeshipVacancyWriteRepository.Verify(m => m.Update(It.IsAny<Vacancy>()), Times.Never());
         }
     }
 }
