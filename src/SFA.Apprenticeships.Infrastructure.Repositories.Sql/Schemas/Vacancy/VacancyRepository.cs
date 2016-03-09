@@ -89,16 +89,25 @@
             return vacancies.Select(MapVacancy).ToList();
         }
 
-        public List<DomainVacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
             var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
 
             var vacancies =
-                _getOpenConnection.Query<Vacancy>("SELECT * FROM dbo.Vacancy WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
+                _getOpenConnection.Query<Vacancy>(@"
+SELECT VacancyId, VacancyOwnerRelationshipId, VacancyReferenceNumber, VacancyStatusId, 
+    AddressLine1, AddressLine2, AddressLine3, AddressLine4, AddressLine5, Town, CountyId, PostCode, LocalAuthorityId, Longitude, Latitude, 
+    ApprenticeshipFrameworkId, Title, ApprenticeshipType, ShortDescription, WeeklyWage, WageType, WageText, NumberofPositions, 
+    ApplicationClosingDate, InterviewsFromDate, ExpectedStartDate, ExpectedDuration, WorkingWeek, EmployerAnonymousName, 
+    ApplyOutsideNAVMS, LockedForSupportUntil, NoOfOfflineApplicants, MasterVacancyId, VacancyLocationTypeId, VacancyManagerID, 
+    VacancyGuid, SubmissionCount, StartedToQADateTime, StandardId, HoursPerWeek, WageUnitId, DurationTypeId, DurationValue, QAUserName, 
+    TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime 
+FROM dbo.Vacancy 
+WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                     new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
 
-            return vacancies.Select(MapVacancy).ToList();
+            return vacancies.Select(MapVacancySummary).ToList();
         }
 
         private DomainVacancy MapVacancy(Vacancy dbVacancy)
@@ -109,7 +118,6 @@
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
             MapAdditionalQuestions(dbVacancy, result);
             MapTextFields(dbVacancy, result);
-            MapIsEmployerLocationMainApprenticeshipLocation(dbVacancy, result);
             MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
@@ -122,7 +130,22 @@
             return result;
         }
 
-        private void MapFrameworkId(Vacancy dbVacancy, DomainVacancy result)
+        private VacancySummary MapVacancySummary(Vacancy dbVacancy)
+        {
+            if (dbVacancy == null)
+                return null;
+            
+            var result = _mapper.Map<Vacancy, VacancySummary>(dbVacancy);
+            MapApprenticeshipType(dbVacancy, result);
+            MapFrameworkId(dbVacancy, result);
+            MapSectorId(dbVacancy, result);
+            MapDateSubmitted(dbVacancy, result);
+            MapDateQAApproved(dbVacancy, result);
+
+            return result;
+        }
+
+        private void MapFrameworkId(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipFrameworkId.HasValue)
             {
@@ -138,7 +161,7 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
             }
         }
 
-        private void MapApprenticeshipType(Vacancy dbVacancy, DomainVacancy result)
+        private void MapApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
             {
@@ -157,21 +180,7 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
             }
         }
 
-        private void MapIsEmployerLocationMainApprenticeshipLocation(Vacancy dbVacancy, DomainVacancy result)
-        {
-            var locationTypeCodeName = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
-SELECT CodeName
-FROM   dbo.VacancyLocationType
-WHERE  VacancyLocationTypeId = @VacancyLocationTypeId",
-                new
-                {
-                    VacancyLocationTypeId = dbVacancy.VacancyLocationTypeId.Value
-                }).Single();
-
-            result.IsEmployerLocationMainApprenticeshipLocation = locationTypeCodeName != "MUL"; // Probably is not true
-        }
-
-        private void MapSectorId(Vacancy dbVacancy, DomainVacancy result)
+        private void MapSectorId(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.SectorId.HasValue)
             {
@@ -290,7 +299,7 @@ order by HistoryDate
                 ).SingleOrDefault();
         }
 
-        private void MapDateSubmitted(Vacancy dbVacancy, DomainVacancy result)
+        private void MapDateSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate
@@ -322,7 +331,7 @@ order by HistoryDate
                 ).SingleOrDefault();
         }
 
-        private void MapDateQAApproved(Vacancy dbVacancy, DomainVacancy result)
+        private void MapDateQAApproved(Vacancy dbVacancy, VacancySummary result)
         {
             result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate

@@ -86,7 +86,7 @@
             var vacancyGuid = Guid.NewGuid();
             var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, numberOfPositions, providerSiteId, vacancyGuid);
 
-            var savedVacancy = new MongoApprenticeshipVacancy
+            var savedVacancy = new MongoVacancy
             {
                 VacancyGuid = vacancyGuid
             };
@@ -111,7 +111,7 @@
             var vacancyGuid = Guid.NewGuid();
             var viewModel = GetProviderSiteEmployerLinkViewModel(employerId, isEmployerLocationMainApprenticeshipLocation, null, providerSiteId, vacancyGuid);
 
-            var savedVacancy = new MongoApprenticeshipVacancy
+            var savedVacancy = new MongoVacancy
             {
                 VacancyGuid = vacancyGuid
             };
@@ -153,7 +153,7 @@
                 VacancyGuid = vacancyGuid
             };
 
-            var savedVacancy = new MongoApprenticeshipVacancy
+            var savedVacancy = new MongoVacancy
             {
                 VacancyGuid = vacancyGuid
             };
@@ -205,7 +205,7 @@
             };
         }
 
-        private static void CheckAllCommentsAreNull(MongoApprenticeshipVacancy clonedVacancy)
+        private static void CheckAllCommentsAreNull(MongoVacancy clonedVacancy)
         {
             clonedVacancy.WorkingWeekComment.Should().BeNull();
             clonedVacancy.ApprenticeshipLevelComment.Should().BeNull();
@@ -219,9 +219,9 @@
             clonedVacancy.LongDescriptionComment.Should().BeNull();
         }
 
-        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.Submitted)
+        private static MongoVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title, VacancyStatus status = VacancyStatus.Submitted)
         {
-            return new MongoApprenticeshipVacancy
+            return new MongoVacancy
             {
                 Title = title,
                 ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
@@ -250,7 +250,7 @@
             };
         }
 
-        private void InitializeDatabaseWithVacancy(MongoApprenticeshipVacancy vacancy)
+        private void InitializeDatabaseWithVacancy(MongoVacancy vacancy)
         {
             Collection.Save(vacancy);
         }

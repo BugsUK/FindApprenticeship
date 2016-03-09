@@ -121,7 +121,7 @@
             return _vacancyReadRepository.GetByIds(vacancyIds);
         }
 
-        public List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
             return _vacancyReadRepository.GetByOwnerPartyIds(ownerPartyIds);
         }

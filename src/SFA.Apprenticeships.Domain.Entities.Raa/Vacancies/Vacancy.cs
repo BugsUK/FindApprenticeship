@@ -2,9 +2,8 @@
 namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
     using System;
-    using Locations;
 
-    public class Vacancy : ICreatableEntity, IUpdatableEntity, ICloneable
+    public class Vacancy : VacancySummary, ICreatableEntity, IUpdatableEntity, ICloneable
     {
         public object Clone()
         {
@@ -93,22 +92,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
             };
         }
 
-        public int VacancyId { get; set; }
-        public int VacancyReferenceNumber { get; set; }
-        public Guid VacancyGuid { get; set; }
-        public string Title { get; set; }
         public string TitleComment { get; set; }
-        public string ShortDescription { get; set; }
         public string ShortDescriptionComment { get; set; }
-        public string WorkingWeek { get; set; }
-        public decimal? HoursPerWeek { get; set; }
-        public WageType WageType { get; set; }
-        public decimal? Wage { get; set; }
-        public WageUnit WageUnit { get; set; }
-        public DurationType DurationType { get; set; }
-        public int? Duration { get; set; }
-        public DateTime? ClosingDate { get; set; }
-        public DateTime? PossibleStartDate { get; set; }
         public string LongDescription { get; set; }
         public string DesiredSkills { get; set; }
         public string DesiredSkillsComment { get; set; }
@@ -122,34 +107,18 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string DesiredQualificationsComment { get; set; }
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
-        public int OwnerPartyId { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
-        public bool? OfflineVacancy { get; set; }
         public string OfflineApplicationUrl { get; set; }
         public string OfflineApplicationUrlComment { get; set; }
         public string OfflineApplicationInstructions { get; set; }
         public string OfflineApplicationInstructionsComment { get; set; }
-        public int OfflineApplicationClickThroughCount { get; set; }
-        public DateTime? DateSubmitted { get; set; }
         public DateTime? DateFirstSubmitted { get; set; }
-        public DateTime? DateStartedToQA { get; set; }
-        public string QAUserName { get; set; }
-        public DateTime? DateQAApproved { get; set; }
-        public int SubmissionCount { get; set; }
-        public int? VacancyManagerId { get; set; }
         public int LastEditedById { get; set; }
-        public int? ParentVacancyId { get; set; }
-        public TrainingType TrainingType { get; set; }
-        public ApprenticeshipLevel ApprenticeshipLevel { get; set; }
         public string ApprenticeshipLevelComment { get; set; }
-        public string FrameworkCodeName { get; set; }
         public string FrameworkCodeNameComment { get; set; }
-        public int? StandardId { get; set; }
         public string StandardIdComment { get; set; }
-        public string SectorCodeName { get; set; }
         public string SectorCodeNameComment { get; set; }
-        public VacancyStatus Status { get; set; }
         public string WageComment { get; set; }
         public string ClosingDateComment { get; set; }
         public string DurationComment { get; set; }
@@ -159,8 +128,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string FirstQuestionComment { get; set; }
         public string SecondQuestionComment { get; set; }
         public string AdditionalLocationInformation { get; set; }
-        public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
-        public int? NumberOfPositions { get; set; }
         public string EmployerDescriptionComment { get; set; }
         public string EmployerWebsiteUrlComment { get; set; }
         public string LocationAddressesComment { get; set; }
@@ -172,9 +139,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string ContactNumber { get; set; }
         public string ContactEmail { get; set; }
         public string ContactDetailsComment { get; set; }
-        public VacancyType VacancyType { get; set; }
         public DateTime CreatedDateTime { get; set; }
-        public DateTime? UpdatedDateTime { get; set; }
-        public PostalAddress Address { get; set; }
     }
 }

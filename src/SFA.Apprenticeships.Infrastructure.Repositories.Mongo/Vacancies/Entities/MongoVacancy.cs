@@ -4,7 +4,7 @@
     using Domain.Entities.Raa.Vacancies;
     using MongoDB.Bson.Serialization.Attributes;
 
-    public class MongoApprenticeshipVacancy : Vacancy
+    public class MongoVacancy : Vacancy
     {
         [BsonId]
         public Guid Id

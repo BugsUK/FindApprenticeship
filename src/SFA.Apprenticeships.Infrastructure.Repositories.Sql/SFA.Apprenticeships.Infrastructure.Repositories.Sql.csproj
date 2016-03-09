@@ -140,7 +140,7 @@
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
-    <Compile Include="Schemas\Vacancy\ApprenticeshipVacancyMappers.cs" />
+    <Compile Include="Schemas\Vacancy\VacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
     <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />

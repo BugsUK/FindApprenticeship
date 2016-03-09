@@ -23,7 +23,7 @@
 
         List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
 
-        List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
+        List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 

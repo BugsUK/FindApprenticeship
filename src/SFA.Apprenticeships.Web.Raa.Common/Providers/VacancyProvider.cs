@@ -678,7 +678,7 @@
 
             vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
 
-            var vacancySummaries = vacancies.Select(v => _mapper.Map<Vacancy, VacancySummaryViewModel>(v)).ToList();
+            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
             foreach (var vacancySummary in vacancySummaries)
             {
                 vacancySummary.EmployerName = vacancyPartyToEmployerMap[vacancySummary.OwnerPartyId].Name;

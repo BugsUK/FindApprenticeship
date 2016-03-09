@@ -12,10 +12,10 @@
         Vacancy GetByReferenceNumber(int vacancyReferenceNumber);
 
         Vacancy GetByVacancyGuid(Guid vacancyGuid);
-
+        
         List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
 
-        List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
+        List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
 

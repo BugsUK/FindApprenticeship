@@ -17,7 +17,7 @@
     [TestFixture(Category = "Integration")]
     public class VacancyRepositoryTests : TestBase
     {
-        private readonly IMapper _mapper = new ApprenticeshipVacancyMappers();
+        private readonly IMapper _mapper = new VacancyMappers();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
         private IGetOpenConnection _connection;
 

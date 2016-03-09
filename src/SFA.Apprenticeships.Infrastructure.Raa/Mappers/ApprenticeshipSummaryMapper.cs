@@ -14,7 +14,7 @@
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(Vacancy vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             
@@ -33,9 +33,11 @@
                 //Goes into elastic unformatted for searching
                 VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                 Title = vacancy.Title,
-                PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
-                StartDate = vacancy.PossibleStartDate ?? DateTime.MinValue,
-                ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
+                // ReSharper disable PossibleInvalidOperationException
+                PostedDate = vacancy.DateQAApproved.Value,
+                StartDate = vacancy.PossibleStartDate.Value,
+                ClosingDate = vacancy.ClosingDate.Value,
+                // ReSharper restore PossibleInvalidOperationException
                 Description = vacancy.ShortDescription,
                 NumberOfPositions = vacancy.NumberOfPositions,
                 EmployerName = employer.Name,

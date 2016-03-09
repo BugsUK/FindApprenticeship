@@ -19,8 +19,6 @@
 
         private TableSpecList _tables;
 
-        private readonly DateTime _unixEpoc = new DateTime(1970, 01, 01);
-
         private const int ApprenticeshipTypeUnknown = 0;
         private const int ApprenticeshipTypeTraineeship = 1;
         private const int VacancyTypeUnknown = 0;
@@ -200,9 +198,8 @@ select top 10 * from VacancyReferralComments
             /// 
             /// </summary>
             /// <param name="tableName"></param>
-            /// <param name="transform">Function taking (oldRecord, newRecord). "originalTarget" will be null if there is not yet a corresponding record in the target. "source" may be changed by this function
+            /// <param name="transform">Function taking (oldRecord, newRecord). "oldRecord" will be null if there is not yet a corresponding record in the target. "newRecord" may be changed by this function
             /// to add or change fields. If this function then returns true AND "source" and "originalTarget" are then found to vary then the record will be inserted/updated, otherwise it will be left alone.</param>
-            /// <param name="transform">Action taking (ourOriginal, av). ourOriginal is the record on our side (may be null), av is the record on their side. This action will be called after</param>
             /// <param name="dependsOn"></param>
             /// <returns></returns>
             public TableSpec AddNew(string tableName, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
@@ -295,8 +292,6 @@ select top 10 * from VacancyReferralComments
             newRecord.DeliveryOrganisationID  = null;
             newRecord.ContractOwnerID         = null;
             newRecord.OriginalContractOwnerId = null;
-
-            newRecord.CreatedDateTime = (object)_unixEpoc;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;
