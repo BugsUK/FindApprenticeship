@@ -1,12 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Sql.Schemas.Vacancy;
-    using DbVacancyLocation = Sql.Schemas.Vacancy.Entities.VacancyLocation;
+    using Schemas.Vacancy;
+    using DbVacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
     using DomainVacancyLocation = Domain.Entities.Raa.Locations.VacancyLocation;
-
 
     [TestFixture]
     public class ApprenticeshipVacancyLocationMappersUnitTests : TestBase

@@ -5,14 +5,13 @@
 
     public interface IProviderReadRepository
     {
-        Provider Get(int providerId);
-        Provider GetViaUkprn(string ukprn);
+        Provider GetById(int providerId);
+        Provider GetByUkprn(string ukprn);
         IEnumerable<Provider> GetByIds(IEnumerable<int> providerIds);
     }
 
     public interface IProviderWriteRepository
     {
-        void Delete(int providerId);
-        Provider Save(Provider entity);
+        Provider Update(Provider entity);
     }
 }

@@ -1,14 +1,14 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
     using System;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
+    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
-    using Domain.Entities.Raa.Vacancies;
-    using VacancyLocation = Sql.Schemas.Vacancy.Entities.VacancyLocation;
+    using VacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
 
     [TestFixture]
     public class TestBase
@@ -37,7 +37,7 @@
             return result;
         }
 
-        protected DomainVacancy CreateValidDomainVacancy()
+        private DomainVacancy CreateValidDomainVacancy()
         {
             var fixture = new Fixture();
 
@@ -81,12 +81,17 @@
             return result;
         }
 
-        protected EquivalencyAssertionOptions<DomainVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<DomainVacancy> options)
+        protected Tuple<DomainVacancy, DomainVacancy> CreateValidParentChildDomainVacancies()
         {
-            return options.Excluding(v => v.FrameworkCodeName);
+            var parentVacancy = CreateValidDomainVacancy();
+
+            var childVacancy = CreateValidDomainVacancy();
+            childVacancy.ParentVacancyId = parentVacancy.VacancyReferenceNumber;
+
+            return new Tuple<DomainVacancy, DomainVacancy>(parentVacancy, childVacancy);
         }
 
-        protected EquivalencyAssertionOptions<DomainVacancy> ForShallowSave(EquivalencyAssertionOptions<DomainVacancy> options)
+        protected EquivalencyAssertionOptions<DomainVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<DomainVacancy> options)
         {
             return options.Excluding(v => v.FrameworkCodeName);
         }

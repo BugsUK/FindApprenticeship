@@ -24,7 +24,7 @@
             _logger = logger;
         }
 
-        public Provider Get(int providerId)
+        public Provider GetById(int providerId)
         {
             _logger.Debug("Called Mongodb to get provider with Id={0}", providerId);
 
@@ -33,7 +33,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoProvider, Provider>(mongoEntity);
         }
 
-        public Provider GetViaUkprn(string ukprn)
+        public Provider GetByUkprn(string ukprn)
         {
             _logger.Debug("Called Mongodb to get provider with UKPRN={0}", ukprn);
 
@@ -58,7 +58,7 @@
             _logger.Debug("Deleted provider with Id={0}", providerId);
         }
 
-        public Provider Save(Provider entity)
+        public Provider Update(Provider entity)
         {
             _logger.Debug("Called Mongodb to save provider with UKPRN={0}", entity.Ukprn);
 

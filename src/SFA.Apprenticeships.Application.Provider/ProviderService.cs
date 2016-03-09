@@ -43,12 +43,13 @@ namespace SFA.Apprenticeships.Application.Provider
         {
             //TODO: Remove null checks following SQL migration
             var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
+
             if (vacancyParty != null)
             {
                 var providerSite = _providerSiteReadRepository.Get(vacancyParty.ProviderSiteId);
                 if (providerSite != null)
                 {
-                    return _providerReadRepository.Get(providerSite.ProviderId);
+                    return _providerReadRepository.GetById(providerSite.ProviderId);
                 }
             }
             return new Provider();
@@ -56,7 +57,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Provider GetProvider(int providerId)
         {
-            return _providerReadRepository.Get(providerId);
+            return _providerReadRepository.GetById(providerId);
         }
 
         public Provider GetProvider(string ukprn)
@@ -65,7 +66,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            var provider = _providerReadRepository.GetViaUkprn(ukprn);
+            var provider = _providerReadRepository.GetByUkprn(ukprn);
 
             if (provider != null)
             {
@@ -86,7 +87,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public void SaveProvider(Provider provider)
         {
-            _providerWriteRepository.Save(provider);
+            _providerWriteRepository.Update(provider);
         }
 
         public ProviderSite GetProviderSite(int providerSiteId)
