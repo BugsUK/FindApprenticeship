@@ -1,9 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Providers.IoC
 {
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
-    using Mappers;
     using SFA.Infrastructure.Interfaces;
+    using Sql.Schemas.Provider;
     using StructureMap.Configuration.DSL;
 
     public class ProviderRepositoryRegistry : Registry

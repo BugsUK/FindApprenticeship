@@ -15,7 +15,7 @@ public class TestAssemblySetup
         var dbInitialiser = new DatabaseInitialiser();
 
         //control db initialisation and seeding through these two bools
-        var shouldDropCreateDB = true;
+        var shouldDropCreateDB = false;
 
         if (shouldDropCreateDB)
         {
