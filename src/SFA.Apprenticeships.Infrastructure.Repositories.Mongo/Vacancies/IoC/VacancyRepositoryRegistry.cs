@@ -12,27 +12,27 @@
         public VacancyRepositoryRegistry()
         {
             // Apprenticeships.
-            For<IMapper>().Use<Sql.Schemas.Vacancy.ApprenticeshipVacancyMappers>().Name = "ApprenticeshipVacancyMappers";
+            For<IMapper>().Use<Sql.Schemas.Vacancy.VacancyMappers>().Name = "VacancyMappers";
 
             For<IVacancyReadRepository>()
                 .Use<VacancyRepository>()
                 .Ctor<IMapper>()
-                .Named("ApprenticeshipVacancyMappers");
+                .Named("VacancyMappers");
 
             For<IVacancyWriteRepository>()
                 .Use<VacancyRepository>()
                 .Ctor<IMapper>()
-                .Named("ApprenticeshipVacancyMappers");
+                .Named("VacancyMappers");
 
             For<IVacancyLocationReadRepository>()
                 .Use<VacancyLocationRepository>()
                 .Ctor<IMapper>()
-                .Named("ApprenticeshipVacancyMappers");
+                .Named("VacancyMappers");
 
             For<IVacancyLocationWriteRepository>()
                 .Use<VacancyLocationRepository>()
                 .Ctor<IMapper>()
-                .Named("ApprenticeshipVacancyMappers");
+                .Named("VacancyMappers");
 
             For<IReferenceNumberRepository>()
                 .Use<ReferenceNumberRepository>();

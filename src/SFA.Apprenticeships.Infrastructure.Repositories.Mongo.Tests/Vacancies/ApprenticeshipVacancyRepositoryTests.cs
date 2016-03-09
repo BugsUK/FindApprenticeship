@@ -29,7 +29,7 @@
                 .GetServer()
                 .GetDatabase(mongoDbName);
 
-            var collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
+            var collection = database.GetCollection<MongoVacancy>("apprenticeshipVacancies");
             collection.Remove(Query.EQ("Title", expiredVacancyIdCumTitle.ToString()));
             collection.Remove(Query.EQ("Title", expiredQaVacancyIdCumTitle.ToString()));
             collection.Remove(Query.EQ("Title", futureVacancyIdCumTitle.ToString()));

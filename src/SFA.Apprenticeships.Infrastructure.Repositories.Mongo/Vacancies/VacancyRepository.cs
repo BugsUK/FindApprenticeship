@@ -15,7 +15,7 @@
     using MongoDB.Driver.Builders;
     using SFA.Infrastructure.Interfaces;
 
-    public class VacancyRepository : GenericMongoClient2<MongoApprenticeshipVacancy>, IVacancyReadRepository, IVacancyWriteRepository
+    public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
     {
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -39,7 +39,7 @@
 
             var mongoEntity = Collection.FindOne(Query<Vacancy>.EQ(v => v.VacancyId, vacancyId));
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
         public Vacancy GetByReferenceNumber(int vacancyReferenceNumber)
@@ -48,7 +48,7 @@
 
             var mongoEntity = Collection.FindOne(Query<Vacancy>.EQ(v => v.VacancyReferenceNumber, vacancyReferenceNumber));
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
         public Vacancy GetByVacancyGuid(Guid vacancyGuid)
@@ -57,29 +57,29 @@
 
             var mongoEntity = Collection.FindOne(Query<Vacancy>.EQ(v => v.VacancyGuid, vacancyGuid));
 
-            return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+            return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
-        public List<Vacancy> GetByIds(IEnumerable<int> vacancyIds)
+        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
             var mongoEntities = Collection.Find(Query.In("VacancyId", new BsonArray(vacancyIds)));
 
-            return mongoEntities.Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e)).ToList();
+            return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
-        public List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
+        public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
         {
             var mongoEntities = Collection.Find(Query.In("OwnerPartyId", new BsonArray(ownerPartyIds)));
 
-            return mongoEntities.Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e)).ToList();
+            return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
-        public List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
             var mongoEntities = Collection.Find(Query<Vacancy>.In(v => v.Status, desiredStatuses))
-                .Select(e => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(e))
+                .Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e))
                 .ToList();
 
             _logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", mongoEntities.Count, string.Join(",", desiredStatuses)));
@@ -87,7 +87,7 @@
             return mongoEntities;
         }
 
-        public List<Vacancy>Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
+        public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
         {
             _logger.Debug("Calling repository to find apprenticeship vacancies");
 
@@ -127,7 +127,7 @@
                 .SetSortOrder(SortBy.Ascending("VacancyReferenceNumber"))
                 .SetSkip(query.PageSize * (query.CurrentPage - 1))
                 .SetLimit(query.PageSize)
-                .Select(vacancy => _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(vacancy))
+                .Select(vacancy => _mapper.Map<MongoVacancy, VacancySummary>(vacancy))
                 .ToList();
 
             totalResultsCount = Convert.ToInt32(Collection.Count(queryBuilder.And(mongoQueryConditions)));
@@ -168,7 +168,7 @@
         {
             _logger.Debug("Calling repository to delete apprenticeship vacancy with Id={0}", vacancyId);
 
-            Collection.Remove(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyId, vacancyId));
+            Collection.Remove(Query<MongoVacancy>.EQ(o => o.VacancyId, vacancyId));
 
             _logger.Debug("Deleted apprenticeship vacancy with Id={0}", vacancyId);
         }
@@ -181,7 +181,7 @@
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.VacancyId);
 
-            return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+            return _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
         public Vacancy Update(Vacancy entity)
@@ -192,10 +192,10 @@
 
             _logger.Debug("Saved apprenticeship vacancy with to Mongodb with id={0}", entity.VacancyId);
 
-            return _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+            return _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
         }
 
-        private MongoApprenticeshipVacancy SaveEntity(Vacancy entity)
+        private MongoVacancy SaveEntity(Vacancy entity)
         {
             if (entity.VacancyId == 0 && entity.VacancyReferenceNumber != 0)
             {
@@ -205,7 +205,7 @@
             SetCreatedDateTime(entity);
             SetUpdatedDateTime(entity);
 
-            var mongoEntity = _mapper.Map<Vacancy, MongoApprenticeshipVacancy>(entity);
+            var mongoEntity = _mapper.Map<Vacancy, MongoVacancy>(entity);
 
             Collection.Save(mongoEntity);
             return mongoEntity;
@@ -237,9 +237,9 @@
             {
                 _logger.Info($"Called Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
 
-                var mongoEntity = result.GetModifiedDocumentAs<MongoApprenticeshipVacancy>();
+                var mongoEntity = result.GetModifiedDocumentAs<MongoVacancy>();
 
-                return mongoEntity == null ? null : _mapper.Map<MongoApprenticeshipVacancy, Vacancy>(mongoEntity);
+                return mongoEntity == null ? null : _mapper.Map<MongoVacancy, Vacancy>(mongoEntity);
             }
 
             _logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");

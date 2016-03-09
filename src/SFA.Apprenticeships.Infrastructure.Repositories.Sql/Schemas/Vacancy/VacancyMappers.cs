@@ -88,10 +88,19 @@
         }
     }
 
-    public class ApprenticeshipVacancyMappers : MapperEngine
+    public class IsEmployerLocationMainApprenticeshipLocationResolver : ValueResolver<int, bool>
+    {
+        protected override bool ResolveCore(int source)
+        {
+            return source != (int)VacancyLocationType.MultipleLocations;
+        }
+    }
+
+    public class VacancyMappers : MapperEngine
     {
         public override void Initialise()
         {
+            //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
                 .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
@@ -197,6 +206,7 @@
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .IgnoreMember(av => av.StandardIdComment)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
+                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .IgnoreMember(av => av.WageComment)
                 .IgnoreMember(av => av.ClosingDateComment)
                 .IgnoreMember(av => av.DurationComment)
@@ -206,7 +216,6 @@
                 .IgnoreMember(av => av.FirstQuestionComment)
                 .IgnoreMember(av => av.SecondQuestionComment)
                 .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
-                .IgnoreMember(av => av.IsEmployerLocationMainApprenticeshipLocation)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
                 .IgnoreMember(av => av.EmployerWebsiteUrlComment)
                 .IgnoreMember(av => av.LocationAddressesComment)
@@ -270,6 +279,70 @@
                         {
                             Latitude = (double) v.Latitude.Value,
                             Longitude = (double) v.Longitude.Value
+                        };
+                    }
+                })
+
+                .End();
+
+
+
+            Mapper.CreateMap<DbVacancy, VacancySummary>()
+                .MapMemberFrom(av => av.VacancyId, v => v.VacancyId)
+                .MapMemberFrom(av => av.VacancyGuid, v => v.VacancyGuid)
+                .MapMemberFrom(av => av.VacancyReferenceNumber, v => v.VacancyReferenceNumber)
+                .MapMemberFrom(av => av.VacancyType, v => v.VacancyTypeId)
+                .MapMemberFrom(av => av.OwnerPartyId, v => v.VacancyOwnerRelationshipId)
+                .MapMemberFrom(av => av.Title, v => v.Title)
+                .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
+                .MapMemberFrom(av => av.Wage, v => v.WeeklyWage)
+                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
+                .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
+                .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
+                .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
+                .MapMemberFrom(av => av.WorkingWeek, v => v.WorkingWeek)
+                .MapMemberFrom(av => av.OfflineVacancy, v => v.ApplyOutsideNAVMS)
+                .MapMemberFrom(av => av.OfflineApplicationClickThroughCount, v => v.NoOfOfflineApplicants)
+                .MapMemberFrom(av => av.VacancyManagerId, v => v.VacancyManagerID)
+                .IgnoreMember(av => av.TrainingType)
+                .IgnoreMember(av => av.ApprenticeshipLevel)
+                .IgnoreMember(av => av.FrameworkCodeName)
+                .MapMemberFrom(av => av.StandardId, v => v.StandardId)
+                .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
+                .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
+                .MapMemberFrom(av => av.WageUnit, v => v.WageUnitId)
+                .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
+                .MapMemberFrom(av => av.Duration, v => v.DurationValue)
+                .IgnoreMember(av => av.QAUserName)
+                .IgnoreMember(av => av.DateQAApproved)
+                .MapMemberFrom(av => av.SubmissionCount, v => v.SubmissionCount)
+                .MapMemberFrom(av => av.DateStartedToQA, v => v.StartedToQADateTime)
+                .IgnoreMember(av => av.DateSubmitted)
+                .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
+                .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
+                .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
+                .IgnoreMember(av => av.SectorCodeName)
+                .IgnoreMember(dvl => dvl.Address)
+                .AfterMap((v, av) =>
+                {
+                    av.Address = new DomainPostalAddress
+                    {
+                        AddressLine1 = v.AddressLine1,
+                        AddressLine2 = v.AddressLine2,
+                        AddressLine3 = v.AddressLine3,
+                        AddressLine4 = v.AddressLine4,
+                        AddressLine5 = v.AddressLine5,
+                        Postcode = v.PostCode,
+                        Town = v.Town
+                    };
+
+                    if (v.Latitude.HasValue && v.Longitude.HasValue)
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
+                        {
+                            Latitude = (double)v.Latitude.Value,
+                            Longitude = (double)v.Longitude.Value
                         };
                     }
                 })

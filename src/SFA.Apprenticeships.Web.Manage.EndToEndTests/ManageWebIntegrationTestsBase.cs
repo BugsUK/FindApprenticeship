@@ -22,7 +22,7 @@
     {
         protected MongoConfiguration MongoConfiguration;
         protected IContainer Container;
-        protected MongoCollection<MongoApprenticeshipVacancy> Collection;
+        protected MongoCollection<MongoVacancy> Collection;
         protected string QaUserName = "qaUserName";
 
         [SetUp]
