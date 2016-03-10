@@ -61,58 +61,28 @@
     <ServiceConfiguration Include="ServiceConfiguration.Local.cscfg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LogEventIndexer\SFA.Apprenticeships.Infrastructure.LogEventIndexer.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.LogEventIndexer</Name>
-      <Project>{4ca9132c-14c8-4743-b9bb-66d84d4d8e69}</Project>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate\SFA.Apprenticeships.Infrastructure.Migrate.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.Migrate</Name>
+      <Project>{0491054e-caf4-4321-be1d-3e44e7394aaa}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.LogEventIndexer</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
-      <Project>{61619f66-5f17-4ef7-a8cf-ba720bea3ad3}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.Monitor</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
-      <Project>{d1bc4a28-a7ab-475e-b73e-5564897550ba}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.Processes</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\SFA.Apprenticeships.Infrastructure.ScheduledJobs.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.ScheduledJobs</Name>
-      <Project>{0491054e-caf4-4321-be1d-3e44e739421c}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.ScheduledJobs</RoleName>
+      <RoleName>SFA.Apprenticeships.Infrastructure.Migrate</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.LogEventIndexerContent\" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.ProcessesContent" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
+    <Folder Include="SFA.Apprenticeships.Infrastructure.MigrateContent\" />
   </ItemGroup>
   <ItemGroup>
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.LogEventIndexerContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MigrateContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
     <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.7\</CloudExtensionsDir>
     <ProductVersion>2.7</ProductVersion>
-    <ProjectGuid>{3f950894-ddc7-436f-9df7-8236c76cbcec}</ProjectGuid>
+    <ProjectGuid>{90752230-6869-4de6-8264-cdecfa8a5ac0}</ProjectGuid>
     <PackageEnableRemoteDebugger>False</PackageEnableRemoteDebugger>
     <UseWebProjectPorts>False</UseWebProjectPorts>
     <StartDevelopmentStorage>True</StartDevelopmentStorage>
@@ -129,8 +99,6 @@ robocopy /E /IS %COPY_PATH% $(ProjectDir) /XF *.csdef
 if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
   </PropertyGroup>
   <Target Name="CopyWorkerRoleConfigurations" BeforeTargets="AfterPackageComputeService">
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.ScheduledJobs.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.ScheduledJobs" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Monitor\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Monitor.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Monitor" OverwriteReadOnlyFiles="true" />
-    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Processes\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Processes.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Processes" OverwriteReadOnlyFiles="true" />
+    <Copy SourceFiles="..\SFA.Apprenticeships.Infrastructure.Migrate\obj\$(Configuration)\SFA.Apprenticeships.Infrastructure.Migrate.dll.config" DestinationFolder="$(IntermediateOutputPath)\SFA.Apprenticeships.Infrastructure.Migrate" OverwriteReadOnlyFiles="true" />
   </Target>
 </Project>
