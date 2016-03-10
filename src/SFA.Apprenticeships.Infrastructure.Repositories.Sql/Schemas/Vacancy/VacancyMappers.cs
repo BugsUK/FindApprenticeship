@@ -277,6 +277,8 @@
                 .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
                 .IgnoreMember(av => av.SectorCodeName)
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(av => av.DateFirstSubmitted)
+                .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

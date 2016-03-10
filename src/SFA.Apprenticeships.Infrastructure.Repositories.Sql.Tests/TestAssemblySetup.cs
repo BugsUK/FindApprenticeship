@@ -15,7 +15,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
             var dbInitialiser = new DatabaseInitialiser();
 
             // ReSharper disable once ConvertToConstant.Local
-            var shouldDropAndCreateDatabase = false;
+            var shouldDropAndCreateDatabase = true;
 
             // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (!shouldDropAndCreateDatabase)
