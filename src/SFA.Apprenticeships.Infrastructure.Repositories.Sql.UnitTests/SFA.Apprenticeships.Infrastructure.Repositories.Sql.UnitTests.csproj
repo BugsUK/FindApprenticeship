@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Provider\ProviderMappersTests.cs" />
+    <Compile Include="Provider\ProviderUserMappersTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyLocationMappersUnitTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyMappersUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

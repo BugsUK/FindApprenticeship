@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
 {
     using Common;
+    using Domain.Entities.Raa.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -29,7 +30,6 @@
         }
 
         [Test]
-        [Ignore]
         public void ShouldGetProviderUserById()
         {
             // Act.
@@ -37,10 +37,10 @@
 
             // Assert.            
             providerUser.Should().NotBeNull();
+            providerUser.ProviderUserId.Should().Be(SeedData.ProviderUser1.ProviderUserId);
         }
 
         [Test]
-        [Ignore]
         public void ShouldGetProviderUsername()
         {
             // Act.
@@ -48,6 +48,7 @@
 
             // Assert.            
             providerUser.Should().NotBeNull();
+            providerUser.Username.Should().Be(SeedData.ProviderUser1.Username);
         }
     }
 }

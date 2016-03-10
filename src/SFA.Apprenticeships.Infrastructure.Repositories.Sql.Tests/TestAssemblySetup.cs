@@ -36,7 +36,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
                 scriptsBasePath + "InsertEmployerContact.sql",
                 scriptsBasePath + "InsertEmployer.sql",
                 scriptsBasePath + "InsertVacancyProvisionRelationshipStatusType.sql",
-                scriptsBasePath + "InsertVacancyOwnerRelationship.sql"
+                scriptsBasePath + "InsertVacancyOwnerRelationship.sql",
+                scriptsBasePath + "InsertProviderUser.sql"
             };
 
             dbInitialiser.Seed(scriptFilePaths);
