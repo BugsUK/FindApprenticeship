@@ -32,9 +32,4 @@
       <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.Migrate" vmsize="ExtraSmall">
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>
-  </WorkerRole>
 </ServiceDefinition>

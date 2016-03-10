@@ -12,7 +12,7 @@
 
     public class TraineeshipSummaryMapper
     {
-        public static TraineeshipSummary GetTraineeshipSummary(Vacancy vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             

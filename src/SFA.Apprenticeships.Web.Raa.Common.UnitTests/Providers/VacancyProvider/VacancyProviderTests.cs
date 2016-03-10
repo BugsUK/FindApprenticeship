@@ -193,9 +193,9 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            var apprenticeshipVacancies = new List<Vacancy>
+            var apprenticeshipVacancies = new List<VacancySummary>
             {
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -205,7 +205,7 @@
                     QAUserName = username,
                     DateStartedToQA = DateTime.UtcNow
                 },
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -267,9 +267,9 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
             timeService.Setup(ts => ts.UtcNow).Returns(DateTime.UtcNow);
-            var apprenticeshipVacancies = new List<Vacancy>
+            var apprenticeshipVacancies = new List<VacancySummary>
             {
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -279,7 +279,7 @@
                     DateStartedToQA = DateTime.UtcNow.AddMinutes(-greaterThanTimeout),
                     Status = VacancyStatus.ReservedForQA
                 },
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -330,9 +330,9 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            var apprenticeshipVacancies = new List<Vacancy>
+            var apprenticeshipVacancies = new List<VacancySummary>
             {
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -342,7 +342,7 @@
                     QAUserName = username,
                     DateStartedToQA = DateTime.UtcNow
                 },
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -391,9 +391,9 @@
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 
-            var apprenticeshipVacancies = new List<Vacancy>
+            var apprenticeshipVacancies = new List<VacancySummary>
             {
-                new Vacancy
+                new VacancySummary
                 {
                     ClosingDate = DateTime.Now,
                     DateSubmitted = DateTime.Now,
@@ -439,9 +439,9 @@
 
             vacancyPostingService.Setup(
                 avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
-                .Returns(new List<Vacancy>
+                .Returns(new List<VacancySummary>
                 {
-                    new Vacancy
+                    new VacancySummary
                     {
                         ClosingDate = DateTime.Now,
                         DateSubmitted = DateTime.Now,

@@ -79,7 +79,7 @@
             Mapper.CreateMap<Vacancy, VacancyQuestionsViewModel>()
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
             Mapper.CreateMap<Vacancy, VacancyViewModel>().ConvertUsing<VacancyToVacancyViewModelConverter>();
-            Mapper.CreateMap<Vacancy, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
+            Mapper.CreateMap<VacancySummary, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
 
             //Applications
             Mapper.CreateMap<Address, AddressViewModel>();
