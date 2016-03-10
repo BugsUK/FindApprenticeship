@@ -40,5 +40,22 @@
             domainProvider.Ukprn.Should().Be(dbProvider.Ukprn.ToString());
             domainProvider.Name.Should().Be(dbProvider.FullName);
         }
+
+        [Test]
+        public void ShouldMapFromDomainToDatabaseProvider()
+        {
+            // Arrange
+            const string ukprn = "123456789";
+
+            var domainProvider = new Fixture()
+                .Build<DomainProvider>()
+                .With(p => p.Ukprn, ukprn)
+                .Create();
+
+            //Act
+            var dbProvider = _mapper.Map<DomainProvider, DatabaseProvider>(domainProvider);
+            dbProvider.Ukprn.ToString().Should().Be(domainProvider.Ukprn);
+            dbProvider.FullName.Should().Be(domainProvider.Name);
+        }
     }
 }

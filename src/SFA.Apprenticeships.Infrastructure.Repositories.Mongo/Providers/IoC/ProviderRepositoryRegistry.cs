@@ -10,12 +10,13 @@
         public ProviderRepositoryRegistry()
         {
             For<IMapper>().Use<ProviderMappers>().Name = "ProviderMappers";
+            For<IMapper>().Use<Mappers.ProviderMappers>().Name = "ProviderSiteMappers";
             For<IProviderReadRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
             For<IProviderWriteRepository>().Use<ProviderRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IVacancyPartyReadRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderMappers");
-            For<IVacancyPartyWriteRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderMappers");
+            For<IProviderSiteReadRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
+            For<IProviderSiteWriteRepository>().Use<ProviderSiteRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
+            For<IVacancyPartyReadRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
+            For<IVacancyPartyWriteRepository>().Use<VacancyPartyRepository>().Ctor<IMapper>().Named("ProviderSiteMappers");
         }
     }
 }

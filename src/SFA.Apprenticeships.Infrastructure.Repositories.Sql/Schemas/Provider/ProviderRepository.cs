@@ -8,7 +8,7 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
-    
+
     public class ProviderRepository : IProviderReadRepository, IProviderWriteRepository
     {
         private readonly IGetOpenConnection _getOpenConnection;
@@ -47,7 +47,8 @@
         {
             _logger.Debug("Getting activated provider with Ukprn={0}", ukprn);
 
-            const string sql = "SELECT * FROM dbo.Provider WHERE UKPRN = @ukprn AND ProviderStatusTypeId = @providerStatusTypeId";
+            const string sql =
+                "SELECT * FROM dbo.Provider WHERE UKPRN = @ukprn AND ProviderStatusTypeId = @providerStatusTypeId";
 
             var sqlParams = new
             {
@@ -74,11 +75,11 @@
                 ProviderIds = providerIdsArray
             };
 
-            var providers =_getOpenConnection.Query<Entities.Provider>(sql, sqlParams);
+            var providers = _getOpenConnection.Query<Entities.Provider>(sql, sqlParams);
 
             return providers.Select(MapProvider);
         }
-     
+
         /// <summary>
         /// UpdateEntityTimeStamps
         /// Save to Collection
@@ -102,8 +103,6 @@
             return MapProvider(dbProvider);
         }
 
-        #region Helpers
-
         private Entities.Provider MapProvider(Provider provider)
         {
             return _mapper.Map<Provider, Entities.Provider>(provider);
@@ -115,7 +114,5 @@
                 ? null
                 : _mapper.Map<Entities.Provider, Provider>(provider);
         }
-
-        #endregion
     }
 }

@@ -13,53 +13,6 @@
     using DbVacancy = Entities.Vacancy;
     using DbVacancyLocation = Entities.VacancyLocation;
 
-    ///// <summary>
-    ///// TODO: Copied because I don't want to depend on SFA.Apprenticeships.Infrastructure.Common.Mappers because this depends on lots of other things
-    ///// But don't want to move it to SFA.Infrastructure project because that would then depend on AutoMapper
-    ///// </summary>
-    //public abstract class MapperEngine : IMapper
-    //{
-    //    private readonly IMappingEngine _mappingEngine;
-
-    //    protected MapperEngine()
-    //    {
-    //        Mapper = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
-    //        _mappingEngine = new MappingEngine(Mapper);
-    //        Initialise();
-    //    }
-
-    //    public ConfigurationStore Mapper { get; private set; }
-
-    //    public TDestination Map<TSource, TDestination>(TSource sourceObject)
-    //    {
-    //        return _mappingEngine.Map<TDestination>(sourceObject);
-    //    }
-
-    //    public abstract void Initialise();
-    //}
-
-    public class NullableIntToIntConverter : ValueResolver<int?, int>
-    {
-        protected override int ResolveCore(int? source)
-        {
-            int result = 0;
-            if (source.HasValue)
-            {
-                result = Convert.ToInt32(source.Value);
-            }
-
-            return result;
-        }
-    }
-
-    public class IntToNullableIntConverter : ValueResolver<int, int?>
-    {
-        protected override int? ResolveCore(int source)
-        {
-            return source;
-        }
-    }
-
     public class ShortToIntConverter : ValueResolver<short?, int?>
     {
         protected override int? ResolveCore(short? source)
