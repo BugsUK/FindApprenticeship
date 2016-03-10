@@ -158,7 +158,6 @@
     <Compile Include="Providers\IoC\ProviderRepositoryRegistry.cs" />
     <Compile Include="Providers\Mappers\ProviderMappers.cs" />
     <Compile Include="Providers\VacancyPartyRepository.cs" />
-    <Compile Include="Providers\ProviderSiteRepository.cs" />
     <Compile Include="UserProfiles\AgencyUserRepository.cs" />
     <Compile Include="UserProfiles\Entities\MongoAgencyUser.cs" />
     <Compile Include="UserProfiles\Entities\MongoProviderUser.cs" />

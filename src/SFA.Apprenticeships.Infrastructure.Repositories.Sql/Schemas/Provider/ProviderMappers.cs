@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
     using AutoMapper;
-    using DatabaseProvider = Entities.Provider;
     using Infrastructure.Common.Mappers;
+    using DatabaseProvider = Entities.Provider;
     using DomainProvider = Domain.Entities.Raa.Parties.Provider;
 
     public class StringToIntConverter : ValueResolver<string, int>

@@ -124,8 +124,11 @@
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
+    <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteRepository.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
     <Compile Include="Schemas\Provider\ProviderUserMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepository.cs" />

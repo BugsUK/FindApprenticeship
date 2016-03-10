@@ -122,6 +122,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Common\DatabaseConfigurationProvider.cs" />
+    <Compile Include="Schemas\dbo\ProviderSite\ProviderSiteRepositoryTests.cs" />
     <Compile Include="Schemas\dbo\Provider\ProviderRepositoryTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepositoryTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />

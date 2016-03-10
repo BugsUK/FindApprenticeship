@@ -46,7 +46,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             if (vacancyParty != null)
             {
-                var providerSite = _providerSiteReadRepository.Get(vacancyParty.ProviderSiteId);
+                var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
                 if (providerSite != null)
                 {
                     return _providerReadRepository.GetById(providerSite.ProviderId);
@@ -92,7 +92,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public ProviderSite GetProviderSite(int providerSiteId)
         {
-            return _providerSiteReadRepository.Get(providerSiteId);
+            return _providerSiteReadRepository.GetById(providerSiteId);
         }
 
         public ProviderSite GetProviderSite(string ukprn, string edsUrn)
@@ -122,7 +122,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
-            IEnumerable<ProviderSite> providerSites = _providerSiteReadRepository.GetForProvider(ukprn).ToList();
+            IEnumerable<ProviderSite> providerSites = _providerSiteReadRepository.GetByUkprn(ukprn).ToList();
 
             if (providerSites.Any())
             {
