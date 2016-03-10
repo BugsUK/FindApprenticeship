@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Sql.Schemas.Vacancy;
-    using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
+    using Schemas.Vacancy;
+    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
 
     [TestFixture]
@@ -82,32 +82,6 @@
 
             // Assert
             domainVacancy2.ShouldBeEquivalentTo(domainVacancy1);
-        }
-
-        [Test, Ignore]
-        public void DoesApprenticeshipVacancyDomainObjectMappingRoundTripViaDatabaseObjectExcludingHardOnes()
-        {
-            // Arrange
-            //var mapper = new VacancyMappers();
-            //var databaseVacancy1 = CreateValidDatabaseVacancy();
-
-            // Act
-            //var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy1);
-            //var databaseVacancy2 = mapper.Map<DomainVacancy, Vacancy>(domainVacancy);
-
-            // Assert
-            //databaseVacancy2.ShouldBeEquivalentTo(databaseVacancy1, options =>
-            //    options.Excluding(v => v.EmployerVacancyPartyId)
-            //    // Mapped using database lookups
-            //    .Excluding(v => v.OwnerVacancyPartyId)
-            //    .Excluding(v => v.ManagerVacancyPartyId)
-            //    .Excluding(v => v.DeliveryProviderVacancyPartyId)
-            //    .Excluding(v => v.ContractOwnerVacancyPartyId)
-            //    .Excluding(v => v.OriginalContractOwnerVacancyPartyId)
-            //    .Excluding(v => v.FrameworkId)
-            //    // Not in Domain object yet
-            //    .Excluding(v => v.AV_ContactName)
-            //    .Excluding(v => v.AV_WageText));
         }
     }
 }

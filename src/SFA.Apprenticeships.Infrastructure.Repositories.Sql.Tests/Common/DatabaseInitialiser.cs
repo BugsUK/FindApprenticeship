@@ -33,25 +33,26 @@
             var dacServices = new DacServices(_targetConnectionString);
 
             //Wire up events for Deploy messages and for task progress (For less verbose output, don't subscribe to Message Event (handy for debugging perhaps?)
-            dacServices.Message += dacServices_Message;
-            dacServices.ProgressChanged += dacServices_ProgressChanged;
+            dacServices.Message += DacServicesHandlers.Message;
+            dacServices.ProgressChanged += DacServicesHandlers.ProgressChanged;
 
             var dbPackage = DacPackage.Load(_dacpacFilePath);
-
             var dbDeployOptions = new DacDeployOptions { CreateNewDatabase = dropDatabase };
 
             dacServices.Deploy(dbPackage, _databaseTargetName, true, dbDeployOptions);
         }
 
-        public void Seed(string[] seedScripts)
+        public void Seed(string[] scriptFilePaths)
         {
             using (var connection = new SqlConnection(_targetConnectionString))
             {
                 connection.Open();
-                foreach (var seedScript in seedScripts)
+
+                foreach (var seedScript in scriptFilePaths)
                 {
                     ExecuteScript(seedScript, connection);
                 }
+
                 connection.Close();
             }
         }
@@ -61,10 +62,9 @@
             foreach (var objectToSeed in seedObjects)
             {
                 var objectType = objectToSeed.GetType();
-
                 var propertiesToInsert = objectType.GetProperties().Where(p => !IsVirtual(p)).ToList();
-
                 var typeIdPropertyName = GetTableIdPropertyName(objectType);
+
                 if (ShouldInsertTableId(objectType, typeIdPropertyName))
                 {
                     typeIdPropertyName = "InsertIdProperty";
@@ -73,9 +73,7 @@
                 var sqlBuilder = new StringBuilder($"INSERT INTO {GetTableName(objectType)} (");
 
                 BuildColumnNames(propertiesToInsert, typeIdPropertyName, sqlBuilder);
-
                 BuildValues(propertiesToInsert, objectToSeed, typeIdPropertyName, sqlBuilder);
-
                 ExecuteInsert(sqlBuilder.ToString());
             }
         }
@@ -88,6 +86,7 @@
         private void ExecuteInsert(string sql)
         {
             Debug.WriteLine(sql);
+
             using (var connection = new SqlConnection(_targetConnectionString))
             {
                 connection.Open();
@@ -111,13 +110,13 @@
             for (var i = 0; i < props.Count; i++)
             {
                 var prop = props[i];
-
+                var name = prop.Name;
                 var propValue = prop.GetValue(vacancy, null);
 
-                var name = prop.Name;
-                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
+                var isAttributeMapped = prop.CustomAttributes.FirstOrDefault(
+                    attributeData => attributeData.AttributeType == typeof(NotMappedAttribute)) == null;
 
-                if (name != typeIdProperty && attributeMapped)
+                if (name != typeIdProperty && isAttributeMapped)
                 {
                     if (propValue == null)
                     {
@@ -126,8 +125,10 @@
                     else
                     {
                         var formattedValue = InstanceFormatter.FormatTypeInstance(propValue, prop.PropertyType);
+
                         sqlBuilder.Append(formattedValue);
                     }
+
                     sqlBuilder.Append(i != props.Count - 1 ? ", " : ")");
                 }
                 else
@@ -140,25 +141,27 @@
 
         private static void BuildColumnNames(IList<PropertyInfo> props, string typeIdProperty, StringBuilder sqlBuilder)
         {
-            for (int i = 0; i < props.Count; i++)
+            for (var i = 0; i < props.Count; i++)
             {
                 var prop = props[i];
-
                 var name = prop.Name;
 
-                var attributeMapped = prop.CustomAttributes.FirstOrDefault(a => a.AttributeType == typeof(NotMappedAttribute)) == null;
+                var isAttributeMapped = prop.CustomAttributes.FirstOrDefault(
+                    attributeData => attributeData.AttributeType == typeof(NotMappedAttribute)) == null;
 
-                if (name != typeIdProperty)
+                if (name == typeIdProperty)
                 {
-                    if (attributeMapped)
-                    {
-                        sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
-                    }
-                    else if (i == props.Count - 1)
-                    {
-                        sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
-                        sqlBuilder.Append(") VALUES (");
-                    }
+                    continue;
+                }
+
+                if (isAttributeMapped)
+                {
+                    sqlBuilder.Append(i != props.Count - 1 ? $"[{name}], " : $"[{name}]) VALUES (");
+                }
+                else if (i == props.Count - 1)
+                {
+                    sqlBuilder.Replace(",", "", sqlBuilder.Length - 2, 2);
+                    sqlBuilder.Append(") VALUES (");
                 }
             }
         }
@@ -166,13 +169,14 @@
         private static string GetTableName(Type myType)
         {
             var tableName = myType.Name;
-            var tableAttribute =
-                myType.CustomAttributes.FirstOrDefault(
-                    a => a.AttributeType == typeof(TableAttribute));
+            var tableAttribute = myType.CustomAttributes.FirstOrDefault(
+                attributeData => attributeData.AttributeType == typeof(TableAttribute));
+
             if (tableAttribute != null)
             {
                 tableName = tableAttribute.ConstructorArguments.First().Value.ToString();
             }
+
             return tableName;
         }
 
@@ -189,12 +193,12 @@
                 idPropertyInfo.CustomAttributes.FirstOrDefault(
                     a => a.AttributeType == typeof(DatabaseGeneratedAttribute));
 
-            if (identityAttribute != null)
+            if (identityAttribute == null)
             {
-                return (DatabaseGeneratedOption)identityAttribute.ConstructorArguments.First().Value == DatabaseGeneratedOption.None;
+                return false;
             }
 
-            return false;
+            return (DatabaseGeneratedOption)identityAttribute.ConstructorArguments.First().Value == DatabaseGeneratedOption.None;
         }
 
         private static string GetTableIdPropertyName(Type type)
@@ -205,7 +209,7 @@
             return possiblePropertyNames.FirstOrDefault(p => type.GetProperties().Any(prop => prop.Name == p));
         }
 
-        private void ExecuteScript(string seedScript, SqlConnection connection)
+        private static void ExecuteScript(string seedScript, SqlConnection connection)
         {
             var commandText = File.ReadAllText(seedScript);
 
@@ -215,14 +219,17 @@
             }
         }
 
-        static void dacServices_Message(object sender, DacMessageEventArgs e)
+        private static class DacServicesHandlers
         {
-            Debug.WriteLine("DAC Message: {0}", e.Message);
-        }
+            public static void Message(object sender, DacMessageEventArgs e)
+            {
+                Debug.WriteLine("DAC Message: {0}", e.Message);
+            }
 
-        static void dacServices_ProgressChanged(object sender, DacProgressEventArgs e)
-        {
-            Debug.WriteLine(e.Status + ": " + e.Message);
+            public static void ProgressChanged(object sender, DacProgressEventArgs e)
+            {
+                Debug.WriteLine(e.Status + ": " + e.Message);
+            }
         }
     }
 }

@@ -124,9 +124,13 @@
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
+    <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteRepository.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
+    <Compile Include="Schemas\Provider\ProviderUserMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepository.cs" />
     <Compile Include="Schemas\Reference\Entities\LocalAuthority.cs" />
     <Compile Include="Schemas\Reference\Entities\Region.cs" />
@@ -144,6 +148,7 @@
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
     <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
+    <Compile Include="Schemas\Vacancy\IoC\VacancyRepositoryRegistry.cs" />
     <Compile Include="Schemas\Vacancy\ReferralCommentCodeName.cs" />
     <Compile Include="Schemas\Vacancy\TextFieldCodeName.cs" />
     <Compile Include="Schemas\Vacancy\VacancyLocationRepository.cs" />

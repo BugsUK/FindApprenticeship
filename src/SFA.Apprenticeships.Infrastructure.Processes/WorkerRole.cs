@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Mongo.Vacancies.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
+    using Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
     using TacticalDataServices.IoC;
     using VacancyIndexer.IoC;
@@ -116,6 +117,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry<VacancyReferenceNumberRegistry>();
                 x.AddCachingRegistry(cacheConfig);
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));

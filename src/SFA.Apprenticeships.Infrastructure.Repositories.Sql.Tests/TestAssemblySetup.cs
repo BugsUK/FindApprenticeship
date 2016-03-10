@@ -1,38 +1,46 @@
-﻿//NB: This class is not placed within a namespace, intentionally.
-//http://www.nunit.org/index.php?p=setupFixture&r=2.4
-
-using System;
+﻿using System;
 using NUnit.Framework;
-using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests;
 using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Common;
 
-[SetUpFixture]
-public class TestAssemblySetup
+// ReSharper disable HeuristicUnreachableCode
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
 {
-    [SetUp]
-    public void RunBeforeAnyTestsInThisAssembly()
+
+    [SetUpFixture]
+    public class TestAssemblySetup
     {
-        var dbInitialiser = new DatabaseInitialiser();
-
-        //control db initialisation and seeding through these two bools
-        var shouldDropCreateDB = true;
-
-        if (shouldDropCreateDB)
+        [SetUp]
+        public void RunBeforeAnyTestsInThisAssembly()
         {
+            var dbInitialiser = new DatabaseInitialiser();
+
+            // ReSharper disable once ConvertToConstant.Local
+            var shouldDropAndCreateDatabase = true;
+
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (!shouldDropAndCreateDatabase)
+            {
+                return;
+            }
+
             dbInitialiser.Publish(true);
 
-            var seedScripts = new []
+            var scriptsBasePath = AppDomain.CurrentDomain.BaseDirectory + @"\Scripts\";
+
+            var scriptFilePaths = new[]
             {
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertContactPreferenceType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertPersonType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertPersonTitleType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertPerson.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertEmployerContact.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertEmployer.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertVacancyProvisionRelationshipStatusType.sql",
-                AppDomain.CurrentDomain.BaseDirectory + "Scripts\\InsertVacancyOwnerRelationship.sql"
+                scriptsBasePath + "InsertContactPreferenceType.sql",
+                scriptsBasePath + "InsertPersonType.sql",
+                scriptsBasePath + "InsertPersonTitleType.sql",
+                scriptsBasePath + "InsertPerson.sql",
+                scriptsBasePath + "InsertEmployerContact.sql",
+                scriptsBasePath + "InsertEmployer.sql",
+                scriptsBasePath + "InsertVacancyProvisionRelationshipStatusType.sql",
+                scriptsBasePath + "InsertVacancyOwnerRelationship.sql",
+                scriptsBasePath + "InsertProviderUser.sql"
             };
-            dbInitialiser.Seed(seedScripts);
+
+            dbInitialiser.Seed(scriptFilePaths);
 
             // dbInitialiser.Seed(SeedData.Providers);
             // dbInitialiser.Seed(SeedData.ProviderUsers);

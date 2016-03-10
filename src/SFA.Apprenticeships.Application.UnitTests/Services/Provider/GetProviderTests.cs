@@ -28,7 +28,7 @@
         public void FromRepository()
         {
             var repository = new Mock<IProviderReadRepository>();
-            repository.Setup(r => r.GetViaUkprn(Ukprn)).Returns(_provider1);
+            repository.Setup(r => r.GetByUkprn(Ukprn)).Returns(_provider1);
             var service = new ProviderServiceBuilder().With(repository.Object).Build();
 
             var provider = service.GetProvider(Ukprn);
@@ -54,7 +54,7 @@
         public void RepositoryMaster()
         {
             var repository = new Mock<IProviderReadRepository>();
-            repository.Setup(r => r.GetViaUkprn(Ukprn)).Returns(_provider1);
+            repository.Setup(r => r.GetByUkprn(Ukprn)).Returns(_provider1);
             var organisationService = new Mock<IOrganisationService>();
             organisationService.Setup(r => r.GetProvider(Ukprn)).Returns(_provider2);
             var service = new ProviderServiceBuilder().With(organisationService.Object).With(repository.Object).Build();

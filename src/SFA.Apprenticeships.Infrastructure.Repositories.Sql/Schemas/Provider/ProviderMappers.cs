@@ -1,58 +1,29 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
-    using System;
     using AutoMapper;
     using Infrastructure.Common.Mappers;
-    using Domain = Domain.Entities.Raa.Users;
-    using Database = Entities;
+    using DatabaseProvider = Entities.Provider;
+    using DomainProvider = Domain.Entities.Raa.Parties.Provider;
 
-    // TODO: SQL: AG: need to understand MapperEngine usage here (and in AgencyUserMappers).
-    public class ProviderUserMappers : MapperEngine
+    public class StringToIntConverter : ValueResolver<string, int>
     {
-        public override void Initialise()
+        protected override int ResolveCore(string source)
         {
-            // ProviderUser -> Entities.ProviderUser
-            Mapper.CreateMap<Domain.ProviderUser, Database.ProviderUser>()
-                //.ForMember(destination => destination.PreferredProviderSiteId, opt =>
-                //    opt.MapFrom(source => source.PreferredProviderSiteId))
-
-                .ForMember(destination => destination.ProviderUserStatusId, opt =>
-                    opt.MapFrom(source => (int)source.Status))
-
-                .ForMember(destination => destination.EmailVerifiedDateTime, opt =>
-                    opt.MapFrom(source => source.EmailVerifiedDate));
-
-            // Entities.ProviderUser -> ProviderUser
-            Mapper.CreateMap<Database.ProviderUser, Domain.ProviderUser>()
-                /*
-                .ForMember(destination => destination.Ukprn, opt =>
-                    opt.MapFrom(source => Convert.ToString(source.Ukprn)))
-                */
-
-                .ForMember(destination => destination.Status, opt =>
-                    opt.ResolveUsing<ProviderUserStatusResolver>()
-                        .FromMember(source => source.ProviderUserStatusId))
-
-                .ForMember(destination => destination.EmailVerifiedDate, opt =>
-                    opt.MapFrom(source => source.EmailVerifiedDateTime));
+            return int.Parse(source);
         }
     }
 
-    public class ProviderUserStatusResolver : ValueResolver<int, Domain.ProviderUserStatus>
+    public class ProviderMappers : MapperEngine
     {
-        protected override Domain.ProviderUserStatus ResolveCore(int providerUserStatusId)
+        public override void Initialise()
         {
-            switch (providerUserStatusId)
-            {
-                case 10:
-                    return Domain.ProviderUserStatus.Registered;
-                case 20:
-                    return Domain.ProviderUserStatus.EmailVerified;
-            }
+            Mapper.CreateMap<DatabaseProvider, DomainProvider>()
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(source => source.FullName));
 
-            throw new ArgumentOutOfRangeException(
-                nameof(providerUserStatusId),
-                $"Unknown Provider User Status: {providerUserStatusId}");
+            Mapper.CreateMap<DomainProvider, DatabaseProvider>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
+                .ForMember(dest => dest.Ukprn,
+                    opt => opt.ResolveUsing<StringToIntConverter>().FromMember(source => source.Ukprn));
         }
     }
 }

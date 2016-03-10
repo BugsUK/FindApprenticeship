@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Provider
 {
     using System;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Sql.Schemas.Provider;
-    using Database = Sql.Schemas.Provider.Entities;
+    using Database = Schemas.Provider.Entities;
     using Domain = Domain.Entities.Raa.Users;
 
     [TestFixture]

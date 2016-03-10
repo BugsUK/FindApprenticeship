@@ -5,15 +5,17 @@
 
     public interface IProviderSiteReadRepository
     {
-        ProviderSite Get(int providerSiteId);
+        ProviderSite GetById(int providerSiteId);
+
         ProviderSite GetByEdsUrn(string edsUrn);
-        IEnumerable<ProviderSite> GetForProvider(string ukprn);
+
+        IEnumerable<ProviderSite> GetByUkprn(string ukprn);
+
         IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
     }
 
     public interface IProviderSiteWriteRepository
     {
-        void Delete(int providerSiteId);
-        ProviderSite Save(ProviderSite entity);
+        ProviderSite Update(ProviderSite providerSite);
     }
 }
