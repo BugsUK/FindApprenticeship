@@ -63,7 +63,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate\SFA.Apprenticeships.Infrastructure.Migrate.csproj">
       <Name>SFA.Apprenticeships.Infrastructure.Migrate</Name>
-      <Project>{0491054e-caf4-4321-be1d-3e44e7394aaa}</Project>
+      <Project>{F1446ECB-60F3-401E-A8EF-5F8227519842}</Project>
       <Private>True</Private>
       <RoleType>Worker</RoleType>
       <RoleName>SFA.Apprenticeships.Infrastructure.Migrate</RoleName>
