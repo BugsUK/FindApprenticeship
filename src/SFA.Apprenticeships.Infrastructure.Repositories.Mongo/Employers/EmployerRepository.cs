@@ -51,15 +51,6 @@
             return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
-        public void Delete(int employerId)
-        {
-            _logger.Debug("Calling repository to delete employer with Id={0}", employerId);
-
-            Collection.Remove(Query<MongoEmployer>.EQ(e => e.EmployerId, employerId));
-
-            _logger.Debug("Deleted employer with Id={0}", employerId);
-        }
-
         public Employer Save(Employer entity)
         {
             _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
@@ -69,7 +60,6 @@
                 entity.EmployerGuid = Guid.NewGuid();
                 entity.EmployerId = entity.EmployerGuid.GetHashCode();
             }
-
 
             var mongoEntity = _mapper.Map<Employer, MongoEmployer>(entity);
 
