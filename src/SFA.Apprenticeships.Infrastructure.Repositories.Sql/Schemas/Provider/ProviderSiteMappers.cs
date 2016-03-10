@@ -35,6 +35,21 @@
                         };
                     }
                 });
+
+            Mapper.CreateMap<DomainProviderSite, DatabaseProviderSite>()
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(source => source.Name))
+                .IgnoreMember(dest => dest.CountyId)
+                .IgnoreMember(dest => dest.GeocodeEasting)
+                .IgnoreMember(dest => dest.GeocodeNorthing)
+                .MapMemberFrom(dest => dest.AddressLine1, source => source.Address.AddressLine1)
+                .MapMemberFrom(dest => dest.AddressLine2, source => source.Address.AddressLine2)
+                .MapMemberFrom(dest => dest.AddressLine3, source => source.Address.AddressLine3)
+                .MapMemberFrom(dest => dest.AddressLine4, source => source.Address.AddressLine4)
+                .MapMemberFrom(dest => dest.AddressLine5, source => source.Address.AddressLine5)
+                .MapMemberFrom(dest => dest.PostCode, source => source.Address.Postcode)
+                .MapMemberFrom(dest => dest.Town, source => source.Address.Town)
+                .MapMemberFrom(dest => dest.Latitude, source => (decimal)source.Address.GeoPoint.Latitude) // use a converter?
+                .MapMemberFrom(dest => dest.Longitude, source => (decimal)source.Address.GeoPoint.Longitude); // use a converter?
         }
     }
 }
