@@ -11,10 +11,6 @@
 
         public string EdsUrn { get; set; }
 
-        public int ProviderId { get; set; }
-
-        public string Ukprn { get; set; }
-
         public string FullName { get; set; }
 
         public string EmployerDescription { get; set; }

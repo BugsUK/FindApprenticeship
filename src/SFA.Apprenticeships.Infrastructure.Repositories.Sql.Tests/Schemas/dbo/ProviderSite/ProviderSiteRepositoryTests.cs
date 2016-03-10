@@ -17,7 +17,7 @@
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
         private IGetOpenConnection _connection;
         private IProviderSiteReadRepository _providerSiteReadRepository;
-        // private IProviderSiteWriteRepository _providerSiteWriteRepository;
+        private IProviderSiteWriteRepository _providerSiteWriteRepository;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
@@ -26,7 +26,7 @@
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             _providerSiteReadRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object);
-            // _providerSiteWriteRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object);
+            _providerSiteWriteRepository = new ProviderSiteRepository(_connection, _mapper, _logger.Object);
         }
 
         [Test]
@@ -67,6 +67,23 @@
             // Assert.
             providerSitesByProviderSiteIds.Should().NotBeNull();
             providerSitesByProviderSiteIds.Count().Should().Be(providerSiteIds.Length);
+        }
+
+        [Test]
+        public void ShouldUpdateProviderSite()
+        {
+            // Arrange.
+            var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+
+            originalProvideSite.Name = new string(originalProvideSite.Name.Reverse().ToArray());
+
+            // Act.
+            var updatedProviderSite = _providerSiteWriteRepository.Update(originalProvideSite);
+            var newProviderSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+
+            // Assert.
+            newProviderSite.ShouldBeEquivalentTo(updatedProviderSite);
+            newProviderSite.ShouldBeEquivalentTo(originalProvideSite);
         }
     }
 }

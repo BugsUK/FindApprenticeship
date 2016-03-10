@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Provider
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
@@ -104,12 +105,50 @@
 
         public ProviderSite Update(ProviderSite providerSite)
         {
-            throw new System.NotImplementedException();
+            _logger.Debug("Saving provider site with ProviderSiteId={0}", providerSite.ProviderSiteId);
+
+            var dbProviderSite = MapProvider(providerSite);
+
+            if (!_getOpenConnection.UpdateSingle(dbProviderSite))
+            {
+                throw new Exception($"Failed to save provider site with ProviderSiteId={providerSite.ProviderSiteId}");
+            }
+
+            return GetById(providerSite.ProviderSiteId);
+        }
+
+        private Entities.ProviderSite MapProvider(ProviderSite providerSite)
+        {
+            return _mapper.Map<ProviderSite, Entities.ProviderSite>(providerSite);
         }
 
         private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite)
         {
-            return _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
+            var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
+
+            providerSite.ProviderId = GetProviderIdByProviderSiteId(providerSite.ProviderSiteId);
+
+            return providerSite;
+        }
+
+        private int GetProviderIdByProviderSiteId(int providerSiteId)
+        {
+            const int activatedEmployerTrainingProviderStatusId = 1;
+
+            const string sql = @"
+                SELECT p.ProviderID
+                FROM dbo.Provider AS p 
+                JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
+                JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
+                WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @activatedEmployerTrainingProviderStatusId";
+
+            var sqlParams = new
+            {
+                providerSiteId,
+                activatedEmployerTrainingProviderStatusId
+            };
+
+            return _getOpenConnection.Query<int>(sql, sqlParams).First();
         }
     }
 }
