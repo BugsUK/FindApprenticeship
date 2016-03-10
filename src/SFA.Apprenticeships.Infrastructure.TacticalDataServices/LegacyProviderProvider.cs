@@ -118,7 +118,6 @@ namespace SFA.Apprenticeships.Infrastructure.TacticalDataServices
             {
                 ProviderSiteId = legacyProviderSite.ProviderSiteID,
                 ProviderId = legacyProviderSite.ProviderID,
-                Ukprn = legacyProviderSite.UKPRN.ToString(),
                 EdsUrn = legacyProviderSite.EDSURN.ToString(),
                 Name = legacyProviderSite.FullName,
                 EmployerDescription = legacyProviderSite.EmployerDescription,

@@ -8,9 +8,6 @@
     {
         public override void Initialise()
         {
-            Mapper.CreateMap<ProviderSite, MongoProviderSite>();
-            Mapper.CreateMap<MongoProviderSite, ProviderSite>();
-
             Mapper.CreateMap<VacancyParty, MongoVacancyParty>();
             Mapper.CreateMap<MongoVacancyParty, VacancyParty>();
         }

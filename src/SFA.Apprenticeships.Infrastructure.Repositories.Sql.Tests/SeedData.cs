@@ -29,7 +29,6 @@
 
         #region ProviderUsers
 
-
         public static ProviderUser ProviderUser1 = new ProviderUser()
         {
             ProviderUserId = -1,

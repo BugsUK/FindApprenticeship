@@ -145,7 +145,7 @@ namespace SFA.Apprenticeships.Application.Provider
         {
             foreach (var providerSite in providerSites)
             {
-                _providerSiteWriteRepository.Save(providerSite);
+                _providerSiteWriteRepository.Update(providerSite);
             }
         }
 
