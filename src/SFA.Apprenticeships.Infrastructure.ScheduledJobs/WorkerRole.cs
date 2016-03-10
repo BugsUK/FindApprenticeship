@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Mongo.Vacancies.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
+    using Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
     using TacticalDataServices.IoC;
     using VacancyIndexer.IoC;
@@ -164,6 +165,7 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry<VacancyReferenceNumberRegistry>();
                 x.AddRegistry<JobsRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

@@ -170,11 +170,11 @@
     <Compile Include="Users\Mappers\UserMappers.cs" />
     <Compile Include="Users\UserRepository.cs" />
     <Compile Include="Vacancies\Entities\MongoVacancyLocation.cs" />
+    <Compile Include="Vacancies\IoC\VacancyReferenceNumberRegistry.cs" />
     <Compile Include="Vacancies\VacancyLocationRepository.cs" />
     <Compile Include="Vacancies\VacancyRepository.cs" />
     <Compile Include="Vacancies\Entities\MongoApprenticeshipVacancy.cs" />
     <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />
-    <Compile Include="Vacancies\IoC\VacancyRepositoryRegistry.cs" />
     <Compile Include="Vacancies\Mappers\ApprenticeshipVacancyMappers.cs" />
     <Compile Include="Vacancies\ReferenceNumberRepository.cs" />
   </ItemGroup>
