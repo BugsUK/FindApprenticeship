@@ -74,9 +74,6 @@
                 entity.VacancyPartyId = entity.VacancyPartyGuid.GetHashCode();
             }
 
-            SetCreatedDateTime(entity);
-            SetUpdatedDateTime(entity);
-
             var mongoEntity = _mapper.Map<VacancyParty, MongoVacancyParty>(entity);
 
             Collection.Save(mongoEntity);

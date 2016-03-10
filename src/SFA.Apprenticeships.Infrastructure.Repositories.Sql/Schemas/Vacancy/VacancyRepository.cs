@@ -241,12 +241,12 @@ FETCH NEXT @PageSize ROWS ONLY
                 return null;
             
             var result = _mapper.Map<Vacancy, VacancySummary>(dbVacancy);
-            /*MapApprenticeshipType(dbVacancy, result);
+            MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
-            MapDateQAApproved(dbVacancy, result);*/
+            MapDateQAApproved(dbVacancy, result);
 
             return result;
         }

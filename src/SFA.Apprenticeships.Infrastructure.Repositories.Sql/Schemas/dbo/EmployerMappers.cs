@@ -12,6 +12,7 @@
         {
             Mapper.CreateMap<Employer, DomainEmployer>()
                 .ForMember(v => v.Name, opt => opt.MapFrom(src => src.FullName))
+                .ForMember(v => v.Address, opt => opt.Ignore())
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

@@ -26,8 +26,6 @@
             var vacancyParty = new VacancyParty
             {
                 VacancyPartyId = vacancyPartyId,
-                CreatedDateTime = DateTime.Now,
-                UpdatedDateTime = DateTime.Now,
                 ProviderSiteId = providerSiteId,
                 EmployerId = employerId,
                 EmployerDescription = "Description",
@@ -83,8 +81,6 @@
             var providerSiteEmployerLink = new VacancyParty
             {
                 VacancyPartyId = vacancyPartyId,
-                CreatedDateTime = DateTime.Now,
-                UpdatedDateTime = DateTime.Now,
                 ProviderSiteId = providerSiteId,
                 EmployerId = employerId,
                 EmployerDescription = "Description",

@@ -1,16 +1,16 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Employer
 {
     using NUnit.Framework;
-    using Sql.Schemas.dbo;
+    using Schemas.dbo;
 
     [TestFixture]
-    public class VacancyPartyMappersTests
+    public class EmployerMappersTests
     {
         [Test]
         public void DoMappersMapEverything()
         {
             // Arrange
-            var mapper = new VacancyPartyMappers();
+            var mapper = new EmployerMappers();
 
             // Act
             mapper.Initialise();

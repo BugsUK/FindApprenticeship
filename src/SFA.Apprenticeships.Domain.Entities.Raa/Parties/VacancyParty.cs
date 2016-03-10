@@ -2,7 +2,7 @@
 {
     using System;
 
-    public class VacancyParty : ICreatableEntity, IUpdatableEntity
+    public class VacancyParty
     {
         public int VacancyPartyId { get; set; }
         public Guid VacancyPartyGuid { get; set; }
@@ -10,7 +10,5 @@
         public int EmployerId { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
-        public DateTime CreatedDateTime { get; set; }
-        public DateTime? UpdatedDateTime { get; set; }
     }
 }

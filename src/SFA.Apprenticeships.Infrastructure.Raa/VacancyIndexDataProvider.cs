@@ -45,7 +45,7 @@
             {
                 pageCount++;
             }
-            return 1; // pageCount;
+            return pageCount;
         }
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
