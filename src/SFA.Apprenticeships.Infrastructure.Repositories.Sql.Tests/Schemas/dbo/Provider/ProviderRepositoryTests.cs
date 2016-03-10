@@ -17,18 +17,21 @@
         [TestFixtureSetUp]
         public void SetUpFixture()
         {
-            _connection =
-                new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
+            _connection = new GetOpenConnectionFromConnectionString(
+                DatabaseConfigurationProvider.Instance.TargetConnectionString);
         }
 
         [Test]
         public void ShouldGetProviderById()
         {
+            // Arrange.
             var providerReadRepository = new ProviderRepository(_connection, _mapper, _logger.Object);
 
+            // Act.
             var provider = providerReadRepository.GetByUkprn("10000000");
+
+            // Assert.
             provider.Should().NotBeNull();
         }
-
     }
 }

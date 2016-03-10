@@ -19,7 +19,8 @@
         [SetUp]
         public void SetUpFixture()
         {
-            _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
+            _connection = new GetOpenConnectionFromConnectionString(
+                DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             var logger = new Mock<ILogService>();
 
@@ -28,10 +29,9 @@
         }
 
         [Test]
+        [Ignore]
         public void ShouldGetProviderUserById()
         {
-            // Arrange.
-
             // Act.
             var providerUser = _repository.GetById(SeedData.ProviderUser1.ProviderUserId);
 
@@ -40,10 +40,9 @@
         }
 
         [Test]
+        [Ignore]
         public void ShouldGetProviderUsername()
         {
-            // Arrange.
-
             // Act.
             var providerUser = _repository.GetByUsername(SeedData.ProviderUser1.Username);
 
