@@ -26,6 +26,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
     using Infrastructure.Repositories.Mongo.Vacancies.IoC;
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
+    using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
     using Infrastructure.TacticalDataServices.IoC;
     using Infrastructure.UserDirectory.IoC;
     using Infrastructure.VacancySearch.IoC;
@@ -70,6 +71,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry<VacancyReferenceNumberRegistry>();
                 x.AddRegistry<EmployerDataServicesRegistry>();
                 x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();

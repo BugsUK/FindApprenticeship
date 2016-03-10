@@ -1,10 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Mongo.Vacancies.IoC
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC
 {
-    using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
-    using Mappers;
     using SFA.Infrastructure.Interfaces;
-    using Sql.Schemas.Vacancy;
+    using Vacancy;
     using StructureMap.Configuration.DSL;
 
     public class VacancyRepositoryRegistry : Registry
@@ -33,11 +31,6 @@
                 .Use<VacancyLocationRepository>()
                 .Ctor<IMapper>()
                 .Named("VacancyMappers");
-
-            For<IReferenceNumberRepository>()
-                .Use<ReferenceNumberRepository>();
-
-            // TODO: Traineeships.
         }
     }
 }

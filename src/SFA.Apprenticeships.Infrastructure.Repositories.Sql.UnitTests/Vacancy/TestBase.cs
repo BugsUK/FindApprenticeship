@@ -1,25 +1,21 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Vacancy
 {
     using System;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
+    using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
-    using Domain.Entities.Raa.Vacancies;
-    using VacancyLocation = Sql.Schemas.Vacancy.Entities.VacancyLocation;
+    using VacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
 
     [TestFixture]
     public class TestBase
     {
-        protected static readonly Guid VacancyIdVacancyA = Guid.NewGuid();
-        protected const int VacancyReferenceNumberVacancyA = 1;
-        protected const int FrameworkIdFramework1 = 1;
-        protected const string FramworkCodeNameFramework1 = "260";
-        protected const int FrameworkIdFramework2 = 2;
-        protected const int StandardIdStandard1 = 1;
-        protected int VacancyReferenceNumber = 10;
+        private const string FramworkCodeNameFramework1 = "260";
+        private const int StandardIdStandard1 = 1;
+        private int _vacancyReferenceNumber = 10;
 
         protected Vacancy CreateValidDatabaseVacancy()
         {
@@ -41,7 +37,7 @@
             return result;
         }
 
-        protected DomainVacancy CreateValidDomainVacancy()
+        private DomainVacancy CreateValidDomainVacancy()
         {
             var fixture = new Fixture();
 
@@ -55,7 +51,7 @@
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
                 .With(av => av.DateQAApproved, null)
-                .With(av => av.VacancyReferenceNumber, VacancyReferenceNumber++)
+                .With(av => av.VacancyReferenceNumber, _vacancyReferenceNumber++)
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
@@ -82,10 +78,6 @@
                 result.SectorCodeName = "ALB";
             }
 
-            //result.ProviderSiteEmployerLink.Employer.Ern = "101";
-            //result.ProviderSiteEmployerLink.Employer.Address.Postcode = "CV1 2WT";
-            //result.Ukprn = "202"; //TODO: check with database values.
-
             return result;
         }
 
@@ -99,35 +91,9 @@
             return new Tuple<DomainVacancy, DomainVacancy>(parentVacancy, childVacancy);
         }
 
-        protected EquivalencyAssertionOptions<Vacancy> ExcludeHardOnes(EquivalencyAssertionOptions<Vacancy> options)
-        {
-            return options
-                // TODO: Not in Domain object yet
-                //.Excluding(v => v.AV_ContactName)
-                //.Excluding(v => v.AV_WageText)
-                ;
-        }
-
         protected EquivalencyAssertionOptions<DomainVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<DomainVacancy> options)
         {
-            return options
-                // TODO: Might be easier?
-                .Excluding(v => v.FrameworkCodeName)
-                //.Excluding(v => v.Ukprn)
-                //.Excluding(v => v.ProviderSiteEmployerLink)
-                //.Excluding(v => v.VacancyManagerId)
-                //.Excluding(v => v.LastEditedById)
-                ;
-        }
-
-        protected EquivalencyAssertionOptions<DomainVacancy> ForShallowSave(EquivalencyAssertionOptions<DomainVacancy> options)
-        {
-            return options
-                // TODO: Might be easier?
-                .Excluding(v => v.FrameworkCodeName)
-                //.Excluding(v => v.Ukprn)
-                //.Excluding(v => v.ProviderSiteEmployerLink)
-                ;
+            return options.Excluding(v => v.FrameworkCodeName);
         }
     }
 }
