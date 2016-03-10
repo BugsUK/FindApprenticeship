@@ -5,7 +5,6 @@
     using System.Linq;
     using Domain.Entities.Raa.Users;
     using Sql.Schemas.Vacancy.Entities;
-    using Schemas.Vacancy;
     using Sql.Schemas.Reference.Entities;
     using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;
     using ProviderUser = Sql.Schemas.Provider.Entities.ProviderUser;

@@ -129,9 +129,9 @@
     <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappersTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepositoryTests.cs" />
-    <Compile Include="Schemas\Vacancy\TestBase.cs" />
+    <Compile Include="Schemas\dbo\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
-    <Compile Include="Schemas\Vacancy\VacancyRepositoryTests.cs" />
+    <Compile Include="Schemas\dbo\Vacancy\VacancyRepositoryTests.cs" />
     <Compile Include="Common\Formatters.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeedData.cs" />

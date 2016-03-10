@@ -1,14 +1,12 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.Vacancy
 {
     using System;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using Vacancy = Sql.Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
-    using Domain.Entities.Raa.Vacancies;
-    using VacancyLocation = Sql.Schemas.Vacancy.Entities.VacancyLocation;
 
     [TestFixture]
     public class TestBase
@@ -16,26 +14,6 @@
         private const string FramworkCodeNameFramework1 = "260";
         private const int StandardIdStandard1 = 1;
         private int _vacancyReferenceNumber = 10;
-
-        protected Vacancy CreateValidDatabaseVacancy()
-        {
-            var fixture = new Fixture();
-
-            var result = fixture.Build<Vacancy>()
-                .Create();
-
-            return result;
-        }
-
-        protected VacancyLocation CreateValidDatabaseVacancyLocation()
-        {
-            var fixture = new Fixture();
-
-            var result = fixture.Build<VacancyLocation>()
-                .Create();
-
-            return result;
-        }
 
         protected DomainVacancy CreateValidDomainVacancy()
         {
@@ -79,11 +57,6 @@
             }
 
             return result;
-        }
-
-        protected EquivalencyAssertionOptions<DomainVacancy> ExcludeHardOnes(EquivalencyAssertionOptions<DomainVacancy> options)
-        {
-            return options.Excluding(v => v.FrameworkCodeName);
         }
 
         protected EquivalencyAssertionOptions<DomainVacancy> ForShallowSave(EquivalencyAssertionOptions<DomainVacancy> options)
