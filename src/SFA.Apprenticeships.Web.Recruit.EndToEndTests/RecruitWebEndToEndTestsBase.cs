@@ -22,7 +22,7 @@
         protected MongoConfiguration MongoConfiguration;
         protected IContainer Container;
         protected IContainer Container2;
-        protected MongoCollection<MongoApprenticeshipVacancy> Collection;
+        protected MongoCollection<MongoVacancy> Collection;
         protected string QaUserName = "qaUserName";
         
 
@@ -45,7 +45,7 @@
                 .GetServer()
                 .GetDatabase(mongoDbName);
 
-            Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
+            Collection = database.GetCollection<MongoVacancy>("apprenticeshipVacancies");
             ClearCollection();
         }
 

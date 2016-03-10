@@ -50,14 +50,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'MSDN|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\MSDN\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
   <!-- Items for the project -->
   <ItemGroup>
     <ServiceDefinition Include="ServiceDefinition.csdef" />
@@ -101,14 +93,6 @@
       <RoleName>SFA.Apprenticeships.Infrastructure.ScheduledJobs</RoleName>
       <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate\SFA.Apprenticeships.Infrastructure.Migrate.csproj">
-      <Name>SFA.Apprenticeships.Infrastructure.Migrate</Name>
-      <Project>{0491054e-caf4-4321-be1d-3e44e7394aaa}</Project>
-      <Private>True</Private>
-      <RoleType>Worker</RoleType>
-      <RoleName>SFA.Apprenticeships.Infrastructure.Migrate</RoleName>
-      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Profiles" />
@@ -116,14 +100,12 @@
     <Folder Include="SFA.Apprenticeships.Infrastructure.ProcessesContent" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MonitorContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\" />
-    <Folder Include="SFA.Apprenticeships.Infrastructure.MigrateContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.LogEventIndexerContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MonitorContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ProcessesContent\diagnostics.wadcfgx" />
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.ScheduledJobsContent\diagnostics.wadcfgx" />
-    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MigrateContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

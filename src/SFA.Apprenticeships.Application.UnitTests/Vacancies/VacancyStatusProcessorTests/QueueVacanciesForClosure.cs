@@ -46,7 +46,7 @@
             var deadline = DateTime.Now;
             int outParam;
 
-            var result = new Fixture().Build<Vacancy>()
+            var result = new Fixture().Build<VacancySummary>()
                 .With(x => x.Status, VacancyStatus.Live)
                 .CreateMany(capacity).ToList();
             _apprenticeshipVacancyReadRepository

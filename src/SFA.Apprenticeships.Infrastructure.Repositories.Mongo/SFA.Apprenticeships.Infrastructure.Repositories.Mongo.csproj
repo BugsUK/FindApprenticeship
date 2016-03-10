@@ -171,9 +171,9 @@
     <Compile Include="Vacancies\IoC\VacancyReferenceNumberRegistry.cs" />
     <Compile Include="Vacancies\VacancyLocationRepository.cs" />
     <Compile Include="Vacancies\VacancyRepository.cs" />
-    <Compile Include="Vacancies\Entities\MongoApprenticeshipVacancy.cs" />
+    <Compile Include="Vacancies\Entities\MongoVacancy.cs" />
     <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />
-    <Compile Include="Vacancies\Mappers\ApprenticeshipVacancyMappers.cs" />
+    <Compile Include="Vacancies\Mappers\VacancyMappers.cs" />
     <Compile Include="Vacancies\ReferenceNumberRepository.cs" />
   </ItemGroup>
   <ItemGroup>

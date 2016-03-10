@@ -15,7 +15,7 @@
         public void DoMappersMapEverything()
         {
             // Arrange
-            var x = new ApprenticeshipVacancyMappers();
+            var x = new VacancyMappers();
 
             // Act
             x.Initialise();
@@ -28,7 +28,7 @@
         public void DoesApprenticeshipVacancyDomainObjectToDatabaseObjectMapperChokeInPractice()
         {
             // Arrange
-            var x = new ApprenticeshipVacancyMappers();
+            var x = new VacancyMappers();
 
             var vacancy =
                 new Fixture().Build<DomainVacancy>()
@@ -45,7 +45,7 @@
         public void DoesDatabaseVacancyObjectToDomainObjectMapperChokeInPractice()
         {
             // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
+            var mapper = new VacancyMappers();
             var vacancy = CreateValidDatabaseVacancy();
 
             // Act / Assert no exception
@@ -57,7 +57,7 @@
         public void DoesDatabaseVacancyObjectMappingRoundTripViaDomainObjectExcludingHardOnes()
         {
             // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
+            var mapper = new VacancyMappers();
             var domainVacancy1 = new Fixture().Create<DomainVacancy>();
 
             // Act
@@ -73,7 +73,7 @@
         public void DoesDatabaseVacancyObjectMappingRoundTripViaDomainObjectIncludingHardOnes()
         {
             // Arrange
-            var mapper = new ApprenticeshipVacancyMappers();
+            var mapper = new VacancyMappers();
             var domainVacancy1 = new Fixture().Create<DomainVacancy>();
 
             // Act

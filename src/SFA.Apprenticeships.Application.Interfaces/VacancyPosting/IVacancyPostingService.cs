@@ -19,11 +19,11 @@
 
         Vacancy GetVacancy(Guid vacancyGuid);
         
-        List<Vacancy> GetWithStatus(params VacancyStatus[] desiredStatuses);
+        List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<Vacancy> GetByIds(IEnumerable<int> vacancyIds);
+        List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
 
-        List<Vacancy> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
+        List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 

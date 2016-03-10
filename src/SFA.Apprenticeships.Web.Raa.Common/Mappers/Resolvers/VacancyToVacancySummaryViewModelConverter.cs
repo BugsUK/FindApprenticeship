@@ -4,7 +4,6 @@
     using AutoMapper;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using Infrastructure.Presentation;
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
@@ -15,11 +14,11 @@
     /// 
     /// TODO: DI for automapper within Raa websites (manage and recruit), then replace usage of converter (above) with this mapping class
     /// </summary>
-    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<Vacancy, VacancySummaryViewModel>
+    internal sealed class VacancyToVacancySummaryViewModelConverter : ITypeConverter<VacancySummary, VacancySummaryViewModel>
     {
         public VacancySummaryViewModel Convert(ResolutionContext context)
         {
-            var source = (Vacancy)context.SourceValue;
+            var source = (VacancySummary)context.SourceValue;
 
             var destination = new VacancySummaryViewModel
             {

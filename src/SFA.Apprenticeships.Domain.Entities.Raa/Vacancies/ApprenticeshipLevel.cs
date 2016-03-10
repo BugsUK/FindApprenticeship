@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 {
+    //Should be EducationLevel
     public enum ApprenticeshipLevel
     {
         Unknown = 0,

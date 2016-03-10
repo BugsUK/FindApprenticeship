@@ -460,7 +460,7 @@
             vacancyController.Review(vacancyReferenceNumber);
 
             var vacancyInDb =
-                Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
+                Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
             vacancyInDb.Status.Should().Be(VacancyStatus.ReservedForQA);
@@ -482,7 +482,7 @@
             vacancyController.Approve(vacancyReferenceNumber);
 
             var vacancyInDb =
-                Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
+                Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
             vacancyInDb.Status.Should().Be(VacancyStatus.Live);
@@ -544,7 +544,7 @@
             vacancyController.Reject(vacancyReferenceNumber);
 
             var vacancyInDb =
-                Collection.FindOne(Query<MongoApprenticeshipVacancy>.EQ(o => o.VacancyReferenceNumber,
+                Collection.FindOne(Query<MongoVacancy>.EQ(o => o.VacancyReferenceNumber,
                     vacancyReferenceNumber));
 
             vacancyInDb.Status.Should().Be(VacancyStatus.Referred);
@@ -592,7 +592,7 @@
             redirection.RouteValues.Values.First().As<long>().Should().Be(secondVacancyReferenceNumber);
         }
 
-        private void InitializeDatabaseWithVacancy(MongoApprenticeshipVacancy vacancy)
+        private void InitializeDatabaseWithVacancy(MongoVacancy vacancy)
         {
             var mongoConnectionString = MongoConfiguration.VacancyDb;
             var mongoDbName = MongoUrl.Create(mongoConnectionString).DatabaseName;
@@ -601,14 +601,14 @@
                 .GetServer()
                 .GetDatabase(mongoDbName);
 
-            Collection = database.GetCollection<MongoApprenticeshipVacancy>("apprenticeshipVacancies");
+            Collection = database.GetCollection<MongoVacancy>("apprenticeshipVacancies");
 
             Collection.Save(vacancy);
         }
 
-        private static MongoApprenticeshipVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title)
+        private static MongoVacancy GetCorrectVacancy(int vacancyReferenceNumber, string title)
         {
-            return new MongoApprenticeshipVacancy
+            return new MongoVacancy
             {
                 Title = title,
                 ApprenticeshipLevel = ApprenticeshipLevel.Advanced,
@@ -667,7 +667,7 @@
             };
         }
 
-        private static MongoApprenticeshipVacancy GetVacancyWithErrorsInBasicDetails(int vacancyReferenceNumber,
+        private static MongoVacancy GetVacancyWithErrorsInBasicDetails(int vacancyReferenceNumber,
             string title)
         {
             var vacancy = GetCorrectVacancy(vacancyReferenceNumber, title);
@@ -700,7 +700,7 @@
             return vacancyViewModel;
         }
 
-        private static MongoApprenticeshipVacancy GetVacancyWithErrorsAndWarningsInSummary(int vacancyReferenceNumber,
+        private static MongoVacancy GetVacancyWithErrorsAndWarningsInSummary(int vacancyReferenceNumber,
             string vacancyTitle)
         {
             var vacancy = GetCorrectVacancy(vacancyReferenceNumber, vacancyTitle);
@@ -742,7 +742,7 @@
             return vacancySummaryViewModel;
         }
 
-        private static MongoApprenticeshipVacancy GetVacancyWithErrorsInRequirementsAndProspects(
+        private static MongoVacancy GetVacancyWithErrorsInRequirementsAndProspects(
             int vacancyReferenceNumber, string vacancyTitle)
         {
             var vacancy = GetCorrectVacancy(vacancyReferenceNumber, vacancyTitle);
@@ -783,7 +783,7 @@
             return viewModel;
         }
 
-        private static MongoApprenticeshipVacancy GetVacancyWithErrorsInQuestions(
+        private static MongoVacancy GetVacancyWithErrorsInQuestions(
             int vacancyReferenceNumber, string vacancyTitle)
         {
             var vacancy = GetCorrectVacancy(vacancyReferenceNumber, vacancyTitle);
