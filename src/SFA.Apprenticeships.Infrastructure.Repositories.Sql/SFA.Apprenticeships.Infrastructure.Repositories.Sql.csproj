@@ -121,6 +121,9 @@
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
+    <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
+    <Compile Include="Schemas\dbo\VacancyPartyRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
@@ -185,9 +188,7 @@
     <None Include="packages.config" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Schemas\dbo\Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

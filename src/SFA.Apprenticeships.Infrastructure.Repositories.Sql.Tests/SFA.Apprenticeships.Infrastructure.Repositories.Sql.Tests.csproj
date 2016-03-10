@@ -124,6 +124,7 @@
     <Compile Include="Common\DatabaseConfigurationProvider.cs" />
     <Compile Include="Provider\ProviderUserMappersTests.cs" />
     <Compile Include="Provider\ProviderUserRepositoryTests.cs" />
+    <Compile Include="Schemas\dbo\VacancyPartyMappersTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserMappersTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepositoryTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />

@@ -17,7 +17,9 @@
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
-        List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
+        int CountWithStatus(params VacancyStatus[] desiredStatuses);
+
+        List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }

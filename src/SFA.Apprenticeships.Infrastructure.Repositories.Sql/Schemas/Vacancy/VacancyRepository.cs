@@ -113,21 +113,52 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             return vacancies.Select(MapVacancySummary).ToList();
         }
 
-        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public int CountWithStatus(params VacancyStatus[] desiredStatuses)
         {
-            _logger.Debug("Called database to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+            _logger.Debug("Called database to count apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 
-            var dbVacancies = _getOpenConnection.Query<Vacancy>(
-            VacancySummarySelect + @"
+            var count = _getOpenConnection.Query<int>(
+            @"SELECT Count(*)
             FROM   dbo.Vacancy
             WHERE  VacancyStatusId IN @VacancyStatusCodeIds", new
+            {
+                VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
+            }).Single();
+
+
+            _logger.Debug(
+                $"Found {count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
+
+            return count;
+        }
+
+        public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
+        {
+            _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
+
+
+            var sql = VacancySummarySelect + @"
+            FROM   dbo.Vacancy
+            WHERE  VacancyStatusId IN @VacancyStatusCodeIds";
+
+            if (pageSize > 0)
+            {
+                var offset = pageSize * page;
+                sql += @"
+                ORDER BY VacancyId
+                OFFSET " + offset + @" ROWS
+                FETCH NEXT " + pageSize + @" ROWS ONLY";
+            }
+
+            var dbVacancies = _getOpenConnection.Query<Vacancy>(
+            sql, new
             {
                 VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
             });
 
 
             _logger.Debug(
-                $"Found {dbVacancies.Count} apprenticeship vacancies with statuses in {string.Join(",", desiredStatuses)}");
+                $"Found {dbVacancies.Count} apprenticeship vacancies in page {page} with statuses in {string.Join(",", desiredStatuses)}. Page size {pageSize}");
 
             return dbVacancies.Select(MapVacancySummary).ToList();
         }
@@ -210,12 +241,12 @@ FETCH NEXT @PageSize ROWS ONLY
                 return null;
             
             var result = _mapper.Map<Vacancy, VacancySummary>(dbVacancy);
-            MapApprenticeshipType(dbVacancy, result);
+            /*MapApprenticeshipType(dbVacancy, result);
             MapFrameworkId(dbVacancy, result);
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
-            MapDateQAApproved(dbVacancy, result);
+            MapDateQAApproved(dbVacancy, result);*/
 
             return result;
         }

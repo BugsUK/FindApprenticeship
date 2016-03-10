@@ -19,6 +19,9 @@
     /// </summary>
     public class VacancyIndexDataProvider : IVacancyIndexDataProvider
     {
+        private const int PageSize = 500;
+        private readonly VacancyStatus[] _desiredStatuses = {VacancyStatus.Live};
+
         private readonly IVacancyReadRepository _vacancyReadRepository;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
@@ -36,14 +39,18 @@
 
         public int GetVacancyPageCount()
         {
-            //We're returning all live vacancies as a single page for now to simplify things.
-            //TODO: Implement robust paging as a stretch goal
-            return 1;
+            var count = _vacancyReadRepository.CountWithStatus(_desiredStatuses);
+            var pageCount = count/PageSize;
+            if (count%PageSize != 0)
+            {
+                pageCount++;
+            }
+            return 1; // pageCount;
         }
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
-            var vacancies = _vacancyReadRepository.GetWithStatus(VacancyStatus.Live);
+            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber, _desiredStatuses);
             var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct()).ToDictionary(vp => vp.VacancyPartyId, vp => vp);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
