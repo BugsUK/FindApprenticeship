@@ -59,6 +59,8 @@
     <Compile Include="Provider\ProviderMappersTests.cs" />
     <Compile Include="Provider\ProviderSiteMappersTests.cs" />
     <Compile Include="Provider\ProviderUserMappersTests.cs" />
+    <Compile Include="Reference\ReferenceMappersTests.cs" />
+    <Compile Include="UserProfile\AgencyUserMappersTests.cs" />
     <Compile Include="VacancyParty\VacancyPartyMappersTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyLocationMappersUnitTests.cs" />
     <Compile Include="Vacancy\ApprenticeshipVacancyMappersUnitTests.cs" />

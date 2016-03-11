@@ -126,9 +126,7 @@
     <Compile Include="Schemas\dbo\ProviderSite\ProviderSiteRepositoryTests.cs" />
     <Compile Include="Schemas\dbo\Provider\ProviderRepositoryTests.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepositoryTests.cs" />
-    <Compile Include="Schemas\Reference\ReferenceMappersTests.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepositoryTests.cs" />
-    <Compile Include="Schemas\UserProfile\AgencyUserMappersTests.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepositoryTests.cs" />
     <Compile Include="Schemas\dbo\Vacancy\TestBase.cs" />
     <Compile Include="Common\DatabaseInitialiser.cs" />
@@ -195,6 +193,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertPerson.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Scripts\InsertAgencyUser.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Scripts\InsertVacancyOwnerRelationship.sql">

@@ -34,7 +34,7 @@
             //Arrange
 
             //Act
-            var result = _repoUnderTest.Get(SeedData.AgencyUser1.Username);
+            var result = _repoUnderTest.GetByUsername(SeedData.AgencyUser1.Username);
 
             //Assert
             result.Should().NotBeNull();

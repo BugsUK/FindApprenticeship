@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
                 scriptsBasePath + "InsertEmployerContact.sql",
                 scriptsBasePath + "InsertEmployer.sql",
                 scriptsBasePath + "InsertVacancyOwnerRelationship.sql",
+                scriptsBasePath + "InsertAgencyUser.sql",
                 scriptsBasePath + "InsertProviderUser.sql"
             };
 

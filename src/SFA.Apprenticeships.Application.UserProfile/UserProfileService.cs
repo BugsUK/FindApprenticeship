@@ -50,7 +50,7 @@
 
         public AgencyUser GetAgencyUser(string username)
         {
-            return _agencyUserReadRepository.Get(username);
+            return _agencyUserReadRepository.GetByUsername(username);
         }
 
         public AgencyUser SaveUser(AgencyUser agencyUser)
