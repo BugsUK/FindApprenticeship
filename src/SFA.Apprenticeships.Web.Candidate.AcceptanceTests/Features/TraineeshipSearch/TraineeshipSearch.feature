@@ -10,8 +10,7 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-#TODO: Unignore once traineeships support is in RAA
-@SmokeTests @PrimaryTransaction @Ignore
+@SmokeTests @PrimaryTransaction
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
