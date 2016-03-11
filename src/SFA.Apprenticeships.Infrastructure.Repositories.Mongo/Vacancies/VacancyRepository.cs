@@ -74,7 +74,18 @@
             return mongoEntities.Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e)).ToList();
         }
 
-        public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
+        public int CountWithStatus(params VacancyStatus[] desiredStatuses)
+        {
+            _logger.Debug("Called Mongodb to count apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
+
+            var count = (int)Collection.Count(Query<Vacancy>.In(v => v.Status, desiredStatuses));
+
+            _logger.Debug(string.Format("Found {0} apprenticeship vacancies with statuses in {1}", count, string.Join(",", desiredStatuses)));
+
+            return count;
+        }
+
+        public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
 

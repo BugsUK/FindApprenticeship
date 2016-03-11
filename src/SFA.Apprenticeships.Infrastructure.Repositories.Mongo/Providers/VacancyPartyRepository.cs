@@ -64,15 +64,6 @@
             return entities;
         }
 
-        public void Delete(int vacancyPartyId)
-        {
-            _logger.Debug("Calling repository to delete provider site employer link with Id={0}", vacancyPartyId);
-
-            Collection.Remove(Query<MongoVacancyParty>.EQ(e => e.VacancyPartyId, vacancyPartyId));
-
-            _logger.Debug("Deleted provider site employer link with Id={0}", vacancyPartyId);
-        }
-
         public VacancyParty Save(VacancyParty entity)
         {
             _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", entity.EmployerId);
@@ -82,9 +73,6 @@
                 entity.VacancyPartyGuid = Guid.NewGuid();
                 entity.VacancyPartyId = entity.VacancyPartyGuid.GetHashCode();
             }
-
-            SetCreatedDateTime(entity);
-            SetUpdatedDateTime(entity);
 
             var mongoEntity = _mapper.Map<VacancyParty, MongoVacancyParty>(entity);
 

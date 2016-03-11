@@ -121,12 +121,20 @@
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\Entities\Employer.cs" />
+    <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
+    <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
+    <Compile Include="Schemas\dbo\VacancyPartyRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
     <Compile Include="Schemas\dbo\EmployerMappers.cs" />
     <Compile Include="Schemas\dbo\EmployerRepository.cs" />
+    <Compile Include="Schemas\Provider\Entities\ProviderSite.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteMappers.cs" />
     <Compile Include="Schemas\Provider\Entities\ProviderUser.cs" />
     <Compile Include="Schemas\Provider\ProviderMappers.cs" />
+    <Compile Include="Schemas\Provider\ProviderSiteRepository.cs" />
     <Compile Include="Schemas\Provider\ProviderRepository.cs" />
+    <Compile Include="Schemas\Provider\ProviderUserMappers.cs" />
     <Compile Include="Schemas\Provider\ProviderUserRepository.cs" />
     <Compile Include="Schemas\Reference\Entities\LocalAuthority.cs" />
     <Compile Include="Schemas\Reference\Entities\Region.cs" />
@@ -144,6 +152,7 @@
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />
     <Compile Include="Schemas\UserProfile\Entities\AgencyUser.cs" />
+    <Compile Include="Schemas\Vacancy\IoC\VacancyRepositoryRegistry.cs" />
     <Compile Include="Schemas\Vacancy\ReferralCommentCodeName.cs" />
     <Compile Include="Schemas\Vacancy\TextFieldCodeName.cs" />
     <Compile Include="Schemas\Vacancy\VacancyLocationRepository.cs" />
@@ -185,9 +194,7 @@
     <None Include="packages.config" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Schemas\dbo\Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets" Condition="Exists('..\packages\AutoMapper.3.3.1\tools\AutoMapper.targets')" />

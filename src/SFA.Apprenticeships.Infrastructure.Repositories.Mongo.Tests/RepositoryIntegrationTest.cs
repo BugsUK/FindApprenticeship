@@ -10,6 +10,7 @@
     using Mongo.Users.IoC;
     using Mongo.Vacancies.IoC;
     using SFA.Infrastructure.Interfaces;
+    using Sql.Schemas.Vacancy.IoC;
     using StructureMap;
 
     [SetUpFixture]
@@ -30,6 +31,7 @@
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
+                x.AddRegistry<VacancyReferenceNumberRegistry>();
             });
 
             var configurationManager = Container.GetInstance<IConfigurationService>();

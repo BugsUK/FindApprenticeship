@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.Vacancy
 {
     using System;
     using System.Collections.Generic;
@@ -194,9 +194,9 @@
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
 
-            var entity = writeRepository.Create(vacancy);
+            writeRepository.Create(vacancy);
 
-            var totalResultsCount = 0;
+            int totalResultsCount;
             var findResults = readRepository.Find(new ApprenticeshipVacancyQuery
             {
                 CurrentPage = 1,

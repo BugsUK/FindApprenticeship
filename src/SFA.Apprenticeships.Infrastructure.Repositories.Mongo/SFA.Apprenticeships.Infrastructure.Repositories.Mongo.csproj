@@ -153,14 +153,10 @@
     <Compile Include="Employers\IoC\EmployerRepositoryRegistry.cs" />
     <Compile Include="Employers\Mappers\EmployerMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Providers\Entities\MongoProvider.cs" />
-    <Compile Include="Providers\Entities\MongoProviderSite.cs" />
     <Compile Include="Providers\Entities\MongoVacancyParty.cs" />
     <Compile Include="Providers\IoC\ProviderRepositoryRegistry.cs" />
     <Compile Include="Providers\Mappers\ProviderMappers.cs" />
-    <Compile Include="Providers\ProviderRepository.cs" />
     <Compile Include="Providers\VacancyPartyRepository.cs" />
-    <Compile Include="Providers\ProviderSiteRepository.cs" />
     <Compile Include="UserProfiles\AgencyUserRepository.cs" />
     <Compile Include="UserProfiles\Entities\MongoAgencyUser.cs" />
     <Compile Include="UserProfiles\Entities\MongoProviderUser.cs" />
@@ -172,11 +168,11 @@
     <Compile Include="Users\Mappers\UserMappers.cs" />
     <Compile Include="Users\UserRepository.cs" />
     <Compile Include="Vacancies\Entities\MongoVacancyLocation.cs" />
+    <Compile Include="Vacancies\IoC\VacancyReferenceNumberRegistry.cs" />
     <Compile Include="Vacancies\VacancyLocationRepository.cs" />
     <Compile Include="Vacancies\VacancyRepository.cs" />
     <Compile Include="Vacancies\Entities\MongoVacancy.cs" />
     <Compile Include="Vacancies\Entities\MongoReferenceNumber.cs" />
-    <Compile Include="Vacancies\IoC\VacancyRepositoryRegistry.cs" />
     <Compile Include="Vacancies\Mappers\VacancyMappers.cs" />
     <Compile Include="Vacancies\ReferenceNumberRepository.cs" />
   </ItemGroup>

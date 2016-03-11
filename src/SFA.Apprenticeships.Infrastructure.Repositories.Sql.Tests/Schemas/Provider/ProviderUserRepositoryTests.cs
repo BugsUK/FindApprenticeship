@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
 {
     using Common;
+    using Domain.Entities.Raa.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -19,7 +20,8 @@
         [SetUp]
         public void SetUpFixture()
         {
-            _connection = new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
+            _connection = new GetOpenConnectionFromConnectionString(
+                DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             var logger = new Mock<ILogService>();
 
@@ -30,25 +32,23 @@
         [Test]
         public void ShouldGetProviderUserById()
         {
-            // Arrange.
-
             // Act.
             var providerUser = _repository.GetById(SeedData.ProviderUser1.ProviderUserId);
 
             // Assert.            
             providerUser.Should().NotBeNull();
+            providerUser.ProviderUserId.Should().Be(SeedData.ProviderUser1.ProviderUserId);
         }
 
         [Test]
         public void ShouldGetProviderUsername()
         {
-            // Arrange.
-
             // Act.
             var providerUser = _repository.GetByUsername(SeedData.ProviderUser1.Username);
 
             // Assert.            
             providerUser.Should().NotBeNull();
+            providerUser.Username.Should().Be(SeedData.ProviderUser1.Username);
         }
     }
 }

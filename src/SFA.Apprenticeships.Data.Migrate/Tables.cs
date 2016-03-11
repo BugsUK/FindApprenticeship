@@ -20,7 +20,7 @@
         private TableSpecList _tables;
 
         private const int ApprenticeshipTypeUnknown = 0;
-        private const int ApprenticeshipTypeTraineeship = 1;
+        private const int ApprenticeshipTypeTraineeship = 4;
         private const int VacancyTypeUnknown = 0;
         private const int VacancyTypeApprenticeship = 1;
         private const int VacancyTypeTraineeship = 2;

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Mappers
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
@@ -30,9 +29,11 @@
                 //Goes into elastic unformatted for searching
                 VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                 Title = vacancy.Title,
-                PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
-                StartDate = vacancy.PossibleStartDate ?? DateTime.MinValue,
-                ClosingDate = vacancy.ClosingDate ?? DateTime.MinValue,
+                // ReSharper disable PossibleInvalidOperationException
+                PostedDate = vacancy.DateQAApproved.Value,
+                StartDate = vacancy.PossibleStartDate.Value,
+                ClosingDate = vacancy.ClosingDate.Value,
+                // ReSharper restore PossibleInvalidOperationException
                 Description = vacancy.ShortDescription,
                 NumberOfPositions = vacancy.NumberOfPositions,
                 EmployerName = employer.Name,
