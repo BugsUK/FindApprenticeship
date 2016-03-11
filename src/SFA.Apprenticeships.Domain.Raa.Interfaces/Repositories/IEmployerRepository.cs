@@ -14,8 +14,6 @@
 
     public interface IEmployerWriteRepository
     {
-        void Delete(int employerId);
-
         Employer Save(Employer entity);
     }
 }

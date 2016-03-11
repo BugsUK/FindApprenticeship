@@ -113,7 +113,7 @@
 
         public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
         {
-            return _vacancyReadRepository.GetWithStatus(desiredStatuses);
+            return _vacancyReadRepository.GetWithStatus(0, 0, desiredStatuses);
         }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)

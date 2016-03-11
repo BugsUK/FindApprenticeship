@@ -11,6 +11,7 @@
     public class AddressViewModel
     {
         private string _postcode;
+        private string _addressLine4;
 
         [Display(Name = AddressViewModelMessages.AddressLine1.LabelText)]
         public string AddressLine1 { get; set; }
@@ -35,7 +36,17 @@
         public string AddressLine3 { get; set; }
 
         [Display(Name = AddressViewModelMessages.AddressLine4.LabelText)]
-        public string AddressLine4 { get; set; }
+        public string AddressLine4
+        {
+            get { return string.IsNullOrEmpty(_addressLine4) ? Town : _addressLine4; }
+            set { _addressLine4 = value; }
+        }
+
+        [Display(Name = AddressViewModelMessages.AddressLine5.LabelText)]
+        public string AddressLine5 { get; set; }
+
+        [Display(Name = AddressViewModelMessages.Town.LabelText)]
+        public string Town { get; set; }
 
         [Display(Name = AddressViewModelMessages.Postcode.LabelText)]
         public string Postcode
@@ -45,6 +56,8 @@
         }
 
         public string Uprn { get; set; }
+
+        public string County { get; set; }
 
         public GeoPointViewModel GeoPoint { get; set; }
 

@@ -16,8 +16,6 @@
 
     public interface IVacancyPartyWriteRepository
     {
-        void Delete(int vacancyPartyId);
-
         VacancyParty Save(VacancyParty entity);
     }
 }

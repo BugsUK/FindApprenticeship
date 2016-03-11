@@ -41,9 +41,9 @@
         }
     }
 
-    public class IsEmployerLocationMainApprenticeshipLocationResolver : ValueResolver<int, bool>
+    public class IsEmployerLocationMainApprenticeshipLocationResolver : ValueResolver<int?, bool>
     {
-        protected override bool ResolveCore(int source)
+        protected override bool ResolveCore(int? source)
         {
             return source != (int)VacancyLocationType.MultipleLocations;
         }
