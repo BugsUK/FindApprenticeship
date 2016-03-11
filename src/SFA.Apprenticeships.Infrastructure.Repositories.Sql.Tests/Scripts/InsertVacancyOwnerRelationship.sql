@@ -7,7 +7,15 @@ USING (VALUES (
 	1, -- ProviderSiteID
 	0, -- ContractHolderIsEmployer
 	0, -- ManagerIsEmployer
-	1, -- StatusTypeId
+	4, -- StatusTypeId: Live
+	0 -- NationWideAllowed
+  ), (
+	2, -- VacancyOwnerRelationshipId
+	2, -- EmployerId
+	1, -- ProviderSiteID
+	0, -- ContractHolderIsEmployer
+	0, -- ManagerIsEmployer
+	4, -- StatusTypeId: Live
 	0 -- NationWideAllowed
   )
 ) 
