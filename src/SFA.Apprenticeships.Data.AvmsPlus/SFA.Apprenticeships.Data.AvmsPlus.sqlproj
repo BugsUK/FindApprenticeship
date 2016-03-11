@@ -896,7 +896,6 @@
     <None Include="Scripts\TestData\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\TestData\dbo.Employer.sql" />
     <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
-    <None Include="Scripts\TestData\dbo.VacancyTextFieldValue.sql" />
     <None Include="Scripts\Data\dbo.VacancyLocationType.Upsert.sql" />
     <None Include="Scripts\Data\Sync.SyncParams.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ContactPreferenceType.Upsert.sql" />
