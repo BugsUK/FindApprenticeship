@@ -64,30 +64,7 @@
 
             return MapProviderSite(dbProviderSite);
         }
-
-        public IEnumerable<ProviderSite> GetByUkprn(string ukprn)
-        {
-            _logger.Debug("Getting provider sites with UKPRN={0}", ukprn);
-
-            const string sql = @"
-                SELECT ps.* FROM dbo.ProviderSite ps
-                INNER JOIN dbo.ProviderSiteRelationship psr
-                ON psr.ProviderSiteID = ps.ProviderSiteID
-                INNER JOIN dbo.Provider p
-                ON p.ProviderID = psr.ProviderID
-                WHERE p.UKPRN = @ukprn AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
-
-            var sqlParams = new
-            {
-                ukprn,
-                ActivatedEmployerTrainingProviderStatusId
-            };
-
-            var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
-
-            return providerSites.Select(MapProviderSite);
-        }
-
+        
         public IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
         {
             var providerSiteIdsArray = providerSiteIds as int[] ?? providerSiteIds.ToArray();
@@ -99,6 +76,27 @@
             var sqlParams = new
             {
                 providerSiteIdsArray
+            };
+
+            var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
+
+            return providerSites.Select(MapProviderSite);
+        }
+
+        public IEnumerable<ProviderSite> GetByProviderId(int providerId)
+        {
+            _logger.Debug("Getting provider sites for provider={0}", providerId);
+
+            const string sql = @"
+                SELECT ps.* FROM dbo.ProviderSite ps
+                INNER JOIN dbo.ProviderSiteRelationship psr
+                ON psr.ProviderSiteID = ps.ProviderSiteID
+                WHERE psr.ProviderID = @providerId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+
+            var sqlParams = new
+            {
+                providerId,
+                ActivatedEmployerTrainingProviderStatusId
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
@@ -137,9 +135,8 @@
         private int GetProviderIdByProviderSiteId(int providerSiteId)
         {
             const string sql = @"
-                SELECT p.ProviderID
-                FROM dbo.Provider AS p 
-                JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
+                SELECT psr.ProviderID
+                FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
                 WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 

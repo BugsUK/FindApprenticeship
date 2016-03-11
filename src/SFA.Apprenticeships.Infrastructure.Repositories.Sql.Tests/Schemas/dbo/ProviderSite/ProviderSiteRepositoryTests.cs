@@ -49,17 +49,17 @@
 
         [Test]
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public void ShouldGetProviderSiteByUkprn()
+        public void ShouldGetProviderSiteByProviderId()
         {
             // Act.
-            var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn("10000000");
+            var providerSitesByProviderId = _providerSiteReadRepository.GetByProviderId(1);
 
             // Assert.
-            providerSitesByUkprn.Should().NotBeNull();
-            providerSitesByUkprn.Count().Should().BeGreaterThan(0);
+            providerSitesByProviderId.Should().NotBeNull();
+            providerSitesByProviderId.Count().Should().BeGreaterThan(0);
 
             // Act.
-            var providerSiteIds = providerSitesByUkprn
+            var providerSiteIds = providerSitesByProviderId
                 .Select(each => each.ProviderSiteId).ToArray();
 
             var providerSitesByProviderSiteIds = _providerSiteReadRepository.GetByIds(providerSiteIds);

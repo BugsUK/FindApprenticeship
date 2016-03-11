@@ -9,9 +9,9 @@
 
         ProviderSite GetByEdsUrn(string edsUrn);
 
-        IEnumerable<ProviderSite> GetByUkprn(string ukprn);
-
         IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
+
+        IEnumerable<ProviderSite> GetByProviderId(int providerId);
     }
 
     public interface IProviderSiteWriteRepository

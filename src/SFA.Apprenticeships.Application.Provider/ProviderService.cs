@@ -122,13 +122,16 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
-            IEnumerable<ProviderSite> providerSites = _providerSiteReadRepository.GetByUkprn(ukprn).ToList();
+            var provider = _providerReadRepository.GetByUkprn(ukprn);
+
+            var providerSites = _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
 
             if (providerSites.Any())
             {
                 return providerSites;
             }
 
+            // TODO: remove this call?
             _logService.Debug("Calling OrganisationService to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
             providerSites = _organisationService.GetProviderSites(ukprn);
