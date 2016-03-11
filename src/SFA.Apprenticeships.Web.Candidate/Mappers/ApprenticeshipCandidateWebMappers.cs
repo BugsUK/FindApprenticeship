@@ -86,7 +86,10 @@
                 .ForMember(d => d.Wage, 
                     opt => opt.ResolveUsing<ApprenticeshipVacancySummaryViewModelResolvers.WageResolver>());
             
-            Mapper.CreateMap<Address, AddressViewModel>();
+            Mapper.CreateMap<Address, AddressViewModel>()
+                .ForMember(dest => dest.AddressLine5, opt => opt.Ignore())
+                .ForMember(dest => dest.Town, opt => opt.Ignore())
+                .ForMember(dest => dest.County, opt => opt.Ignore());
             Mapper.CreateMap<AddressViewModel, Address>();
 
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();

@@ -10,6 +10,8 @@
 
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
+        private const int ActivatedEmployerTrainingProviderStatusId = 1;
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -73,11 +75,12 @@
                 ON psr.ProviderSiteID = ps.ProviderSiteID
                 INNER JOIN dbo.Provider p
                 ON p.ProviderID = psr.ProviderID
-                WHERE p.UKPRN = @ukprn";
+                WHERE p.UKPRN = @ukprn AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 
             var sqlParams = new
             {
-                ukprn
+                ukprn,
+                ActivatedEmployerTrainingProviderStatusId
             };
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
@@ -133,19 +136,17 @@
 
         private int GetProviderIdByProviderSiteId(int providerSiteId)
         {
-            const int activatedEmployerTrainingProviderStatusId = 1;
-
             const string sql = @"
                 SELECT p.ProviderID
                 FROM dbo.Provider AS p 
                 JOIN dbo.ProviderSiteRelationship AS psr ON p.ProviderID = psr.ProviderID 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @activatedEmployerTrainingProviderStatusId";
+                WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
 
             var sqlParams = new
             {
                 providerSiteId,
-                activatedEmployerTrainingProviderStatusId
+                ActivatedEmployerTrainingProviderStatusId
             };
 
             return _getOpenConnection.Query<int>(sql, sqlParams).First();
