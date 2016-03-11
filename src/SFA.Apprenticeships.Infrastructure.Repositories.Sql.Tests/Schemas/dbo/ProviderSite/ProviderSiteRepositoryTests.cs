@@ -11,6 +11,7 @@
     using Sql.Common;
     using Sql.Schemas.Provider;
 
+    [TestFixture]
     public class ProviderSiteRepositoryTests
     {
         private readonly IMapper _mapper = new ProviderSiteMappers();
@@ -19,8 +20,8 @@
         private IProviderSiteReadRepository _providerSiteReadRepository;
         private IProviderSiteWriteRepository _providerSiteWriteRepository;
 
-        [TestFixtureSetUp]
-        public void SetUpFixture()
+        [SetUp]
+        public void SetUp()
         {
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
