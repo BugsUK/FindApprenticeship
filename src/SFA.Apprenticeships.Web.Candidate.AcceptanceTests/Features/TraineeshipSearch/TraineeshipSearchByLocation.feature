@@ -67,13 +67,15 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Location | Manchester |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
-	Then I clear the Location field
-	When I enter data
+	When I am on the TraineeshipSearchResultPage page
+	And I clear the Location field
+	And I enter data
 		 | Field    | Value |
-		 | Location | Cov  |
+		 | Location | Cov   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
-	And I see 
+	When I am on the TraineeshipSearchResultPage page
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |
