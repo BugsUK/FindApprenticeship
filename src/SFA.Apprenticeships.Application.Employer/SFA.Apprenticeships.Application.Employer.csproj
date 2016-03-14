@@ -94,7 +94,6 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="EmployerService.cs" />
-    <Compile Include="Mappers\EmployerMappers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Strategies\GetByEdsUrnStrategy.cs" />
     <Compile Include="Strategies\GetByIdsStrategy.cs" />

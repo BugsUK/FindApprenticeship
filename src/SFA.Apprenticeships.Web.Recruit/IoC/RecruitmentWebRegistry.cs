@@ -4,6 +4,7 @@
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer;
+    using Application.Employer.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -88,6 +89,12 @@
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
+
+            For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
+            For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
         }
 
         private void RegisterMediators()

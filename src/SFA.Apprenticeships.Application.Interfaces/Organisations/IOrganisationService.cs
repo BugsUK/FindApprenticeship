@@ -7,6 +7,6 @@
     {
         VerifiedOrganisationSummary GetVerifiedOrganisationSummary(string referenceNumber);
 
-        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location);
+        IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location, out int resultCount);
     }
 }

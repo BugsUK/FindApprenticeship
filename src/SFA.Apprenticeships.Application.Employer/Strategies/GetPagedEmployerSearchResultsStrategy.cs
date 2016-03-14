@@ -25,10 +25,11 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
                 CurrentPage = currentPage
             };
 
-            var verifiedOrganisationSummaries = _organisationService.GetVerifiedOrganisationSummaries(edsUrn, name, location).ToList();
+            int resultCount;
+            var verifiedOrganisationSummaries = _organisationService.GetVerifiedOrganisationSummaries(edsUrn, name, location, out resultCount);
             pageable.Page = _mapper.Map<IEnumerable<VerifiedOrganisationSummary>, IEnumerable<Employer>>(verifiedOrganisationSummaries.Skip((currentPage - 1) * pageSize).Take(pageSize)).ToList();
-            pageable.ResultsCount = verifiedOrganisationSummaries.Count;
-            pageable.TotalNumberOfPages = verifiedOrganisationSummaries.Count / pageSize + 1;
+            pageable.ResultsCount = resultCount;
+            pageable.TotalNumberOfPages = resultCount / pageSize + 1;
             return pageable;
         }
     }

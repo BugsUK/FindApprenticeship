@@ -31,8 +31,9 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
             {
                 _logService.Info("No record of employer with ERN='{0}' found in Employer Repository. Calling Organisation Service to get employer", edsUrn);
 
-                //We don't know about this employer yet so get the reference from the organisation service and store for future use
                 var organisationSummary = _organisationService.GetVerifiedOrganisationSummary(edsUrn);
+                
+                //We don't know about this employer yet so get the reference from the organisation service and store for future use
                 employer = _mapper.Map<VerifiedOrganisationSummary, Employer>(organisationSummary);
                 employer = _employerWriteRepository.Save(employer);
             }

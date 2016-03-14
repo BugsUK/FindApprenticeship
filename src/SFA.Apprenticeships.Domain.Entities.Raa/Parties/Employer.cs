@@ -10,6 +10,7 @@
         public Guid EmployerGuid { get; set; }
         public string EdsUrn { get; set; }
         public string Name { get; set; }
+        public string TradingName { get; set; }
         public PostalAddress Address { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Employer.Strategies
 {
-    using Apprenticeships.Application.Employer.Mappers;
     using Apprenticeships.Application.Employer.Strategies;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
@@ -23,7 +22,7 @@
         public void Setup()
         {
             _employerWriteRepository.Setup(r => r.Save(It.IsAny<Employer>())).Returns<Employer>(e => e);
-            _strategy = new GetByEdsUrnStrategy(_employerReadRepository.Object, _employerWriteRepository.Object, _organisationService.Object, new EmployerMappers(), new Mock<ILogService>().Object);
+            _strategy = new GetByEdsUrnStrategy(_employerReadRepository.Object, _employerWriteRepository.Object, _organisationService.Object, new Mock<IMapper>().Object, new Mock<ILogService>().Object);
         }
 
         [Test]
@@ -57,7 +56,6 @@
             var employer = _strategy.Get(edsUrn);
 
             //Assert
-            employer.EdsUrn.Should().Be(verifiedOrganisationSummary.ReferenceNumber);
             _organisationService.Verify(os => os.GetVerifiedOrganisationSummary(edsUrn), Times.Once);
             _employerWriteRepository.Verify(r => r.Save(It.IsAny<Employer>()), Times.Once);
         }

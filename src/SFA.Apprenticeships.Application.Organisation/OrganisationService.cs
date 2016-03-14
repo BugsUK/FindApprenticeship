@@ -28,22 +28,23 @@
             return _verifiedOrganisationProvider.GetByReferenceNumber(referenceNumber);
         }
 
-        public IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location)
+        public IEnumerable<VerifiedOrganisationSummary> GetVerifiedOrganisationSummaries(string edsUrn, string name, string location, out int resultCount)
         {
             if (!string.IsNullOrEmpty(edsUrn))
             {
                 var verifiedOrganisationSummary = _verifiedOrganisationProvider.GetByReferenceNumber(edsUrn);
                 if (verifiedOrganisationSummary == null)
                 {
+                    resultCount = 0;
                     return new List<VerifiedOrganisationSummary>();
                 }
+                resultCount = 1;
                 return new List<VerifiedOrganisationSummary>
                 {
                     verifiedOrganisationSummary
                 };
             }
 
-            int resultCount;
             return _verifiedOrganisationProvider.Find(name, location, out resultCount);
         }
     }

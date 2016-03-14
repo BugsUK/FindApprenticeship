@@ -170,7 +170,6 @@
     <Compile Include="Builders\SendDailyDigestsStrategyBuilder.cs" />
     <Compile Include="Communications\ExpiringDraftCommunicationTests.cs" />
     <Compile Include="Applications\Housekeeping\SubmittedApplicationHousekeeperTests.cs" />
-    <Compile Include="Employer\EmployerMappersTests.cs" />
     <Compile Include="Employer\Strategies\GetByEdsUrnStrategyTests.cs" />
     <Compile Include="Employer\Strategies\GetPagedEmployerSearchResultsStrategyTests.cs" />
     <Compile Include="Processors\CandidateProcesorTests.cs" />

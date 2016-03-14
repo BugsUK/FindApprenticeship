@@ -1,5 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo
 {
+    using System;
+    using AutoMapper;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Infrastructure.Common.Mappers;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
@@ -38,6 +42,7 @@
                 });
 
             Mapper.CreateMap<DomainEmployer, Employer>()
+                .ForMember(v => v.EdsUrn, opt => opt.MapFrom(src => Convert.ToInt32(src.EdsUrn)))
                 .ForMember(v => v.FullName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(v => v.AddressLine1, opt => opt.MapFrom(src => src.Address.AddressLine1))
                 .ForMember(v => v.AddressLine2, opt => opt.MapFrom(src => src.Address.AddressLine2))
@@ -46,9 +51,8 @@
                 .ForMember(v => v.AddressLine5, opt => opt.MapFrom(src => src.Address.AddressLine5))
                 .ForMember(v => v.PostCode, opt => opt.MapFrom(src => src.Address.Postcode))
                 .ForMember(v => v.Town, opt => opt.MapFrom(src => src.Address.Town))
-                .ForMember(v => v.Latitude, opt => opt.MapFrom(src => (decimal)src.Address.GeoPoint.Latitude))  // use a converter?
-                .ForMember(v => v.Longitude, opt => opt.MapFrom(src => (decimal)src.Address.GeoPoint.Longitude)) // use a converter?;
-                .ForMember(v => v.TradingName, opt => opt.Ignore())
+                .ForMember(v => v.Latitude, opt => opt.ResolveUsing<GeocodeToLatitudeConverter>().FromMember(src => src.Address.GeoPoint))
+                .ForMember(v => v.Longitude, opt => opt.ResolveUsing<GeocodeToLongitudeConverter>().FromMember(src => src.Address.GeoPoint))
                 .ForMember(v => v.CountyId, opt => opt.Ignore())
                 .ForMember(v => v.LocalAuthorityId, opt => opt.Ignore())
                 .ForMember(v => v.GeocodeEasting, opt => opt.Ignore())
@@ -64,6 +68,37 @@
                 .ForMember(v => v.EmployerStatusTypeId, opt => opt.Ignore())
                 .ForMember(v => v.DisableAllowed, opt => opt.Ignore())
                 .ForMember(v => v.TrackingAllowed, opt => opt.Ignore());
+
+            Mapper.CreateMap<VerifiedOrganisationSummary, DomainEmployer>()
+                .ForMember(dest => dest.EmployerId, opt => opt.Ignore())
+                .ForMember(dest => dest.EmployerGuid, opt => opt.Ignore())
+                .ForMember(dest => dest.EdsUrn, opt => opt.MapFrom(src => src.ReferenceNumber));
+        }
+    }
+
+    public class GeocodeToLatitudeConverter : ValueResolver<GeoPoint, decimal>
+    {
+        protected override decimal ResolveCore(GeoPoint source)
+        {
+            if (source == null)
+            {
+                return 0;
+            }
+
+            return (decimal)source.Latitude;
+        }
+    }
+
+    public class GeocodeToLongitudeConverter : ValueResolver<GeoPoint, decimal>
+    {
+        protected override decimal ResolveCore(GeoPoint source)
+        {
+            if (source == null)
+            {
+                return 0;
+            }
+
+            return (decimal)source.Longitude;
         }
     }
 }

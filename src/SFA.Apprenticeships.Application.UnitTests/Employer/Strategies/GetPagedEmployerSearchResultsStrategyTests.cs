@@ -20,7 +20,8 @@
 
             strategy.Get(edsUrn, name, location, 1, 25);
 
-            organisationService.Verify(s => s.GetVerifiedOrganisationSummaries(edsUrn, name, location));
+            int resultCount;
+            organisationService.Verify(s => s.GetVerifiedOrganisationSummaries(edsUrn, name, location, out resultCount));
         }
 
         private IGetPagedEmployerSearchResultsStrategy GetStrategy(Mock<IOrganisationService> orgService = null)
