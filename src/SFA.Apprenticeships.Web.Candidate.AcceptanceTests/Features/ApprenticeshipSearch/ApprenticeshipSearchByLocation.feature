@@ -80,7 +80,7 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Location | Cov   |
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
-	And I wait 5 seconds
+	And I wait 3 seconds
 	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
@@ -145,8 +145,9 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Field    | Value |
 		 | Location | Manchester  |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see 
+	And I wait 3 seconds
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
         | Field                    | Rule         | Value                           |
         | Location                 | Equals       | Manchester (Greater Manchester) |
         | LocationSuggestionsCount | Greater Than | 0                               |
@@ -155,9 +156,9 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Field    | Value |
 		 | Location | Cov   |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
+	And I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
-	And I see 
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |
