@@ -83,13 +83,15 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Traineeship
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find traineeships and test ordering")]
+        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void FindTraineeshipsAndTestOrdering()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find traineeships and test ordering", new string[] {
                         "SmokeTests",
-                        "PrimaryTransaction"});
+                        "PrimaryTransaction",
+                        "Ignore"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -108,7 +110,7 @@ this.FeatureBackground();
 #line 19
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
- testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -123,7 +125,7 @@ this.FeatureBackground();
                         "Equals",
                         "True"});
 #line 21
- testRunner.Then("I see", ((string)(null)), table2, "Then ");
+ testRunner.And("I see", ((string)(null)), table2, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -132,7 +134,7 @@ this.FeatureBackground();
                         "SortOrderingDropDown",
                         "Closing date"});
 #line 25
- testRunner.And("I enter data", ((string)(null)), table3, "And ");
+ testRunner.When("I enter data", ((string)(null)), table3, "When ");
 #line 28
  testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 29
@@ -151,7 +153,7 @@ this.FeatureBackground();
                         "Equals",
                         "True"});
 #line 30
- testRunner.And("I see", ((string)(null)), table4, "And ");
+ testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

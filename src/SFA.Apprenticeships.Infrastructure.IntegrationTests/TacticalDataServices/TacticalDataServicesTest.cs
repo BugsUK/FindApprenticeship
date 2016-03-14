@@ -60,7 +60,7 @@ namespace SFA.Apprenticeships.Infrastructure.IntegrationTests.TacticalDataServic
             }
         }
         
-        [TestCase(902763946), Category("Integration")]
+        [TestCase(902763946), Category("Integration"), Ignore("This test will be removed")]
         public void ReturnsProviderSiteEmployerLinks(int providerSiteId)
         {
             //Arrange
