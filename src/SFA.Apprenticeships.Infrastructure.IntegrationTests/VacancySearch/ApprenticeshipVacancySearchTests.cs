@@ -3,7 +3,6 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Vacancies;
-    using Common.Configuration;
     using Common.IoC;
     using Domain.Entities.Locations;
     using Domain.Entities.Vacancies.Apprenticeships;
@@ -53,7 +52,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
+        [Test, Category("Integration")]
         public void ShouldSearchBySector()
         {
 
@@ -67,7 +66,7 @@
             vacancies.AggregationResults.Should().HaveCount(c => c > 0);
         }
 
-        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
+        [Test, Category("Integration")]
         public void ShouldSearchBySectorAndFramework()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
@@ -81,7 +80,8 @@
             vacancies.AggregationResults.Should().HaveCount(n => n > 1);
         }
 
-        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
+        [Test, Category("Integration")]
+        //, Ignore("Failing because an exception")
         public void ShouldSearchAllEngland()
         {
             //TODO: this test could be too fragile
@@ -94,7 +94,7 @@
             vacancies.Results.Where(r => r.Distance > 40).Should().NotBeEmpty();
         }
 
-        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
+        [Test, Category("Integration")]
         public void ShouldSortByPostedDate()
         {
             var vacancySearchProvider = new ApprenticeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _configurationService, _logger.Object);
@@ -116,8 +116,8 @@
                     Name = "London",
                     GeoPoint = new GeoPoint
                     {
-                        Latitude = 51.5072,
-                        Longitude = 0.1275
+                        Longitude = -1.50812239495425,
+                        Latitude = 52.4009991288043
                     }
                 },
                 PageNumber = 1,
