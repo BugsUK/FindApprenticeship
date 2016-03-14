@@ -3,7 +3,7 @@
     using Apprenticeships.Application.UserAccount;
     using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
     using Moq;
 

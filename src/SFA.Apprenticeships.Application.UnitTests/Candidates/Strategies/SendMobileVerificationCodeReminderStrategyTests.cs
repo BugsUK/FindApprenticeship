@@ -6,7 +6,7 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Configuration;
     using Domain.Entities.UnitTests.Builder;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;

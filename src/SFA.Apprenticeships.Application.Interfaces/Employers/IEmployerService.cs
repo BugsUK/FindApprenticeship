@@ -12,8 +12,6 @@ namespace SFA.Apprenticeships.Application.Interfaces.Employers
         Employer GetEmployer(int employerId);
         Employer GetEmployer(string edsUrn);
         IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds);
-        //TODO: Use the object below once it has been agreed upon
-        IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location);
         Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize);
         Employer SaveEmployer(Employer employer);
     }

@@ -9,30 +9,21 @@ namespace SFA.Apprenticeships.Application.Provider
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
-    using Interfaces.Organisations;
     using Interfaces.Providers;
 
-    //TODO: Much of this servcies's implementation is a crutch to coping with a current lack of a migration strategy. In the future all data will be in the repositories and so the
-    //organization service will only be used for searching for new employers
     public class ProviderService : IProviderService
     {
-        private readonly IOrganisationService _organisationService;
         private readonly IEmployerService _employerService;
         private readonly IProviderReadRepository _providerReadRepository;
-        private readonly IProviderWriteRepository _providerWriteRepository;
         private readonly IProviderSiteReadRepository _providerSiteReadRepository;
-        private readonly IProviderSiteWriteRepository _providerSiteWriteRepository;
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
 
-        public ProviderService(IOrganisationService organisationService, IProviderReadRepository providerReadRepository, IProviderWriteRepository providerWriteRepository, IProviderSiteReadRepository providerSiteReadRepository, IProviderSiteWriteRepository providerSiteWriteRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
+        public ProviderService(IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
         {
-            _organisationService = organisationService;
             _providerReadRepository = providerReadRepository;
-            _providerWriteRepository = providerWriteRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
-            _providerSiteWriteRepository = providerSiteWriteRepository;
             _vacancyPartyReadRepository = vacancyPartyReadRepository;
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
@@ -41,18 +32,9 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
         {
-            //TODO: Remove null checks following SQL migration
             var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
-
-            if (vacancyParty != null)
-            {
-                var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
-                if (providerSite != null)
-                {
-                    return _providerReadRepository.GetById(providerSite.ProviderId);
-                }
-            }
-            return new Provider();
+            var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
+            return _providerReadRepository.GetById(providerSite.ProviderId);
         }
 
         public Provider GetProvider(int providerId)
@@ -66,18 +48,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderReadRepository to get provider with UKPRN='{0}'.", ukprn);
 
-            var provider = _providerReadRepository.GetByUkprn(ukprn);
-
-            if (provider != null)
-            {
-                return provider;
-            }
-
-            _logService.Debug("Calling OrganisationService to get provider with UKPRN='{0}'.", ukprn);
-
-            provider = _organisationService.GetProvider(ukprn);
-
-            return provider;
+            return _providerReadRepository.GetByUkprn(ukprn);
         }
 
         public IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds)
@@ -85,35 +56,18 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerReadRepository.GetByIds(providerIds);
         }
 
-        public void SaveProvider(Provider provider)
-        {
-            _providerWriteRepository.Update(provider);
-        }
-
         public ProviderSite GetProviderSite(int providerSiteId)
         {
             return _providerSiteReadRepository.GetById(providerSiteId);
         }
 
-        public ProviderSite GetProviderSite(string ukprn, string edsUrn)
+        public ProviderSite GetProviderSite(string edsUrn)
         {
-            Condition.Requires(ukprn).IsNotNullOrEmpty();
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsUrn);
+            _logService.Debug("Calling ProviderSiteReadRepository to get provider site with ERN='{0}'.", edsUrn);
 
-            var providerSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
-
-            if (providerSite != null)
-            {
-                return providerSite;
-            }
-
-            _logService.Debug("Calling OrganisationService to get provider site with UKPRN='{0}' and ERN='{1}'.", ukprn, edsUrn);
-
-            providerSite = _organisationService.GetProviderSite(ukprn, edsUrn);
-
-            return providerSite;
+            return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
@@ -122,31 +76,12 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
-            IEnumerable<ProviderSite> providerSites = _providerSiteReadRepository.GetByUkprn(ukprn).ToList();
-
-            if (providerSites.Any())
-            {
-                return providerSites;
-            }
-
-            _logService.Debug("Calling OrganisationService to get provider sites for provider with UKPRN='{0}'.", ukprn);
-
-            providerSites = _organisationService.GetProviderSites(ukprn);
-
-            return providerSites;
+            return _providerSiteReadRepository.GetByUkprn(ukprn).ToList();
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
         {
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
-        }
-
-        public void SaveProviderSites(IEnumerable<ProviderSite> providerSites)
-        {
-            foreach (var providerSite in providerSites)
-            {
-                _providerSiteWriteRepository.Update(providerSite);
-            }
         }
 
         public VacancyParty GetVacancyParty(int vacancyPartyId)
@@ -159,38 +94,14 @@ namespace SFA.Apprenticeships.Application.Provider
             Condition.Requires(providerSiteId);
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
+            _logService.Debug("Calling Employer Service to get employer with EDSURN='{0}'.", edsUrn);
+
             var employer = _employerService.GetEmployer(edsUrn);
-            if (employer.EdsUrn != edsUrn)
-            {
-                employer = _employerService.GetEmployer(employer.EdsUrn);
-            }
-            if (employer.EmployerId == 0)
-            {
-                //New employer
-                employer = _employerService.SaveEmployer(employer);
-            }
 
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employer.EmployerId);
+            _logService.Debug("Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.", providerSiteId, employer.EmployerId);
 
-            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employer.EmployerId);
-
-            if (vacancyParty != null)
-            {
-                return vacancyParty;
-            }
-
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, edsUrn);
-
-            vacancyParty = _organisationService.GetVacancyParty(providerSiteId, employer.EmployerId);
-
-            if (vacancyParty == null)
-            {
-                vacancyParty = new VacancyParty
-                {
-                    ProviderSiteId = providerSiteId,
-                    EmployerId = employer.EmployerId
-                };
-            }
+            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employer.EmployerId) ??
+                               new VacancyParty {ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId};
 
             return vacancyParty;
         }
@@ -214,16 +125,9 @@ namespace SFA.Apprenticeships.Application.Provider
         {
             Condition.Requires(request).IsNotNull();
 
-            _logService.Debug("Calling OrganisationService to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
+            _logService.Debug("Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyParties = _organisationService.GetVacancyParties(request.ProviderSiteId).ToList();
-
-            _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
-
-            var vacancyPartiesFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId);
-
-            //Combine with results from repository
-            vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();
+            var vacancyParties = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId).ToList();
 
             if (request.IsQuery)
             {
@@ -270,7 +174,7 @@ namespace SFA.Apprenticeships.Application.Provider
                 CurrentPage = currentPage
             };
 
-            var resultCount = results.Count();
+            var resultCount = results.Count;
             pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;

@@ -115,8 +115,6 @@
     <Compile Include="Configuration\TacticalDataServivcesConfiguration.cs" />
     <Compile Include="FrameworkDataProvider.cs" />
     <Compile Include="IoC\TacticalDataServicesRegistry.cs" />
-    <Compile Include="LegacyEmployerProvider.cs" />
-    <Compile Include="LegacyProviderProvider.cs" />
     <Compile Include="Models\Employer.cs" />
     <Compile Include="Models\Framework.cs" />
     <Compile Include="Models\Occupation.cs" />

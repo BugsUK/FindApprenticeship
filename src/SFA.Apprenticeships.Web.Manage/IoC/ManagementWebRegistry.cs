@@ -59,8 +59,6 @@
 
         private void RegisterProviders()
         {
-            For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
-            For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
