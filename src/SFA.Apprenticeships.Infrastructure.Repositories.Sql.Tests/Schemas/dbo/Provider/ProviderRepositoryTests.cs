@@ -35,7 +35,7 @@
         public void ShouldGetProvider()
         {
             // Act.
-            var provider = _providerReadRepository.GetByUkprn("10000000");
+            var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
             // Assert.
             provider.Should().NotBeNull();
@@ -56,7 +56,7 @@
         public void ShouldUpdateProvider()
         {
             // Arrange.
-            var provider = _providerReadRepository.GetByUkprn("10000000");
+            var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
             provider.Name = new string(provider.Name.Reverse().ToArray());
 

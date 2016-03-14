@@ -1,10 +1,16 @@
 ﻿SET IDENTITY_INSERT [dbo].[Employer] ON
 
+DECLARE @employerId1 INT = 50000001
+DECLARE @employerId2 INT = 50000002
+
+DECLARE @edsurn1 INT = 21000002
+DECLARE @edsurn2 INT = 21000003
+
 MERGE INTO [dbo].[Employer] AS TARGET 
 USING (VALUES (
-	1, -- EmployerId
+	@employerId1, -- EmployerId
 	1, -- EmployerStatusTypeId: Activated
-	101, -- EdsUrn
+	@edsurn1, -- EdsUrn
 	'Acme Corp', -- FullName
 	'Acme Corp', -- TradingName
 	'14 Acacia Avenue', -- AddressLine1
@@ -15,11 +21,11 @@ USING (VALUES (
 	1, -- DisableAllowed
 	1 -- TrackingAllowed
   ), (
-	2, -- EmployerId
+	@employerId2, -- EmployerId
 	1, -- EmployerStatusTypeId: Activated
-	102, -- EdsUrn
-	'Corp Inc', -- FullName
-	'Corp Incorporated', -- TradingName
+	@edsurn2, -- EdsUrn
+	'Awesome Inc', -- FullName
+	'Awesome Inc', -- TradingName
 	'Big Building', -- AddressLine1
 	'London', -- Town
 	25, -- CountyId: London
@@ -91,7 +97,8 @@ VALUES (
 
 SELECT * FROM [dbo].[Employer]
 WHERE EmployerId IN (
-	101
+	@employerId1,
+	@employerId2
 )
 
 SET IDENTITY_INSERT [dbo].[Employer] OFF

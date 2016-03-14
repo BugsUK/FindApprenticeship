@@ -1,42 +1,26 @@
-﻿/*
-BEGIN
-	-- TODO: Reseed identity columns as they are not currently set by migration.
-	DECLARE @maxProviderId INT = COALESCE((SELECT MAX(ProviderId) FROM dbo.Provider) + 1, 1)
-	DECLARE @maxProviderSiteId INT = COALESCE((SELECT MAX(ProviderSiteId) FROM dbo.ProviderSite) + 1, 1)
-	DECLARE @maxProviderSiteRelationshipId INT = COALESCE((SELECT MAX(ProviderSiteRelationshipId) FROM dbo.ProviderSiteRelationship) + 1, 1)
-
-	DBCC CHECKIDENT ('Provider', RESEED, @maxProviderId)
-	DBCC CHECKIDENT ('ProviderSite', RESEED, @maxProviderSiteId)
-	DBCC CHECKIDENT ('ProviderSiteRelationship', RESEED, @maxProviderSiteRelationshipId)
-
+﻿BEGIN
 	BEGIN TRANSACTION
 
-	DECLARE @ukprn INT = 10000000
+	DECLARE @providerId INT = 10000001
+	DECLARE @ukprn INT = 10000002
 
-	DECLARE @edsurn1 INT = 100339794
-	DECLARE @edsurn2 INT = 903008386
-	DECLARE @edsurn3 INT = 145238970
+	DECLARE @providerSiteId1 INT = 20000001
+	DECLARE @providerSiteId2 INT = 20000002
+	DECLARE @providerSiteId3 INT = 20000003
 
-	--------------------------------------------------------------------------------
-	-- Delete test data
-	--
-	/*
-	DELETE FROM [dbo].[ProviderSiteRelationship]
-	WHERE ProviderID = (SELECT ProviderId FROM [dbo].[Provider] WHERE UKPRN = @ukprn)
-
-	DELETE FROM [dbo].[ProviderSite]
-	WHERE EDSURN IN (@edsurn1, @edsurn2, @edsurn3)
-
-	DELETE FROM [dbo].[Provider]
-	WHERE UKPRN = @ukprn
-	*/
+	DECLARE @edsurn1 INT = 21000002
+	DECLARE @edsurn2 INT = 21000003
+	DECLARE @edsurn3 INT = 21000004
 
 	--------------------------------------------------------------------------------
 	-- Provider
 	--
+	SET IDENTITY_INSERT [dbo].[Provider] ON
+
 	MERGE [dbo].[Provider] AS dest
 	USING (VALUES
 		(
+		@providerId,
 		123, -- UPIN
 		@ukprn, -- UKPRN
 		'Hopwood Hall College', -- FullName
@@ -49,6 +33,7 @@ BEGIN
 		456 -- OriginalUPIN
 		)
 	) AS src (
+		ProviderId,
 		UPIN,
 		UKPRN,
 		FullName,
@@ -74,6 +59,7 @@ BEGIN
 			OriginalUPIN = src.OriginalUPIN
 	WHEN NOT MATCHED THEN
 		INSERT (
+			ProviderId,
 			UPIN,
 			UKPRN,
 			FullName,
@@ -86,6 +72,7 @@ BEGIN
 			OriginalUPIN
 		)
 		VALUES (
+			ProviderId,
 			UPIN,
 			UKPRN,
 			FullName,
@@ -99,15 +86,20 @@ BEGIN
 		)
 	;
 
+	SET IDENTITY_INSERT [dbo].[Provider] OFF
+
 	SELECT * FROM [dbo].[Provider]
 	WHERE UKPRN = @ukprn
 
 	--------------------------------------------------------------------------------
 	-- ProviderSite
 	--
+	SET IDENTITY_INSERT [dbo].[ProviderSite] ON
+
 	MERGE [dbo].[ProviderSite] AS dest
 	USING (VALUES
 		(
+		@providerSiteId1,
 		'Hopwood Campus',-- FullName
 		'The Hopwood College', -- TradingName
 		@edsurn1, -- EDSURN
@@ -138,6 +130,7 @@ BEGIN
 		NULL -- ContactDetailsAsARecruitmentAgency
 		),
 		(
+		@providerSiteId2,
 		'Hopwood Hall College',-- FullName
 		'Orchard Training Solutions', -- TradingName
 		@edsurn2, -- EDSURN
@@ -168,6 +161,7 @@ BEGIN
 		NULL -- ContactDetailsAsARecruitmentAgency
 		),
 		(
+		@providerSiteId3,
 		'Hopwood Hall College in the Community',-- FullName
 		'Hopwood Hall Community College', -- TradingName
 		@edsurn3, -- EDSURN
@@ -198,6 +192,7 @@ BEGIN
 		NULL -- ContactDetailsAsARecruitmentAgency
 		)
 	) AS src (
+		ProviderSiteId,
 		FullName,
 		TradingName,
 		EDSURN,
@@ -259,6 +254,7 @@ BEGIN
 			ContactDetailsAsARecruitmentAgency = src.ContactDetailsAsARecruitmentAgency
 	WHEN NOT MATCHED THEN
 		INSERT (
+			ProviderSiteId,
 			FullName,
 			TradingName,
 			EDSURN,
@@ -289,6 +285,7 @@ BEGIN
 			ContactDetailsAsARecruitmentAgency
 		)
 		VALUES (
+			ProviderSiteId,
 			FullName,
 			TradingName,
 			EDSURN,
@@ -320,6 +317,8 @@ BEGIN
 		)
 	;
 
+	SET IDENTITY_INSERT [dbo].[ProviderSite] OFF
+
 	SELECT * FROM [dbo].[ProviderSite]
 	WHERE EDSURN IN (@edsurn1, @edsurn2, @edsurn3)
 
@@ -329,18 +328,18 @@ BEGIN
 	MERGE [dbo].[ProviderSiteRelationship] AS dest
 	USING (VALUES
 		(
-			(SELECT ProviderId FROM [dbo].[Provider] WHERE UKPRN = @ukprn), -- ProviderID
-			(SELECT ProviderSiteId FROM [dbo].[ProviderSite] WHERE EDSURN = @edsurn1), -- ProviderSiteID
+			@providerId,
+			@providerSiteId1,
 			1 -- ProviderSiteRelationShipTypeID: Owner
 		),
 		(
-			(SELECT ProviderId FROM [dbo].[Provider] WHERE UKPRN = @ukprn), -- ProviderID
-			(SELECT ProviderSiteId FROM [dbo].[ProviderSite] WHERE EDSURN = @edsurn2), -- ProviderSiteID
+			@providerId,
+			@providerSiteId2,
 			1 -- ProviderSiteRelationShipTypeID: Owner
 		),
 		(
-			(SELECT ProviderId FROM [dbo].[Provider] WHERE UKPRN = @ukprn), -- ProviderID
-			(SELECT ProviderSiteId FROM [dbo].[ProviderSite] WHERE EDSURN = @edsurn3), -- ProviderSiteID
+			@providerId,
+			@providerSiteId3,
 			1 -- ProviderSiteRelationShipTypeID: Owner
 		)
 	) AS src (
@@ -351,7 +350,7 @@ BEGIN
 	ON (dest.ProviderID = src.ProviderID AND dest.ProviderSiteId = src.ProviderSiteId)
 	WHEN MATCHED THEN
 		UPDATE SET
-			ProviderSiteRelationShipTypeID = 1 -- ProviderSiteRelationShipTypeID: Owner
+			ProviderSiteRelationShipTypeID = src.ProviderSiteRelationShipTypeID -- ProviderSiteRelationShipTypeID: Owner
 	WHEN NOT MATCHED THEN
 		INSERT (
 			ProviderID,
@@ -369,15 +368,8 @@ BEGIN
 	INNER JOIN [dbo].[Provider] p
 	ON p.ProviderID = psr.ProviderID
 	INNER JOIN [dbo].[ProviderSite] ps
-	ON psr.ProviderID = ps.ProviderSiteID
+	ON psr.ProviderSiteId = ps.ProviderSiteID
 	WHERE p.UKPRN = @ukprn
-
-	-- VacancyOwnerRelationship
-	-- Employer
-	-- EmployerContact?
-	-- EmployerTrainingProviderStatus
 
 	COMMIT TRANSACTION
 END
-GO
-*/

@@ -35,7 +35,7 @@
         public void ShouldGetEmployerById()
         {
             // Act.
-            var employer = _employerReadRepository.GetById(1);
+            var employer = _employerReadRepository.GetById(SeedData.Employers.AcmeCorp.EmployerId);
 
             // Assert.
             employer.Should().NotBeNull();
@@ -45,7 +45,7 @@
         public void ShouldGetEmployerByEdsUrn()
         {
             // Act.
-            var employer = _employerReadRepository.GetByEdsUrn("101");
+            var employer = _employerReadRepository.GetByEdsUrn(SeedData.Employers.AcmeCorp.EdsUrn);
 
             // Assert.
             employer.Should().NotBeNull();
@@ -57,8 +57,8 @@
             // Arrange.
             var employerIds = new List<int>
             {
-                1,
-                2
+                SeedData.Employers.AcmeCorp.EmployerId,
+                SeedData.Employers.AwesomeInc.EmployerId
             };
 
             // Act.
@@ -74,7 +74,7 @@
         public void ShouldUpdateEmployer()
         {
             // Act.
-            var employer = _employerReadRepository.GetById(1);
+            var employer = _employerReadRepository.GetById(SeedData.Employers.AcmeCorp.EmployerId);
 
             // Assert.
             employer.Should().NotBeNull();

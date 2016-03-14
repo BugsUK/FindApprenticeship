@@ -33,23 +33,22 @@
         }
 
         [Test]
-        public void ShouldGetVacancyPartyById()
-        {
-            // Act.
-            var vacancyParty = _vacancyPartyReadRepository.GetById(1);
-
-            // Assert.
-            vacancyParty.Should().NotBeNull();
-        }
-
-        [Test]
         public void ShouldGetByProviderSiteAndEmployerId()
         {
             // Act.
-            var vacancyParty = _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(1, 1);
+            var providerSiteId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            var employerId = SeedData.Employers.AcmeCorp.EmployerId;
+
+            var vacancyPartyByProviderSiteAndEmployerId = _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employerId);
 
             // Assert.
-            vacancyParty.Should().NotBeNull();
+            vacancyPartyByProviderSiteAndEmployerId.Should().NotBeNull();
+
+            // Act.
+            var vacancyPartyById = _vacancyPartyReadRepository.GetById(vacancyPartyByProviderSiteAndEmployerId.VacancyPartyId);
+
+            // Assert.
+            vacancyPartyById.Should().NotBeNull();
         }
 
         [Test]
@@ -57,7 +56,8 @@
         public void ShouldGetByProviderSiteId()
         {
             // Act.
-            var vacancyParties = _vacancyPartyReadRepository.GetByProviderSiteId(1);
+            var providerSiteId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            var vacancyParties = _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
 
             // Assert.
             vacancyParties.Should().NotBeNull();
@@ -71,8 +71,8 @@
             var newVacancyParty = new VacancyParty
             {
                 VacancyPartyId = 0, // zero indicates new Vacancy Party
-                ProviderSiteId = 3,
-                EmployerId = 1,
+                ProviderSiteId = SeedData.ProviderSites.HopwoodHallCollege.ProviderSiteId,
+                EmployerId = SeedData.Employers.AwesomeInc.EmployerId,
                 EmployerDescription = "Some employer description.",
                 EmployerWebsiteUrl = "http://example.com"
             };

@@ -127,6 +127,11 @@
 
         private ProviderSite MapProviderSite(Entities.ProviderSite dbProviderSite)
         {
+            if (dbProviderSite == null)
+            {
+                return null;
+            }
+
             var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
 
             providerSite.ProviderId = GetProviderIdByProviderSiteId(providerSite.ProviderSiteId);

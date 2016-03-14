@@ -34,11 +34,12 @@
         public void ShouldGetProviderSite()
         {
             // Act.
-            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var edsUrn = SeedData.ProviderSites.HopwoodCampus.EdsUrn;
+            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             // Assert.
             providerSiteByEdsUrn.Should().NotBeNull();
-            providerSiteByEdsUrn.EdsUrn.Should().Be("100339794");
+            providerSiteByEdsUrn.EdsUrn.Should().Be(edsUrn);
 
             // Act.
             var providerSiteById = _providerSiteReadRepository.GetById(providerSiteByEdsUrn.ProviderSiteId);
@@ -49,11 +50,22 @@
         }
 
         [Test]
+        public void ShouldNotGetProviderSiteWithInvalidEdsUrn()
+        {
+            // Act.
+            var edsUrn = new string(SeedData.ProviderSites.HopwoodCampus.EdsUrn.Reverse().ToArray());
+            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
+
+            // Assert.
+            providerSiteByEdsUrn.Should().BeNull();
+        }
+
+        [Test]
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public void ShouldGetProviderSiteByUkprn()
         {
             // Act.
-            var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn("10000000");
+            var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
             // Assert.
             providerSitesByUkprn.Should().NotBeNull();
@@ -74,13 +86,14 @@
         public void ShouldUpdateProviderSite()
         {
             // Arrange.
-            var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var edsUrn = SeedData.ProviderSites.HopwoodCampus.EdsUrn;
+            var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             originalProvideSite.Name = new string(originalProvideSite.Name.Reverse().ToArray());
 
             // Act.
             var updatedProviderSite = _providerSiteWriteRepository.Update(originalProvideSite);
-            var newProviderSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var newProviderSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             // Assert.
             newProviderSite.ShouldBeEquivalentTo(updatedProviderSite);
