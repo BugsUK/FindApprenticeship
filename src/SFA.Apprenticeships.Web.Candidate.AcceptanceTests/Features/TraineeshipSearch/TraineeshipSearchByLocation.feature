@@ -44,11 +44,8 @@ Scenario: User enters location manually and sees a list of suggested locations
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
-	And I choose Search
-	Then I am on the TraineeshipSearchResultPage page
-	And I see 
-        | Field                    | Rule         | Value |
-        | LocationSuggestionsCount | Greater Than | 0     |
+	Then I wait for 5 seconds to see LocationAutoComplete
+	
 
 @SmokeTests
 Scenario: User enters location manually and location defaults to first suggested location
