@@ -275,7 +275,7 @@
                 .MapMemberFrom(av => av.QAUserName, v => v.QAUserName)
                 .MapMemberFrom(av => av.TrainingType, v => v.TrainingTypeId)
                 .MapMemberFrom(av => av.UpdatedDateTime, v => v.UpdatedDateTime)
-                .IgnoreMember(av => av.SectorCodeName)
+                .MapMemberFrom(av => av.SectorCodeName, v => v.SectorId.HasValue ? v.SectorId.ToString() : null)
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.DateFirstSubmitted)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
