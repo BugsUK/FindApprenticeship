@@ -79,9 +79,9 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Field    | Value |
 		 | Location | Cov   |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I wait 3 seconds
-	And I see 
+	And I am on the ApprenticeshipSearchResultPage page
+	And I wait 5 seconds
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |

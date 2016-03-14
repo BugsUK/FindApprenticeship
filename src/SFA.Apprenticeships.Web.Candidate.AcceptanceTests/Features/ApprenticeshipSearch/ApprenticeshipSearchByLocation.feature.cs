@@ -331,9 +331,9 @@ this.FeatureBackground();
 #line 81
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 82
- testRunner.Then("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 83
- testRunner.And("I wait 3 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I wait 5 seconds", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -348,7 +348,7 @@ this.FeatureBackground();
                         "Greater Than",
                         "0"});
 #line 84
- testRunner.And("I see", ((string)(null)), table11, "And ");
+ testRunner.Then("I see", ((string)(null)), table11, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
