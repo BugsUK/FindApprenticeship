@@ -99,8 +99,8 @@ Scenario: User enters location manually then selects from autocomplete and sees 
 	And I choose WrappedElement
 	And I am on the ApprenticeshipSearchPage page
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see 
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
         | Field                        | Rule           | Value                  |
         | Location                     | Equals         | Leeds (West Yorkshire) |
         | LocationSuggestionsContainer | Does Not Exist |                        |

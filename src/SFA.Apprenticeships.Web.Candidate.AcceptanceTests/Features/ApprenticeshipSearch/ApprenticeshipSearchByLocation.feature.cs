@@ -399,7 +399,7 @@ this.FeatureBackground();
 #line 101
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 102
- testRunner.Then("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.And("I am on the ApprenticeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -414,7 +414,7 @@ this.FeatureBackground();
                         "Does Not Exist",
                         ""});
 #line 103
- testRunner.And("I see", ((string)(null)), table14, "And ");
+ testRunner.Then("I see", ((string)(null)), table14, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
