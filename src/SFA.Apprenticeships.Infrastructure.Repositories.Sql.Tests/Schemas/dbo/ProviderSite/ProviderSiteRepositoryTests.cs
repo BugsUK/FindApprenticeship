@@ -68,11 +68,11 @@
             var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
             // Assert.
-            providerSitesByUkprn.Should().NotBeNull();
-            providerSitesByUkprn.Count().Should().BeGreaterThan(0);
+            providerSitesByProviderId.Should().NotBeNull();
+            providerSitesByProviderId.Count().Should().BeGreaterThan(0);
 
             // Act.
-            var providerSiteIds = providerSitesByUkprn
+            var providerSiteIds = providerSitesByProviderId
                 .Select(each => each.ProviderSiteId).ToArray();
 
             var providerSitesByProviderSiteIds = _providerSiteReadRepository.GetByIds(providerSiteIds);
