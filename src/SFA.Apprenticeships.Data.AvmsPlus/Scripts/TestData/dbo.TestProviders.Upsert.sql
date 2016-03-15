@@ -1,5 +1,4 @@
-﻿/*
-BEGIN
+﻿BEGIN
 	-- TODO: Reseed identity columns as they are not currently set by migration.
 	DECLARE @maxProviderId INT = COALESCE((SELECT MAX(ProviderId) FROM dbo.Provider) + 1, 1)
 	DECLARE @maxProviderSiteId INT = COALESCE((SELECT MAX(ProviderSiteId) FROM dbo.ProviderSite) + 1, 1)
@@ -380,4 +379,3 @@ BEGIN
 	COMMIT TRANSACTION
 END
 GO
-*/
