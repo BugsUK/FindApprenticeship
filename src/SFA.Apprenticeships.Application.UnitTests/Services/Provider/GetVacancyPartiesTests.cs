@@ -82,7 +82,7 @@
             _employerService = new Mock<IEmployerService>();
             _employerService.Setup(r => r.GetEmployers(It.IsAny<IEnumerable<int>>())).Returns(_employersFromService);
             _vacancyPartyReadRepository = new Mock<IVacancyPartyReadRepository>();
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(_fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(_fromRepository);
         }
 
         [Test]
@@ -103,7 +103,7 @@
         public void ErnRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, EdsUrn2);
 
@@ -121,7 +121,7 @@
         public void NameRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer3.Name.Substring(0, 10), null);
 
@@ -139,7 +139,7 @@
         public void NameAndPostCodeRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.Postcode.Substring(0, 10));
 
@@ -157,7 +157,7 @@
         public void NameAndLocationRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, _employer1.Name.Substring(0, 10), _employer1.Address.AddressLine4.Substring(0, 15));
 
@@ -175,7 +175,7 @@
         public void PostCodeRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, null, _employer3.Address.Postcode.Substring(0, 10));
 
@@ -193,7 +193,7 @@
         public void LocationRepositorySearch()
         {
             var fromRepository = new List<VacancyParty> { _providerSiteEmployerLink1, _providerSiteEmployerLink2, _providerSiteEmployerLink3 };
-            _vacancyPartyReadRepository.Setup(r => r.GetForProviderSite(ProviderSiteId)).Returns(fromRepository);
+            _vacancyPartyReadRepository.Setup(r => r.GetByProviderSiteId(ProviderSiteId)).Returns(fromRepository);
             var service = new ProviderServiceBuilder().With(_employerService.Object).With(_vacancyPartyReadRepository.Object).Build();
             var employerSearchRequest = new EmployerSearchRequest(ProviderSiteId, null, _employer3.Address.AddressLine4.Substring(0, 15));
 

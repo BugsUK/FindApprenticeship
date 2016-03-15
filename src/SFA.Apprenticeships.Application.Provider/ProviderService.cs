@@ -76,7 +76,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
-            return _providerSiteReadRepository.GetByUkprn(ukprn).ToList();
+            return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }
 
         public IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
@@ -86,7 +86,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public VacancyParty GetVacancyParty(int vacancyPartyId)
         {
-            return _vacancyPartyReadRepository.Get(vacancyPartyId);
+            return _vacancyPartyReadRepository.GetById(vacancyPartyId);
         }
 
         public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
@@ -100,7 +100,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}' and employer with Id='{1}'.", providerSiteId, employer.EmployerId);
 
-            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employer.EmployerId) ??
+            var vacancyParty = _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId) ??
                                new VacancyParty {ProviderSiteId = providerSiteId, EmployerId = employer.EmployerId};
 
             return vacancyParty;
@@ -118,7 +118,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
         {
-            return _vacancyPartyReadRepository.GetForProviderSite(providerSiteId);
+            return _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
@@ -127,7 +127,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling VacancyPartyReadRepository to get vacancy party for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyParties = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId).ToList();
+            var vacancyParties = _vacancyPartyReadRepository.GetByProviderSiteId(request.ProviderSiteId).ToList();
 
             if (request.IsQuery)
             {

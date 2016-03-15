@@ -1,4 +1,5 @@
-﻿SET IDENTITY_INSERT [dbo].[EmployerContact] ON
+﻿/*
+SET IDENTITY_INSERT [dbo].[EmployerContact] ON
 GO
 
 MERGE INTO [dbo].[EmployerContact] AS Target 
@@ -21,3 +22,4 @@ DELETE;
 
 SET IDENTITY_INSERT [dbo].[EmployerContact] OFF
 GO
+*/

@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.Provider
 {
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Repositories;
@@ -10,6 +11,7 @@
     using Sql.Common;
     using Sql.Schemas.Provider;
 
+    [TestFixture]
     public class ProviderRepositoryTests
     {
         private readonly IMapper _mapper = new ProviderMappers();
@@ -18,8 +20,8 @@
         private IProviderReadRepository _providerReadRepository;
         private IProviderWriteRepository _providerWriteRepository;
 
-        [TestFixtureSetUp]
-        public void SetUpFixture()
+        [SetUp]
+        public void SetUp()
         {
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
@@ -29,10 +31,11 @@
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         public void ShouldGetProvider()
         {
             // Act.
-            var provider = _providerReadRepository.GetByUkprn("10000000");
+            var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
             // Assert.
             provider.Should().NotBeNull();
@@ -50,18 +53,23 @@
         }
 
         [Test]
-        public void ShouldUpdateTheProvider()
+        public void ShouldUpdateProvider()
         {
-            // Arrange
-            var newName = "A new name for the provider";
-            var provider = _providerReadRepository.GetByUkprn("10000000");
+            // Arrange.
+            var provider = _providerReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
 
-            provider.Name = newName;
+            provider.Name = new string(provider.Name.Reverse().ToArray());
 
+            // Act.
             var newProvider = _providerWriteRepository.Update(provider);
+
+            // Assert.
             newProvider.ShouldBeEquivalentTo(provider);
 
+            // Act.
             newProvider = _providerReadRepository.GetById(provider.ProviderId);
+
+            // Assert.
             newProvider.ShouldBeEquivalentTo(provider);
         }
     }

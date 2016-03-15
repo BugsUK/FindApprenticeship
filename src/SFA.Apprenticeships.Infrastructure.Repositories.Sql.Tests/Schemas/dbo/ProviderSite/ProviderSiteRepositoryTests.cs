@@ -11,6 +11,7 @@
     using Sql.Common;
     using Sql.Schemas.Provider;
 
+    [TestFixture]
     public class ProviderSiteRepositoryTests
     {
         private readonly IMapper _mapper = new ProviderSiteMappers();
@@ -19,8 +20,8 @@
         private IProviderSiteReadRepository _providerSiteReadRepository;
         private IProviderSiteWriteRepository _providerSiteWriteRepository;
 
-        [TestFixtureSetUp]
-        public void SetUpFixture()
+        [SetUp]
+        public void SetUp()
         {
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
@@ -33,11 +34,12 @@
         public void ShouldGetProviderSite()
         {
             // Act.
-            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var edsUrn = SeedData.ProviderSites.HopwoodCampus.EdsUrn;
+            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             // Assert.
             providerSiteByEdsUrn.Should().NotBeNull();
-            providerSiteByEdsUrn.EdsUrn.Should().Be("100339794");
+            providerSiteByEdsUrn.EdsUrn.Should().Be(edsUrn);
 
             // Act.
             var providerSiteById = _providerSiteReadRepository.GetById(providerSiteByEdsUrn.ProviderSiteId);
@@ -48,38 +50,28 @@
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public void ShouldGetProviderSiteByUkprn()
+        public void ShouldNotGetProviderSiteWithInvalidEdsUrn()
         {
             // Act.
-            var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn("10000000");
+            var edsUrn = new string(SeedData.ProviderSites.HopwoodCampus.EdsUrn.Reverse().ToArray());
+            var providerSiteByEdsUrn = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             // Assert.
-            providerSitesByUkprn.Should().NotBeNull();
-            providerSitesByUkprn.Count().Should().BeGreaterThan(0);
-
-            // Act.
-            var providerSiteIds = providerSitesByUkprn
-                .Select(each => each.ProviderSiteId).ToArray();
-
-            var providerSitesByProviderSiteIds = _providerSiteReadRepository.GetByIds(providerSiteIds);
-
-            // Assert.
-            providerSitesByProviderSiteIds.Should().NotBeNull();
-            providerSitesByProviderSiteIds.Count().Should().Be(providerSiteIds.Length);
+            providerSiteByEdsUrn.Should().BeNull();
         }
 
         [Test]
         public void ShouldUpdateProviderSite()
         {
             // Arrange.
-            var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var edsUrn = SeedData.ProviderSites.HopwoodCampus.EdsUrn;
+            var originalProvideSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             originalProvideSite.Name = new string(originalProvideSite.Name.Reverse().ToArray());
 
             // Act.
             var updatedProviderSite = _providerSiteWriteRepository.Update(originalProvideSite);
-            var newProviderSite = _providerSiteReadRepository.GetByEdsUrn("100339794");
+            var newProviderSite = _providerSiteReadRepository.GetByEdsUrn(edsUrn);
 
             // Assert.
             newProviderSite.ShouldBeEquivalentTo(updatedProviderSite);
