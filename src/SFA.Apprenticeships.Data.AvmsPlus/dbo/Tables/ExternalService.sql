@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ExternalService] (
-    [ID]                        INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ID]                        INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ServiceName]               NVARCHAR (50)  NULL,
     [ServiceShortName]          NVARCHAR (3)   NULL,
     [ServiceDescription]        NVARCHAR (300) NULL,

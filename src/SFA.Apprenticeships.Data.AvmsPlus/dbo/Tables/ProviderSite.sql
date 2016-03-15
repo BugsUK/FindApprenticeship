@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProviderSite] (
-    [ProviderSiteID]                     INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ProviderSiteID]                     INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [FullName]                           NVARCHAR (255)   NOT NULL,
     [TradingName]                        NVARCHAR (255)   NOT NULL,
     [EDSURN]                             INT              NOT NULL,

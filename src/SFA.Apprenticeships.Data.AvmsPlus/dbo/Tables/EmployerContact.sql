@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EmployerContact] (
-    [EmployerContactId]       INT           IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [EmployerContactId]       INT           IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [PersonId]                INT           NOT NULL,
     [AddressLine1]            NVARCHAR (50) NULL,
     [AddressLine2]            NVARCHAR (50) NULL,

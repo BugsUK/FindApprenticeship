@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ApplicationUnsuccessfulReasonType] (
-    [ApplicationUnsuccessfulReasonTypeId] INT            IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [ApplicationUnsuccessfulReasonTypeId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CodeName]                            NVARCHAR (3)   NOT NULL,
     [ShortName]                           NVARCHAR (10)  NOT NULL,
     [FullName]                            NVARCHAR (100) NOT NULL,

@@ -34,6 +34,8 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
 :r ".\Scripts\Data\Reference.StandardSector.Upsert.sql"
 :r ".\Scripts\Data\Reference.Standard.Upsert.sql"
+:r ".\Scripts\Data\dbo.Person.Upsert.sql"
+:r ".\Scripts\Data\dbo.EmployerContact.Upsert.sql"
 
 
 -- Test Data

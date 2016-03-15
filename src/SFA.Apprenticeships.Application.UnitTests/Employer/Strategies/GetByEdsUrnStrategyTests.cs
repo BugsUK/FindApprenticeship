@@ -32,7 +32,10 @@
             const string edsUrn = "1234";
             var repositoryEmployer = new Fixture().Create<Employer>();
             repositoryEmployer.EdsUrn = edsUrn;
+            _employerReadRepository.Reset();
             _employerReadRepository.Setup(e => e.GetByEdsUrn(edsUrn)).Returns(repositoryEmployer);
+            _employerWriteRepository.Reset();
+            _organisationService.Reset();
 
             //Act
             var employer = _strategy.Get(edsUrn);
@@ -50,6 +53,9 @@
             const string edsUrn = "4567";
             var verifiedOrganisationSummary = new Fixture().Create<VerifiedOrganisationSummary>();
             verifiedOrganisationSummary.ReferenceNumber = edsUrn;
+            _employerReadRepository.Reset();
+            _employerWriteRepository.Reset();
+            _organisationService.Reset();
             _organisationService.Setup(os => os.GetVerifiedOrganisationSummary(edsUrn)).Returns(verifiedOrganisationSummary);
 
             //Act

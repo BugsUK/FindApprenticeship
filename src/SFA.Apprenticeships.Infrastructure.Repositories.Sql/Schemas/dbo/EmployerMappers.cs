@@ -57,7 +57,6 @@
                 .ForMember(v => v.LocalAuthorityId, opt => opt.Ignore())
                 .ForMember(v => v.GeocodeEasting, opt => opt.Ignore())
                 .ForMember(v => v.GeocodeNorthing, opt => opt.Ignore())
-                .ForMember(v => v.PrimaryContact, opt => opt.Ignore())
                 .ForMember(v => v.NumberofEmployeesAtSite, opt => opt.Ignore())
                 .ForMember(v => v.NumberOfEmployeesInGroup, opt => opt.Ignore())
                 .ForMember(v => v.OwnerOrgnistaion, opt => opt.Ignore())
@@ -72,7 +71,8 @@
             Mapper.CreateMap<VerifiedOrganisationSummary, DomainEmployer>()
                 .ForMember(dest => dest.EmployerId, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployerGuid, opt => opt.Ignore())
-                .ForMember(dest => dest.EdsUrn, opt => opt.MapFrom(src => src.ReferenceNumber));
+                .ForMember(dest => dest.EdsUrn, opt => opt.MapFrom(src => src.ReferenceNumber))
+                .ForMember(dest => dest.PrimaryContact, opt => opt.UseValue(Constants.UnspecifiedEmployerContact));
         }
     }
 

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProviderSiteRelationship] (
-    [ProviderSiteRelationshipID]     INT IDENTITY (1, 1) NOT NULL,
+    [ProviderSiteRelationshipID]     INT IDENTITY (-1, -1) NOT NULL,
     [ProviderID]                     INT NOT NULL,
     [ProviderSiteID]                 INT NOT NULL,
     [ProviderSiteRelationShipTypeID] INT NOT NULL,

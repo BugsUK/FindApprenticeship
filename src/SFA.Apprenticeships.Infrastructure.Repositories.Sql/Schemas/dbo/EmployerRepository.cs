@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
@@ -34,7 +35,7 @@
         {
             var employer =
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn AND EmployerStatusTypeId != 2",
-                    new { EdsUrn = edsUrn }).SingleOrDefault();
+                    new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
             return _mapper.Map<Employer, DomainEmployer>(employer);
         }
@@ -80,7 +81,7 @@
                 _getOpenConnection.UpdateSingle(employer);
             }
 
-            return entity;
+            return Get(employer.EmployerId);
         }
     }
 }

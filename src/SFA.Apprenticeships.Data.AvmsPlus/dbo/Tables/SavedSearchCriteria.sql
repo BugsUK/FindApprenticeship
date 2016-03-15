@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SavedSearchCriteria] (
-    [SavedSearchCriteriaId]  INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [SavedSearchCriteriaId]  INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]            INT              NOT NULL,
     [Name]                   NVARCHAR (50)    NOT NULL,
     [SearchType]             INT              NOT NULL,

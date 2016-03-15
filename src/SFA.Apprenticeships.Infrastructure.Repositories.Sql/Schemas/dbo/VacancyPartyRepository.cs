@@ -83,7 +83,7 @@
                 _getOpenConnection.UpdateSingle(vacancyOwnerRelationship);
             }
 
-            return entity;
+            return Get(vacancyOwnerRelationship.VacancyOwnerRelationshipId);
         }
     }
 }

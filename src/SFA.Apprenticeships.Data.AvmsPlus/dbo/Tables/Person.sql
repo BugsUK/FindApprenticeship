@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Person] (
-    [PersonId]       INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [PersonId]       INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [Title]          INT            CONSTRAINT [DF_Person_Title] DEFAULT ((0)) NOT NULL,
     [OtherTitle]     NVARCHAR (10)  NULL,
     [FirstName]      NVARCHAR (35)  NULL,
