@@ -4,7 +4,6 @@
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
     using DomainPostalAddress = Domain.Entities.Raa.Locations.PostalAddress;
-    using PostalAddress = Address.Entities.PostalAddress;
 
     public class EmployerMappers : MapperEngine
     {

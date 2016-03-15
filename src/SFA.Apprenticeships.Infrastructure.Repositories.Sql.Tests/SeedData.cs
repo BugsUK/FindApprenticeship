@@ -1,72 +1,63 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
 {
-    using System;
-    using Domain.Entities.Raa.Users;
+    using Domain.Entities.Raa.Parties;
     using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;
     using ProviderUser = Sql.Schemas.Provider.Entities.ProviderUser;
 
-    //using Sql.Schemas.Provider.Entities;
-    //using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;
-    //using ProviderUser = Sql.Schemas.Provider.Entities.ProviderUser;
-
-    internal class SeedData
+    // NOTE: test data here corresponds to ./Scripts/*.sql
+    public class SeedData
     {
-        #region Providers
-
-        /*
-        public static Provider Provider1 = new Provider()
+        public static class Providers
         {
-            ProviderId = 1,
-            FullName = "Acme Corp",
-            Ukprn = 678,
-            IsContracted = false,
-            IsNasProvider = false,
-            ProviderStatusTypeId = (int)ProviderStatuses.Activated
-        };
-        */
+            public static readonly Provider HopwoodHallCollege = new Provider
+            {
+                ProviderId = 10000001,
+                Ukprn = "10000002"
+            };
+        }
 
-        #endregion
-
-        #region ProviderUsers
-
-        public static ProviderUser ProviderUser1 = new ProviderUser()
+        public static class ProviderSites
         {
-            ProviderUserId = -1,
-            Username = "jane.doe@example.com"
-        };
+            public static readonly ProviderSite HopwoodCampus = new ProviderSite
+            {
+                ProviderSiteId = 20000001,
+                EdsUrn = "21000002"
+            };
 
-        #endregion
+            public static readonly ProviderSite HopwoodHallCollege = new ProviderSite
+            {
+                ProviderSiteId = 20000002
+            };
+        }
 
-        #region AgencyUsers
-
-        public static AgencyUser AgencyUser1 = new AgencyUser() { Username = "userRoleTeam" };
-
-        #endregion
-
-        //public static object[] Providers => new object[]
-        //{
-        //    Provider1
-        //};
-
-        //public static object[] Vacancies()
-        //{
-        //    var result = (new object[]
-        //        {occupation, occupation2, framework1, framework2, vacancyParty1, vacancyParty2, vacancyParty3})
-        //    .Union(GetVacancies()).ToArray();
-
-        //    return result;
-        //}
-
-        public static object[] ProviderUsers => new object[]
+        public static class ProviderUsers
         {
-            ProviderUser1
-        };
+            public static readonly ProviderUser JaneDoe = new ProviderUser
+            {
+                Username = "jane.doe@example.com"
+            };
+        }
 
-
-
-        public static object[] AgencyUsers => new object[]
+        public static class AgencyUsers
         {
-            AgencyUser1
-        };
+            public static readonly AgencyUser JaneAgency = new AgencyUser
+            {
+                Username = "jane.agency@sfa.bis.gov.uk"
+            };
+        }
+
+        public static class Employers
+        {
+            public static readonly Employer AcmeCorp = new Employer
+            {
+                EmployerId = 50000001,
+                EdsUrn = "21000002"
+            };
+
+            public static readonly Employer AwesomeInc = new Employer
+            {
+                EmployerId = 50000002
+            };
+        }
     }
 }

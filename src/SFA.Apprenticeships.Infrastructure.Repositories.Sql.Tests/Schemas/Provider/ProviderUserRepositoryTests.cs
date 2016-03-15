@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
 {
+    using System.Linq;
     using Common;
     using Domain.Entities.Raa.Users;
     using FluentAssertions;
@@ -18,7 +19,7 @@
         private ProviderUserRepository _repository;
 
         [SetUp]
-        public void SetUpFixture()
+        public void SetUp()
         {
             _connection = new GetOpenConnectionFromConnectionString(
                 DatabaseConfigurationProvider.Instance.TargetConnectionString);
@@ -30,25 +31,32 @@
         }
 
         [Test]
-        public void ShouldGetProviderUserById()
+        public void ShouldGetProviderUser()
         {
             // Act.
-            var providerUser = _repository.GetById(SeedData.ProviderUser1.ProviderUserId);
+            var providerUserByUsername = _repository.GetByUsername(SeedData.ProviderUsers.JaneDoe.Username);
 
             // Assert.            
-            providerUser.Should().NotBeNull();
-            providerUser.ProviderUserId.Should().Be(SeedData.ProviderUser1.ProviderUserId);
+            providerUserByUsername.Should().NotBeNull();
+            providerUserByUsername.Username.Should().Be(SeedData.ProviderUsers.JaneDoe.Username);
+
+            // Act.
+            var providerUserById = _repository.GetById(providerUserByUsername.ProviderUserId);
+
+            // Assert.            
+            providerUserById.Should().NotBeNull();
+            providerUserById.ProviderUserId.Should().Be(providerUserByUsername.ProviderUserId);
         }
 
         [Test]
-        public void ShouldGetProviderUsername()
+        public void ShouldNotGetProviderUserWithInvalidUsername()
         {
             // Act.
-            var providerUser = _repository.GetByUsername(SeedData.ProviderUser1.Username);
+            var username = new string(SeedData.ProviderUsers.JaneDoe.Username.Reverse().ToArray());
+            var providerUser = _repository.GetByUsername(username);
 
             // Assert.            
-            providerUser.Should().NotBeNull();
-            providerUser.Username.Should().Be(SeedData.ProviderUser1.Username);
+            providerUser.Should().BeNull();
         }
     }
 }

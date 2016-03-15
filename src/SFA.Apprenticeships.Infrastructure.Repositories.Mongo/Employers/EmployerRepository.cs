@@ -26,7 +26,7 @@
             _logger = logger;
         }
 
-        public Employer Get(int employerId)
+        public Employer GetById(int employerId)
         {
             _logger.Debug("Called Mongodb to get employer with Id={0}", employerId);
 
@@ -51,21 +51,21 @@
             return mongoEntities.Select(e => _mapper.Map<MongoEmployer, Employer>(e)).ToList();
         }
 
-        public Employer Save(Employer entity)
+        public Employer Save(Employer employer)
         {
-            _logger.Debug("Called Mongodb to save employer with ERN={0}", entity.EdsUrn);
+            _logger.Debug("Called Mongodb to save employer with ERN={0}", employer.EdsUrn);
 
-            if (entity.EmployerGuid == Guid.Empty)
+            if (employer.EmployerGuid == Guid.Empty)
             {
-                entity.EmployerGuid = Guid.NewGuid();
-                entity.EmployerId = entity.EmployerGuid.GetHashCode();
+                employer.EmployerGuid = Guid.NewGuid();
+                employer.EmployerId = employer.EmployerGuid.GetHashCode();
             }
 
-            var mongoEntity = _mapper.Map<Employer, MongoEmployer>(entity);
+            var mongoEntity = _mapper.Map<Employer, MongoEmployer>(employer);
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved employer to Mongodb with ERN={0}", entity.EdsUrn);
+            _logger.Debug("Saved employer to Mongodb with ERN={0}", employer.EdsUrn);
 
             return _mapper.Map<MongoEmployer, Employer>(mongoEntity);
         }

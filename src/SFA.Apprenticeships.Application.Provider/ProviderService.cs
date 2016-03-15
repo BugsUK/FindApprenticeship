@@ -42,7 +42,7 @@ namespace SFA.Apprenticeships.Application.Provider
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
         {
             //TODO: Remove null checks following SQL migration
-            var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
+            var vacancyParty = _vacancyPartyReadRepository.GetById(vacancyPartyId);
 
             if (vacancyParty != null)
             {
@@ -154,7 +154,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public VacancyParty GetVacancyParty(int vacancyPartyId)
         {
-            return _vacancyPartyReadRepository.Get(vacancyPartyId);
+            return _vacancyPartyReadRepository.GetById(vacancyPartyId);
         }
 
         public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
@@ -175,7 +175,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with ERN='{0}' and employer with ERN='{1}'.", providerSiteId, employer.EmployerId);
 
-            var vacancyParty = _vacancyPartyReadRepository.Get(providerSiteId, employer.EmployerId);
+            var vacancyParty = _vacancyPartyReadRepository.GetByProviderSiteAndEmployerId(providerSiteId, employer.EmployerId);
 
             if (vacancyParty != null)
             {
@@ -210,7 +210,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
         {
-            return _vacancyPartyReadRepository.GetForProviderSite(providerSiteId);
+            return _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
         }
 
         private List<VacancyParty> GetVacancyParties(EmployerSearchRequest request)
@@ -223,7 +223,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
             _logService.Debug("Calling ProviderSiteEmployerLinkReadRepository to get provider site employer link for provider site with Id='{0}'.", request.ProviderSiteId);
 
-            var vacancyPartiesFromRepository = _vacancyPartyReadRepository.GetForProviderSite(request.ProviderSiteId);
+            var vacancyPartiesFromRepository = _vacancyPartyReadRepository.GetByProviderSiteId(request.ProviderSiteId);
 
             //Combine with results from repository
             vacancyParties = vacancyPartiesFromRepository.Union(vacancyParties, new VacancyPartyEqualityComparer()).ToList();

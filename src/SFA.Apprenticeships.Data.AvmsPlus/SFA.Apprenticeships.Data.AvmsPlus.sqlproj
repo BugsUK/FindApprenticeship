@@ -886,22 +886,20 @@
     <None Include="Scripts\Data\Reference.StandardSector.Upsert.sql" />
     <Build Include="Reference\Reference.StandardSector.sql" />
     <None Include="Scripts\Data\dbo.VacancyReferralCommentsFieldType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.PersonTitleType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.VacancyProvisionRelationshipStatusType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
     <None Include="Publish\localhost.sqlexpress.publish.xml" />
-    <None Include="Scripts\TestData\dbo.PersonTitleType.sql" />
-    <None Include="Scripts\TestData\dbo.PersonType.sql" />
     <None Include="Scripts\TestData\dbo.Person.sql" />
-    <None Include="Scripts\TestData\dbo.ContactPreferenceType.sql" />
     <None Include="Scripts\TestData\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\TestData\dbo.Employer.sql" />
-    <None Include="Scripts\TestData\dbo.VacancyProvisionRelationshipStatusType.sql" />
     <None Include="Scripts\TestData\dbo.VacancyOwnerRelationship.sql" />
-    <None Include="Scripts\TestData\dbo.VacancyStatusType.sql" />
-    <None Include="Scripts\TestData\dbo.VacancyTextFieldValue.sql" />
     <None Include="Scripts\Data\dbo.VacancyLocationType.Upsert.sql" />
     <None Include="Scripts\Data\Sync.SyncParams.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ContactPreferenceType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.PersonType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />

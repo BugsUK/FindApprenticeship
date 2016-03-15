@@ -13,6 +13,9 @@ Post-Deployment Script Template
 -- Data
 :r ".\Scripts\Data\dbo.County.Upsert.sql"
 :r ".\Scripts\Data\dbo.EmployerTrainingProviderStatus.Upsert.sql"
+:r ".\Scripts\Data\dbo.ContactPreferenceType.Upsert.sql"
+:r ".\Scripts\Data\dbo.PersonType.Upsert.sql"
+:r ".\Scripts\Data\dbo.PersonTitleType.Upsert.sql"
 :r ".\Scripts\Data\dbo.LocalAuthority.Upsert.sql"
 :r ".\Scripts\Data\dbo.ProviderSiteRelationshipType.Upsert.sql"
 :r ".\Scripts\Data\Provider.ProviderUserStatus.Upsert.sql"
@@ -31,6 +34,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.ApprenticeshipFramework.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyHistoryEventType.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyReferralCommentsFieldType.Upsert.sql"
+:r ".\Scripts\Data\dbo.VacancyProvisionRelationshipStatusType.Upsert.sql"
 :r ".\Scripts\Data\Sync.SyncParams.Upsert.sql"
 :r ".\Scripts\Data\Reference.StandardSector.Upsert.sql"
 :r ".\Scripts\Data\Reference.Standard.Upsert.sql"

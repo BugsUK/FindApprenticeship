@@ -32,7 +32,7 @@
 
             _logService.Debug("Calling OrganisationService to get employer with Id='{0}'.", employerId);
 
-            return _employerReadRepository.Get(employerId) ?? _organisationService.GetEmployer(employerId);
+            return _employerReadRepository.GetById(employerId) ?? _organisationService.GetEmployer(employerId);
         }
 
         public Employer GetEmployer(string edsUrn)

@@ -31,7 +31,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoAgencyUser, AgencyUser>(mongoEntity);
         }
 
-        public AgencyUser Get(string username)
+        public AgencyUser GetByUsername(string username)
         {
             _logger.Debug("Called Mongodb to get agency user with Username={0}", username);
 

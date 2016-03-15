@@ -4,7 +4,7 @@
 
     public interface IAgencyUserReadRepository
     {
-        AgencyUser Get(string username);
+        AgencyUser GetByUsername(string username);
     }
 
     public interface IAgencyUserWriteRepository
