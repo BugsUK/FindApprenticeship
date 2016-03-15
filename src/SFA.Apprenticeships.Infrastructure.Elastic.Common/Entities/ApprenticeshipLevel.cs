@@ -5,6 +5,7 @@
         Unknown = 0,
         Intermediate,
         Advanced,
-        Higher
+        Higher,
+        Degree
     }
 }
