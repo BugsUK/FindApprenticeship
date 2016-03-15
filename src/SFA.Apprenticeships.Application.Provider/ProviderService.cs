@@ -32,7 +32,7 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
         {
-            var vacancyParty = _vacancyPartyReadRepository.Get(vacancyPartyId);
+            var vacancyParty = _vacancyPartyReadRepository.GetById(vacancyPartyId);
             var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
             return _providerReadRepository.GetById(providerSite.ProviderId);
         }
@@ -75,6 +75,8 @@ namespace SFA.Apprenticeships.Application.Provider
             Condition.Requires(ukprn).IsNotNullOrEmpty();
 
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
+
+            var provider = _providerReadRepository.GetByUkprn(ukprn);
 
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }

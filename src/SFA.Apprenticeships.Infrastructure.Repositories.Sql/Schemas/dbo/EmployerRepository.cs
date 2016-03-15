@@ -87,7 +87,7 @@
                 _getOpenConnection.UpdateSingle(dbEmployer);
             }
 
-            return Get(dbEmployer.EmployerId);
+            return GetById(dbEmployer.EmployerId);
         }
     }
 }

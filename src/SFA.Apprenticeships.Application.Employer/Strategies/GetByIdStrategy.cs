@@ -20,7 +20,7 @@
         {
             _logService.Debug("Calling Employer Repository to get employer with Id='{0}'.", employerId);
 
-            return _employerReadRepository.Get(employerId);
+            return _employerReadRepository.GetById(employerId);
         }
     }
 }

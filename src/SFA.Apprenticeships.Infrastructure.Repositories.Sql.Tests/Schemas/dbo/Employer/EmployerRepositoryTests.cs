@@ -71,6 +71,23 @@
         }
 
         [Test]
+        public void ShouldCreateEmployer()
+        {
+            // Arrange.
+            var employer = _employerReadRepository.GetById(SeedData.Employers.AcmeCorp.EmployerId);
+            employer.EmployerId = 0;
+            employer.EdsUrn = "-" + employer.EdsUrn;
+
+            // Act.
+            var newEmployer = _employerWriteRepository.Save(employer);
+
+            // Assert.
+            newEmployer.Should().NotBeNull();
+            newEmployer.EmployerId.Should().NotBe(0);
+            newEmployer.EmployerId.Should().NotBe(SeedData.Employers.AcmeCorp.EmployerId);
+        }
+
+        [Test]
         public void ShouldUpdateEmployer()
         {
             // Act.
