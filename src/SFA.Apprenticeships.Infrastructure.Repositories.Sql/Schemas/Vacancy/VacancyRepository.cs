@@ -354,11 +354,11 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
                         new
                         {
                             Ids = ids
-                        }).ToDictionary(t => t.Map, t => t.Value);
+                        }).ToDictionary(t => t.Map.ToString(), t => t.Value);
 
-            foreach (var vacancySummary in results.Where(v => v.StandardId.HasValue))
+            foreach (var vacancySummary in results.Where(v => v.SectorCodeName != null))
             {
-                var value = map[vacancySummary.StandardId.Value];
+                var value = map[vacancySummary.SectorCodeName];
                 vacancySummary.SectorCodeName = value;
             }
         }

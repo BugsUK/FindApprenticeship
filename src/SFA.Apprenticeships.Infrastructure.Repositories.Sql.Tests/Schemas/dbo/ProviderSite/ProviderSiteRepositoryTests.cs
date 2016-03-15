@@ -61,28 +61,6 @@
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        public void ShouldGetProviderSiteByUkprn()
-        {
-            // Act.
-            var providerSitesByUkprn = _providerSiteReadRepository.GetByUkprn(SeedData.Providers.HopwoodHallCollege.Ukprn);
-
-            // Assert.
-            providerSitesByProviderId.Should().NotBeNull();
-            providerSitesByProviderId.Count().Should().BeGreaterThan(0);
-
-            // Act.
-            var providerSiteIds = providerSitesByProviderId
-                .Select(each => each.ProviderSiteId).ToArray();
-
-            var providerSitesByProviderSiteIds = _providerSiteReadRepository.GetByIds(providerSiteIds);
-
-            // Assert.
-            providerSitesByProviderSiteIds.Should().NotBeNull();
-            providerSitesByProviderSiteIds.Count().Should().Be(providerSiteIds.Length);
-        }
-
-        [Test]
         public void ShouldUpdateProviderSite()
         {
             // Arrange.
