@@ -562,43 +562,6 @@
         }
 
         [Test]
-        public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
-        {
-            //Arrange
-            var vacancyReferenceNumber = 1;
-            var vacancy = new Vacancy
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber
-            };
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
-
-            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(configurationService)
-                    .With(vacancyPostingService)
-                    .Build();
-
-            //Act
-            vacancyProvider.RejectVacancy(vacancyReferenceNumber);
-
-            //Assert
-            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
-            vacancyPostingService.Verify(
-                r =>
-                    r.UpdateVacancy(
-                        It.Is<Vacancy>(
-                            av =>
-                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
-                                av.Status == VacancyStatus.Referred &&
-                                av.QAUserName == null)));
-        }
-
-        [Test]
         public void ReserveForQA_UsernameIsSavedFromCurrentPrinciple()
         {
             //Arrange

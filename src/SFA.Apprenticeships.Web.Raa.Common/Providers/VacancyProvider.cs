@@ -880,14 +880,14 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public ApproveVacancyResult ApproveVacancy(int vacancyReferenceNumber)
+        public QAActionResult ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow;
             var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, submittedVacancy))
             {
-                return ApproveVacancyResult.InvalidVacancy;
+                return QAActionResult.InvalidVacancy;
             }
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
@@ -912,16 +912,24 @@
             submittedVacancy.DateQAApproved = qaApprovalDate;
             _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
-            return ApproveVacancyResult.Ok;
+            return QAActionResult.Ok;
         }
 
-        public void RejectVacancy(int vacancyReferenceNumber)
+        public QAActionResult RejectVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return QAActionResult.InvalidVacancy;
+            }
+
             vacancy.Status = VacancyStatus.Referred;
             vacancy.QAUserName = null;
 
             _vacancyPostingService.UpdateVacancy(vacancy);
+
+            return QAActionResult.Ok;
         }
 
         public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
