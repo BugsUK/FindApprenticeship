@@ -4,11 +4,11 @@
     using System.Collections.Generic;
     using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Entities.Communication;
-    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class SubmitInvalidMessageTests

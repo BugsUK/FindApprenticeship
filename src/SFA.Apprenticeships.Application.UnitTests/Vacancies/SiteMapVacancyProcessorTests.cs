@@ -7,9 +7,9 @@
     using Apprenticeships.Application.Vacancies.Entities.SiteMap;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
-    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
     using Vacancy;
     using Vacancy.SiteMap;
 

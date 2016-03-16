@@ -4,9 +4,9 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using Infrastructure.Interfaces;
     using Interfaces.Communications;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class SendAccountRemindersStrategyBuilder
     {

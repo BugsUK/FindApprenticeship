@@ -29,6 +29,7 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
     using Common.Providers;
@@ -74,6 +75,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
+            For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();

@@ -10,9 +10,8 @@
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Users;
+    using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Configuration;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
@@ -36,14 +35,24 @@
         private readonly IReferenceDataService _referenceDataService;
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
-        private readonly IUserProfileService _userProfileService;
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
+        private readonly IVacancyLockingService _vacancyLockingService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider(ILogService logService, IConfigurationService configurationService, IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService, IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService, IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IUserProfileService userProfileService)
+        public VacancyProvider( ILogService logService, 
+                                IConfigurationService configurationService, 
+                                IVacancyPostingService vacancyPostingService, 
+                                IReferenceDataService referenceDataService, 
+                                IProviderService providerService, 
+                                IEmployerService employerService, 
+                                IDateTimeService dateTimeService, 
+                                IMapper mapper, 
+                                IApprenticeshipApplicationService apprenticeshipApplicationService, 
+                                ITraineeshipApplicationService traineeshipApplicationService,
+                                IVacancyLockingService vacancyLockingService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -55,7 +64,7 @@
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
-            _userProfileService = userProfileService;
+            _vacancyLockingService = vacancyLockingService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -835,6 +844,7 @@
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
+            var userName = Thread.CurrentPrincipal.Identity.Name; // TODO: move to service
 
             return new DashboardVacancySummaryViewModel
             {
@@ -847,12 +857,12 @@
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 DateStartedToQA = vacancy.DateStartedToQA,
                 QAUserName = vacancy.QAUserName,
-                CanBeReservedForQaByCurrentUser = CanBeReservedForQaByCurrentUser(vacancy),
+                CanBeReservedForQaByCurrentUser = _vacancyLockingService.CanBeReservedForQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
                 VacancyType = vacancy.VacancyType
             };
         }
-
+        /*
         private bool CanBeReservedForQaByCurrentUser(VacancySummary vacancy)
         {
             if (NoUserHasStartedToQATheVacancy(vacancy))
@@ -888,7 +898,7 @@
         {
             return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
         }
-
+        */
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();

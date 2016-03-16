@@ -9,7 +9,6 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
-    using Manage.UnitTests.Providers.VacancyProvider;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

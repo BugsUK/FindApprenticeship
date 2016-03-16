@@ -6,8 +6,8 @@
     using Domain.Entities.Communication;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class SendDailyDigestsStrategyBuilder
     {

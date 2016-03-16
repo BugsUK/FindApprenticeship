@@ -8,13 +8,13 @@
     using Apprenticeships.Application.Candidates.Entities;
     using Candidates.Configuration;
     using Domain.Entities.Users;
-    using Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class CandidateProcesorTests

@@ -9,8 +9,8 @@
     using Domain.Entities.UnitTests.Builder;
     using Interfaces.Users;
     using Domain.Entities.Users;
-    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class AuthenticateCandidateStrategyTests

@@ -2,8 +2,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
 {
     using Apprenticeships.Application.Applications.Strategies;
     using Domain.Interfaces.Messaging;
-    using Infrastructure.Interfaces;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class ApplicationStatusAlertStrategyBuilder
     {

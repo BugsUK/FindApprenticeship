@@ -2,9 +2,9 @@
 {
     using Apprenticeships.Application.UserAccount.Configuration;
     using Apprenticeships.Application.UserAccount.Strategies;
-    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class RegisterUserStrategyBuilder
     {

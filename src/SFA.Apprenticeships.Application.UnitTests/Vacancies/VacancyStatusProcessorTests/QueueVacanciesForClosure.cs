@@ -8,10 +8,10 @@
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class QueueVacanciesForClosure

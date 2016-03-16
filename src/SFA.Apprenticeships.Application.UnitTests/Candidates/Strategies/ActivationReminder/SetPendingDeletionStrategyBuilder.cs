@@ -4,9 +4,9 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class SetPendingDeletionStrategyBuilder
     {

@@ -5,8 +5,8 @@
     using Apprenticeships.Application.Candidate.Strategies.Apprenticeships;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class SaveCandidateStrategyBuilder
     {

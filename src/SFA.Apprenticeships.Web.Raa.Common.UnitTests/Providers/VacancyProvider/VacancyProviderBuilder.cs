@@ -1,31 +1,34 @@
-﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Providers.VacancyProvider
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
-    using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
-    using Domain.Interfaces.Repositories;
-    using Moq;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Users;
+    using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Raa.Common.Providers;
-
+    using Common.Providers;
+    using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class VacancyProviderBuilder
     {
-        private Mock<IProviderService> _providerService = new Mock<IProviderService>();
-        private Mock<IEmployerService> _employerService = new Mock<IEmployerService>();
-        private Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
-        private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
+        private readonly Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService =
+            new Mock<IApprenticeshipApplicationService>();
+
+        private readonly Mock<ILogService> _logService = new Mock<ILogService>();
+
+        private readonly Mock<ITraineeshipApplicationService> _traineeshipApplicationService =
+            new Mock<ITraineeshipApplicationService>();
+
+        private Mock<IVacancyLockingService> _vacancyLockingService = new Mock<IVacancyLockingService>();
         private Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();
+        private Mock<IDateTimeService> _dateTimeService = new Mock<IDateTimeService>();
+        private Mock<IEmployerService> _employerService = new Mock<IEmployerService>();
+        private Mock<IMapper> _mapper = new Mock<IMapper>();
+        private Mock<IProviderService> _providerService = new Mock<IProviderService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
-        private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
-        private Mock<ITraineeshipApplicationService> _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
-        private Mock<ILogService> _logService = new Mock<ILogService>();
-        private Mock<IMapper> _mapper = new Mock<IMapper>();
 
         public VacancyProviderBuilder()
         {
@@ -34,22 +37,23 @@
 
         public IVacancyQAProvider Build()
         {
-            return new VacancyProvider(_logService.Object, _configurationService.Object, _vacancyPostingServcie.Object,
-                _referenceDataService.Object, _providerService.Object, _employerService.Object, _dateTimeService.Object, 
-                _mapper.Object, _apprenticeshipApplicationService.Object, _traineeshipApplicationService.Object, _userProfileService.Object);
+            return new VacancyProvider(_logService.Object,
+                _configurationService.Object,
+                _vacancyPostingServcie.Object,
+                _referenceDataService.Object,
+                _providerService.Object,
+                _employerService.Object,
+                _dateTimeService.Object,
+                _mapper.Object,
+                _apprenticeshipApplicationService.Object,
+                _traineeshipApplicationService.Object,
+                _vacancyLockingService.Object);
         }
-        
+
         public VacancyProviderBuilder With(
             Mock<IProviderService> providerService)
         {
             _providerService = providerService;
-            return this;
-        }
-
-        public VacancyProviderBuilder With(
-            Mock<IUserProfileService> userProfileService)
-        {
-            _userProfileService = userProfileService;
             return this;
         }
 
@@ -86,6 +90,12 @@
         public VacancyProviderBuilder With(Mock<IMapper> mapper)
         {
             _mapper = mapper;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IVacancyLockingService> vacancyLockingService)
+        {
+            _vacancyLockingService = vacancyLockingService;
             return this;
         }
     }

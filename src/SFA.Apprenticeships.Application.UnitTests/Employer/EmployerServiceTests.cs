@@ -3,10 +3,10 @@
     using Apprenticeships.Application.Employer;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
-    using Infrastructure.Interfaces;
     using Interfaces.Organisations;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class EmployerServiceTests

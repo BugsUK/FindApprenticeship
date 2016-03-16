@@ -5,9 +5,9 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class HardDeleteApplicationStrategyTests

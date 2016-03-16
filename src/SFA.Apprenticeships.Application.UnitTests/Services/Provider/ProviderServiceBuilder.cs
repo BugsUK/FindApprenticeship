@@ -2,11 +2,11 @@
 {
     using Apprenticeships.Application.Provider;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
     using Interfaces.Employers;
     using Interfaces.Organisations;
     using Interfaces.Providers;
     using Moq;
+    using SFA.Infrastructure.Interfaces;
 
     public class ProviderServiceBuilder
     {

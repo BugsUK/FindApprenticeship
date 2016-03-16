@@ -10,11 +10,11 @@
     using Domain.Entities.Candidates;
     using Domain.Entities.UnitTests.Builder;
     using Domain.Entities.Users;
-    using Infrastructure.Interfaces;
     using FluentAssertions;
     using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class SendAccountRemindersStrategyTests
