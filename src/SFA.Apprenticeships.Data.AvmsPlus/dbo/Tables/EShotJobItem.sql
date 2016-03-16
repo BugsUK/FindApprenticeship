@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EShotJobItem] (
-    [EShotJobItemId]       INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [EShotJobItemId]       INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EShotJobId]           INT            NOT NULL,
     [EShotJobItemStatusId] INT            NOT NULL,
     [Email]                NVARCHAR (200) NOT NULL,

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[WatchedVacancy] (
-    [WatchedVacancyId] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [WatchedVacancyId] INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]      INT NOT NULL,
     [VacancyId]        INT NOT NULL,
     CONSTRAINT [PK_WatchedVacancy] PRIMARY KEY CLUSTERED ([WatchedVacancyId] ASC),

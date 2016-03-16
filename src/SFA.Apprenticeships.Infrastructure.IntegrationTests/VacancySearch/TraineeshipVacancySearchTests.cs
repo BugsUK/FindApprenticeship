@@ -37,13 +37,13 @@
             _mapper = container.GetInstance<IMapper>();
         }
 
-        [Test, Category("Integration"), Ignore("The test data here is not compatible with data from RAA. Data either needs to be created by the tests or the tests perfomed in another way")]
+        [Test, Category("Integration")]
         public void ShouldSortByPostedDate()
         {
             var vacancySearchProvider = new TraineeshipsSearchProvider(_elasticsearchClientFactory, _mapper, _logger.Object);
 
             var searchParameters = GetPostedDateSearchParameters();
-
+            
             var vacancies = vacancySearchProvider.FindVacancies(searchParameters);
 
             vacancies.Results.Count().Should().BeGreaterThan(0);
@@ -59,8 +59,8 @@
                     Name = "London",
                     GeoPoint = new GeoPoint
                     {
-                        Latitude = 51.5072,
-                        Longitude = 0.1275
+                        Longitude = -1.50812239495425,
+                        Latitude = 52.4009991288043
                     }
                 },
                 PageNumber = 1,

@@ -95,7 +95,7 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
                 _getOpenConnection.Query<Vacancy>(VacancySummarySelect + " FROM dbo.Vacancy WHERE VacancyId IN @VacancyIds",
                     new { VacancyIds = vacancyIdsArray });
 
-            return vacancies.Select(MapVacancySummary).ToList();
+            return MapVacancySummaries(vacancies.ToList());
         }
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
@@ -110,7 +110,7 @@ FROM dbo.Vacancy
 WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                     new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
 
-            return vacancies.Select(MapVacancySummary).ToList();
+            return MapVacancySummaries(vacancies.ToList());
         }
 
         public int CountWithStatus(params VacancyStatus[] desiredStatuses)
@@ -160,7 +160,7 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             _logger.Debug(
                 $"Found {dbVacancies.Count} apprenticeship vacancies in page {page} with statuses in {string.Join(",", desiredStatuses)}. Page size {pageSize}");
 
-            return dbVacancies.Select(MapVacancySummary).ToList();
+            return MapVacancySummaries(dbVacancies.ToList());
         }
 
         public List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount)
@@ -212,7 +212,7 @@ FETCH NEXT @PageSize ROWS ONLY
 
             _logger.Debug("Found {0} apprenticeship vacanc(ies)", dbVacancies.Count);
 
-            return dbVacancies.Select(MapVacancySummary).ToList();
+            return MapVacancySummaries(dbVacancies.ToList());
         }
 
         private DomainVacancy MapVacancy(Vacancy dbVacancy)
@@ -235,20 +235,21 @@ FETCH NEXT @PageSize ROWS ONLY
             return result;
         }
 
-        private VacancySummary MapVacancySummary(Vacancy dbVacancy)
+        private List<VacancySummary> MapVacancySummaries(List<Vacancy> dbVacancies)
         {
-            if (dbVacancy == null)
-                return null;
-            
-            var result = _mapper.Map<Vacancy, VacancySummary>(dbVacancy);
-            MapApprenticeshipType(dbVacancy, result);
-            MapFrameworkId(dbVacancy, result);
-            MapSectorId(dbVacancy, result);
-            MapDateFirstSubmitted(dbVacancy, result);
-            MapDateSubmitted(dbVacancy, result);
-            MapDateQAApproved(dbVacancy, result);
+            var results = _mapper.Map<List<Vacancy>, List<VacancySummary>>(dbVacancies);
 
-            return result;
+            MapApprenticeshipTypes(dbVacancies, results);
+            MapFrameworkIds(dbVacancies, results);
+            MapSectorIds(dbVacancies, results);
+            for (int i = 0; i < dbVacancies.Count; i++)
+            {
+                MapDateFirstSubmitted(dbVacancies[i], results[i]);
+                MapDateSubmitted(dbVacancies[i], results[i]);
+                MapDateQAApproved(dbVacancies[i], results[i]);
+            }
+
+            return results;
         }
 
         private void MapFrameworkId(Vacancy dbVacancy, VacancySummary result)
@@ -264,6 +265,25 @@ WHERE  ApprenticeshipFrameworkId = @ApprenticeshipFrameworkId",
                         {
                             ApprenticeshipFrameworkId = dbVacancy.ApprenticeshipFrameworkId.Value
                         }).Single();
+            }
+        }
+
+        private void MapFrameworkIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.ApprenticeshipFrameworkId).Distinct().Where(id => id.HasValue);
+            var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
+SELECT ApprenticeshipFrameworkId as Map, CodeName as Value
+FROM   dbo.ApprenticeshipFramework
+WHERE  ApprenticeshipFrameworkId IN @Ids",
+                        new
+                        {
+                            Ids = ids
+                        }).ToDictionary(t => t.Map.ToString(), t => t.Value);
+
+            foreach (var vacancySummary in results.Where(v => v.FrameworkCodeName != null))
+            {
+                var value = map[vacancySummary.FrameworkCodeName];
+                vacancySummary.FrameworkCodeName = value;
             }
         }
 
@@ -286,6 +306,25 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
             }
         }
 
+        private void MapApprenticeshipTypes(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.ApprenticeshipType).Distinct().Where(id => id.HasValue);
+            var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
+SELECT at.ApprenticeshipTypeId as Map, el.CodeName as Value
+FROM   Reference.EducationLevel as el JOIN dbo.ApprenticeshipType as at ON el.EducationLevelId = at.EducationLevelId
+WHERE  at.ApprenticeshipTypeId IN @Ids",
+                        new
+                        {
+                            Ids = ids
+                        }).ToDictionary(t => t.Map, t => (ApprenticeshipLevel)Enum.Parse(typeof(ApprenticeshipLevel), t.Value));
+
+            foreach (var vacancySummary in results.Where(v => v.ApprenticeshipLevel != ApprenticeshipLevel.Unknown))
+            {
+                var apprenticeshipLevel = map[(int)vacancySummary.ApprenticeshipLevel];
+                vacancySummary.ApprenticeshipLevel = apprenticeshipLevel;
+            }
+        }
+
         private void MapSectorId(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.SectorId.HasValue)
@@ -302,6 +341,25 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             else
             {
                 result.SectorCodeName = null;
+            }
+        }
+
+        private void MapSectorIds(IEnumerable<Vacancy> dbVacancies, IEnumerable<VacancySummary> results)
+        {
+            var ids = dbVacancies.Select(v => v.SectorId).Distinct().Where(id => id.HasValue);
+            var map = _getOpenConnection.QueryCached<PropertyMapItem>(_cacheDuration, @"
+SELECT ApprenticeshipOccupationId as Map, CodeName as Value
+FROM   dbo.ApprenticeshipOccupation
+WHERE  ApprenticeshipOccupationId IN @Ids",
+                        new
+                        {
+                            Ids = ids
+                        }).ToDictionary(t => t.Map.ToString(), t => t.Value);
+
+            foreach (var vacancySummary in results.Where(v => v.SectorCodeName != null))
+            {
+                var value = map[vacancySummary.SectorCodeName];
+                vacancySummary.SectorCodeName = value;
             }
         }
 

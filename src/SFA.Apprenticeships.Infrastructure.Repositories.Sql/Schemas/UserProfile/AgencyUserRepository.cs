@@ -21,7 +21,7 @@
             _logger = logger;
         }
 
-        public AgencyUser Get(string username)
+        public AgencyUser GetByUsername(string username)
         {
             var user = _getOpenConnection.Query<Entities.AgencyUser>("SELECT * FROM UserProfile.AgencyUser WHERE Username = @username", new { username = username }).SingleOrDefault();
             var result = _mapper.Map<Entities.AgencyUser, AgencyUser>(user);

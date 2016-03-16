@@ -29,14 +29,12 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
 
             var scriptFilePaths = new[]
             {
-                scriptsBasePath + "InsertContactPreferenceType.sql",
-                scriptsBasePath + "InsertPersonType.sql",
-                scriptsBasePath + "InsertPersonTitleType.sql",
                 scriptsBasePath + "InsertPerson.sql",
                 scriptsBasePath + "InsertEmployerContact.sql",
                 scriptsBasePath + "InsertEmployer.sql",
-                scriptsBasePath + "InsertVacancyProvisionRelationshipStatusType.sql",
+                scriptsBasePath + "InsertProvider.sql",
                 scriptsBasePath + "InsertVacancyOwnerRelationship.sql",
+                scriptsBasePath + "InsertAgencyUser.sql",
                 scriptsBasePath + "InsertProviderUser.sql"
             };
 

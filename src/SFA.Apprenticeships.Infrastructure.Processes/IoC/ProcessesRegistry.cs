@@ -10,6 +10,7 @@
     using Application.Communication.Strategies;
     using Application.Communications.Housekeeping;
     using Application.Employer;
+    using Application.Employer.Strategies;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
@@ -111,6 +112,8 @@
 
             // service bus
             RegisterServiceBusMessageBrokers(container);
+
+            RegisterStrategies();
         }
 
         #region Helpers
@@ -175,6 +178,15 @@
         {
             For<IServiceBusSubscriber<TMessage>>().Use<TSubscriber>();
             For<IServiceBusMessageBroker>().Use<AzureServiceBusMessageBroker<TMessage>>();
+        }
+
+        private void RegisterStrategies()
+        {
+            For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
+            For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
         }
 
         #endregion

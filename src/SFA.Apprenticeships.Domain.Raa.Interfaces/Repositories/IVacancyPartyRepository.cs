@@ -5,17 +5,17 @@
 
     public interface IVacancyPartyReadRepository
     {
-        VacancyParty Get(int vacancyPartyId);
+        VacancyParty GetById(int vacancyPartyId);
 
-        VacancyParty Get(int providerSiteId, int employerId);
+        VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId);
 
         IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds);
 
-        IEnumerable<VacancyParty> GetForProviderSite(int providerSiteId);
+        IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId);
     }
 
     public interface IVacancyPartyWriteRepository
     {
-        VacancyParty Save(VacancyParty entity);
+        VacancyParty Save(VacancyParty vacancyParty);
     }
 }

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[County] (
-    [CountyId]  INT            IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [CountyId]  INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CodeName]  NVARCHAR (3)   NOT NULL,
     [ShortName] NVARCHAR (50)  NOT NULL,
     [FullName]  NVARCHAR (150) NOT NULL,

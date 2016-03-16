@@ -13,7 +13,8 @@
                 .ForMember(u => u.RoleId, opt => opt.MapFrom(s => s.Role.Id));
 
             Mapper.CreateMap<Entities.AgencyUser, AgencyUser>()
-                .ForMember(u => u.Role, opt => opt.ResolveUsing<RoleResolver>().FromMember(src => src.RoleId));
+                .ForMember(u => u.Role, opt => opt.ResolveUsing<RoleResolver>().FromMember(src => src.RoleId))
+                .ForMember(u => u.Team, opt => opt.Ignore());
         }
     }
 

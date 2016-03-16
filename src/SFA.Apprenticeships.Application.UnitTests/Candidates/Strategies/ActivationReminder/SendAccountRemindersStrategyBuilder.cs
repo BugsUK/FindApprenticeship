@@ -4,7 +4,7 @@
     using Apprenticeships.Application.Candidates.Strategies;
     using Apprenticeships.Application.Candidates.Strategies.ActivationReminder;
     using Configuration;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Communications;
     using Moq;
 

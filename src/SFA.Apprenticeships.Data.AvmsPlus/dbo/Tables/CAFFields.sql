@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CAFFields] (
-    [CAFFieldsId]   INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [CAFFieldsId]   INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]   INT             NOT NULL,
     [ApplicationId] INT             NULL,
     [Field]         SMALLINT        NOT NULL,

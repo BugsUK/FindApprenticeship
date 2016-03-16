@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[LocalAuthorityAudit] (
-    [LocalAuthorityAuditId] INT          IDENTITY (1, 1) NOT NULL,
+    [LocalAuthorityAuditId] INT          IDENTITY (-1, -1) NOT NULL,
     [ItemName]              VARCHAR (50) NOT NULL,
     [ItemKey]               INT          NOT NULL,
     [OldAuthorityId]        INT          NULL,

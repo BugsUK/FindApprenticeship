@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[AdditionalQuestion] (
-    [AdditionalQuestionId] INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [AdditionalQuestionId] INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]            INT             NOT NULL,
     [QuestionId]           SMALLINT        NOT NULL,
     [Question]             NVARCHAR (4000) NOT NULL,

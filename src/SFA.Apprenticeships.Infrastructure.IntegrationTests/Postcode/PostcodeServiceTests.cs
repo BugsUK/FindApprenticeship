@@ -13,8 +13,8 @@
             var service = Container.GetInstance<IPostcodeLookupProvider>();
 
             var location = service.GetLocation("CV1");
-            location.GeoPoint.Latitude.Should().Be(52.4086984986053);
-            location.GeoPoint.Longitude.Should().Be(-1.50538772580656);
+            location.GeoPoint.Latitude.Should().Be(52.4087386196133);
+            location.GeoPoint.Longitude.Should().Be(-1.50533991358462);
         }
 
         [Test, Category("Integration")]

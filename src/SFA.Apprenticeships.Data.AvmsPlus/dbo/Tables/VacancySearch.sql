@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancySearch] (
-    [VacancySearchId]              INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [VacancySearchId]              INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]                    INT              NOT NULL,
     [VacancyReferenceNumber]       INT              NOT NULL,
     [EmployerName]                 NVARCHAR (256)   NOT NULL,

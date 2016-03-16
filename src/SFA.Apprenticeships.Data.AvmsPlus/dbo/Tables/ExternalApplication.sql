@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ExternalApplication] (
-    [ExternalApplicationId] INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ExternalApplicationId] INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]           INT              NOT NULL,
     [VacancyId]             INT              NOT NULL,
     [ClickthroughDate]      DATETIME         NOT NULL,
