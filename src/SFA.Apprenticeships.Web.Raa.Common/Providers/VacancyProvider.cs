@@ -461,6 +461,8 @@
             return viewModel;
         }
 
+        
+
         public VacancyViewModel GetVacancy(Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
@@ -838,10 +840,19 @@
             return viewModel;
         }
 
+        public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
+        {
+            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
+                vacancies); 
+
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
+        }
+
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
-            var userName = Thread.CurrentPrincipal.Identity.Name; // TODO: move to service
+            var userName = _currentUserService.CurrentUserName;
 
             return new DashboardVacancySummaryViewModel
             {

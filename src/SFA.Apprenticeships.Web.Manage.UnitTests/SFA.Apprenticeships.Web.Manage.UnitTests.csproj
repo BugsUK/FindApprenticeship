@@ -160,8 +160,10 @@
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorBuilder.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorTests.cs" />
     <Compile Include="Mediators\Candidate\CandidateMediatorTests.cs" />
+    <Compile Include="Mediators\Vacancy\ApproveVacancyTests.cs" />
     <Compile Include="Mediators\Vacancy\EditCommentTests.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorBuilder.cs" />
+    <Compile Include="Mediators\Vacancy\VacancyMediatorTestHelper.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\AgencyUser\AgencyUserProviderBuilder.cs" />

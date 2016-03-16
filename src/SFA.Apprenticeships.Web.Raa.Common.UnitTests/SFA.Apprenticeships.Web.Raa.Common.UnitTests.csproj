@@ -173,6 +173,7 @@
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
     <Compile Include="Providers\VacancyPosting\TrainingDetailsTests.cs" />
     <Compile Include="Providers\VacancyProvider\ApproveVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\GetNextAvailableVacancy.cs" />
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
     <Compile Include="Providers\VacancyProvider\RejectVacancyTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />

@@ -55,5 +55,7 @@
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+
+        DashboardVacancySummaryViewModel GetNextAvailableVacancy();
     }
 }

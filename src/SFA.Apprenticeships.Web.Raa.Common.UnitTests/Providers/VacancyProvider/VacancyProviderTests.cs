@@ -10,10 +10,8 @@
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
-    using Common.Providers;
     using Configuration;
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
+    using Domain.Entities.Raa.Parties; 
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using FluentAssertions;
@@ -30,29 +28,6 @@
     public class VacancyProviderTests
     {
         private const int QAVacancyTimeout = 10;
-
-        
-
-        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
-        {
-            return new FurtherVacancyDetailsViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                VacancyDatesViewModel = new VacancyDatesViewModel
-                {
-                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
-                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
-                },
-                Duration = 3,
-                DurationType = DurationType.Years,
-                LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
-                HoursPerWeek = 30,
-                WorkingWeek = "A working week"
-            };
-        }
-
-        
 
         [Test]
         public void GetPendingQAVacanciesOverviewShouldGetSubmittedAndReservedForQAVacanciesFromVacancyPostingService()
@@ -351,6 +326,7 @@
             //Assert
             vacancies.Should().HaveCount(0);
         }
+        
 
         [Test]
         public void GetPendingQAVacanciesOverviewShouldReturnVacanciesResubmitted()
@@ -924,6 +900,25 @@
             result.PersonalQualities.Should().Be(vacancyVm.PersonalQualities);
             result.ThingsToConsiderComment.Should().Be(vacancyVm.ThingsToConsiderComment);
             result.ThingsToConsider.Should().Be(vacancyVm.ThingsToConsider);
+        }
+
+        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
+        {
+            return new FurtherVacancyDetailsViewModel
+            {
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                VacancyDatesViewModel = new VacancyDatesViewModel
+                {
+                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
+                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
+                },
+                Duration = 3,
+                DurationType = DurationType.Years,
+                LongDescription = "A description",
+                WageType = WageType.ApprenticeshipMinimumWage,
+                HoursPerWeek = 30,
+                WorkingWeek = "A working week"
+            };
         }
     }
 
