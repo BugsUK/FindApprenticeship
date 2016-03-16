@@ -857,48 +857,12 @@
                 VacancyReferenceNumber = vacancy.VacancyReferenceNumber,
                 DateStartedToQA = vacancy.DateStartedToQA,
                 QAUserName = vacancy.QAUserName,
-                CanBeReservedForQaByCurrentUser = _vacancyLockingService.CanBeReservedForQABy(userName, vacancy),
+                CanBeReservedForQaByCurrentUser = _vacancyLockingService.IsVacancyAvailableToQABy(userName, vacancy),
                 SubmissionCount = vacancy.SubmissionCount,
                 VacancyType = vacancy.VacancyType
             };
         }
-        /*
-        private bool CanBeReservedForQaByCurrentUser(VacancySummary vacancy)
-        {
-            if (NoUserHasStartedToQATheVacancy(vacancy))
-            {
-                return true;
-            }
-
-            if (CurrentUserHasStartedToQATheVacancy(vacancy))
-            {
-                return true;
-            }
-
-            var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; //In minutes
-            if (AUserHasLeftTheVacancyUnattended(vacancy, timeout))
-            {
-                return true;
-            }
-
-            return false;
-        }
-
-        private static bool NoUserHasStartedToQATheVacancy(VacancySummary vacancy)
-        {
-            return vacancy.Status == VacancyStatus.Submitted && (string.IsNullOrWhiteSpace(vacancy.QAUserName) || !vacancy.DateStartedToQA.HasValue);
-        }
-
-        private bool CurrentUserHasStartedToQATheVacancy(VacancySummary vacancy)
-        {
-            return vacancy.Status == VacancyStatus.ReservedForQA && vacancy.QAUserName == Thread.CurrentPrincipal.Identity.Name;
-        }
-
-        private bool AUserHasLeftTheVacancyUnattended(VacancySummary vacancy, int timeout)
-        {
-            return vacancy.Status == VacancyStatus.ReservedForQA && (_dateTimeService.UtcNow - vacancy.DateStartedToQA).Value.TotalMinutes > timeout;
-        }
-        */
+        
         public List<DashboardVacancySummaryViewModel> GetPendingQAVacancies()
         {
             return GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel()).Vacancies.Where(vm => vm.CanBeReservedForQaByCurrentUser).ToList();

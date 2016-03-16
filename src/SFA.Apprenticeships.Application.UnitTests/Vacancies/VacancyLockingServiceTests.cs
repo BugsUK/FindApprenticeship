@@ -1,13 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.Vacancies
 {
     using System;
+    using System.Collections.Generic;
     using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
+    using Interfaces.Vacancies;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
-    using Vacancy;
     using Web.Raa.Common.Configuration;
 
     [TestFixture]
@@ -15,26 +16,89 @@
     {
         private const string UserName = "userName";
         private const string AnotherUserName = "anotherUserName";
-        
+        private const int Timeout = 5;
+        private const int GreaterTimeout = Timeout + 1;
+        private const int SmallerTimeout = Timeout - 1;
+        private DateTime _utcNow = DateTime.UtcNow;
+
         [Test]
         public void ShouldBeAbleToReserveForQAIfNobodyHasLockedTheVacancy()
         {
-
-            var vacancySummary = new VacancySummary();
+            var vacancySummary = new VacancySummary {Status = VacancyStatus.Submitted};
 
             var canBeReserved = new VacancyLockingServiceBuilder().Build()
-                .CanBeReservedForQABy(UserName, vacancySummary);
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
+
+            canBeReserved.Should().BeTrue();
+        }
+
+        [TestCase(VacancyStatus.Live)]
+        [TestCase(VacancyStatus.Closed)]
+        [TestCase(VacancyStatus.Completed)]
+        [TestCase(VacancyStatus.Deleted)]
+        [TestCase(VacancyStatus.Draft)]
+        [TestCase(VacancyStatus.PostedInError)]
+        [TestCase(VacancyStatus.Referred)]
+        [TestCase(VacancyStatus.Unknown)]
+        [TestCase(VacancyStatus.Withdrawn)]
+        public void ShouldNotBeAbleToReserveForQAIfTheIfTheStatusIsNotReservedForQAOrSubmitted(VacancyStatus vacancyStatus)
+        {
+            var vacancySummary = new VacancySummary { Status = vacancyStatus};
+
+            var canBeReserved = new VacancyLockingServiceBuilder().Build()
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
+
+            canBeReserved.Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldntBeAbleToReserveForQAIfNobodyHasLockedTheVacancyButTheStateIsReserveForQA()
+        {
+            // TODO: this is a situation that should be impossible to reach (an invalid status of the vacancy summary) 
+            // but we test it because is not controlled by the entity itself
+            var vacancySummary = new VacancySummary {Status = VacancyStatus.ReservedForQA };
+
+            var canBeReserved = new VacancyLockingServiceBuilder().Build()
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
+
+            canBeReserved.Should().BeFalse();
+        }
+
+        [Test]
+        public void ShouldBeAbleToReserveForQAIfTheVacancyIsReservedByMe()
+        {
+            var vacancySummary = new VacancySummary {Status = VacancyStatus.ReservedForQA, QAUserName = UserName};
+
+            var canBeReserved = new VacancyLockingServiceBuilder().Build()
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
 
             canBeReserved.Should().BeTrue();
         }
 
         [Test]
-        public void ShouldntBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancy()
+        public void ShouldBeAbleToReserveForQAIfQAUserNameIsFilledButStatusIsSubmitted()
         {
-            var vacancySummary = new VacancySummary {QAUserName = AnotherUserName};
+            var vacancySummary = new VacancySummary {QAUserName = AnotherUserName, Status = VacancyStatus.Submitted};
 
             var canBeReserved = new VacancyLockingServiceBuilder().Build()
-                .CanBeReservedForQABy(UserName, vacancySummary);
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
+
+            canBeReserved.Should().BeTrue();
+        }
+
+        [Test]
+        public void ShouldNotBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancy()
+        {
+            // Arrange
+            var vacancySummary = new VacancySummary
+            {
+                QAUserName = AnotherUserName,
+                Status = VacancyStatus.ReservedForQA,
+                DateStartedToQA = _utcNow.AddMinutes(-SmallerTimeout)
+            };
+
+            var canBeReserved = new VacancyLockingServiceBuilder().Build()
+                .IsVacancyAvailableToQABy(UserName, vacancySummary);
 
             canBeReserved.Should().BeFalse();
         }
@@ -43,26 +107,90 @@
         public void ShouldBeAbleToReserveForQAIfAnotherUserHasLockedTheVacancyButHasLeftItUnattended()
         {
             // Arrange
-            const int timeout = 5;
-            const int greaterTimeout = timeout + 1;
-            var utcNow = DateTime.UtcNow;
-
+            
             var vacancySummary = new VacancySummary
             {
                 QAUserName = AnotherUserName,
-                DateStartedToQA = utcNow.AddMinutes(-greaterTimeout)
+                DateStartedToQA = _utcNow.AddMinutes(-GreaterTimeout),
+                Status = VacancyStatus.ReservedForQA
             };
 
-            var vacancyLockingService = GetVacancyLockingServiceWith(timeout, utcNow);
+            var vacancyLockingService = GetVacancyLockingServiceWith(Timeout, _utcNow);
 
             // Act
-            var canBeReserved = vacancyLockingService.CanBeReservedForQABy(UserName, vacancySummary);
+            var canBeReserved = vacancyLockingService.IsVacancyAvailableToQABy(UserName, vacancySummary);
 
             //Assert
             canBeReserved.Should().BeTrue();
         }
 
-        private VacancyLockingService GetVacancyLockingServiceWith(int timeout, DateTime utcNow)
+        [Test]
+        public void GivenAnotherUserIsReviewingVacancyBNextVacancyShouldBeVacancyC()
+        {
+            const int vacancyBReferenceNumber = 1;
+            const int vacancyCReferenceNumber = 2;
+
+            var vacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    VacancyReferenceNumber = vacancyBReferenceNumber,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = AnotherUserName,
+                    DateStartedToQA = _utcNow
+                },
+                new VacancySummary
+                {
+                    VacancyReferenceNumber = vacancyCReferenceNumber,
+                    Status = VacancyStatus.Submitted
+                }
+            };
+
+            var vacancyLockingService = GetVacancyLockingServiceWith(Timeout, _utcNow);
+
+            var nextAvailableVacancy = vacancyLockingService.GetNextAvailableVacancy(UserName, vacancies);
+
+            nextAvailableVacancy.VacancyReferenceNumber.Should().Be(vacancyCReferenceNumber);
+        }
+
+        [Test]
+        public void ShouldReturnNullIfAllVacanciesAreReservedForQA()
+        {
+            var vacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = AnotherUserName,
+                    DateStartedToQA = _utcNow.AddMinutes(-SmallerTimeout)
+                },
+                new VacancySummary
+                {
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = AnotherUserName,
+                    DateStartedToQA = _utcNow.AddMinutes(-SmallerTimeout)
+                }
+            };
+
+            var vacancyLockingService = GetVacancyLockingServiceWith(Timeout, _utcNow);
+
+            var nextAvailableVacancy = vacancyLockingService.GetNextAvailableVacancy(UserName, vacancies);
+
+            nextAvailableVacancy.Should().BeNull();
+        }
+
+        [Test]
+        public void ShouldReturnNullIfThereAreNoVacanciesToQA()
+        {
+            var vacancyLockingService = GetVacancyLockingServiceWith(Timeout, _utcNow);
+
+            var nextAvailableVacancy = vacancyLockingService.GetNextAvailableVacancy(UserName, new List<VacancySummary>());
+
+            nextAvailableVacancy.Should().BeNull();
+        }
+
+
+        private IVacancyLockingService GetVacancyLockingServiceWith(int timeout, DateTime utcNow)
         {
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(cs => cs.Get<ManageWebConfiguration>())

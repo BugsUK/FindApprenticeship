@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Vacancies
 {
+    using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
 
     public interface IVacancyLockingService
     {
-        bool CanBeReservedForQABy(string userName, VacancySummary vacancySummary);
+        bool IsVacancyAvailableToQABy(string userName, VacancySummary vacancySummary);
+
+        VacancySummary GetNextAvailableVacancy(string userName, List<VacancySummary> vacancies);
     }
 }

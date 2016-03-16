@@ -617,12 +617,12 @@
 
             vacancyLockingService.Setup(
                 vls =>
-                    vls.CanBeReservedForQABy(username,
+                    vls.IsVacancyAvailableToQABy(username,
                         It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyAvailableToQAReferenceNumber))).Returns(true);
 
             vacancyLockingService.Setup(
                 vls =>
-                    vls.CanBeReservedForQABy(username,
+                    vls.IsVacancyAvailableToQABy(username,
                         It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber))).Returns(false);
 
             Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null); // TODO: move to service!!

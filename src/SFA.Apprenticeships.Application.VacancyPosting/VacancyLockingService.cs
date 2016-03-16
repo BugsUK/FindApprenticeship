@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Application.VacancyPosting
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Vacancies;
     using Infrastructure.Interfaces;
     using Interfaces.Vacancies;
     using Web.Raa.Common.Configuration;
 
     // TODO: is this the correct project?
+    // TODO: think in a better name
     public class VacancyLockingService : IVacancyLockingService
     {
         private readonly IDateTimeService _dateTimeService;
@@ -17,16 +20,27 @@
             _configurationService = configurationService;
         }
 
-        /*
-        *   TODO: In the original code we check that the vacany status is correct.
-        *   I think we can assume that if the QAUserName property is filled (or not)
-        *   The vacancy is in the correct status    
-        */
-        public bool CanBeReservedForQABy(string userName, VacancySummary vacancySummary)
+        public bool IsVacancyAvailableToQABy(string userName, VacancySummary vacancySummary)
         {
-            return string.IsNullOrWhiteSpace(vacancySummary.QAUserName)
-                   || vacancySummary.QAUserName == userName
+            return NobodyHasTheVacancyLocked(vacancySummary)
+                   || VacancyIsLockedByMe(userName, vacancySummary)
                    || AnotherUserHasLeftTheVacanyUnattended(userName, vacancySummary);
+        }
+
+        public VacancySummary GetNextAvailableVacancy(string userName, List<VacancySummary> vacancies)
+        {
+            return vacancies.FirstOrDefault(v => IsVacancyAvailableToQABy(userName, v));
+        }
+
+        private static bool VacancyIsLockedByMe(string userName, VacancySummary vacancySummary)
+        {
+            return vacancySummary.Status == VacancyStatus.ReservedForQA &&
+                   vacancySummary.QAUserName == userName;
+        }
+
+        private static bool NobodyHasTheVacancyLocked(VacancySummary vacancySummary)
+        {
+            return vacancySummary.Status == VacancyStatus.Submitted;
         }
 
         private bool AnotherUserHasLeftTheVacanyUnattended(string userName, VacancySummary vacancySummary)
