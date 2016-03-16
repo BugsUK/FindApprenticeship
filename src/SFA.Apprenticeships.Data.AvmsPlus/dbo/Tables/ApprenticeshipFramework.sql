@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ApprenticeshipFramework] (
-    [ApprenticeshipFrameworkId]           INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ApprenticeshipFrameworkId]           INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ApprenticeshipOccupationId]          INT            NOT NULL,
     [CodeName]                            NVARCHAR (3)   NOT NULL,
     [ShortName]                           NVARCHAR (100) NOT NULL,

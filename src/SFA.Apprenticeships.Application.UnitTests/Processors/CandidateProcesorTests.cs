@@ -8,7 +8,7 @@
     using Apprenticeships.Application.Candidates.Entities;
     using Candidates.Configuration;
     using Domain.Entities.Users;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;

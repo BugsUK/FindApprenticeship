@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SchoolAttended] (
-    [SchoolAttendedId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [SchoolAttendedId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]      INT            NOT NULL,
     [SchoolId]         INT            NULL,
     [OtherSchoolName]  NVARCHAR (120) NULL,

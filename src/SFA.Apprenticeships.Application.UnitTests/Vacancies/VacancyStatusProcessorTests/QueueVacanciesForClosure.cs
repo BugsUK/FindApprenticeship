@@ -8,7 +8,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;

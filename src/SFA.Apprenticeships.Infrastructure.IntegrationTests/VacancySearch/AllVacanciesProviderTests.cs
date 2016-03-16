@@ -37,6 +37,7 @@
         }
 
         [Test, Category("Integration")]
+        //, Ignore("Failing because an Newtonsoft.Json.JsonReaderException -> update libraries?")
         public void ShouldGetAllApprenticeships()
         {
             // Arrange.

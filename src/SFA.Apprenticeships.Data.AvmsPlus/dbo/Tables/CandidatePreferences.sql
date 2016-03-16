@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CandidatePreferences] (
-    [CandidatePreferenceId] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [CandidatePreferenceId] INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]           INT NOT NULL,
     [FirstFrameworkId]      INT NULL,
     [FirstOccupationId]     INT NULL,

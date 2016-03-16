@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancyOwnerRelationship] (
-    [VacancyOwnerRelationshipId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [VacancyOwnerRelationshipId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EmployerId]                 INT            NOT NULL,
     [ProviderSiteID]             INT            NOT NULL,
     [ContractHolderIsEmployer]   BIT            NOT NULL,

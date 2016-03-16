@@ -3,7 +3,7 @@
     using Apprenticeships.Application.Candidate.Strategies;
     using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Candidates;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Interfaces.Users;

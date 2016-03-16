@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CandidateDeRegistrationControl] (
-    [CandidateDeRegistrationControlId] INT IDENTITY (1, 1) NOT NULL,
+    [CandidateDeRegistrationControlId] INT IDENTITY (-1, -1) NOT NULL,
     [CandidateId]                      INT NOT NULL,
     [isDeletedFromAdam]                BIT NULL,
     [isDeleteFromAOL]                  BIT NULL,

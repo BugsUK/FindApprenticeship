@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EmployerSICCodes] (
-    [EmployerSICCodes] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [EmployerSICCodes] INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EmployerId]       INT NOT NULL,
     [SICId]            INT NOT NULL,
     CONSTRAINT [PK_EmployerSICCodes] PRIMARY KEY CLUSTERED ([EmployerSICCodes] ASC),

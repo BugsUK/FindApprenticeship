@@ -1,11 +1,11 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Reference
 {
     using FluentAssertions;
-    using Sql.Schemas.Reference;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
-    using Sql.Schemas.Reference.Entities;
+    using Schemas.Reference;
+    using Schemas.Reference.Entities;
 
     [TestFixture]
     public class ReferenceMappersTests
@@ -28,10 +28,10 @@
         public void ShouldMapCounty()
         {
             //Arrange
-            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.County>().Without(c => c.PostalAddresses).Create();
+            var source = new Fixture().Build<County>().Without(c => c.PostalAddresses).Create();
 
             //Act
-            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.County, County>(source);
+            var viewModel = _mapper.Map<County, County>(source);
 
             //Assert
             viewModel.Should().NotBeNull();
@@ -45,10 +45,10 @@
         public void ShouldMapRegion()
         {
             //Arrange
-            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.Region>().Create();
+            var source = new Fixture().Build<Region>().Create();
 
             //Act
-            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.Region, Region>(source);
+            var viewModel = _mapper.Map<Region, Region>(source);
 
             //Assert
             viewModel.Should().NotBeNull();
@@ -62,10 +62,10 @@
         public void ShouldMapLocalAuthority()
         {
             //Arrange
-            var source = new Fixture().Build<Sql.Schemas.Reference.Entities.LocalAuthority>().Create();
+            var source = new Fixture().Build<LocalAuthority>().Create();
 
             //Act
-            var viewModel = _mapper.Map<Sql.Schemas.Reference.Entities.LocalAuthority, LocalAuthority>(source);
+            var viewModel = _mapper.Map<LocalAuthority, LocalAuthority>(source);
 
             //Assert
             viewModel.Should().NotBeNull();

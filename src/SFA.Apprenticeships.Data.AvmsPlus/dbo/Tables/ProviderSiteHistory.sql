@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProviderSiteHistory] (
-    [TrainingProviderHistoryId] INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [TrainingProviderHistoryId] INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [TrainingProviderId]        INT             NOT NULL,
     [UserName]                  NVARCHAR (50)   NOT NULL,
     [HistoryDate]               DATETIME        NOT NULL,

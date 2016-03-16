@@ -63,7 +63,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddress(It.IsNotNull<string>(), It.IsNotNull<string>())).Returns(foundAddressList);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             Assert.AreEqual(foundAddressList.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
             Assert.AreEqual("PCA", result.Address.ValidationSourceCode);
@@ -85,7 +85,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             Assert.AreEqual(foundAddressList2.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
             Assert.AreEqual("PCA", result.Address.ValidationSourceCode);
@@ -107,7 +107,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             Assert.AreEqual(foundAddressList2.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
             Assert.AreEqual("PCA", result.Address.ValidationSourceCode);
@@ -128,7 +128,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
 
             //Assert. Naive mapping indicates that it is not validated
             Assert.AreEqual(null, result.Address.ValidationSourceKeyValue);
@@ -151,7 +151,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             Assert.AreEqual(foundAddressList2.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
             Assert.AreEqual("PCA", result.Address.ValidationSourceCode);
@@ -172,7 +172,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             Assert.AreEqual(foundAddressList2.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
             Assert.AreEqual("PCA", result.Address.ValidationSourceCode);
@@ -192,7 +192,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList2);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
 
             //Assert. Naive mapping indicates that it is not validated
             Assert.AreEqual(null, result.Address.ValidationSourceKeyValue);
@@ -213,7 +213,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             _mockPostalAddressSearchService.Verify(m => m.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
             Assert.AreEqual(foundAddressList.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
@@ -233,7 +233,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
             //Assert
             _mockPostalAddressSearchService.Verify(m => m.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>()), Times.Never);
             Assert.AreEqual(foundAddressList.First().ValidationSourceKeyValue, result.Address.ValidationSourceKeyValue);
@@ -252,7 +252,7 @@
             _mockPostalAddressSearchService.Setup(
                 m => m.GetValidatedAddresses(It.IsNotNull<string>())).Returns(foundAddressList);
             //Act
-            var result = _serviceUnderTest.ValidatedAddress(input);
+            var result = _serviceUnderTest.GetVerifiedOrganisationSummary(input);
 
             //Assert. Naive mapping indicates that it is not validated
             _mockPostalAddressSearchService.Verify(m => m.GetValidatedAddress(It.IsAny<string>(), It.IsAny<string>()), Times.Never);

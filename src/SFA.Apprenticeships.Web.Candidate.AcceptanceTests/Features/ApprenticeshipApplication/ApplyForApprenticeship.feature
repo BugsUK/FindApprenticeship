@@ -135,6 +135,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| TrainingCourseFromYear | 2011                   |
 		| TrainingCourseToYear   | 2012                   |
 	And I choose SaveTrainingCourseButton
+	#Should be removed when it works properly
+	And I choose SaveTrainingCourseButton
 	Then I wait for 30 seconds to see TrainingCourseSummary
 	Then I see
         | Field               | Rule   | Value |

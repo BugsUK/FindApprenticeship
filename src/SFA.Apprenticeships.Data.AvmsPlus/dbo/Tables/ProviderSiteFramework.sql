@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProviderSiteFramework] (
-    [ProviderSiteFrameworkID]    INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ProviderSiteFrameworkID]    INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ProviderSiteRelationshipID] INT NOT NULL,
     [FrameworkId]                INT NOT NULL,
     CONSTRAINT [PK_ProviderSiteFramework] PRIMARY KEY CLUSTERED ([ProviderSiteFrameworkID] ASC),

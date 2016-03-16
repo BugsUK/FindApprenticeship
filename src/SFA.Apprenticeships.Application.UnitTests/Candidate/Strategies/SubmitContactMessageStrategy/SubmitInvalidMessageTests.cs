@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using Apprenticeships.Application.Candidate.Strategies;
     using Domain.Entities.Communication;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;

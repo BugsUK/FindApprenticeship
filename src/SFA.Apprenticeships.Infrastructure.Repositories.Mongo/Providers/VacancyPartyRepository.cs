@@ -26,7 +26,7 @@
             _logger = logger;
         }
 
-        public VacancyParty Get(int vacancyPartyId)
+        public VacancyParty GetById(int vacancyPartyId)
         {
             _logger.Debug("Called Mongodb to get provider site employer link with Id={0}", vacancyPartyId);
 
@@ -35,7 +35,7 @@
             return mongoEntity == null ? null : _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
         }
 
-        public VacancyParty Get(int providerSiteId, int employerId)
+        public VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
         {
             _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, edsUrn={1}", providerSiteId, employerId);
 
@@ -51,7 +51,7 @@
             return mongoEntities.Select(e => _mapper.Map<MongoVacancyParty, VacancyParty>(e)).ToList();
         }
 
-        public IEnumerable<VacancyParty> GetForProviderSite(int providerSiteId)
+        public IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId)
         {
             _logger.Debug("Called Mongodb to get provider site employer links for provider site with ERN={0}", providerSiteId);
 
@@ -64,21 +64,21 @@
             return entities;
         }
 
-        public VacancyParty Save(VacancyParty entity)
+        public VacancyParty Save(VacancyParty vacancyParty)
         {
-            _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", entity.EmployerId);
+            _logger.Debug("Called Mongodb to save provider site employer link with ERN={0}", vacancyParty.EmployerId);
 
-            if (entity.VacancyPartyGuid == Guid.Empty)
+            if (vacancyParty.VacancyPartyGuid == Guid.Empty)
             {
-                entity.VacancyPartyGuid = Guid.NewGuid();
-                entity.VacancyPartyId = entity.VacancyPartyGuid.GetHashCode();
+                vacancyParty.VacancyPartyGuid = Guid.NewGuid();
+                vacancyParty.VacancyPartyId = vacancyParty.VacancyPartyGuid.GetHashCode();
             }
 
-            var mongoEntity = _mapper.Map<VacancyParty, MongoVacancyParty>(entity);
+            var mongoEntity = _mapper.Map<VacancyParty, MongoVacancyParty>(vacancyParty);
 
             Collection.Save(mongoEntity);
 
-            _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", entity.EmployerId);
+            _logger.Debug("Saved provider site employer link to Mongodb with ERN={0}", vacancyParty.EmployerId);
 
             return _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
         }

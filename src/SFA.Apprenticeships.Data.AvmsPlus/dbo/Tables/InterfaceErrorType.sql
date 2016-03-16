@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[InterfaceErrorType] (
-    [InterfaceErrorTypeId]      INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [InterfaceErrorTypeId]      INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ErrorCode]                 INT            NOT NULL,
     [ErrorDescription]          NVARCHAR (500) NULL,
     [InterfaceErrorGroupTypeId] INT            NULL,

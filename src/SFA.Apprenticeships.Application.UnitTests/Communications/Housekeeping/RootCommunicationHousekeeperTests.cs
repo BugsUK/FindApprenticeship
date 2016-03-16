@@ -5,7 +5,7 @@
     using System.Linq;
     using Apprenticeships.Application.Candidates.Configuration;
     using Apprenticeships.Application.Communications.Housekeeping;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;

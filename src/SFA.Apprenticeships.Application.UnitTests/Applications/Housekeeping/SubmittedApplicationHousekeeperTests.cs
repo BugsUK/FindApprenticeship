@@ -7,7 +7,7 @@
     using Apprenticeships.Application.Candidates.Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

@@ -8,7 +8,7 @@
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

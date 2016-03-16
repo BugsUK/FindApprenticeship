@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancyOwnerRelationshipHistory] (
-    [VacancyOwnerRelationshipHistoryId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [VacancyOwnerRelationshipHistoryId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyOwnerRelationshipId]        INT            NOT NULL,
     [UserName]                          NVARCHAR (50)  NULL,
     [Date]                              DATETIME       NOT NULL,
