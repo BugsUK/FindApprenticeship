@@ -29,6 +29,7 @@
         private Mock<IProviderService> _providerService = new Mock<IProviderService>();
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingServcie = new Mock<IVacancyPostingService>();
+        private Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
 
         public VacancyProviderBuilder()
         {
@@ -47,7 +48,8 @@
                 _mapper.Object,
                 _apprenticeshipApplicationService.Object,
                 _traineeshipApplicationService.Object,
-                _vacancyLockingService.Object);
+                _vacancyLockingService.Object,
+                _currentUserService.Object);
         }
 
         public VacancyProviderBuilder With(
@@ -96,6 +98,12 @@
         public VacancyProviderBuilder With(Mock<IVacancyLockingService> vacancyLockingService)
         {
             _vacancyLockingService = vacancyLockingService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<ICurrentUserService> currentUserService)
+        {
+            _currentUserService = currentUserService;
             return this;
         }
     }

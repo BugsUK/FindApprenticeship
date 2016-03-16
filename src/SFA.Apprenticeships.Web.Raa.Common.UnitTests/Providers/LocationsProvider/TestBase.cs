@@ -27,6 +27,7 @@
         protected Mock<IProviderService> MockProviderService;
         protected Mock<IEmployerService> MockEmployerService;
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
+        private Mock<ICurrentUserService> _mockCurrentUserService;
 
         [SetUp]
         public void SetUpBase()
@@ -49,6 +50,7 @@
             _mockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
             _mockTraineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
+            _mockCurrentUserService = new Mock<ICurrentUserService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -63,7 +65,8 @@
                 MockMapper.Object,
                 _mockApprenticeshipApplicationService.Object,
                 _mockTraineeshipApplicationService.Object,
-                _mockVacancyLockingService.Object);
+                _mockVacancyLockingService.Object,
+                _mockCurrentUserService.Object);
         }
     }
 }

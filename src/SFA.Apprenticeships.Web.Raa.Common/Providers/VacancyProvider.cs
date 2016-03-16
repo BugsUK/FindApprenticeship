@@ -39,20 +39,16 @@
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
+        private readonly ICurrentUserService _currentUserService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
-        public VacancyProvider( ILogService logService, 
-                                IConfigurationService configurationService, 
-                                IVacancyPostingService vacancyPostingService, 
-                                IReferenceDataService referenceDataService, 
-                                IProviderService providerService, 
-                                IEmployerService employerService, 
-                                IDateTimeService dateTimeService, 
-                                IMapper mapper, 
-                                IApprenticeshipApplicationService apprenticeshipApplicationService, 
-                                ITraineeshipApplicationService traineeshipApplicationService,
-                                IVacancyLockingService vacancyLockingService)
+        public VacancyProvider(ILogService logService, IConfigurationService configurationService,
+            IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
+            IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
+            IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
+            ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
+            ICurrentUserService currentUserService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -65,6 +61,7 @@
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyLockingService = vacancyLockingService;
+            _currentUserService = currentUserService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -883,10 +880,15 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public void ApproveVacancy(int vacancyReferenceNumber)
+        public ApproveVacancyResult ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow;
             var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, submittedVacancy))
+            {
+                return ApproveVacancyResult.InvalidVacancy;
+            }
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
@@ -910,6 +912,7 @@
             submittedVacancy.DateQAApproved = qaApprovalDate;
             _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
+            return ApproveVacancyResult.Ok;
         }
 
         public void RejectVacancy(int vacancyReferenceNumber)

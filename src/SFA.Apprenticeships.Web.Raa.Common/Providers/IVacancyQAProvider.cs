@@ -12,7 +12,7 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(int vacancyReferenceNumber);
+        ApproveVacancyResult ApproveVacancy(int vacancyReferenceNumber);
 
         void RejectVacancy(int vacancyReferenceNumber);
 
