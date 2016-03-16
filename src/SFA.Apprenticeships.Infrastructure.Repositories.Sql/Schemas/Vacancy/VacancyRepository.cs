@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using Common;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
@@ -231,6 +232,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
+            result.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(result.Address.Postcode);
 
             return result;
         }
@@ -242,11 +244,14 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipTypes(dbVacancies, results);
             MapFrameworkIds(dbVacancies, results);
             MapSectorIds(dbVacancies, results);
-            for (int i = 0; i < dbVacancies.Count; i++)
+            for (var i = 0; i < dbVacancies.Count; i++)
             {
-                MapDateFirstSubmitted(dbVacancies[i], results[i]);
-                MapDateSubmitted(dbVacancies[i], results[i]);
-                MapDateQAApproved(dbVacancies[i], results[i]);
+                var dbVacancy = dbVacancies[i];
+                var vacancySummary = results[i];
+                MapDateFirstSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmitted(dbVacancy, vacancySummary);
+                MapDateQAApproved(dbVacancy, vacancySummary);
+                vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode);
             }
 
             return results;

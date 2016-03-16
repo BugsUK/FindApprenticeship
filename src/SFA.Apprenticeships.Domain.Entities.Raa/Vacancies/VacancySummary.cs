@@ -2,6 +2,7 @@
 {
     using System;
     using Locations;
+    using Reference;
 
     public class VacancySummary
     {
@@ -42,5 +43,6 @@
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
+        public RegionalTeam RegionalTeam { get; set; }
     }
 }

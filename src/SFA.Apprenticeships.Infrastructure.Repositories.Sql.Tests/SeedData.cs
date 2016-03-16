@@ -3,6 +3,7 @@
     using Domain.Entities.Raa.Parties;
     using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;
     using ProviderUser = Sql.Schemas.Provider.Entities.ProviderUser;
+    using VacancyOwnerRelationship = Sql.Schemas.dbo.Entities.VacancyOwnerRelationship;
 
     // NOTE: test data here corresponds to ./Scripts/*.sql
     public class SeedData
@@ -57,6 +58,19 @@
             public static readonly Employer AwesomeInc = new Employer
             {
                 EmployerId = 50000002
+            };
+        }
+
+        public static class VacancyOwnerRelationships
+        {
+            public static readonly VacancyOwnerRelationship TestOne = new VacancyOwnerRelationship
+            {
+                VacancyOwnerRelationshipId = 60000001
+            };
+
+            public static readonly VacancyOwnerRelationship TestTwo = new VacancyOwnerRelationship
+            {
+                VacancyOwnerRelationshipId = 60000002
             };
         }
     }

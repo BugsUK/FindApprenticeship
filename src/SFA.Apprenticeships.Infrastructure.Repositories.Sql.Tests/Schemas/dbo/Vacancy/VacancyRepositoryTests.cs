@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using Common;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -46,7 +47,7 @@
                 _dateTimeService.Object, _logger.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object);
-
+             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
 
@@ -60,10 +61,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
                 // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -113,10 +114,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
             // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -155,10 +156,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
             // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -188,8 +189,8 @@
             vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Live;
-            vacancy.VacancyManagerId = 1;
-            vacancy.OwnerPartyId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
