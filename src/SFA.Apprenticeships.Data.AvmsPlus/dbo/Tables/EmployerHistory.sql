@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[EmployerHistory] (
-    [EmployerHistoryId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [EmployerHistoryId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EmployerId]        INT            NOT NULL,
     [UserName]          NVARCHAR (50)  NOT NULL,
     [Date]              DATETIME       NOT NULL,

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Application] (
-    [ApplicationId]               INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ApplicationId]               INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]                 INT            NOT NULL,
     [VacancyId]                   INT            NOT NULL,
     [ApplicationStatusTypeId]     INT            NOT NULL,

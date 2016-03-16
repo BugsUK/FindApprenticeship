@@ -2,7 +2,7 @@
 {
     using Apprenticeships.Application.UserAccount.Configuration;
     using Apprenticeships.Application.UserAccount.Strategies;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Moq;
 

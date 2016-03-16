@@ -1,68 +1,56 @@
 ﻿namespace SFA.Apprenticeships.Application.Employer
 {
     using System.Collections.Generic;
-    using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
-    using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Employers;
     using Interfaces.Generic;
-    using Infrastructure.Interfaces;
-    using Interfaces.Organisations;
+    using Strategies;
 
     public class EmployerService : IEmployerService
     {
-        //TODO: This class needs to use the repositories not the organization service
-        private readonly IOrganisationService _organisationService;
-        private readonly IEmployerReadRepository _employerReadRepository;
-        private readonly IEmployerWriteRepository _employerWriteRepository;
-        private readonly ILogService _logService;
+        private readonly IGetByIdStrategy _getByIdStrategy;
+        private readonly IGetByIdsStrategy _getByIdsStrategy;
+        private readonly IGetByEdsUrnStrategy _getByEdsUrnStrategy;
+        private readonly IGetPagedEmployerSearchResultsStrategy _getPagedEmployerSearchResultsStrategy;
+        private readonly ISaveEmployerStrategy _saveEmployerStrategy;
 
-        public EmployerService(IOrganisationService organisationService, ILogService logService, IEmployerReadRepository employerReadRepository, IEmployerWriteRepository employerWriteRepository)
+        public EmployerService(IGetByIdStrategy getByIdStrategy, IGetByIdsStrategy getByIdsStrategy, IGetByEdsUrnStrategy getByEdsUrnStrategy, IGetPagedEmployerSearchResultsStrategy getPagedEmployerSearchResultsStrategy, ISaveEmployerStrategy saveEmployerStrategy)
         {
-            _organisationService = organisationService;
-            _logService = logService;
-            _employerReadRepository = employerReadRepository;
-            _employerWriteRepository = employerWriteRepository;
+            _getByIdStrategy = getByIdStrategy;
+            _getByIdsStrategy = getByIdsStrategy;
+            _getByEdsUrnStrategy = getByEdsUrnStrategy;
+            _getPagedEmployerSearchResultsStrategy = getPagedEmployerSearchResultsStrategy;
+            _saveEmployerStrategy = saveEmployerStrategy;
         }
 
         public Employer GetEmployer(int employerId)
         {
             Condition.Requires(employerId);
 
-            _logService.Debug("Calling OrganisationService to get employer with Id='{0}'.", employerId);
-
-            return _employerReadRepository.GetById(employerId) ?? _organisationService.GetEmployer(employerId);
+            return _getByIdStrategy.Get(employerId);
         }
 
         public Employer GetEmployer(string edsUrn)
         {
             Condition.Requires(edsUrn).IsNotNullOrEmpty();
 
-            _logService.Debug("Calling OrganisationService to get employer with ERN='{0}'.", edsUrn);
-
-            return _employerReadRepository.GetByEdsUrn(edsUrn) ?? _organisationService.GetEmployer(edsUrn);
+            return _getByEdsUrnStrategy.Get(edsUrn);
         }
 
         public IEnumerable<Employer> GetEmployers(IEnumerable<int> employerIds)
         {
-            var ids = employerIds.ToList();
-            return _employerReadRepository.GetByIds(ids).Union(_organisationService.GetByIds(ids), new EmployerEqualityComparer());
-        }
-
-        public IEnumerable<Employer> GetEmployers(string edsUrn, string name, string location)
-        {
-            return _organisationService.GetEmployers(edsUrn, name, location);
+            return _getByIdsStrategy.Get(employerIds);
         }
 
         public Pageable<Employer> GetEmployers(string edsUrn, string name, string location, int currentPage, int pageSize)
         {
-            return _organisationService.GetEmployers(edsUrn, name, location, currentPage, pageSize);
+            return _getPagedEmployerSearchResultsStrategy.Get(edsUrn, name, location, currentPage, pageSize);
         }
 
         public Employer SaveEmployer(Employer employer)
         {
-            return _employerWriteRepository.Save(employer);
+            return _saveEmployerStrategy.Save(employer);
         }
     }
 }

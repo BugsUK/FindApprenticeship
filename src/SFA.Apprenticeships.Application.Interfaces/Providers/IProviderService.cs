@@ -19,17 +19,13 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<Provider> GetProviders(IEnumerable<int> providerIds);
 
-        void SaveProvider(Provider provider);
-
         ProviderSite GetProviderSite(int providerSiteId);
 
-        ProviderSite GetProviderSite(string ukprn, string edsUrn);
+        ProviderSite GetProviderSite(string edsUrn);
 
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
         IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
-
-        void SaveProviderSites(IEnumerable<ProviderSite> providerSites);
 
         VacancyParty GetVacancyParty(int vacancyPartyId);
 

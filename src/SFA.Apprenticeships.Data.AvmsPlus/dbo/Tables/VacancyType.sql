@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancyType] (
-    [VacancyTypeId]			  INT           NOT NULL IDENTITY,
+    [VacancyTypeId]			  INT           NOT NULL IDENTITY (-1, -1),
     [CodeName]                NVARCHAR (3)  NOT NULL,
     [ShortName]               NVARCHAR (10) NOT NULL,
     [FullName]                NVARCHAR (50) NOT NULL,

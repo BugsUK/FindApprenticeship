@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ExternalServiceSystemRelationship] (
-    [ID]                INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ID]                INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ExternalServiceId] INT NOT NULL,
     [ExternalSystemId]  INT NOT NULL,
     [IsNasDisabled]     BIT NULL,

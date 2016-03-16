@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancyTextField] (
-    [VacancyTextFieldId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [VacancyTextFieldId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]          INT            NOT NULL,
     [Field]              INT            NOT NULL,
     [Value]              NVARCHAR (MAX) NULL,

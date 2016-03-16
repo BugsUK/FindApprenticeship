@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[DisplayText] (
-    [DisplayTextId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [DisplayTextId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [Type]          NVARCHAR (250) NOT NULL,
     [Id]            INT            NOT NULL,
     [StandardText]  NVARCHAR (250) NOT NULL,

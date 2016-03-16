@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[WorkExperience] (
-    [WorkExperienceId]    INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [WorkExperienceId]    INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]         INT            NOT NULL,
     [Employer]            NVARCHAR (50)  NOT NULL,
     [FromDate]            DATETIME       NULL,

@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[AdditionalAnswer] (
-    [AdditionalAnswerId]   INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [AdditionalAnswerId]   INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ApplicationId]        INT             NOT NULL,
     [AdditionalQuestionId] INT             NOT NULL,
     [Answer]               NVARCHAR (4000) NOT NULL,

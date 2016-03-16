@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CountyAudit] (
-    [CountyAuditId]   INT          IDENTITY (1, 1) NOT NULL,
+    [CountyAuditId]   INT          IDENTITY (-1, -1) NOT NULL,
     [AuditDate]       DATETIME     NOT NULL,
     [ItemName]        VARCHAR (50) NOT NULL,
     [ItemKey]         INT          NOT NULL,

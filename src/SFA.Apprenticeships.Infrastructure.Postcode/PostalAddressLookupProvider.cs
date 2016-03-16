@@ -30,7 +30,7 @@
             if (string.IsNullOrWhiteSpace(postcode))
                 return null;
 
-            var restRequest = Create(GetFindByPartsServiceUrl()
+            var restRequest = Create("&key={key}&Postcode={postcode}"
                 , new[]
                 {
                     new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),
@@ -52,7 +52,7 @@
 
             _logger.Debug("Calling GetVerifiedPostalAddresses for an address with addressLine1={0} and postcode={1}", addressLine1, postcode);
 
-            var restRequest = Create(GetFindByPartsServiceUrl()
+            var restRequest = Create("&key={key}&Street={addressLine1}&Postcode={postcode}"
                 , new[]
                 {
                     new KeyValuePair<string, string>("key", System.Web.HttpUtility.UrlEncode(Config.Key)),

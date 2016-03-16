@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Employer] (
-    [EmployerId]                INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [EmployerId]                INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EdsUrn]                    INT              NOT NULL,
     [FullName]                  NVARCHAR (255)   NOT NULL,
     [TradingName]               NVARCHAR (255)   NOT NULL,

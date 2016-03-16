@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SubVacancy] (
-    [SubVacancyId]           INT        IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [SubVacancyId]           INT        IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]              INT        NOT NULL,
     [AllocatedApplicationId] INT        NULL,
     [StartDate]              DATETIME   NULL,
