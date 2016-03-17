@@ -3,9 +3,11 @@ GO
 
 MERGE INTO [dbo].[WageType] AS Target 
 USING (VALUES 
-  (1, 'AMW', 'AMW', 'ApprenticeshipMinimumWage'),
-  (2, 'NMW', 'NMW', 'NationalMinimumWage'),
-  (3, 'CUS', 'CUS', 'Custom')
+  (0, 'LET', 'LET', 'Legacy Text Wage'),
+  (1, 'LEW', 'LEW', 'Legacy Weekly Wage'),
+  (2, 'AMW', 'AMW', 'Apprenticeship Minimum Wage'),
+  (3, 'NMW', 'NMW', 'National Minimum Wage'),
+  (4, 'CUS', 'CUS', 'Custom Wage')
 ) 
 AS Source (WageTypeId, CodeName, ShortName, FullName) 
 ON Target.WageTypeId = Source.WageTypeId 
