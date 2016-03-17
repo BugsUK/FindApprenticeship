@@ -18,6 +18,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
@@ -825,10 +826,38 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
+                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList(),
+                RegionalTeamsMetrics = GetRegionalTeamsMetrics(submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted)
             };
 
             return viewModel;
+        }
+
+        private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
+        {
+            return new List<RegionalTeamMetrics>
+            {
+                GetRegionalTeamMetrics(RegionalTeam.North, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.NorthWest, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.YorkshireAndHumberside, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.EastMidlands, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.WestMidlands, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.EastAnglia, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.SouthEast, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.SouthWest, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted)
+            };
+        }
+
+        private static RegionalTeamMetrics GetRegionalTeamMetrics(RegionalTeam regionalTeam, IEnumerable<VacancySummary> submittedToday, IEnumerable<VacancySummary> submittedYesterday, IEnumerable<VacancySummary> submittedMoreThan48Hours, IEnumerable<VacancySummary> resubmitted)
+        {
+            return new RegionalTeamMetrics
+            {
+                RegionalTeam = regionalTeam,
+                SubmittedTodayCount = submittedToday.Count(v => v.RegionalTeam == regionalTeam),
+                SubmittedYesterdayCount = submittedYesterday.Count(v => v.RegionalTeam == regionalTeam),
+                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
+                ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
+            };
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)

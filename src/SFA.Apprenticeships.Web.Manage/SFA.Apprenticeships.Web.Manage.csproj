@@ -540,6 +540,8 @@
     <Content Include="Views\Candidate\DisplayTemplates\ApplicantDetails.cshtml" />
     <Content Include="Views\Candidate\VacancyHeader.cshtml" />
     <Content Include="Views\Candidate\_Apply.cshtml" />
+    <Content Include="Views\AgencyUser\_DashboardTeamMetrics.cshtml" />
+    <Content Include="Views\AgencyUser\_DashboardVacancyCounts.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

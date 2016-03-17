@@ -133,6 +133,13 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             return count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="page">Expects page starting from 0 rather than 1</param>
+        /// <param name="desiredStatuses"></param>
+        /// <returns></returns>
         public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
