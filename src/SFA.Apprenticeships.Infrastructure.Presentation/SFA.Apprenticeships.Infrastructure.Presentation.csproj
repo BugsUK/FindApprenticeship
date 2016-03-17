@@ -91,6 +91,7 @@
     <Compile Include="ProviderVacancyStatusPresenter.cs" />
     <Compile Include="QualificationPresenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegionalTeamPresenter.cs" />
     <Compile Include="VacancyPresenter.cs" />
     <Compile Include="VacancyTypePresenter.cs" />
     <Compile Include="WagePresenter.cs" />

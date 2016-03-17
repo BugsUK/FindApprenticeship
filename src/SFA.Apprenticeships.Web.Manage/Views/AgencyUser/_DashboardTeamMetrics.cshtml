@@ -1,0 +1,58 @@
+﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model List<RegionalTeamMetrics>
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-1">
+        <div class="inner-block-padr">
+            <section>
+                <div class="tabbed-element tab1 active width-all-1-1">
+                    <table class="no-btm-margin">
+                        <colgroup>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Total vacancies</th>
+                                <th>Submitted today</th>
+                                <th>Submitted yesterday</th>
+                                <th>Submitted +48 hours</th>
+                                <th>Resubmitted vacancies</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var regionalTeamMetrics in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <span>@regionalTeamMetrics.RegionalTeam.GetTitle()</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@regionalTeamMetrics.TotalCount</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@regionalTeamMetrics.SubmittedTodayCount</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@regionalTeamMetrics.SubmittedYesterdayCount</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@regionalTeamMetrics.SubmittedMoreThan48HoursCount</span>
+                                    </td>
+                                    <td class="ta-center">
+                                        <span>@regionalTeamMetrics.ResubmittedCount</span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

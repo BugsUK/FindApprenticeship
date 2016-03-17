@@ -215,6 +215,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{CC5FD16D-436D-48AD-A40C-5A424C6E3E79}") = "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure", "SFA.Apprenticeships.Infrastructure.MigrateRole.Azure\SFA.Apprenticeships.Infrastructure.MigrateRole.Azure.ccproj", "{90752230-6869-4DE6-8264-CDECFA8A5AC0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Entities.Raa.UnitTests", "SFA.Apprenticeships.Domain.Entities.Raa.UnitTests\SFA.Apprenticeships.Domain.Entities.Raa.UnitTests.csproj", "{E9B83262-916C-4AF9-A55C-F89F623847AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -1555,6 +1557,22 @@ Global
 		{90752230-6869-4DE6-8264-CDECFA8A5AC0}.Release|Any CPU.ActiveCfg = Sit|Any CPU
 		{90752230-6869-4DE6-8264-CDECFA8A5AC0}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{90752230-6869-4DE6-8264-CDECFA8A5AC0}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Local|Any CPU.Build.0 = Local|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{E9B83262-916C-4AF9-A55C-F89F623847AE}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1653,9 +1671,10 @@ Global
 		{F1446ECB-60F3-401E-A8EF-5F8227519842} = {18D67FE8-091F-4873-871A-8B81E455DA79}
 		{4E423F21-5A4F-444D-AD72-2E2566AFF713} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
 		{90752230-6869-4DE6-8264-CDECFA8A5AC0} = {18D67FE8-091F-4873-871A-8B81E455DA79}
+		{E9B83262-916C-4AF9-A55C-F89F623847AE} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

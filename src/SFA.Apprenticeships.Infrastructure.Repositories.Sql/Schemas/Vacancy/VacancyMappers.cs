@@ -213,6 +213,7 @@
                 .IgnoreMember(av => av.SectorCodeName)
                 .IgnoreMember(av => av.SectorCodeNameComment)
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(av => av.RegionalTeam)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -279,6 +280,7 @@
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.DateFirstSubmitted)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
+                .IgnoreMember(av => av.RegionalTeam)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
