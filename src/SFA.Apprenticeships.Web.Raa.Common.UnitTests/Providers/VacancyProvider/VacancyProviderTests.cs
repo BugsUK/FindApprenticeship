@@ -135,7 +135,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
                 HoursPerWeek = 30,
                 WorkingWeek = "A working week"
             };

@@ -63,9 +63,9 @@
             {
                 case WageType.Custom:
                     return $"£{wage.Amount?.ToString() ?? "unknown"}";
-                case WageType.ApprenticeshipMinimumWage:
+                case WageType.ApprenticeshipMinimum:
                     return hoursPerWeek.HasValue ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value) : "unknown";
-                case WageType.NationalMinimumWage:
+                case WageType.NationalMinimum:
                     return hoursPerWeek.HasValue ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value) : "unknown";
                 default:
                     return string.Empty;
@@ -81,6 +81,7 @@
                     case WageUnit.Weekly:
                         return Domain.Entities.Vacancies.WageUnit.Weekly;
                     case WageUnit.Monthly:
+                        // TODO: US897: AG: bug, surely.
                         return Domain.Entities.Vacancies.WageUnit.Weekly;
                     case WageUnit.Annually:
                         return Domain.Entities.Vacancies.WageUnit.Weekly;

@@ -55,7 +55,7 @@
         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.FurtherVacancyDetailsViewModel.WageType, Model.SummaryLink, Model.FurtherVacancyDetailsViewModel.WageComment))
     </div>
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.ApprenticeshipMinimum)
     {
         <details>
             <summary>Wages explained</summary>
@@ -67,7 +67,7 @@
         </details>
     }
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.NationalMinimumWage)
+    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.NationalMinimum)
     {
         <details>
             <summary>Wages explained</summary>
