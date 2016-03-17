@@ -68,7 +68,7 @@
 
         private void LogMessage(LogLevel logLevel, Exception e, string message = null, params object[] args)
         {
-            var logMessage = (message == null || args.Length == 0) ? e.Message : string.Format(message, args);
+            var logMessage = message == null ? e?.Message : args.Length == 0 ? message : string.Format(message, args);
 
             var logEvent = new LogEventInfo
             {
