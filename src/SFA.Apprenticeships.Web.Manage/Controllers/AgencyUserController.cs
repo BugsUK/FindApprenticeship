@@ -102,20 +102,21 @@
             return View(response.ViewModel);
         }
 
-        /*[HttpPost]
+        [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult Dashboard(HomeViewModel viewModel)
+        [MultipleFormActionsButton(SubmitButtonActionName = "DashboardAction")]
+        public ActionResult ChangeRole(HomeViewModel viewModel)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel.AgencyUser);
 
             return RedirectToRoute(ManagementRouteNames.Dashboard);
-        }*/
+        }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
         [MultipleFormActionsButton(SubmitButtonActionName = "DashboardAction")]
-        public ActionResult ChangeRole(HomeViewModel viewModel)
+        public ActionResult ChangeTeam(HomeViewModel viewModel)
         {
             var claimsPrincipal = (ClaimsPrincipal)User;
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel.AgencyUser);

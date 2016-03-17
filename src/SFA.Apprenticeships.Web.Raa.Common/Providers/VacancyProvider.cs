@@ -794,6 +794,9 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
+            var agencyUser = _userProfileService.GetAgencyUser(Thread.CurrentPrincipal.Identity.Name);
+            var regionalTeam = agencyUser.RegionalTeam;
+
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
             var utcNow = _dateTimeService.UtcNow;
@@ -804,6 +807,12 @@
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
 
             var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
+
+            vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
 
             switch (searchViewModel.FilterType)
             {
