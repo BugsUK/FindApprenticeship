@@ -33,7 +33,7 @@
 
         public static LegacyWageType GetLegacyWageType(this WageType wageType)
         {
-            return LegacyWageType.Text;
+            return LegacyWageType.LegacyText;
         }
 
         public static VacancyStatuses GetVacancyStatuses(this VacancyStatus vacancyStatuses)

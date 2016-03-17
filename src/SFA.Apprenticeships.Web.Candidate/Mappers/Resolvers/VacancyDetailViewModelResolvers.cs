@@ -22,18 +22,18 @@
             {
                 string wage;
 
-                if (vacancyDetail.WageType == LegacyWageType.Text)
+                if (vacancyDetail.WageType == LegacyWageType.LegacyText)
                 {
                     wage = vacancyDetail.WageDescription;
                     decimal wageDecimal;
                     if (decimal.TryParse(wage, out wageDecimal))
                     {
-                        wage = string.Format("£{0:N2}", wageDecimal);
+                        wage = $"£{wageDecimal:N2}";
                     }
                 }
                 else
                 {
-                    wage = string.Format("£{0:N2}", vacancyDetail.Wage);
+                    wage = $"£{vacancyDetail.Wage:N2}";
                 }
 
                 return wage;
