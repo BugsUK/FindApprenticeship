@@ -232,7 +232,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
-            result.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(result.Address.Postcode);
+            MapRegionalTeam(result);
 
             return result;
         }
@@ -251,7 +251,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 MapDateFirstSubmitted(dbVacancy, vacancySummary);
                 MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
-                vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode);
+                MapRegionalTeam(vacancySummary);
             }
 
             return results;
@@ -514,6 +514,23 @@ order by HistoryDate desc
                     VacancyStatus = VacancyStatus.Live
                 }
                 ).SingleOrDefault();
+        }
+
+        private void MapRegionalTeam(VacancySummary vacancySummary)
+        {
+            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode);
+            if (vacancySummary.RegionalTeam == RegionalTeam.Other)
+            {
+                //Try and get region from vacancy locations
+                var vacancyLocation =
+                    _getOpenConnection.Query<VacancyLocation>(
+                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC", new {vacancySummary.VacancyId})
+                        .FirstOrDefault();
+                if (vacancyLocation != null)
+                {
+                    vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
+                }
+            }
         }
 
         private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)

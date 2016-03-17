@@ -625,8 +625,7 @@
                 vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
             }
 
-            //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
-            //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
+            //TODO: Unit tests
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.Single(e => e.EmployerId == vp.EmployerId));
