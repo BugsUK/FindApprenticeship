@@ -104,7 +104,6 @@
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\ProviderUserStatus.cs" />
     <Compile Include="Users\Role.cs" />
-    <Compile Include="Users\Team.cs" />
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />
