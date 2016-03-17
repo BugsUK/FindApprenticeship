@@ -113,5 +113,19 @@
         {
             public const string Ok = "VacancyMediatorCodes.GetVacancyViewModel.Ok";
         }
+
+        public class ReserveVacancyForQA
+        {
+            public const string NoVacanciesAvailable = "VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable";
+            public const string Ok = "VacancyMediatorCodes.ReserveVacancyForQA.Ok";
+            public const string NextAvailableVacancy = "VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableOption";
+        }
+
+        public class ReviewVacancy
+        {
+            public const string InvalidVacancy = "VacancyMediatorCodes.ReviewVacancy.ReviewVacancy";
+            public const string Ok = "VacancyMediatorCodes.ReviewVacancy.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.ReviewVacancy.FailedValidation";
+        }
     }
 }

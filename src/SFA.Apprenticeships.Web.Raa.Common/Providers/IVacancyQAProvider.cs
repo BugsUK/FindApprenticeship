@@ -18,6 +18,8 @@
 
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
+        VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
+        
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);

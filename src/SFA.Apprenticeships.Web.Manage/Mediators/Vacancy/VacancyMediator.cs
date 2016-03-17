@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Common.Constants;
     using Common.Mediators;
     using FluentValidation;
     using Common.Validators;
     using Common.ViewModels;
+    using Constants.ViewModels;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Converters;
@@ -90,20 +93,40 @@
         {
             var vacancyViewModel = _vacancyQaProvider.ReserveVacancyForQA(vacancyReferenceNumber);
 
-            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel, ruleSet: RuleSets.ErrorsAndWarnings);
-
-            if (!validationResult.IsValid)
+            if (vacancyViewModel == null)
             {
-                return GetMediatorResponse(VacancyMediatorCodes.GetVacancy.FailedValidation,
-                    vacancyViewModel, validationResult);
+                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable, null, Constants.ViewModels.VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
             }
+
+            if (vacancyViewModel.VacancyReferenceNumber != vacancyReferenceNumber)
+            {
+                return
+                    GetMediatorResponse(VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableVacancy, vacancyViewModel,
+                        Constants.ViewModels.VacancyViewModelMessages.NextAvailableVacancy, UserMessageLevel.Info);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.ReserveVacancyForQA.Ok, vacancyViewModel);
+        }
+
+        public MediatorResponse<VacancyViewModel> ReviewVacancy(int vacancyReferenceNumber)
+        {
+            var vacancyViewModel = _vacancyQaProvider.ReviewVacancy(vacancyReferenceNumber);
 
             if (vacancyViewModel == null)
             {
-                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.GetVacancy.NotAvailable);
+                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.ReviewVacancy.InvalidVacancy, null,
+                    VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(VacancyMediatorCodes.GetVacancy.Ok, vacancyViewModel);
+            var validationResult = _vacancyViewModelValidator.Validate(vacancyViewModel);
+
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.FailedValidation,
+                    vacancyViewModel, validationResult);
+            }
+
+            return GetMediatorResponse(VacancyMediatorCodes.ReviewVacancy.Ok, vacancyViewModel);
         }
 
         public MediatorResponse<FurtherVacancyDetailsViewModel> GetVacancySummaryViewModel(int vacancyReferenceNumber)

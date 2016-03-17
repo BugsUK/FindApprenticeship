@@ -537,60 +537,7 @@
             providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
 
-        [Test]
-        public void ReserveForQA_UsernameIsSavedFromCurrentPrinciple()
-        {
-            //Arrange
-            const int vacancyReferenceNumber = 123456;
-            const string username = "qa@test.com";
-            var reservedVacancy =
-                new Fixture().Build<Vacancy>()
-                    .With(av => av.Status, VacancyStatus.ReservedForQA)
-                    .With(av => av.StandardId, null)
-                    .Create();
-            var vacancyWithReservedStatus = new Fixture().Build<VacancyViewModel>()
-                .With(vvm => vvm.Status, VacancyStatus.ReservedForQA)
-                .Create();
-            var providerSite = new Fixture().Build<ProviderSite>().Create();
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            vacancyPostingService.Setup(r => r.ReserveVacancyForQA(vacancyReferenceNumber)).Returns(reservedVacancy);
-            var providerService = new Mock<IProviderService>();
-            providerService.Setup(s => s.GetProviderSite(It.IsAny<int>())).Returns(providerSite);
-            providerService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
-                .Returns(new Fixture().Build<VacancyParty>().Create());
-            var employerService = new Mock<IEmployerService>();
-            employerService.Setup(s => s.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Build<Employer>().Create());
-            var referenceDataService = new Mock<IReferenceDataService>();
-            referenceDataService.Setup(s => s.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
-            referenceDataService.Setup(s => s.GetCategoryByCode(It.IsAny<string>())).Returns(new Category());
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
-            var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<Vacancy, VacancyViewModel>(reservedVacancy))
-                .Returns(vacancyWithReservedStatus);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(referenceDataService)
-                    .With(configurationService)
-                    .With(vacancyPostingService)
-                    .With(employerService)
-                    .With(mapper)
-                    .Build();
-
-            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null);
-
-            //Act
-            var vacancy = vacancyProvider.ReserveVacancyForQA(vacancyReferenceNumber);
-
-            //Assert
-            vacancyPostingService.Verify();
-            vacancy.Status.Should().Be(VacancyStatus.ReservedForQA);
-        }
+        
 
         [Test]
         public void ShouldSaveCommentsWhenUpdatingVacancyQuestionsViewModel()

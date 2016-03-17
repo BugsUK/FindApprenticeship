@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
-    using System.Collections.Generic;
     using System.Linq;
     using Common.UnitTests.Mediators;
     using FluentAssertions;

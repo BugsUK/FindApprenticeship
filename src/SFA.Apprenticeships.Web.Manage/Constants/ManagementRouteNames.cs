@@ -16,6 +16,7 @@
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";
+        public const string ReserveForQA = "ReserveForQA";
         public const string ApproveVacancy = "ApproveVacancy";
         public const string BasicDetails = "BasicDetails";
         public const string TrainingDetails = "TrainingDetails";

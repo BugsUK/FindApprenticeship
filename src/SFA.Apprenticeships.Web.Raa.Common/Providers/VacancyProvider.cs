@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -478,6 +477,7 @@
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
+            var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
@@ -503,6 +503,11 @@
                     viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
                 }
             }
+
+            var vacancyManager = default(ProviderUser);
+            // TODO: AG: _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
+            viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider,
+                vacancyManager, vacancy);
 
             viewModel.NewVacancyViewModel.LocationAddresses =
                 _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
@@ -945,30 +950,41 @@
 
         public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
         {
+            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
+            {
+                var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
+
+                return GetVacancyViewModelFrom(vacancy);
+            }
+
+            var vacancies =
+                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
+                    .OrderBy(v => v.DateSubmitted)
+                    .ToList();
+
+            var nextAvailableVacancySummary =
+                _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName, vacancies);
+
+            if (nextAvailableVacancySummary == null) return default(VacancyViewModel);
+
+            var nextAvailableVacancy =
+                _vacancyPostingService.ReserveVacancyForQA(nextAvailableVacancySummary.VacancyReferenceNumber);
+
+            return GetVacancyViewModelFrom(nextAvailableVacancy);
+        }
+
+        public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)
+        {
+            var vacancyToReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToReserve))
+                return null;
+
             var vacancy = _vacancyPostingService.ReserveVacancyForQA(vacancyReferenceNumber);
-            //TODO: Cope with null, interprit as already reserved etc.
-            var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            //TODO: Get from data layer via joins once we're on SQL
-            var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
-            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
 
-            var vacancyManager = default(ProviderUser); // TODO: AG: _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
-
-            viewModel.ProviderSite = providerSite.Convert();
-            viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
-            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName) ? vacancy.SectorCodeName : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
-            var standard = GetStandard(vacancy.StandardId);
-            viewModel.StandardName = standard == null ? "" : standard.Name;
-            viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider, vacancyManager, vacancy);
-
-            viewModel.NewVacancyViewModel.LocationAddresses =
-               _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
-                   _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId));
-
-            return viewModel;
+            return GetVacancyViewModelFrom(vacancy);
         }
 
         public FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)

@@ -34,25 +34,54 @@
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
         public ActionResult Review(int vacancyReferenceNumber)
         {
-            var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
+            var response = _vacancyMediator.ReviewVacancy(vacancyReferenceNumber);
+
             var vacancyViewModel = response.ViewModel;
 
-            SetLinks(vacancyViewModel);
+            if (response.ViewModel != null)
+            {
+                SetLinks(vacancyViewModel);
 
-            vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
+                vacancyViewModel.IsEditable = vacancyViewModel.Status.IsStateReviewable();
+            }
 
             ModelState.Clear();
 
             switch (response.Code)
             {
-                case VacancyMediatorCodes.GetVacancy.FailedValidation:
+                case VacancyMediatorCodes.ReviewVacancy.FailedValidation:
                     response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     var view = View(vacancyViewModel);
                     return view;
 
-                case VacancyMediatorCodes.GetVacancy.Ok:
+                case VacancyMediatorCodes.ReviewVacancy.Ok:
                     return View(vacancyViewModel);
 
+                case VacancyMediatorCodes.ReviewVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
+
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpGet]
+        [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
+        public ActionResult ReserveForQA(int vacancyReferenceNumber)
+        {
+            var response = _vacancyMediator.ReserveVacancyForQA(vacancyReferenceNumber);
+
+            switch (response.Code)
+            {
+                case VacancyMediatorCodes.ReserveVacancyForQA.Ok:
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, vacancyReferenceNumber);
+                case VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, response.ViewModel.VacancyReferenceNumber);
+                case VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
