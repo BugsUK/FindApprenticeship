@@ -69,7 +69,7 @@
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
                 WageType = LegacyWageType.LegacyText,
-                WageDescription = "Competetive"
+                WageDescription = "Competitive"
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);

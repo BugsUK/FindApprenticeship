@@ -2,6 +2,7 @@
 {
     using System;
     using AutoMapper;
+    using Constants.ViewModels;
     using Domain.Entities.Vacancies;
 
     public class VacancyDetailViewModelResolvers
@@ -20,21 +21,34 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                var wage = vacancyDetail.WageDescription;
-
-                if (vacancyDetail.WageType != LegacyWageType.LegacyWeekly)
+                switch (vacancyDetail.WageType)
                 {
-                    return wage;
+                    case LegacyWageType.ApprenticeshipMinimum:
+                    case LegacyWageType.NationalMinimum:
+                        return vacancyDetail.WageDescription;
+
+                    case LegacyWageType.LegacyText:
+                        {
+                            var wage = vacancyDetail.WageDescription;
+
+                            decimal wageDecimal;
+
+                            if (decimal.TryParse(wage, out wageDecimal))
+                            {
+                                wage = $"£{wageDecimal:N2}";
+                            }
+
+                            return wage;
+                        }
+
+                    case LegacyWageType.LegacyWeekly:
+                    case LegacyWageType.Custom:
+                        return $"£{vacancyDetail.Wage:N2}";
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(vacancyDetail.WageType), vacancyDetail.WageType, $"Invalid Wage Type: {vacancyDetail.WageType}");
                 }
-
-                decimal wageDecimal;
-
-                if (decimal.TryParse(wage, out wageDecimal))
-                {
-                    wage = $"£{wageDecimal:N2}";
-                }
-
-                return wage;
             }
         }
 

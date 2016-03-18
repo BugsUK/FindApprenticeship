@@ -92,7 +92,7 @@
             {
                 case WageType.LegacyWeekly:
                 case WageType.Custom:
-                    return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
+                    return $"£{wage.Amount?.ToString() ?? UnknownText}";
 
                 case WageType.ApprenticeshipMinimum:
                     return hoursPerWeek.HasValue
