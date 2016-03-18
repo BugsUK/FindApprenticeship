@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
+    using System;
     using Constants;
     using Domain.Entities.Raa.Vacancies;
 
@@ -9,14 +10,17 @@
         public const string MonthlyWageText = "Monthly wage";
         public const string WeeklyWageText = "Weekly wage";
 
+        public const string PerYearText = "per year";
+        public const string PerMonthText = "per month";
+        public const string PerWeekText = "per week";
+
         private const string UnknownText = "unknown";
         private const string WageAmountFormat = "N2";
-
         public static string GetHeaderDisplayText(this Wage wage)
         {
-            if (wage.Type != WageType.Custom) return WeeklyWageText;
-
-            return wage.Unit.GetHeaderDisplayText();
+            return wage.Type == WageType.Custom
+                ? wage.Unit.GetHeaderDisplayText()
+                : WeeklyWageText;
         }
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
@@ -25,12 +29,18 @@
             {
                 case WageUnit.Annually:
                     return AnnualWageText;
+
                 case WageUnit.Monthly:
                     return MonthlyWageText;
+
                 case WageUnit.Weekly:
                     return WeeklyWageText;
+
+                case WageUnit.NotApplicable:
+                    return string.Empty;
+
                 default:
-                    return "<1000>";
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
             }
         }
 
@@ -47,8 +57,11 @@
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
                     return WeeklyWageText;
 
+                case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                    return string.Empty;
+
                 default:
-                    return "<1010>";
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
             }
         }
 
@@ -57,13 +70,19 @@
             switch (wageUnit)
             {
                 case Domain.Entities.Vacancies.WageUnit.Annually:
-                    return "per year";
+                    return PerYearText;
+
                 case Domain.Entities.Vacancies.WageUnit.Monthly:
-                    return "per month";
+                    return PerMonthText;
+
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
-                    return "per week";
+                    return PerWeekText;
+
+                case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                    return string.Empty;
+
                 default:
-                    return "<1020>";
+                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
             }
         }
 
@@ -86,42 +105,50 @@
                         : UnknownText;
 
                 case WageType.LegacyText:
-                    return "<1031>";
+                    return "TODO";
 
                 default:
-                    return UnknownText;
+                    throw new ArgumentOutOfRangeException(nameof(wage.Type), $"Invalid Wage Type: {wage.Type}");
             }
         }
 
         public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
         {
-            if (wage.Type == WageType.Custom)
+            if (wage.Type != WageType.Custom)
             {
-                switch (wage.Unit)
-                {
-                    case WageUnit.Weekly:
-                        return Domain.Entities.Vacancies.WageUnit.Weekly;
-                    case WageUnit.Monthly:
-                        return Domain.Entities.Vacancies.WageUnit.Weekly;
-                    case WageUnit.Annually:
-                        return Domain.Entities.Vacancies.WageUnit.Weekly;
-                }
+                return Domain.Entities.Vacancies.WageUnit.Weekly;
             }
 
-            return Domain.Entities.Vacancies.WageUnit.Weekly;
+            switch (wage.Unit)
+            {
+                case WageUnit.Weekly:
+                    return Domain.Entities.Vacancies.WageUnit.Weekly;
+
+                case WageUnit.Monthly:
+                    return Domain.Entities.Vacancies.WageUnit.Monthly;
+
+                case WageUnit.Annually:
+                    return Domain.Entities.Vacancies.WageUnit.Annually;
+
+                case WageUnit.NotApplicable:
+                    return Domain.Entities.Vacancies.WageUnit.NotApplicable;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(wage.Unit), $"Invalid Wage Unit: {wage.Unit}");
+            }
         }
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
-            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var lowerRange = (Wages.Under18NationalMinimumWage*hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (Wages.Over21NationalMinimumWage*hoursPerWeek).ToString(WageAmountFormat);
 
             return $"£{lowerRange} - £{higherRange}";
         }
 
         private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
         {
-            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
+            return $"£{(Wages.ApprenticeMinimumWage*hoursPerWeek).ToString(WageAmountFormat)}";
         }
     }
 }
