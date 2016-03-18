@@ -91,6 +91,7 @@
                 .MapMemberFrom(v => v.Description, av => av.LongDescription)
                 .MapMemberFrom(v => v.WeeklyWage, av => av.Wage)
                 .MapMemberFrom(v => v.WageType, av => av.WageType)
+                .MapMemberFrom(v => v.WageUnitId, av => av.WageUnit)
                 .ForMember(v => v.WageText, opt => opt.MapFrom(av => new Wage(av.WageType, av.Wage, av.WageUnit).GetDisplayText(av.HoursPerWeek)))
                 .ForMember(v => v.NumberOfPositions, opt => opt.ResolveUsing<IntToShortConverter>().FromMember(av => av.NumberOfPositions))
                 .MapMemberFrom(v => v.ApplicationClosingDate, av => av.ClosingDate)
@@ -265,7 +266,8 @@
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
-                .MapMemberFrom(av => av.WageUnit, v => v.WageUnitId)
+                .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
+                    v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.QAUserName)

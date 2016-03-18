@@ -5,32 +5,33 @@
 
     public static class WagePresenter
     {
+        public const string AnnualWageText = "Annual wage";
+        public const string MonthlyWageText = "Monthly wage";
         public const string WeeklyWageText = "Weekly wage";
+
+        private const string UnknownText = "unknown";
+        private const string WageAmountFormat = "N2";
 
         public static string GetHeaderDisplayText(this Wage wage)
         {
-            if (wage.Type != WageType.Custom) return "Weekly wage";
+            if (wage.Type != WageType.Custom) return WeeklyWageText;
 
             return wage.Unit.GetHeaderDisplayText();
         }
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
         {
-            /*
             switch (wageUnit)
             {
                 case WageUnit.Annually:
-                    return "Annual wage";
+                    return AnnualWageText;
                 case WageUnit.Monthly:
-                    return "Monthly wage";
+                    return MonthlyWageText;
                 case WageUnit.Weekly:
-                    return "Weekly wage";
+                    return WeeklyWageText;
                 default:
-                    return string.Empty;
+                    return "<1000>";
             }
-            */
-
-            return WeeklyWageText;
         }
 
         public static string GetHeaderDisplayText(this Domain.Entities.Vacancies.WageUnit wageUnit)
@@ -38,13 +39,13 @@
             switch (wageUnit)
             {
                 case Domain.Entities.Vacancies.WageUnit.Annually:
-                    return "Annual wage";
+                    return AnnualWageText;
                 case Domain.Entities.Vacancies.WageUnit.Monthly:
-                    return "Monthly wage";
+                    return MonthlyWageText;
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
-                    return "Weekly wage";
+                    return WeeklyWageText;
                 default:
-                    return string.Empty;
+                    return "<1010>";
             }
         }
 
@@ -59,7 +60,7 @@
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
                     return "per week";
                 default:
-                    return string.Empty;
+                    return "<1020>";
             }
         }
 
@@ -67,18 +68,25 @@
         {
             switch (wage.Type)
             {
-                case WageType.LegacyText:
-                    // TODO: US897: AG: fix and test.
-                    return "TODO";
                 case WageType.LegacyWeekly:
                 case WageType.Custom:
-                    return $"£{wage.Amount?.ToString() ?? "unknown"}";
+                    return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
+
                 case WageType.ApprenticeshipMinimum:
-                    return hoursPerWeek.HasValue ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value) : "unknown";
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyApprenticeshipMinimumWage(hoursPerWeek.Value)
+                        : UnknownText;
+
                 case WageType.NationalMinimum:
-                    return hoursPerWeek.HasValue ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value) : "unknown";
+                    return hoursPerWeek.HasValue
+                        ? GetWeeklyNationalMinimumWage(hoursPerWeek.Value)
+                        : UnknownText;
+
+                case WageType.LegacyText:
+                    return "<1031>";
+
                 default:
-                    return string.Empty;
+                    return "<1030>";
             }
         }
 
@@ -91,7 +99,6 @@
                     case WageUnit.Weekly:
                         return Domain.Entities.Vacancies.WageUnit.Weekly;
                     case WageUnit.Monthly:
-                        // TODO: US897: AG: bug, surely.
                         return Domain.Entities.Vacancies.WageUnit.Weekly;
                     case WageUnit.Annually:
                         return Domain.Entities.Vacancies.WageUnit.Weekly;
@@ -103,15 +110,15 @@
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
-            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString("N2");
-            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString("N2");
+            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
 
             return $"£{lowerRange} - £{higherRange}";
         }
 
         private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
         {
-            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString("N2")}";
+            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
         }
     }
 }

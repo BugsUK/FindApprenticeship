@@ -8,17 +8,17 @@
     [TestFixture]
     public class WagePresenterTests
     {
-        [TestCase(WageType.LegacyWeekly)]
-        public void ShouldGetHeaderDisplayText(WageType wageType)
+        [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
+        public void ShouldGetHeaderDisplayText(WageUnit wageUnit, string expected)
         {
             // Arrange.
-            var wage = new Wage(wageType, null, WageUnit.Weekly);
+            var wage = new Wage(WageType.Custom, null, WageUnit.Weekly);
 
             // Act.
             var actual = wage.GetHeaderDisplayText();
 
             // Assert.
-            actual.Should().Be(WagePresenter.WeeklyWageText);
+            actual.Should().Be(expected);
         }
     }
 }

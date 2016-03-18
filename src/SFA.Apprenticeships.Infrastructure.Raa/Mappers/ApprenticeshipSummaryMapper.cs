@@ -34,6 +34,7 @@
             }
 
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
+
             var summary = new ApprenticeshipSummary
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
