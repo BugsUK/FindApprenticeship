@@ -10,6 +10,7 @@
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
@@ -38,7 +39,7 @@
                 Wage = vacancy.Wage ?? 0,
                 WageUnit = wage.GetWageUnit(),
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = vacancy.WageType.GetLegacyWageType(),
+                WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.ThingsToConsider,
                 FutureProspects = vacancy.FutureProspects,
