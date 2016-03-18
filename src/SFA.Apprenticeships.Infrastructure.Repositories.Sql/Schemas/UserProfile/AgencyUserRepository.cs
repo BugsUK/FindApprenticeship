@@ -59,7 +59,7 @@
 
             var endResult = _mapper.Map<Entities.AgencyUser, AgencyUser>(dbEntity);
             endResult.Role = entity.Role;
-            endResult.Team = entity.Team;
+            endResult.RegionalTeam = entity.RegionalTeam;
 
             return endResult;
         }

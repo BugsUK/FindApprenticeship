@@ -7,61 +7,77 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="grid-wrapper">
-    <div class="grid grid-1-2">
-        <div class="inner-block-padr">
-            <h1 class="heading-xlarge">
-                Agency home
-            </h1>
+
+@using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
+{
+    <div class="grid-wrapper">
+        <div class="grid grid-1-2">
+            <div class="inner-block-padr">
+                <h1 class="heading-xlarge">
+                    Agency home
+                </h1>
+            </div>
         </div>
-    </div>
-    <div class="grid grid-1-2">
-        @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
-        {
+        <div class="grid grid-1-2">
             <p class="form-label">Change role</p>
             @Html.DropDownListFor(m => m.AgencyUser.RoleId, Model.AgencyUser.Roles, new {id = "role", @class = "chosen-select grid grid-1-1"})
+            @if (Model.AgencyUser.RoleId != "QA_advisor")
+            {
+                @Html.HiddenFor(m => m.AgencyUser.RegionalTeam)
+            }
             <noscript>
                 <button class="button" name="DashboardAction" value="ChangeRole">Change role</button>
             </noscript>
-        }
-    </div>
-</div>
-
-@if (Model.AgencyUser.RoleId == "QA_advisor")
-{
-    <h2 class="heading-medium">
-        Review vacancies
-    </h2>
-
-    <div class="grid-wrapper">
-        <div class="grid grid-1-1">
-            <nav class="tabbed-nav">
-                @{
-                    var reviewTabControlClass = Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Review ? " active" : "";
-                    var metricsTabControlClass = Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Metrics ? " active" : "";
-                }
-                @Html.RouteLink("All vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummariesMode.Review), new {@class = "tabbed-tab no-js" + reviewTabControlClass})
-                @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummariesMode.Metrics), new {@class = "tabbed-tab no-js" + metricsTabControlClass})
-            </nav>
         </div>
     </div>
 
-    <div class="tabbed-content active width-all-1-1">
-        @if (Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Review)
-        {
-            @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
-            @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
-        }
-        @if(Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
-        {
-            @Html.Partial("_DashboardTeamMetrics", Model.VacancySummaries.RegionalTeamsMetrics)
-        }
-    </div>
-}
+    if (Model.AgencyUser.RoleId == "QA_advisor")
+    {
+        <div class="grid-wrapper">
+            <div class="grid grid-1-2">
+                <h2 class="heading-medium">
+                    Review vacancies
+                </h2>
+            </div>
+            <div class="grid grid-1-2">
+                <p class="form-label">Change team</p>
+                @Html.DropDownListFor(m => m.AgencyUser.RegionalTeam, Model.AgencyUser.RegionalTeams, new { id = "regional-team", @class = "chosen-select grid grid-1-1" })
+                <noscript>
+                    <button class="button" name="DashboardAction" value="ChangeTeam">Change team</button>
+                </noscript>
+            </div>
+        </div>
 
-@if(Model.AgencyUser.RoleId == "Helpdesk_advisor")
-{
-    @Html.Partial("_DashboardHelpDesk")
+        <div class="grid-wrapper">
+            <div class="grid grid-1-1">
+                <nav class="tabbed-nav">
+                    @{
+                        var reviewTabControlClass = Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Review ? " active" : "";
+                        var metricsTabControlClass = Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Metrics ? " active" : "";
+                    }
+                    @Html.RouteLink(Model.AgencyUser.RegionalTeam.GetTitle() + " vacancies", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummariesMode.Review), new {@class = "tabbed-tab no-js" + reviewTabControlClass})
+                    @Html.RouteLink("All teams", ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.VacancySummaries.SearchViewModel, DashboardVacancySummariesMode.Metrics), new {@class = "tabbed-tab no-js" + metricsTabControlClass})
+                </nav>
+            </div>
+        </div>
+
+        <div class="tabbed-content active width-all-1-1">
+            @if (Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Review)
+            {
+                @Html.Partial("_DashboardVacancyCounts", Model.VacancySummaries)
+                @Html.Partial("_DashboardVacancySummaries", Model.VacancySummaries)
+            }
+            @if(Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
+            {
+                @Html.Partial("_DashboardTeamMetrics", Model)
+            }
+        </div>
+    }
+
+    if(Model.AgencyUser.RoleId == "Helpdesk_advisor")
+    {
+        @Html.Partial("_DashboardHelpDesk")
+    }
 }
 
 <div class="saving-prompt toggle-content hide-nojs" id="ajaxLoading">

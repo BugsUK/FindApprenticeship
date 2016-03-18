@@ -80,6 +80,12 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.ChangeTeam,
+                url: "changeteam",
+                defaults: new {controller = "AgencyUser", action = "ChangeTeam" }
+                );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.ReviewVacancy,
                 url: "vacancy/review",
                 defaults: new { controller = "Vacancy", action = "Review" }

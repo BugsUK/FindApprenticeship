@@ -6,6 +6,7 @@
         public const string Authorize = "Authorize";
         public const string AuthorizationError = "AuthorizationError";
         public const string Dashboard = "Dashboard";
+        public const string ChangeTeam = "ChangeTeam";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
         public const string SessionTimeout = "SessionTimeout";

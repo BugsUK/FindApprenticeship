@@ -7,7 +7,7 @@
         <div class="inner-block-padr">
             <section>
                 <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin">
+                    <table class="no-btm-margin reactive">
                         <colgroup>
                             <col>
                             <col>
@@ -33,22 +33,22 @@
                             {
                                 <tr>
                                     <td>
-                                        <span class="vac-title">@vacancy.Title</span>
+                                        <div class="reactive-title">@vacancy.Title</div>
                                     </td>
                                     <td>
-                                        <span>@vacancy.VacancyType.ToString()</span>
+                                        @vacancy.VacancyType.ToString()
                                     </td>
-                                    <td>
-                                        <span>@vacancy.ProviderName</span>
+                                    <td class="reactive-header" data-label="Provider">
+                                        @vacancy.ProviderName
                                     </td>
-                                    <td>
-                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
+                                    <td class="reactive-header" data-label="Date submitted">
+                                        @vacancy.DateSubmitted.ToGmtDate()
                                     </td>
-                                    <td>
-                                        <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
+                                    <td class="reactive-header" data-label="Closing date">
+                                        @vacancy.ClosingDate.ToFriendlyClosingToday()
                                     </td>
-                                    <td class="ta-center">
-                                        <span>@vacancy.SubmissionCount</span>
+                                    <td class="ta-center reactive-header" data-label="Submission count">
+                                        @vacancy.SubmissionCount
                                     </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)

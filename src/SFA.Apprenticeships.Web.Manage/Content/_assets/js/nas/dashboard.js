@@ -12,6 +12,14 @@
         //loadResults(searchUrl, true, false, 'POST', form.serialize());
     });
 
+    $(document).on('change', '#regional-team', function () {
+        var form = $('form');
+        var input = $("<input>").attr("type", "hidden").attr("name", "DashboardAction").val("ChangeTeam");
+        form.append(input);
+        form.submit();
+        //loadResults(searchUrl, true, false, 'POST', form.serialize());
+    });
+
     function loadResults(searchQueryUrl, addHistory, scrollTop, method, data) {
 
         $('.search-results').addClass('disabled');

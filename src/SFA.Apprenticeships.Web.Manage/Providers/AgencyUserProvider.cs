@@ -1,10 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Providers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Web.Mvc;
     using Application.Interfaces.Users;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Users;
+    using Infrastructure.Presentation;
     using ViewModels;
 
     public class AgencyUserProvider : IAgencyUserProvider
@@ -19,7 +22,6 @@
         public AgencyUserViewModel GetOrCreateAgencyUser(string username, string roleList)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
             if (agencyUser == null)
@@ -27,48 +29,38 @@
                 agencyUser = new AgencyUser
                 {
                     Username = username,
-                    Team = teams.Single(t => t.IsDefault),
-                    Role = roles.Single(r => r.IsDefault)
+                    Role = roles.Single(r => r.IsDefault),
+                    RegionalTeam = RegionalTeam.North
                 };
                 agencyUser = _userProfileService.SaveUser(agencyUser);
             }
 
-            return GetAgencyUserViewModel(agencyUser, teams, roles);
+            return GetAgencyUserViewModel(agencyUser, roles);
         }
 
         public AgencyUserViewModel GetAgencyUser(string username, string roleList)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
-            return GetAgencyUserViewModel(agencyUser, teams, roles);
+            return GetAgencyUserViewModel(agencyUser, roles);
         }
 
         public AgencyUserViewModel SaveAgencyUser(string username, string roleList, AgencyUserViewModel viewModel)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var teams = _userProfileService.GetTeams().ToList();
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
-            var role = roles.Single(r => r.Id == viewModel.RoleId);
-            agencyUser.Role = role;
-            if (!string.IsNullOrEmpty(viewModel.TeamId))
+            if (!string.IsNullOrEmpty(viewModel.RoleId))
             {
-                var team = teams.Single(t => t.Id == viewModel.TeamId);
-                agencyUser.Team = team;
+                var role = roles.Single(r => r.Id == viewModel.RoleId);
+                agencyUser.Role = role;
             }
+            agencyUser.RegionalTeam = viewModel.RegionalTeam;
 
             _userProfileService.SaveUser(agencyUser);
 
-            return GetAgencyUserViewModel(agencyUser, teams, roles);
-        }
-
-        private static List<SelectListItem> GetTeamsSelectList(IEnumerable<Team> teams, string teamId)
-        {
-            var teamsSelectList = teams.Select(t => new SelectListItem { Value = t.Id, Text = t.Name, Selected = t.Id == teamId }).ToList();
-
-            return teamsSelectList;
+            return GetAgencyUserViewModel(agencyUser, roles);
         }
 
         private static List<SelectListItem> GetRolesSelectList(IEnumerable<Role> roles, string roleId)
@@ -78,13 +70,20 @@
             return rolesSelectList;
         }
 
-        private static AgencyUserViewModel GetAgencyUserViewModel(AgencyUser agencyUser, IEnumerable<Team> teams, IEnumerable<Role> roles)
+        private static List<SelectListItem> GetRegionalTeamsSelectList(RegionalTeam regionalTeam)
         {
-            if (agencyUser.Team == null)
-            {
-                agencyUser.Team = teams.First(t => t.IsDefault);
-            }
+            var regionalTeams =
+                Enum.GetValues(typeof(RegionalTeam))
+                    .Cast<RegionalTeam>()
+                    .Where(rt => rt != RegionalTeam.Other)
+                    .Select(rt => new SelectListItem { Value = rt.ToString(), Text = rt.GetTitle(), Selected = rt == regionalTeam })
+                    .ToList();
 
+            return regionalTeams;
+        }
+
+        private static AgencyUserViewModel GetAgencyUserViewModel(AgencyUser agencyUser, IEnumerable<Role> roles)
+        {
             if (agencyUser.Role == null)
             {
                 agencyUser.Role = roles.First(r => r.IsDefault);
@@ -92,10 +91,10 @@
 
             return new AgencyUserViewModel
             {
-                Teams = GetTeamsSelectList(teams, agencyUser.Team.Id),
-                TeamId = agencyUser.Team.Id,
                 Roles = GetRolesSelectList(roles, agencyUser.Role.Id),
-                RoleId = agencyUser.Role.Id
+                RoleId = agencyUser.Role.Id,
+                RegionalTeams = GetRegionalTeamsSelectList(agencyUser.RegionalTeam),
+                RegionalTeam = agencyUser.RegionalTeam
             };
         }
     }

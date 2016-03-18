@@ -2,6 +2,7 @@
 {
     using Application.Interfaces.Users;
     using Builders;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Users;
     using Factory;
     using FluentAssertions;
@@ -18,9 +19,8 @@
         public void GetOrCreateAgencyUser_Existing()
         {
             var userProfileService = new Mock<IUserProfileService>();
-            userProfileService.Setup(s => s.GetAgencyUser(Username)).Returns(new AgencyUserBuilder(Username).WithTeam(TeamListFactory.GetTeam("Team1", "Team 1")).WithRole(RoleListFactory.GetRole("Technical_advisor", "Technical advisor")).Build);
+            userProfileService.Setup(s => s.GetAgencyUser(Username)).Returns(new AgencyUserBuilder(Username).WithRegionalTeam(RegionalTeam.NorthWest).WithRole(RoleListFactory.GetRole("Technical_advisor", "Technical advisor")).Build);
             userProfileService.Setup(s => s.SaveUser(It.IsAny<AgencyUser>())).Returns<AgencyUser>(u => u);
-            userProfileService.Setup(s => s.GetTeams()).Returns(TeamListFactory.GetTeams());
             userProfileService.Setup(s => s.GetRoles(RoleList)).Returns(RoleListFactory.GetRoleList(RoleList));
             var provider = new AgencyUserProviderBuilder().With(userProfileService).Build();
 
@@ -29,9 +29,9 @@
             viewModel.Should().NotBeNull();
             userProfileService.Verify(s => s.GetAgencyUser(Username), Times.Once);
             userProfileService.Verify(s => s.SaveUser(It.IsAny<AgencyUser>()), Times.Never);
-            viewModel.TeamId.Should().Be("Team1");
+            viewModel.RegionalTeam.Should().Be(RegionalTeam.NorthWest);
             viewModel.RoleId.Should().Be("Technical_advisor");
-            viewModel.Teams.Should().NotBeNullOrEmpty();
+            viewModel.RegionalTeams.Should().NotBeNullOrEmpty();
             viewModel.Roles.Should().NotBeNullOrEmpty();
         }
 
@@ -41,7 +41,6 @@
             var userProfileService = new Mock<IUserProfileService>();
             userProfileService.Setup(s => s.GetAgencyUser(Username)).Returns((AgencyUser) null);
             userProfileService.Setup(s => s.SaveUser(It.IsAny<AgencyUser>())).Returns<AgencyUser>(u => u);
-            userProfileService.Setup(s => s.GetTeams()).Returns(TeamListFactory.GetTeams());
             userProfileService.Setup(s => s.GetRoles(RoleList)).Returns(RoleListFactory.GetRoleList(RoleList));
             var provider = new AgencyUserProviderBuilder().With(userProfileService).Build();
 
@@ -50,9 +49,9 @@
             viewModel.Should().NotBeNull();
             userProfileService.Verify(s => s.GetAgencyUser(Username), Times.Once);
             userProfileService.Verify(s => s.SaveUser(It.IsAny<AgencyUser>()), Times.Once);
-            viewModel.TeamId.Should().Be("All");
+            viewModel.RegionalTeam.Should().Be(RegionalTeam.North);
             viewModel.RoleId.Should().Be("QA_advisor");
-            viewModel.Teams.Should().NotBeNullOrEmpty();
+            viewModel.RegionalTeams.Should().NotBeNullOrEmpty();
             viewModel.Roles.Should().NotBeNullOrEmpty();
         }
     }

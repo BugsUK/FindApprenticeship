@@ -5,11 +5,11 @@
     using Application.Interfaces.Employers;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
-    using Domain.Interfaces.Repositories;
     using Moq;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.VacancyPosting;
+    using Domain.Entities.Raa.Users;
     using Raa.Common.Providers;
 
 
@@ -29,6 +29,7 @@
 
         public VacancyProviderBuilder()
         {
+            _userProfileService.Setup(s => s.GetAgencyUser(It.IsAny<string>())).Returns(new AgencyUser());
             _dateTimeService.Setup(s => s.UtcNow).Returns(DateTime.UtcNow);
         }
 
