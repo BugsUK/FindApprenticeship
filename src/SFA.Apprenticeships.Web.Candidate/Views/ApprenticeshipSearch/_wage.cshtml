@@ -5,27 +5,8 @@
 
 <div>
     <h3 class="bold-small">@Model.WageUnit.GetHeaderDisplayText()</h3>
-    <p id="vacancy-wage">TODO: @Model.WageType</p>
-    <p id="vacancy-wage">@Model.Wage</p>
-
-    <h3 class="bold-small">
-        @if (Model.WageType == LegacyWageType.Custom)
-        {
-            <span>
-                @* @Model.WageUnitDisplayText *@
-                TBD1
-            </span>
-        }
-        else
-        {
-            <span>
-                Weekly wage
-            </span>
-        }
-    </h3>
     <p id="vacancy-wage">
-        @* @Model.WageDisplayText *@
-        TBD1
+        @Model.Wage
     </p>
 </div>
 

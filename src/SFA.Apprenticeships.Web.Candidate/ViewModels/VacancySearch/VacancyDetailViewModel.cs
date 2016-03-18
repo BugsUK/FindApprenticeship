@@ -4,8 +4,12 @@
     using System.ComponentModel.DataAnnotations;
     using Common.ViewModels.Locations;
     using Domain.Entities.Applications;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
+    using Infrastructure.Presentation;
+    using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
+    using WageUnit = Domain.Entities.Vacancies.WageUnit;
 
     //TODO move type specific properties into sub classes, remove unused properties
     [Serializable]

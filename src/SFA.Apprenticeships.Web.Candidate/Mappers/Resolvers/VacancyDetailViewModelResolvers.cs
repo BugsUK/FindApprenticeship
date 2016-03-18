@@ -20,20 +20,18 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                string wage;
+                var wage = vacancyDetail.WageDescription;
 
-                if (vacancyDetail.WageType == LegacyWageType.LegacyText)
+                if (vacancyDetail.WageType != LegacyWageType.LegacyWeekly)
                 {
-                    wage = vacancyDetail.WageDescription;
-                    decimal wageDecimal;
-                    if (decimal.TryParse(wage, out wageDecimal))
-                    {
-                        wage = $"£{wageDecimal:N2}";
-                    }
+                    return wage;
                 }
-                else
+
+                decimal wageDecimal;
+
+                if (decimal.TryParse(wage, out wageDecimal))
                 {
-                    wage = $"£{vacancyDetail.Wage:N2}";
+                    wage = $"£{wageDecimal:N2}";
                 }
 
                 return wage;

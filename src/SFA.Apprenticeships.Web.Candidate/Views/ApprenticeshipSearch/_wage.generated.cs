@@ -83,80 +83,21 @@ WriteLiteral("</h3>\r\n    <p");
 
 WriteLiteral(" id=\"vacancy-wage\"");
 
-WriteLiteral(">TODO: ");
+WriteLiteral(">\r\n");
 
-            
-            #line 8 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                          Write(Model.WageType);
-
-            
-            #line default
-            #line hidden
-WriteLiteral("</p>\r\n    <p");
-
-WriteLiteral(" id=\"vacancy-wage\"");
-
-WriteLiteral(">");
+WriteLiteral("        ");
 
             
             #line 9 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-                    Write(Model.Wage);
+   Write(Model.Wage);
 
             
             #line default
             #line hidden
-WriteLiteral("</p>\r\n\r\n    <h3");
-
-WriteLiteral(" class=\"bold-small\"");
-
-WriteLiteral(">\r\n");
+WriteLiteral("\r\n    </p>\r\n</div>\r\n\r\n");
 
             
-            #line 12 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-        
-            
-            #line default
-            #line hidden
-            
-            #line 12 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-         if (Model.WageType == LegacyWageType.Custom)
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <span>\r\n                ");
-
-WriteLiteral("\r\n                TBD1\r\n            </span>\r\n");
-
-            
-            #line 18 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-        }
-        else
-        {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("            <span>\r\n                Weekly wage\r\n            </span>\r\n");
-
-            
-            #line 24 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
-        }
-
-            
-            #line default
-            #line hidden
-WriteLiteral("    </h3>\r\n    <p");
-
-WriteLiteral(" id=\"vacancy-wage\"");
-
-WriteLiteral(">\r\n        ");
-
-WriteLiteral("\r\n        TBD1\r\n    </p>\r\n</div>\r\n\r\n");
-
-            
-            #line 32 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 13 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
  if (Model.WageType == LegacyWageType.ApprenticeshipMinimum)
 {
 
@@ -170,7 +111,7 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n            The current National Minimum Wage (NMW) for apprentices is £");
 
             
-            #line 37 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 18 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                                                                    Write(Wages.ApprenticeMinimumWage);
 
             
@@ -184,7 +125,7 @@ WriteLiteral(@" per hour.<br />
 ");
 
             
-            #line 42 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 23 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
 }
 
             
@@ -193,7 +134,7 @@ WriteLiteral(@" per hour.<br />
 WriteLiteral("\r\n");
 
             
-            #line 44 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 25 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
  if (Model.WageType == LegacyWageType.NationalMinimum)
 {
 
@@ -207,7 +148,7 @@ WriteLiteral(" class=\"detail-content\"");
 WriteLiteral(">\r\n            The current National Minimum Wage rates are £");
 
             
-            #line 49 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 30 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                                                     Write(Wages.Between18And20NationalMinimumWage);
 
             
@@ -216,7 +157,7 @@ WriteLiteral(">\r\n            The current National Minimum Wage rates are £");
 WriteLiteral(" for 18 to 20 year-olds and £");
 
             
-            #line 49 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 30 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
                                                                                                                          Write(Wages.Over21NationalMinimumWage);
 
             
@@ -227,7 +168,7 @@ WriteLiteral(" for anyone aged 21 and over.<br />\r\n            Apprentices are
 "e day per week).\r\n        </div>\r\n    </details>\r\n");
 
             
-            #line 53 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
+            #line 34 "..\..\Views\ApprenticeshipSearch\_wage.cshtml"
 }
 
             

@@ -9,6 +9,7 @@
     public class WagePresenterTests
     {
         [TestCase(WageUnit.Weekly, WagePresenter.WeeklyWageText)]
+        [TestCase(WageUnit.Annually, WagePresenter.AnnualWageText)]
         public void ShouldGetHeaderDisplayText(WageUnit wageUnit, string expected)
         {
             // Arrange.

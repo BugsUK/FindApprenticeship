@@ -40,10 +40,13 @@
             {
                 case Domain.Entities.Vacancies.WageUnit.Annually:
                     return AnnualWageText;
+
                 case Domain.Entities.Vacancies.WageUnit.Monthly:
                     return MonthlyWageText;
+
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
                     return WeeklyWageText;
+
                 default:
                     return "<1010>";
             }
@@ -86,7 +89,7 @@
                     return "<1031>";
 
                 default:
-                    return "<1030>";
+                    return UnknownText;
             }
         }
 
