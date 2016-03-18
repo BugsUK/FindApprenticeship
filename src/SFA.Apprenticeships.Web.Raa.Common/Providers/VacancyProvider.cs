@@ -963,19 +963,21 @@
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
-
-                var vacancyLocation = vacancyLocationAddresses.First();
-                submittedVacancy.Address = vacancyLocation.Address;
-                submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
-                submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
-                submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
-
-                foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
+                if (vacancyLocationAddresses != null && vacancyLocationAddresses.Any())
                 {
-                    CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
-                }
+                    var vacancyLocation = vacancyLocationAddresses.First();
+                    submittedVacancy.Address = vacancyLocation.Address;
+                    submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
+                    submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
+                    submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-                _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                    foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
+                    {
+                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                    }
+
+                    _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                }
             }
 
             submittedVacancy.Status = VacancyStatus.Live;
