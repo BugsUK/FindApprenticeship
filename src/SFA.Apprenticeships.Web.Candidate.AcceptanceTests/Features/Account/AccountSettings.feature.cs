@@ -466,7 +466,7 @@ this.ScenarioSetup(scenarioInfo);
             table15.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your first line of address"});
+                        "Enter your first line of address"});
             table15.AddRow(new string[] {
                         "Href",
                         "Equals",
@@ -483,7 +483,7 @@ this.ScenarioSetup(scenarioInfo);
             table16.AddRow(new string[] {
                         "Text",
                         "Equals",
-                        "Please enter your postcode"});
+                        "Enter your postcode"});
             table16.AddRow(new string[] {
                         "Href",
                         "Equals",

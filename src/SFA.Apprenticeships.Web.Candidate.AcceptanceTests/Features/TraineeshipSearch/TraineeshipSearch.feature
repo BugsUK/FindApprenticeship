@@ -10,12 +10,12 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-@SmokeTests @PrimaryTransaction @Ignore
+@SmokeTests @PrimaryTransaction
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Location | N7 8LS |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see
@@ -57,8 +57,8 @@ Scenario: Find traineeships and change distance
 Scenario: Find traineeships and test paging
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	And I wait 3 seconds
@@ -129,7 +129,7 @@ Scenario: Different results per page
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
-		 | Location       | Coventry   |
+		 | Location       | N7 8LS   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see

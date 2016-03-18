@@ -193,8 +193,8 @@ Scenario: User enters location manually then selects from autocomplete then chan
 Scenario: Find traineeships by location and change ordering to closing date
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
@@ -215,8 +215,8 @@ Scenario: Find traineeships by location and change ordering to closing date
 Scenario: Find traineeships by location and change ordering to closing date and back again
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
