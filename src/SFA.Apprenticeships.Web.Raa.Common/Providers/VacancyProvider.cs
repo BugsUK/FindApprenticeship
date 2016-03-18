@@ -814,6 +814,12 @@
             submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
             resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
 
+            if (vacancies.Count == 0)
+            {
+                //No vacancies for current team selection. Redirect to metrics
+                searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
+            }
+
             switch (searchViewModel.FilterType)
             {
                 case DashboardVacancySummaryFilterTypes.SubmittedToday:

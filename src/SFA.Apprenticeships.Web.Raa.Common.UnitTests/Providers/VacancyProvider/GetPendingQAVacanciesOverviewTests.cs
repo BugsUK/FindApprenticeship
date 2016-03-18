@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Providers;
     using Application.Interfaces.VacancyPosting;
@@ -31,7 +32,9 @@
         private Mock<IDateTimeService> _dateTimeService;
         private IVacancyQAProvider _provider;
 
-        [TestFixtureSetUp]
+        private List<VacancySummary> _vacanciesSubmittedToday;
+
+        [SetUp]
         public void Setup()
         {
             var utcNow = new DateTime(2016, 01, 29, 11, 39, 34, DateTimeKind.Utc);
@@ -39,7 +42,7 @@
             _dateTimeService.Setup(s => s.UtcNow).Returns(utcNow);
 
             var submittedTodayDate = utcNow.Date;
-            var vacanciesSubmittedToday = new Fixture().Build<VacancySummary>()
+            _vacanciesSubmittedToday = new Fixture().Build<VacancySummary>()
                 .With(v => v.Status, VacancyStatus.Submitted)
                 .With(v => v.DateSubmitted, submittedTodayDate)
                 .With(v => v.SubmissionCount, 1)
@@ -75,7 +78,7 @@
                 .With(v => v.RegionalTeam, RegionalTeam.Other)
                 .CreateMany(ExpectedResubmittedCount).ToList();
 
-            var vacancies = vacanciesSubmittedToday;
+            var vacancies = _vacanciesSubmittedToday;
             vacancies.AddRange(vacanciesSubmittedYesterdayUpperBoundary);
             vacancies.AddRange(vacanciesSubmittedYesterdayLowerBoundary);
             vacancies.AddRange(vacanciesSubmittedMoreThan48Hours);
@@ -233,6 +236,42 @@
 
             //Assert
             vacancySummariesViewModel.Vacancies.Should().BeInAscendingOrder(v => v.DateFirstSubmitted);
+        }
+
+        [Test]
+        public void NoVacanciesRedirectToMetrics()
+        {
+            //Arrange
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                Mode = DashboardVacancySummariesMode.Review
+            };
+            _vacancyPostingService.Reset();
+            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(new List<VacancySummary>());
+
+            //Act
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacancySummariesViewModel.SearchViewModel.Mode.Should().Be(DashboardVacancySummariesMode.Metrics);
+        }
+
+        [Test]
+        public void NoVacanciesForSelectionAllowReview()
+        {
+            var searchViewModel = new DashboardVacancySummariesSearchViewModel
+            {
+                FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours,
+                Mode = DashboardVacancySummariesMode.Review
+            };
+            _vacancyPostingService.Reset();
+            _vacancyPostingService.Setup(p => p.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)).Returns(_vacanciesSubmittedToday);
+
+            //Act
+            var vacancySummariesViewModel = _provider.GetPendingQAVacanciesOverview(searchViewModel);
+
+            //Assert
+            vacancySummariesViewModel.SearchViewModel.Mode.Should().Be(DashboardVacancySummariesMode.Review);
         }
     }
 }
