@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AvmsSyncRepository.cs" />
+    <Compile Include="BaseMutateTarget.cs" />
     <Compile Include="IAvmsSyncRepository.cs" />
     <Compile Include="MutateTarget.cs" />
     <Compile Include="IMutateTarget.cs" />

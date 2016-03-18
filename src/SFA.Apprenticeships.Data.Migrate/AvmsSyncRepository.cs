@@ -6,7 +6,6 @@ namespace SFA.Apprenticeships.Data.Migrate
     using Dapper;
     using System.Collections.Generic;
     using SFA.Infrastructure.Interfaces;
-    using System.Linq;
 
     public class AvmsSyncRespository : IAvmsSyncRespository
     {

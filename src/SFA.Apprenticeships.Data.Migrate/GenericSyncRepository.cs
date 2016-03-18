@@ -1,5 +1,4 @@
-﻿
-namespace SFA.Apprenticeships.Data.Migrate
+﻿namespace SFA.Apprenticeships.Data.Migrate
 {
     using Infrastructure.Repositories.Sql.Common;
     using System;
@@ -39,60 +38,237 @@ namespace SFA.Apprenticeships.Data.Migrate
 
         public void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records)
         {
-            if (records.Any())
-            {
-                var columnTypes = GetColumnTypes(records).Where(x => x.Value != null);
+            if (!records.Any())
+                return;
 
-                using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
+            var tempTable = "_InsertTemp_" + table.Name;
+            var columnTypes = GetColumnTypes(records);
+
+            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
+            {
+                if (tempTable == null)
                 {
-                    BulkInsert(connection, table.Name, records, columnTypes);
+                    /*
+                    try
+                    {
+                        // Bulk insert straight into destination table
+                        BulkInsert(connection, table.Name, records, columnTypes.Where(c => c.Value != null), SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.KeepIdentity);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Warn($"Error inserting record. This may be due to more data having been inserted since the parent table was processed. Therefore inserting what can be before continuing. Error was {ex.Message}");
+                        */
+                        CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
+                        var errors = InsertFromTempOneAtATime(table, columnTypes, tempTable, connection);
+                        if (errors.Any())
+                            throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                    //}
+                }
+                else
+                {
+                    // Insert via temp table.
+                    // This is sometimes required where there is a nullable foreign key due to a bug in SqlBulkCopy whereby inserts with NULL values are rejected
+
+                    CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
+                    /*
+                    try
+                    {
+                        InsertFromTemp(table, columnTypes, tempTable, connection);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Warn($"Error inserting record. This may be due to more data having been inserted since the parent table was processed. Therefore inserting what can be before continuing. Error was {ex.Message}");
+                        */
+                        CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
+                        var errors = InsertFromTempOneAtATime(table, columnTypes, tempTable, connection);
+                        if (errors.Any())
+                            throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                    //}
                 }
             }
         }
+
 
         public void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records)
         {
-            const string tempTable = "#BulkUpdateTemp";
+            if (!records.Any())
+                return;
 
-            if (records.Any())
+            var tempTable = "_UpdateTemp_" + table.Name;
+            var columnTypes = GetColumnTypes(records);
+            var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
+
+            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
             {
-                var columnTypes = GetColumnTypes(records);
-                var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
+                CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
 
-                using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection()) // TODO: Cast
-                {
-                    var columnsWithSqlTypes = nonNullColumnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
-                    connection.Execute($"CREATE TABLE {tempTable} ({string.Join(", ", columnsWithSqlTypes)})");
+                //UpdateFromTempInOneGo(table, columnTypes, tempTable, connection);
+                var errors = UpdateFromTempOneAtATime(table, columnTypes, tempTable, connection);
+                if (errors.Any())
+                    throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+            }
 
-                    BulkInsert(connection, tempTable, records, nonNullColumnTypes);
+        }
 
-                    var columnAssignments = columnTypes.Where(c => !table.PrimaryKeys.Contains(c.Key)).Select(c => (c.Value == null) ? $"[{c.Key}] = NULL" : $"[{c.Key}] = temp.[{c.Key}]");
+        #region BulkInsert / Update support methods
 
-                    connection.Execute($@"
+        private string GetErrorText(IEnumerable<dynamic> errors)
+        {
+            return $"{string.Join("\n", errors)}";
+        }
+
+
+        private void CreateAndInsertIntoTemp(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, SqlConnection connection, IReadOnlyList<dynamic> records)
+        {
+            var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
+            var columnsWithSqlTypes = nonNullColumnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
+
+            var sql = $"CREATE TABLE {tempTable} ({string.Join(", ", columnsWithSqlTypes)})";
+            if (!tempTable.StartsWith("#"))
+            {
+                sql = $@"
+BEGIN TRY
+    DROP TABLE {tempTable}
+END TRY
+BEGIN CATCH
+END CATCH
+
+{sql}
+";
+            }
+            connection.Execute(sql);
+
+            BulkInsert(connection, tempTable, records, nonNullColumnTypes);
+        }
+
+
+        private void InsertFromTemp(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
+        {
+            connection.Execute($@"
+{GetSetIdentityInsertSql(table)};
+{GetInsertSql(table, columnTypes, tempTable)};
+");
+        }
+
+
+        private IEnumerable<dynamic> InsertFromTempOneAtATime(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
+        {
+            string primaryKeyList = $"{string.Join(", ", table.PrimaryKeys)}";
+
+            var sql = $@"
+DECLARE @totalRecords INT = (SELECT COUNT(*) FROM {tempTable});
+DECLARE @thisRecord   INT = 0;
+
+CREATE TABLE #Errors ({string.Join(", ", table.PrimaryKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
+
+{GetSetIdentityInsertSql(table)};
+
+WHILE @thisRecord < @totalRecords
+BEGIN
+    BEGIN TRY
+        {GetInsertSql(table, columnTypes, tempTable, "        ")}
+        ORDER BY {primaryKeyList}
+        OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
+    END TRY
+    BEGIN CATCH
+        INSERT INTO #Errors
+        SELECT {primaryKeyList}, ERROR_MESSAGE()
+        FROM   {tempTable}
+        ORDER BY {primaryKeyList}
+        OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
+    END CATCH
+    SET @thisRecord = @thisRecord + 1;
+END
+
+SELECT * FROM #Errors
+";
+
+            return connection.Query<dynamic>(sql);
+        }
+
+        private string GetInsertSql(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, string indent = "")
+        {
+            return $@"
+INSERT INTO {table.Name}
+      ({string.Join(", ", columnTypes.Select(c => c.Key))})
+SELECT {string.Join(", ", columnTypes.Select(c => (c.Value == null) ? "NULL" : c.Key))}
+FROM   {tempTable}"
+.Replace(@"
+", $@"
+{indent}");
+        }
+
+        private string GetSetIdentityInsertSql(ITableDetails table)
+        {
+            return $@"
+BEGIN TRY
+    SET IDENTITY_INSERT {table.Name} ON;
+END TRY
+BEGIN CATCH
+END CATCH";
+        }
+
+        private string GetColumnAssignments(ITableDetails table, IDictionary<String, Type> columnTypes)
+        {
+            return string.Join(", ", 
+                columnTypes
+                .Where(c => !table.PrimaryKeys.Contains(c.Key))
+                .Select(c => (c.Value == null) ? $"[{c.Key}] = NULL" : $"[{c.Key}] = temp.[{c.Key}]")
+                );
+        }
+
+        private void UpdateFromTempInOneGo(ITableDetails table, IDictionary<string, Type> columnTypes, string tempTable, IDbConnection connection)
+        {
+            connection.Execute($@"
 UPDATE target
-SET    {string.Join(", ", columnAssignments)}
+SET    {GetColumnAssignments(table, columnTypes)}
 FROM   {table.Name} target
 JOIN   {tempTable}  temp
-ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))}
+ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))};
 ");
-                }
-            }
         }
 
-        public void InsertSingle(ITableDetails table, dynamic record)
+        private IEnumerable<dynamic> UpdateFromTempOneAtATime(ITableDetails table, IDictionary<string, Type> columnTypes, string tempTable, IDbConnection connection)
         {
-            // TODO: Should only set identity_insert on for tables with an identity column. This fact should be addeded to ITableDetails (default: true).
-            var dictRecord = ((IDictionary<string, object>)record);
-            using (var connection = _targetDatabase.GetOpenConnection())
-            {
-                connection.Execute($@"
-SET IDENTITY_INSERT {table.Name} ON;
-INSERT INTO {table.Name}
-       ({string.Join(",", dictRecord.Keys.Select(k => $" {k}"))})
-VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
-", new DynamicParameters(dictRecord));
-            }
+            string primaryKeyList = $"{string.Join(", ", table.PrimaryKeys)}";
+
+            var sql = $@"
+DECLARE @totalRecords INT = (SELECT COUNT(*) FROM {tempTable});
+DECLARE @thisRecord   INT = 0;
+
+CREATE TABLE #Errors ({string.Join(", ", table.PrimaryKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
+
+{GetSetIdentityInsertSql(table)};
+
+WHILE @thisRecord < @totalRecords
+BEGIN
+    BEGIN TRY
+        UPDATE target
+        SET    {GetColumnAssignments(table, columnTypes)}
+        FROM   {table.Name} target
+        JOIN   (
+               SELECT * FROM {tempTable}
+               ORDER BY {primaryKeyList}
+               OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY
+               ) temp
+        ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))};
+    END TRY
+    BEGIN CATCH
+        INSERT INTO #Errors
+        SELECT {primaryKeyList}, ERROR_MESSAGE()
+        FROM   {tempTable}
+        ORDER BY {primaryKeyList}
+        OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
+    END CATCH
+    SET @thisRecord = @thisRecord + 1;
+END
+
+SELECT * FROM #Errors
+";
+            _log.Info(System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + sql);
+            return connection.Query<dynamic>(sql);
         }
+
 
         private static string SqlTypeFor(Type type)
         {
@@ -112,6 +288,8 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
                 return "VARBINARY(MAX)";
             if (type == typeof(decimal))
                 return "DECIMAL(38,10)"; // TODO: This is sufficient for everything I have seen, but ideally should ensure it is big enough for values actually encountered
+            if (type == typeof(Guid))
+                return "UNIQUEIDENTIFIER";
 
             throw new Exception($"No mapping from {type} to SQL Server type");
         }
@@ -123,7 +301,7 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
         /// <typeparam name="T"></typeparam>
         /// <param name="data">Note that lists of many types of dynamic are suitable</param>
         /// <param name="tableName"></param>
-        public static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes)
+        private static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes, SqlBulkCopyOptions options = SqlBulkCopyOptions.Default)
         {
             var dataTable = new DataTable();
             foreach (var column in columnTypes)
@@ -141,12 +319,10 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
                 dataTable.Rows.Add(dataRow);
             }
 
-            using (var bulkCopy = new SqlBulkCopy(connection, SqlBulkCopyOptions.CheckConstraints | SqlBulkCopyOptions.KeepIdentity, null))
+            using (var bulkCopy = new SqlBulkCopy(connection, options, null))
             {
                 // Mapping columns names is required whenever the data might not tie up positionwise with the target
-                // This can happen to us when the supplied data has null for every value and therefore cannot include
-                // it in the bulk loaded data because we cannot determine its type.
-                // It could also happen if the target table has had the columns reordered
+                // This can happen for a variety of reasons and therefore safest to always map
                 foreach (var column in columnTypes)
                 {
                     bulkCopy.ColumnMappings.Add(column.Key, column.Key);
@@ -164,7 +340,7 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static IDictionary<string,Type> GetColumnTypes(IReadOnlyList<dynamic> data)
+        private static IDictionary<string,Type> GetColumnTypes(IReadOnlyList<dynamic> data)
         {
             var result = new Dictionary<string, Type>();
             bool first = true;
@@ -209,6 +385,9 @@ VALUES ({string.Join(",", dictRecord.Keys.Select(k => $"@{k}"))})
 
             return result;
         }
+
+        #endregion
+
 
         public void DeleteAll(ITableSpec table)
         {
@@ -261,6 +440,10 @@ SELECT @Errors
                                     _log.Info($" Deleted batch with {errors} errors");
                                 }
 
+                            }
+                            else
+                            {
+                                throw;
                             }
                         }
                     }

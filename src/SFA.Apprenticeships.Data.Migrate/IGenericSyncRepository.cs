@@ -15,8 +15,6 @@
         void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records);
         void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records);
 
-        void InsertSingle(ITableDetails table, dynamic record);
-
         void DeleteAll(ITableSpec table);
 
         void Reset();
@@ -77,12 +75,12 @@
 
         private long[] _key;
 
-        public static Keys GetPrimaryKeys(dynamic record, ITableDetails table)
+        public static Keys GetPrimaryKeys(IDictionary<string, object> record, ITableDetails table)
         {
             var keys = new List<long>();
             foreach (var key in table.PrimaryKeys)
             {
-                var sourceId = ((IDictionary<string, object>)record)[key];
+                var sourceId = record[key];
                 if (sourceId == null)
                     throw new FatalException($"Unknown column (may be case sensitive) or null value for {key} on {table.Name}");
                 if (sourceId is long)

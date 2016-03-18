@@ -6,6 +6,7 @@
     {
         void Insert(dynamic record);
         void Update(dynamic record);
+        void Delete(dynamic record);
 
         void NoChange(dynamic record);
 

@@ -22,7 +22,6 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
             var options = new Options();
             if (!CommandLine.Parser.Default.ParseArguments(args, options))
             {
-                log.Info("Here");
                 return;
             }
 
@@ -51,10 +50,9 @@ TargetConnectionString             = {options.TargetConnectionString}
 RecordBatchSize                    = {options.RecordBatchSize}
 MaxNumberOfChangesToDetailPerTable = {options.MaxNumberOfChangesToDetailPerTable}
 AnonymiseData                      = {options.AnonymiseData}
+SingleFullUpdate                   = {options.SingleFullUpdate}
 ");
-
             }
-
 
             var sourceDatabase = new GetOpenConnectionFromConnectionString(options.SourceConnectionString);
             var targetDatabase = new GetOpenConnectionFromConnectionString(options.TargetConnectionString);
@@ -62,24 +60,30 @@ AnonymiseData                      = {options.AnonymiseData}
             var genericSyncRepository = new GenericSyncRespository(log, sourceDatabase, targetDatabase);
             var avmsSyncRepository = new AvmsSyncRespository(log, sourceDatabase, targetDatabase);
 
-            var tables = new AvmsToAvmsPlusTables(log, options, avmsSyncRepository, true).All;
+            Func<ITableSpec, IMutateTarget> createMutateTarget;
+            if (options.DummyRun)
+                createMutateTarget = tableSpec => new DummyMutateTarget(log, tableSpec);
+            else
+                createMutateTarget = tableSpec => new MutateTarget(log, genericSyncRepository, (int)Math.Max(5000 * tableSpec.BatchSizeMultiplier, 1), tableSpec);
+
+            var tables = new AvmsToAvmsPlusTables(log, options, avmsSyncRepository, !options.ExcludeVacancy).All;
 
             if (options.SingleTable != null)
                 tables = tables.Where(t => t.Name == options.SingleTable);
 
-            var controller = new Controller(
-                options,
-                log,
-                genericSyncRepository,
-                //tableSpec => new DummyMutateTarget(log, tableSpec),
-                tableSpec => new MutateTarget(log, genericSyncRepository, 5000, tableSpec),
-                tables
-                );
+            var controller = new Controller(options, log, genericSyncRepository, createMutateTarget, tables);
 
             if (options.Reset)
                 controller.Reset();
 
-            controller.DoAll(new System.Threading.CancellationTokenSource());
+            var cancellationTokenSource = new System.Threading.CancellationTokenSource();
+
+            bool threaded = true;
+
+            if (options.SingleFullUpdate)
+                controller.DoFullScanForAll(threaded);
+            else
+                controller.DoAll(new System.Threading.CancellationTokenSource(), threaded);
         }
     }
 
@@ -94,7 +98,7 @@ AnonymiseData                      = {options.AnonymiseData}
         [Option('b', "RecordBatchSize", HelpText = "The number of records to load at once when compare data. e.g. 15000")]
         public int RecordBatchSize { get; set; }
 
-        [Option('r', "Reset", HelpText = "Reset (clear) the target database before starting")]
+        [Option('r', "Reset", HelpText = "Reset (clear) the target database before starting. DummyRun option does not apply to the clearing of the database")]
         public bool Reset { get; set; }
 
         [Option("SingleTable", HelpText = "Ignore the built in configuration of which tables to synchronise and instead sychronise the single table specified, e.g. Vacancy")]
@@ -105,6 +109,15 @@ AnonymiseData                      = {options.AnonymiseData}
 
         [Option('a', "AnonymiseData", HelpText = "Whether to anonymise personal data during the transfer.")]
         public bool AnonymiseData { get; set; }
+
+        [Option("SingleFullUpdate", HelpText = "Update all of the tables in the destination (ignoring change tracking except to update the last state) once then exit")]
+        public bool SingleFullUpdate { get; set; }
+
+        [Option("DummyRun", HelpText = "Don't make any changes (doesn't apply to Reset option). Can be useful to combine with -v / --Verbose to see configuration in Azure")]
+        public bool DummyRun { get; set; }
+
+        [Option("ExcludeVacancy", HelpText = "Exclude Vacancy and related tables (for when only reference data is required)")]
+        public bool ExcludeVacancy { get; set; }
 
         [Option('v', "Verbose", HelpText = "Verbose. WILL USUALLY WRITE PASSWORDS TO OUTPUT")]
         public bool Verbose { get; set; }

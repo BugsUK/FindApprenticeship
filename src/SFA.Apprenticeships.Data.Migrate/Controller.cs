@@ -4,7 +4,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Text;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -12,12 +11,12 @@
     {
         private ILogService _log;
         private IMigrateConfiguration _migrateConfig;
-        private Func<ITableDetails, IMutateTarget> _createMutateTarget;
+        private Func<ITableSpec, IMutateTarget> _createMutateTarget;
         private IEnumerable<ITableSpec> _tables;
 
         public IGenericSyncRespository _syncRepository;
 
-        public Controller(IMigrateConfiguration migrateConfig, ILogService log, IGenericSyncRespository syncRepository, Func<ITableDetails, IMutateTarget> createMutateTarget, IEnumerable<ITableSpec> tables)
+        public Controller(IMigrateConfiguration migrateConfig, ILogService log, IGenericSyncRespository syncRepository, Func<ITableSpec, IMutateTarget> createMutateTarget, IEnumerable<ITableSpec> tables)
         {
             _migrateConfig = migrateConfig;
             _log = log;
@@ -31,7 +30,7 @@
         /// an error that is known to be fatal (not transitory and requires attention) occurs
         /// </summary>
         /// <param name="cancellationToken"></param>
-        public void DoAll(CancellationTokenSource cancellationToken)
+        public void DoAll(CancellationTokenSource cancellationToken, bool threaded = false)
         {
             _log.Info("DoAll Started");
 
@@ -39,7 +38,7 @@
             {
                 try
                 {
-                    DoUpdatesForAll();
+                    DoUpdatesForAll(threaded);
                 }
                 catch (FatalException)
                 {
@@ -51,7 +50,7 @@
 
                     try
                     {
-                        DoFullScanForAll();
+                        DoFullScanForAll(threaded);
                     }
                     catch (FatalException)
                     {
@@ -79,28 +78,36 @@
             _syncRepository.Reset();
         }
 
-        public void DoUpdatesForAll()
+        public void DoUpdatesForAll(bool threaded = false)
         {
             _log.Info("============ DoUpdatesForAll");
             using (var context = _syncRepository.StartChangesOnlySnapshotSync())
             {
                 if (context.AreAnyChanges())
-                    ApplyToTablesUnthreaded(tableSpec => DoUpdatesForTable(tableSpec, context));
+                    ApplyToTables(tableSpec => DoUpdatesForTable(tableSpec, context), threaded);
                 else
                     _log.Info("No changes");
                 context.Success();
             }
         }
 
-        public void DoFullScanForAll()
+        public void DoFullScanForAll(bool threaded = false)
         {
             _log.Info("============ DoFullScanForAll");
             var context = _syncRepository.StartFullTransactionlessSync();
-            ApplyToTablesUnthreaded(tableSpec => DoInitial(tableSpec, context));
+            ApplyToTables(tableSpec => DoInitial(tableSpec, context), threaded);
             context.Success();
         }
 
-        public void ApplyToTables(Action<ITableSpec> action)
+        private void ApplyToTables(Action<ITableSpec> action, bool threaded)
+        {
+            if (threaded)
+                ApplyToTablesThreaded(action);
+            else
+                ApplyToTablesUnthreaded(action);
+        }
+
+        public void ApplyToTablesThreaded(Action<ITableSpec> action)
         {
             if (_tables.Count() == 1)
             {
@@ -158,11 +165,31 @@
         {
             _log.Info($"---------- Scanning for tables to process");
 
+            var exceptions = new List<Exception>();
+
             foreach (var table in _tables)
             {
                 _log.Info($"Processing {table.Name}");
-                action(table);
+                try
+                {
+                    action(table);
+                }
+                catch (FatalException)
+                {
+                    // No point in carrying on for one of these
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    // Report, but try to progress with the next table
+                    // Re-throw the exception later
+                    _log.Error(ex);
+                    exceptions.Add(ex);
+                }
             }
+
+            if (exceptions.Any())
+                throw exceptions.First();
         }
 
         public void ApplyToTablesUnthreadedReverseDependency(Action<ITableSpec> action)
@@ -217,11 +244,14 @@
                 var changes = syncContext.GetChangesForTable(table);
 
                 var changesOfInterest = new Dictionary<IKeys, Operation>();
+                var deletes = new List<IKeys>();
+
                 foreach (var change in changes)
                 {
                     switch (change.Operation)
                     {
                         case Operation.Delete:
+                            deletes.Add(change.PrimaryKeys);
                             _log.Warn($"Ignored delete of record {change.PrimaryKeys} from {table.Name}");
                             break;
                         case Operation.Insert:
@@ -231,6 +261,13 @@
                         default:
                             throw new Exception($"Unknown change {change.Operation}");
                     }
+                }
+
+                if (deletes.Any())
+                {
+                    var targetRecords = syncContext.GetTargetRecords(table, deletes);
+
+                    DoDeletes(table, targetRecords, deletes, mutateTarget);
                 }
 
                 if (changesOfInterest.Any())
@@ -249,9 +286,9 @@
             int batchSize = (int)(_migrateConfig.RecordBatchSize * table.BatchSizeMultiplier);
             using (var mutateTarget = _createMutateTarget(table))
             {
-                long maxFirstId = syncContext.GetMaxFirstId(table);
+                long maxFirstId = (table.Name == "Vacancyxxx") ? 700000 : syncContext.GetMaxFirstId(table);
 
-                long startFirstId = 0; // (table.Name == "Vacancy") ? 560000 : 0;
+                long startFirstId = (table.Name == "Personxxxx") ? 4290000 : 0;
 
                 while (startFirstId < maxFirstId)
                 {
@@ -270,6 +307,9 @@
 
         public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<IKeys, Operation> operationById, IMutateTarget mutateTarget)
         {
+            // TODO: Don't completely ignore the operation claimed by the change tracking
+            // And don't completely ignore change tracking where no record could be found on the source
+
             using (var targetRecordEnumerator = targetRecords.GetEnumerator())
             {
                 var targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
@@ -311,10 +351,21 @@
             }
         }
 
+        public void DoDeletes(ITableSpec tableSpec, IEnumerable<dynamic> targetRecords, IEnumerable<IKeys> deletes, IMutateTarget mutateTarget)
+        {
+            foreach (var targetRecord in targetRecords)
+            {
+                if (tableSpec.ShouldDelete(tableSpec, targetRecord))
+                {
+                    mutateTarget.Delete(targetRecord);
+                }
+            }
+        }
+
 
         public void DoChange(IMutateTarget mutateTarget, ITableSpec table, dynamic sourceRecord, dynamic targetRecord)
         {
-            if (table.Transform(targetRecord, sourceRecord))
+            if (table.Transform(table, targetRecord, sourceRecord))
             {
                 if (targetRecord == null)
                 {
