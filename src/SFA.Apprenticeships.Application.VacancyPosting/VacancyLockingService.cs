@@ -29,7 +29,15 @@
 
         public VacancySummary GetNextAvailableVacancy(string userName, List<VacancySummary> vacancies)
         {
-            return vacancies.FirstOrDefault(v => IsVacancyAvailableToQABy(userName, v));
+            return
+                vacancies.OrderBy(v => v.DateSubmitted)
+                    .FirstOrDefault(IsVacancySuitableToBeTheNextVacancyToChoose);
+        }
+
+        private bool IsVacancySuitableToBeTheNextVacancyToChoose(VacancySummary vacancySummary)
+        {
+            return NobodyHasTheVacancyLocked(vacancySummary)
+                   || VacancyIsUnattended(vacancySummary);
         }
 
         private static bool VacancyIsLockedByMe(string userName, VacancySummary vacancySummary)
@@ -45,10 +53,14 @@
 
         private bool AnotherUserHasLeftTheVacanyUnattended(string userName, VacancySummary vacancySummary)
         {
+            return vacancySummary.QAUserName != userName && VacancyIsUnattended(vacancySummary);
+        }
+
+        private bool VacancyIsUnattended(VacancySummary vacancySummary)
+        {
             var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; // In minutes
-            return vacancySummary.QAUserName != userName &&
-                vacancySummary.DateStartedToQA.HasValue &&
-                (_dateTimeService.UtcNow - vacancySummary.DateStartedToQA.Value).TotalMinutes > timeout;
+            return vacancySummary.DateStartedToQA.HasValue &&
+                   (_dateTimeService.UtcNow - vacancySummary.DateStartedToQA.Value).TotalMinutes > timeout;
         }
     }
 }

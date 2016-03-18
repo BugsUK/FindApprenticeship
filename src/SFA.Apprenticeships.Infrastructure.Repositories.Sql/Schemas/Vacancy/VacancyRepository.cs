@@ -84,6 +84,13 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
             return dbVacancy;
         }
 
+        private Vacancy GetVacancyByVacancyId(int vacancyId)
+        {
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyId = @VacancyId",
+                new { VacancyId = vacancyId }).SingleOrDefault();
+            return dbVacancy;
+        }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
@@ -565,7 +572,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
             PopulateIds(entity, dbVacancy);
 
-            var previousVacancyState = GetVacancyByVacancyGuid(entity.VacancyGuid);
+            var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 

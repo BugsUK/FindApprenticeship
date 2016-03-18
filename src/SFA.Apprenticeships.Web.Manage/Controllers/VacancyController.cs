@@ -75,10 +75,18 @@
             switch (response.Code)
             {
                 case VacancyMediatorCodes.ReserveVacancyForQA.Ok:
-                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, vacancyReferenceNumber);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
                 case VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableVacancy:
                     SetUserMessage(response.Message);
-                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy, response.ViewModel.VacancyReferenceNumber);
+                    return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
+                        new
+                        {
+                            vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
+                        });
                 case VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable:
                     SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
