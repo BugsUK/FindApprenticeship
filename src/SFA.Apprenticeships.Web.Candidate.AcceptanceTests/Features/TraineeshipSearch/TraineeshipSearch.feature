@@ -10,12 +10,12 @@ Background:
 	And I navigated to the TraineeshipSearchPage page
 	Then I am on the TraineeshipSearchPage page
 
-@SmokeTests @PrimaryTransaction @Ignore
+@SmokeTests @PrimaryTransaction
 Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Location | N7 8LS |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see

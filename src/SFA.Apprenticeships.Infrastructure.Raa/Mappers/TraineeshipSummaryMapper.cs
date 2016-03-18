@@ -14,14 +14,21 @@
         public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
-            
-            //TODO: Store geopoints for employers
-            var location = new GeoPoint
+
+            //TODO: Geocode new vacancies
+            var location = new GeoPoint();
+            if (vacancy.Address.GeoPoint != null && vacancy.Address.GeoPoint.Latitude != 0 &&
+                vacancy.Address.GeoPoint.Longitude != 0)
+            {
+                location.Latitude = vacancy.Address.GeoPoint.Latitude;
+                location.Longitude = vacancy.Address.GeoPoint.Longitude;
+            }
+            else
             {
                 //Coventry
-                Latitude = 52.4009991288043,
-                Longitude = -1.50812239495425
-            };
+                location.Latitude = 52.4009991288043;
+                location.Longitude = -1.50812239495425;
+            }
 
             var summary = new TraineeshipSummary
             {
