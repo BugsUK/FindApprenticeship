@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
     using NUnit.Framework;
@@ -13,7 +14,6 @@
     {
         private const string FramworkCodeNameFramework1 = "260";
         private const int StandardIdStandard1 = 1;
-        private int _vacancyReferenceNumber = 10;
 
         protected DomainVacancy CreateValidDomainVacancy()
         {
@@ -24,15 +24,17 @@
                     Guid.NewGuid().ToString().Substring(0, 10)));
 
             var result = fixture.Build<DomainVacancy>()
+                .With(av => av.VacancyId, 0)
                 .With(av => av.Status, VacancyStatus.Submitted)
                 .With(av => av.DateSubmitted, null)
                 .With(av => av.QAUserName, null)
                 .With(av => av.DateStartedToQA, null)
                 .With(av => av.DateQAApproved, null)
-                .With(av => av.VacancyReferenceNumber, _vacancyReferenceNumber++)
+                .With(av => av.VacancyReferenceNumber, Guid.NewGuid().GetHashCode())
                 .With(av => av.IsEmployerLocationMainApprenticeshipLocation, true)
                 .With(av => av.ParentVacancyId, null)
                 .With(av => av.UpdatedDateTime, null)
+                .With(av => av.RegionalTeam, RegionalTeam.WestMidlands)
                 .Create();
 
             result.Address = new PostalAddress

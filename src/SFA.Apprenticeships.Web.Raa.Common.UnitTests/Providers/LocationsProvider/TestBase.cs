@@ -4,6 +4,7 @@
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Moq;
@@ -28,6 +29,7 @@
         protected Mock<IEmployerService> MockEmployerService;
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
         private Mock<ICurrentUserService> _mockCurrentUserService;
+        private Mock<IUserProfileService> _mockUserProfileService;
 
         [SetUp]
         public void SetUpBase()
@@ -51,6 +53,7 @@
             _mockTraineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
             _mockCurrentUserService = new Mock<ICurrentUserService>();
+            _mockUserProfileService = new Mock<IUserProfileService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -66,7 +69,8 @@
                 _mockApprenticeshipApplicationService.Object,
                 _mockTraineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,
-                _mockCurrentUserService.Object);
+                _mockCurrentUserService.Object,
+                _mockUserProfileService.Object);
         }
     }
 }

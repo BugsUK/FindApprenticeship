@@ -70,7 +70,7 @@
                 return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.FailedValidation, providerViewModel, result);
             }
 
-            providerViewModel = _providerProvider.SaveProviderViewModel(ukprn, providerViewModel);
+            providerViewModel = _providerProvider.GetProviderViewModel(ukprn);
 
             if (_providerUserProvider.GetUserProfileViewModel(username) == null)
             {
@@ -80,9 +80,9 @@
             return GetMediatorResponse(ProviderMediatorCodes.UpdateSites.Ok, providerViewModel);
         }
 
-        public MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string edsUrn)
+        public MediatorResponse<ProviderSiteViewModel> GetSite(string edsUrn)
         {
-            var providerSite = _providerProvider.GetProviderSiteViewModel(ukprn, edsUrn);
+            var providerSite = _providerProvider.GetProviderSiteViewModel(edsUrn);
 
             return GetMediatorResponse(ProviderMediatorCodes.GetSite.Ok, providerSite);
         }

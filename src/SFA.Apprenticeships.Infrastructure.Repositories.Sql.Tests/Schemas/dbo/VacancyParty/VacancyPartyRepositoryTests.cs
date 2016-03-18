@@ -82,7 +82,7 @@
 
             // Assert.
             savedVacancyParty.Should().NotBeNull();
-            savedVacancyParty.VacancyPartyId.Should().BePositive();
+            savedVacancyParty.VacancyPartyId.Should().NotBe(0);
 
             // Arrange.
             var newEmployerDescription = new string(savedVacancyParty.EmployerDescription.Reverse().ToArray());

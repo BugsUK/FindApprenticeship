@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[VacancyReferralComments] (
-    [VacancyReferralCommentsID] INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [VacancyReferralCommentsID] INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [VacancyId]                 INT             NOT NULL,
     [FieldTypeId]               INT             NOT NULL,
     [Comments]                  NVARCHAR (4000) NULL,

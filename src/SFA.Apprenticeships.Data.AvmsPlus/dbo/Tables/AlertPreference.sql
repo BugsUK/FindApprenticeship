@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[AlertPreference] (
-    [AlertPreferenceId] INT IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [AlertPreferenceId] INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]       INT NOT NULL,
     [AlertTypeId]       INT NOT NULL,
     [SMSAlert]          BIT NOT NULL,

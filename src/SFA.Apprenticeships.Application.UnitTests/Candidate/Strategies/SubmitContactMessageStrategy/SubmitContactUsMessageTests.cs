@@ -6,11 +6,11 @@
     using Apprenticeships.Application.Candidate.Strategies;
     using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class SubmitContactUsMessageTests

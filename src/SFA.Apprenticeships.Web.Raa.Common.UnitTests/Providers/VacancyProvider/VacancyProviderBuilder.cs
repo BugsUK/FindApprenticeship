@@ -5,8 +5,10 @@
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Domain.Entities.Raa.Users;
     using Common.Providers;
     using Moq;
     using SFA.Infrastructure.Interfaces;
@@ -30,9 +32,11 @@
         private Mock<IReferenceDataService> _referenceDataService = new Mock<IReferenceDataService>();
         private Mock<IVacancyPostingService> _vacancyPostingService = new Mock<IVacancyPostingService>();
         private Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
+        private readonly Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
 
         public VacancyProviderBuilder()
         {
+            _userProfileService.Setup(s => s.GetAgencyUser(It.IsAny<string>())).Returns(new AgencyUser());
             _dateTimeService.Setup(s => s.UtcNow).Returns(DateTime.UtcNow);
         }
 
@@ -49,7 +53,8 @@
                 _apprenticeshipApplicationService.Object,
                 _traineeshipApplicationService.Object,
                 _vacancyLockingService.Object,
-                _currentUserService.Object);
+                _currentUserService.Object,
+                _userProfileService.Object);
         }
 
         public Mock<IVacancyPostingService> VacancyPostingService => _vacancyPostingService;

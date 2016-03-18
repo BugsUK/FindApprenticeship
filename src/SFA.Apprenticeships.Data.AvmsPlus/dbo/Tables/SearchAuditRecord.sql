@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SearchAuditRecord] (
-    [SearchAuditRecordId] INT            IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [SearchAuditRecordId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [CandidateId]         INT            NOT NULL,
     [RunDate]             DATETIME       NOT NULL,
     [SearchCriteria]      NVARCHAR (500) NULL,

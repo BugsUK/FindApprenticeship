@@ -9,9 +9,9 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class ApplicationStatusProcessorTests

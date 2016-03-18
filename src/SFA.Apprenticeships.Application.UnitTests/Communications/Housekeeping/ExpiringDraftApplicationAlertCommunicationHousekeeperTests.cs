@@ -5,12 +5,12 @@
     using Apprenticeships.Application.Candidates.Configuration;
     using Apprenticeships.Application.Communications.Housekeeping;
     using Domain.Entities.Communication;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class ExpiringDraftApplicationAlertCommunicationHousekeeperTests

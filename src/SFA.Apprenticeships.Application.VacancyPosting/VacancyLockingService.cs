@@ -3,7 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Vacancies;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Vacancies;
     using Web.Raa.Common.Configuration;
 

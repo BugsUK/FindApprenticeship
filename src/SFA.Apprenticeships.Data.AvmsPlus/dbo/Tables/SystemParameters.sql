@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SystemParameters] (
-    [SystemParametersId] INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [SystemParametersId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ParameterName]      NVARCHAR (100) NOT NULL,
     [ParameterType]      NVARCHAR (100) NOT NULL,
     [ParameterValue]     NVARCHAR (300) NOT NULL,

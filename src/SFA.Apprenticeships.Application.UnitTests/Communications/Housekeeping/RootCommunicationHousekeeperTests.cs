@@ -5,12 +5,12 @@
     using System.Linq;
     using Apprenticeships.Application.Candidates.Configuration;
     using Apprenticeships.Application.Communications.Housekeeping;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class RootCommunicationHousekeeperTests

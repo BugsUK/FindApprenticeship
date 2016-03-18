@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[Message] (
-    [MessageId]         INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [MessageId]         INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [Sender]            INT             NOT NULL,
     [SenderType]        INT             NOT NULL,
     [Recipient]         INT             NOT NULL,

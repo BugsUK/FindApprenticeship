@@ -17,5 +17,6 @@
         public string Username { get; set; }
 
         public string RoleId { get; set; }
+        public int RegionalTeamId { get; set; }
     }
 }

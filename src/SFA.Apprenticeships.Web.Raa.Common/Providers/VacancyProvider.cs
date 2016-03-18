@@ -3,12 +3,14 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using ViewModels.Vacancy;
@@ -16,6 +18,7 @@
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
@@ -39,6 +42,7 @@
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IUserProfileService _userProfileService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
 
@@ -47,7 +51,7 @@
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -61,6 +65,7 @@
             _traineeshipApplicationService = traineeshipApplicationService;
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
+            _userProfileService = userProfileService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -638,8 +643,7 @@
                 vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
             }
 
-            //TODO: This filtering, aggregation and pagination should be done in the DAL once we've moved over to SQL Server
-            //This means that we will need integration tests covering regression of the filtering and ordering. No point unit testing these at the moment
+            //TODO: Unit tests
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.Single(e => e.EmployerId == vp.EmployerId));
@@ -807,6 +811,9 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
+            var agencyUser = _userProfileService.GetAgencyUser(Thread.CurrentPrincipal.Identity.Name);
+            var regionalTeam = agencyUser.RegionalTeam;
+
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
 
             var utcNow = _dateTimeService.UtcNow;
@@ -815,6 +822,20 @@
             var submittedYesterday = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date && v.DateSubmitted >= utcNow.Date.AddDays(-1)).ToList();
             var submittedMoreThan48Hours = vacancies.Where(v => v.DateSubmitted.HasValue && v.DateSubmitted < utcNow.Date.AddDays(-1)).ToList();
             var resubmitted = vacancies.Where(v => v.SubmissionCount > 1).ToList();
+
+            var regionalTeamsMetrics = GetRegionalTeamsMetrics(vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted);
+
+            vacancies = vacancies.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedToday = submittedToday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedYesterday = submittedYesterday.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            submittedMoreThan48Hours = submittedMoreThan48Hours.Where(v => v.RegionalTeam == regionalTeam).ToList();
+            resubmitted = resubmitted.Where(v => v.RegionalTeam == regionalTeam).ToList();
+
+            if (vacancies.Count == 0)
+            {
+                //No vacancies for current team selection. Redirect to metrics
+                searchViewModel.Mode = DashboardVacancySummariesMode.Metrics;
+            }
 
             switch (searchViewModel.FilterType)
             {
@@ -839,10 +860,39 @@
                 SubmittedYesterdayCount = submittedYesterday.Count,
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count,
                 ResubmittedCount = resubmitted.Count,
-                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList()
+                Vacancies = vacancies.Select(ConvertToDashboardVacancySummaryViewModel).ToList(),
+                RegionalTeamsMetrics = regionalTeamsMetrics
             };
 
             return viewModel;
+        }
+
+        private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> vacancies, List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
+        {
+            return new List<RegionalTeamMetrics>
+            {
+                GetRegionalTeamMetrics(RegionalTeam.North, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.NorthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.YorkshireAndHumberside, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.EastMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.WestMidlands, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.EastAnglia, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.SouthEast, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted),
+                GetRegionalTeamMetrics(RegionalTeam.SouthWest, vacancies, submittedToday, submittedYesterday, submittedMoreThan48Hours, resubmitted)
+            };
+        }
+
+        private static RegionalTeamMetrics GetRegionalTeamMetrics(RegionalTeam regionalTeam, IEnumerable<VacancySummary> vacancies, IEnumerable<VacancySummary> submittedToday, IEnumerable<VacancySummary> submittedYesterday, IEnumerable<VacancySummary> submittedMoreThan48Hours, IEnumerable<VacancySummary> resubmitted)
+        {
+            return new RegionalTeamMetrics
+            {
+                RegionalTeam = regionalTeam,
+                TotalCount = vacancies.Count(v => v.RegionalTeam == regionalTeam),
+                SubmittedTodayCount = submittedToday.Count(v => v.RegionalTeam == regionalTeam),
+                SubmittedYesterdayCount = submittedYesterday.Count(v => v.RegionalTeam == regionalTeam),
+                SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
+                ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
+            };
         }
 
         public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
@@ -909,19 +959,21 @@
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 var vacancyLocationAddresses = _vacancyPostingService.GetVacancyLocations(submittedVacancy.VacancyId);
-
-                var vacancyLocation = vacancyLocationAddresses.First();
-                submittedVacancy.Address = vacancyLocation.Address;
-                submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
-                submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
-                submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
-
-                foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
+                if (vacancyLocationAddresses != null && vacancyLocationAddresses.Any())
                 {
-                    CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
-                }
+                    var vacancyLocation = vacancyLocationAddresses.First();
+                    submittedVacancy.Address = vacancyLocation.Address;
+                    submittedVacancy.ParentVacancyId = submittedVacancy.VacancyId;
+                    submittedVacancy.NumberOfPositions = vacancyLocation.NumberOfPositions;
+                    submittedVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-                _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                    foreach (var locationAddress in vacancyLocationAddresses.Skip(1))
+                    {
+                        CreateChildVacancy(submittedVacancy, locationAddress, qaApprovalDate);
+                    }
+
+                    _vacancyPostingService.DeleteVacancyLocationsFor(submittedVacancy.VacancyId);
+                }
             }
 
             submittedVacancy.Status = VacancyStatus.Live;

@@ -15,5 +15,7 @@
         public int ResubmittedCount { get; set; }
 
         public List<DashboardVacancySummaryViewModel> Vacancies { get; set; }
+
+        public List<RegionalTeamMetrics> RegionalTeamsMetrics { get; set; }
     }
 }

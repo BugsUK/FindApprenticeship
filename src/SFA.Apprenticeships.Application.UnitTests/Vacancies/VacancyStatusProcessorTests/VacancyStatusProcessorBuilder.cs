@@ -3,8 +3,8 @@
     using Apprenticeships.Application.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Raa.Interfaces.Repositories;
-    using Moq;
     using SFA.Infrastructure.Interfaces;
+    using Moq;
 
     public class VacancyStatusProcessorBuilder
     {

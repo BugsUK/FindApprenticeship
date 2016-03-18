@@ -2,6 +2,7 @@
 {
     using System;
     using Common;
+    using Domain.Entities.Raa.Reference;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -48,7 +49,7 @@
             {
                 Username = Guid.NewGuid().ToString(),
                 Role = null,
-                Team = null
+                RegionalTeam = RegionalTeam.Other
             };
 
             //Act
@@ -57,7 +58,7 @@
             //Assert
             result.Should().NotBeNull();
             result.Role.Should().BeNull();
-            result.Team.Should().BeNull();
+            result.RegionalTeam.Should().Be(RegionalTeam.Other);
         }
     }
 }

@@ -2,91 +2,12 @@
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model DashboardVacancySummariesViewModel
 
-<section class="grid-wrapper">
-    @{
-        var filterType = Model.SearchViewModel.FilterType;
-    }
-    <h2 class="heading-medium">
-        Vacancies to review
-        @if (filterType != DashboardVacancySummaryFilterTypes.All)
-        {
-            <span>&nbsp;<a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
-        }
-    </h2>
-    <ul class="vacancies-summary">
-        <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedToday)
-                {
-                    <p class="count">@Model.SubmittedTodayCount</p>
-                    <figcaption><h2>Submitted today</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedToday))" class="vacancy-filter">
-                        <p class="count">@Model.SubmittedTodayCount</p>
-                        <figcaption><h2>Submitted today</h2></figcaption>
-                    </a>
-                }
-            </figure>
-        </li>
-        <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedYesterday)
-                {
-                    <p class="count">@Model.SubmittedYesterdayCount</p>
-                    <figcaption><h2>Submitted yesterday</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedYesterday))" class="vacancy-filter">
-                        <p class="count">@Model.SubmittedYesterdayCount</p>
-                        <figcaption><h2>Submitted yesterday</h2></figcaption>
-                    </a>
-                }
-            </figure>
-        </li>
-        <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours)
-                {
-                    <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
-                    <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours))" class="vacancy-filter">
-                        <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
-                        <figcaption><h2>Submitted +48 hours</h2></figcaption>
-                    </a>
-                }
-            </figure>
-        </li>
-        <li>
-            <figure class="data">
-                @if (filterType == DashboardVacancySummaryFilterTypes.Resubmitted)
-                {
-                    <p class="count">@Model.ResubmittedCount</p>
-                    <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                }
-                else
-                {
-                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
-                        <p class="count">@Model.ResubmittedCount</p>
-                        <figcaption><h2>Resubmitted vacancies</h2></figcaption>
-                    </a>
-                }
-            </figure>
-        </li>
-    </ul>
-</section>
-
 <div class="grid-wrapper">
     <div class="grid grid-1-1">
         <div class="inner-block-padr">
             <section>
                 <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin">
+                    <table class="no-btm-margin reactive">
                         <colgroup>
                             <col>
                             <col>
@@ -112,22 +33,22 @@
                             {
                                 <tr>
                                     <td>
-                                        <span class="vac-title">@vacancy.Title</span>
+                                        <div class="reactive-title">@vacancy.Title</div>
                                     </td>
                                     <td>
-                                        <span>@vacancy.VacancyType.ToString()</span>
+                                        @vacancy.VacancyType.ToString()
                                     </td>
-                                    <td>
-                                        <span>@vacancy.ProviderName</span>
+                                    <td class="reactive-header" data-label="Provider">
+                                        @vacancy.ProviderName
                                     </td>
-                                    <td>
-                                        <span>@vacancy.DateSubmitted.ToGmtDate()</span>
+                                    <td class="reactive-header" data-label="Date submitted">
+                                        @vacancy.DateSubmitted.ToGmtDate()
                                     </td>
-                                    <td>
-                                        <span>@vacancy.ClosingDate.ToFriendlyClosingToday()</span>
+                                    <td class="reactive-header" data-label="Closing date">
+                                        @vacancy.ClosingDate.ToFriendlyClosingToday()
                                     </td>
-                                    <td class="ta-center">
-                                        <span>@vacancy.SubmissionCount</span>
+                                    <td class="ta-center reactive-header" data-label="Submission count">
+                                        @vacancy.SubmissionCount
                                     </td>
                                     <td>
                                         @if (vacancy.CanBeReservedForQaByCurrentUser)

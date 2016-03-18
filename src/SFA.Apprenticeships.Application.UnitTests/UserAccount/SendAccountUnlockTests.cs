@@ -6,11 +6,11 @@
     using Apprenticeships.Application.UserAccount.Strategies;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class SendAccountUnlockTests

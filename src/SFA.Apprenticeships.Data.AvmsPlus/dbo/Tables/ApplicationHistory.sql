@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ApplicationHistory] (
-    [ApplicationHistoryId]             INT             IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ApplicationHistoryId]             INT             IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ApplicationId]                    INT             NOT NULL,
     [UserName]                         NVARCHAR (50)   NULL,
     [ApplicationHistoryEventDate]      DATETIME        NOT NULL,

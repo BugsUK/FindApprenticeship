@@ -5,9 +5,9 @@
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Interfaces.Communications;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class UnsubscribeFailureTests

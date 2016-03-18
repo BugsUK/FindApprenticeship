@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/Index.cshtml")]
@@ -847,8 +848,8 @@ WriteLiteral(">\r\n        <p");
 WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
-"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
-"/li>\r\n    <li");
+"ced is 2 A-level passes, a Higher can lead to a foundation degree and Degree is " +
+"equivalent to bachelor\'s or master\'s degree.</p>\r\n    </li>\r\n    <li");
 
 WriteLiteral(" data-id=\"reset-search-options-link\"");
 
@@ -931,8 +932,8 @@ WriteLiteral(">\r\n        <p");
 WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
-"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
-"/li>\r\n    <li");
+"ced is 2 A-level passes, a Higher can lead to a foundation degree and Degree is " +
+"equivalent to bachelor\'s or master\'s degree.</p>\r\n    </li>\r\n    <li");
 
 WriteLiteral(" data-id=\"reset-search-options-link\"");
 
