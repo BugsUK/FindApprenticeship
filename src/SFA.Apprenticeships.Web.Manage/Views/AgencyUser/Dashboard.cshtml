@@ -69,7 +69,7 @@
             }
             @if(Model.VacancySummaries.SearchViewModel.Mode == DashboardVacancySummariesMode.Metrics)
             {
-                @Html.Partial("_DashboardTeamMetrics", Model.VacancySummaries.RegionalTeamsMetrics)
+                @Html.Partial("_DashboardTeamMetrics", Model)
             }
         </div>
     }

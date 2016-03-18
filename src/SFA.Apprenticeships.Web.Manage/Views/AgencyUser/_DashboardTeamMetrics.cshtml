@@ -1,19 +1,19 @@
-﻿@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
-@model List<RegionalTeamMetrics>
+﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 <div class="grid-wrapper">
     <div class="grid grid-1-1">
         <div class="inner-block-padr">
             <section>
                 <div class="tabbed-element tab1 active width-all-1-1">
-                    <table class="no-btm-margin">
+                    <table class="no-btm-margin reactive">
                         <colgroup>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
-                            <col>
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t10">
                         </colgroup>
                         <thead>
                             <tr>
@@ -23,29 +23,40 @@
                                 <th>Submitted yesterday</th>
                                 <th>Submitted +48 hours</th>
                                 <th>Resubmitted vacancies</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var regionalTeamMetrics in Model)
+                            @foreach (var regionalTeamMetrics in Model.VacancySummaries.RegionalTeamsMetrics)
                             {
                                 <tr>
                                     <td>
-                                        <span>@regionalTeamMetrics.RegionalTeam.GetTitle()</span>
+                                        <div class="reactive-title">@regionalTeamMetrics.RegionalTeam.GetTitle()</div>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Total vacancies">
+                                        @regionalTeamMetrics.TotalCount
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted today">
+                                        @regionalTeamMetrics.SubmittedTodayCount
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted yesterday">
+                                        @regionalTeamMetrics.SubmittedYesterdayCount
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted +48 hours">
+                                        @regionalTeamMetrics.SubmittedMoreThan48HoursCount
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Resubmitted vacancies">
+                                        @regionalTeamMetrics.ResubmittedCount
                                     </td>
                                     <td class="ta-center">
-                                        <span>@regionalTeamMetrics.TotalCount</span>
-                                    </td>
-                                    <td class="ta-center">
-                                        <span>@regionalTeamMetrics.SubmittedTodayCount</span>
-                                    </td>
-                                    <td class="ta-center">
-                                        <span>@regionalTeamMetrics.SubmittedYesterdayCount</span>
-                                    </td>
-                                    <td class="ta-center">
-                                        <span>@regionalTeamMetrics.SubmittedMoreThan48HoursCount</span>
-                                    </td>
-                                    <td class="ta-center">
-                                        <span>@regionalTeamMetrics.ResubmittedCount</span>
+                                        @if (Model.AgencyUser.RegionalTeam == regionalTeamMetrics.RegionalTeam)
+                                        {
+                                            <div>Your team</div>
+                                        }
+                                        else
+                                        {
+                                            <div>Change team</div>
+                                        }
                                     </td>
                                 </tr>
                             }
