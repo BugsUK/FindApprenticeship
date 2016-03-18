@@ -478,7 +478,8 @@
                     vls.IsVacancyAvailableToQABy(username,
                         It.Is<VacancySummary>(vs => vs.VacancyReferenceNumber == vacancyNotAvailableToQAReferenceNumber))).Returns(false);
 
-            Thread.CurrentPrincipal = new GenericPrincipal(new GenericIdentity(username), null); // TODO: move to service!!
+            var currentUserService = new Mock<ICurrentUserService>();
+            currentUserService.Setup(cus => cus.CurrentUserName).Returns(username);
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -486,6 +487,7 @@
                     .With(vacancyPostingService)
                     .With(dateTimeService)
                     .With(vacancyLockingService)
+                    .With(currentUserService)
                     .Build();
 
             var vacancies = vacancyProvider.GetPendingQAVacancies();

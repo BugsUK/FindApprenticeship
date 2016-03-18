@@ -25,7 +25,11 @@
 
             provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
 
-            var mediator = new VacancyMediatorBuilder().With(provider).Build();
+            var validator = new Mock<VacancyViewModelValidator>();
+            validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
+                .Returns(new ValidationResult());
+
+            var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 
             var result = mediator.ReviewVacancy(vacancyReferenceNumber);
 
@@ -43,6 +47,8 @@
             provider.Setup(p => p.ReviewVacancy(vacancyReferenceNumber)).Returns(viewModel);
 
             var validator = new Mock<VacancyViewModelValidator>();
+            validator.Setup(v => v.Validate(It.IsAny<VacancyViewModel>()))
+                .Returns(new ValidationResult());
 
             var mediator = new VacancyMediatorBuilder().With(validator).With(provider).Build();
 

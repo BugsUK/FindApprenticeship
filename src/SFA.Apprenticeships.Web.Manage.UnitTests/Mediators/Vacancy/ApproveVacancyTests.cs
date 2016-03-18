@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
 {
     using System.Linq;
+    using Common.Constants;
     using Common.UnitTests.Mediators;
+    using Constants.ViewModels;
     using FluentAssertions;
     using Manage.Mediators.Vacancy;
     using Moq;
@@ -16,12 +18,8 @@
         public void ShouldGetStatusOkIfNoProblem()
         {
             const int vacancyReferenceNumber = 1;
-            var pendingQAVacancies = VacancyMediatorTestHelper.GetPendingVacancies(new[]
-            {
-                vacancyReferenceNumber
-            });
             var provider = new Mock<IVacancyQAProvider>();
-            provider.Setup(p => p.GetPendingQAVacancies()).Returns(pendingQAVacancies.ToList());
+            provider.Setup(p => p.GetNextAvailableVacancy()).Returns(new DashboardVacancySummaryViewModel());
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
@@ -110,8 +108,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             var result = mediator.ApproveVacancy(vacancyReferenceNumber);
-            result.AssertCode(VacancyMediatorCodes.ApproveVacancy.InvalidVacancy);
-            Assert.Fail("Should have the message");
+            result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
     }
 }

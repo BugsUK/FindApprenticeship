@@ -63,7 +63,8 @@
             {
                 return
                     GetMediatorResponse<DashboardVacancySummaryViewModel>(
-                        VacancyMediatorCodes.ApproveVacancy.InvalidVacancy);
+                        VacancyMediatorCodes.ApproveVacancy.InvalidVacancy, null,
+                        VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
             }
 
             var nextVacancy = _vacancyQaProvider.GetNextAvailableVacancy();
@@ -95,14 +96,14 @@
 
             if (vacancyViewModel == null)
             {
-                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable, null, Constants.ViewModels.VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
+                return GetMediatorResponse<VacancyViewModel>(VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable, null, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
             }
 
             if (vacancyViewModel.VacancyReferenceNumber != vacancyReferenceNumber)
             {
                 return
                     GetMediatorResponse(VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableVacancy, vacancyViewModel,
-                        Constants.ViewModels.VacancyViewModelMessages.NextAvailableVacancy, UserMessageLevel.Info);
+                        VacancyViewModelMessages.NextAvailableVacancy, UserMessageLevel.Info);
             }
 
             return GetMediatorResponse(VacancyMediatorCodes.ReserveVacancyForQA.Ok, vacancyViewModel);
