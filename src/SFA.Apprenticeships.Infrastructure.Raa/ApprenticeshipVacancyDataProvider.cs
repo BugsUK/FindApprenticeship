@@ -36,8 +36,12 @@
             {
                 if (errorIfNotFound)
                 {
-                    throw new DomainException(ErrorCodes.VacancyNotFoundError, new { vacancyId });
+                    throw new DomainException(ErrorCodes.VacancyNotFoundError, new
+                    {
+                        vacancyId
+                    });
                 }
+
                 return null;
             }
 
@@ -46,6 +50,7 @@
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             var provider = _providerService.GetProvider(providerSite.ProviderId);
             var categories = _referenceDataProvider.GetCategories();
+
             return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
         }
     }

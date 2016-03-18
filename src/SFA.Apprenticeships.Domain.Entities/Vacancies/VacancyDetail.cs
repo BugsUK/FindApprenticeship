@@ -9,6 +9,7 @@
 
         protected VacancyDetail()
         {
+            // TODO: US897: AG: why default this?
             WageUnit = WageUnit.Weekly;
         }
 

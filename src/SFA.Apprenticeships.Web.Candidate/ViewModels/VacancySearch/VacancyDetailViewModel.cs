@@ -53,6 +53,8 @@
         [DataType(DataType.DateTime)]
         public DateTime ClosingDate { get; set; }
 
+        public LegacyWageType WageType { get; set; }
+
         public string Wage { get; set; }
 
         public WageUnit WageUnit { get; set; }

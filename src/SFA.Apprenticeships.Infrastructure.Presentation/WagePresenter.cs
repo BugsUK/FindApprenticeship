@@ -5,6 +5,8 @@
 
     public static class WagePresenter
     {
+        public const string WeeklyWageText = "Weekly wage";
+
         public static string GetHeaderDisplayText(this Wage wage)
         {
             if (wage.Type != WageType.Custom) return "Weekly wage";
@@ -14,6 +16,7 @@
 
         public static string GetHeaderDisplayText(this WageUnit wageUnit)
         {
+            /*
             switch (wageUnit)
             {
                 case WageUnit.Annually:
@@ -25,6 +28,9 @@
                 default:
                     return string.Empty;
             }
+            */
+
+            return WeeklyWageText;
         }
 
         public static string GetHeaderDisplayText(this Domain.Entities.Vacancies.WageUnit wageUnit)
@@ -47,11 +53,11 @@
             switch (wageUnit)
             {
                 case Domain.Entities.Vacancies.WageUnit.Annually:
-                    return "p/year";
+                    return "per year";
                 case Domain.Entities.Vacancies.WageUnit.Monthly:
-                    return "p/month";
+                    return "per month";
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
-                    return "p/week";
+                    return "per week";
                 default:
                     return string.Empty;
             }
@@ -61,6 +67,10 @@
         {
             switch (wage.Type)
             {
+                case WageType.LegacyText:
+                    // TODO: US897: AG: fix and test.
+                    return "TODO";
+                case WageType.LegacyWeekly:
                 case WageType.Custom:
                     return $"£{wage.Amount?.ToString() ?? "unknown"}";
                 case WageType.ApprenticeshipMinimum:
