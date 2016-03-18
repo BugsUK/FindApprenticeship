@@ -15,7 +15,7 @@ Scenario: Find apprenticeships and test ordering without keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
@@ -46,7 +46,7 @@ Scenario: Find apprenticeships and test ordering with keywords
 	When I enter data
 		 | Field               | Value      |
 		 | Keywords            | Web        |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
@@ -95,7 +95,7 @@ Scenario: Find apprenticeships and test paging
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS   |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
