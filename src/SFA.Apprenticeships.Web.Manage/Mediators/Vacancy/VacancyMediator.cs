@@ -77,17 +77,20 @@
 
         public MediatorResponse<DashboardVacancySummaryViewModel> RejectVacancy(int vacancyReferenceNumber)
         {
-            //TODO: There should be validation here
-            _vacancyQaProvider.RejectVacancy(vacancyReferenceNumber);
-
-            var vacancies = _vacancyQaProvider.GetPendingQAVacancies();
-
-            if (vacancies == null || !vacancies.Any())
+            if (_vacancyQaProvider.RejectVacancy(vacancyReferenceNumber) == QAActionResult.InvalidVacancy)
             {
-                return GetMediatorResponse<DashboardVacancySummaryViewModel>(VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies);
+                return
+                    GetMediatorResponse<DashboardVacancySummaryViewModel>(
+                        VacancyMediatorCodes.RejectVacancy.InvalidVacancy, null,
+                        VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
             }
 
-            return GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, vacancies.First());
+            var nextVacancy = _vacancyQaProvider.GetNextAvailableVacancy();
+
+            return nextVacancy == null
+                ? GetMediatorResponse<DashboardVacancySummaryViewModel>(
+                    VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies)
+                : GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, nextVacancy);
         }
 
         public MediatorResponse<VacancyViewModel> ReserveVacancyForQA(int vacancyReferenceNumber)

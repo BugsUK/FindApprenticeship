@@ -7,69 +7,80 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
+    using SFA.Infrastructure.Interfaces;
+    using Web.Common.Configuration;
 
+    [TestFixture]
     public class RejectVacancyTests
     {
-        private const int VacancyReferenceNumber = 1;
-        private readonly Mock<IVacancyPostingService> _vacancyPostingService = new Mock<IVacancyPostingService>();
-        private readonly Mock<IVacancyLockingService>  _vacancyLockingService = new Mock<IVacancyLockingService>();
-
-        [SetUp]
-        public void SetUp()
-        {
-            var vacancy = new Vacancy
-            {
-                VacancyReferenceNumber = VacancyReferenceNumber
-            };
-
-            _vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(VacancyReferenceNumber)).Returns(vacancy);
-        }
-
         [Test]
-        public void RejectVacancyShouldCallRepositorySaveWithStatusAsRejectedByQA()
+        public void RejectVacancy()
         {
             //Arrange
-            _vacancyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
+            var vacancyReferenceNumber = 1;
+            var vacancy = new Fixture().Build<Vacancy>()
+                .With(x => x.VacancyReferenceNumber, vacancyReferenceNumber)
+                .With(x => x.IsEmployerLocationMainApprenticeshipLocation, true)
+                .Create();
+
+            var vacanyLockingService = new Mock<IVacancyLockingService>();
+            var configurationService = new Mock<IConfigurationService>();
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
+
+            vacancyPostingService.Setup(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+
+            vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
                 .Returns(true);
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
-                    .With(_vacancyPostingService)
-                    .With(_vacancyLockingService)
+                    .With(configurationService)
+                    .With(vacancyPostingService)
+                    .With(vacanyLockingService)
                     .Build();
 
             //Act
-            var result = vacancyProvider.RejectVacancy(VacancyReferenceNumber);
+            var result = vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
             result.Should().Be(QAActionResult.Ok);
-            _vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(VacancyReferenceNumber));
-            _vacancyPostingService.Verify(
+            vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
+            vacancyPostingService.Verify(
                 r =>
                     r.UpdateVacancy(
                         It.Is<Vacancy>(
                             av =>
-                                av.VacancyReferenceNumber == VacancyReferenceNumber &&
-                                av.Status == VacancyStatus.Referred &&
-                                av.QAUserName == null)));
+                                av.VacancyReferenceNumber == vacancyReferenceNumber &&
+                                av.Status == VacancyStatus.Referred)));
         }
 
         [Test]
-        public void ShouldReturnInvalidVacancyIfTheVacancyIsNotAvailableToQA()
+        public void ShouldReturnInvalidVacancyIfTheUserCantQATheVacancy()
         {
-            //Arrange
-            var vacancyLockingService = new Mock<IVacancyLockingService>();
+            const int vacanyReferenceNumber = 1;
+            const string userName = "userName";
 
-            vacancyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(It.IsAny<string>(), It.IsAny<Vacancy>()))
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var vacanyLockingService = new Mock<IVacancyLockingService>();
+            var currentUserService = new Mock<ICurrentUserService>();
+
+            currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
+            vacancyPostingService.Setup(vps => vps.GetVacancyByReferenceNumber(vacanyReferenceNumber))
+                .Returns(new Vacancy {VacancyReferenceNumber = vacanyReferenceNumber});
+            vacanyLockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, It.IsAny<Vacancy>()))
                 .Returns(false);
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
-                    .With(_vacancyPostingService)
-                    .With(vacancyLockingService)
+                    .With(vacancyPostingService)
+                    .With(vacanyLockingService)
+                    .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.RejectVacancy(VacancyReferenceNumber);
+            var result = vacancyProvider.RejectVacancy(vacanyReferenceNumber);
 
             result.Should().Be(QAActionResult.InvalidVacancy);
         }
