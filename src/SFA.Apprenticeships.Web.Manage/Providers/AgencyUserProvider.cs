@@ -51,8 +51,11 @@
             var agencyUser = _userProfileService.GetAgencyUser(username);
             var roles = _userProfileService.GetRoles(roleList).ToList();
 
-            var role = roles.Single(r => r.Id == viewModel.RoleId);
-            agencyUser.Role = role;
+            if (!string.IsNullOrEmpty(viewModel.RoleId))
+            {
+                var role = roles.Single(r => r.Id == viewModel.RoleId);
+                agencyUser.Role = role;
+            }
             agencyUser.RegionalTeam = viewModel.RegionalTeam;
 
             _userProfileService.SaveUser(agencyUser);

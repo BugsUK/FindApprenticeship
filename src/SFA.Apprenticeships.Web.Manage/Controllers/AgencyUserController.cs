@@ -11,6 +11,7 @@
     using Common.Models.Azure.AccessControlService;
     using Constants;
     using Domain.Entities.Raa;
+    using Domain.Entities.Raa.Reference;
     using Mediators.AgencyUser;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
@@ -90,7 +91,6 @@
         }
 
         [HttpGet]
-        //TODO: Discuss and implement verifying roleList claim
         [AuthorizeUser(Roles = Roles.Raa)]
         [OwinSessionTimeout]
         [OutputCache(Duration = 0, NoStore = true, VaryByParam = "none")]
@@ -122,6 +122,16 @@
             _agencyUserMediator.SaveAgencyUser(claimsPrincipal, viewModel.AgencyUser);
 
             return RedirectToRoute(ManagementRouteNames.Dashboard);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ChangeTeam(RegionalTeam regionalTeam, DashboardVacancySummaryFilterTypes filterType)
+        {
+            var claimsPrincipal = (ClaimsPrincipal)User;
+            _agencyUserMediator.SaveAgencyUser(claimsPrincipal, new AgencyUserViewModel {RegionalTeam = regionalTeam});
+
+            return RedirectToRoute(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel {FilterType = filterType, Mode = DashboardVacancySummariesMode.Review});
         }
     }
 }

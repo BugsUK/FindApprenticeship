@@ -1,4 +1,6 @@
-﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
 <div class="grid-wrapper">
     <div class="grid grid-1-1">
@@ -34,19 +36,19 @@
                                         <div class="reactive-title">@regionalTeamMetrics.RegionalTeam.GetTitle()</div>
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Total vacancies">
-                                        @regionalTeamMetrics.TotalCount
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.All})">@regionalTeamMetrics.TotalCount</a>
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Submitted today">
-                                        @regionalTeamMetrics.SubmittedTodayCount
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedToday})">@regionalTeamMetrics.SubmittedTodayCount</a>
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Submitted yesterday">
-                                        @regionalTeamMetrics.SubmittedYesterdayCount
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday})">@regionalTeamMetrics.SubmittedYesterdayCount</a>
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Submitted +48 hours">
-                                        @regionalTeamMetrics.SubmittedMoreThan48HoursCount
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours})">@regionalTeamMetrics.SubmittedMoreThan48HoursCount</a>
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Resubmitted vacancies">
-                                        @regionalTeamMetrics.ResubmittedCount
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.Resubmitted})">@regionalTeamMetrics.ResubmittedCount</a>
                                     </td>
                                     <td class="ta-center">
                                         @if (Model.AgencyUser.RegionalTeam == regionalTeamMetrics.RegionalTeam)
@@ -55,7 +57,7 @@
                                         }
                                         else
                                         {
-                                            <div>Change team</div>
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.All})">Change team</a>
                                         }
                                     </td>
                                 </tr>
