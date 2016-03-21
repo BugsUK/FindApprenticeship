@@ -793,7 +793,7 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var agencyUser = _userProfileService.GetAgencyUser(Thread.CurrentPrincipal.Identity.Name);
+            var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
 
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
@@ -1037,7 +1037,6 @@
 
         private RegionalTeam GetRegionalTeamForCurrentUser()
         {
-            // Thread.CurrentPrincipal.Identity.Name
             var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
             return regionalTeam;
