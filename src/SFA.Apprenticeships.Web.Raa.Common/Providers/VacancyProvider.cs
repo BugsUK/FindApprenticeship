@@ -614,25 +614,7 @@
             return standard.Convert(sector);
         }
 
-        #region Helpers
-
-        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
-        {
-            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
-            
-            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
-            {
-                return new string[] {};
-            }
-
-            return blacklistedCategoryCodeNames
-                .Split(',')
-                .Select(each => each.Trim())
-                .ToArray();
-        }
-
-        #endregion
-
+        
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
@@ -867,6 +849,43 @@
             return viewModel;
         }
 
+        public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
+        {
+            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
+                vacancies); 
+
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
+        }
+
+        public void UnReserveVacancyForQA(int vacancyReferenceNumber)
+        {
+            var vacancyToUnReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToUnReserve))
+            {
+                vacancyToUnReserve.QAUserName = null;
+                vacancyToUnReserve.Status = VacancyStatus.Submitted;
+
+                _vacancyPostingService.UpdateVacancy(vacancyToUnReserve);
+            }
+        }
+
+        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
+        {
+            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
+
+            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
+            {
+                return new string[] { };
+            }
+
+            return blacklistedCategoryCodeNames
+                .Split(',')
+                .Select(each => each.Trim())
+                .ToArray();
+        }
+
         private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> vacancies, List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
         {
             return new List<RegionalTeamMetrics>
@@ -893,15 +912,6 @@
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
                 ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
             };
-        }
-
-        public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
-        {
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
-            var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
-                vacancies); 
-
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)

@@ -176,6 +176,7 @@
     <Compile Include="Providers\VacancyProvider\GetNextAvailableVacancy.cs" />
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
     <Compile Include="Providers\VacancyProvider\RejectVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UnReserveForQATests.cs" />
     <Compile Include="Providers\VacancyProvider\ReserveForQATests.cs" />
     <Compile Include="Providers\VacancyProvider\ReviewVacancyTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />

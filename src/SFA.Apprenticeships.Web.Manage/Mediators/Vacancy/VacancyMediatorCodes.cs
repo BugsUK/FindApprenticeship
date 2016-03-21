@@ -127,5 +127,10 @@
             public const string Ok = "VacancyMediatorCodes.ReviewVacancy.Ok";
             public const string FailedValidation = "VacancyMediatorCodes.ReviewVacancy.FailedValidation";
         }
+
+        public class UnReserveVacancyForQA
+        {
+            public const string Ok = "VacancyMediatorCodes.UnReserveVacancyForQA.Ok";
+        }
     }
 }

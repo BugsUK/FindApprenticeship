@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.Raa.Reference;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -60,5 +59,7 @@
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
         DashboardVacancySummaryViewModel GetNextAvailableVacancy();
+
+        void UnReserveVacancyForQA(int vacancyReferenceNumber);
     }
 }

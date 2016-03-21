@@ -231,6 +231,13 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetVacancyViewModel.Ok, vacancyViewModel);
         }
 
+        public MediatorResponse UnReserveVacancyForQA(int vacancyReferenceNumber)
+        {
+            _vacancyQaProvider.UnReserveVacancyForQA(vacancyReferenceNumber);
+
+            return GetMediatorResponse(VacancyMediatorCodes.UnReserveVacancyForQA.Ok);
+        }
+
         public MediatorResponse<VacancyQuestionsViewModel> GetVacancyQuestionsViewModel(int vacancyReferenceNumber)
         {
             var vacancyViewModel = _vacancyQaProvider.GetVacancyQuestionsViewModel(vacancyReferenceNumber);

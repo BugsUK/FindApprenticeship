@@ -98,6 +98,12 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.UnReserveForQA,
+                url: "vacancy/unReserveForQA",
+                defaults: new { controller = "Vacancy", action = "UnReserveForQA" }
+                );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.ApproveVacancy,
                 url: "vacancy/approve",
                 defaults: new { controller = "Vacancy", action = "Approve" }

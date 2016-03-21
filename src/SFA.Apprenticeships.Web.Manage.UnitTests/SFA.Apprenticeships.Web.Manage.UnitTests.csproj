@@ -162,6 +162,7 @@
     <Compile Include="Mediators\Vacancy\RejectVacancyTests.cs" />
     <Compile Include="Mediators\Vacancy\ApproveVacancyTests.cs" />
     <Compile Include="Mediators\Vacancy\EditCommentTests.cs" />
+    <Compile Include="Mediators\Vacancy\UnReserveForQATests.cs" />
     <Compile Include="Mediators\Vacancy\ReserveForQATests.cs" />
     <Compile Include="Mediators\Vacancy\ReviewVacancyTests.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorBuilder.cs" />
