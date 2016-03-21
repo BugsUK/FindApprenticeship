@@ -6,10 +6,10 @@
     {
         public static class EmployerDescription
         {
-            public const string LabelText = "Employer description for candidates";
-            public const string RequiredErrorText = "Enter an employer description for candidates";
+            public const string LabelText = "About the employer";
+            public const string RequiredErrorText = "Enter text about the employer";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "Employer description for candidates " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "About the employer " + Whitelists.FreetextWhitelist.ErrorText;
         }
         public static class EmployerWebsiteUrl
         {

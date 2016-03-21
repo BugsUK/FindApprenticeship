@@ -28,5 +28,7 @@
         public bool ComeFromPreview { get; set; }
 
         public VacancyStatus Status { get; set; }
+
+        public VacancyType VacancyType { get; set; }
     }
 }
