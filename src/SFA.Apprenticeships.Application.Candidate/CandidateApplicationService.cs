@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Application.Candidate
     using CuttingEdge.Conditions;
     using Domain.Entities.Applications;
     using Domain.Entities.Candidates;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.Traineeships;

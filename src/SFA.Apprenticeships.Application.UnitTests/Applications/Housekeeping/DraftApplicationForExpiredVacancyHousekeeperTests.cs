@@ -15,6 +15,7 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+
     [TestFixture]
     public class DraftApplicationForExpiredVacancyHousekeeperTests
     {

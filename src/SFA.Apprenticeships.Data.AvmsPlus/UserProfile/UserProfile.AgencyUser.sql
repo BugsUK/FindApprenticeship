@@ -6,6 +6,7 @@
     [UpdatedDateTime] DATETIME2 NULL, 
     [Username] NVARCHAR(100) NOT NULL, 
     [RoleId] NVARCHAR(20) NULL, 
+    [RegionalTeamId] int NOT NULL DEFAULT 1, 
     CONSTRAINT PK_UserProfile_AgencyUser PRIMARY KEY (AgencyUserId)
 )
 

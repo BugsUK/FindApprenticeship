@@ -14,7 +14,6 @@
         private readonly Mock<ILocationLookupProvider> _locationLookupProvider = new Mock<ILocationLookupProvider>();
         private readonly Mock<IPostcodeLookupProvider> _postcodeLookupProvider = new Mock<IPostcodeLookupProvider>();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
-        private readonly Mock<IAddressLookupProvider> _addressLookupProvider = new Mock<IAddressLookupProvider>();
 
         [Test]
         public void ShouldCallToPostcodeProviderIfTheInputIsAPostcode()

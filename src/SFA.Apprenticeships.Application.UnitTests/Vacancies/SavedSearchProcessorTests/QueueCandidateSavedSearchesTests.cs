@@ -39,7 +39,11 @@
 
             logService.Setup(l => l.Info(It.IsAny<string>(), It.IsAny<object[]>())).Callback<string, object[]>((m, p) => { loggedMessage = m; });
 
-            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(serviceBus).With(logService).Build();
+            var processor =
+                new SavedSearchProcessorBuilder().With(savedSearchReadRepository)
+                    .With(serviceBus)
+                    .With(logService)
+                    .Build();
 
             processor.QueueCandidateSavedSearches();
 

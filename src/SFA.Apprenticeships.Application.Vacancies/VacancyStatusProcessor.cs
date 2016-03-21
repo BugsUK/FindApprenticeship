@@ -8,7 +8,7 @@
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
 
     public class VacancyStatusProcessor : IVacancyStatusProcessor
     {

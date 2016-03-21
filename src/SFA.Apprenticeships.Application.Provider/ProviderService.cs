@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Application.Provider
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Providers;
 
     public class ProviderService : IProviderService

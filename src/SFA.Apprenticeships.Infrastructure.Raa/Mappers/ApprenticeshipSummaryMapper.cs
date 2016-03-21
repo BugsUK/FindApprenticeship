@@ -17,8 +17,8 @@
         public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
-            
-            //TODO: Store geopoints for employers
+
+            //TODO: Geocode new vacancies
             var location = new GeoPoint();
             if (vacancy.Address.GeoPoint != null && vacancy.Address.GeoPoint.Latitude != 0 &&
                 vacancy.Address.GeoPoint.Longitude != 0)

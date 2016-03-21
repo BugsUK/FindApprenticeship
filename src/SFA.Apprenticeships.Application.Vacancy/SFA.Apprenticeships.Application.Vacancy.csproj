@@ -120,7 +120,7 @@
       <Name>SFA.Apprenticeships.Domain.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj">
-      <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
+      <Project>{CF497DD1-550D-4203-8FBF-C0A3B0109D2B}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">

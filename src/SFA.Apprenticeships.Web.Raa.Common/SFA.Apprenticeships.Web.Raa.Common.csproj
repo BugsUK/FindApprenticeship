@@ -191,6 +191,7 @@
     <Compile Include="Mappers\Resolvers\NullableIntToNullableDecimalResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationProvider.cs" />
+    <Compile Include="Providers\QAActionResult.cs" />
     <Compile Include="Providers\EmployerProvider.cs" />
     <Compile Include="Providers\IApplicationProvider.cs" />
     <Compile Include="Providers\IEmployerProvider.cs" />
@@ -244,6 +245,7 @@
     <Compile Include="ViewModels\Application\WorkExperienceViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ApplicationsLinkViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\CommentViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesMode.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesSearchViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummariesViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryFilterTypes.cs" />
@@ -270,6 +272,7 @@
     <Compile Include="ViewModels\Vacancy\DashboardVacancySummaryViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\EmployerViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\NewVacancyViewModel.cs" />
+    <Compile Include="ViewModels\Vacancy\RegionalTeamMetrics.cs" />
     <Compile Include="ViewModels\Vacancy\StandardViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\SubmittedVacancyViewModel.cs" />
     <Compile Include="ViewModels\Vacancy\ContactDetailsAndVacancyHistoryViewModel.cs" />

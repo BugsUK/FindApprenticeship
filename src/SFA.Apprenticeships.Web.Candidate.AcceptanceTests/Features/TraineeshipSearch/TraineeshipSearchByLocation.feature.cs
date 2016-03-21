@@ -681,7 +681,7 @@ this.FeatureBackground();
                         "Value"});
             table29.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 195
  testRunner.When("I enter data", ((string)(null)), table29, "When ");
 #line 198
@@ -754,7 +754,7 @@ this.FeatureBackground();
                         "Value"});
             table33.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 217
  testRunner.When("I enter data", ((string)(null)), table33, "When ");
 #line 220

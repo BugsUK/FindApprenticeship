@@ -96,6 +96,7 @@
     <Compile Include="Interfaces\Caching\ICacheService.cs" />
     <Compile Include="Interfaces\IConfigurationManager.cs" />
     <Compile Include="Interfaces\IConfigurationService.cs" />
+    <Compile Include="Interfaces\ICurrentUserService.cs" />
     <Compile Include="Interfaces\IDateTimeService.cs" />
     <Compile Include="Interfaces\ILogService.cs" />
     <Compile Include="Interfaces\IMapper.cs" />

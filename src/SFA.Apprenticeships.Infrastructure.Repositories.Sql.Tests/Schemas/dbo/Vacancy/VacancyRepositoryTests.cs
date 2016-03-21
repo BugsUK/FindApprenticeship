@@ -2,7 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Queries;
     using Domain.Raa.Interfaces.Repositories;
@@ -46,7 +49,7 @@
                 _dateTimeService.Object, _logger.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object);
-
+             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
 
@@ -60,10 +63,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
                 // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -113,10 +116,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
             // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -155,10 +158,10 @@
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Draft;
             // Changed from PendingQA to Draft because PendingQA is not still in the db
-            vacancy.VacancyManagerId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
             vacancy.Address.County = "CAM";
-            vacancy.OwnerPartyId = 1;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
 
@@ -188,8 +191,8 @@
             vacancy.VacancyGuid = vacancyGuid;
             vacancy.Title = title;
             vacancy.Status = VacancyStatus.Live;
-            vacancy.VacancyManagerId = 1;
-            vacancy.OwnerPartyId = 1;
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
@@ -256,6 +259,91 @@
 
             findResults.Should().HaveCount(0);
             totalResultsCount.Should().Be(0);
+        }
+
+        [Test, Category("Integration")]
+        public void GetByIdsTest()
+        {
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+
+            var vacancy1 = CreateValidDomainVacancy();
+            vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy1.Address.Postcode = "B26 2LW";
+            vacancy1.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+
+            var vacancy2 = CreateValidDomainVacancy();
+            vacancy2.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy2.Address.Postcode = "SW2 4NT";
+            vacancy2.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+
+            var vacancy3 = CreateValidDomainVacancy();
+            vacancy3.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy3.Address.Postcode = "DE6 5JA";
+            vacancy3.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+
+            vacancy1 = writeRepository.Create(vacancy1);
+            vacancy2 = writeRepository.Create(vacancy2);
+            vacancy3 = writeRepository.Create(vacancy3);
+
+            var vacancies = readRepository.GetByIds(new[] {vacancy1.VacancyId, vacancy2.VacancyId, vacancy3.VacancyId});
+
+            vacancies.Count.Should().Be(3);
+            foreach (var vacancySummary in vacancies)
+            {
+                vacancySummary.VacancyId.Should().NotBe(0);
+            }
+            vacancies.Single(v => v.VacancyId == vacancy1.VacancyId).RegionalTeam.Should().Be(RegionalTeam.WestMidlands);
+            vacancies.Single(v => v.VacancyId == vacancy2.VacancyId).RegionalTeam.Should().Be(RegionalTeam.SouthEast);
+            vacancies.Single(v => v.VacancyId == vacancy3.VacancyId).RegionalTeam.Should().Be(RegionalTeam.EastMidlands);
+        }
+
+        [Test, Category("Integration")]
+        public void GetMultiLocationTest()
+        {
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+
+            IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object);
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy.Address.Postcode = null;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+
+            vacancy = writeRepository.Create(vacancy);
+            
+            var vacancyLocations = new List<VacancyLocation>
+            {
+                new VacancyLocation
+                {
+                    VacancyId = vacancy.VacancyId,
+                    Address = new PostalAddress
+                    {
+                        Postcode = "SW2 4NT"
+                    }
+                },
+                new VacancyLocation
+                {
+                    VacancyId = vacancy.VacancyId,
+                    Address = new PostalAddress
+                    {
+                        Postcode = "B26 2LW"
+                    }
+                }
+            };
+
+            locationWriteRepository.Save(vacancyLocations);
+
+            var entity = readRepository.Get(vacancy.VacancyId);
+
+            entity.RegionalTeam.Should().Be(RegionalTeam.SouthEast);
         }
     }
 }

@@ -1,0 +1,71 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
+
+<div class="grid-wrapper">
+    <div class="grid grid-1-1">
+        <div class="inner-block-padr">
+            <section>
+                <div class="tabbed-element tab1 active width-all-1-1">
+                    <table class="no-btm-margin reactive">
+                        <colgroup>
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t15">
+                            <col class="t10">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Team</th>
+                                <th>Total vacancies</th>
+                                <th>Submitted today</th>
+                                <th>Submitted yesterday</th>
+                                <th>Submitted +48 hours</th>
+                                <th>Resubmitted vacancies</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var regionalTeamMetrics in Model.VacancySummaries.RegionalTeamsMetrics)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="reactive-title">@regionalTeamMetrics.RegionalTeam.GetTitle()</div>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Total vacancies">
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.All})">@regionalTeamMetrics.TotalCount</a>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted today">
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedToday})">@regionalTeamMetrics.SubmittedTodayCount</a>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted yesterday">
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday})">@regionalTeamMetrics.SubmittedYesterdayCount</a>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Submitted +48 hours">
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours})">@regionalTeamMetrics.SubmittedMoreThan48HoursCount</a>
+                                    </td>
+                                    <td class="ta-center reactive-header" data-label="Resubmitted vacancies">
+                                        <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.Resubmitted})">@regionalTeamMetrics.ResubmittedCount</a>
+                                    </td>
+                                    <td class="ta-center">
+                                        @if (Model.AgencyUser.RegionalTeam == regionalTeamMetrics.RegionalTeam)
+                                        {
+                                            <div>Your team</div>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.All})">Change team</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>

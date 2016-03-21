@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Threading;
     using Common;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using Domain.Raa.Interfaces.Queries;
@@ -84,6 +85,13 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
             return dbVacancy;
         }
 
+        private Vacancy GetVacancyByVacancyId(int vacancyId)
+        {
+            var dbVacancy = _getOpenConnection.Query<Vacancy>(
+                "SELECT * FROM dbo.Vacancy WHERE VacancyId = @VacancyId",
+                new { VacancyId = vacancyId }).SingleOrDefault();
+            return dbVacancy;
+        }
 
         public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
         {
@@ -132,6 +140,13 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             return count;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pageSize"></param>
+        /// <param name="page">Expects page starting from 0 rather than 1</param>
+        /// <param name="desiredStatuses"></param>
+        /// <returns></returns>
         public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
@@ -231,6 +246,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
+            MapRegionalTeam(result);
 
             return result;
         }
@@ -242,11 +258,14 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipTypes(dbVacancies, results);
             MapFrameworkIds(dbVacancies, results);
             MapSectorIds(dbVacancies, results);
-            for (int i = 0; i < dbVacancies.Count; i++)
+            for (var i = 0; i < dbVacancies.Count; i++)
             {
-                MapDateFirstSubmitted(dbVacancies[i], results[i]);
-                MapDateSubmitted(dbVacancies[i], results[i]);
-                MapDateQAApproved(dbVacancies[i], results[i]);
+                var dbVacancy = dbVacancies[i];
+                var vacancySummary = results[i];
+                MapDateFirstSubmitted(dbVacancy, vacancySummary);
+                MapDateSubmitted(dbVacancy, vacancySummary);
+                MapDateQAApproved(dbVacancy, vacancySummary);
+                MapRegionalTeam(vacancySummary);
             }
 
             return results;
@@ -511,6 +530,23 @@ order by HistoryDate desc
                 ).SingleOrDefault();
         }
 
+        private void MapRegionalTeam(VacancySummary vacancySummary)
+        {
+            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode);
+            if (vacancySummary.RegionalTeam == RegionalTeam.Other)
+            {
+                //Try and get region from vacancy locations
+                var vacancyLocation =
+                    _getOpenConnection.Query<VacancyLocation>(
+                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC", new {vacancySummary.VacancyId})
+                        .FirstOrDefault();
+                if (vacancyLocation != null)
+                {
+                    vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
+                }
+            }
+        }
+
         private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)
         {
             var vacancyTextFieldValueId =
@@ -565,7 +601,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
             PopulateIds(entity, dbVacancy);
 
-            var previousVacancyState = GetVacancyByVacancyGuid(entity.VacancyGuid);
+            var previousVacancyState = GetVacancyByVacancyId(entity.VacancyId);
 
             _getOpenConnection.UpdateSingle(dbVacancy);
 

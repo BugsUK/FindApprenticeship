@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.UserAccount;
@@ -72,6 +73,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
+                x.For<IVacancyLockingService>().Use<VacancyLockingService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();

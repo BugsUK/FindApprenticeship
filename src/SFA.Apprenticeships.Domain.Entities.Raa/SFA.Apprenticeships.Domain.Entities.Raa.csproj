@@ -97,12 +97,13 @@
     <Compile Include="Reference\County.cs" />
     <Compile Include="Reference\LocalAuthority.cs" />
     <Compile Include="Reference\Region.cs" />
+    <Compile Include="Reference\RegionalTeam.cs" />
+    <Compile Include="Reference\RegionalTeamMapper.cs" />
     <Compile Include="Roles.cs" />
     <Compile Include="Users\AgencyUser.cs" />
     <Compile Include="Users\ProviderUser.cs" />
     <Compile Include="Users\ProviderUserStatus.cs" />
     <Compile Include="Users\Role.cs" />
-    <Compile Include="Users\Team.cs" />
     <Compile Include="Vacancies\ApprenticeshipLevel.cs" />
     <Compile Include="Vacancies\Duration.cs" />
     <Compile Include="Vacancies\DurationType.cs" />

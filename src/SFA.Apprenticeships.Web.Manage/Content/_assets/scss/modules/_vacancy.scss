@@ -189,3 +189,33 @@ h2{
 .candidate-address {
   list-style-type: none;
 }
+
+table.reactive {
+    @media screen and ( max-width: 768px ) {
+        border-top: 1px solid $grey-2;
+        display: block;
+        thead {
+            display: none;
+        } 
+        tr {
+            display: block;
+            border-bottom: 1px solid $grey-2;
+            padding: 1em 0;
+            td {
+                display: block;
+                text-align: left;
+                border: none;
+                padding: 0.25em 0;
+                .reactive-title {
+                    @include bold-19;
+                }
+                &.reactive-header {
+                    &:before {
+                        content: attr(data-label) ":\00a0";
+                        @include bold-16;
+                    }
+                }
+            }
+        }
+    }
+}
