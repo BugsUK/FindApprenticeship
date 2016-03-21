@@ -166,7 +166,7 @@
 
             var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
-            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+            return ReturnResult(updatedViewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> GetBasicDetails(int vacancyReferenceNumber)

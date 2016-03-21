@@ -30,7 +30,7 @@
 
         VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
+        QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
         QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 

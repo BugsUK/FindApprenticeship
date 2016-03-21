@@ -1049,7 +1049,7 @@
             return GetVacancyViewModelFrom(vacancy);
         }
 
-        public FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
+        public QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
@@ -1083,7 +1083,8 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            return viewModel;
+
+            return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
