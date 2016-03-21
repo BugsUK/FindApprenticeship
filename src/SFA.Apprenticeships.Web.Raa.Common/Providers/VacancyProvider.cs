@@ -851,7 +851,8 @@
 
         public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
         {
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
+            var vacancies = GetTeamVacancySummaries();
+
             var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
                 vacancies); 
 
@@ -1021,10 +1022,7 @@
                 return GetVacancyViewModelFrom(vacancy);
             }
 
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
-                    .OrderBy(v => v.DateSubmitted)
-                    .ToList();
+            var vacancies = GetTeamVacancySummaries();
 
             var nextAvailableVacancySummary =
                 _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName, vacancies);
@@ -1035,6 +1033,27 @@
                 _vacancyPostingService.ReserveVacancyForQA(nextAvailableVacancySummary.VacancyReferenceNumber);
 
             return GetVacancyViewModelFrom(nextAvailableVacancy);
+        }
+
+        private RegionalTeam GetRegionalTeamForCurrentUser()
+        {
+            // Thread.CurrentPrincipal.Identity.Name
+            var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
+            var regionalTeam = agencyUser.RegionalTeam;
+            return regionalTeam;
+        }
+
+        private List<VacancySummary> GetTeamVacancySummaries()
+        {
+            var regionalTeam = GetRegionalTeamForCurrentUser();
+
+            var vacancies =
+                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
+                    .Where(v => v.RegionalTeam == regionalTeam)
+                    .OrderBy(v => v.DateSubmitted)
+                    .ToList();
+
+            return vacancies;
         }
 
         public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)
