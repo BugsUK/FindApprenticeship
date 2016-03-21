@@ -356,7 +356,7 @@
 
             var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
-            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+            return ReturnResult(updatedViewModel);
         }
 
         public MediatorResponse<VacancyRequirementsProspectsViewModel> UpdateVacancy(VacancyRequirementsProspectsViewModel viewModel)

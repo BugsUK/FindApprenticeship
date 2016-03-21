@@ -1112,7 +1112,7 @@
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
             // TODO: not sure if do this or call reserveForQA in the service
-            ResereVacancyForQA(vacancy);
+            AddQAInformation(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1120,18 +1120,23 @@
             return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        private void ResereVacancyForQA(Vacancy vacancy)
+        private void AddQAInformation(Vacancy vacancy)
         {
             vacancy.QAUserName = _currentUserService.CurrentUserName;
             vacancy.DateStartedToQA = _dateTimeService.UtcNow;
         }
 
-        public TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
+        public QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<TrainingDetailsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             //update properties
             vacancy.TrainingType = viewModel.TrainingType;
@@ -1159,7 +1164,11 @@
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
             viewModel.Sectors = sectors;
-            return viewModel;
+
+            // TODO: not sure if do this or call reserveForQA in the service
+            AddQAInformation(vacancy);
+
+            return new QAActionResult<TrainingDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
@@ -1233,7 +1242,7 @@
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
             // TODO: not sure if do this or call reserveForQA in the service
-            ResereVacancyForQA(vacancy);
+            AddQAInformation(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 

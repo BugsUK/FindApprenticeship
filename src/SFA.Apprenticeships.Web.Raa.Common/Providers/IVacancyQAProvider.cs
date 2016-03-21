@@ -34,7 +34,7 @@
 
         QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
-        TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
+        QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
 
