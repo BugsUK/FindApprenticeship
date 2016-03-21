@@ -193,7 +193,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="packages.config" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
   </ItemGroup>
