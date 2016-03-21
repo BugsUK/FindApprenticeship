@@ -12,9 +12,9 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        QAActionResult ApproveVacancy(int vacancyReferenceNumber);
+        QAActionResultCode ApproveVacancy(int vacancyReferenceNumber);
 
-        QAActionResult RejectVacancy(int vacancyReferenceNumber);
+        QAActionResultCode RejectVacancy(int vacancyReferenceNumber);
 
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
@@ -32,7 +32,7 @@
 
         FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
-        NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
+        QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
         TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 

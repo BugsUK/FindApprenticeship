@@ -46,7 +46,7 @@
             var result = vacancyProvider.RejectVacancy(vacancyReferenceNumber);
 
             //Assert
-            result.Should().Be(QAActionResult.Ok);
+            result.Should().Be(QAActionResultCode.Ok);
             vacancyPostingService.Verify(r => r.GetVacancyByReferenceNumber(vacancyReferenceNumber));
             vacancyPostingService.Verify(
                 r =>
@@ -82,7 +82,7 @@
 
             var result = vacancyProvider.RejectVacancy(vacanyReferenceNumber);
 
-            result.Should().Be(QAActionResult.InvalidVacancy);
+            result.Should().Be(QAActionResultCode.InvalidVacancy);
         }
     }
 }

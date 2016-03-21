@@ -31,6 +31,7 @@
         
         public class UpdateVacancy
         {
+            public const string InvalidVacancy = "VacancyMediatorCodes.UpdateVacancy.InvalidVacancy";
             public const string FailedValidation = "VacancyMediatorCodes.UpdateVacancy.FailedValidation";
             public const string Ok = "VacancyMediatorCodes.UpdateVacancy.Ok";
         }

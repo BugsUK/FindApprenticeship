@@ -956,14 +956,14 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public QAActionResult ApproveVacancy(int vacancyReferenceNumber)
+        public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow;
             var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, submittedVacancy))
             {
-                return QAActionResult.InvalidVacancy;
+                return QAActionResultCode.InvalidVacancy;
             }
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
@@ -990,16 +990,16 @@
             submittedVacancy.DateQAApproved = qaApprovalDate;
             _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
-            return QAActionResult.Ok;
+            return QAActionResultCode.Ok;
         }
 
-        public QAActionResult RejectVacancy(int vacancyReferenceNumber)
+        public QAActionResultCode RejectVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
-                return QAActionResult.InvalidVacancy;
+                return QAActionResultCode.InvalidVacancy;
             }
 
             vacancy.Status = VacancyStatus.Referred;
@@ -1007,7 +1007,7 @@
 
             _vacancyPostingService.UpdateVacancy(vacancy);
 
-            return QAActionResult.Ok;
+            return QAActionResultCode.Ok;
         }
 
         public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
@@ -1086,7 +1086,7 @@
             return viewModel;
         }
 
-        public NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel)
+        public QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
@@ -1110,7 +1110,7 @@
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            return viewModel;
+            return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
