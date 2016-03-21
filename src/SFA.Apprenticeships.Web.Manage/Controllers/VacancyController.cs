@@ -154,6 +154,10 @@
                             vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                         });
 
+                case VacancyMediatorCodes.UpdateVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -201,6 +205,10 @@
                         {
                             vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                         });
+
+                case VacancyMediatorCodes.UpdateVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -271,6 +279,10 @@
                             vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                         });
 
+                case VacancyMediatorCodes.UpdateVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
+
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -316,6 +328,10 @@
                     {
                         vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                     });
+
+                case VacancyMediatorCodes.UpdateVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -363,6 +379,10 @@
                         {
                             vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                         });
+
+                case VacancyMediatorCodes.UpdateVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
 
                 default:
                     throw new InvalidMediatorCodeException(response.Code);

@@ -143,55 +143,6 @@
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
             providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
-        
-        [Test]
-        public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
-        {
-            //Arrange
-            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>()
-                .With(vm => vm.VacancyReferenceNumber, null)
-                .Create();
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .Build();
-
-            //Act
-            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
-
-            //Assert
-            action.ShouldThrow<ArgumentNullException>();
-        }
-
-        
-        private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
-        {
-            return new FurtherVacancyDetailsViewModel
-            {
-                VacancyReferenceNumber = vacancyReferenceNumber,
-                VacancyDatesViewModel = new VacancyDatesViewModel
-                {
-                    ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(20)),
-                    PossibleStartDate = new DateViewModel(DateTime.UtcNow.AddDays(30))
-                },
-                Duration = 3,
-                DurationType = DurationType.Years,
-                LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
-                HoursPerWeek = 30,
-                WorkingWeek = "A working week"
-            };
-        }
     }
 
     public static class MoqExtensions

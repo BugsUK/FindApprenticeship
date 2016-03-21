@@ -21,12 +21,42 @@
     [TestFixture]
     public class UpdateNewVacancyViewModelTests
     {
+        private const int QAVacancyTimeout = 10;
+
+        [Test]
+        public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
+        {
+            //Arrange
+            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>()
+                .With(vm => vm.VacancyReferenceNumber, null)
+                .Create();
+
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
+            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
+                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+
+            var vacancyProvider =
+                new VacancyProviderBuilder().With(vacancyPostingService)
+                    .With(providerService)
+                    .With(configurationService)
+                    .Build();
+
+            //Act
+            Action action = () => vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+
+            //Assert
+            action.ShouldThrow<ArgumentNullException>();
+        }
+
         [Test]
         public void ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
             const string ukprn = "ukprn";
-            const int QAVacancyTimeout = 10;
             const string userName = "userName";
             var utcNow = DateTime.UtcNow;
 

@@ -93,8 +93,6 @@
                     .With(vacancylockingService)
                     .Build();
 
-            var expectedResult = new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok, viewModel);
-
             //Act
             var result = vacancyProvider.UpdateVacancyWithComments(viewModel);
             
