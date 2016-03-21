@@ -216,6 +216,7 @@
                 .IgnoreMember(av => av.SectorCodeNameComment)
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.RegionalTeam)
+                .IgnoreMember(av => av.CreatedByProviderUsername)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

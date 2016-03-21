@@ -509,8 +509,7 @@
                 }
             }
 
-            var vacancyManager = default(ProviderUser);
-            // TODO: AG: _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
+            var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider,
                 vacancyManager, vacancy);
 
