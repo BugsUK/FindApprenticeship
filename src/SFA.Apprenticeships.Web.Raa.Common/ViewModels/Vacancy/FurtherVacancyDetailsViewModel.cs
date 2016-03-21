@@ -10,7 +10,7 @@
     using Validators.Vacancy;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
-    public class FurtherVacancyDetailsViewModel
+    public class FurtherVacancyDetailsViewModel : IPartialVacancyViewModel
     {
         public const string PartialView = "Vacancy/FurtherVacancyDetails";
 

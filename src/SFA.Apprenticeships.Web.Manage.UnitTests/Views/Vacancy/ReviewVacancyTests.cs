@@ -113,7 +113,7 @@
 
             var view = details.RenderAsHtml(_context, viewModel);
 
-            view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
+            view.GetElementbyId("btnUnReserve").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
         [Test]

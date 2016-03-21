@@ -1,4 +1,5 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.SubmittedVacancyViewModel
+@using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
 @using SFA.Apprenticeships.Web.Recruit.Constants
 @{
@@ -36,7 +37,14 @@
     else
     {
         <p>
-            Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.
+            @if (Model.VacancyType == VacancyType.Traineeship)
+            {
+                <span>Your traineeship opportunity will now be reviewed by a Skills Funding Agency adviser.</span>
+            }
+            else
+            {
+                <span>Your vacancy advert will now be reviewed by a Skills Funding Agency adviser.</span>
+            }
             You’ll be notified via your recruitment home page if any changes are
             necessary before the advert goes live.
         </p>
@@ -44,11 +52,11 @@
 </section>
 <section class="section-border">
     <div class="hgroup-medium text">
-        <h2 class="heading-medium">Create another vacancy</h2>
-        <span class="subtitle">Start with a fresh template or continue with a draft</span>
+        <h2 class="heading-medium">Create another apprenticeship vacancy or traineeship opportunity</h2>
+        <span class="subtitle">Use a fresh template or continue with a draft</span>
     </div>
     <div class="form-group">
-        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Create new vacancy</a>
+        <a href="@Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })" class="button">Start new opportunity or vacancy</a>
     </div>
     <p>
         <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Return to recruitment home</a>

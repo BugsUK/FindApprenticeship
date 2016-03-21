@@ -22,6 +22,7 @@
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
+        private readonly ICurrentUserService _currentUserService;
 
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
@@ -35,12 +36,14 @@ ApplyOutsideNAVMS, LockedForSupportUntil, NoOfOfflineApplicants, MasterVacancyId
 VacancyGuid, SubmissionCount, StartedToQADateTime, StandardId, HoursPerWeek, WageUnitId, DurationTypeId, DurationValue, QAUserName, 
 TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
 
-        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger)
+        public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
+            ILogService logger, ICurrentUserService currentUserService)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
             _dateTimeService = dateTimeService;
             _logger = logger;
+            _currentUserService = currentUserService;
         }
 
         public DomainVacancy Get(int vacancyId)
@@ -243,6 +246,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapCreatedDateTime(dbVacancy, result);
+            MapCreatedByProviderUsername(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
@@ -514,6 +518,22 @@ order by HistoryDate
                 ).SingleOrDefault();
         }
 
+        private void MapCreatedByProviderUsername(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.CreatedByProviderUsername = _getOpenConnection.Query<string>(@"
+select top 1 UserName
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Draft
+                }
+                ).SingleOrDefault();
+        }
+
         private void MapDateQAApproved(Vacancy dbVacancy, VacancySummary result)
         {
             result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
@@ -583,7 +603,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             SaveTextFieldsFor(dbVacancy.VacancyId, entity);
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
 
-            CreateVacancyHistoryRow(dbVacancy.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange,
+            CreateVacancyHistoryRow(dbVacancy.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange,
                 (int)entity.Status);
 
             _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
@@ -620,7 +640,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
         {
             if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
             {
-                CreateVacancyHistoryRow(actualVacancyState.VacancyId, GetUserName(), VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
             }
         }
 
@@ -637,11 +657,6 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             };
 
             _getOpenConnection.Insert(vacancyHistory);
-        }
-
-        private static string GetUserName()
-        {
-            return Thread.CurrentPrincipal.Identity.Name;
         }
 
         public void Delete(int vacancyId)
@@ -978,7 +993,7 @@ when not matched then
             _logger.Debug(
                 $"Calling database to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA");
 
-            var userName = Thread.CurrentPrincipal.Identity.Name; // use function/service
+            var userName = _currentUserService.CurrentUserName;
 
             // TODO: Add QAUserName / TimeStartedToQA. Perhaps a name without QA in would be better?
             // TODO: Possibly need MutatingQueryMulti to get address etc??? Or use join as only one record
@@ -988,7 +1003,7 @@ SET    QAUserName             = @UserName,
        StartedToQADateTime    = @StartedToQADateTime,
        VacancyStatusId        = @VacancyStatusId
 WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
-AND    (QAUserName IS NULL OR (QAUserName = @UserName))
+-- AND    (QAUserName IS NULL OR (QAUserName = @UserName))
 -- AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
 
 SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber

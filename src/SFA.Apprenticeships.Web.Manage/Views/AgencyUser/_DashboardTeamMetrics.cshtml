@@ -9,13 +9,12 @@
                 <div class="tabbed-element tab1 active width-all-1-1">
                     <table class="no-btm-margin reactive">
                         <colgroup>
-                            <col class="t15">
-                            <col class="t15">
-                            <col class="t15">
-                            <col class="t15">
-                            <col class="t15">
-                            <col class="t15">
-                            <col class="t10">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
                         </colgroup>
                         <thead>
                             <tr>
@@ -25,7 +24,6 @@
                                 <th>Submitted yesterday</th>
                                 <th>Submitted +48 hours</th>
                                 <th>Resubmitted vacancies</th>
-                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,16 +47,6 @@
                                     </td>
                                     <td class="ta-center reactive-header" data-label="Resubmitted vacancies">
                                         <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.Resubmitted})">@regionalTeamMetrics.ResubmittedCount</a>
-                                    </td>
-                                    <td class="ta-center">
-                                        @if (Model.AgencyUser.RegionalTeam == regionalTeamMetrics.RegionalTeam)
-                                        {
-                                            <div>Your team</div>
-                                        }
-                                        else
-                                        {
-                                            <a href="@Url.RouteUrl(ManagementRouteNames.ChangeTeam, new {regionalTeam = regionalTeamMetrics.RegionalTeam, filterType = DashboardVacancySummaryFilterTypes.All})">Change team</a>
-                                        }
                                     </td>
                                 </tr>
                             }

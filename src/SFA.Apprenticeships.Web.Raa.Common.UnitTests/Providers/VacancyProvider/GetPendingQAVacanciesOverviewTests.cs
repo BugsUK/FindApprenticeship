@@ -272,5 +272,396 @@
             //Assert
             vacancySummariesViewModel.SearchViewModel.Mode.Should().Be(DashboardVacancySummariesMode.Review);
         }
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldGetSubmittedAndReservedForQAVacanciesFromVacancyPostingService()
+        {
+            // Arrange
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(new List<VacancySummary>());
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .Build();
+
+            //Act
+            vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel());
+
+            // Assert
+            vacancyPostingService.Verify(vps => vps.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA), Times.Once);
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedToday()
+        {
+            // Arrange
+            var today = new DateTime(2016, 3, 16, 12, 0, 0);
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var dateTimeService = new Mock<IDateTimeService>();
+            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
+            const int anInt = 1;
+            const string username = "userName";
+
+            var apprenticeshipVacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    ClosingDate = today,
+                    DateSubmitted = today,
+                    OwnerPartyId = anInt,
+                    VacancyReferenceNumber = anInt,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = null
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .With(dateTimeService)
+                    .Build();
+
+            //Act
+            var vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.All
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedYesterday()
+        {
+            // Arrange
+            var today = new DateTime(2016, 3, 16, 12, 0, 0);
+            var yesterday = new DateTime(2016, 3, 15, 12, 0, 0);
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var dateTimeService = new Mock<IDateTimeService>();
+            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
+            const int anInt = 1;
+            const string username = "userName";
+
+            var apprenticeshipVacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    ClosingDate = yesterday,
+                    DateSubmitted = yesterday,
+                    OwnerPartyId = anInt,
+                    VacancyReferenceNumber = anInt,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = null
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .With(dateTimeService)
+                    .Build();
+
+            //Act
+            var vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.All
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+        }
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesSubmittedMoreThan48HoursAgo()
+        {
+            // Arrange
+            var today = new DateTime(2016, 3, 16, 12, 0, 0);
+            var fourtyEightHoursAndOneMinuteAgo = today.AddMinutes(-(48 * 60 + 1));
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var dateTimeService = new Mock<IDateTimeService>();
+            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
+            const int anInt = 1;
+            const string username = "userName";
+
+            var apprenticeshipVacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    ClosingDate = fourtyEightHoursAndOneMinuteAgo,
+                    DateSubmitted = fourtyEightHoursAndOneMinuteAgo,
+                    OwnerPartyId = anInt,
+                    VacancyReferenceNumber = anInt,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = null
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .With(dateTimeService)
+                    .Build();
+
+            //Act
+            var vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.All
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+        }
+
+
+        [Test]
+        public void GetPendingQAVacanciesOverviewShouldReturnVacanciesResubmitted()
+        {
+            // Arrange
+            var today = new DateTime(2016, 3, 16, 12, 0, 0);
+            var vacancyPostingService = new Mock<IVacancyPostingService>();
+            var providerService = new Mock<IProviderService>();
+            var dateTimeService = new Mock<IDateTimeService>();
+            dateTimeService.Setup(dts => dts.UtcNow).Returns(today);
+            const int anInt = 1;
+            const string username = "userName";
+            const int submissionCount = 2;
+
+            var apprenticeshipVacancies = new List<VacancySummary>
+            {
+                new VacancySummary
+                {
+                    ClosingDate = today,
+                    DateSubmitted = today,
+                    OwnerPartyId = anInt,
+                    VacancyReferenceNumber = anInt,
+                    Status = VacancyStatus.ReservedForQA,
+                    QAUserName = username,
+                    DateStartedToQA = null,
+                    SubmissionCount = submissionCount
+                }
+            };
+
+            vacancyPostingService.Setup(
+                avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA))
+                .Returns(apprenticeshipVacancies);
+
+            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+
+            var vacancyProvider =
+                new VacancyProviderBuilder()
+                    .With(providerService)
+                    .With(vacancyPostingService)
+                    .With(dateTimeService)
+                    .Build();
+
+            //Act
+            var vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedToday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedYesterday
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(0);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.All
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+
+            //Act
+            vacancies =
+                vacancyProvider.GetPendingQAVacanciesOverview(new DashboardVacancySummariesSearchViewModel
+                {
+                    FilterType = DashboardVacancySummaryFilterTypes.Resubmitted
+                }).Vacancies;
+
+            //Assert
+            vacancies.Should().HaveCount(1);
+        }
     }
 }

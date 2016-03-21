@@ -29,6 +29,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using System.Web.WebPages;
     
     #line 2 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
+    
+    #line default
+    #line hidden
+    
+    #line 3 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
     using SFA.Apprenticeships.Infrastructure.Presentation;
     
     #line default
@@ -39,7 +45,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
     using SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates;
     using SFA.Apprenticeships.Web.Recruit;
     
-    #line 3 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+    #line 4 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
     using SFA.Apprenticeships.Web.Recruit.Constants;
     
     #line default
@@ -55,7 +61,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Views.VacancyPosting
         public override void Execute()
         {
             
-            #line 4 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 5 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
   
     ViewBag.Title = "Recruit an Apprentice - Confirmation of submission";
 
@@ -79,13 +85,13 @@ WriteLiteral(" class=\"fa fa-check\"");
 WriteLiteral("></i>\r\n");
 
             
-            #line 13 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 14 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 13 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 14 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
          if (Model.Resubmitted)
         {
 
@@ -95,7 +101,7 @@ WriteLiteral("></i>\r\n");
 WriteLiteral("            <span>");
 
             
-            #line 15 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 16 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
              Write(vacancyText);
 
             
@@ -104,7 +110,7 @@ WriteLiteral("            <span>");
 WriteLiteral(" resubmitted for approval</span>\r\n");
 
             
-            #line 16 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 17 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         }
         else
         {
@@ -115,7 +121,7 @@ WriteLiteral(" resubmitted for approval</span>\r\n");
 WriteLiteral("            <span>");
 
             
-            #line 19 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 20 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
              Write(vacancyText);
 
             
@@ -124,7 +130,7 @@ WriteLiteral("            <span>");
 WriteLiteral(" submitted for approval</span>\r\n");
 
             
-            #line 20 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 21 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
         }
 
             
@@ -141,13 +147,13 @@ WriteLiteral(" class=\"heading-medium\"");
 WriteLiteral(">Next steps</h2>\r\n    </hgroup>\r\n");
 
             
-            #line 27 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 28 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 27 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 28 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
      if (Model.IsMultiLocationVacancy)
     {
 
@@ -162,7 +168,7 @@ WriteLiteral("        <p>\r\n            You\'ll be notified via your recruitmen
 "changes are necessary before the adverts go live.\r\n        </p>\r\n");
 
             
-            #line 35 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            #line 36 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
     }
     else
     {
@@ -170,13 +176,49 @@ WriteLiteral("        <p>\r\n            You\'ll be notified via your recruitmen
             
             #line default
             #line hidden
-WriteLiteral("        <p>\r\n            Your vacancy advert will now be reviewed by a Skills Fun" +
-"ding Agency adviser.\r\n            You’ll be notified via your recruitment home p" +
-"age if any changes are\r\n            necessary before the advert goes live.\r\n    " +
-"    </p>\r\n");
+WriteLiteral("        <p>\r\n");
+
+            
+            #line 40 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            
+            
+            #line default
+            #line hidden
+            
+            #line 40 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+             if (Model.VacancyType == VacancyType.Traineeship)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <span>Your traineeship opportunity will now be reviewed by a Skil" +
+"ls Funding Agency adviser.</span>\r\n");
 
             
             #line 43 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            }
+            else
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <span>Your vacancy advert will now be reviewed by a Skills Fundin" +
+"g Agency adviser.</span>\r\n");
+
+            
+            #line 47 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+            }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("            You’ll be notified via your recruitment home page if any changes are\r" +
+"\n            necessary before the advert goes live.\r\n        </p>\r\n");
+
+            
+            #line 51 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
     }
 
             
@@ -194,39 +236,39 @@ WriteLiteral(">\r\n        <h2");
 
 WriteLiteral(" class=\"heading-medium\"");
 
-WriteLiteral(">Create another vacancy</h2>\r\n        <span");
+WriteLiteral(">Create another apprenticeship vacancy or traineeship opportunity</h2>\r\n        <" +
+"span");
 
 WriteLiteral(" class=\"subtitle\"");
 
-WriteLiteral(">Start with a fresh template or continue with a draft</span>\r\n    </div>\r\n    <di" +
-"v");
+WriteLiteral(">Use a fresh template or continue with a draft</span>\r\n    </div>\r\n    <div");
 
 WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1740), Tuple.Create("\"", 1853)
+WriteAttribute("href", Tuple.Create(" href=\"", 2108), Tuple.Create("\"", 2221)
             
-            #line 51 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 1747), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
+            #line 59 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+, Tuple.Create(Tuple.Create("", 2115), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.SelectExistingEmployer, new { providerSiteId = Model.ProviderSiteId })
             
             #line default
             #line hidden
-, 1747), false)
+, 2115), false)
 );
 
 WriteLiteral(" class=\"button\"");
 
-WriteLiteral(">Create new vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
+WriteLiteral(">Start new opportunity or vacancy</a>\r\n    </div>\r\n    <p>\r\n        <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1925), Tuple.Create("\"", 1984)
+WriteAttribute("href", Tuple.Create(" href=\"", 2307), Tuple.Create("\"", 2366)
             
-            #line 54 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
-, Tuple.Create(Tuple.Create("", 1932), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
+            #line 62 "..\..\Views\VacancyPosting\VacancySubmitted.cshtml"
+, Tuple.Create(Tuple.Create("", 2314), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)
             
             #line default
             #line hidden
-, 1932), false)
+, 2314), false)
 );
 
 WriteLiteral(">Return to recruitment home</a>\r\n    </p>\r\n</section>\r\n");

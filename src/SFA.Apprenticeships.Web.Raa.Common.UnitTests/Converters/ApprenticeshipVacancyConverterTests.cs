@@ -21,11 +21,11 @@
             //Assert
             viewModel.DurationTypes.Count.Should().Be(3);
             viewModel.DurationTypes[0].Value.Should().Be(DurationType.Weeks.ToString());
-            viewModel.DurationTypes[0].Text.Should().Be(DurationType.Weeks.ToString());
+            viewModel.DurationTypes[0].Text.Should().Be(DurationType.Weeks.ToString().ToLower());
             viewModel.DurationTypes[1].Value.Should().Be(DurationType.Months.ToString());
-            viewModel.DurationTypes[1].Text.Should().Be(DurationType.Months.ToString());
+            viewModel.DurationTypes[1].Text.Should().Be(DurationType.Months.ToString().ToLower());
             viewModel.DurationTypes[2].Value.Should().Be(DurationType.Years.ToString());
-            viewModel.DurationTypes[2].Text.Should().Be(DurationType.Years.ToString());
+            viewModel.DurationTypes[2].Text.Should().Be(DurationType.Years.ToString().ToLower());
         }
 
         [Test]
@@ -40,9 +40,9 @@
             //Assert
             viewModel.DurationTypes.Count.Should().Be(2);
             viewModel.DurationTypes[0].Value.Should().Be(DurationType.Weeks.ToString());
-            viewModel.DurationTypes[0].Text.Should().Be(DurationType.Weeks.ToString());
+            viewModel.DurationTypes[0].Text.Should().Be(DurationType.Weeks.ToString().ToLower());
             viewModel.DurationTypes[1].Value.Should().Be(DurationType.Months.ToString());
-            viewModel.DurationTypes[1].Text.Should().Be(DurationType.Months.ToString());
+            viewModel.DurationTypes[1].Text.Should().Be(DurationType.Months.ToString().ToLower());
         }
     }
 }

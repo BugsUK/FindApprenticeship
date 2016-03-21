@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
     using Validators.Vacancy;
 
     [Validator(typeof (NewVacancyViewModelClientValidator))]
-    public class NewVacancyViewModel
+    public class NewVacancyViewModel : IPartialVacancyViewModel
     {
         public const string PartialView = "Vacancy/BasicVacancyDetails";
 

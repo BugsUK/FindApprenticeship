@@ -620,7 +620,7 @@ WriteLiteral(">\r\n                    <h3");
 
 WriteLiteral(" class=\"bold-small\"");
 
-WriteLiteral(">\r\n                        Contact details for candidate\r\n");
+WriteLiteral(">\r\n                        Contact details\r\n");
 
 WriteLiteral("                        ");
 
@@ -735,15 +735,15 @@ WriteLiteral(" class=\"grid grid-2-3\"");
 
 WriteLiteral(">\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 7680), Tuple.Create("\"", 7711)
-, Tuple.Create(Tuple.Create("", 7688), Tuple.Create("text", 7688), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 7666), Tuple.Create("\"", 7697)
+, Tuple.Create(Tuple.Create("", 7674), Tuple.Create("text", 7674), true)
             
             #line 130 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create(" ", 7692), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 7678), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 7693), false)
+, 7679), false)
 );
 
 WriteLiteral(" itemprop=\"responsibilities\"");
@@ -868,14 +868,14 @@ WriteLiteral("\r\n        </div>\r\n");
             #line hidden
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 8918), Tuple.Create("\"", 8944)
+WriteAttribute("class", Tuple.Create(" class=\"", 8904), Tuple.Create("\"", 8930)
             
             #line 150 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 8926), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 8912), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 8926), false)
+, 8912), false)
 );
 
 WriteLiteral(">\r\n                <h3");
@@ -923,14 +923,14 @@ WriteLiteral("\r\n            </div>\r\n");
 
 WriteLiteral("            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 9698), Tuple.Create("\"", 9724)
+WriteAttribute("class", Tuple.Create(" class=\"", 9684), Tuple.Create("\"", 9710)
             
             #line 158 "..\..\Views\Shared\DisplayTemplates\Vacancy\_VacancyDetails.cshtml"
-, Tuple.Create(Tuple.Create("", 9706), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 9692), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 9706), false)
+, 9692), false)
 );
 
 WriteLiteral(">\r\n                <div");

@@ -45,5 +45,6 @@
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
         public RegionalTeam RegionalTeam { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
     }
 }

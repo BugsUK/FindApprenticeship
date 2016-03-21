@@ -103,7 +103,7 @@
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
 
-            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(QAActionResult.InvalidVacancy);
+            provider.Setup(p => p.ApproveVacancy(vacancyReferenceNumber)).Returns(QAActionResultCode.InvalidVacancy);
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 

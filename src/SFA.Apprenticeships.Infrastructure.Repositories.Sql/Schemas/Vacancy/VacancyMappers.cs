@@ -216,6 +216,8 @@
                 .IgnoreMember(av => av.SectorCodeNameComment)
                 .IgnoreMember(dvl => dvl.Address)
                 .IgnoreMember(av => av.RegionalTeam)
+                .IgnoreMember(av => av.CreatedByProviderUsername)
+                .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
@@ -284,6 +286,7 @@
                 .IgnoreMember(av => av.DateFirstSubmitted)
                 .MapMemberFrom(av => av.ParentVacancyId, v => v.MasterVacancyId)
                 .IgnoreMember(av => av.RegionalTeam)
+                .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
