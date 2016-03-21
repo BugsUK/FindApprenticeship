@@ -1093,6 +1093,11 @@
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
+            }
+
             var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
 
             //update properties
@@ -1106,6 +1111,9 @@
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
+            // TODO: not sure if do this or call reserveForQA
+            vacancy.QAUserName = _currentUserService.CurrentUserName;
+            vacancy.DateStartedToQA = _dateTimeService.UtcNow;
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 

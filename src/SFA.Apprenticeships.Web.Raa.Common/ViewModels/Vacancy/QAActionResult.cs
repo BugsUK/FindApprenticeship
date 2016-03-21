@@ -4,7 +4,7 @@
 
     public class QAActionResult<T> where T: IPartialVacancyViewModel
     {
-        public QAActionResult(QAActionResultCode qaActionResultCode, T viewModel)
+        public QAActionResult(QAActionResultCode qaActionResultCode, T viewModel = default(T))
         {
             Code = qaActionResultCode;
             ViewModel = viewModel;
