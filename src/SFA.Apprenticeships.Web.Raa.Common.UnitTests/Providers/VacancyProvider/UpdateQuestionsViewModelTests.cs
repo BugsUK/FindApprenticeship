@@ -1,14 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
-    using System.Collections.Generic;
-    using Application.Interfaces.Providers;
-    using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
-    using Configuration;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
@@ -16,48 +11,37 @@
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Vacancy;
-    using Web.Common.Configuration;
 
     [TestFixture]
-    public class UpdateNewVacancyViewModelTests
+    public class UpdateQuestionsViewModelTests
     {
         [Test]
         public void ShouldReturnOKIfTheUserCanLockTheVacancy()
         {
             //Arrange
-            const string ukprn = "ukprn";
-            const int QAVacancyTimeout = 10;
             const string userName = "userName";
             var utcNow = DateTime.UtcNow;
+            const int vacancyReferenceNumber = 1;
+            const string aString = "aString";
 
-            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>().Create();
-            var vacancy = new Fixture().Build<Vacancy>()
-                            .With(av => av.VacancyReferenceNumber, newVacancyVM.VacancyReferenceNumber.Value)
-                            .With(av => av.OfflineApplicationInstructionsComment, Guid.NewGuid().ToString())
-                            .With(av => av.OfflineApplicationUrlComment, Guid.NewGuid().ToString())
-                            .With(av => av.ShortDescriptionComment, Guid.NewGuid().ToString())
-                            .With(av => av.TitleComment, Guid.NewGuid().ToString())
-                            .With(av => av.OfflineApplicationUrl, $"http://www.google.com/{Guid.NewGuid()}")
-                            .With(av => av.OfflineApplicationInstructions, Guid.NewGuid().ToString())
-                            .With(av => av.ShortDescription, Guid.NewGuid().ToString())
-                            .With(av => av.Title, Guid.NewGuid().ToString())
-                            .Create();
-
-            var sectorList = new List<Sector>
+            var viewModel = new VacancyQuestionsViewModel
             {
-                new Fixture().Build<Sector>().Create()
+                FirstQuestion = aString,
+                SecondQuestion = aString,
+                FirstQuestionComment = aString,
+                SecondQuestionComment = aString,
+                VacancyReferenceNumber = vacancyReferenceNumber
             };
 
+            var vacancy = new Fixture().Build<Vacancy>()
+                            .With(av => av.VacancyReferenceNumber, vacancyReferenceNumber)
+                            .With(av => av.FirstQuestion, aString)
+                            .With(av => av.SecondQuestion, aString)
+                            .With(av => av.FirstQuestionComment, aString)
+                            .With(av => av.SecondQuestionComment, aString)
+                            .Create();
+
             var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
-            var referenceDataService = new Mock<IReferenceDataService>();
-            referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
-            providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());
             var currentUserService = new Mock<ICurrentUserService>();
             currentUserService.Setup(cus => cus.CurrentUserName).Returns(userName);
             var dateTimeService = new Mock<IDateTimeService>();
@@ -67,37 +51,34 @@
 
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
             vacancyPostingService.Setup(
-                vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value)).Returns(vacancy);
+                vps => vps.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
 
             vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns((Vacancy av) => av);
 
             var mapper = new Mock<IMapper>();
-            mapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
-                .Returns((Vacancy av) => newVacancyVM);
+            mapper.Setup(m => m.Map<Vacancy, VacancyQuestionsViewModel>(It.IsAny<Vacancy>()))
+                .Returns((Vacancy av) => viewModel);
 
             var vacancyProvider =
                 new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .With(referenceDataService)
                     .With(mapper)
                     .With(currentUserService)
                     .With(dateTimeService)
                     .With(vacancylockingService)
                     .Build();
 
-            var expectedResult = new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, newVacancyVM);
+            var expectedResult = new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
 
             //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+            var result = vacancyProvider.UpdateVacancyWithComments(viewModel);
             
             //Assert
             vacancyPostingService.Verify(
-                vps => vps.GetVacancyByReferenceNumber(newVacancyVM.VacancyReferenceNumber.Value), Times.Once);
+                vps => vps.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber), Times.Once);
             vacancyPostingService.Verify(
                 vps =>
                     vps.UpdateVacancy(
-                        It.Is<Vacancy>(av => av.VacancyReferenceNumber == newVacancyVM.VacancyReferenceNumber.Value &&
+                        It.Is<Vacancy>(av => av.VacancyReferenceNumber == viewModel.VacancyReferenceNumber &&
                             av.QAUserName == userName && av.DateStartedToQA == utcNow)));
             result.ShouldBeEquivalentTo(expectedResult);
         }
@@ -108,7 +89,7 @@
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
 
-            var newVacancyVM = new Fixture().Build<NewVacancyViewModel>().Create();
+            var vacancyQuestionsViewModel = new Fixture().Build<VacancyQuestionsViewModel>().Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var vacanyLockingService = new Mock<IVacancyLockingService>();
@@ -127,7 +108,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.UpdateVacancyWithComments(newVacancyVM);
+            var result = vacancyProvider.UpdateVacancyWithComments(vacancyQuestionsViewModel);
 
             result.Code.Should().Be(QAActionResultCode.InvalidVacancy);
             result.ViewModel.Should().BeNull();

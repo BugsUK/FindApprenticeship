@@ -296,6 +296,20 @@
             return GetMediatorResponse(VacancyMediatorCodes.GetEmployerInformation.Ok, vacancy.OwnerParty);
         }
 
+        private static MediatorResponse<T> ReturnResult<T>(QAActionResult<T> result) where T : IPartialVacancyViewModel
+        {
+            switch (result.Code)
+            {
+                case QAActionResultCode.Ok:
+                    return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, result.ViewModel);
+                case QAActionResultCode.InvalidVacancy:
+                    return GetMediatorResponse<T>(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, default(T),
+                        VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
         public MediatorResponse<VacancyQuestionsViewModel> UpdateVacancy(VacancyQuestionsViewModel viewModel)
         {
             var validationResult = _vacancyQuestionsViewModelServerValidator.Validate(viewModel);
@@ -307,7 +321,7 @@
 
             var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
-            return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel);
+            return ReturnResult(updatedViewModel);
         }
 
         public MediatorResponse<NewVacancyViewModel> UpdateVacancy(NewVacancyViewModel viewModel)
@@ -321,16 +335,7 @@
 
             var updatedViewModel = _vacancyQaProvider.UpdateVacancyWithComments(viewModel);
 
-            switch (updatedViewModel.Code)
-            {
-                case QAActionResultCode.Ok:
-                    return GetMediatorResponse(VacancyMediatorCodes.UpdateVacancy.Ok, updatedViewModel.ViewModel);
-                case QAActionResultCode.InvalidVacancy:
-                    return GetMediatorResponse<NewVacancyViewModel>(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, null,
-                        VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+            return ReturnResult(updatedViewModel);
         }
 
         public MediatorResponse<TrainingDetailsViewModel> UpdateVacancy(TrainingDetailsViewModel viewModel)

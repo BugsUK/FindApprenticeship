@@ -11,18 +11,18 @@
     using Raa.Common.ViewModels.Vacancy;
 
     [TestFixture]
-    public class UpdateNewVacancyViewModelTests
+    public class UpdateVacancyQuestionsViewModelTests
     {
         [Test]
         public void ShouldReturnFailedValidationIfTheViewModelIsNotCorrect()
         {
             const int vacancyReferenceNumber = 1;
             var vacancy = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
-            vacancy.NewVacancyViewModel.Title = null; // Make the vacancy invalid
+            vacancy.VacancyQuestionsViewModel.FirstQuestion = @"<script> </script>"; // Make the vacancy invalid
 
             var mediator = new VacancyMediatorBuilder().Build();
 
-            var result = mediator.UpdateVacancy(vacancy.NewVacancyViewModel);
+            var result = mediator.UpdateVacancy(vacancy.VacancyQuestionsViewModel);
             result.AssertValidationResult(VacancyMediatorCodes.UpdateVacancy.FailedValidation);
         }
 
@@ -32,13 +32,13 @@
             const int vacancyReferenceNumber = 1;
             var provider = new Mock<IVacancyQAProvider>();
             var vacancy = VacancyMediatorTestHelper.GetValidVacancyViewModel(vacancyReferenceNumber);
-            var qaActionResult = new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
+            var qaActionResult = new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.InvalidVacancy);
 
-            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.NewVacancyViewModel)).Returns(qaActionResult);
+            provider.Setup(p => p.UpdateVacancyWithComments(vacancy.VacancyQuestionsViewModel)).Returns(qaActionResult);
 
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
-            var result = mediator.UpdateVacancy(vacancy.NewVacancyViewModel);
+            var result = mediator.UpdateVacancy(vacancy.VacancyQuestionsViewModel);
             result.AssertMessage(VacancyMediatorCodes.UpdateVacancy.InvalidVacancy, VacancyViewModelMessages.InvalidVacancy, UserMessageLevel.Error);
         }
 

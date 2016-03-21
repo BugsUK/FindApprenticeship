@@ -37,8 +37,8 @@
         TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
         VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-        
-        VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
+
+        QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 

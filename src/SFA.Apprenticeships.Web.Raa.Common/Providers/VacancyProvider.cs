@@ -1111,14 +1111,19 @@
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
-            // TODO: not sure if do this or call reserveForQA
-            vacancy.QAUserName = _currentUserService.CurrentUserName;
-            vacancy.DateStartedToQA = _dateTimeService.UtcNow;
+            // TODO: not sure if do this or call reserveForQA in the service
+            ResereVacancyForQA(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, viewModel);
+        }
+
+        private void ResereVacancyForQA(Vacancy vacancy)
+        {
+            vacancy.QAUserName = _currentUserService.CurrentUserName;
+            vacancy.DateStartedToQA = _dateTimeService.UtcNow;
         }
 
         public TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
@@ -1213,19 +1218,27 @@
             return viewModel;
         }
 
-        public VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
+        public QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
+            // TODO: not sure if do this or call reserveForQA in the service
+            ResereVacancyForQA(vacancy);
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
-            return viewModel;
+            return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
