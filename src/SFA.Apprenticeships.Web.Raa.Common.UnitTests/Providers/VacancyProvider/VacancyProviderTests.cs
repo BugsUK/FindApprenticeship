@@ -143,55 +143,7 @@
             vacancyPostingService.Verify(avr => avr.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
             providerService.Verify(ps => ps.GetProviderViaOwnerParty(ownerPartyId), Times.Once);
         }
-
         
-
-        
-
-        [Test]
-        public void ShouldSaveCommentsWhenUpdatingVacancySummaryViewModel()
-        {
-            const int vacancyReferenceNumber = 1;
-            const string closingDateComment = "Closing date comment";
-            const string workingWeekComment = "Working week comment";
-            const string wageComment = "Wage comment";
-            const string durationComment = "Duration comment";
-            const string longDescriptionComment = "Long description comment";
-            const string possibleStartDateComment = "Possible start date comment";
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var configService = new Mock<IConfigurationService>();
-            configService.Setup(m => m.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = string.Empty});
-            var provider = new VacancyProviderBuilder().With(vacancyPostingService).With(configService).Build();
-            var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
-            vacancyPostingService.Setup(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber))
-                .Returns(new Vacancy());
-            vacancyPostingService.Setup(vp => vp.UpdateVacancy(It.IsAny<Vacancy>()))
-                .Returns(new Vacancy());
-            viewModel.VacancyDatesViewModel.ClosingDateComment = closingDateComment;
-            viewModel.DurationComment = durationComment;
-            viewModel.LongDescriptionComment = longDescriptionComment;
-            viewModel.VacancyDatesViewModel.PossibleStartDateComment = possibleStartDateComment;
-            viewModel.WageComment = wageComment;
-            viewModel.WorkingWeekComment = workingWeekComment;
-
-            provider.UpdateVacancyWithComments(viewModel);
-
-            vacancyPostingService.Verify(vp => vp.GetVacancyByReferenceNumber(vacancyReferenceNumber));
-            vacancyPostingService.Verify(
-                vp =>
-                    vp.UpdateVacancy(
-                        It.Is<Vacancy>(
-                            v =>
-                                v.ClosingDateComment == closingDateComment &&
-                                v.DurationComment == durationComment &&
-                                v.LongDescriptionComment == longDescriptionComment &&
-                                v.PossibleStartDateComment == possibleStartDateComment &&
-                                v.WageComment == wageComment &&
-                                v.WorkingWeekComment == workingWeekComment)));
-        }
-
         [Test]
         public void UpdateVacancyBasicDetailsShouldExpectVacancyReferenceNumber()
         {

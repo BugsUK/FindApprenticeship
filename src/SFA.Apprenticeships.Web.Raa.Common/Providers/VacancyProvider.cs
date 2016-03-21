@@ -1054,6 +1054,11 @@
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
+
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
             vacancy.WageType = viewModel.WageType;
@@ -1079,6 +1084,8 @@
             vacancy.LongDescriptionComment = viewModel.LongDescriptionComment;
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
+
+            AddQAInformation(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
