@@ -377,6 +377,9 @@
 
             switch (response.Code)
             {
+                case VacancyMediatorCodes.ApproveVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
@@ -395,6 +398,9 @@
 
             switch (response.Code)
             {
+                case VacancyMediatorCodes.RejectVacancy.InvalidVacancy:
+                    SetUserMessage(response.Message);
+                    return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies:
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.Ok:
