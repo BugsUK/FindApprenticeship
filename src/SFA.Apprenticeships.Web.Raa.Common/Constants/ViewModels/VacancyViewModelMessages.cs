@@ -23,16 +23,16 @@
 
         public static class ShortDescription
         {
-            public const string LabelText = "Summary";
-            public const string RequiredErrorText = "Enter a vacancy summary";
-            public const string TooLongErrorText = "The vacancy summary must not be more than 350 characters";
+            public const string LabelText = "Short description of the role";
+            public const string RequiredErrorText = "Enter the short description of the role";
+            public const string TooLongErrorText = "The short description of the role must not be more than 350 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The vacancy summary " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "The short description of the role " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ShortDescriptionComment
         {
-            public const string LabelText = "Summary comment";
+            public const string LabelText = "Short description of the role comment";
         }
 
         public static class VacancyType
@@ -119,8 +119,8 @@
 
         public static class ClosingDate
         {
-            public const string LabelText = "Closing date";
-            public const string RequiredErrorText = "Enter the closing date";
+            public const string LabelText = "Closing date for applications";
+            public const string RequiredErrorText = "Enter the closing date for applications";
             public const string AfterTodayErrorText = "The closing date can't be today or earlier. We advise using a date more than two weeks from now";
             public const string TooSoonErrorText = "The closing date should be at least two weeks in the future";
         }
@@ -133,7 +133,7 @@
         public static class PossibleStartDate
         {
             public const string LabelText = "Possible start date";
-            public const string RequiredErrorText = "Enter the start date";
+            public const string RequiredErrorText = "Enter the possible start date";
             public const string TooSoonErrorText = "The possible start date should be at least two weeks in the future";
             public const string AfterTodayErrorText = "The possible start date can't be today or earlier. We advise using a date more than two weeks from now";
             public const string BeforePublishDateErrorText = "The possible start date should be after the closing date";

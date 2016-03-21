@@ -2,6 +2,7 @@
 {
     using System;
     using AutoMapper;
+    using Constants.ViewModels;
     using Domain.Entities.Vacancies;
 
     public class VacancyDetailViewModelResolvers
@@ -20,23 +21,34 @@
         {
             protected override string ResolveCore(VacancyDetail vacancyDetail)
             {
-                string wage;
-
-                if (vacancyDetail.WageType == LegacyWageType.Text)
+                switch (vacancyDetail.WageType)
                 {
-                    wage = vacancyDetail.WageDescription;
-                    decimal wageDecimal;
-                    if (decimal.TryParse(wage, out wageDecimal))
-                    {
-                        wage = string.Format("£{0:N2}", wageDecimal);
-                    }
-                }
-                else
-                {
-                    wage = string.Format("£{0:N2}", vacancyDetail.Wage);
-                }
+                    case LegacyWageType.ApprenticeshipMinimum:
+                    case LegacyWageType.NationalMinimum:
+                        return vacancyDetail.WageDescription;
 
-                return wage;
+                    case LegacyWageType.LegacyText:
+                        {
+                            var wage = vacancyDetail.WageDescription;
+
+                            decimal wageDecimal;
+
+                            if (decimal.TryParse(wage, out wageDecimal))
+                            {
+                                wage = $"£{wageDecimal:N2}";
+                            }
+
+                            return wage;
+                        }
+
+                    case LegacyWageType.LegacyWeekly:
+                    case LegacyWageType.Custom:
+                        return $"£{vacancyDetail.Wage:N2}";
+
+                    default:
+                        throw new ArgumentOutOfRangeException(
+                            nameof(vacancyDetail.WageType), vacancyDetail.WageType, $"Invalid Wage Type: {vacancyDetail.WageType}");
+                }
             }
         }
 

@@ -10,7 +10,9 @@
         }
 
         public WageType Type { get; private set; }
+
         public decimal? Amount { get; private set; }
+
         public WageUnit Unit { get; private set; }
     }
 }

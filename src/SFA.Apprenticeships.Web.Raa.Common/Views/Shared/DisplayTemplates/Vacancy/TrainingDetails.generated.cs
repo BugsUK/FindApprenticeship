@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -1262,7 +1263,7 @@ WriteLiteral(">\r\n        <h3");
 
 WriteLiteral(" class=\"heading-small\"");
 
-WriteLiteral(">Contact details for candidate</h3>\r\n\r\n");
+WriteLiteral(">Contact details</h3>\r\n\r\n");
 
 WriteLiteral("        ");
 

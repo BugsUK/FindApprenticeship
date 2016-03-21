@@ -184,8 +184,8 @@
 
         [TestCase(0, false)]
         [TestCase(WageType.Custom, true)]
-        [TestCase(WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(WageType.NationalMinimumWage, true)]
+        [TestCase(WageType.ApprenticeshipMinimum, true)]
+        [TestCase(WageType.NationalMinimum, true)]
         public void WageTypeRequired(WageType wageType, bool expectValid)
         {
             var viewModel = new FurtherVacancyDetailsViewModel
@@ -220,8 +220,8 @@
 
         [TestCase(0, true)]
         [TestCase(WageType.Custom, true)]
-        [TestCase(WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(WageType.NationalMinimumWage, true)]
+        [TestCase(WageType.ApprenticeshipMinimum, true)]
+        [TestCase(WageType.NationalMinimum, true)]
         public void WageTypeNotRequiredIfTraineeship(WageType wageType, bool expectValid)
         {
             var viewModel = new FurtherVacancyDetailsViewModel
@@ -256,21 +256,21 @@
         }
 
         [TestCase(null, WageType.Custom, false)]
-        [TestCase(null, WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(null, WageType.NationalMinimumWage, true)]
+        [TestCase(null, WageType.ApprenticeshipMinimum, true)]
+        [TestCase(null, WageType.NationalMinimum, true)]
         [TestCase("", WageType.Custom, false)]
-        [TestCase("", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("", WageType.NationalMinimumWage, true)]
+        [TestCase("", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("", WageType.NationalMinimum, true)]
         [TestCase(" ", WageType.Custom, false)]
-        [TestCase(" ", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(" ", WageType.NationalMinimumWage, true)]
+        [TestCase(" ", WageType.ApprenticeshipMinimum, true)]
+        [TestCase(" ", WageType.NationalMinimum, true)]
         [TestCase("Seven pounds an hour", WageType.Custom, false)]
-        [TestCase("Seven pounds an hour", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("Seven pounds an hour", WageType.NationalMinimumWage, true)]
+        [TestCase("Seven pounds an hour", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("Seven pounds an hour", WageType.NationalMinimum, true)]
         [TestCase("<script>", WageType.Custom, false)]
         [TestCase("500", WageType.Custom, true)]
-        [TestCase("500", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("500", WageType.NationalMinimumWage, true)]
+        [TestCase("500", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("500", WageType.NationalMinimum, true)]
         public void WageRequired(string wageString, WageType wageType, bool expectValid)
         {
             decimal? wage = null;
@@ -313,21 +313,21 @@
         }
 
         [TestCase(null, WageType.Custom, true)]
-        [TestCase(null, WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(null, WageType.NationalMinimumWage, true)]
+        [TestCase(null, WageType.ApprenticeshipMinimum, true)]
+        [TestCase(null, WageType.NationalMinimum, true)]
         [TestCase("", WageType.Custom, true)]
-        [TestCase("", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("", WageType.NationalMinimumWage, true)]
+        [TestCase("", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("", WageType.NationalMinimum, true)]
         [TestCase(" ", WageType.Custom, true)]
-        [TestCase(" ", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase(" ", WageType.NationalMinimumWage, true)]
+        [TestCase(" ", WageType.ApprenticeshipMinimum, true)]
+        [TestCase(" ", WageType.NationalMinimum, true)]
         [TestCase("Seven pounds an hour", WageType.Custom, true)]
-        [TestCase("Seven pounds an hour", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("Seven pounds an hour", WageType.NationalMinimumWage, true)]
+        [TestCase("Seven pounds an hour", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("Seven pounds an hour", WageType.NationalMinimum, true)]
         [TestCase("<script>", WageType.Custom, true)]
         [TestCase("500", WageType.Custom, true)]
-        [TestCase("500", WageType.ApprenticeshipMinimumWage, true)]
-        [TestCase("500", WageType.NationalMinimumWage, true)]
+        [TestCase("500", WageType.ApprenticeshipMinimum, true)]
+        [TestCase("500", WageType.NationalMinimum, true)]
         public void WageNotRequiredIfTraineeship(string wageString, WageType wageType, bool expectValid)
         {
             decimal? wage = null;

@@ -193,6 +193,7 @@
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="Presentation\RegionalTeamPresenter.cs" />
     <Compile Include="Presentation\VacancyTypePresenterTests.cs" />
+    <Compile Include="Presentation\WagePresenterTests.cs" />
     <Compile Include="Processes\ApplicationStatusChangedSubscriberTests.cs" />
     <Compile Include="Processes\Builders\ApplicationStatusChangedSubscriberBuilder.cs" />
     <Compile Include="Processes\Builders\EmailRequestSubscriberBuilder.cs" />

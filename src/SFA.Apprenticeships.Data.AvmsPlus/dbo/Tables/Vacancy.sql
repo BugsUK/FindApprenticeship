@@ -84,6 +84,7 @@
     CONSTRAINT [FK_Vacancy_VacancyOwnerRelationship] FOREIGN KEY ([VacancyOwnerRelationshipId]) REFERENCES [dbo].[VacancyOwnerRelationship] ([VacancyOwnerRelationshipId]),
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
 	CONSTRAINT [FK_Vacancy_DurationType] FOREIGN KEY ([DurationTypeId]) REFERENCES [dbo].[DurationType] ([DurationTypeId]),
+	CONSTRAINT [FK_Vacancy_WageType] FOREIGN KEY ([WageType]) REFERENCES [dbo].[WageType] ([WageTypeId]),
     CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
 );
 

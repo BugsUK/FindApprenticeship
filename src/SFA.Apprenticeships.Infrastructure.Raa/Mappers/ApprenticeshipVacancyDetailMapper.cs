@@ -10,6 +10,7 @@
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Extensions;
     using Presentation;
@@ -21,6 +22,7 @@
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
+
             var detail = new ApprenticeshipVacancyDetail
             {
                 Id = (int)vacancy.VacancyReferenceNumber,
@@ -37,7 +39,7 @@
                 Wage = vacancy.Wage ?? 0,
                 WageUnit = wage.GetWageUnit(),
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = vacancy.WageType.GetLegacyWageType(),
+                WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.ThingsToConsider,
                 FutureProspects = vacancy.FutureProspects,
@@ -84,8 +86,7 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
-                //TODO: How do we determine this in RAA?
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel()
             };
 

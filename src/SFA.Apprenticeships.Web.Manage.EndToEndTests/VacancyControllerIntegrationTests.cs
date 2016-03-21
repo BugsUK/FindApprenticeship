@@ -662,7 +662,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
                 // Ukprn = "10003816"
             };
         }
@@ -724,7 +724,7 @@
                 DurationType = DurationType.Years,
                 HoursPerWeek = 40,
                 LongDescription = "Long description",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
                 WorkingWeek = "working week"
             };
 

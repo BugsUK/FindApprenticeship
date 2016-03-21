@@ -246,7 +246,7 @@
                 TrainingType = TrainingType.Standards,
                 StandardId = 1,
                 WorkingWeek = "Working week",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
             };
         }
 

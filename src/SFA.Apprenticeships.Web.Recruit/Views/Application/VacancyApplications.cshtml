@@ -90,11 +90,11 @@
 
                 @if (Model.NewApplicationsCount + Model.ViewedApplicationsCount == 1)
                 {
-                    <p>There is still 1 application to send a decision to</p>
+                    <p>1 candidate needs to be notified whether their application has been successful/unsuccessful</p>
                 }
                 else if (Model.NewApplicationsCount + Model.ViewedApplicationsCount > 1)
                 {
-                    <p>There are still @(Model.NewApplicationsCount + Model.ViewedApplicationsCount) applications to send a decision to</p>
+                    <p>@(Model.NewApplicationsCount + Model.ViewedApplicationsCount) candidates need to be notified whether their applications have been successful/unsuccessful</p>
                 }
             </div>
         </section>
