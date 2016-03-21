@@ -53,8 +53,7 @@
                 //TODO: Are we going to add this to RAA?
                 //IsPositiveAboutDisability = vacancy.,
                 Location = location,
-                //TODO: How do we determine this in RAA?
-                VacancyLocationType = ApprenticeshipLocationType.NonNational,
+                VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageUnit = wage.GetWageUnit(),
