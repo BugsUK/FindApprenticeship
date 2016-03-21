@@ -2,6 +2,8 @@
 {
     public interface ICurrentUserService
     {
-         string CurrentUserName { get; }
+        string CurrentUserName { get; }
+
+        bool IsInRole(string role);
     }
 }

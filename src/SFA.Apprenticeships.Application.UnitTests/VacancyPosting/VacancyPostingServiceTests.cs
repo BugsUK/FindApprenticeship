@@ -1,16 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
-    using System.Threading;
     using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.UnitTests.Builder;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class VacancyPostingServiceTests
@@ -21,6 +20,7 @@
         private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
         private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
         private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
+        private readonly Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
 
         private IVacancyPostingService _vacancyPostingService;
 
@@ -42,17 +42,19 @@
         {
             _vacancyPostingService = new VacancyPostingService(_apprenticeshipVacancyReadRepository.Object,
                 _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
-                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, _vacancyLocationAddressWriteRepository.Object);
+                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, 
+                _vacancyLocationAddressWriteRepository.Object, _currentUserService.Object);
 
             _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
             _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
-        }
+            }
 
         [Test]
         public void CreateVacancyShouldCallRepository()
         {
-            var principal = new ClaimsPrincipalBuilder().WithName(_vacancyManager.Username).WithRole(Roles.Faa).Build();
-            Thread.CurrentPrincipal = principal;
+            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
+            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,
@@ -69,8 +71,9 @@
         [Test]
         public void CreateVacancyShouldUpdateVacancyManagerUsername()
         {
-            var principal = new ClaimsPrincipalBuilder().WithName(_vacancyManager.Username).WithRole(Roles.Faa).Build();
-            Thread.CurrentPrincipal = principal;
+            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
+
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,
@@ -87,8 +90,9 @@
         [Test]
         public void SaveVacancyShouldCallRepository()
         {
-            var principal = new ClaimsPrincipalBuilder().WithName(_lastEditedBy.Username).WithRole(Roles.Faa).Build();
-            Thread.CurrentPrincipal = principal;
+            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
+
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,
@@ -105,8 +109,9 @@
         [Test]
         public void SaveVacancyShouldUpdateLastEditedByUsername()
         {
-            var principal = new ClaimsPrincipalBuilder().WithName(_lastEditedBy.Username).WithRole(Roles.Faa).Build();
-            Thread.CurrentPrincipal = principal;
+            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
+
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,

@@ -25,6 +25,7 @@
         private IGetOpenConnection _connection;
 
         private Mock<IDateTimeService> _dateTimeService;
+        private Mock<ICurrentUserService> _currentUserService;
 
         [TestFixtureSetUp]
         public void SetUpFixture()
@@ -33,6 +34,7 @@
                 new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
 
             _dateTimeService = new Mock<IDateTimeService>();
+            _currentUserService = new Mock<ICurrentUserService>();
         }
 
         [SetUp]
@@ -46,9 +48,9 @@
         public void SimpleGetTest()
         {
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
              
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -99,9 +101,9 @@
             _dateTimeService.Setup(ds => ds.UtcNow).Returns(now);
 
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -142,7 +144,7 @@
         public void SimpleSaveAndUpdateTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -175,9 +177,9 @@
         public void FindTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             const string title = "Vacancy title";
             var vacancyGuid = Guid.NewGuid();
@@ -265,9 +267,9 @@
         public void GetByIdsTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             var vacancy1 = CreateValidDomainVacancy();
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
@@ -304,9 +306,9 @@
         public void GetMultiLocationTest()
         {
             IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
             IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
                 _dateTimeService.Object, _logger.Object);

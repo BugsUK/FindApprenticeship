@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
-    using Domain.Entities.Raa.Reference;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -13,9 +12,9 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        QAActionResult ApproveVacancy(int vacancyReferenceNumber);
+        QAActionResultCode ApproveVacancy(int vacancyReferenceNumber);
 
-        QAActionResult RejectVacancy(int vacancyReferenceNumber);
+        QAActionResultCode RejectVacancy(int vacancyReferenceNumber);
 
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
@@ -31,15 +30,15 @@
 
         VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
+        QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
-        NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
+        QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
-        TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
+        QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
-        VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-        
-        VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
+        QAActionResult<VacancyRequirementsProspectsViewModel> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
+
+        QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -60,5 +59,7 @@
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
 
         DashboardVacancySummaryViewModel GetNextAvailableVacancy();
+
+        void UnReserveVacancyForQA(int vacancyReferenceNumber);
     }
 }

@@ -613,25 +613,7 @@
             return standard.Convert(sector);
         }
 
-        #region Helpers
-
-        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
-        {
-            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
-            
-            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
-            {
-                return new string[] {};
-            }
-
-            return blacklistedCategoryCodeNames
-                .Split(',')
-                .Select(each => each.Trim())
-                .ToArray();
-        }
-
-        #endregion
-
+        
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
@@ -810,7 +792,7 @@
 
         public DashboardVacancySummariesViewModel GetPendingQAVacanciesOverview(DashboardVacancySummariesSearchViewModel searchViewModel)
         {
-            var agencyUser = _userProfileService.GetAgencyUser(Thread.CurrentPrincipal.Identity.Name);
+            var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
             var regionalTeam = agencyUser.RegionalTeam;
 
             var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
@@ -866,6 +848,44 @@
             return viewModel;
         }
 
+        public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
+        {
+            var vacancies = GetTeamVacancySummaries();
+
+            var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
+                vacancies); 
+
+            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
+        }
+
+        public void UnReserveVacancyForQA(int vacancyReferenceNumber)
+        {
+            var vacancyToUnReserve = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancyToUnReserve))
+            {
+                vacancyToUnReserve.QAUserName = null;
+                vacancyToUnReserve.Status = VacancyStatus.Submitted;
+
+                _vacancyPostingService.UpdateVacancy(vacancyToUnReserve);
+            }
+        }
+
+        private static string[] GetBlacklistedCategoryCodeNames(IConfigurationService configurationService)
+        {
+            var blacklistedCategoryCodeNames = configurationService.Get<CommonWebConfiguration>().BlacklistedCategoryCodes;
+
+            if (string.IsNullOrWhiteSpace(blacklistedCategoryCodeNames))
+            {
+                return new string[] { };
+            }
+
+            return blacklistedCategoryCodeNames
+                .Split(',')
+                .Select(each => each.Trim())
+                .ToArray();
+        }
+
         private static List<RegionalTeamMetrics> GetRegionalTeamsMetrics(List<VacancySummary> vacancies, List<VacancySummary> submittedToday, List<VacancySummary> submittedYesterday, List<VacancySummary> submittedMoreThan48Hours, List<VacancySummary> resubmitted)
         {
             return new List<RegionalTeamMetrics>
@@ -892,15 +912,6 @@
                 SubmittedMoreThan48HoursCount = submittedMoreThan48Hours.Count(v => v.RegionalTeam == regionalTeam),
                 ResubmittedCount = resubmitted.Count(v => v.RegionalTeam == regionalTeam),
             };
-        }
-
-        public DashboardVacancySummaryViewModel GetNextAvailableVacancy()
-        {
-            var vacancies = _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA).OrderBy(v => v.DateSubmitted).ToList();
-            var nextVacancy = _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName,
-                vacancies); 
-
-            return nextVacancy != null ? ConvertToDashboardVacancySummaryViewModel(nextVacancy) : null;
         }
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
@@ -945,14 +956,14 @@
             _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
         }
 
-        public QAActionResult ApproveVacancy(int vacancyReferenceNumber)
+        public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)
         {
             var qaApprovalDate = _dateTimeService.UtcNow;
             var submittedVacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, submittedVacancy))
             {
-                return QAActionResult.InvalidVacancy;
+                return QAActionResultCode.InvalidVacancy;
             }
 
             if (submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue && !submittedVacancy.IsEmployerLocationMainApprenticeshipLocation.Value)
@@ -979,16 +990,16 @@
             submittedVacancy.DateQAApproved = qaApprovalDate;
             _vacancyPostingService.UpdateVacancy(submittedVacancy);
 
-            return QAActionResult.Ok;
+            return QAActionResultCode.Ok;
         }
 
-        public QAActionResult RejectVacancy(int vacancyReferenceNumber)
+        public QAActionResultCode RejectVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
-                return QAActionResult.InvalidVacancy;
+                return QAActionResultCode.InvalidVacancy;
             }
 
             vacancy.Status = VacancyStatus.Referred;
@@ -996,7 +1007,7 @@
 
             _vacancyPostingService.UpdateVacancy(vacancy);
 
-            return QAActionResult.Ok;
+            return QAActionResultCode.Ok;
         }
 
         public VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber)
@@ -1010,10 +1021,7 @@
                 return GetVacancyViewModelFrom(vacancy);
             }
 
-            var vacancies =
-                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
-                    .OrderBy(v => v.DateSubmitted)
-                    .ToList();
+            var vacancies = GetTeamVacancySummaries();
 
             var nextAvailableVacancySummary =
                 _vacancyLockingService.GetNextAvailableVacancy(_currentUserService.CurrentUserName, vacancies);
@@ -1024,6 +1032,26 @@
                 _vacancyPostingService.ReserveVacancyForQA(nextAvailableVacancySummary.VacancyReferenceNumber);
 
             return GetVacancyViewModelFrom(nextAvailableVacancy);
+        }
+
+        private RegionalTeam GetRegionalTeamForCurrentUser()
+        {
+            var agencyUser = _userProfileService.GetAgencyUser(_currentUserService.CurrentUserName);
+            var regionalTeam = agencyUser.RegionalTeam;
+            return regionalTeam;
+        }
+
+        private List<VacancySummary> GetTeamVacancySummaries()
+        {
+            var regionalTeam = GetRegionalTeamForCurrentUser();
+
+            var vacancies =
+                _vacancyPostingService.GetWithStatus(VacancyStatus.Submitted, VacancyStatus.ReservedForQA)
+                    .Where(v => v.RegionalTeam == regionalTeam)
+                    .OrderBy(v => v.DateSubmitted)
+                    .ToList();
+
+            return vacancies;
         }
 
         public VacancyViewModel ReviewVacancy(int vacancyReferenceNumber)
@@ -1038,10 +1066,15 @@
             return GetVacancyViewModelFrom(vacancy);
         }
 
-        public FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
+        public QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel)
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             vacancy.WorkingWeek = viewModel.WorkingWeek;
             vacancy.HoursPerWeek = viewModel.HoursPerWeek;
@@ -1069,18 +1102,26 @@
             vacancy.PossibleStartDateComment = viewModel.VacancyDatesViewModel.PossibleStartDateComment;
             vacancy.WorkingWeekComment = viewModel.WorkingWeekComment;
 
+            AddQAInformation(vacancy);
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancySummaryViewModel();
-            return viewModel;
+
+            return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel)
+        public QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             var offlineApplicationUrl = !string.IsNullOrEmpty(viewModel.OfflineApplicationUrl) ? new UriBuilder(viewModel.OfflineApplicationUrl).Uri.ToString() : viewModel.OfflineApplicationUrl;
 
@@ -1095,19 +1136,32 @@
             vacancy.ShortDescriptionComment = viewModel.ShortDescriptionComment;
             vacancy.TitleComment = viewModel.TitleComment;
             vacancy.VacancyType = viewModel.VacancyType;
+            // TODO: not sure if do this or call reserveForQA in the service
+            AddQAInformation(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            return viewModel;
+            return new QAActionResult<NewVacancyViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
+        private void AddQAInformation(Vacancy vacancy)
+        {
+            vacancy.QAUserName = _currentUserService.CurrentUserName;
+            vacancy.DateStartedToQA = _dateTimeService.UtcNow;
+        }
+
+        public QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel)
         {
             if (!viewModel.VacancyReferenceNumber.HasValue)
                 throw new ArgumentNullException("viewModel.VacancyReferenceNumber", "VacancyReferenceNumber required for update");
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<TrainingDetailsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             //update properties
             vacancy.TrainingType = viewModel.TrainingType;
@@ -1135,7 +1189,11 @@
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
             viewModel.Sectors = sectors;
-            return viewModel;
+
+            // TODO: not sure if do this or call reserveForQA in the service
+            AddQAInformation(vacancy);
+
+            return new QAActionResult<TrainingDetailsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public NewVacancyViewModel UpdateEmployerInformationWithComments(NewVacancyViewModel viewModel)
@@ -1173,9 +1231,14 @@
             return viewModel;
         }
 
-        public VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
+        public QAActionResult<VacancyRequirementsProspectsViewModel> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<VacancyRequirementsProspectsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.DesiredSkillsComment = viewModel.DesiredSkillsComment;
@@ -1188,25 +1251,35 @@
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
 
+            AddQAInformation(vacancy);
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
-            return viewModel;
+            return new QAActionResult<VacancyRequirementsProspectsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
-        public VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
+        public QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
 
             vacancy.FirstQuestion = viewModel.FirstQuestion;
             vacancy.SecondQuestion = viewModel.SecondQuestion;
             vacancy.FirstQuestionComment = viewModel.FirstQuestionComment;
             vacancy.SecondQuestionComment = viewModel.SecondQuestionComment;
 
+            // TODO: not sure if do this or call reserveForQA in the service
+            AddQAInformation(vacancy);
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
-            return viewModel;
+            return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
         }
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)

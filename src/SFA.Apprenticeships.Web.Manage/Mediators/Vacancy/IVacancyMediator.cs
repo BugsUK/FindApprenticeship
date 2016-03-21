@@ -61,5 +61,7 @@
         MediatorResponse<TrainingDetailsViewModel> SelectStandardAsTrainingType(TrainingDetailsViewModel viewModel);
 
         MediatorResponse<VacancyViewModel> GetVacancyViewModel(int vacancyReferenceNumber);
+
+        MediatorResponse UnReserveVacancyForQA(int vacancyReferenceNumber);
     }
 }
