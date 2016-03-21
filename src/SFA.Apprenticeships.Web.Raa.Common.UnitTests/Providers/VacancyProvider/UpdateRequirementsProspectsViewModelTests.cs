@@ -109,7 +109,7 @@
             const int vacanyReferenceNumber = 1;
             const string userName = "userName";
 
-            var trainingDetailsViewModel = new Fixture().Build<TrainingDetailsViewModel>().Create();
+            var requirementsProspectsViewModel = new Fixture().Build<VacancyRequirementsProspectsViewModel>().Create();
 
             var vacancyPostingService = new Mock<IVacancyPostingService>();
             var vacanyLockingService = new Mock<IVacancyLockingService>();
@@ -128,7 +128,7 @@
                     .With(currentUserService)
                     .Build();
 
-            var result = vacancyProvider.UpdateVacancyWithComments(trainingDetailsViewModel);
+            var result = vacancyProvider.UpdateVacancyWithComments(requirementsProspectsViewModel);
 
             result.Code.Should().Be(QAActionResultCode.InvalidVacancy);
             result.ViewModel.Should().BeNull();

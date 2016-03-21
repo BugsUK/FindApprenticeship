@@ -1210,6 +1210,11 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
+            if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
+            {
+                return new QAActionResult<VacancyRequirementsProspectsViewModel>(QAActionResultCode.InvalidVacancy);
+            }
+
             vacancy.DesiredSkills = viewModel.DesiredSkills;
             vacancy.DesiredSkillsComment = viewModel.DesiredSkillsComment;
             vacancy.FutureProspects = viewModel.FutureProspects;
@@ -1220,6 +1225,8 @@
             vacancy.ThingsToConsiderComment = viewModel.ThingsToConsiderComment;
             vacancy.DesiredQualifications = viewModel.DesiredQualifications;
             vacancy.DesiredQualificationsComment = viewModel.DesiredQualificationsComment;
+
+            AddQAInformation(vacancy);
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
