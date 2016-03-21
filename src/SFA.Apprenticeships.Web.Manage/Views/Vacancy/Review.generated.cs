@@ -165,12 +165,10 @@ WriteLiteral(" name=\"VacancyQAAction\"");
 
 WriteLiteral(" value=\"UnReserveForQA\"");
 
-WriteLiteral(">Agency home</button>\r\n                ");
-
-WriteLiteral(" \r\n            </div>\r\n        </section>\r\n");
+WriteLiteral(">Agency home</button>\r\n            </div>\r\n        </section>\r\n");
 
             
-            #line 26 "..\..\Views\Vacancy\Review.cshtml"
+            #line 25 "..\..\Views\Vacancy\Review.cshtml"
     }
 
             
