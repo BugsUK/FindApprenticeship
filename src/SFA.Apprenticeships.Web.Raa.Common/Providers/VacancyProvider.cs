@@ -990,7 +990,7 @@
             viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
 
-            var vacancyManager = default(ProviderUser); // TODO: AG: _userProfileService.GetProviderUser(vacancy.VacancyManagerId);
+            var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
 
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName) ? vacancy.FrameworkCodeName : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;

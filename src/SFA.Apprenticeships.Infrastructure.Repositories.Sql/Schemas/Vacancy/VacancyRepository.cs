@@ -236,6 +236,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapSectorId(dbVacancy, result);
             MapDateFirstSubmitted(dbVacancy, result);
             MapCreatedDateTime(dbVacancy, result);
+            MapCreatedByProviderUsername(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
@@ -495,6 +496,22 @@ order by HistoryDate desc
         {
             result.CreatedDateTime = _getOpenConnection.Query<DateTime>(@"
 select top 1 HistoryDate
+from dbo.VacancyHistory
+where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
+order by HistoryDate
+",
+                new
+                {
+                    VacancyId = dbVacancy.VacancyId,
+                    VacancyStatus = VacancyStatus.Draft
+                }
+                ).SingleOrDefault();
+        }
+
+        private void MapCreatedByProviderUsername(Vacancy dbVacancy, DomainVacancy result)
+        {
+            result.CreatedByProviderUsername = _getOpenConnection.Query<string>(@"
+select top 1 UserName
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
 order by HistoryDate
