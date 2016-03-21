@@ -988,7 +988,7 @@ SET    QAUserName             = @UserName,
        StartedToQADateTime    = @StartedToQADateTime,
        VacancyStatusId        = @VacancyStatusId
 WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
-AND    (QAUserName IS NULL OR (QAUserName = @UserName))
+-- AND    (QAUserName IS NULL OR (QAUserName = @UserName))
 -- AND    (TimeStartedToQA IS NULL OR (TimeStartedToQA > @lockExpiryTime))
 
 SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
