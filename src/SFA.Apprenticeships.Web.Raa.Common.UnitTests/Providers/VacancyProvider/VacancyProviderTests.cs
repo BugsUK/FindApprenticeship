@@ -222,57 +222,6 @@
         }
 
         
-        [Test]
-        public void UpdateVacancyRequirementsAndProspectsWithComments()
-        {
-            //Arrange
-            var vacancyVm = new Fixture().Build<VacancyRequirementsProspectsViewModel>()
-                .Create();
-
-            var appVacancy = new Fixture().Build<Vacancy>()
-                .With(x => x.VacancyReferenceNumber, vacancyVm.VacancyReferenceNumber)
-                .With(x => x.Status, VacancyStatus.Submitted)
-                .Create();
-
-            var vacancyPostingService = new Mock<IVacancyPostingService>();
-            var providerService = new Mock<IProviderService>();
-            var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<CommonWebConfiguration>())
-                .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
-
-            vacancyPostingService.Setup(
-                vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber)).Returns(appVacancy);
-
-            vacancyPostingService.Setup(vps => vps.UpdateVacancy(It.IsAny<Vacancy>())).Returns(appVacancy);
-
-            var vacancyProvider =
-                new VacancyProviderBuilder().With(vacancyPostingService)
-                    .With(providerService)
-                    .With(configurationService)
-                    .Build();
-
-            //Act
-            var result = vacancyProvider.UpdateVacancyWithComments(vacancyVm);
-
-            //Assert
-            vacancyPostingService.Verify(vps => vps.GetVacancyByReferenceNumber(vacancyVm.VacancyReferenceNumber),
-                Times.Once);
-            vacancyPostingService.Verify(
-                vps =>
-                    vps.UpdateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == vacancyVm.VacancyReferenceNumber)));
-            result.VacancyReferenceNumber.Should().Be(vacancyVm.VacancyReferenceNumber);
-            result.DesiredQualifications.Should().Be(vacancyVm.DesiredQualifications);
-            result.DesiredQualificationsComment.Should().Be(vacancyVm.DesiredQualificationsComment);
-            result.DesiredSkills.Should().Be(vacancyVm.DesiredSkills);
-            result.DesiredSkillsComment.Should().Be(vacancyVm.DesiredSkillsComment);
-            result.FutureProspectsComment.Should().Be(vacancyVm.FutureProspectsComment);
-            result.FutureProspects.Should().Be(vacancyVm.FutureProspects);
-            result.PersonalQualitiesComment.Should().Be(vacancyVm.PersonalQualitiesComment);
-            result.PersonalQualities.Should().Be(vacancyVm.PersonalQualities);
-            result.ThingsToConsiderComment.Should().Be(vacancyVm.ThingsToConsiderComment);
-            result.ThingsToConsider.Should().Be(vacancyVm.ThingsToConsider);
-        }
-
         private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             return new FurtherVacancyDetailsViewModel

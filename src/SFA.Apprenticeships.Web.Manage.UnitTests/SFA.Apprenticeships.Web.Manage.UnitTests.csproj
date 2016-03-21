@@ -159,6 +159,7 @@
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorBuilder.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorTests.cs" />
     <Compile Include="Mediators\Candidate\CandidateMediatorTests.cs" />
+    <Compile Include="Mediators\Vacancy\UpdateRequirementsProspectsViewModelTests.cs" />
     <Compile Include="Mediators\Vacancy\UpdateTrainingDetailsViewModelTests.cs" />
     <Compile Include="Mediators\Vacancy\UpdateVacancyQuestionsViewModelTests.cs" />
     <Compile Include="Mediators\Vacancy\UpdateNewVacancyViewModelTests.cs" />
