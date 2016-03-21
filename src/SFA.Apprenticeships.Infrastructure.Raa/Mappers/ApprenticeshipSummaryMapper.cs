@@ -33,7 +33,7 @@
                 location.Longitude = -1.50812239495425;
             }
 
-            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
+            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var summary = new ApprenticeshipSummary
             {
