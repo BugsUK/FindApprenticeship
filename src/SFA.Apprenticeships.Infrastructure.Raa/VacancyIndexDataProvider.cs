@@ -71,7 +71,7 @@
                             employers[vacancyParties[v.OwnerPartyId].EmployerId],
                             providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
                             categories, _logService));
-            return new VacancySummaries(apprenticeshipSummaries, traineeshipSummaries);
+            return new VacancySummaries(apprenticeshipSummaries.Where(s => s != null), traineeshipSummaries.Where(s => s != null));
         }
     }
 }
