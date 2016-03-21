@@ -3,9 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Security.Principal;
-    using System.Threading;
-    using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Vacancies;
@@ -13,7 +10,6 @@
     using Configuration;
     using Domain.Entities.Raa.Parties; 
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.ReferenceData;
     using FluentAssertions;
     using Moq;
     using Moq.Language.Flow;
@@ -864,7 +860,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
                 HoursPerWeek = 30,
                 WorkingWeek = "A working week"
             };
