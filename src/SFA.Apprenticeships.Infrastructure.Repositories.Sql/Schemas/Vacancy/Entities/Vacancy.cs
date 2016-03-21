@@ -67,7 +67,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy.En
 
         public string WageText { get; set; }
 
-        public int WageUnitId { get; set; }
+        public int? WageUnitId { get; set; }
 
         [Column(TypeName = "smallint")]
         public short? NumberOfPositions { get; set; }

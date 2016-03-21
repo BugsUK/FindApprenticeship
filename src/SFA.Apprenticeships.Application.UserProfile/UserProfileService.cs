@@ -58,25 +58,6 @@
             return _agencyUserWriteRepository.Save(agencyUser);
         }
 
-        public IEnumerable<Team> GetTeams()
-        {
-            //TODO: Get these from config or a repo once the design and full list has been agreed
-            return new List<Team>
-            {
-                GetTeam("All", "All", true)
-            };
-        }
-
-        private static Team GetTeam(string id, string name, bool isDefault = false)
-        {
-            return new Team
-            {
-                Id = id,
-                Name = name,
-                IsDefault = isDefault
-            };
-        }
-
         public IEnumerable<Role> GetRoles(string roleList)
         {
             //TODO: Get these from config or a repo once the design and full list has been agreed

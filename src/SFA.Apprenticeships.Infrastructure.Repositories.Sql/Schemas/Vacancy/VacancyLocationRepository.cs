@@ -27,7 +27,7 @@
             _logger.Debug("Calling database to get vacancy with locations for vacancy with Id={0}", vacancyId);
 
             var vacancyLocations =
-                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId",
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
                     new { VacancyId = vacancyId });
 
             return
@@ -50,7 +50,7 @@
         public void DeleteFor(int vacancyId)
         {
             var vacancyLocations =
-                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId",
+                _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
                     new { VacancyId = vacancyId });
 
             foreach (var vacancyLocation in vacancyLocations)

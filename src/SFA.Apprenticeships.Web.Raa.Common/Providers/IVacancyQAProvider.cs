@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+    using Domain.Entities.Raa.Reference;
     using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
 
@@ -12,12 +13,14 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(int vacancyReferenceNumber);
+        QAActionResult ApproveVacancy(int vacancyReferenceNumber);
 
-        void RejectVacancy(int vacancyReferenceNumber);
+        QAActionResult RejectVacancy(int vacancyReferenceNumber);
 
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
+        VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
+        
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
@@ -55,5 +58,7 @@
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+
+        DashboardVacancySummaryViewModel GetNextAvailableVacancy();
     }
 }

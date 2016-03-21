@@ -203,6 +203,7 @@
     <Compile Include="Vacancies\SavedSearchProcessorTests\ProcessCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SavedSearchProcessorTests\QueueCandidateSavedSearchesTests.cs" />
     <Compile Include="Vacancies\SiteMapVacancyProcessorTests.cs" />
+    <Compile Include="Vacancies\VacancyLockingServiceTests.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
@@ -286,8 +287,12 @@
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
-      <Project>{78b1f2a1-dcc3-4ed3-8ce0-16e0781b59fa}</Project>
+      <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Web.Raa.Common\SFA.Apprenticeships.Web.Raa.Common.csproj">
+      <Project>{700D41DD-527A-42BD-94D2-FD49A5F00A18}</Project>
+      <Name>SFA.Apprenticeships.Web.Raa.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>

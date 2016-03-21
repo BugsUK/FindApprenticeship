@@ -33,6 +33,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     
     #line default
     #line hidden
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     
     #line 2 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
     using SFA.Apprenticeships.Infrastructure.Presentation.Constants;
@@ -133,7 +134,7 @@ WriteLiteral("            <span>Working week</span>\r\n");
             #line hidden
             
             #line 20 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                              
         }
 
             
@@ -222,14 +223,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1563), Tuple.Create("\"", 1589)
+WriteAttribute("class", Tuple.Create(" class=\"", 1612), Tuple.Create("\"", 1638)
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 1571), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1620), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1571), false)
+, 1620), false)
 );
 
 WriteLiteral(">\r\n        <h3");
@@ -334,7 +335,7 @@ WriteLiteral("\r\n    </div>\r\n");
             
             #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.ApprenticeshipMinimumWage)
+    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.ApprenticeshipMinimum)
     {
 
             
@@ -365,7 +366,7 @@ WriteLiteral(@" per hour.<br />
             #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
     }
 
-    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.NationalMinimumWage)
+    if (Model.FurtherVacancyDetailsViewModel.WageType == WageType.NationalMinimum)
     {
 
             

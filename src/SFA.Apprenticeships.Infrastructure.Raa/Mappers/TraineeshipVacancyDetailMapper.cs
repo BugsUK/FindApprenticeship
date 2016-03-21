@@ -20,6 +20,7 @@
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
+
             var detail = new TraineeshipVacancyDetail
             {
                 Id = (int)vacancy.VacancyReferenceNumber,

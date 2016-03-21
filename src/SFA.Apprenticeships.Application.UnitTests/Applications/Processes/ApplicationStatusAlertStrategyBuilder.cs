@@ -5,6 +5,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Applications.Processes
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+
     public class ApplicationStatusAlertStrategyBuilder
     {
         private readonly Mock<ILogService> _logService = new Mock<ILogService>();

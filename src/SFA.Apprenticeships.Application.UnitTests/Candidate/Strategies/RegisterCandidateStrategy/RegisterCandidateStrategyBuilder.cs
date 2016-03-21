@@ -9,6 +9,7 @@
     using Interfaces.Users;
     using Moq;
 
+
     public class RegisterCandidateStrategyBuilder
     {
         private readonly Mock<IConfigurationService> _configurationService = new Mock<IConfigurationService>();

@@ -83,15 +83,13 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Traineeship
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Find traineeships and test ordering")]
-        [NUnit.Framework.IgnoreAttribute()]
         [NUnit.Framework.CategoryAttribute("SmokeTests")]
         [NUnit.Framework.CategoryAttribute("PrimaryTransaction")]
         public virtual void FindTraineeshipsAndTestOrdering()
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Find traineeships and test ordering", new string[] {
                         "SmokeTests",
-                        "PrimaryTransaction",
-                        "Ignore"});
+                        "PrimaryTransaction"});
 #line 14
 this.ScenarioSetup(scenarioInfo);
 #line 7
@@ -104,7 +102,7 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 16
  testRunner.When("I enter data", ((string)(null)), table1, "When ");
 #line 19
@@ -244,7 +242,7 @@ this.FeatureBackground();
                         "Value"});
             table9.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 59
  testRunner.When("I enter data", ((string)(null)), table9, "When ");
 #line 62
@@ -475,7 +473,7 @@ this.FeatureBackground();
                         "Value"});
             table20.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 130
  testRunner.When("I enter data", ((string)(null)), table20, "When ");
 #line 133

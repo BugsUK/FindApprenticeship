@@ -4,7 +4,7 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Candidates;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Interfaces.Candidates;
 
     public class CandidateSearchService : ICandidateSearchService

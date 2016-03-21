@@ -21,6 +21,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\Provider.ProviderUserStatus.Upsert.sql"
 :r ".\Scripts\Data\dbo.VacancyLocationType.Upsert.sql"
 :r ".\Scripts\Data\dbo.WageUnit.Upsert.sql"
+:r ".\Scripts\Data\dbo.WageType.Upsert.sql"
 :r ".\Scripts\Data\dbo.DurationType.Upsert.sql"
 :r ".\Scripts\Data\Reference.EducationLevel.Upsert.sql" -- Needs to be before ApprenticeshipType
 :r ".\Scripts\Data\dbo.ApprenticeshipType.Upsert.sql"

@@ -10,7 +10,7 @@
         public VacancyRepositoryRegistry()
         {
             // Apprenticeships.
-            For<IMapper>().Use<Sql.Schemas.Vacancy.VacancyMappers>().Name = "VacancyMappers";
+            For<IMapper>().Use<VacancyMappers>().Name = "VacancyMappers";
 
             For<IVacancyReadRepository>()
                 .Use<VacancyRepository>()

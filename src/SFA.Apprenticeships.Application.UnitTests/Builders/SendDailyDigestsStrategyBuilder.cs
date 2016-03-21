@@ -9,6 +9,7 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+
     public class SendDailyDigestsStrategyBuilder
     {
         private Mock<ILogService> _logService = new Mock<ILogService>();

@@ -6313,6 +6313,46 @@ h2 a i.raa-icon-comment {
 .candidate-address {
   list-style-type: none; }
 
+@media screen and (max-width: 768px) {
+  table.reactive {
+    border-top: 1px solid #bfc1c3;
+    display: block; }
+    table.reactive thead {
+      display: none; }
+    table.reactive tr {
+      display: block;
+      border-bottom: 1px solid #bfc1c3;
+      padding: 1em 0; }
+      table.reactive tr td {
+        display: block;
+        text-align: left;
+        border: none;
+        padding: 0.25em 0; }
+        table.reactive tr td .reactive-title {
+          font-family: "nta", Arial, sans-serif;
+          font-size: 19px;
+          line-height: 1.31579;
+          font-weight: 400;
+          text-transform: none;
+          font-weight: 700; } }
+        @media screen and (max-width: 768px) and (max-width: 640px) {
+          table.reactive tr td .reactive-title {
+            font-size: 16px;
+            line-height: 1.25; } }
+
+@media screen and (max-width: 768px) {
+        table.reactive tr td.reactive-header:before {
+          content: attr(data-label) ": ";
+          font-family: "nta", Arial, sans-serif;
+          font-size: 16px;
+          line-height: 1.25;
+          font-weight: 300;
+          text-transform: none;
+          font-weight: 700; } }
+        @media screen and (max-width: 768px) and (max-width: 640px) {
+          table.reactive tr td.reactive-header:before {
+            font-size: 14px; } }
+
 .applicant-location,
 .applicant-distance {
   display: block; }

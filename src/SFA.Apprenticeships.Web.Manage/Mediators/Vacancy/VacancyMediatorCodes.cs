@@ -6,12 +6,14 @@
         {
             public const string NoAvailableVacancies = "VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies";
             public const string Ok = "VacancyMediatorCodes.ApproveVacancy.Ok";
+            public const string InvalidVacancy = "VacancyMediatorCodes.ApproveVacancy.InvalidVacancy";
         }
 
         public class RejectVacancy
         {
             public const string NoAvailableVacancies = "VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies";
             public const string Ok = "VacancyMediatorCodes.RejectVacancy.Ok";
+            public const string InvalidVacancy = "VacancyMediatorCodes.RejectVacancy.InvalidVacancy";
         }
 
         public class GetVacancy
@@ -110,6 +112,20 @@
         public class GetVacancyViewModel
         {
             public const string Ok = "VacancyMediatorCodes.GetVacancyViewModel.Ok";
+        }
+
+        public class ReserveVacancyForQA
+        {
+            public const string NoVacanciesAvailable = "VacancyMediatorCodes.ReserveVacancyForQA.NoVacanciesAvailable";
+            public const string Ok = "VacancyMediatorCodes.ReserveVacancyForQA.Ok";
+            public const string NextAvailableVacancy = "VacancyMediatorCodes.ReserveVacancyForQA.NextAvailableOption";
+        }
+
+        public class ReviewVacancy
+        {
+            public const string InvalidVacancy = "VacancyMediatorCodes.ReviewVacancy.ReviewVacancy";
+            public const string Ok = "VacancyMediatorCodes.ReviewVacancy.Ok";
+            public const string FailedValidation = "VacancyMediatorCodes.ReviewVacancy.FailedValidation";
         }
     }
 }

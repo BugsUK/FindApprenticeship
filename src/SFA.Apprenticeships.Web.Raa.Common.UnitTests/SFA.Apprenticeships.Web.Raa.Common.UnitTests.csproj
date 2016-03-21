@@ -172,8 +172,14 @@
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
     <Compile Include="Providers\VacancyPosting\TrainingDetailsTests.cs" />
+    <Compile Include="Providers\VacancyProvider\ApproveVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\GetNextAvailableVacancy.cs" />
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
+    <Compile Include="Providers\VacancyProvider\RejectVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\ReserveForQATests.cs" />
+    <Compile Include="Providers\VacancyProvider\ReviewVacancyTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />
+    <Compile Include="Providers\VacancyProvider\VacancyProviderTestHelper.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />

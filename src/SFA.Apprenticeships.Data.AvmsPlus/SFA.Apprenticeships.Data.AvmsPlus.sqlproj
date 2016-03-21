@@ -196,7 +196,6 @@
     <Build Include="dbo\Tables\Candidate.sql" />
     <Build Include="dbo\Tables\PIMSOrgTypeBlackList.sql" />
     <Build Include="dbo\Tables\PostcodeOutcode.sql" />
-    <Build Include="dbo\Tables\WageTypes.sql" />
     <Build Include="dbo\Tables\CandidateBroadcastMessage.sql" />
     <Build Include="dbo\Tables\WatchedVacancy.sql" />
     <Build Include="dbo\Tables\PrivilegeType.sql" />

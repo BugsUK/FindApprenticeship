@@ -146,7 +146,7 @@ Scenario: Find apprenticeships by keyword and change ordering to distance
 	When I enter data
 		 | Field               | Value      |
 		 | Keywords            | Admin      |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search

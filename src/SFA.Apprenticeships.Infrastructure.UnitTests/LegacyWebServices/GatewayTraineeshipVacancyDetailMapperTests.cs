@@ -121,7 +121,7 @@
             dest.Title.Should().Be(src.VacancyTitle);
             dest.VacancyUrl.Should().Be(src.VacancyUrl);
             dest.WorkingWeek.Should().Be(src.WorkingWeek);
-            dest.WageType.Should().Be(LegacyWageType.Weekly);
+            dest.WageType.Should().Be(LegacyWageType.LegacyWeekly);
         }
 
         [Test]

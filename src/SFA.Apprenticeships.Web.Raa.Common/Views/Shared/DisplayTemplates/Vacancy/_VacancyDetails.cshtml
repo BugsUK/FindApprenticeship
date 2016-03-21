@@ -97,20 +97,10 @@
 
             @if (Model.IsSingleLocation)
             {
-                var positions = Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? Model.NewVacancyViewModel.NumberOfPositions : Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions;
-
                 <div class="@editableItemClass">
                     <h3 class="bold-small">Positions</h3>
-                    <p id="vacancy-reference-id">@positions available</p>
-
-                    @if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
-                    {
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
-                    }
-                    else
-                    {
-                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.LocationsLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
-                    }
+                    <p id="vacancy-reference-id">@Model.NewVacancyViewModel.NumberOfPositions available</p>
+                    @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
                 </div>
             }
 
