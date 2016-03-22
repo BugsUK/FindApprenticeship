@@ -219,6 +219,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             And("I choose Search");
             Then("I am on the ApprenticeshipSearchResultPage page");
             When("I enter data", Get50ResultsPerPage());
+            And("I wait 3 seconds");
             Then("I am on the ApprenticeshipSearchResultPage page");
         }
 
@@ -235,6 +236,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             And("I choose Search");
             Then("I am on the TraineeshipSearchResultPage page");
             When("I enter data", Get50ResultsPerPage());
+            And("I wait 3 seconds");
             Then("I am on the TraineeshipSearchResultPage page");
         }
 
