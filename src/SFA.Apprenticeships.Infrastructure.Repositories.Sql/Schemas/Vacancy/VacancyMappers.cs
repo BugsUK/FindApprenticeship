@@ -139,7 +139,7 @@
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
-                .MapMemberFrom(av => av.Wage, v => v.WeeklyWage)
+                .MapMemberFrom(av => av.Wage, v => RoundMoney(v.WeeklyWage))
                 .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
@@ -394,6 +394,13 @@
                         };
                     }
                 });
+        }
+
+        private static decimal? RoundMoney(decimal? money)
+        {
+            return money.HasValue
+                ? Math.Round(money.Value, 2)
+                : default(decimal?);
         }
     }
 
