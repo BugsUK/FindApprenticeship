@@ -90,10 +90,7 @@
             _providerService.Setup(s => s.GetProvider(It.IsAny<string>())).Returns(new Fixture().Create<Provider>());
             _providerService.Setup(s => s.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Fixture().Create<Provider>());
 
-            _configurationService = new Mock<IConfigurationService>();
-            _configurationService.Setup(x => x.Get<ManageWebConfiguration>()).Returns(new ManageWebConfiguration { QAVacancyTimeout = 10 });
-
-            _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_configurationService).With(_dateTimeService).Build();
+            _provider = new VacancyProviderBuilder().With(_vacancyPostingService).With(_providerService).With(_dateTimeService).Build();
         }
 
         [TestCase(DashboardVacancySummaryFilterTypes.All, ExpectedSubmittedTodayCount + ExpectedSubmittedYesterdayCount + ExpectedSubmittedMoreThan48HoursCount + ExpectedResubmittedCount)]

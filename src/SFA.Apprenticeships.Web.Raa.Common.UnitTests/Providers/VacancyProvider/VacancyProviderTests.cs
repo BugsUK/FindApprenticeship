@@ -109,8 +109,6 @@
             var providerService = new Mock<IProviderService>();
             const int ownerPartyId = 42;
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration {QAVacancyTimeout = QAVacancyTimeout});
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration {BlacklistedCategoryCodes = ""});
 

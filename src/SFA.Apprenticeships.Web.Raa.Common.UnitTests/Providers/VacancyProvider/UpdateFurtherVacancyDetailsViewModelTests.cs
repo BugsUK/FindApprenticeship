@@ -55,8 +55,6 @@
                             .Create();
 
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(x => x.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = QAVacancyTimeout });
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
             var referenceDataService = new Mock<IReferenceDataService>();

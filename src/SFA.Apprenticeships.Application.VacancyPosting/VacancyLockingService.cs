@@ -2,13 +2,11 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+    using Configuration;
     using Domain.Entities.Raa.Vacancies;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Vacancies;
-    using Web.Raa.Common.Configuration;
 
-    // TODO: is this the correct project?
-    // TODO: think in a better name
     public class VacancyLockingService : IVacancyLockingService
     {
         private readonly IDateTimeService _dateTimeService;
@@ -58,7 +56,7 @@
 
         private bool VacancyIsUnattended(VacancySummary vacancySummary)
         {
-            var timeout = _configurationService.Get<ManageWebConfiguration>().QAVacancyTimeout; // In minutes
+            var timeout = _configurationService.Get<VacancyPostingConfiguration>().QAVacancyTimeout; // In minutes
             return vacancySummary.DateStartedToQA.HasValue &&
                    (_dateTimeService.UtcNow - vacancySummary.DateStartedToQA.Value).TotalMinutes > timeout;
         }
