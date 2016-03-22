@@ -14,8 +14,10 @@
         public const string PerMonthText = "per month";
         public const string PerWeekText = "per week";
 
-        private const string UnknownText = "unknown";
+        public const string UnknownText = "unknown";
+
         private const string WageAmountFormat = "N2";
+
         public static string GetHeaderDisplayText(this Wage wage)
         {
             return wage.Type == WageType.Custom
@@ -92,7 +94,7 @@
             {
                 case WageType.LegacyWeekly:
                 case WageType.Custom:
-                    return $"£{wage.Amount?.ToString() ?? UnknownText}";
+                    return $"£{wage.Amount?.ToString(WageAmountFormat) ?? UnknownText}";
 
                 case WageType.ApprenticeshipMinimum:
                     return hoursPerWeek.HasValue
@@ -105,7 +107,7 @@
                         : UnknownText;
 
                 case WageType.LegacyText:
-                    return "TODO";
+                    return wage.Text ?? UnknownText;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(wage.Type), $"Invalid Wage Type: {wage.Type}");

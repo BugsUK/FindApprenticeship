@@ -19,6 +19,7 @@
                 HoursPerWeek = vacancy.HoursPerWeek,
                 WageType = vacancy.WageType,
                 Wage = vacancy.Wage,
+                WageText = vacancy.WageText,
                 WageUnit = vacancy.WageUnit,
                 WageUnits = GetWageUnits(),
                 DurationType = vacancy.DurationType,

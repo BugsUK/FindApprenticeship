@@ -122,9 +122,9 @@
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
 
-        [TestCase(100, WageUnit.Weekly, @"&#163;100")]
-        [TestCase(100, WageUnit.Monthly, @"&#163;100")]
-        [TestCase(100, WageUnit.Annually, @"&#163;100")]
+        [TestCase(100, WageUnit.Weekly, @"&#163;100.00")]
+        [TestCase(100, WageUnit.Monthly, @"&#163;100.00")]
+        [TestCase(100, WageUnit.Annually, @"&#163;100.00")]
         public void ShouldShowCustomWageAmount(decimal wage, WageUnit wageUnit, string expectedDisplayText)
         {
             var details = new WorkingWeekAndWage();

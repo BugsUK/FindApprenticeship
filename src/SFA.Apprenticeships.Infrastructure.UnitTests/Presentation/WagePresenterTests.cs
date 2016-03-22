@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Presentation
 {
+    using System;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
@@ -15,7 +16,7 @@
         public void ShouldGetHeaderDisplayTextForCustomWageType(WageUnit wageUnit, string expected)
         {
             // Arrange.
-            var wage = new Wage(WageType.Custom, null, wageUnit);
+            var wage = new Wage(WageType.Custom, null, null, wageUnit);
 
             // Act.
             var actual = wage.GetHeaderDisplayText();
@@ -31,7 +32,7 @@
         public void ShouldGetHeaderDisplayTextForNonCustomWageTypes(WageType wageType)
         {
             // Arrange.
-            var wage = new Wage(wageType, null, WageUnit.NotApplicable);
+            var wage = new Wage(wageType, null, null, WageUnit.NotApplicable);
 
             // Act.
             var actual = wage.GetHeaderDisplayText();
@@ -61,6 +62,35 @@
         {
             // Act.
             var actual = wageUnit.GetWagePostfix();
+
+            // Assert.
+            actual.Should().Be(expected);
+        }
+
+        [TestCase(WageType.LegacyText, "Competitive salary", "123.45", null, "Competitive salary")]
+        [TestCase(WageType.LegacyText, null, "123.45", null, WagePresenter.UnknownText)]
+        public void ShouldGetDisplayText(
+            WageType wageType, string wageText, string wageAmountString, string hoursPerWeekString, string expected)
+        {
+            // Arrange.
+            decimal tempDecimal;
+            decimal? wageAmount = null;
+            decimal? hoursPerWeek = null;
+
+            if (decimal.TryParse(wageAmountString, out tempDecimal))
+            {
+                wageAmount = tempDecimal;
+            }
+
+            if (decimal.TryParse(hoursPerWeekString, out tempDecimal))
+            {
+                hoursPerWeek = tempDecimal;
+            }
+
+            var wage = new Wage(wageType, wageAmount, wageText, WageUnit.NotApplicable);
+
+            // Act.
+            var actual = wage.GetDisplayText(Convert.ToDecimal(hoursPerWeek));
 
             // Assert.
             actual.Should().Be(expected);

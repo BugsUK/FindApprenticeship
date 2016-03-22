@@ -21,7 +21,7 @@
         public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
-            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageUnit);
+            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var detail = new ApprenticeshipVacancyDetail
             {
