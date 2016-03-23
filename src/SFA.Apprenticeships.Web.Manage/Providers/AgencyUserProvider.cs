@@ -19,10 +19,10 @@
             _userProfileService = userProfileService;
         }
 
-        public AgencyUserViewModel GetOrCreateAgencyUser(string username, string roleList)
+        public AgencyUserViewModel GetOrCreateAgencyUser(string username)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var roles = _userProfileService.GetRoles(roleList).ToList();
+            var roles = _userProfileService.GetRoles().ToList();
 
             if (agencyUser == null)
             {
@@ -38,18 +38,18 @@
             return GetAgencyUserViewModel(agencyUser, roles);
         }
 
-        public AgencyUserViewModel GetAgencyUser(string username, string roleList)
+        public AgencyUserViewModel GetAgencyUser(string username)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var roles = _userProfileService.GetRoles(roleList).ToList();
+            var roles = _userProfileService.GetRoles().ToList();
 
             return GetAgencyUserViewModel(agencyUser, roles);
         }
 
-        public AgencyUserViewModel SaveAgencyUser(string username, string roleList, AgencyUserViewModel viewModel)
+        public AgencyUserViewModel SaveAgencyUser(string username, AgencyUserViewModel viewModel)
         {
             var agencyUser = _userProfileService.GetAgencyUser(username);
-            var roles = _userProfileService.GetRoles(roleList).ToList();
+            var roles = _userProfileService.GetRoles().ToList();
 
             if (!string.IsNullOrEmpty(viewModel.RoleId))
             {

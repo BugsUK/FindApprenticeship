@@ -139,6 +139,7 @@
     <Compile Include="Builders\ClaimsPrincipalBuilder.cs" />
     <Compile Include="Builders\HttpContextBuilder.cs" />
     <Compile Include="Builders\HttpResponseBuilder.cs" />
+    <Compile Include="Extensions\ClaimsPrincipalExtensionsTests.cs" />
     <Compile Include="Extensions\MetadataExtensionsTests.cs" />
     <Compile Include="Framework\DateDisplayExtensionsTests.cs" />
     <Compile Include="Mediators\MediatorResponseExtensions.cs" />

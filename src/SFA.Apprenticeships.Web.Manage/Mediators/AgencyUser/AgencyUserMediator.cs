@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.Providers;
-
-namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
+﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
 {
     using System.Security.Claims;
     using Common.Constants;
@@ -11,24 +9,30 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
     using Common.Providers;
     using Common.Providers.Azure.AccessControlService;
     using Constants.Messages;
-    using Domain.Entities.Raa;
     using Providers;
+    using Raa.Common.Configuration;
+    using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     public class AgencyUserMediator : MediatorBase, IAgencyUserMediator
     {
         private readonly IAgencyUserProvider _agencyUserProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
+        private readonly IConfigurationService _configurationService;
         private readonly IUserDataProvider _userDataProvider;
         private readonly IVacancyQAProvider _vacancyQaProvider;
 
-        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider, IAuthorizationErrorProvider authorizationErrorProvider, IUserDataProvider userDataProvider, IVacancyQAProvider vacancyQaProvider)
+        public AgencyUserMediator(IAgencyUserProvider agencyUserProvider,
+            IAuthorizationErrorProvider authorizationErrorProvider, IUserDataProvider userDataProvider,
+            IVacancyQAProvider vacancyQaProvider, IConfigurationService configurationService)
         {
             _agencyUserProvider = agencyUserProvider;
             _authorizationErrorProvider = authorizationErrorProvider;
             _userDataProvider = userDataProvider;
             _vacancyQaProvider = vacancyQaProvider;
+            _configurationService = configurationService;
         }
 
         public MediatorResponse<AgencyUserViewModel> Authorize(ClaimsPrincipal principal)
@@ -37,22 +41,20 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
 
             if (string.IsNullOrEmpty(principal?.Identity?.Name))
             {
-                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.EmptyUsername, viewModel, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
+                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.EmptyUsername, viewModel,
+                    AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
             }
 
-            if (!principal.IsInRole(Roles.Raa))
-            {
-                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.MissingServicePermission, viewModel, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Error);
-            }
+            var authorisationGroupClaim = _configurationService.Get<ManageWebConfiguration>().AuthorisationGroupClaim;
 
-            var roleList = principal.GetRoleList();
-            if (string.IsNullOrEmpty(roleList))
+            if (!principal.IsInGroup(authorisationGroupClaim))
             {
-                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.MissingRoleListClaim, viewModel, AuthorizeMessages.MissingRoleListClaim, UserMessageLevel.Error);
+                return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.MissingServicePermission, viewModel,
+                    AuthorizeMessages.MissingServicePermission, UserMessageLevel.Error);
             }
 
             var username = principal.Identity.Name;
-            viewModel = _agencyUserProvider.GetOrCreateAgencyUser(username, roleList);
+            viewModel = _agencyUserProvider.GetOrCreateAgencyUser(username);
 
             // Redirect to session return URL (if any).
             var returnUrl = _userDataProvider.Pop(UserDataItemNames.ReturnUrl);
@@ -72,28 +74,27 @@ namespace SFA.Apprenticeships.Web.Manage.Mediators.AgencyUser
         public MediatorResponse<AgencyUserViewModel> GetAgencyUser(ClaimsPrincipal principal)
         {
             var username = principal.Identity.Name;
-            var roleList = principal.GetRoleList();
-            var viewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
-            
+            var viewModel = _agencyUserProvider.GetAgencyUser(username);
+
             return GetMediatorResponse(AgencyUserMediatorCodes.GetAgencyUser.Ok, viewModel);
         }
 
-        public MediatorResponse<AgencyUserViewModel> SaveAgencyUser(ClaimsPrincipal principal, AgencyUserViewModel viewModel)
+        public MediatorResponse<AgencyUserViewModel> SaveAgencyUser(ClaimsPrincipal principal,
+            AgencyUserViewModel viewModel)
         {
             var username = principal.Identity.Name;
-            var roleList = principal.GetRoleList();
-            viewModel = _agencyUserProvider.SaveAgencyUser(username, roleList, viewModel);
+            viewModel = _agencyUserProvider.SaveAgencyUser(username, viewModel);
 
             return GetMediatorResponse(AgencyUserMediatorCodes.Authorize.Ok, viewModel);
         }
 
-        public MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal, DashboardVacancySummariesSearchViewModel searchViewModel)
+        public MediatorResponse<HomeViewModel> GetHomeViewModel(ClaimsPrincipal principal,
+            DashboardVacancySummariesSearchViewModel searchViewModel)
         {
             var username = principal.Identity.Name;
-            var roleList = principal.GetRoleList();
-            var userViewModel = _agencyUserProvider.GetAgencyUser(username, roleList);
+            var userViewModel = _agencyUserProvider.GetAgencyUser(username);
             var vacancySummariesViewModel = _vacancyQaProvider.GetPendingQAVacanciesOverview(searchViewModel);
-            
+
             var homeViewModel = new HomeViewModel
             {
                 AgencyUser = userViewModel,
