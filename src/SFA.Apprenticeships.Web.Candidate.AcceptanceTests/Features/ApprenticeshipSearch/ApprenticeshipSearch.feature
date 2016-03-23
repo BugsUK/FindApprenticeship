@@ -210,7 +210,7 @@ Scenario: Return to search results link appears if arriving from search results 
 
 @US528 @SmokeTests
 Scenario: Return to find apprenticeship link appears if not arriving from search results page
-	When I navigate to the details of the apprenticeship vacancy 779161
+	When I navigate to the details of the apprenticeship vacancy 506663
 	And I am on the ApprenticeshipDetailsPage page
 	Then I see
 		| Field                  | Rule   | Value |
