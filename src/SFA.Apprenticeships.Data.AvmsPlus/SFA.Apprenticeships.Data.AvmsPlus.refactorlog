@@ -70,4 +70,11 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="EditedInRaa" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="267d60f8-2f75-4a0f-a78f-d7b0102c3ec2" ChangeDateTime="03/22/2016 14:40:48">
+    <Property Name="ElementName" Value="[dbo].[Vacancy].[idx_Vacancy_]" />
+    <Property Name="ElementType" Value="SqlIndex" />
+    <Property Name="ParentElementName" Value="[dbo].[Vacancy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="[idx_Vacancy_VacancyGuid]" />
+  </Operation>
 </Operations>
