@@ -181,6 +181,7 @@ Scenario: Different results per page
 	When I enter data
 		| Field                  | Value      |
 		| ResultsPerPageDropDown | 10 per page |
+	And I wait 3 seconds
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
@@ -188,6 +189,7 @@ Scenario: Different results per page
 	When I enter data
 		| Field                  | Value      |
 		| ResultsPerPageDropDown | 25 per page |
+	And I wait 3 seconds
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
@@ -195,6 +197,7 @@ Scenario: Different results per page
 	When I enter data
 		| Field                  | Value      |
 		| ResultsPerPageDropDown | 50 per page |
+	And I wait 3 seconds
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see
         | Field                  | Rule   | Value |
