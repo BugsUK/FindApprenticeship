@@ -79,5 +79,29 @@
             viewModel.County.ShortName.Should().Be(source.County.ShortName);
             viewModel.County.FullName.Should().Be(source.County.FullName);
         }
+
+        [Test]
+        public void ShouldMapStandard()
+        {
+            Assert.Fail("Implement me!");
+        }
+
+        [Test]
+        public void ShouldMapSector()
+        {
+            Assert.Fail("Implement me!");
+        }
+
+        [Test]
+        public void ShouldMapFramework()
+        {
+            Assert.Fail("Implement me!");
+        }
+
+        [Test]
+        public void ShouldMapOccupation()
+        {
+            Assert.Fail("Implement me!");
+        }
     }
 }

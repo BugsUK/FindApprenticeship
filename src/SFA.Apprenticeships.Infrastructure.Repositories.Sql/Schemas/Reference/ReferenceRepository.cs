@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Reference;
     using SFA.Infrastructure.Interfaces;
     using Common;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
 
     public class ReferenceRepository : IReferenceRepository
@@ -60,6 +61,26 @@
             var localAuthorities = _mapper.Map<IList<Entities.LocalAuthority>, IList<LocalAuthority>>(dbLocalAuthorities);
 
             return localAuthorities;
+        }
+
+        public IList<Framework> GetFrameworks()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Occupation> GetOccupations()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Standard> GetStandards()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IList<Sector> GetSectors()
+        {
+            throw new NotImplementedException();
         }
     }
 }

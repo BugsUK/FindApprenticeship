@@ -9,7 +9,6 @@
     using Sql.Schemas.Reference;
 
     [TestFixture(Category = "Integration")]
-    [Ignore("Un-ignore, once we start using the reference data")]
     public class ReferenceRepositoryTests
     {
         private readonly IMapper _mapper = new ReferenceMappers();
@@ -78,6 +77,30 @@
             counties[0].County.CodeName.Should().Be("WSX");
             counties[0].County.ShortName.Should().Be("WSX");
             counties[0].County.FullName.Should().Be("West Sussex");
+        }
+
+        [Test]
+        public void GetStandards()
+        {
+            Assert.Fail("Implement this!");
+        }
+
+        [Test]
+        public void GetSectors()
+        {
+            Assert.Fail("Implement this!");
+        }
+
+        [Test]
+        public void GetFrameworks()
+        {
+            Assert.Fail("Implement this!");
+        }
+
+        [Test]
+        public void GetOccupations()
+        {
+            Assert.Fail("Implement this!");
         }
     }
 }
