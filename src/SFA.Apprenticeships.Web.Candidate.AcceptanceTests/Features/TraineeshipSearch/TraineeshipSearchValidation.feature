@@ -27,6 +27,7 @@ Scenario: Show validation error message when single character location entered
 		 | Field    | Value |
 		 | Location | M     |
 	When I choose Search
+	When I choose Search
 	And I wait to see ValidationSummary
 	Then I see
         | Field                  | Rule   | Value |
