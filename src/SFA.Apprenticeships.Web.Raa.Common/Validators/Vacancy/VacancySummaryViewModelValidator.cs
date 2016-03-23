@@ -107,7 +107,7 @@
                 .When(x => x.HoursPerWeek.HasValue);
 
             validator.RuleFor(viewModel => (int)viewModel.WageType)
-                .InclusiveBetween((int)WageType.ApprenticeshipMinimumWage, (int)WageType.Custom)
+                .InclusiveBetween((int)WageType.ApprenticeshipMinimum, (int)WageType.Custom)
                 .WithMessage(VacancyViewModelMessages.WageType.RequiredErrorText)
                 .When(x => x.VacancyType != VacancyType.Traineeship);
 

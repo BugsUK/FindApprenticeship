@@ -85,8 +85,8 @@
             get
             {
                 return NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true ||
-                       (NewVacancyViewModel.LocationAddresses != null &&
-                        NewVacancyViewModel.LocationAddresses.Count == 1);
+                       (NewVacancyViewModel.LocationAddresses == null ||
+                        NewVacancyViewModel.LocationAddresses.Count == 0);
             }
         }
 

@@ -9,6 +9,7 @@
     using Application.Communications.Housekeeping;
     using Application.Communications.Strategies;
     using Application.Employer;
+    using Application.Employer.Strategies;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
     using Application.Interfaces.Organisations;
@@ -21,7 +22,6 @@
     using Application.Vacancies;
     using Consumers;
     using Domain.Interfaces.Repositories;
-    using EmployerDataService.Providers;
     using Processes.Vacancies;
     using Repositories.Mongo.Audit;
     using StructureMap.Configuration.DSL;
@@ -83,6 +83,17 @@
 
             // Vacancy Housekeeping
             For<VacancyStatusControlQueueConsumer>().Use<VacancyStatusControlQueueConsumer>();
+
+            RegisterStrategies();
+        }
+
+        private void RegisterStrategies()
+        {
+            For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
+            For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
         }
     }
 }

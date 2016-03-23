@@ -10,7 +10,7 @@
     using Validators.Vacancy;
 
     [Validator(typeof(VacancySummaryViewModelClientValidator))]
-    public class FurtherVacancyDetailsViewModel
+    public class FurtherVacancyDetailsViewModel : IPartialVacancyViewModel
     {
         public const string PartialView = "Vacancy/FurtherVacancyDetails";
 
@@ -30,6 +30,8 @@
 
         [Display(Name = VacancyViewModelMessages.Wage.LabelText)]
         public decimal? Wage { get; set; }
+
+        public string WageText { get; set; }
 
         public WageUnit WageUnit { get; set; }
 
@@ -60,11 +62,11 @@
 
         public VacancyStatus Status { get; set; }
 
-        public string WageUnitDisplayText => new Wage(WageType, Wage, WageUnit).GetHeaderDisplayText();
+        public string WageUnitDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetHeaderDisplayText();
 
         public string DurationTypeDisplayText => new Duration(DurationType, (int?)Duration).GetDisplayText();
 
-        public string WageDisplayText => new Wage(WageType, Wage, WageUnit).GetDisplayText(HoursPerWeek);
+        public string WageDisplayText => new Wage(WageType, Wage, WageText, WageUnit).GetDisplayText(HoursPerWeek);
 
         public bool ComeFromPreview { get; set; }
 

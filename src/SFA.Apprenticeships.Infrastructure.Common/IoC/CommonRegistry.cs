@@ -3,6 +3,7 @@
     using SFA.Infrastructure.Interfaces;
     using Caching.Memory.IoC;
     using Configuration;
+    using CurrentUser;
     using DateTime;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
@@ -18,6 +19,7 @@
             For<IConfigurationManager>().Singleton().Use<ConfigurationManager>();
             For<IConfigurationService>().Singleton().Use<AzureBlobConfigurationService>().Name = "ConfigurationService";
             For<IDateTimeService>().Use<DateTimeService>();
+            For<ICurrentUserService>().Use<CurrentUserService>();
 
             if (cacheConfiguration.UseCache)
             {

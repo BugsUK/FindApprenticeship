@@ -112,6 +112,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Agent.Intercept.1.2.0\lib\net45\Microsoft.AI.Agent.Intercept.dll</HintPath>
     </Reference>
@@ -792,6 +796,10 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>MyApplications.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ApprenticeshipSearch\_wage.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_wage.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1092,6 +1100,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Settings.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ApprenticeshipSearch\_wage.generated.cs">
+      <DependentUpon>_wage.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Home\Feedback.generated.cs">
       <DependentUpon>Feedback.cshtml</DependentUpon>

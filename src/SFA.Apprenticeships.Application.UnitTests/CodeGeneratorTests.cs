@@ -4,10 +4,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Apprenticeships.Application.UserAccount;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
-    
+
     [TestFixture]
     public class ActivationCodeGeneratorTests
     {

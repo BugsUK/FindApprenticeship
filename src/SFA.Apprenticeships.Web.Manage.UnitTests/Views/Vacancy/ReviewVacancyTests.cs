@@ -113,7 +113,7 @@
 
             var view = details.RenderAsHtml(_context, viewModel);
 
-            view.GetElementbyId("dashboardLink").Should().NotBeNull("Should exists a return to dashboard button");
+            view.GetElementbyId("btnUnReserve").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
         [Test]
@@ -156,11 +156,11 @@
             view.GetElementbyId("btnReject").Should().NotBeNull("Should exists a return to dashboard button");
         }
 
-        [TestCase(WageType.NationalMinimumWage, 30, "&#163;116.10 - &#163;201.00")]
-        [TestCase(WageType.NationalMinimumWage, 37.5, "&#163;145.13 - &#163;251.25")]
-        [TestCase(WageType.ApprenticeshipMinimumWage, 20, "&#163;66.00")]
-        [TestCase(WageType.ApprenticeshipMinimumWage, 16, "&#163;52.80")]
-        [TestCase(WageType.ApprenticeshipMinimumWage, 37.5, "&#163;123.75")]
+        [TestCase(WageType.NationalMinimum, 30, "&#163;116.10 - &#163;201.00")]
+        [TestCase(WageType.NationalMinimum, 37.5, "&#163;145.13 - &#163;251.25")]
+        [TestCase(WageType.ApprenticeshipMinimum, 20, "&#163;66.00")]
+        [TestCase(WageType.ApprenticeshipMinimum, 16, "&#163;52.80")]
+        [TestCase(WageType.ApprenticeshipMinimum, 37.5, "&#163;123.75")]
         public void ShouldShowWageText(WageType wagetype, decimal hoursPerWeek, string expectedDisplayText)
         {
             var details = new WorkingWeekAndWage();
@@ -205,9 +205,9 @@
             view.GetElementbyId("vacancy-wage").InnerHtml.Should().Be(expectedDisplayText);
         }
 
-        [TestCase(100, WageUnit.Weekly, @"&#163;100")]
-        [TestCase(100, WageUnit.Monthly, @"&#163;100")]
-        [TestCase(100, WageUnit.Annually, @"&#163;100")]
+        [TestCase(100, WageUnit.Weekly, @"&#163;100.00")]
+        [TestCase(100, WageUnit.Monthly, @"&#163;100.00")]
+        [TestCase(100, WageUnit.Annually, @"&#163;100.00")]
         public void ShouldShowCustomWageAmount(decimal wage, WageUnit wageUnit, string expectedDisplayText)
         {
             var details = new WorkingWeekAndWage();

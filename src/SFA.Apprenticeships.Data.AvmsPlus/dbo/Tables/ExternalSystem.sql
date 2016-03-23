@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ExternalSystem] (
-    [ID]               INT              IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ID]               INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [SystemCode]       UNIQUEIDENTIFIER NOT NULL,
     [SystemName]       NVARCHAR (200)   NULL,
     [OrganisationId]   INT              NULL,

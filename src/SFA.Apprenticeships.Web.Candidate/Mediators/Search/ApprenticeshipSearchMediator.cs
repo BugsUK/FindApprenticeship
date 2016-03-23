@@ -112,7 +112,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
                     new {ApprenticeshipLevel = "All", Name = "All levels"},
                     new {ApprenticeshipLevel = "Intermediate", Name = "Intermediate"},
                     new {ApprenticeshipLevel = "Advanced", Name = "Advanced"},
-                    new {ApprenticeshipLevel = "Higher", Name = "Higher"}
+                    new {ApprenticeshipLevel = "Higher", Name = "Higher"},
+                    new {ApprenticeshipLevel = "Degree", Name = "Degree"}
                 },
                 "ApprenticeshipLevel",
                 "Name",

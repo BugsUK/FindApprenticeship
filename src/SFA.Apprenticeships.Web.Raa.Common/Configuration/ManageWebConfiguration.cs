@@ -2,6 +2,5 @@
 {
     public class ManageWebConfiguration
     {
-         public int QAVacancyTimeout { get; set; }
     }
 }

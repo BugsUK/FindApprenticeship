@@ -14,6 +14,7 @@
 @{
     ViewBag.Title = "Recruit an Apprentice";
     var vacanciesLabel = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "opportunities" : "vacancies";
+    var vacanciesTitle = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "Opportunity" : "Vacancy";
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -243,7 +244,7 @@
                         <summary>Search your @vacanciesLabel</summary>
                         <div class="detail-content">
                             @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
-                            <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search vacancies</button>
+                            <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
                         </div>
                     </details>
                     <nav class="tabbed-nav">
@@ -266,11 +267,11 @@
                             </colgroup>
                             <thead>
                             <tr>
-                                <th>Vacancy title</th>
+                                <th>@vacanciesTitle title</th>
                                 <th>Employer</th>
                             	<th>Location</th>
                                 <th>Applications / click-throughs</th>
-                                <th>Vacancy status</th>
+                                <th>@vacanciesTitle status</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -305,7 +306,7 @@
                                     <td class="vac-employer" data-label="Employer">
                                         @vacancy.EmployerName
                                     </td>
-                                    <td class="vac-ref-number" data-label="Vacancy ref">
+                                    <td class="vac-ref-number" data-label="Location">
                                     @if (vacancy.ParentVacancyId != null && 
                                         vacancy.Status == VacancyStatus.Live)
                                     {
@@ -354,6 +355,10 @@
                                         @if (VacancyIsClonable(vacancy))
                                         {
                                     	    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Clone</a>
+                                        }
+                                        @if (vacancy.Status == VacancyStatus.Referred)
+                                        {
+                                            <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Edit and resubmit</a>
                                         }
                                     </td>
                                 </tr>

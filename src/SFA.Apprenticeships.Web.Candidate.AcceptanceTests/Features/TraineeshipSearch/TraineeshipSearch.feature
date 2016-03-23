@@ -15,19 +15,19 @@ Scenario: Find traineeships and test ordering
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Location | N7 8LS |
 	And I choose Search
-	And I am on the TraineeshipSearchResultPage page
-	Then I see
+	Then I am on the TraineeshipSearchResultPage page
+	And I see
         | Field                     | Rule   | Value |
         | SearchResultItemsCount    | Equals | 5     |
         | ResultsAreInDistanceOrder | Equals | True  |
-	And I enter data
+	When I enter data
 		| Field                | Value        |
 		| SortOrderingDropDown | Closing date |
 	And I am on the TraineeshipSearchResultPage page
 	And I wait 3 seconds
-	And I see
+	Then I see
         | Field                        | Rule   | Value |
         | SearchResultItemsCount       | Equals | 5     |
         | ResultsAreInClosingDateOrder | Equals | True  |
@@ -57,8 +57,8 @@ Scenario: Find traineeships and change distance
 Scenario: Find traineeships and test paging
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field    | Value    |
-		 | Location | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	And I wait 3 seconds
@@ -129,7 +129,7 @@ Scenario: Different results per page
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
 		 | Field          | Value    |
-		 | Location       | Coventry   |
+		 | Location       | N7 8LS   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see

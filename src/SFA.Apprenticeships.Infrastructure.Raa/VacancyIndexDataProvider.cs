@@ -50,7 +50,8 @@
 
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
-            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber, _desiredStatuses);
+            //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
+            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, _desiredStatuses);
             var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct()).ToDictionary(vp => vp.VacancyPartyId, vp => vp);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
@@ -70,7 +71,7 @@
                             employers[vacancyParties[v.OwnerPartyId].EmployerId],
                             providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
                             categories, _logService));
-            return new VacancySummaries(apprenticeshipSummaries, traineeshipSummaries);
+            return new VacancySummaries(apprenticeshipSummaries.Where(s => s != null), traineeshipSummaries.Where(s => s != null));
         }
     }
 }

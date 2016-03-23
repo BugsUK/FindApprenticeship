@@ -164,6 +164,7 @@
     <Compile Include="Configuration\ConfigurationService.cs" />
     <Compile Include="Configuration\ServicesConfiguration.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
+    <Compile Include="CurrentUser\ICurrentUserService.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

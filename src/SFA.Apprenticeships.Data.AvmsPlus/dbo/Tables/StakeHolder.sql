@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[StakeHolder] (
-    [StakeHolderID]              INT              IDENTITY (60000000, 1) NOT FOR REPLICATION NOT NULL,
+    [StakeHolderID]              INT              IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [PersonId]                   INT              NOT NULL,
     [StakeHolderStatusId]        INT              NOT NULL,
     [AddressLine1]               NVARCHAR (50)    NOT NULL,

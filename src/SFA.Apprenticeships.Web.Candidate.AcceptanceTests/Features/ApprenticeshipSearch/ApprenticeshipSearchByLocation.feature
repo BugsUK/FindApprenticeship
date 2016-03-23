@@ -79,9 +79,9 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Field    | Value |
 		 | Location | Cov   |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
+	And I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
-	And I see 
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |
@@ -99,8 +99,8 @@ Scenario: User enters location manually then selects from autocomplete and sees 
 	And I choose WrappedElement
 	And I am on the ApprenticeshipSearchPage page
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see 
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
         | Field                        | Rule           | Value                  |
         | Location                     | Equals         | Leeds (West Yorkshire) |
         | LocationSuggestionsContainer | Does Not Exist |                        |
@@ -145,8 +145,9 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Field    | Value |
 		 | Location | Manchester  |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see 
+	And I wait 3 seconds
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
         | Field                    | Rule         | Value                           |
         | Location                 | Equals       | Manchester (Greater Manchester) |
         | LocationSuggestionsCount | Greater Than | 0                               |
@@ -155,9 +156,9 @@ Scenario: User enters location manually then selects from autocomplete then refi
 		 | Field    | Value |
 		 | Location | Cov   |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
+	And I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
-	And I see 
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |
@@ -166,11 +167,12 @@ Scenario: User enters location manually then selects from autocomplete then refi
 Scenario: User enters location manually then selects from autocomplete then changes location manually then selects from autocomplete and sees a list of suggested locations
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field    | Value |
-		 | Location | Cov   |
+		 | Field    | Value		 |
+		 | Location | Coventry   |
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
-	And I see 
+	And I wait 3 seconds
+	And I am on the ApprenticeshipSearchResultPage page
+	Then I see 
         | Field                    | Rule         | Value |
 		#The location should be deterministically found however that does not seem to be the case
 		#Further investigation is required but for now changing to fix test
@@ -188,11 +190,12 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I choose WrappedElement
 	And I am on the ApprenticeshipSearchResultPage page
 	And I choose Search
-	Then I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
-	And I see 
+	And I am on the ApprenticeshipSearchResultPage page	
+	Then I see 
         | Field                        | Rule           | Value                    |
-        | Location                     | Equals         | Coventry (West Midlands) |
+		#Don't know exactly what are we choosing?
+        | Location                     | Equals         | Clent (Worcestershire)   | 		
         | LocationSuggestionsContainer | Does Not Exist |                          |
 
 @SmokeTests

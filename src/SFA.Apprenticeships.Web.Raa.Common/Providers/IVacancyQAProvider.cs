@@ -12,12 +12,14 @@
 
         List<DashboardVacancySummaryViewModel> GetPendingQAVacancies();
 
-        void ApproveVacancy(int vacancyReferenceNumber);
+        QAActionResultCode ApproveVacancy(int vacancyReferenceNumber);
 
-        void RejectVacancy(int vacancyReferenceNumber);
+        QAActionResultCode RejectVacancy(int vacancyReferenceNumber);
 
         VacancyViewModel ReserveVacancyForQA(int vacancyReferenceNumber);
 
+        VacancyViewModel ReviewVacancy(int vacancyReferenceNumber);
+        
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
@@ -28,15 +30,15 @@
 
         VacancyQuestionsViewModel GetVacancyQuestionsViewModel(int vacancyReferenceNumber);
 
-        FurtherVacancyDetailsViewModel UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
+        QAActionResult<FurtherVacancyDetailsViewModel> UpdateVacancyWithComments(FurtherVacancyDetailsViewModel viewModel);
 
-        NewVacancyViewModel UpdateVacancyWithComments(NewVacancyViewModel viewModel);
+        QAActionResult<NewVacancyViewModel> UpdateVacancyWithComments(NewVacancyViewModel viewModel);
 
-        TrainingDetailsViewModel UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
+        QAActionResult<TrainingDetailsViewModel> UpdateVacancyWithComments(TrainingDetailsViewModel viewModel);
 
-        VacancyRequirementsProspectsViewModel UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
-        
-        VacancyQuestionsViewModel UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
+        QAActionResult<VacancyRequirementsProspectsViewModel> UpdateVacancyWithComments(VacancyRequirementsProspectsViewModel viewModel);
+
+        QAActionResult<VacancyQuestionsViewModel> UpdateVacancyWithComments(VacancyQuestionsViewModel viewModel);
 
         List<SelectListItem> GetSectorsAndFrameworks();
 
@@ -55,5 +57,9 @@
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
+
+        DashboardVacancySummaryViewModel GetNextAvailableVacancy();
+
+        void UnReserveVacancyForQA(int vacancyReferenceNumber);
     }
 }

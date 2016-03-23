@@ -121,6 +121,7 @@
     <Compile Include="IoC\RepositoriesRegistry.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
+    <Compile Include="Schemas\dbo\Constants.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
@@ -148,6 +149,7 @@
     <Compile Include="Schemas\Reference\Entities\Standard.cs" />
     <Compile Include="Schemas\Reference\ReferenceMappers.cs" />
     <Compile Include="Schemas\Reference\ReferenceRepository.cs" />
+    <Compile Include="Schemas\Vacancy\Entities\PropertyMapItem.cs" />
     <Compile Include="Schemas\Vacancy\VacancyMappers.cs" />
     <Compile Include="Schemas\Vacancy\Entities\VacancyHistory.cs" />
     <Compile Include="Schemas\UserProfile\AgencyUserMappers.cs" />

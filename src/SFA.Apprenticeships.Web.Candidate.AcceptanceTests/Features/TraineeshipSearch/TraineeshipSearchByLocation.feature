@@ -44,11 +44,8 @@ Scenario: User enters location manually and sees a list of suggested locations
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
-	And I choose Search
-	Then I am on the TraineeshipSearchResultPage page
-	And I see 
-        | Field                    | Rule         | Value |
-        | LocationSuggestionsCount | Greater Than | 0     |
+	Then I wait for 5 seconds to see LocationAutoComplete
+	
 
 @SmokeTests
 Scenario: User enters location manually and location defaults to first suggested location
@@ -70,13 +67,15 @@ Scenario: User enters location manually then changes location manually and sees 
 		 | Location | Manchester |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
-	Then I clear the Location field
-	When I enter data
+	When I am on the TraineeshipSearchResultPage page
+	And I clear the Location field
+	And I enter data
 		 | Field    | Value |
-		 | Location | Cov  |
+		 | Location | Cov   |
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
-	And I see 
+	When I am on the TraineeshipSearchResultPage page
+	Then I see 
         | Field                    | Rule         | Value                    |
         | Location                 | Equals       | Coventry (West Midlands) |
         | LocationSuggestionsCount | Greater Than | 0                        |
@@ -194,8 +193,8 @@ Scenario: User enters location manually then selects from autocomplete then chan
 Scenario: Find traineeships by location and change ordering to closing date
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
@@ -216,8 +215,8 @@ Scenario: Find traineeships by location and change ordering to closing date
 Scenario: Find traineeships by location and change ordering to closing date and back again
 	Given I navigated to the TraineeshipSearchPage page
 	When I enter data
-		 | Field          | Value    |
-		 | Location       | Coventry |
+		 | Field    | Value  |
+		 | Location | N7 8LS |
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see

@@ -1,0 +1,81 @@
+﻿@using SFA.Apprenticeships.Web.Manage.Constants
+@using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
+@model DashboardVacancySummariesViewModel
+
+<section class="grid-wrapper">
+    @{
+        var filterType = Model.SearchViewModel.FilterType;
+    }
+    <p>
+        @if (filterType != DashboardVacancySummaryFilterTypes.All)
+        {
+            <span><a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.All))" class="font-small vacancy-filter">Show all</a></span>
+        }
+    </p>
+    <ul class="vacancies-summary">
+        <li>
+            <figure class="data">
+                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedToday)
+                {
+                    <p class="count">@Model.SubmittedTodayCount</p>
+                    <figcaption><h2>Submitted today</h2></figcaption>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedToday))" class="vacancy-filter">
+                        <p class="count">@Model.SubmittedTodayCount</p>
+                        <figcaption><h2>Submitted today</h2></figcaption>
+                    </a>
+                }
+            </figure>
+        </li>
+        <li>
+            <figure class="data">
+                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedYesterday)
+                {
+                    <p class="count">@Model.SubmittedYesterdayCount</p>
+                    <figcaption><h2>Submitted yesterday</h2></figcaption>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedYesterday))" class="vacancy-filter">
+                        <p class="count">@Model.SubmittedYesterdayCount</p>
+                        <figcaption><h2>Submitted yesterday</h2></figcaption>
+                    </a>
+                }
+            </figure>
+        </li>
+        <li>
+            <figure class="data">
+                @if (filterType == DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours)
+                {
+                    <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
+                    <figcaption><h2>Submitted +48 hours</h2></figcaption>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.SubmittedMoreThan48Hours))" class="vacancy-filter">
+                        <p class="count">@Model.SubmittedMoreThan48HoursCount</p>
+                        <figcaption><h2>Submitted +48 hours</h2></figcaption>
+                    </a>
+                }
+            </figure>
+        </li>
+        <li>
+            <figure class="data">
+                @if (filterType == DashboardVacancySummaryFilterTypes.Resubmitted)
+                {
+                    <p class="count">@Model.ResubmittedCount</p>
+                    <figcaption><h2>Resubmitted vacancies</h2></figcaption>
+                }
+                else
+                {
+                    <a href="@Url.RouteUrl(ManagementRouteNames.Dashboard, new DashboardVacancySummariesSearchViewModel(Model.SearchViewModel, DashboardVacancySummaryFilterTypes.Resubmitted))" class="vacancy-filter">
+                        <p class="count">@Model.ResubmittedCount</p>
+                        <figcaption><h2>Resubmitted vacancies</h2></figcaption>
+                    </a>
+                }
+            </figure>
+        </li>
+    </ul>
+</section>

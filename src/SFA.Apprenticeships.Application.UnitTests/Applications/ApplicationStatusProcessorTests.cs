@@ -9,7 +9,7 @@
     using Domain.Entities.Vacancies;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
 

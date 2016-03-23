@@ -27,6 +27,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Views.Shared.DisplayTemplates.Vacan
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
+    using SFA.Apprenticeships.Infrastructure.Presentation;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
@@ -317,7 +318,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                         if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
+                         if (Model.IsSingleLocation)
                         {
 
             
@@ -836,7 +837,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 177 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-             if (Model.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
+             if (Model.IsSingleLocation)
             {
 
             
@@ -864,16 +865,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 12740), Tuple.Create("\"", 12888)
-, Tuple.Create(Tuple.Create("", 12746), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 12746), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 12628), Tuple.Create("\"", 12776)
+, Tuple.Create(Tuple.Create("", 12634), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 12634), true)
             
             #line 181 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 12791), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 12679), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
             
             #line default
             #line hidden
-, 12791), false)
-, Tuple.Create(Tuple.Create("", 12824), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 12824), true)
+, 12679), false)
+, Tuple.Create(Tuple.Create("", 12712), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 12712), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -885,56 +886,6 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 
             
             #line 184 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-            }
-            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count == 1)
-            {
-
-            
-            #line default
-            #line hidden
-WriteLiteral("                <div");
-
-WriteLiteral(" id=\"vacancy-map\"");
-
-WriteLiteral(" class=\"ad-details__map\"");
-
-WriteLiteral(">\r\n                    <div");
-
-WriteLiteral(" class=\"map-overlay\"");
-
-WriteLiteral(" onclick=\" style.pointerEvents=\'none\' \"");
-
-WriteLiteral("></div>\r\n                    <iframe");
-
-WriteLiteral(" width=\"700\"");
-
-WriteLiteral(" height=\"250\"");
-
-WriteLiteral(" title=\"Map of location\"");
-
-WriteLiteral(" style=\"border: 0\"");
-
-WriteAttribute("src", Tuple.Create(" src=\"", 13449), Tuple.Create("\"", 13643)
-, Tuple.Create(Tuple.Create("", 13455), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13455), true)
-            
-            #line 189 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 13500), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode)
-            
-            #line default
-            #line hidden
-, 13500), false)
-, Tuple.Create(Tuple.Create("", 13579), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13579), true)
-);
-
-WriteLiteral("></iframe>\r\n                    <p");
-
-WriteLiteral(" class=\"nojs-notice\"");
-
-WriteLiteral(">You must have JavaScript enabled to view a map of the location</p>\r\n            " +
-"    </div>\r\n");
-
-            
-            #line 192 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             }
 
             

@@ -6,12 +6,13 @@
     using Apprenticeships.Application.Applications.Housekeeping;
     using Apprenticeships.Application.Candidates.Configuration;
     using Domain.Entities.Vacancies;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
 
     [TestFixture]
     public class RootApplicationHousekeeperTests

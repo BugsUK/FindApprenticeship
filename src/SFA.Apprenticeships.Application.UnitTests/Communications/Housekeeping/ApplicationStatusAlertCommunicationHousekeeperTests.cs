@@ -5,7 +5,7 @@
     using Apprenticeships.Application.Candidates.Configuration;
     using Apprenticeships.Application.Communications.Housekeeping;
     using Domain.Entities.Communication;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;

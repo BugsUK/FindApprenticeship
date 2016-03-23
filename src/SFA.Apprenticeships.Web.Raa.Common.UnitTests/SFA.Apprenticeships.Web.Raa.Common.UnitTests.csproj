@@ -90,8 +90,8 @@
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="HtmlAgilityPack, Version=1.4.6.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
-      <HintPath>..\packages\HtmlAgilityPack.1.4.6\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -172,8 +172,20 @@
     <Compile Include="Providers\VacancyPosting\SubmitVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\TestBase.cs" />
     <Compile Include="Providers\VacancyPosting\TrainingDetailsTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UpdateRequirementsProspectsViewModelTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UpdateFurtherVacancyDetailsViewModelTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UpdateTrainingDetailsViewModelTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UpdateQuestionsViewModelTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UpdateNewVacancyViewModelTests.cs" />
+    <Compile Include="Providers\VacancyProvider\ApproveVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\GetNextAvailableVacancy.cs" />
     <Compile Include="Providers\VacancyProvider\GetPendingQAVacanciesOverviewTests.cs" />
+    <Compile Include="Providers\VacancyProvider\RejectVacancyTests.cs" />
+    <Compile Include="Providers\VacancyProvider\UnReserveForQATests.cs" />
+    <Compile Include="Providers\VacancyProvider\ReserveForQATests.cs" />
+    <Compile Include="Providers\VacancyProvider\ReviewVacancyTests.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderBuilder.cs" />
+    <Compile Include="Providers\VacancyProvider\VacancyProviderTestHelper.cs" />
     <Compile Include="Providers\VacancyProvider\VacancyProviderTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelClientValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\NewVacancyViewModelServerValidatorTests.cs" />

@@ -24,8 +24,7 @@
                 case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.FoundationDegree:
                 case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Degree:
                 case Domain.Entities.Raa.Vacancies.ApprenticeshipLevel.Masters:
-                    //TODO: Check what degree should map to
-                    return ApprenticeshipLevel.Higher;
+                    return ApprenticeshipLevel.Degree;
                 default:
                     throw new ArgumentException("Apprenticeship Level: " + apprenticeshipLevel + " was not recognized");
             }
@@ -33,7 +32,7 @@
 
         public static LegacyWageType GetLegacyWageType(this WageType wageType)
         {
-            return LegacyWageType.Text;
+            return LegacyWageType.LegacyText;
         }
 
         public static VacancyStatuses GetVacancyStatuses(this VacancyStatus vacancyStatuses)

@@ -8,12 +8,13 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
 
     [TestFixture]
     public class DraftApplicationForExpiredVacancyHousekeeperTests

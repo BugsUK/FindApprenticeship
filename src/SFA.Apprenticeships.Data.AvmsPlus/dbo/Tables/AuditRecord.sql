@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[AuditRecord] (
-    [AuditRecordId]      INT           IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [AuditRecordId]      INT           IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [Author]             NVARCHAR (50) NOT NULL,
     [ChangeDate]         DATETIME      NOT NULL,
     [AttachedtoItem]     INT           NOT NULL,

@@ -173,13 +173,13 @@ Scenario: As a candidate I cannot save invalid personal settings
 	And I am on the SettingsPage page
 	And I am on ValidationSummaryItems list item matching criteria
 	| Field | Rule   | Value                                   |
-	| Text  | Equals | Please enter your first line of address |
+	| Text  | Equals | Enter your first line of address |
 	| Href  | Equals | #Address_AddressLine1                   |
 
 	And I am on the SettingsPage page
 	And I am on ValidationSummaryItems list item matching criteria
 	| Field | Rule   | Value                      |
-	| Text  | Equals | Please enter your postcode |
+	| Text  | Equals | Enter your postcode |
 	| Href  | Equals | #Address_Postcode          |
 
 	And I am on the SettingsPage page

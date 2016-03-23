@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[CandidateDisability] (
-    [CandidateDisabilityId] INT            IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [CandidateDisabilityId] INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [Codename]              NVARCHAR (3)   NOT NULL,
     [ShortName]             NVARCHAR (50)  NOT NULL,
     [FullName]              NVARCHAR (100) NOT NULL,

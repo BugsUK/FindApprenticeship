@@ -5,7 +5,7 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using FluentAssertions;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
@@ -39,7 +39,11 @@
 
             logService.Setup(l => l.Info(It.IsAny<string>(), It.IsAny<object[]>())).Callback<string, object[]>((m, p) => { loggedMessage = m; });
 
-            var processor = new SavedSearchProcessorBuilder().With(savedSearchReadRepository).With(serviceBus).With(logService).Build();
+            var processor =
+                new SavedSearchProcessorBuilder().With(savedSearchReadRepository)
+                    .With(serviceBus)
+                    .With(logService)
+                    .Build();
 
             processor.QueueCandidateSavedSearches();
 

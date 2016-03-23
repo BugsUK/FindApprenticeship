@@ -6,6 +6,7 @@
         public const string Authorize = "Authorize";
         public const string AuthorizationError = "AuthorizationError";
         public const string Dashboard = "Dashboard";
+        public const string ChangeTeam = "ChangeTeam";
         public const string SignIn = "SignIn";
         public const string SignOut = "SignOut";
         public const string SessionTimeout = "SessionTimeout";
@@ -16,6 +17,8 @@
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";
+        public const string ReserveForQA = "ReserveForQA";
+        public const string UnReserveForQA = "UnReserveForQA";
         public const string ApproveVacancy = "ApproveVacancy";
         public const string BasicDetails = "BasicDetails";
         public const string TrainingDetails = "TrainingDetails";

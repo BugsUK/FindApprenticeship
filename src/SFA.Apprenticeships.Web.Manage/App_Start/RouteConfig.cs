@@ -80,9 +80,27 @@
                 );
 
             routes.MapRoute(
+                name: ManagementRouteNames.ChangeTeam,
+                url: "changeteam",
+                defaults: new {controller = "AgencyUser", action = "ChangeTeam" }
+                );
+
+            routes.MapRoute(
                 name: ManagementRouteNames.ReviewVacancy,
                 url: "vacancy/review",
                 defaults: new { controller = "Vacancy", action = "Review" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.ReserveForQA,
+                url: "vacancy/reserveForQA",
+                defaults: new { controller = "Vacancy", action = "ReserveForQA" }
+                );
+
+            routes.MapRoute(
+                name: ManagementRouteNames.UnReserveForQA,
+                url: "vacancy/unReserveForQA",
+                defaults: new { controller = "Vacancy", action = "UnReserveForQA" }
                 );
 
             routes.MapRoute(

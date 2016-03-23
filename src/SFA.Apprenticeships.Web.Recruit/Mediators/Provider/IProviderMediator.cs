@@ -13,7 +13,7 @@
 
         MediatorResponse<ProviderViewModel> UpdateSites(string ukprn, string username, ProviderViewModel providerViewModel);
 
-        MediatorResponse<ProviderSiteViewModel> GetSite(string ukprn, string edsUrn);
+        MediatorResponse<ProviderSiteViewModel> GetSite(string edsUrn);
 
         MediatorResponse<ProviderSiteViewModel> UpdateSite(ProviderSiteViewModel providerSiteViewModel);
     }

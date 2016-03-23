@@ -2,6 +2,7 @@
 {
     using System;
     using Locations;
+    using Reference;
 
     public class VacancySummary
     {
@@ -14,6 +15,7 @@
         public decimal? HoursPerWeek { get; set; }
         public WageType WageType { get; set; }
         public decimal? Wage { get; set; }
+        public string WageText { get; set; }
         public WageUnit WageUnit { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
@@ -42,5 +44,7 @@
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }
         public PostalAddress Address { get; set; }
+        public RegionalTeam RegionalTeam { get; set; }
+        public VacancyLocationType VacancyLocationType { get; set; }
     }
 }

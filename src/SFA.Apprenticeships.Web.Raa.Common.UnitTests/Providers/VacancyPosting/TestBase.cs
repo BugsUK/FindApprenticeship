@@ -5,6 +5,7 @@
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
+    using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
@@ -14,18 +15,19 @@
 
     public abstract class TestBase
     {
-        protected Mock<IConfigurationService> MockConfigurationService;
         private Mock<ILogService> _mockLogService;
-        protected Mock<IMapper> MockMapper;
-        protected Mock<IProviderService> MockProviderService;
-        protected Mock<IEmployerService> MockEmployerService;
-        private Mock<IUserProfileService> _mockUserProfileService;
-        protected Mock<IReferenceDataService> MockReferenceDataService;
-        protected Mock<IDateTimeService> MockTimeService;
         private Mock<IApprenticeshipApplicationService> _apprenticeshipApplicationService;
         private Mock<ITraineeshipApplicationService> _traineeshipApplicationService;
-
+        private Mock<IVacancyLockingService> _mockVacancyLockingService;
+        protected Mock<IConfigurationService> MockConfigurationService;
+        protected Mock<IMapper> MockMapper;
         protected Mock<IVacancyPostingService> MockVacancyPostingService;
+        protected Mock<IProviderService> MockProviderService;
+        protected Mock<IEmployerService> MockEmployerService;
+        protected Mock<IReferenceDataService> MockReferenceDataService;
+        protected Mock<IDateTimeService> MockTimeService;
+        private Mock<ICurrentUserService> _mockCurrentUserService;
+        private Mock<IUserProfileService> _mockUserProfileService;
 
         [SetUp]
         public void SetUpBase()
@@ -36,7 +38,6 @@
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
             MockProviderService = new Mock<IProviderService>();
             MockEmployerService = new Mock<IEmployerService>();
-            _mockUserProfileService = new Mock<IUserProfileService>();
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
             MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
@@ -44,6 +45,9 @@
             MockTimeService = new Mock<IDateTimeService>();
             _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
             _traineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
+            _mockVacancyLockingService = new Mock<IVacancyLockingService>();
+            _mockCurrentUserService = new Mock<ICurrentUserService>();
+            _mockUserProfileService = new Mock<IUserProfileService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -58,6 +62,8 @@
                 MockMapper.Object,
                 _apprenticeshipApplicationService.Object,
                 _traineeshipApplicationService.Object,
+                _mockVacancyLockingService.Object,
+                _mockCurrentUserService.Object,
                 _mockUserProfileService.Object);
         }
     }

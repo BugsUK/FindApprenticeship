@@ -12,6 +12,7 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
+    using Infrastructure.Interfaces;
     using Interfaces.VacancyPosting;
 
     public class VacancyPostingService : IVacancyPostingService
@@ -22,13 +23,16 @@
         private readonly IProviderUserReadRepository _providerUserReadRepository;
         private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
         private readonly IVacancyLocationWriteRepository _vacancyLocationWriteRepository;
+        private readonly ICurrentUserService _currentUserService;
 
         public VacancyPostingService(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IReferenceNumberRepository referenceNumberRepository,
             IProviderUserReadRepository providerUserReadRepository, 
-            IVacancyLocationReadRepository vacancyLocationReadRepository, IVacancyLocationWriteRepository vacancyLocationWriteRepository)
+            IVacancyLocationReadRepository vacancyLocationReadRepository, 
+            IVacancyLocationWriteRepository vacancyLocationWriteRepository,
+            ICurrentUserService currentUserService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
@@ -36,15 +40,16 @@
             _providerUserReadRepository = providerUserReadRepository;
             _vacancyLocationReadRepository = vacancyLocationReadRepository;
             _vacancyLocationWriteRepository = vacancyLocationWriteRepository;
+            _currentUserService = currentUserService;
         }
 
         public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
 
-            if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
+            if(_currentUserService.IsInRole(Roles.Faa))
             {
-                var username = Thread.CurrentPrincipal.Identity.Name;
+                var username = _currentUserService.CurrentUserName;
                 var vacancyManager = _providerUserReadRepository.GetByUsername(username);
                 if (vacancyManager?.PreferredProviderSiteId != null)
                 {
@@ -76,9 +81,9 @@
                 throw new CustomException(message, ErrorCodes.EntityStateError);
             }
 
-            if (Thread.CurrentPrincipal.IsInRole(Roles.Faa))
+            if (_currentUserService.IsInRole(Roles.Faa))
             {
-                var username = Thread.CurrentPrincipal.Identity.Name;
+                var username = _currentUserService.CurrentUserName;
                 var lastEditedBy = _providerUserReadRepository.GetByUsername(username);
                 if (lastEditedBy != null)
                 {

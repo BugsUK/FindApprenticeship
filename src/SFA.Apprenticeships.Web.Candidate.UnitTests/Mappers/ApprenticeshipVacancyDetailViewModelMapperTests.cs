@@ -52,7 +52,7 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.Weekly,
+                WageType = LegacyWageType.LegacyWeekly,
                 Wage = 101.19m
             };
 
@@ -68,8 +68,8 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.Text,
-                WageDescription = "Competetive"
+                WageType = LegacyWageType.LegacyText,
+                WageDescription = "Competitive"
             };
 
             var model = new ApprenticeshipCandidateWebMappers().Map<ApprenticeshipVacancyDetail, ApprenticeshipVacancyDetailViewModel>(vacancyDetail);
@@ -83,7 +83,7 @@
         {
             var vacancyDetail = new ApprenticeshipVacancyDetail
             {
-                WageType = LegacyWageType.Text,
+                WageType = LegacyWageType.LegacyText,
                 WageDescription = "123.45678"
             };
 

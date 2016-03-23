@@ -51,7 +51,7 @@ Scenario: As a candidate I want to save my apprenticeship application as a draft
 @US461 @US362 @US365 @US154 @US463 @US352 @US354 @PrimaryTransaction
 Scenario: As a candidate I want to enter my qualifications and work experience in an apprenticeship application
 	Given I have registered a new candidate
-	When I select the "first" apprenticeship vacancy in location "Coventry" that can apply by this website
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
@@ -134,6 +134,8 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 		| TrainingCourseTitle    | TrainingCourseTitle    |
 		| TrainingCourseFromYear | 2011                   |
 		| TrainingCourseToYear   | 2012                   |
+	And I choose SaveTrainingCourseButton
+	#Should be removed when it works properly
 	And I choose SaveTrainingCourseButton
 	Then I wait for 30 seconds to see TrainingCourseSummary
 	Then I see

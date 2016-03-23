@@ -5,7 +5,7 @@
 
     public interface IEmployerReadRepository
     {
-        Employer Get(int employerId);
+        Employer GetById(int employerId);
 
         Employer GetByEdsUrn(string edsUrn);
 
@@ -14,6 +14,6 @@
 
     public interface IEmployerWriteRepository
     {
-        Employer Save(Employer entity);
+        Employer Save(Employer employer);
     }
 }

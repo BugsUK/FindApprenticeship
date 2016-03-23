@@ -131,8 +131,8 @@
       <HintPath>..\packages\AutoFixture.3.31.3\lib\net40\Ploeh.AutoFixture.dll</HintPath>
     </Reference>
     <Reference Include="RazorGenerator.Testing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\RazorGenerator.Testing.2.3.2\lib\net40\RazorGenerator.Testing.dll</HintPath>
+      <HintPath>..\packages\RazorGenerator.Testing.2.3.4\lib\net40\RazorGenerator.Testing.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="ReflectionMagic, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>

@@ -102,13 +102,13 @@ this.FeatureBackground();
                         "Value"});
             table1.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 16
  testRunner.When("I enter data", ((string)(null)), table1, "When ");
 #line 19
  testRunner.And("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 20
- testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.Then("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -123,7 +123,7 @@ this.FeatureBackground();
                         "Equals",
                         "True"});
 #line 21
- testRunner.Then("I see", ((string)(null)), table2, "Then ");
+ testRunner.And("I see", ((string)(null)), table2, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
                         "Field",
@@ -132,7 +132,7 @@ this.FeatureBackground();
                         "SortOrderingDropDown",
                         "Closing date"});
 #line 25
- testRunner.And("I enter data", ((string)(null)), table3, "And ");
+ testRunner.When("I enter data", ((string)(null)), table3, "When ");
 #line 28
  testRunner.And("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 29
@@ -151,7 +151,7 @@ this.FeatureBackground();
                         "Equals",
                         "True"});
 #line 30
- testRunner.And("I see", ((string)(null)), table4, "And ");
+ testRunner.Then("I see", ((string)(null)), table4, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -242,7 +242,7 @@ this.FeatureBackground();
                         "Value"});
             table9.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 59
  testRunner.When("I enter data", ((string)(null)), table9, "When ");
 #line 62
@@ -473,7 +473,7 @@ this.FeatureBackground();
                         "Value"});
             table20.AddRow(new string[] {
                         "Location",
-                        "Coventry"});
+                        "N7 8LS"});
 #line 130
  testRunner.When("I enter data", ((string)(null)), table20, "When ");
 #line 133

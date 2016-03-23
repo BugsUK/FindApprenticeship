@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[SearchFrameworks] (
-    [SearchFrameworksId]    INT IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [SearchFrameworksId]    INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [FrameworkId]           INT NOT NULL,
     [SavedSearchCriteriaId] INT NOT NULL,
     CONSTRAINT [PK_SearchFrameworks] PRIMARY KEY CLUSTERED ([SearchFrameworksId] ASC),

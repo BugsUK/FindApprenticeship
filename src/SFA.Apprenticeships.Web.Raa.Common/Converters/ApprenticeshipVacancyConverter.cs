@@ -19,6 +19,7 @@
                 HoursPerWeek = vacancy.HoursPerWeek,
                 WageType = vacancy.WageType,
                 Wage = vacancy.Wage,
+                WageText = vacancy.WageText,
                 WageUnit = vacancy.WageUnit,
                 WageUnits = GetWageUnits(),
                 DurationType = vacancy.DurationType,
@@ -60,7 +61,7 @@
                 Enum.GetValues(typeof(DurationType))
                     .Cast<DurationType>()
                     .Where(al => al != DurationType.Unknown && (vacancyType != VacancyType.Traineeship || al != DurationType.Years))
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString().ToLower() })
                     .ToList();
 
             return durationTypes;
@@ -97,7 +98,8 @@
                 SecondQuestion = vacancy.SecondQuestion,
                 FirstQuestionComment = vacancy.FirstQuestionComment,
                 SecondQuestionComment = vacancy.SecondQuestionComment,
-                Status = vacancy.Status
+                Status = vacancy.Status,
+                VacancyType = vacancy.VacancyType
             };
 
             return vacancyViewModel;

@@ -10,6 +10,11 @@
 
     public class VacancyPartyRepository : IVacancyPartyReadRepository, IVacancyPartyWriteRepository
     {
+        private enum VacancyOwnerRelationshipStatusTypes
+        {
+            Live = 4
+        };
+
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
         private readonly ILogService _logger;
@@ -21,20 +26,40 @@
             _logger = logger;
         }
 
-        public VacancyParty Get(int vacancyPartyId)
+        public VacancyParty GetById(int vacancyPartyId)
         {
-            var vacancyParty =
-                _getOpenConnection.Query<VacancyOwnerRelationship>("SELECT * FROM dbo.VacancyOwnerRelationship WHERE VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId AND StatusTypeId = 4",
-                    new { VacancyOwnerRelationshipId = vacancyPartyId }).SingleOrDefault();
+            const string sql = @"
+                SELECT * FROM dbo.VacancyOwnerRelationship
+                WHERE VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId
+                AND StatusTypeId = @StatusTypeId";
+
+            var sqlParams = new
+            {
+                VacancyOwnerRelationshipId = vacancyPartyId,
+                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+            };
+
+            var vacancyParty = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault();
 
             return _mapper.Map<VacancyOwnerRelationship, VacancyParty>(vacancyParty);
         }
 
-        public VacancyParty Get(int providerSiteId, int employerId)
+        public VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
         {
-            var vacancyParty =
-                _getOpenConnection.Query<VacancyOwnerRelationship>("SELECT * FROM dbo.VacancyOwnerRelationship WHERE ProviderSiteID = @ProviderSiteId AND EmployerId = @employerId AND StatusTypeId = 4",
-                    new { ProviderSiteId = providerSiteId, EmployerId = employerId }).SingleOrDefault();
+            const string sql = @"
+                SELECT * FROM dbo.VacancyOwnerRelationship
+                WHERE ProviderSiteID = @ProviderSiteId
+                AND EmployerId = @EmployerId
+                AND StatusTypeId = @StatusTypeId";
+
+            var sqlParams = new
+            {
+                ProviderSiteId = providerSiteId,
+                EmployerId = employerId,
+                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+            };
+
+            var vacancyParty = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault();
 
             return _mapper.Map<VacancyOwnerRelationship, VacancyParty>(vacancyParty);
         }
@@ -42,48 +67,79 @@
         public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds)
         {
             var vacancyPartyIdsArray = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
+
             _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyPartyIdsArray));
 
-            var vacancyParties =
-                _getOpenConnection.Query<VacancyOwnerRelationship>("SELECT * FROM dbo.VacancyOwnerRelationship WHERE VacancyOwnerRelationshipId IN @VacancyPartyIds AND StatusTypeId = 4",
-                    new { VacancyPartyIds = vacancyPartyIdsArray });
+            const string sql = @"
+                SELECT * FROM dbo.VacancyOwnerRelationship
+                WHERE VacancyOwnerRelationshipId IN @VacancyPartyIds
+                AND StatusTypeId = @StatusTypeId";
+
+            var sqlParams = new
+            {
+                VacancyPartyIds = vacancyPartyIdsArray,
+                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+            };
+
+            var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
 
             return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyParties);
         }
 
-        public IEnumerable<VacancyParty> GetForProviderSite(int providerSiteId)
+        public IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId)
         {
-            var vacancyParties =
-                _getOpenConnection.Query<VacancyOwnerRelationship>("SELECT * FROM dbo.VacancyOwnerRelationship WHERE ProviderSiteID = @ProviderSiteId AND StatusTypeId = 4",
-                    new { ProviderSiteID = providerSiteId });
+            const string sql = @"
+                SELECT * FROM dbo.VacancyOwnerRelationship
+                WHERE ProviderSiteID = @ProviderSiteId
+                AND StatusTypeId = @StatusTypeId";
+
+            var sqlParams = new
+            {
+                ProviderSiteID = providerSiteId,
+                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+            };
+
+            var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
 
             return _mapper.Map<IEnumerable<VacancyOwnerRelationship>, IEnumerable<VacancyParty>>(vacancyParties);
         }
         
-        public VacancyParty Save(VacancyParty entity)
+        public VacancyParty Save(VacancyParty vacancyParty)
         {
-            var vacancyOwnerRelationship = _mapper.Map<VacancyParty, VacancyOwnerRelationship>(entity);
-            vacancyOwnerRelationship.StatusTypeId = 4;
-            vacancyOwnerRelationship.EditedInRaa = true;
-            if (vacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
+            var dbVacancyOwnerRelationship = _mapper.Map<VacancyParty, VacancyOwnerRelationship>(vacancyParty);
+
+            dbVacancyOwnerRelationship.StatusTypeId = (int)VacancyOwnerRelationshipStatusTypes.Live;
+            dbVacancyOwnerRelationship.EditedInRaa = true;
+
+            if (dbVacancyOwnerRelationship.VacancyOwnerRelationshipId == 0)
             {
-                vacancyOwnerRelationship.VacancyOwnerRelationshipId = (int)_getOpenConnection.Insert(vacancyOwnerRelationship);
+                dbVacancyOwnerRelationship.VacancyOwnerRelationshipId = (int)_getOpenConnection.Insert(dbVacancyOwnerRelationship);
             }
             else
             {
-                var existingVacancyOwnerRelationship =
-                    _getOpenConnection.Query<VacancyOwnerRelationship>(
-                        "SELECT * FROM dbo.VacancyOwnerRelationship WHERE VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId AND StatusTypeId = 4",
-                        new {vacancyOwnerRelationship.VacancyOwnerRelationshipId}).Single();
-                vacancyOwnerRelationship.ContractHolderIsEmployer = existingVacancyOwnerRelationship.ContractHolderIsEmployer;
-                vacancyOwnerRelationship.ManagerIsEmployer = existingVacancyOwnerRelationship.ManagerIsEmployer;
-                vacancyOwnerRelationship.Notes = existingVacancyOwnerRelationship.Notes;
-                vacancyOwnerRelationship.EmployerLogoAttachmentId = existingVacancyOwnerRelationship.EmployerLogoAttachmentId;
-                vacancyOwnerRelationship.NationWideAllowed = existingVacancyOwnerRelationship.NationWideAllowed;
-                _getOpenConnection.UpdateSingle(vacancyOwnerRelationship);
+                const string sql = @"
+                    SELECT * FROM dbo.VacancyOwnerRelationship
+                    WHERE VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId
+                    AND StatusTypeId = @StatusTypeId";
+
+                var sqlParams = new
+                {
+                    dbVacancyOwnerRelationship.VacancyOwnerRelationshipId,
+                    dbVacancyOwnerRelationship.StatusTypeId
+                };
+
+                var existingVacancyOwnerRelationship = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).Single();
+
+                dbVacancyOwnerRelationship.ContractHolderIsEmployer = existingVacancyOwnerRelationship.ContractHolderIsEmployer;
+                dbVacancyOwnerRelationship.ManagerIsEmployer = existingVacancyOwnerRelationship.ManagerIsEmployer;
+                dbVacancyOwnerRelationship.Notes = existingVacancyOwnerRelationship.Notes;
+                dbVacancyOwnerRelationship.EmployerLogoAttachmentId = existingVacancyOwnerRelationship.EmployerLogoAttachmentId;
+                dbVacancyOwnerRelationship.NationWideAllowed = existingVacancyOwnerRelationship.NationWideAllowed;
+
+                _getOpenConnection.UpdateSingle(dbVacancyOwnerRelationship);
             }
 
-            return entity;
+            return GetById(dbVacancyOwnerRelationship.VacancyOwnerRelationshipId);
         }
     }
 }

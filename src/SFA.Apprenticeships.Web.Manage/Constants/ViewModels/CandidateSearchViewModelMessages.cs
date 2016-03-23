@@ -2,6 +2,7 @@
 {
     using Common.Constants;
 
+    // TODO: can be deleted?
     public class CandidateSearchViewModelMessages
     {
         public const string NoSearchCriteriaErrorText =

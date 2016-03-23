@@ -7,6 +7,7 @@
     using Application.Candidate.Strategies.Traineeships;
     using Application.Communication;
     using Application.Communication.Strategies;
+    using Application.Employer.Strategies;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Locations;
@@ -21,7 +22,6 @@
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
-    using Infrastructure.TacticalDataServices;
     using Mediators.AgencyUser;
     using Mediators.Vacancy;
     using Providers;
@@ -29,9 +29,9 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
-    using Common.Providers;
     using Mappers;
     using Mediators.Candidate;
     using Raa.Common.Providers;
@@ -59,8 +59,6 @@
 
         private void RegisterProviders()
         {
-            For<ILegacyProviderProvider>().Use<LegacyProviderProvider>();
-            For<ILegacyEmployerProvider>().Use<LegacyEmployerProvider>();
             For<IAgencyUserProvider>().Use<AgencyUserProvider>();
             For<IVacancyQAProvider>().Use<VacancyProvider>().Ctor<IMapper>().Named("RaaCommonWebMappers");
             For<IProviderQAProvider>().Use<ProviderProvider>();
@@ -74,6 +72,7 @@
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
+            For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
@@ -97,6 +96,12 @@
             For<IGetCandidateByIdStrategy>().Use<GetCandidateByIdStrategy>();
             For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
             For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
+
+            For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
+            For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
         }
 
         private void RegisterMediators()

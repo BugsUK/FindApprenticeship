@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ThirdParty] (
-    [ID]              INT            IDENTITY (1, 1) NOT FOR REPLICATION NOT NULL,
+    [ID]              INT            IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [EDSURN]          INT            NOT NULL,
     [ThirdPartyName]  NVARCHAR (510) NULL,
     [AddressLine1]    NVARCHAR (100) NULL,

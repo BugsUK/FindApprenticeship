@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ProviderSiteLocalAuthority] (
-    [ProviderSiteLocalAuthorityID] INT IDENTITY (0, 1) NOT FOR REPLICATION NOT NULL,
+    [ProviderSiteLocalAuthorityID] INT IDENTITY (-1, -1) NOT FOR REPLICATION NOT NULL,
     [ProviderSiteRelationshipID]   INT NOT NULL,
     [LocalAuthorityId]             INT NULL,
     CONSTRAINT [PK_TrainingProviderLocation] PRIMARY KEY CLUSTERED ([ProviderSiteLocalAuthorityID] ASC),

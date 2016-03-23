@@ -1,16 +1,18 @@
 ﻿SET IDENTITY_INSERT Provider.ProviderUser ON
 
-DECLARE @providerUserId INT = -1
+DECLARE @providerId INT = 10000001
+DECLARE @providerSiteId1 INT = 20000001
+DECLARE @providerUserId INT = 30000033
 
 MERGE INTO Provider.ProviderUser AS TARGET
 USING (VALUES (
 		@providerUserId , -- ProviderUserId
 		NEWID(), -- ProviderUserGuid
 		20, -- ProviderUserStatusId: Email verified
-		(SELECT ProviderId FROM dbo.Provider WHERE UKPRN = 10000000), -- ProviderId
+		@providerId,
 		'jane.doe@example.com', --Username
 		'Jane Doe', -- Fullname
-		(SELECT TOP 1 ProviderSiteId FROM dbo.ProviderSite WHERE EDSURN = 100339794), -- PreferredProviderSiteId
+		@providerSiteId1,
 		'jane.doe@example.com', -- Email
 		'XYZ123', -- EmailVerificationCode
 		GETUTCDATE(), -- EmailVerifiedDateTime

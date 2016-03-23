@@ -15,7 +15,7 @@ Scenario: Find apprenticeships and test ordering without keywords
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
@@ -46,7 +46,7 @@ Scenario: Find apprenticeships and test ordering with keywords
 	When I enter data
 		 | Field               | Value      |
 		 | Keywords            | Web        |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
@@ -95,7 +95,7 @@ Scenario: Find apprenticeships and test paging
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Location            | Coventry   |
+		 | Location            | N7 8LS   |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
 	And I choose Search
@@ -210,7 +210,7 @@ Scenario: Return to search results link appears if arriving from search results 
 
 @US528 @SmokeTests
 Scenario: Return to find apprenticeship link appears if not arriving from search results page
-	When I navigate to the details of the apprenticeship vacancy 445650
+	When I navigate to the details of the apprenticeship vacancy 779161
 	And I am on the ApprenticeshipDetailsPage page
 	Then I see
 		| Field                  | Rule   | Value |

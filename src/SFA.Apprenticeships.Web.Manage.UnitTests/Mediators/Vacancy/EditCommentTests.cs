@@ -69,20 +69,6 @@
             response.AssertCode(VacancyMediatorCodes.GetVacancySummaryViewModel.Ok);
         }
 
-        [Test]
-        public void UpdateVacancyWillUpdateVacancyIfViewModelIsValid()
-        {
-            const int vacancyReferenceNumber = 1;
-            var vacancyProvider = new Mock<IVacancyQAProvider>();
-
-            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
-            var viewModel = GetValidVacancySummaryViewModel(vacancyReferenceNumber);
-
-            var result = mediator.UpdateVacancy(viewModel);
-
-            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
-            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
-        }
 
         [Test]
         public void UpdateVacancyWillNotUpdateVacancyIfViewModelIsNotValid()
@@ -114,6 +100,10 @@
             var viewModel = GetValidVacancySummaryViewModel(1);
             viewModel.VacancyDatesViewModel.ClosingDate = new DateViewModel(DateTime.UtcNow.AddDays(10));
             viewModel.AcceptWarnings = true;
+
+            vacancyProvider.Setup(vp => vp.UpdateVacancyWithComments(viewModel))
+                .Returns(new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.Ok,
+                    new FurtherVacancyDetailsViewModel()));
 
             var result = mediator.UpdateVacancy(viewModel);
 
@@ -152,20 +142,6 @@
             vacancyProvider.Verify(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber));
         }
 
-        [Test]
-        public void UpdateVacancyShouldCallProvider()
-        {
-            const int vacancyReferenceNumber = 1;
-            var vacancyProvider = new Mock<IVacancyQAProvider>();
-            var mediator = new VacancyMediatorBuilder().With(vacancyProvider).Build();
-            var viewModel = new VacancyQuestionsViewModel();
-            vacancyProvider.Setup(vp => vp.GetVacancyQuestionsViewModel(vacancyReferenceNumber)).Returns(viewModel);
-
-            var result = mediator.UpdateVacancy(viewModel);
-            result.AssertCode(VacancyMediatorCodes.UpdateVacancy.Ok);
-            vacancyProvider.Verify(vp => vp.UpdateVacancyWithComments(viewModel));
-        }
-
         private static FurtherVacancyDetailsViewModel GetValidVacancySummaryViewModel(int vacancyReferenceNumber)
         {
             return new FurtherVacancyDetailsViewModel
@@ -179,7 +155,7 @@
                 Duration = 3,
                 DurationType = DurationType.Years,
                 LongDescription = "A description",
-                WageType = WageType.ApprenticeshipMinimumWage,
+                WageType = WageType.ApprenticeshipMinimum,
                 HoursPerWeek = 30,
                 WorkingWeek = "A working week"
             };

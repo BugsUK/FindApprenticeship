@@ -99,7 +99,7 @@
         [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(string edsUrn)
         {
-            var response = _providerMediator.GetSite(User.GetUkprn(), edsUrn);
+            var response = _providerMediator.GetSite(edsUrn);
             var providerSiteViewModel = response.ViewModel;
 
             return View(providerSiteViewModel);

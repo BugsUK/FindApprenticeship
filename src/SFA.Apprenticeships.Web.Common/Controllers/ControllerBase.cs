@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 {
     using System.Web.Mvc;
     using Attributes;
+    using Mediators;
     using Providers;
     using Services;
     using StructureMap.Attributes;
@@ -21,6 +22,11 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
 
         [SetterProperty]
         public IAuthenticationTicketService AuthenticationTicketService { get; set; }
+
+        protected void SetUserMessage(MediatorResponseMessage message)
+        {
+            SetUserMessage(message.Text, message.Level);
+        }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
         {

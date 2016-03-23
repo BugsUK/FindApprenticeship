@@ -11,14 +11,14 @@
             switch (source)
             {
                 case "Weekly":
-                    return LegacyWageType.Weekly;
+                    return LegacyWageType.LegacyWeekly;
 
                 case "Text":
-                    return LegacyWageType.Text;
+                    return LegacyWageType.LegacyText;
 
                 default:
-                    throw new ArgumentOutOfRangeException("source",
-                        string.Format("Unknown Wage Type received from NAS Gateway Service: \"{0}\"", source));
+                    throw new ArgumentOutOfRangeException(nameof(source),
+                        $"Unknown Wage Type received from NAS Gateway Service: \"{source}\"");
             }
         }
     }

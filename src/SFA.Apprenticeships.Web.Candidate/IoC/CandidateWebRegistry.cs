@@ -13,6 +13,7 @@
     using Application.Communication;
     using Application.Communication.Strategies;
     using Application.Employer;
+    using Application.Employer.Strategies;
     using Application.Interfaces.Candidates;
     using Application.Interfaces.Communications;
     using Application.Interfaces.Employers;
@@ -22,7 +23,6 @@
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
-    using Application.Interfaces.VacancyPosting;
     using Application.Location;
     using Application.Organisation;
     using Application.Provider;
@@ -31,9 +31,7 @@
     using Application.UserAccount.Strategies;
     using Application.Vacancy;
     using Application.Vacancy.SiteMap;
-    using Application.VacancyPosting;
     using Common.Configuration;
-    using Common.Providers;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using SFA.Infrastructure.Interfaces;
@@ -197,6 +195,12 @@
 
             For<Application.Candidate.Strategies.IUpdateUsernameStrategy>().Use<Application.Candidate.Strategies.UpdateUsernameStrategy>().Ctor<ISaveCandidateStrategy>().Named("QueuedLegacySaveCandidateStrategy").Ctor<ICodeGenerator>().Named(codeGenerator);
             For<Application.UserAccount.Strategies.IUpdateUsernameStrategy>().Use<Application.UserAccount.Strategies.UpdateUsernameStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
+
+            For<IGetByIdStrategy>().Use<GetByIdStrategy>();
+            For<IGetByIdsStrategy>().Use<GetByIdsStrategy>();
+            For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
+            For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
         }
 
         private void RegisterMediators()

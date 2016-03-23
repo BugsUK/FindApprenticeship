@@ -51,28 +51,20 @@
             {
                 _logger.Debug("Calling EmployerDataService.ByUrn with reference number='{0}'", referenceNumber);
 
-                ConciseEmployerStructure[] employers = null;
+                DetailedEmployerStructure employer = null;
 
                 _service.Use(EndpointConfigurationName, client =>
-                    employers = client.ByUrn(Convert.ToInt32(referenceNumber), Credentials));
+                    employer = client.Fetch(Convert.ToInt32(referenceNumber), false, Credentials));
 
-                if (employers == null || employers.Length == 0)
+                if (employer == null)
                 {
                     _logger.Debug("EmployerDataService.ByUrn did not find employer with reference number='{0}'", referenceNumber);
                     return null;
                 }
 
-                if (employers.Length > 1)
-                {
-                    // TODO: AG: could this ever be the case when fetching by reference number?
-                    _logger.Warn("EmployerDataService.ByUrn found multiple matches for reference number='{0}', will return first result", referenceNumber);
-                }
-
-                var employerToMap = employers.First();
-
                 _logger.Debug("EmployerDataService.ByUrn found employer with reference number='{0}'", referenceNumber);
                 
-                return ValidatedAddress(employerToMap);
+                return GetVerifiedOrganisationSummary(employer);
             }
             catch (BoundaryException e)
             {
@@ -104,12 +96,8 @@
                 const string orgWorkplace = null;
                 const string region = null;
 
-                var freeText = string.IsNullOrWhiteSpace(postcodeOrTown)
-                    ? $"{employerName}"
-                    : $"{employerName}, {postcodeOrTown}";
-
                 _service.Use(EndpointConfigurationName, client =>
-                    employers = client.ByFreeText(freeText, isPhonetic, orgWorkplace, region, Credentials));
+                    employers = client.ByOrganisationAndTrading(employerName, postcodeOrTown, isPhonetic, orgWorkplace, region, Credentials));
 
                 if (employers == null || employers.Length == 0)
                 {
@@ -121,8 +109,7 @@
                 _logger.Debug($"EmployerDataService.ByFreeText {0} employer(s) with reference number='{employerName}', post code or town='{postcodeOrTown}'");
 
                 resultCount = employers.Length;
-                // TODO: AG: US814: include reference number aliases.
-                var results = employers.Select(ValidatedAddress);
+                var results = employers.Select(GetVerifiedOrganisationSummary);
 
                 return results;
             }
@@ -138,23 +125,45 @@
             }
         }
 
+        public VerifiedOrganisationSummary GetVerifiedOrganisationSummary(DetailedEmployerStructure employer)
+        {
+            var validatedAddress = GetValidatedAddress(employer.Address);
+
+            var organisationSummary = _employerMapper.ToVerifiedOrganisationSummary(employer);
+
+            organisationSummary.Address = validatedAddress ?? organisationSummary.Address;
+
+            return organisationSummary;
+        }
+
+        public VerifiedOrganisationSummary GetVerifiedOrganisationSummary(ConciseEmployerStructure employer)
+        {
+            var validatedAddress = GetValidatedAddress(employer.Address);
+
+            var organisationSummary = _employerMapper.ToVerifiedOrganisationSummary(employer);
+
+            organisationSummary.Address = validatedAddress ?? organisationSummary.Address;
+
+            return organisationSummary;
+        }
+
         /// <summary>
         /// This is a public method so as to be testable.
         /// The SOAP service result is not injectable, making this code impossible to reach if it were invoked
         /// as part of the interface methods.
         /// *This is a nasty piece of code to test, but there are some units around it.
         /// </summary>
-        /// <param name="employerToMap"></param>
+        /// <param name="address"></param>
         /// <returns></returns>
-        public VerifiedOrganisationSummary ValidatedAddress(ConciseEmployerStructure employerToMap)
+        private PostalAddress GetValidatedAddress(BSaddressStructure address)
         {
             //OO 20/01/16: Employer Address validation
             //Here, we are replicating what AVMS does for address verification
             //get address by postcode and line 1
             //if address not found, get address by postcode alone
             //if address not found, just use the retrieved address
-            var postCodeToSearch = employerToMap.Address.PostCode;
-            var addressLine1 = employerToMap.Address.PAON?.Items.FirstOrDefault()?.ToString();
+            var postCodeToSearch = address.PostCode;
+            var addressLine1 = address.PAON?.Items.FirstOrDefault()?.ToString();
             PostalAddress verifiedAddress = null;
 
             if (!string.IsNullOrWhiteSpace(addressLine1))
@@ -168,15 +177,18 @@
 
             if (verifiedAddress == null)
             {
-                verifiedAddress = _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch)?.FirstOrDefault();
+                var validatedAddresses = _postalAddressSearchService.GetValidatedAddresses(postCodeToSearch);
+                if (!string.IsNullOrEmpty(addressLine1))
+                {
+                    verifiedAddress = validatedAddresses?.FirstOrDefault(a => a.AddressLine1.IndexOf(addressLine1, StringComparison.CurrentCultureIgnoreCase) != -1);
+                }
+                if (verifiedAddress == null)
+                {
+                    verifiedAddress = validatedAddresses?.FirstOrDefault();
+                }
             }
 
-            // TODO: AG: US814: include reference number aliases.
-            var employerResult = _employerMapper.ToVerifiedOrganisationSummary(employerToMap, Enumerable.Empty<string>());
-
-            employerResult.Address = verifiedAddress ?? employerResult.Address;
-
-            return employerResult;
+            return verifiedAddress;
         }
 
         #region Helpers
