@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
     using System.Linq;
     using Candidates.Configuration;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Strategies;
 
@@ -78,15 +78,13 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                     break;
 
                 default:
-                    throw new InvalidOperationException(string.Format("Unknown vacancy type: {0}.", request.VacancyType));
+                    throw new InvalidOperationException($"Unknown vacancy type: {request.VacancyType}.");
             }
 
             Successor.Handle(request);
         }
 
         public IApplicationHousekeeper Successor { get; set; }
-
-        #region Helpers
 
         private DateTime GetHousekeepingDate()
         {
@@ -96,7 +94,5 @@ namespace SFA.Apprenticeships.Application.Applications.Housekeeping
                 -housekeepingConfiguration.HousekeepingCycleInHours *
                 housekeepingConfiguration.Application.HardDeleteDraftApplicationForExpiredVacancyAfterCycles);
         }
-
-        #endregion
     }
 }

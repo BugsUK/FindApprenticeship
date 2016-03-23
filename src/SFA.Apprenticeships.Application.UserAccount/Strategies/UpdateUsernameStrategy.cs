@@ -6,7 +6,7 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Users;
     using ErrorCodes = Interfaces.Users.ErrorCodes;
 

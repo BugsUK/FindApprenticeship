@@ -25,16 +25,10 @@ namespace SFA.Apprenticeships.Web.Manage {
 	using System.Web.Mvc;
 	using Common.IoC;
 	using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-	using Manage.IoC;
+	using IoC;
 
     public static class StructuremapMvc {
-        #region Public Properties
-
         public static StructureMapDependencyScope StructureMapDependencyScope { get; set; }
-
-        #endregion
-		
-		#region Public Methods and Operators
 		
 		public static void End() {
             StructureMapDependencyScope.Dispose();
@@ -46,7 +40,5 @@ namespace SFA.Apprenticeships.Web.Manage {
             DependencyResolver.SetResolver(StructureMapDependencyScope);
             DynamicModuleUtility.RegisterModule(typeof(StructureMapScopeModule));
         }
-
-        #endregion
     }
 }

@@ -1,6 +1,4 @@
-﻿
-
-namespace SFA.Apprenticeships.Web.Recruit
+﻿namespace SFA.Apprenticeships.Web.Recruit
 {
     using System;
     using System.Web;
@@ -17,7 +15,7 @@ namespace SFA.Apprenticeships.Web.Recruit
     using StructureMap;
     using Controllers;
 
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_BeginRequest(object sender, EventArgs e)
         {

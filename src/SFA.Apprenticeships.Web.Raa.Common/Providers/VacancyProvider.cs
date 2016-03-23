@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -251,8 +250,7 @@
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
-                Address = employer.Address,
-                // VacancyManagerId = vacancyParty.ProviderSiteId //TODO VGA: is this correct?
+                Address = employer.Address
             });
 
             return vacancy;

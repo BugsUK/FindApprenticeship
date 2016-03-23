@@ -8,7 +8,6 @@
     using StructureMap;
     using SFA.Infrastructure.Interfaces;
     using Common.IoC;
-    using Common.Configuration;
     using IoC;
 
     [Target("AzureEventHubTarget")]

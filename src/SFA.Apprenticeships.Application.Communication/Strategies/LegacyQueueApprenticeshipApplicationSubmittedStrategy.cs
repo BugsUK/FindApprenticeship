@@ -8,7 +8,6 @@ namespace SFA.Apprenticeships.Application.Communication.Strategies
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Vacancy;
-    using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class LegacyQueueApprenticeshipApplicationSubmittedStrategy : ISendApplicationSubmittedStrategy
     {
