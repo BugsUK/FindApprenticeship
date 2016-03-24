@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
+    using System.Collections.Specialized;
     using System.Linq;
     using Common;
     using Domain.Entities.Raa.Vacancies;
@@ -103,19 +104,49 @@
         [Test]
         public void GetSectors()
         {
-            Assert.Fail("Implement this!");
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var sectors = repository.GetSectors();
+
+            //Assert
+            sectors.Should().NotBeNullOrEmpty();
+            var anySectors = sectors.Any(std => std.Id == 0
+            || std.Standards.Count() == 0 
+            || string.IsNullOrWhiteSpace(std.Name)).Should().BeFalse();
         }
 
         [Test]
         public void GetFrameworks()
         {
-            Assert.Fail("Implement this!");
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var frameworks = repository.GetFrameworks();
+
+            //Assert
+            frameworks.Should().NotBeNullOrEmpty();
+            frameworks.Any(std => std.Id == 0)
+                                 .Should().BeFalse();
         }
 
         [Test]
         public void GetOccupations()
         {
-            Assert.Fail("Implement this!");
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var occupations = repository.GetOccupations();
+
+            //Assert
+            occupations.Should().NotBeNullOrEmpty();
+            occupations.Any(std => std.Id == 0).Should().BeFalse();
         }
     }
 }
