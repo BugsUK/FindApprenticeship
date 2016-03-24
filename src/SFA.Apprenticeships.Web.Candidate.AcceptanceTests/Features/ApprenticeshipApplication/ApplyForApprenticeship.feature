@@ -254,7 +254,7 @@ Scenario: As a candidate I want to enter my qualifications and work experience i
 @US154
 Scenario: As a candidate I would like to see my apprenticeship application as submitted
 	Given I have registered a new candidate
-	When I select the "first" apprenticeship vacancy in location "London" that can apply by this website
+	When I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
 	Then I am on the ApprenticeshipDetailsPage page
 	When I choose ApplyButton
 	Then I am on the ApprenticeshipApplicationPage page
