@@ -110,28 +110,6 @@
             subCategoryCode.Should().Be(expectedSubCategoryCode);
         }
 
-        [TestCase(VacancyType.Traineeship, "ICT", "SSAT1.ICT")]
-        [TestCase(VacancyType.Traineeship, null, "SSAT1.UNKNOWN")]
-        [TestCase(VacancyType.Apprenticeship, "ICT", "SSAT1.INVALID")]
-        [TestCase(VacancyType.Apprenticeship, null, "SSAT1.INVALID")]
-        public void ShouldGetPrefixedCategoryCodeForSector(
-            VacancyType vacancyType, string sectorCodeName, string expectedCategoryCode)
-        {
-            // Arrange.
-            var vacancySummary = new Fixture()
-                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
-                .With(each => each.VacancyType, vacancyType)
-                .With(each => each.TrainingType, TrainingType.Sectors)
-                .With(each => each.SectorCodeName, sectorCodeName)
-                .Create();
-
-            // Act.
-            var categoryCode = vacancySummary.GetCategoryCode();
-
-            // Assert.
-            categoryCode.Should().Be(expectedCategoryCode);
-        }
-
         [TestCase(VacancyType.Apprenticeship, 2, "STDSEC.201")]
         [TestCase(VacancyType.Apprenticeship, null, "STDSEC.UNKNOWN")]
         [TestCase(VacancyType.Apprenticeship, -1, "STDSEC.UNKNOWN")]
@@ -153,6 +131,29 @@
 
             // Assert.
             subCategoryCode.Should().Be(expectedSubCategoryCode);
+        }
+
+        [TestCase(VacancyType.Traineeship, "ICT", "SSAT1.ICT")]
+        [TestCase(VacancyType.Traineeship, null, "SSAT1.UNKNOWN")]
+        [TestCase(VacancyType.Traineeship, "XXX", "SSAT1.UNKNOWN")]
+        [TestCase(VacancyType.Apprenticeship, "ICT", "SSAT1.INVALID")]
+        [TestCase(VacancyType.Apprenticeship, null, "SSAT1.INVALID")]
+        public void ShouldGetPrefixedCategoryCodeForSector(
+            VacancyType vacancyType, string sectorCodeName, string expectedCategoryCode)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Sectors)
+                .With(each => each.SectorCodeName, sectorCodeName)
+                .Create();
+
+            // Act.
+            var categoryCode = vacancySummary.GetCategoryCode(_categories);
+
+            // Assert.
+            categoryCode.Should().Be(expectedCategoryCode);
         }
     }
 }

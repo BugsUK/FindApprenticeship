@@ -83,18 +83,26 @@
             return null;
         }
 
-        public static string GetCategoryCode(this VacancySummary vacancy)
+        public static string GetCategoryCode(this VacancySummary vacancy, IEnumerable<Category> categories)
         {
             const string sectorSubjectAreaTier1Prefix = "SSAT1.";
 
             if (vacancy.VacancyType == VacancyType.Traineeship)
             {
-                if (string.IsNullOrWhiteSpace(vacancy.SectorCodeName))
+                if (!string.IsNullOrWhiteSpace(vacancy.SectorCodeName))
                 {
-                    return $"{sectorSubjectAreaTier1Prefix}UNKNOWN";
+                    var code = $"{sectorSubjectAreaTier1Prefix}{vacancy.SectorCodeName}";
+
+                    var category = categories
+                        .SingleOrDefault(c => c.CodeName == code);
+
+                    if (category != null)
+                    {
+                        return category.CodeName;
+                    }
                 }
 
-                return $"{sectorSubjectAreaTier1Prefix}{vacancy.SectorCodeName}";
+                return $"{sectorSubjectAreaTier1Prefix}UNKNOWN";
             }
 
             return $"{sectorSubjectAreaTier1Prefix}INVALID";
