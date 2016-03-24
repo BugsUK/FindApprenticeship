@@ -7,12 +7,6 @@
     {
         #region Vacancy
 
-        protected VacancyDetail()
-        {
-            // TODO: US897: AG: why default this?
-            WageUnit = WageUnit.Weekly;
-        }
-
         public int Id { get; set; }
 
         public string VacancyReference { get; set; }
