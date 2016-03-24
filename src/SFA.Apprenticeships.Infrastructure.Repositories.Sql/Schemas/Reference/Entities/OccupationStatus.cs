@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OccupationStatus()
         {
-            Occupations = new HashSet<Occupation>();
+            Occupations = new HashSet<ApprenticeshipOccupation>();
         }
 
         [Key]
@@ -28,6 +28,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         public string FullName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Occupation> Occupations { get; set; }
+        public virtual ICollection<ApprenticeshipOccupation> Occupations { get; set; }
     }
 }

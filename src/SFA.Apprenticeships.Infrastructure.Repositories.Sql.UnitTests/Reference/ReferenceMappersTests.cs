@@ -1,19 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.UnitTests.Reference
 {
-    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
     using Schemas.Reference;
     using Schemas.Reference.Entities;
-    using DbStandard = Schemas.Reference.Entities.Standard;
-    using DomainStandard = Domain.Entities.Raa.Vacancies.Standard;
-    using DbSector = Schemas.Reference.Entities.Sector;
     using DomainSector = Domain.Entities.Raa.Vacancies.Sector;
-    using DbFramework = Schemas.Reference.Entities.Framework;
     using DomainFramework = Domain.Entities.Raa.Reference.Framework;
-    using DbOccupation = Schemas.Reference.Entities.Occupation;
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
     //using DbCounty = Schemas.Reference.Entities.County;
     //using DomainCounty = Domain.Entities.Raa.Reference.County;
@@ -137,52 +131,18 @@
         //}
 
         [Test]
-        public void ShouldMapStandard_DbToDomain()
-        {
-            //Arrange
-            var source = new DbStandard() { Level = new Level() {LevelCode = ApprenticeshipLevel.Degree.ToString("D") } };
-
-            //Act
-            var destination = _mapper.Map<DbStandard, DomainStandard>(source);
-
-            //Assert
-            destination.Should().NotBeNull();
-            destination.ApprenticeshipLevel.ToString("D").Should().Be(source.Level.LevelCode);
-            destination.Name.Should().Be(source.FullName);
-            destination.ApprenticeshipSectorId.Should().Be(source.SectorId);
-            destination.Id.Should().Be(source.StandardId);
-        }
-
-        [Test]
-        public void ShouldMapStandard_DomainToDb()
-        {
-            //Arrange
-            var source = new Fixture().Build<DomainStandard>().Create();
-
-            //Act
-            var destination = _mapper.Map<DomainStandard, DbStandard>(source);
-
-            //Assert
-            destination.Should().NotBeNull();
-            destination.FullName.Should().Be(source.Name);
-            destination.Level.Should().NotBeNull();
-            destination.LevelCode.Should().Be(source.ApprenticeshipLevel.ToString("D"));
-            destination.Level.LevelCode.Should().Be(source.ApprenticeshipLevel.ToString("D"));
-        }
-
-        [Test]
         public void ShouldMapSector_DbToDomain()
         {
             //Arrange
-            var source = new DbSector() {FullName = "my lovely name"};
+            var source = new StandardSector() {FullName = "my lovely name"};
 
             //Act
-            var destination = _mapper.Map<DbSector, DomainSector>(source);
+            var destination = _mapper.Map<StandardSector, DomainSector>(source);
 
             //Assert
             destination.Should().NotBeNull();
             destination.Name.Should().Be(source.FullName);
-            destination.Id.Should().Be(source.SectorId);
+            destination.Id.Should().Be(source.StandardSectorId);
             destination.Standards.Should().BeNull();
         }
 
@@ -193,30 +153,29 @@
             var source = new Fixture().Build<DomainSector>().Create();
 
             //Act
-            var destination = _mapper.Map<DomainSector, DbSector>(source);
+            var destination = _mapper.Map<DomainSector, StandardSector>(source);
 
             //Assert
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.Name);
-            destination.SectorId.Should().Be(source.Id);
-            destination.Standards.Should().BeEmpty();
+            destination.StandardSectorId.Should().Be(source.Id);
         }
 
         [Test]
         public void ShouldMapFramework_DbToDomain()
         {
             //Arrange
-            var source = new DbFramework() { FullName = "Fake full name", CodeName = "fakeness", ShortName = "Shortie"};
+            var source = new ApprenticeshipFramework() { FullName = "Fake full name", CodeName = "fakeness", ShortName = "Shortie"};
 
             //Act
-            var destination = _mapper.Map<DbFramework, DomainFramework>(source);
+            var destination = _mapper.Map<ApprenticeshipFramework, DomainFramework>(source);
 
             //Assert
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.FullName);
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
-            destination.Id.Should().Be(source.FrameworkId);
+            destination.Id.Should().Be(source.ApprenticeshipFrameworkId);
             destination.Occupation.Should().BeNull();
         }
 
@@ -227,21 +186,17 @@
             var source = new Fixture().Build<DomainFramework>().Create();
 
             //Act
-            var destination = _mapper.Map<DomainFramework, DbFramework>(source);
+            var destination = _mapper.Map<DomainFramework, ApprenticeshipFramework>(source);
 
             //Assert
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.FullName);
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
-            destination.FrameworkId.Should().Be(source.Id);
-            destination.FrameworkStatus.Should().BeNull();
-            destination.FrameworkStatusId.Should().Be(0);
+            destination.ApprenticeshipFrameworkId.Should().Be(source.Id);
+            destination.ApprenticeshipFrameworkStatusTypeId.Should().Be(0);
             destination.ClosedDate.Should().NotHaveValue();
-            destination.Occupation1.Should().BeNull();
-            destination.Occupation.Should().BeNull();
-            destination.PreviousOccupationId.Should().NotHaveValue();
-            destination.Vacancies.Should().BeEmpty();
+            destination.PreviousApprenticeshipOccupationId.Should().NotHaveValue();
         }
 
         [Test]
@@ -251,7 +206,7 @@
             var source = new Fixture().Build<DomainOccupation>().Create();
 
             //Act
-            var destination = _mapper.Map<DomainOccupation, DbOccupation>(source);
+            var destination = _mapper.Map<DomainOccupation, ApprenticeshipOccupation>(source);
 
             //Assert
             destination.Should().NotBeNull();
@@ -264,10 +219,10 @@
         public void ShouldMapOccupation_DbToDomain()
         {
             //Arrange
-            var source = new DbOccupation() { FullName = "Fullness", CodeName = "Coded", ShortName = "Short name"};
+            var source = new ApprenticeshipOccupation() { FullName = "Fullness", CodeName = "Coded", ShortName = "Short name"};
 
             //Act
-            var destination = _mapper.Map<DbOccupation, DomainOccupation>(source);
+            var destination = _mapper.Map<ApprenticeshipOccupation, DomainOccupation>(source);
 
             //Assert
             destination.Should().NotBeNull();

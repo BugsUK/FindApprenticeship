@@ -1,9 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Address.Entities;
 
     [Table("dbo.LocalAuthority")]
     public class LocalAuthority
