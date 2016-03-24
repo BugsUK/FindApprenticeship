@@ -24,7 +24,7 @@
         {
             var category = new Category
             {
-                CodeName = CodeName,
+                CodeName = $"{CategoryPrefixes.SectorSubjectAreaTier1}{CodeName}",
                 FullName = FullName,
                 SubCategories = new List<Category>()
             };

@@ -18,7 +18,7 @@
         {
             return new Category
             {
-                CodeName = CodeName,
+                CodeName = $"{CategoryPrefixes.Framework}{CodeName}",
                 FullName = FullName,
                 ParentCategoryCodeName = ParentCategoryCodeName
             };
