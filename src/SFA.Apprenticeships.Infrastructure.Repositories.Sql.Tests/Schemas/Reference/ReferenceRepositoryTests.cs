@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
-    using System.Collections.Specialized;
     using System.Linq;
     using Common;
     using Domain.Entities.Raa.Vacancies;
@@ -24,23 +23,23 @@
                 new GetOpenConnectionFromConnectionString(DatabaseConfigurationProvider.Instance.TargetConnectionString);
         }
 
-        [Test]
-        public void GetCounties()
-        {
-            //Arrange
-            var logger = new Mock<ILogService>();
-            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+        //[Test]
+        //public void GetCounties()
+        //{
+        //    //Arrange
+        //    var logger = new Mock<ILogService>();
+        //    var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
 
-            //Act
-            var counties = repository.GetCounties();
+        //    //Act
+        //    var counties = repository.GetCounties();
 
-            //Assert
-            counties.Count.Should().Be(47);
-            counties[0].CountyId.Should().Be(1);
-            counties[0].CodeName.Should().Be("BED");
-            counties[0].ShortName.Should().Be("BED");
-            counties[0].FullName.Should().Be("Bedfordshire");
-        }
+        //    //Assert
+        //    counties.Count.Should().Be(47);
+        //    counties[0].CountyId.Should().Be(1);
+        //    counties[0].CodeName.Should().Be("BED");
+        //    counties[0].ShortName.Should().Be("BED");
+        //    counties[0].FullName.Should().Be("Bedfordshire");
+        //}
 
         //[Test]
         //public void GetRegions()
@@ -60,28 +59,28 @@
         //    counties[0].FullName.Should().Be("Unspecified");
         //}
 
-        [Test]
-        public void GetLocalAuthorities()
-        {
-            //Arrange
-            var logger = new Mock<ILogService>();
-            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+        //[Test]
+        //public void GetLocalAuthorities()
+        //{
+        //    //Arrange
+        //    var logger = new Mock<ILogService>();
+        //    var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
 
-            //Act
-            var localAuthorities = repository.GetLocalAuthorities();
+        //    //Act
+        //    var localAuthorities = repository.GetLocalAuthorities();
 
-            //Assert
-            localAuthorities.Count.Should().Be(326);
-            var firstLA = localAuthorities.First(la => la.LocalAuthorityId == 1);
-            firstLA.LocalAuthorityId.Should().Be(1);
-            firstLA.CodeName.Should().Be("45UB");
-            firstLA.ShortName.Should().Be("45UB");
-            firstLA.FullName.Should().Be("Adur");
-            firstLA.County.CountyId.Should().Be(42);
-            firstLA.County.CodeName.Should().Be("WSX");
-            firstLA.County.ShortName.Should().Be("WSX");
-            firstLA.County.FullName.Should().Be("West Sussex");
-        }
+        //    //Assert
+        //    localAuthorities.Count.Should().Be(326);
+        //    var firstLA = localAuthorities.First(la => la.LocalAuthorityId == 1);
+        //    firstLA.LocalAuthorityId.Should().Be(1);
+        //    firstLA.CodeName.Should().Be("45UB");
+        //    firstLA.ShortName.Should().Be("45UB");
+        //    firstLA.FullName.Should().Be("Adur");
+        //    firstLA.County.CountyId.Should().Be(42);
+        //    firstLA.County.CodeName.Should().Be("WSX");
+        //    firstLA.County.ShortName.Should().Be("WSX");
+        //    firstLA.County.FullName.Should().Be("West Sussex");
+        //}
 
         [Test]
         public void GetStandards()

@@ -6,11 +6,11 @@
 
     public interface IReferenceRepository
     {
-        IList<County> GetCounties();
+        //IList<County> GetCounties();
 
         //IList<Region> GetRegions();
 
-        IList<LocalAuthority> GetLocalAuthorities();
+        //IList<LocalAuthority> GetLocalAuthorities();
 
         IList<Framework> GetFrameworks();
 

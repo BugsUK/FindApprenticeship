@@ -21,18 +21,18 @@
             _logger = logger;
         }
 
-        public IList<County> GetCounties()
-        {
-            _logger.Debug("Calling database to get all counties");
+        //public IList<County> GetCounties()
+        //{
+        //    _logger.Debug("Calling database to get all counties");
 
-            var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM dbo.County WHERE CountyId <> 0 ORDER BY FullName");
+        //    var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM dbo.County WHERE CountyId <> 0 ORDER BY FullName");
 
-            _logger.Debug($"Found {dbCounties.Count} counties");
+        //    _logger.Debug($"Found {dbCounties.Count} counties");
 
-            var counties = _mapper.Map<IList<Entities.County>, IList<County>>(dbCounties);
+        //    var counties = _mapper.Map<IList<Entities.County>, IList<County>>(dbCounties);
 
-            return counties;
-        }
+        //    return counties;
+        //}
 
         //public IList<Region> GetRegions()
         //{
@@ -47,21 +47,21 @@
         //    return regions;
         //}
 
-        public IList<LocalAuthority> GetLocalAuthorities()
-        {
-            _logger.Debug("Calling database to get all local authorities");
+        //public IList<LocalAuthority> GetLocalAuthorities()
+        //{
+        //    _logger.Debug("Calling database to get all local authorities");
 
-            const string sql = @"SELECT * FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
-            var dbLocalAuthorities =
-                _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
-                    sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");
+        //    const string sql = @"SELECT * FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
+        //    var dbLocalAuthorities =
+        //        _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
+        //            sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");
 
-            _logger.Debug($"Found {dbLocalAuthorities.Count} local authorities");
+        //    _logger.Debug($"Found {dbLocalAuthorities.Count} local authorities");
 
-            var localAuthorities = _mapper.Map<IList<Entities.LocalAuthority>, IList<LocalAuthority>>(dbLocalAuthorities);
+        //    var localAuthorities = _mapper.Map<IList<Entities.LocalAuthority>, IList<LocalAuthority>>(dbLocalAuthorities);
 
-            return localAuthorities;
-        }
+        //    return localAuthorities;
+        //}
 
         public IList<Framework> GetFrameworks()
         {
