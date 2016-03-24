@@ -34,6 +34,7 @@ Scenario: Remebering last location search does not break nationwide results
 	When I enter data
 		 | Field    | Value |
 		 | Location | Hull  |
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -53,6 +54,7 @@ Scenario: Remebering last location search does not break nationwide results
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Birmingham |
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
@@ -107,7 +109,7 @@ Scenario: Nationwide apprenticeships found by keyword can be ordered
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
 		 | Field               | Value      |
-		 | Keywords            | ambitious  |
+		 | Keywords            | it         |
 		 | Location            | London     |
 		 | WithInDistance      | 40 miles   |
 		 | ApprenticeshipLevel | All levels |
@@ -156,11 +158,11 @@ Scenario: When I'm seeing nationwide apprenticeships and I change the results pe
 Scenario: When I'm seeing nationwide apprenticeships and I change the sort order I remain there
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data
-		 | Field               | Value        |
-		 | Keywords            | Construction |
-		 | Location            | London       |
-		 | WithInDistance      | 40 miles     |
-		 | ApprenticeshipLevel | All levels   |
+		 | Field               | Value      |
+		 | Keywords            | it         |
+		 | Location            | London     |
+		 | WithInDistance      | 40 miles   |
+		 | ApprenticeshipLevel | All levels |
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	When I choose NationwideLocationTypeLink
