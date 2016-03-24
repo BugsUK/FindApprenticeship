@@ -12,19 +12,28 @@
     using Manage.Providers;
     using Moq;
     using NUnit.Framework;
+    using Raa.Common.Configuration;
     using Raa.Common.Providers;
     using Raa.Common.ViewModels.Vacancy;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     [TestFixture]
     public class AgencyUserMediatorTests
     {
+        private const string ValidAuthorisationGroupClaim = "validGroupClaim";
+        private const string InValidAuthorisationGroupClaim = "invalidGroupClaim";
+
         [Test]
         public void Authorize_EmptyUsername()
         {
-            var mediator = new AgencyUserMediatorBuilder().Build();
-
             var principal = new ClaimsPrincipalBuilder().Build();
+
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
+
+            var mediator = new AgencyUserMediatorBuilder().With(configurationService).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(AgencyUserMediatorCodes.Authorize.EmptyUsername, AuthorizeMessages.EmptyUsername, UserMessageLevel.Error);
@@ -33,23 +42,16 @@
         [Test]
         public void Authenticated_MissingServicePermission()
         {
-            var mediator = new AgencyUserMediatorBuilder().Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(InValidAuthorisationGroupClaim).Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
+
+            var mediator = new AgencyUserMediatorBuilder().With(configurationService).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingServicePermission, AuthorizeMessages.MissingServicePermission, UserMessageLevel.Error);
-        }
-
-        [Test]
-        public void Authenticated_MissingRoleListClaim()
-        {
-            var mediator = new AgencyUserMediatorBuilder().Build();
-
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).Build();
-
-            var response = mediator.Authorize(principal);
-            response.AssertMessage(AgencyUserMediatorCodes.Authorize.MissingRoleListClaim, AuthorizeMessages.MissingRoleListClaim, UserMessageLevel.Error);
         }
 
         [Test]
@@ -59,9 +61,13 @@
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
 
-            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
+            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).With(configurationService).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(ValidAuthorisationGroupClaim).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.ReturnUrl, false, true);
@@ -75,9 +81,13 @@
             var userDataProvider = new Mock<IUserDataProvider>();
             userDataProvider.Setup(p => p.Pop(UserDataItemNames.ReturnUrl)).Returns(returnUrl);
 
-            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
+            var mediator = new AgencyUserMediatorBuilder().With(userDataProvider).With(configurationService).Build();
+
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(ValidAuthorisationGroupClaim).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
@@ -86,15 +96,19 @@
         [Test]
         public void Authenticated_Ok()
         {
-            var mediator = new AgencyUserMediatorBuilder().Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(ValidAuthorisationGroupClaim).Build();
 
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
+
+            var mediator = new AgencyUserMediatorBuilder().With(configurationService).Build();
 
             var response = mediator.Authorize(principal);
             response.AssertCode(AgencyUserMediatorCodes.Authorize.Ok);
         }
 
-        [Test]
+        [Test] //TODO: remove roleListPart
         public void GetHomeViewModelShouldGetUserViewModel()
         {
             const string userName = "User001";
@@ -102,18 +116,21 @@
             var principal = new ClaimsPrincipalBuilder().WithName(userName).WithRole(Roles.Raa).WithRoleList(roleList).Build();
 
             var userProvider = new Mock<IAgencyUserProvider>();
-            userProvider.Setup(up => up.GetAgencyUser(userName, roleList)).Returns(new AgencyUserViewModel
+            userProvider.Setup(up => up.GetAgencyUser(userName)).Returns(new AgencyUserViewModel
             {
                 RoleId = roleList
             });
 
-            var mediator = new AgencyUserMediatorBuilder().With(userProvider).Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration { AuthorisationGroupClaim = ValidAuthorisationGroupClaim });
+            var mediator = new AgencyUserMediatorBuilder().With(userProvider).With(configurationService).Build();
 
             var response = mediator.GetHomeViewModel(principal, new DashboardVacancySummariesSearchViewModel());
 
             response.AssertCode(AgencyUserMediatorCodes.GetHomeViewModel.OK);
             response.ViewModel.AgencyUser.RoleId.Should().Be(roleList);
-            userProvider.Verify(up => up.GetAgencyUser(userName, roleList), Times.Once);
+            userProvider.Verify(up => up.GetAgencyUser(userName), Times.Once);
         }
 
         [Test]
@@ -129,8 +146,11 @@
             };
             var vacancyProvider = new Mock<IVacancyQAProvider>();
             vacancyProvider.Setup(vp => vp.GetPendingQAVacanciesOverview(searchViewModel)).Returns(new DashboardVacancySummariesViewModel {Vacancies = vacancies});
-            var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).Build();
-            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithRole(Roles.Raa).WithRoleList("Agency").Build();
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(c => c.Get<ManageWebConfiguration>())
+                .Returns(new ManageWebConfiguration {AuthorisationGroupClaim = ValidAuthorisationGroupClaim});
+            var mediator = new AgencyUserMediatorBuilder().With(vacancyProvider).With(configurationService).Build();
+            var principal = new ClaimsPrincipalBuilder().WithName("User001").WithGroup(ValidAuthorisationGroupClaim).Build();
 
             var response = mediator.GetHomeViewModel(principal, searchViewModel);
 

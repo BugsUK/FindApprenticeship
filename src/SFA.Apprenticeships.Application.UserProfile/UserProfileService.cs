@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.UserProfile
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Domain.Entities.Raa.Users;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Users;
@@ -58,19 +57,14 @@
             return _agencyUserWriteRepository.Save(agencyUser);
         }
 
-        public IEnumerable<Role> GetRoles(string roleList)
+        public IEnumerable<Role> GetRoles()
         {
             //TODO: Get these from config or a repo once the design and full list has been agreed
-            const string technicalAdvisor = "Technical_advisor";
-
-            var roles = new List<Role>
+            return new []
             {
                 GetRole("Helpdesk_advisor", "Helpdesk adviser"),
                 GetRole("QA_advisor", "Vacancy reviewer", true)
-                //GetRole(technicalAdvisor, "Technical adviser")
             };
-
-            return roleList == "Serco" ? roles.Where(r => r.Id != technicalAdvisor) : roles;
         }
 
         private static Role GetRole(string id, string name, bool isDefault = false)

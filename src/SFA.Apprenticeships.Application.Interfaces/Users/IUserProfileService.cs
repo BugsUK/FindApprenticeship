@@ -24,6 +24,6 @@
 
         AgencyUser SaveUser(AgencyUser agencyUser);
 
-        IEnumerable<Role> GetRoles(string roleList);
+        IEnumerable<Role> GetRoles();
     }
 }
