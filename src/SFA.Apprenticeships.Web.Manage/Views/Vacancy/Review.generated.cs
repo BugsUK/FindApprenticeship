@@ -153,7 +153,7 @@ WriteLiteral(" name=\"VacancyQAAction\"");
 
 WriteLiteral(" value=\"Reject\"");
 
-WriteLiteral(">Refer</button>\r\n                <button");
+WriteLiteral(">Refer and continue to next vacancy</button>\r\n                <button");
 
 WriteLiteral(" id=\"btnUnReserve\"");
 

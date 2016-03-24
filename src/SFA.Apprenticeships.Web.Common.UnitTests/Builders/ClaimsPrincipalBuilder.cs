@@ -8,6 +8,7 @@
         private string _role;
         private string _ukprn;
         private string _roleList;
+        private string _groupClaim;
 
         public ClaimsPrincipal Build()
         {
@@ -28,6 +29,11 @@
             {
                 identity.AddClaim(new Claim(Constants.ClaimTypes.RoleList, _roleList));
             }
+            if (_groupClaim != null)
+            {
+                identity.AddClaim(new Claim(Constants.ClaimTypes.Group, _groupClaim));
+            }
+
             var principal = new ClaimsPrincipal(identity);
             return principal;
         }
@@ -53,6 +59,12 @@
         public ClaimsPrincipalBuilder WithRoleList(string roleList)
         {
             _roleList = roleList;
+            return this;
+        }
+
+        public ClaimsPrincipalBuilder WithGroup(string groupClaim)
+        {
+            _groupClaim = groupClaim;
             return this;
         }
     }

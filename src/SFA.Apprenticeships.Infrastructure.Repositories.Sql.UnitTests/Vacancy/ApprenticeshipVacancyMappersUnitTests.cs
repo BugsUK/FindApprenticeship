@@ -83,5 +83,43 @@
             // Assert
             domainVacancy2.ShouldBeEquivalentTo(domainVacancy1);
         }
+
+        [TestCase("123.4567", "123.46")]
+        [TestCase("123.4545", "123.45")]
+        [TestCase("123.45", "123.45")]
+        [TestCase("123.00", "123.00")]
+        [TestCase("123", "123.00")]
+        // [TestCase(null)]
+        public void ShouldRoundWeeklyWageToTwoDecimalPlacesFromDatabaseToDomain(
+            string weeklyWageString, string expectedWeeklyWageString)
+        {
+            // Arrange.
+            var weeklyWage = default(decimal?);
+
+            if (!string.IsNullOrWhiteSpace(weeklyWageString))
+            {
+                weeklyWage = decimal.Parse(weeklyWageString);
+            }
+
+            var expectedWeeklyWage = default(decimal?);
+
+            if (!string.IsNullOrWhiteSpace(expectedWeeklyWageString))
+            {
+                expectedWeeklyWage = decimal.Parse(expectedWeeklyWageString);
+            }
+
+            var mapper = new VacancyMappers();
+
+            var databaseVacancy = new Fixture()
+                .Build<Vacancy>()
+                .With(each => each.WeeklyWage, weeklyWage)
+                .Create();
+
+            // Act
+            var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
+
+            // Assert
+            domainVacancy.Wage.Should().Be(expectedWeeklyWage);
+        }
     }
 }

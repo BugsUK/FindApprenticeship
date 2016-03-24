@@ -5,7 +5,7 @@
 
 @US659 @SmokeTests
 Scenario: When searching by reference number and finding a result I am taken to the details page
-	Given I select the "first" apprenticeship vacancy in location "London"
+	Given I select the "first" apprenticeship vacancy in location "N7 8LS"
 	Then I am on the ApprenticeshipDetailsPage page
 	Given I navigated to the ApprenticeshipSearchPage page
 	When I enter data

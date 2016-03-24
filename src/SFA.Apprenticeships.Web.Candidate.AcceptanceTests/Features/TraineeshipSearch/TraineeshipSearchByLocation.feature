@@ -16,6 +16,8 @@ Scenario: When searching by location the results are ordered by distance and ord
 	When I enter data
 		 | Field          | Value      |
 		 | Location       | Birmingham |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
@@ -31,6 +33,8 @@ Scenario: When searching by location the results are ordered by distance and dis
 	When I enter data
 		 | Field          | Value      |
 		 | Location       | Birmingham |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see SearchResults list contains
@@ -53,6 +57,8 @@ Scenario: User enters location manually and location defaults to first suggested
 	When I enter data
 		 | Field    | Value  |
 		 | Location | Covent |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see 
@@ -65,6 +71,8 @@ Scenario: User enters location manually then changes location manually and sees 
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	When I am on the TraineeshipSearchResultPage page
@@ -72,6 +80,8 @@ Scenario: User enters location manually then changes location manually and sees 
 	And I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	When I am on the TraineeshipSearchResultPage page
@@ -113,8 +123,10 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I am on the TraineeshipSearchPage page
 	Then I clear the Location field
 	When I enter data
-		 | Field    | Value |
-		 | Location | Manchester  |
+		 | Field    | Value      |
+		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see 
@@ -136,8 +148,10 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	And I am on the TraineeshipSearchPage page
 	Then I clear the Location field
 	When I enter data
-		 | Field    | Value |
-		 | Location | Manchester  |
+		 | Field    | Value      |
+		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see 
@@ -148,6 +162,8 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I wait 3 seconds
@@ -162,6 +178,8 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see 

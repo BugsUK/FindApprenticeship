@@ -82,6 +82,8 @@ Scenario: Search when no results are returned for location
 	When I enter data
 		 | Field    | Value  |
 		 | Location | Dundee |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I am on the TraineeshipSearchResultPage page
 	Then I see
