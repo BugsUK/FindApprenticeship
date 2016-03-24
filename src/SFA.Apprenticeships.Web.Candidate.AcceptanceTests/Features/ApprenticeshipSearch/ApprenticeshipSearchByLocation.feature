@@ -48,6 +48,7 @@ Scenario: User enters location manually and sees a list of suggested locations
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -61,6 +62,7 @@ Scenario: User enters location manually and location defaults to first suggested
 	When I enter data
 		 | Field    | Value  |
 		 | Location | Covent |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -74,6 +76,7 @@ Scenario: User enters location manually then changes location manually and sees 
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -81,6 +84,7 @@ Scenario: User enters location manually then changes location manually and sees 
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
@@ -125,6 +129,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -149,6 +154,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	And I wait 3 seconds
@@ -161,6 +167,7 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
@@ -176,6 +183,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	When I enter data
 		 | Field    | Value		 |
 		 | Location | Coventry   |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	And I wait 3 seconds

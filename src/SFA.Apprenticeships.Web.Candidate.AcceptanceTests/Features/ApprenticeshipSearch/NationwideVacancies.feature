@@ -34,6 +34,7 @@ Scenario: Remebering last location search does not break nationwide results
 	When I enter data
 		 | Field    | Value |
 		 | Location | Hull  |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
@@ -54,6 +55,7 @@ Scenario: Remebering last location search does not break nationwide results
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Birmingham |
+	And I wait for 5 seconds to see LocationAutoComplete
 	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
