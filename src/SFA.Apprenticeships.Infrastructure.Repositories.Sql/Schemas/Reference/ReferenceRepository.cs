@@ -2,11 +2,14 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Reference;
     using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
+    using Entities;
+    using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
     {
@@ -65,7 +68,27 @@
 
         public IList<Framework> GetFrameworks()
         {
-            throw new NotImplementedException();
+            _logger.Debug("Getting all frameworks");
+
+            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework;";
+
+            var sqlParams = new
+            {
+            };
+
+            var frameworks = _getOpenConnection
+                .Query<Entities.ApprenticeshipFramework>(frameworkSql, sqlParams)
+                .Select(_mapper.Map<Entities.ApprenticeshipFramework, Framework>).ToList();
+
+            //const string occupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+
+            //var occupations = _getOpenConnection
+            //    .Query<Entities.ApprenticeshipOccupation>(occupationSql, sqlParams)
+            //    .Select(_mapper.Map<Entities.ApprenticeshipOccupation, Occupation>).ToList();
+            
+            _logger.Debug("Got all frameworks");
+
+            return frameworks;
         }
 
         public IList<Occupation> GetOccupations()
