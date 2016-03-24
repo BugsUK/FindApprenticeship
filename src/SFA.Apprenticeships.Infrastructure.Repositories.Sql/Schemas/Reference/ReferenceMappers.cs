@@ -8,7 +8,6 @@
     using Framework = Domain.Entities.Raa.Reference.Framework;
     using LocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
     using Occupation = Domain.Entities.Raa.Reference.Occupation;
-    using Region = Domain.Entities.Raa.Reference.Region;
     using Sector = Domain.Entities.Raa.Vacancies.Sector;
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
@@ -20,10 +19,10 @@
                 .ForMember(c => c.PostalAddresses, opt => opt.Ignore());
             Mapper.CreateMap<Entities.County, County>();
 
-            Mapper.CreateMap<Region, Entities.Region>();
-            Mapper.CreateMap<Entities.Region, Region>()
-                .ForMember(c => c.CodeName, opt => opt.MapFrom(r => r.CodeName.Trim()))
-                .ForMember(c => c.ShortName, opt => opt.MapFrom(r => r.ShortName.Trim()));
+            //Mapper.CreateMap<Region, Entities.Region>();
+            //Mapper.CreateMap<Entities.Region, Region>()
+            //    .ForMember(c => c.CodeName, opt => opt.MapFrom(r => r.CodeName.Trim()))
+            //    .ForMember(c => c.ShortName, opt => opt.MapFrom(r => r.ShortName.Trim()));
 
             Mapper.CreateMap<LocalAuthority, Entities.LocalAuthority>();
             Mapper.CreateMap<Entities.LocalAuthority, LocalAuthority>();

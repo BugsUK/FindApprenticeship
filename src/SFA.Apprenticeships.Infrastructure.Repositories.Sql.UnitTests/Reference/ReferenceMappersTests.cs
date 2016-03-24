@@ -16,6 +16,10 @@
     using DomainFramework = Domain.Entities.Raa.Reference.Framework;
     using DbOccupation = Schemas.Reference.Entities.Occupation;
     using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
+    using DbCounty = Schemas.Reference.Entities.County;
+    using DomainCounty = Domain.Entities.Raa.Reference.County;
+    using DbLocalAuthority = Schemas.Reference.Entities.LocalAuthority;
+    using DomainLocalAuthority = Domain.Entities.Raa.Reference.LocalAuthority;
 
 
     [TestFixture]
@@ -36,16 +40,13 @@
         }
 
         [Test]
-        public void ShouldMapCounty()
+        public void ShouldMapCounty_DomainToDb()
         {
-            //TODO: Fix this
-            Assert.Inconclusive();
-
             //Arrange
-            var source = new Fixture().Build<County>().Without(c => c.PostalAddresses).Create();
+            var source = new Fixture().Build<DomainCounty>().Create();
 
             //Act
-            var destination = _mapper.Map<County, County>(source);
+            var destination = _mapper.Map<DomainCounty, DbCounty>(source);
 
             //Assert
             destination.Should().NotBeNull();
@@ -56,36 +57,72 @@
         }
 
         [Test]
-        public void ShouldMapRegion()
+        public void ShouldMapCounty_DbToDomain()
         {
-            //TODO: Fix this
-            Assert.Inconclusive();
-            
             //Arrange
-            var source = new Fixture().Build<Region>().Create();
+            var source = new Fixture().Build<DbCounty>().Create();
 
             //Act
-            var destination = _mapper.Map<Region, Region>(source);
+            var destination = _mapper.Map<DbCounty, DomainCounty>(source);
 
             //Assert
             destination.Should().NotBeNull();
-            destination.RegionId.Should().Be(source.RegionId);
+            destination.CountyId.Should().Be(source.CountyId);
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
             destination.FullName.Should().Be(source.FullName);
         }
 
+        //[Test]
+        //public void ShouldMapRegion()
+        //{
+        //    //TODO: Fix this
+        //    Assert.Inconclusive();
+
+        //    //Arrange
+        //    var source = new Fixture().Build<Region>().Create();
+
+        //    //Act
+        //    var destination = _mapper.Map<Region, Region>(source);
+
+        //    //Assert
+        //    destination.Should().NotBeNull();
+        //    destination.RegionId.Should().Be(source.RegionId);
+        //    destination.CodeName.Should().Be(source.CodeName);
+        //    destination.ShortName.Should().Be(source.ShortName);
+        //    destination.FullName.Should().Be(source.FullName);
+        //}
+
         [Test]
-        public void ShouldMapLocalAuthority()
+        public void ShouldMapLocalAuthority_DomainToDb()
         {
-            //TODO: Fix this
-            Assert.Inconclusive();
-            
             //Arrange
-            var source = new Fixture().Build<LocalAuthority>().Create();
+            var source = new Fixture().Build<DomainLocalAuthority>().Create();
 
             //Act
-            var destination = _mapper.Map<LocalAuthority, LocalAuthority>(source);
+            var destination = _mapper.Map<DomainLocalAuthority, DbLocalAuthority>(source);
+
+            //Assert
+            destination.Should().NotBeNull();
+            destination.LocalAuthorityId.Should().Be(source.LocalAuthorityId);
+            destination.CodeName.Should().Be(source.CodeName);
+            destination.ShortName.Should().Be(source.ShortName);
+            destination.FullName.Should().Be(source.FullName);
+            destination.County.Should().NotBeNull();
+            destination.County.CountyId.Should().Be(source.County.CountyId);
+            destination.County.CodeName.Should().Be(source.County.CodeName);
+            destination.County.ShortName.Should().Be(source.County.ShortName);
+            destination.County.FullName.Should().Be(source.County.FullName);
+        }
+
+        [Test]
+        public void ShouldMapLocalAuthority_DbToDomain()
+        {
+            //Arrange
+            var source = new Fixture().Build<DbLocalAuthority>().Create();
+
+            //Act
+            var destination = _mapper.Map<DbLocalAuthority, DomainLocalAuthority>(source);
 
             //Assert
             destination.Should().NotBeNull();
