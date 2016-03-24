@@ -138,7 +138,7 @@ this.FeatureBackground();
 #line 26
  testRunner.When("I enter data", ((string)(null)), table2, "When ");
 #line 29
- testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I choose SearchHeader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
  testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 31
