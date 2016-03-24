@@ -97,7 +97,8 @@
             standards.Any(std => std.ApprenticeshipLevel == ApprenticeshipLevel.Unknown
                                  || std.ApprenticeshipSectorId == 0
                                  || std.Id == 0
-                                 || string.IsNullOrWhiteSpace(std.Name)).Should().BeFalse();
+                                 || string.IsNullOrWhiteSpace(std.Name))
+                                 .Should().BeFalse();
         }
 
         [Test]
@@ -112,9 +113,10 @@
 
             //Assert
             sectors.Should().NotBeNullOrEmpty();
-            var anySectors = sectors.Any(std => std.Id == 0
-            || std.Standards.Count() == 0 
-            || string.IsNullOrWhiteSpace(std.Name)).Should().BeFalse();
+            sectors.Any(std => std.Id == 0
+                               || string.IsNullOrWhiteSpace(std.Name)
+                               || !std.Standards.Any())
+                               .Should().BeFalse();
         }
 
         [Test]
@@ -129,8 +131,12 @@
 
             //Assert
             frameworks.Should().NotBeNullOrEmpty();
-            frameworks.Any(std => std.Id == 0)
-                                 .Should().BeFalse();
+            frameworks.Any(std => std.Id == 0
+                                  || !string.IsNullOrWhiteSpace(std.CodeName)
+                                  || !string.IsNullOrWhiteSpace(std.FullName)
+                                  || !string.IsNullOrWhiteSpace(std.ShortName)
+                                  || std.Occupation == null)
+                .Should().BeFalse();
         }
 
         [Test]
@@ -145,7 +151,11 @@
 
             //Assert
             occupations.Should().NotBeNullOrEmpty();
-            occupations.Any(std => std.Id == 0).Should().BeFalse();
+            occupations.Any(std => std.Id == 0
+                                   || !string.IsNullOrWhiteSpace(std.CodeName)
+                                   || !string.IsNullOrWhiteSpace(std.FullName)
+                                   || !string.IsNullOrWhiteSpace(std.ShortName))
+                .Should().BeFalse();
         }
     }
 }
