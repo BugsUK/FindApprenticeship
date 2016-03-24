@@ -1,6 +1,4 @@
-﻿
-
-namespace SFA.Apprenticeships.Data.Migrate.Console
+﻿namespace SFA.Apprenticeships.Data.Migrate.Console
 {
     using CommandLine;
     using CommandLine.Text;
@@ -10,6 +8,7 @@ namespace SFA.Apprenticeships.Data.Migrate.Console
     using SFA.Infrastructure.Interfaces;
     using System;
     using System.Linq;
+    using System.Collections.Generic;
 
     class Program
     {
@@ -160,4 +159,5 @@ SingleFullUpdate                   = {options.SingleFullUpdate}
             throw new NotImplementedException();
         }
     }
+
 }

@@ -12,8 +12,9 @@
 
         ITransactionlessSyncContext StartFullTransactionlessSync();
 
-        void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records);
-        void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records);
+        void BulkInsert(ITableDetails table, IEnumerable<IDictionary<string, object>> records);
+        void BulkUpdate(ITableDetails table, IEnumerable<IDictionary<string, object>> records);
+        void BulkDelete(ITableDetails table, IEnumerable<Keys> keys);
 
         void DeleteAll(ITableSpec table);
 

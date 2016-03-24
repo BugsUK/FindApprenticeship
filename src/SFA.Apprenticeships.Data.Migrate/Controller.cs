@@ -38,7 +38,7 @@
             {
                 try
                 {
-                    DoUpdatesForAll(threaded);
+                    DoUpdatesForAll();
                 }
                 catch (FatalException)
                 {
@@ -72,19 +72,29 @@
             _log.Info("DoAll Cancelled");
         }
 
-        public void Reset()
+        public void Reset(bool threaded = false)
         {
-            ApplyToTablesUnthreadedReverseDependency(table => _syncRepository.DeleteAll(table));
+            ApplyToTablesReverseDependency(table => _syncRepository.DeleteAll(table), threaded);
             _syncRepository.Reset();
         }
 
-        public void DoUpdatesForAll(bool threaded = false)
+        public void DoUpdatesForAll()
         {
             _log.Info("============ DoUpdatesForAll");
+
+            var mutators = _tables.ToDictionary(t => t, t => _createMutateTarget(t)); // TODO: Dispose
             using (var context = _syncRepository.StartChangesOnlySnapshotSync())
             {
                 if (context.AreAnyChanges())
-                    ApplyToTables(tableSpec => DoUpdatesForTable(tableSpec, context), threaded);
+                {
+                    _log.Info("====== Adds / Updates, collect deletes");
+                    var exceptions = ApplyToTables(table => DoChangesForTable(table, context, mutators[table]), false);
+                    _log.Info("====== Apply Deletes");
+                    ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false);
+
+                    if (exceptions.Any())
+                        throw exceptions.First();
+                }
                 else
                     _log.Info("No changes");
                 context.Success();
@@ -94,26 +104,33 @@
         public void DoFullScanForAll(bool threaded = false)
         {
             _log.Info("============ DoFullScanForAll");
+            var mutators = _tables.ToDictionary(t => t, t => _createMutateTarget(t));
             var context = _syncRepository.StartFullTransactionlessSync();
-            ApplyToTables(tableSpec => DoInitial(tableSpec, context), threaded);
+
+            var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table]), threaded);
+            ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded);
+
+            if (exceptions.Any())
+                throw exceptions.First();
+
             context.Success();
         }
 
-        private void ApplyToTables(Action<ITableSpec> action, bool threaded)
+        private IEnumerable<Exception> ApplyToTables(Action<ITableSpec> action, bool threaded)
         {
             if (threaded)
-                ApplyToTablesThreaded(action);
+                return ApplyToTablesThreaded(action);
             else
-                ApplyToTablesUnthreaded(action);
+                return ApplyToTablesUnthreaded(action);
         }
 
-        public void ApplyToTablesThreaded(Action<ITableSpec> action)
+        public IEnumerable<Exception> ApplyToTablesThreaded(Action<ITableSpec> action)
         {
             if (_tables.Count() == 1)
             {
                 // Special case for testing - ignore dependencies
                 action(_tables.Single());
-                return;
+                return Enumerable.Empty<Exception>();
             }
 
 
@@ -133,11 +150,11 @@
                     }
                     if (table.Value.Status != TaskStatus.Created)
                     {
-                        _log.Debug($"Already started {table.Key.Name} - status is {table.Value.Status}");
+                        //_log.Debug($"Already started {table.Key.Name} - status is {table.Value.Status}");
                     }
                     else if (table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Any())
                     {
-                        _log.Debug($"Deferring {table.Key.Name} as dependent on " + string.Join(", ", table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Select(t => t.Name)));
+                        //_log.Debug($"Deferring {table.Key.Name} as dependent on " + string.Join(", ", table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Select(t => t.Name)));
                     }
                     else
                     {
@@ -153,17 +170,12 @@
             }
 
             // Rethrow first of any (non-fatal) exception that may have occurred
-            foreach (var table in tables)
-            {
-                if (table.Value.IsFaulted)
-                    throw table.Value.Exception;
-            }
-
+            return tables.Where(t => t.Value.IsFaulted).Select(t => t.Value.Exception);
         }
 
-        public void ApplyToTablesUnthreaded(Action<ITableSpec> action)
+        public IEnumerable<Exception> ApplyToTablesUnthreaded(Action<ITableSpec> action)
         {
-            _log.Info($"---------- Scanning for tables to process");
+            //_log.Debug($"---------- Scanning for tables to process");
 
             var exceptions = new List<Exception>();
 
@@ -188,25 +200,27 @@
                 }
             }
 
-            if (exceptions.Any())
-                throw exceptions.First();
+            return exceptions;
         }
 
-        public void ApplyToTablesUnthreadedReverseDependency(Action<ITableSpec> action)
+        public void ApplyToTablesReverseDependency(Action<ITableSpec> action, bool threaded)
         {
+            if (threaded)
+                _log.Info("Threaded reverse dependency not supported");
+
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, bool>(tableSpec, false) // Table -> completed
                 ).ToDictionary(i => i.Key, i => i.Value);
 
             while (true)
             {
-                _log.Info($"---------- Scanning for tables to process");
+                //_log.Debug($"---------- Scanning for tables to process");
 
                 foreach (var table in tables)
                 {
                     if (table.Value)
                     {
-                        _log.Debug($"Already finished {table.Key.Name}");
+                        //_log.Debug($"Already finished {table.Key.Name}");
                     }
                     else
                     {
@@ -214,7 +228,7 @@
 
                         if (outstandingDependencies.Any())
                         {
-                            _log.Debug($"Deferring {table.Key.Name} as dependent on {string.Join(", ", outstandingDependencies)}");
+                            //_log.Debug($"Deferring {table.Key.Name} as dependent on {string.Join(", ", outstandingDependencies)}");
                         }
                         else
                         {
@@ -237,25 +251,21 @@
             Thread.Sleep(4000);
         }
 
-        public void DoUpdatesForTable(ITableSpec table, ISnapshotSyncContext syncContext)
+        public void DoChangesForTable(ITableSpec table, ISnapshotSyncContext syncContext, IMutateTarget mutateTarget)
         {
-            using (var mutateTarget = _createMutateTarget(table))
+            try
             {
                 var changes = syncContext.GetChangesForTable(table);
 
                 var changesOfInterest = new Dictionary<IKeys, Operation>();
-                var deletes = new List<IKeys>();
 
                 foreach (var change in changes)
                 {
                     switch (change.Operation)
                     {
-                        case Operation.Delete:
-                            deletes.Add(change.PrimaryKeys);
-                            _log.Warn($"Ignored delete of record {change.PrimaryKeys} from {table.Name}");
-                            break;
                         case Operation.Insert:
                         case Operation.Update:
+                        case Operation.Delete:
                             changesOfInterest.Add(change.PrimaryKeys, change.Operation);
                             break;
                         default:
@@ -263,28 +273,28 @@
                     }
                 }
 
-                if (deletes.Any())
-                {
-                    var targetRecords = syncContext.GetTargetRecords(table, deletes);
-
-                    DoDeletes(table, targetRecords, deletes, mutateTarget);
-                }
-
+                _log.Debug($"Change tracking reports {changesOfInterest.Count(c => c.Value == Operation.Insert)} inserts, {changesOfInterest.Count(c => c.Value == Operation.Update)} updates, {changesOfInterest.Count(c => c.Value == Operation.Delete)} deletes");
                 if (changesOfInterest.Any())
                 {
                     var sourceRecords = syncContext.GetSourceRecordsAsync(table, changesOfInterest.Keys);
                     var targetRecords = syncContext.GetTargetRecords(table, changesOfInterest.Keys);
 
+                    _log.Debug($"Loaded {sourceRecords.Result.Count()} from source, {targetRecords.Count()} from target");
+
                     DoSlidingComparision(table, sourceRecords.Result, targetRecords, changesOfInterest, mutateTarget);
                 }
+            }
+            finally
+            {
+                mutateTarget.FlushInsertsAndUpdates();
             }
         }
 
 
-        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext)
+        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext, IMutateTarget mutateTarget)
         {
             int batchSize = (int)(_migrateConfig.RecordBatchSize * table.BatchSizeMultiplier);
-            using (var mutateTarget = _createMutateTarget(table))
+            try
             {
                 long maxFirstId = (table.Name == "Vacancyxxx") ? 700000 : syncContext.GetMaxFirstId(table);
 
@@ -303,6 +313,10 @@
                     startFirstId = endFirstId + 1;
                 }
             }
+            finally
+            {
+                mutateTarget.FlushInsertsAndUpdates();
+            }
         }
 
         public void DoSlidingComparision(ITableSpec table, IEnumerable<dynamic> sourceRecords, IEnumerable<dynamic> targetRecords, IDictionary<IKeys, Operation> operationById, IMutateTarget mutateTarget)
@@ -310,122 +324,134 @@
             // TODO: Don't completely ignore the operation claimed by the change tracking
             // And don't completely ignore change tracking where no record could be found on the source
 
+            using (var sourceRecordEnumerator = sourceRecords.GetEnumerator())
             using (var targetRecordEnumerator = targetRecords.GetEnumerator())
             {
+                var sourceRecord = sourceRecordEnumerator.MoveNext() ? sourceRecordEnumerator.Current : null;
                 var targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
 
-                foreach (var sourceRecord in sourceRecords)
+                while (sourceRecord != null || targetRecord != null)
                 {
-                    var sourcePrimaryKeys = Keys.GetPrimaryKeys(sourceRecord, table);
+                    Keys sourcePrimaryKeys = (sourceRecord != null) ? Keys.GetPrimaryKeys(sourceRecord, table) : Keys.MaxValue;
+                    Keys targetPrimaryKeys = (targetRecord != null) ? Keys.GetPrimaryKeys(targetRecord, table) : Keys.MaxValue;
 
-                    while (true)
+                    //_log.Debug($"({sourcePrimaryKeys}) ({targetPrimaryKeys})");
+
+                    var cmp = targetPrimaryKeys.CompareTo(sourcePrimaryKeys);
+                    if (cmp < 0)
                     {
-                        var targetPrimaryKeys = (targetRecord != null) ? Keys.GetPrimaryKeys(targetRecord, table) : Keys.MaxValue;
-
-                        var cmp = targetPrimaryKeys.CompareTo(sourcePrimaryKeys);
-                        if (cmp < 0)
-                        {
-                            // Record is missing from source. Keep advancing target until back in sync.
-                            targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
-                            continue;
-                        }
-                        else if (cmp == 0)
-                        {
-                            // Record in both source and target
-                            DoChange(mutateTarget, table, sourceRecord, targetRecord);
-                            targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
-                            break;
-                        }
-                        else if (cmp > 0)
-                        {
-                            // Record is missing from target. Keep inserting from source and advancing it until back in sync.
-                            DoChange(mutateTarget, table, sourceRecord, null);
-                            break;
-                        }
-                        else
-                        {
-                            throw new Exception("Impossible");
-                        }
+                        // Record is missing from source. Keep advancing target until back in sync.
+                        DoPossibleDelete(mutateTarget, table, targetRecord);
+                        targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
+                        continue;
                     }
-                }
-            }
-        }
-
-        public void DoDeletes(ITableSpec tableSpec, IEnumerable<dynamic> targetRecords, IEnumerable<IKeys> deletes, IMutateTarget mutateTarget)
-        {
-            foreach (var targetRecord in targetRecords)
-            {
-                if (tableSpec.ShouldDelete(tableSpec, targetRecord))
-                {
-                    mutateTarget.Delete(targetRecord);
-                }
-            }
-        }
-
-
-        public void DoChange(IMutateTarget mutateTarget, ITableSpec table, dynamic sourceRecord, dynamic targetRecord)
-        {
-            if (table.Transform(table, targetRecord, sourceRecord))
-            {
-                if (targetRecord == null)
-                {
-                    mutateTarget.Insert(sourceRecord);
-                }
-                else
-                {
-                    int changesLeftToLog = _migrateConfig.MaxNumberOfChangesToDetailPerTable.GetValueOrDefault(int.MaxValue) - mutateTarget.NumberOfUpdates;
-
-                    var sourceRecordDict = (IDictionary<string, object>)sourceRecord;
-                    var targetRecordDict = (IDictionary<string, object>)targetRecord;
-
-                    List<string> changes = null;
-                    foreach (var sourceCol in sourceRecordDict)
+                    else if (cmp == 0)
                     {
-                        var targetColValue = targetRecordDict[sourceCol.Key];
-
-                        bool equal;
-                        if (sourceCol.Value == null || targetColValue == null)
-                        {
-                            equal = (sourceCol.Value == null && targetColValue == null);
-                        }
-                        else if (sourceCol.Value.GetType() == typeof(byte[]))
-                        {
-                            var s = (byte[])sourceCol.Value;
-                            var t = (byte[])targetColValue;
-                            equal = s.SequenceEqual(t);
-                        }
-                        else
-                        {
-                            equal = sourceCol.Value.Equals(targetColValue);
-                        }
-
-                        if (!equal)
-                        {
-                            if (changes == null)
-                            {
-                                changes = new List<string>();
-                                if (changesLeftToLog <= 0)
-                                    break;
-                            }
-                            changes.Add($"{sourceCol.Key} '{targetColValue ?? "<null>"}' => '{sourceCol.Value ?? "<null>"}'");
-                        }
+                        // Record in both source and target
+                        DoPossibleUpdate(mutateTarget, table, sourceRecord, targetRecord);
+                        sourceRecord = sourceRecordEnumerator.MoveNext() ? sourceRecordEnumerator.Current : null;
+                        targetRecord = targetRecordEnumerator.MoveNext() ? targetRecordEnumerator.Current : null;
+                        continue;
                     }
-
-                    if (changes != null)
+                    else if (cmp > 0)
                     {
-                        if (changesLeftToLog == 0)
-                            _log.Info($"{table.Name}: More records have changes but these will not be reported");
-                        else if (changesLeftToLog > 0)
-                            _log.Info($"{table.Name} {Keys.GetPrimaryKeys(sourceRecord, table)}: {string.Join(", ", changes)}");
-                        mutateTarget.Update(sourceRecord);
+                        // Record is missing from target. Keep inserting from source and advancing it until back in sync.
+                        DoPossibleInsert(mutateTarget, table, sourceRecord);
+                        sourceRecord = sourceRecordEnumerator.MoveNext() ? sourceRecordEnumerator.Current : null;
+                        continue;
                     }
                     else
                     {
-                        mutateTarget.NoChange(sourceRecord);
+                        throw new Exception("Impossible");
                     }
                 }
             }
         }
 
+        public void DoPossibleDelete(IMutateTarget mutateTarget, ITableSpec table, dynamic targetRecord)
+        {
+            if (table.CanMutate(table, targetRecord, null, Operation.Delete))
+            {
+                mutateTarget.Delete(targetRecord);
+            }
+        }
+
+
+        private void DoPossibleUpdate(IMutateTarget mutateTarget, ITableSpec table, dynamic sourceRecord, dynamic targetRecord)
+        {
+            table.Transform(table, targetRecord, sourceRecord);
+
+            int changesLeftToLog = _migrateConfig.MaxNumberOfChangesToDetailPerTable.GetValueOrDefault(int.MaxValue) - mutateTarget.NumberOfUpdates;
+
+            var sourceRecordDict = (IDictionary<string, object>)sourceRecord;
+            var targetRecordDict = (IDictionary<string, object>)targetRecord;
+
+            List<string> changes = null;
+            foreach (var sourceCol in sourceRecordDict)
+            {
+                var targetColValue = targetRecordDict[sourceCol.Key];
+
+                bool equal;
+                if (sourceCol.Value == null || targetColValue == null)
+                {
+                    equal = (sourceCol.Value == null && targetColValue == null);
+                }
+                else if (sourceCol.Value.GetType() == typeof(byte[]))
+                {
+                    var s = (byte[])sourceCol.Value;
+                    var t = (byte[])targetColValue;
+                    equal = s.SequenceEqual(t);
+                }
+                else
+                {
+                    equal = sourceCol.Value.Equals(targetColValue);
+                }
+
+                if (!equal)
+                {
+                    if (changes == null)
+                    {
+                        changes = new List<string>();
+                        if (changesLeftToLog <= 0)
+                            break;
+                    }
+                    changes.Add($"{sourceCol.Key} '{(targetColValue == null ? "<null>" : targetColValue.ToString().Truncate(100, "..."))}' => '{(sourceCol.Value == null ? "<null>" : sourceCol.Value.ToString().Truncate(100, "..."))}'");
+                }
+            }
+
+            if (changes != null && table.CanMutate(table, targetRecord, sourceRecord, Operation.Update))
+            {
+                if (changesLeftToLog == 0)
+                    _log.Info($"{table.Name}: More records have changes but these will not be reported");
+                else if (changesLeftToLog > 0)
+                    _log.Info($"{table.Name} {Keys.GetPrimaryKeys(sourceRecord, table)}: {string.Join(", ", changes)}");
+
+                mutateTarget.Update(sourceRecord);
+            }
+            else
+            {
+                mutateTarget.NoChange(sourceRecord);
+            }
+        }
+
+        public void DoPossibleInsert(IMutateTarget mutateTarget, ITableSpec table, dynamic sourceRecord)
+        {
+            if (table.CanMutate(table, null, sourceRecord, Operation.Insert))
+            {
+                table.Transform(table, null, sourceRecord);
+                mutateTarget.Insert(sourceRecord);
+            }
+        }
+    }
+
+    public static class StringExtensions
+    {
+        public static string Truncate(this string value, int maxTotalLength, string suffix = "")
+        {
+            if (value == null || value.Length <= maxTotalLength)
+                return value;
+
+            return value.Substring(0, maxTotalLength - suffix.Length) + suffix;
+        }
     }
 }

@@ -36,7 +36,7 @@
             return new FullTransactionlessSyncContext(_log, _sourceDatabase, _targetDatabase);
         }
 
-        public void BulkInsert(ITableDetails table, IReadOnlyList<dynamic> records)
+        public void BulkInsert(ITableDetails table, IEnumerable<IDictionary<string, object>> records)
         {
             if (!records.Any())
                 return;
@@ -48,7 +48,6 @@
             {
                 if (tempTable == null)
                 {
-                    /*
                     try
                     {
                         // Bulk insert straight into destination table
@@ -57,12 +56,11 @@
                     catch (Exception ex)
                     {
                         _log.Warn($"Error inserting record. This may be due to more data having been inserted since the parent table was processed. Therefore inserting what can be before continuing. Error was {ex.Message}");
-                        */
                         CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
                         var errors = InsertFromTempOneAtATime(table, columnTypes, tempTable, connection);
                         if (errors.Any())
                             throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
-                    //}
+                    }
                 }
                 else
                 {
@@ -70,7 +68,6 @@
                     // This is sometimes required where there is a nullable foreign key due to a bug in SqlBulkCopy whereby inserts with NULL values are rejected
 
                     CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
-                    /*
                     try
                     {
                         InsertFromTemp(table, columnTypes, tempTable, connection);
@@ -78,18 +75,17 @@
                     catch (Exception ex)
                     {
                         _log.Warn($"Error inserting record. This may be due to more data having been inserted since the parent table was processed. Therefore inserting what can be before continuing. Error was {ex.Message}");
-                        */
                         CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
                         var errors = InsertFromTempOneAtATime(table, columnTypes, tempTable, connection);
                         if (errors.Any())
                             throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
-                    //}
+                    }
                 }
             }
         }
 
 
-        public void BulkUpdate(ITableDetails table, IReadOnlyList<dynamic> records)
+        public void BulkUpdate(ITableDetails table, IEnumerable<IDictionary<string, object>> records)
         {
             if (!records.Any())
                 return;
@@ -102,12 +98,43 @@
             {
                 CreateAndInsertIntoTemp(table, columnTypes, tempTable, connection, records);
 
-                //UpdateFromTempInOneGo(table, columnTypes, tempTable, connection);
-                var errors = UpdateFromTempOneAtATime(table, columnTypes, tempTable, connection);
-                if (errors.Any())
-                    throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                try
+                {
+                    UpdateFromTempInOneGo(table, columnTypes, tempTable, connection);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn($"Error updating record. Therefore updating what can be before continuing. Error was {ex.Message}");
+                    var errors = UpdateFromTempOneAtATime(table, columnTypes, tempTable, connection);
+                    if (errors.Any())
+                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                }
             }
 
+        }
+
+        public void BulkDelete(ITableDetails table, IEnumerable<Keys> keys)
+        {
+            var tempTable = "_DeleteTemp_" + table.Name;
+            var primaryKeysWithTypes = table.PrimaryKeys.ToDictionary(k => k, k => typeof(long));
+            var records = keys.Select(k => k.ToDictionary(r => table.PrimaryKeys.First(), r => (object)r)); // TODO: Only works if one primary key
+
+            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
+            {
+                CreateAndInsertIntoTemp(table, primaryKeysWithTypes, tempTable, connection, records);
+
+                try
+                {
+                    DeleteFromTempInOneGo(table, primaryKeysWithTypes, tempTable, connection);
+                }
+                catch (Exception ex)
+                {
+                    _log.Warn($"Error deleting record. Therefore updating what can be before continuing. Error was {ex.Message}");
+                    var errors = DeleteFromTempOneAtATime(table, primaryKeysWithTypes, tempTable, connection);
+                    if (errors.Any())
+                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                }
+            }
         }
 
         #region BulkInsert / Update support methods
@@ -118,7 +145,7 @@
         }
 
 
-        private void CreateAndInsertIntoTemp(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, SqlConnection connection, IReadOnlyList<dynamic> records)
+        private void CreateAndInsertIntoTemp(ITableDetails table, IDictionary<string, Type> columnTypes, string tempTable, SqlConnection connection, IEnumerable<IDictionary<string, object>> records)
         {
             var nonNullColumnTypes = columnTypes.Where(c => c.Value != null);
             var columnsWithSqlTypes = nonNullColumnTypes.Select(col => $"{col.Key} {SqlTypeFor(col.Value)}");
@@ -265,10 +292,55 @@ END
 
 SELECT * FROM #Errors
 ";
-            _log.Info(System.Threading.Thread.CurrentThread.ManagedThreadId + ": " + sql);
             return connection.Query<dynamic>(sql);
         }
 
+        private void DeleteFromTempInOneGo(ITableDetails table, IDictionary<string, Type> primaryKeysWithTypes, string tempTable, IDbConnection connection)
+        {
+            connection.Execute($@"
+DELETE target
+FROM   {table.Name} target
+JOIN   {tempTable} temp
+ON     {string.Join(" AND ", primaryKeysWithTypes.Keys.Select(k => $"temp.{k} = target.{k}"))}
+");
+        }
+
+        private IEnumerable<dynamic> DeleteFromTempOneAtATime(ITableDetails table, IDictionary<string, Type> primaryKeysWithTypes, string tempTable, IDbConnection connection)
+        {
+            string primaryKeyList = $"{string.Join(", ", table.PrimaryKeys)}";
+
+            var sql = $@"
+DECLARE @totalRecords INT = (SELECT COUNT(*) FROM {tempTable});
+DECLARE @thisRecord   INT = 0;
+
+CREATE TABLE #Errors ({string.Join(", ", table.PrimaryKeys.Select(k => new KeyValuePair<string, Type>(k, primaryKeysWithTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
+
+WHILE @thisRecord < @totalRecords
+BEGIN
+    BEGIN TRY
+        DELETE target
+        FROM   {table.Name} target
+        JOIN   (
+               SELECT * FROM {tempTable}
+               ORDER BY {primaryKeyList}
+               OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY
+               ) temp
+        ON     {string.Join(" AND ", table.PrimaryKeys.Select(k => $"temp.{k} = target.{k}"))};
+    END TRY
+    BEGIN CATCH
+        INSERT INTO #Errors
+        SELECT {primaryKeyList}, ERROR_MESSAGE()
+        FROM   {tempTable}
+        ORDER BY {primaryKeyList}
+        OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
+    END CATCH
+    SET @thisRecord = @thisRecord + 1;
+END
+
+SELECT * FROM #Errors
+";
+            return connection.Query<dynamic>(sql);
+        }
 
         private static string SqlTypeFor(Type type)
         {
@@ -301,7 +373,7 @@ SELECT * FROM #Errors
         /// <typeparam name="T"></typeparam>
         /// <param name="data">Note that lists of many types of dynamic are suitable</param>
         /// <param name="tableName"></param>
-        private static void BulkInsert(SqlConnection connection, string tableName, IReadOnlyList<dynamic> data, IEnumerable<KeyValuePair<string, Type>> columnTypes, SqlBulkCopyOptions options = SqlBulkCopyOptions.Default)
+        private static void BulkInsert(SqlConnection connection, string tableName, IEnumerable<IDictionary<string, object>> data, IEnumerable<KeyValuePair<string, Type>> columnTypes, SqlBulkCopyOptions options = SqlBulkCopyOptions.Default)
         {
             var dataTable = new DataTable();
             foreach (var column in columnTypes)
@@ -309,7 +381,7 @@ SELECT * FROM #Errors
                 dataTable.Columns.Add(column.Key, column.Value);
             }
 
-            foreach (IDictionary<string, object> row in data)
+            foreach (var row in data)
             {
                 var dataRow = dataTable.NewRow();
                 foreach (var column in columnTypes)
@@ -340,14 +412,13 @@ SELECT * FROM #Errors
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        private static IDictionary<string,Type> GetColumnTypes(IReadOnlyList<dynamic> data)
+        private static IDictionary<string,Type> GetColumnTypes(IEnumerable<IDictionary<string, object>> data)
         {
             var result = new Dictionary<string, Type>();
             bool first = true;
             int nulls = 0;
-            foreach (var row in data)
+            foreach (var record in data)
             {
-                var record = ((IDictionary<string, object>)row);
                 foreach (var column in record)
                 {
                     string name = column.Key;
@@ -455,7 +526,6 @@ SELECT @Errors
         {
             _targetDatabase.MutatingQuery<int>("UPDATE sync.SyncParams SET LastSyncVersion = NULL");
         }
-
 
         private abstract class CommonSyncContext
         {

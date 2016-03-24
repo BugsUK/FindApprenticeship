@@ -15,6 +15,7 @@
 
         private List<dynamic> _toInsert;
         private List<dynamic> _toUpdate;
+        private List<Keys> _toDelete;
 
         public MutateTarget(ILogService log, IGenericSyncRespository syncRepository, int maxBatchSize, ITableDetails tableDetails) : base(log, tableDetails)
         {
@@ -24,12 +25,11 @@
 
             _toInsert = new List<dynamic>();
             _toUpdate = new List<dynamic>();
+            _toDelete = new List<Keys>();
         }
 
         public void Insert(dynamic record)
         {
-            //if (_maxBatchSize == 1)
-            //    _log.Debug($"Queuing for insert: {record}");
             _toInsert.Add(record);
             NumberOfInserts++;
             FlushInsert(false);
@@ -37,8 +37,6 @@
 
         public void Update(dynamic record)
         {
-            //if (_maxBatchSize == 1)
-            //    _log.Debug($"Queuing for update: {record}");
             _toUpdate.Add(record);
             NumberOfUpdates++;
             FlushUpdate(false);
@@ -46,7 +44,8 @@
 
         public void Delete(dynamic record)
         {
-            throw new NotImplementedException();
+            _toDelete.Add(Keys.GetPrimaryKeys(record, _tableDetails));
+            NumberOfDeletes++;
         }
 
         public void NoChange(dynamic record)
@@ -62,7 +61,7 @@
             try
             {
                 _log.Info($"Inserting {_toInsert.Count} records into {_tableDetails.Name}");
-                _syncRepository.BulkInsert(_tableDetails, _toInsert.AsReadOnly());
+                _syncRepository.BulkInsert(_tableDetails, _toInsert.Select(r => (IDictionary<string, object>)r));
             }
             finally
             {
@@ -78,7 +77,7 @@
             try
             {
                 _log.Info($"Updating {_toUpdate.Count} records on {_tableDetails.Name}");
-                _syncRepository.BulkUpdate(_tableDetails, _toUpdate.AsReadOnly());
+                _syncRepository.BulkUpdate(_tableDetails, _toUpdate.Select(r => (IDictionary<string, object>)r));
             }
             finally
             {
@@ -86,13 +85,17 @@
             }
         }
 
-        public void Dispose()
+        public void FlushInsertsAndUpdates()
         {
-            FlushInsert(true);
-            FlushUpdate(true);
-            //FlushDelete(true);
             _log.Info(SummaryText);
+            FlushUpdate(true);
+            FlushInsert(true);
         }
 
+        public void FlushDeletes()
+        {
+            _log.Info(SummaryTextDeletes);
+            _syncRepository.BulkDelete(_tableDetails, _toDelete);
+        }
     }
 }

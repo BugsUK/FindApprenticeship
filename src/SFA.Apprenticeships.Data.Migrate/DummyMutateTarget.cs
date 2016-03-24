@@ -35,10 +35,15 @@
             NumberUnchanged++;
         }
 
-        public void Dispose()
+
+        public void FlushInsertsAndUpdates()
         {
             _log.Info(SummaryText);
+        }
 
+        public void FlushDeletes()
+        {
+            _log.Info(SummaryTextDeletes);
         }
     }
 }
