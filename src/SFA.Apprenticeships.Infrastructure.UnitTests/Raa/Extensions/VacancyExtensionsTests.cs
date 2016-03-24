@@ -1,15 +1,61 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Raa.Extensions
 {
     using System;
+    using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Raa.Extensions;
     using NUnit.Framework;
+    using Ploeh.AutoFixture;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     [TestFixture]
     public class VacancyExtensionsTests
     {
+        private List<Category> _categories;
+
+        [SetUp]
+        public void SetUp()
+        {
+            _categories = new List<Category>
+            {
+                new Category
+                {
+                    CodeName = "SSAT1.ICT",
+                    FullName = "Sector Subject Area Tier 1: Information and Communication Technology",
+                    SubCategories = new List<Category>
+                    {
+                        new Category
+                        {
+                            CodeName = "FW.101",
+                            FullName = "Framework: Software Developer"
+                        },
+                        new Category
+                        {
+                            CodeName = "STDSEC.201",
+                            FullName = "Standard sector: Digital Industries",
+                            SubCategories = new List<Category>
+                            {
+                                new Category
+                                {
+                                    CodeName = "STD.1",
+                                    FullName = "Standard: Network Engineer"
+                                },
+                                new Category
+                                {
+                                    CodeName = "STD.2",
+                                    ParentCategoryCodeName = "STDSEC.201",
+                                    FullName = "Standard: Software Developer"
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+        }
+
         [TestCase(VacancyStatus.Unknown, VacancyStatuses.Unknown)]
         [TestCase(VacancyStatus.Draft, VacancyStatuses.Unavailable)]
         [TestCase(VacancyStatus.Submitted, VacancyStatuses.Unavailable)]
@@ -36,6 +82,73 @@
 
             // Assert.
             action.ShouldThrow<ArgumentException>();
+        }
+
+        [TestCase(VacancyType.Apprenticeship, "001", "FW.001")]
+        [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN")]
+        [TestCase(VacancyType.Traineeship, "001", "FW.INVALID")]
+        [TestCase(VacancyType.Traineeship, null, "FW.INVALID")]
+        public void ShouldGetPrefixedSubCategoryCodeForFramework(
+            VacancyType vacancyType, string frameworkCodeName, string expectedSubCategoryCode)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Frameworks)
+                .With(each => each.FrameworkCodeName, frameworkCodeName)
+                .Create();
+
+            // Act.
+            var subCategoryCode = vacancySummary.GetSubCategoryCode(_categories);
+
+            // Assert.
+            subCategoryCode.Should().Be(expectedSubCategoryCode);
+        }
+
+        [TestCase(VacancyType.Traineeship, "ICT", "SSAT1.ICT")]
+        [TestCase(VacancyType.Traineeship, null, "SSAT1.UNKNOWN")]
+        [TestCase(VacancyType.Apprenticeship, "ICT", "SSAT1.INVALID")]
+        [TestCase(VacancyType.Apprenticeship, null, "SSAT1.INVALID")]
+        public void ShouldGetPrefixedCategoryCodeForSector(
+            VacancyType vacancyType, string sectorCodeName, string expectedCategoryCode)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Sectors)
+                .With(each => each.SectorCodeName, sectorCodeName)
+                .Create();
+
+            // Act.
+            var categoryCode = vacancySummary.GetCategoryCode();
+
+            // Assert.
+            categoryCode.Should().Be(expectedCategoryCode);
+        }
+
+        [TestCase(VacancyType.Apprenticeship, 2, "STDSEC.201")]
+        [TestCase(VacancyType.Apprenticeship, null, "STDSEC.UNKNOWN")]
+        [TestCase(VacancyType.Apprenticeship, -1, "STDSEC.UNKNOWN")]
+        [TestCase(VacancyType.Traineeship, 2, "STDSEC.INVALID")]
+        [TestCase(VacancyType.Traineeship, null, "STDSEC.INVALID")]
+        public void ShouldGetPrefixedSubCategoryCodeForStandard(
+            VacancyType vacancyType, int? standardId, string expectedSubCategoryCode)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Standards)
+                .With(each => each.StandardId, standardId)
+                .Create();
+
+            // Act.
+            var subCategoryCode = vacancySummary.GetSubCategoryCode(_categories);
+
+            // Assert.
+            subCategoryCode.Should().Be(expectedSubCategoryCode);
         }
     }
 }
