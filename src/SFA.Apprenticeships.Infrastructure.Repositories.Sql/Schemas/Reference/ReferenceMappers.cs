@@ -60,7 +60,7 @@
                 .ForMember(dest => dest.SectorId, opt => opt.MapFrom(src => src.ApprenticeshipSectorId))
                 .ForMember(dest => dest.Sector, opt => opt.Ignore())
                 .ForMember(dest => dest.Vacancies, opt => opt.Ignore())
-                .ForMember(dest => dest.LevelCode, opt => opt.Ignore());
+                .ForMember(dest => dest.LevelCode, opt => opt.MapFrom(src=> src.ApprenticeshipLevel.ToString("D")));
             Mapper.CreateMap<Entities.Standard, Standard>()
                 .ForMember(dest => dest.ApprenticeshipLevel, opt => opt.MapFrom(src => Enum.Parse(typeof(ApprenticeshipLevel), src.Level.LevelCode)))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.FullName))

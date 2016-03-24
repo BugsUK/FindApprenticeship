@@ -163,7 +163,7 @@
             destination.Should().NotBeNull();
             destination.FullName.Should().Be(source.Name);
             destination.SectorId.Should().Be(source.Id);
-            destination.Standards.Should().BeNull();
+            destination.Standards.Should().BeEmpty();
         }
 
         [Test]
@@ -204,8 +204,8 @@
             destination.ClosedDate.Should().NotHaveValue();
             destination.Occupation1.Should().BeNull();
             destination.Occupation.Should().BeNull();
-            destination.PreviousOccupationId.Should().Be(0);
-            destination.Vacancies.Should().BeNull();
+            destination.PreviousOccupationId.Should().NotHaveValue();
+            destination.Vacancies.Should().BeEmpty();
         }
 
         [Test]
