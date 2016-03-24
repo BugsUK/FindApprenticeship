@@ -63,15 +63,15 @@
             }
         }
 
-        public static string GetSubCategoryCode(this VacancySummary vacancy, IEnumerable<Category> categories)
+        public static Category GetSubCategory(this VacancySummary vacancy, IEnumerable<Category> categories)
         {
             switch (vacancy.TrainingType)
             {
                 case TrainingType.Frameworks:
-                    return GetFrameworkSubCategoryCode(vacancy, categories);
+                    return GetFrameworkSubCategory(vacancy, categories);
 
                 case TrainingType.Standards:
-                    return GetStandardSubCategoryCode(vacancy, categories);
+                    return GetStandardSubCategory(vacancy, categories);
 
                 case TrainingType.Sectors:
                     break;
@@ -83,40 +83,40 @@
             return null;
         }
 
-        public static string GetCategoryCode(this VacancySummary vacancy, IEnumerable<Category> categories)
+        public static Category GetCategory(this VacancySummary vacancy, IEnumerable<Category> categories)
         {
-            const string sectorSubjectAreaTier1Prefix = "SSAT1.";
-
             if (vacancy.VacancyType == VacancyType.Traineeship)
             {
                 if (!string.IsNullOrWhiteSpace(vacancy.SectorCodeName))
                 {
-                    var code = $"{sectorSubjectAreaTier1Prefix}{vacancy.SectorCodeName}";
+                    var code = $"SSAT1.{vacancy.SectorCodeName}";
 
                     var category = categories
                         .SingleOrDefault(c => c.CodeName == code);
 
                     if (category != null)
                     {
-                        return category.CodeName;
+                        return new Category
+                        {
+                            CodeName = category.CodeName,
+                            FullName = category.FullName
+                        };
                     }
                 }
 
-                return $"{sectorSubjectAreaTier1Prefix}UNKNOWN";
+                return Category.UnknownSectorSubjectAreaTier1;
             }
 
-            return $"{sectorSubjectAreaTier1Prefix}INVALID";
+            return Category.InvalidSectorSubjectAreaTier1;
         }
 
-        private static string GetFrameworkSubCategoryCode(VacancySummary vacancy, IEnumerable<Category> categories)
+        private static Category GetFrameworkSubCategory(VacancySummary vacancy, IEnumerable<Category> categories)
         {
-            const string frameworkPrefix = "FW.";
-
             if (vacancy.VacancyType == VacancyType.Apprenticeship)
             {
                 if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
                 {
-                    var frameworkCode = $"{frameworkPrefix}{vacancy.FrameworkCodeName}";
+                    var frameworkCode = $"FW.{vacancy.FrameworkCodeName}";
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
@@ -127,20 +127,22 @@
 
                     if (framework != null)
                     {
-                        return framework.CodeName;
+                        return new Category
+                        {
+                            CodeName = framework.CodeName,
+                            FullName = framework.FullName
+                        };
                     }
                 }
 
-                return $"{frameworkPrefix}UNKNOWN";
+                return Category.UnknownFramework;
             }
 
-            return $"{frameworkPrefix}INVALID";
+            return Category.InvalidFramework;
         }
 
-        private static string GetStandardSubCategoryCode(VacancySummary vacancy, IEnumerable<Category> categories)
+        private static Category GetStandardSubCategory(VacancySummary vacancy, IEnumerable<Category> categories)
         {
-            const string standardSectorPrefix = "STDSEC.";
-
             if (vacancy.VacancyType == VacancyType.Apprenticeship)
             {
                 if (vacancy.StandardId.HasValue)
@@ -160,14 +162,17 @@
 
                     if (standard != null)
                     {
-                        return standard.ParentCategoryCodeName;
+                        return new Category
+                        {
+                            CodeName = standard.ParentCategoryCodeName
+                        };
                     }
                 }
 
-                return $"{standardSectorPrefix}UNKNOWN";
+                return Category.UnknownStandardSector;
             }
 
-            return $"{standardSectorPrefix}INVALID";
+            return Category.InvalidStandardSector;
         }
     }
 }

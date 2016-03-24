@@ -35,7 +35,9 @@
                     location.Longitude = -1.50812239495425;
                 }
 
-            var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
+                var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
+
+                var subcategory = vacancy.GetSubCategory(categories);
 
                 var summary = new ApprenticeshipSummary
                 {
@@ -60,7 +62,7 @@
                     Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
                     WageUnit = wage.GetWageUnit(),
                     WorkingWeek = vacancy.WorkingWeek,
-                    SubCategoryCode = vacancy.GetSubCategoryCode(categories)
+                    SubCategoryCode = subcategory.CodeName
                 };
 
                 if (!string.IsNullOrEmpty(summary.SubCategoryCode))

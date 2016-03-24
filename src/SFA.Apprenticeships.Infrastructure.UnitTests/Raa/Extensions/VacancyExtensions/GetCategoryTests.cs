@@ -21,33 +21,33 @@
                 new Category
                 {
                     CodeName = "SSAT1.ICT",
-                    FullName = "Sector Subject Area Tier 1: Information and Communication Technology",
+                    FullName = "Information and Communication Technology",
                     SubCategories = new List<Category>
                     {
                         new Category
                         {
                             CodeName = "FW.101",
                             ParentCategoryCodeName = "SSAT1.ICT",
-                            FullName = "Framework: Software Developer"
+                            FullName = "Software Developer"
                         },
                         new Category
                         {
                             CodeName = "STDSEC.201",
                             ParentCategoryCodeName = "SSAT1.ICT",
-                            FullName = "Standard sector: Digital Industries",
+                            FullName = "Digital Industries",
                             SubCategories = new List<Category>
                             {
                                 new Category
                                 {
                                     CodeName = "STD.1",
                                     ParentCategoryCodeName = "STDSEC.201",
-                                    FullName = "Standard: Network Engineer"
+                                    FullName = "Network Engineer"
                                 },
                                 new Category
                                 {
                                     CodeName = "STD.2",
                                     ParentCategoryCodeName = "STDSEC.201",
-                                    FullName = "Standard: Software Developer"
+                                    FullName = "Software Developer"
                                 }
                             }
                         }
@@ -61,22 +61,22 @@
         [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN")]
         [TestCase(VacancyType.Traineeship, "101", "FW.INVALID")]
         [TestCase(VacancyType.Traineeship, null, "FW.INVALID")]
-        public void ShouldGetPrefixedSubCategoryCodeForFramework(
+        public void ShouldGetSubCategoryForFramework(
             VacancyType vacancyType, string frameworkCodeName, string expectedSubCategoryCode)
         {
             // Arrange.
             var vacancySummary = new Fixture()
-                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .Build<VacancySummary>()
                 .With(each => each.VacancyType, vacancyType)
                 .With(each => each.TrainingType, TrainingType.Frameworks)
                 .With(each => each.FrameworkCodeName, frameworkCodeName)
                 .Create();
 
             // Act.
-            var subCategoryCode = vacancySummary.GetSubCategoryCode(_categories);
+            var subCategory = vacancySummary.GetSubCategory(_categories);
 
             // Assert.
-            subCategoryCode.Should().Be(expectedSubCategoryCode);
+            subCategory.CodeName.Should().Be(expectedSubCategoryCode);
         }
 
         [TestCase(VacancyType.Apprenticeship, 2, "STDSEC.201")]
@@ -84,22 +84,22 @@
         [TestCase(VacancyType.Apprenticeship, -1, "STDSEC.UNKNOWN")]
         [TestCase(VacancyType.Traineeship, 2, "STDSEC.INVALID")]
         [TestCase(VacancyType.Traineeship, null, "STDSEC.INVALID")]
-        public void ShouldGetPrefixedSubCategoryCodeForStandard(
+        public void ShouldGetSubCategoryForStandard(
             VacancyType vacancyType, int? standardId, string expectedSubCategoryCode)
         {
             // Arrange.
             var vacancySummary = new Fixture()
-                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .Build<VacancySummary>()
                 .With(each => each.VacancyType, vacancyType)
                 .With(each => each.TrainingType, TrainingType.Standards)
                 .With(each => each.StandardId, standardId)
                 .Create();
 
             // Act.
-            var subCategoryCode = vacancySummary.GetSubCategoryCode(_categories);
+            var subCategory = vacancySummary.GetSubCategory(_categories);
 
             // Assert.
-            subCategoryCode.Should().Be(expectedSubCategoryCode);
+            subCategory.CodeName.Should().Be(expectedSubCategoryCode);
         }
 
         [TestCase(VacancyType.Traineeship, "ICT", "SSAT1.ICT")]
@@ -107,22 +107,22 @@
         [TestCase(VacancyType.Traineeship, "XXX", "SSAT1.UNKNOWN")]
         [TestCase(VacancyType.Apprenticeship, "ICT", "SSAT1.INVALID")]
         [TestCase(VacancyType.Apprenticeship, null, "SSAT1.INVALID")]
-        public void ShouldGetPrefixedCategoryCodeForSector(
+        public void ShouldGetCategoryForSector(
             VacancyType vacancyType, string sectorCodeName, string expectedCategoryCode)
         {
             // Arrange.
             var vacancySummary = new Fixture()
-                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .Build<VacancySummary>()
                 .With(each => each.VacancyType, vacancyType)
                 .With(each => each.TrainingType, TrainingType.Sectors)
                 .With(each => each.SectorCodeName, sectorCodeName)
                 .Create();
 
             // Act.
-            var categoryCode = vacancySummary.GetCategoryCode(_categories);
+            var category = vacancySummary.GetCategory(_categories);
 
             // Assert.
-            categoryCode.Should().Be(expectedCategoryCode);
+            category.CodeName.Should().Be(expectedCategoryCode);
         }
     }
 }
