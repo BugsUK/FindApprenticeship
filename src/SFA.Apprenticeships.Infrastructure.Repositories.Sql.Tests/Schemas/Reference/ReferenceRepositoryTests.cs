@@ -2,6 +2,7 @@
 {
     using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -84,7 +85,19 @@
         [Test]
         public void GetStandards()
         {
-            Assert.Fail("Implement this!");
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var standards = repository.GetStandards();
+
+            //Assert
+            standards.Should().NotBeNullOrEmpty();
+            standards.Any(std => std.ApprenticeshipLevel == ApprenticeshipLevel.Unknown
+                                 || std.ApprenticeshipSectorId == 0
+                                 || std.Id == 0
+                                 || string.IsNullOrWhiteSpace(std.Name)).Should().BeFalse();
         }
 
         [Test]
