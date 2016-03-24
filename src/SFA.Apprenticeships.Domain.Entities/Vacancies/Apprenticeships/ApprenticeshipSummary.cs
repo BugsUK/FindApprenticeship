@@ -4,8 +4,6 @@
     {
         public ApprenticeshipSummary()
         {
-            // TODO: US897: AG: why default this?
-            WageUnit = WageUnit.Weekly;
         }
 
         public ApprenticeshipSummary(ApprenticeshipSummary apprenticeshipSummary) : base(apprenticeshipSummary)

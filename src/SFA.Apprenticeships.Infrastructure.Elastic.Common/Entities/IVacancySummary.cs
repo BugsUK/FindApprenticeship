@@ -25,7 +25,5 @@
         string VacancyReference { get; set; }
 
         string Category { get; set; }
-
-        string SubCategory { get; set; }
     }
 }

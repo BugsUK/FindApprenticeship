@@ -1,9 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.Extensions
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
     using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
+    using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
     //TODO: This is only used by FAA for conversions - move to that project when found
     public static class VacancyExtensions
@@ -56,6 +61,113 @@
                 default:
                     throw new ArgumentException("Provider Vacancy Status: " + vacancyStatuses + " was not recognized");
             }
+        }
+
+        public static string GetSubCategoryCode(this VacancySummary vacancy, IEnumerable<Category> categories)
+        {
+            switch (vacancy.TrainingType)
+            {
+                case TrainingType.Frameworks:
+                    return GetFrameworkSubCategoryCode(vacancy, categories);
+
+                case TrainingType.Standards:
+                    return GetStandardSubCategoryCode(vacancy, categories);
+
+                case TrainingType.Sectors:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return null;
+        }
+
+        public static string GetCategoryCode(this VacancySummary vacancy, IEnumerable<Category> categories)
+        {
+            const string sectorSubjectAreaTier1Prefix = "SSAT1.";
+
+            if (vacancy.VacancyType == VacancyType.Traineeship)
+            {
+                if (!string.IsNullOrWhiteSpace(vacancy.SectorCodeName))
+                {
+                    var code = $"{sectorSubjectAreaTier1Prefix}{vacancy.SectorCodeName}";
+
+                    var category = categories
+                        .SingleOrDefault(c => c.CodeName == code);
+
+                    if (category != null)
+                    {
+                        return category.CodeName;
+                    }
+                }
+
+                return $"{sectorSubjectAreaTier1Prefix}UNKNOWN";
+            }
+
+            return $"{sectorSubjectAreaTier1Prefix}INVALID";
+        }
+
+        private static string GetFrameworkSubCategoryCode(VacancySummary vacancy, IEnumerable<Category> categories)
+        {
+            const string frameworkPrefix = "FW.";
+
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
+                {
+                    var frameworkCode = $"{frameworkPrefix}{vacancy.FrameworkCodeName}";
+
+                    var subCategories = categories
+                        .Where(c => c.SubCategories != null)
+                        .SelectMany(c => c.SubCategories);
+
+                    var framework = subCategories
+                        .SingleOrDefault(c => c.CodeName == frameworkCode);
+
+                    if (framework != null)
+                    {
+                        return framework.CodeName;
+                    }
+                }
+
+                return $"{frameworkPrefix}UNKNOWN";
+            }
+
+            return $"{frameworkPrefix}INVALID";
+        }
+
+        private static string GetStandardSubCategoryCode(VacancySummary vacancy, IEnumerable<Category> categories)
+        {
+            const string standardSectorPrefix = "STDSEC.";
+
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                if (vacancy.StandardId.HasValue)
+                {
+                    var standardCode = $"STD.{vacancy.StandardId}";
+
+                    var subCategories = categories
+                        .Where(c => c.SubCategories != null)
+                        .SelectMany(c => c.SubCategories);
+
+                    var standards = subCategories
+                        .Where(c => c.SubCategories != null && c.SubCategories.Any())
+                        .SelectMany(c => c.SubCategories);
+
+                    var standard = standards
+                        .SingleOrDefault(c => c.CodeName == standardCode);
+
+                    if (standard != null)
+                    {
+                        return standard.ParentCategoryCodeName;
+                    }
+                }
+
+                return $"{standardSectorPrefix}UNKNOWN";
+            }
+
+            return $"{standardSectorPrefix}INVALID";
         }
     }
 }

@@ -60,7 +60,7 @@
                     Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
                     WageUnit = wage.GetWageUnit(),
                     WorkingWeek = vacancy.WorkingWeek,
-                    SubCategoryCode = vacancy.FrameworkCodeName
+                    SubCategoryCode = vacancy.GetSubCategoryCode(categories)
                 };
 
                 if (!string.IsNullOrEmpty(summary.SubCategoryCode))
