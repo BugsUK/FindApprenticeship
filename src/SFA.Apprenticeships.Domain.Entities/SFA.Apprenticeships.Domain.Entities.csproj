@@ -111,9 +111,11 @@
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\CategoryExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
+    <Compile Include="ReferenceData\CategoryPrefixes.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderStatuses.cs" />

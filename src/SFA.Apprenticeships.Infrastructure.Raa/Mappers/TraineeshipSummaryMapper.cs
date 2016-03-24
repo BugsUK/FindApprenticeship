@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using Domain.Entities.Extensions;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
@@ -18,20 +19,7 @@
             {
                 //Manually mapping rather than using automapper as the two enties are significantly different
 
-                //TODO: Geocode new vacancies
-                var location = new GeoPoint();
-                if (vacancy.Address.GeoPoint != null && vacancy.Address.GeoPoint.Latitude != 0 &&
-                    vacancy.Address.GeoPoint.Longitude != 0)
-                {
-                    location.Latitude = vacancy.Address.GeoPoint.Latitude;
-                    location.Longitude = vacancy.Address.GeoPoint.Longitude;
-                }
-                else
-                {
-                    //Coventry
-                    location.Latitude = 52.4009991288043;
-                    location.Longitude = -1.50812239495425;
-                }
+                var location = GetGeoPoint(vacancy);
 
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
@@ -40,7 +28,7 @@
 
                 var summary = new TraineeshipSummary
                 {
-                    Id = (int)vacancy.VacancyReferenceNumber,
+                    Id = vacancy.VacancyReferenceNumber,
                     //Goes into elastic unformatted for searching
                     VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                     Title = vacancy.Title,
@@ -71,10 +59,28 @@
             }
         }
 
+        private static GeoPoint GetGeoPoint(VacancySummary vacancy)
+        {
+            //TODO: Geocode new vacancies
+            var location = new GeoPoint();
+            if (vacancy.Address.GeoPoint != null && vacancy.Address.GeoPoint.Latitude != 0 &&
+                vacancy.Address.GeoPoint.Longitude != 0)
+            {
+                location.Latitude = vacancy.Address.GeoPoint.Latitude;
+                location.Longitude = vacancy.Address.GeoPoint.Longitude;
+            }
+            else
+            {
+                //Coventry
+                location.Latitude = 52.4009991288043;
+                location.Longitude = -1.50812239495425;
+            }
+            return location;
+        }
+
         private static void LogCategory(VacancySummary vacancy, ILogService logService, Category category)
         {
-            if (category == Category.UnknownSectorSubjectAreaTier1 ||
-                category == Category.InvalidSectorSubjectAreaTier1)
+            if (category.IsValid())
             {
                 logService.Warn("Cannot find a category for the traineeship with Id {0}", vacancy.VacancyId);
             }

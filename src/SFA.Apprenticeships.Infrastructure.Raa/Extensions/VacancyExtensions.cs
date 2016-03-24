@@ -87,7 +87,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
                 {
-                    var frameworkCode = $"FW.{vacancy.FrameworkCodeName}";
+                    var frameworkCode = $"{CategoryPrefixes.Framework}{vacancy.FrameworkCodeName}";
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
@@ -119,7 +119,7 @@
             {
                 if (vacancy.StandardId.HasValue)
                 {
-                    var standardCode = $"STD.{vacancy.StandardId}";
+                    var standardCode = $"{CategoryPrefixes.Standard}{vacancy.StandardId}";
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
@@ -157,7 +157,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(vacancy.SectorCodeName))
                 {
-                    var code = $"SSAT1.{vacancy.SectorCodeName}";
+                    var code = $"{CategoryPrefixes.SectorSubjectAreaTier1}{vacancy.SectorCodeName}";
 
                     var category = categories
                         .SingleOrDefault(c => c.CodeName == code);
@@ -202,7 +202,7 @@
             {
                 if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
                 {
-                    var frameworkCode = $"FW.{vacancy.FrameworkCodeName}";
+                    var frameworkCode = $"{CategoryPrefixes.Framework}{vacancy.FrameworkCodeName}";
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
@@ -233,7 +233,7 @@
             {
                 if (vacancy.StandardId.HasValue)
                 {
-                    var standardCode = $"STD.{vacancy.StandardId}";
+                    var standardCode = $"{CategoryPrefixes.Standard}{vacancy.StandardId}";
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
