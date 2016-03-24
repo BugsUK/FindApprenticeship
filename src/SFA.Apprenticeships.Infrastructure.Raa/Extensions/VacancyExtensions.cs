@@ -63,27 +63,95 @@
             }
         }
 
-        public static Category GetSubCategory(this VacancySummary vacancy, IEnumerable<Category> categories)
+        public static Category GetCategory(this VacancySummary vacancy, IList<Category> categories)
         {
             switch (vacancy.TrainingType)
             {
                 case TrainingType.Frameworks:
-                    return GetFrameworkSubCategory(vacancy, categories);
+                    return GetFrameworkCategory(vacancy, categories);
 
                 case TrainingType.Standards:
-                    return GetStandardSubCategory(vacancy, categories);
+                    return GetStandardCategory(vacancy, categories);
 
                 case TrainingType.Sectors:
-                    break;
+                    return GetSectorCategory(vacancy, categories);
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            return null;
         }
 
-        public static Category GetCategory(this VacancySummary vacancy, IEnumerable<Category> categories)
+        private static Category GetFrameworkCategory(VacancySummary vacancy, IList<Category> categories)
+        {
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
+                {
+                    var frameworkCode = $"FW.{vacancy.FrameworkCodeName}";
+
+                    var subCategories = categories
+                        .Where(c => c.SubCategories != null)
+                        .SelectMany(c => c.SubCategories);
+
+                    var framework = subCategories
+                        .SingleOrDefault(c => c.CodeName == frameworkCode);
+
+                    if (framework != null)
+                    {
+                        var category = categories.Single(sc => sc.CodeName == framework.ParentCategoryCodeName);
+                        return new Category
+                        {
+                            CodeName = category.CodeName,
+                            FullName = category.FullName
+                        };
+                    }
+                }
+
+                return Category.UnknownSectorSubjectAreaTier1;
+            }
+
+            return Category.InvalidSectorSubjectAreaTier1;
+        }
+
+        private static Category GetStandardCategory(VacancySummary vacancy, IList<Category> categories)
+        {
+            if (vacancy.VacancyType == VacancyType.Apprenticeship)
+            {
+                if (vacancy.StandardId.HasValue)
+                {
+                    var standardCode = $"STD.{vacancy.StandardId}";
+
+                    var subCategories = categories
+                        .Where(c => c.SubCategories != null)
+                        .SelectMany(c => c.SubCategories)
+                        .ToList();
+
+                    var standards = subCategories
+                        .Where(c => c.SubCategories != null && c.SubCategories.Any())
+                        .SelectMany(c => c.SubCategories);
+
+                    var standard = standards
+                        .SingleOrDefault(c => c.CodeName == standardCode);
+
+                    if (standard != null)
+                    {
+                        var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
+                        var category = categories.Single(sc => sc.CodeName == standardSector.ParentCategoryCodeName);
+                        return new Category
+                        {
+                            CodeName = category.CodeName,
+                            FullName = category.FullName
+                        };
+                    }
+                }
+
+                return Category.UnknownSectorSubjectAreaTier1;
+            }
+
+            return Category.InvalidSectorSubjectAreaTier1;
+        }
+
+        private static Category GetSectorCategory(this VacancySummary vacancy, IList<Category> categories)
         {
             if (vacancy.VacancyType == VacancyType.Traineeship)
             {
@@ -110,7 +178,27 @@
             return Category.InvalidSectorSubjectAreaTier1;
         }
 
-        private static Category GetFrameworkSubCategory(VacancySummary vacancy, IEnumerable<Category> categories)
+        public static Category GetSubCategory(this VacancySummary vacancy, IList<Category> categories)
+        {
+            switch (vacancy.TrainingType)
+            {
+                case TrainingType.Frameworks:
+                    return GetFrameworkSubCategory(vacancy, categories);
+
+                case TrainingType.Standards:
+                    return GetStandardSubCategory(vacancy, categories);
+
+                case TrainingType.Sectors:
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            return null;
+        }
+
+        private static Category GetFrameworkSubCategory(VacancySummary vacancy, IList<Category> categories)
         {
             if (vacancy.VacancyType == VacancyType.Apprenticeship)
             {
@@ -141,7 +229,7 @@
             return Category.InvalidFramework;
         }
 
-        private static Category GetStandardSubCategory(VacancySummary vacancy, IEnumerable<Category> categories)
+        private static Category GetStandardSubCategory(VacancySummary vacancy, IList<Category> categories)
         {
             if (vacancy.VacancyType == VacancyType.Apprenticeship)
             {

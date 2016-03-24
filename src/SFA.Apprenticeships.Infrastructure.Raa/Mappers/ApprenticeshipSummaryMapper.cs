@@ -14,7 +14,7 @@
 
     public class ApprenticeshipSummaryMapper
     {
-        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipSummary GetApprenticeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
         {
             try
             {
@@ -37,6 +37,7 @@
 
                 var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
+                var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
 
                 var summary = new ApprenticeshipSummary
@@ -62,10 +63,13 @@
                     Wage = wage.GetDisplayText(vacancy.HoursPerWeek),
                     WageUnit = wage.GetWageUnit(),
                     WorkingWeek = vacancy.WorkingWeek,
-                    SubCategoryCode = subcategory.CodeName
+                    CategoryCode = category.CodeName,
+                    Category = category.FullName,
+                    SubCategoryCode = subcategory.CodeName,
+                    SubCategory = subcategory.FullName
                 };
 
-                if (!string.IsNullOrEmpty(summary.SubCategoryCode))
+                /*if (!string.IsNullOrEmpty(summary.SubCategoryCode))
                 {
                     var category = categories.SingleOrDefault(c => c.SubCategories.Any(sc => sc.CodeName == summary.SubCategoryCode));
                     if (category == null)
@@ -92,7 +96,7 @@
                             summary.SubCategoryCode = subCategory.CodeName;
                         }
                     }
-                }
+                }*/
 
                 return summary;
             }

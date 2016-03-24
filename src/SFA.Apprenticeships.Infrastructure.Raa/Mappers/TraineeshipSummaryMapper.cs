@@ -9,10 +9,11 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Traineeships;
+    using Extensions;
 
     public class TraineeshipSummaryMapper
     {
-        public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipSummary GetTraineeshipSummary(VacancySummary vacancy, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
         {
             try
             {
@@ -33,6 +34,9 @@
                     location.Longitude = -1.50812239495425;
                 }
 
+                var category = vacancy.GetCategory(categories);
+                var subcategory = vacancy.GetSubCategory(categories);
+
                 var summary = new TraineeshipSummary
                 {
                     Id = (int)vacancy.VacancyReferenceNumber,
@@ -51,11 +55,13 @@
                     //TODO: Are we going to add this to RAA?
                     //IsPositiveAboutDisability = vacancy.,
                     Location = location,
-                    CategoryCode = vacancy.SectorCodeName,
-                    SubCategoryCode = vacancy.FrameworkCodeName
+                    CategoryCode = category.CodeName,
+                    Category = category.FullName,
+                    SubCategoryCode = subcategory.CodeName,
+                    SubCategory = subcategory.FullName
                 };
 
-                if (!string.IsNullOrEmpty(summary.CategoryCode))
+                /*if (!string.IsNullOrEmpty(summary.CategoryCode))
                 {
                     var category = categories.SingleOrDefault(c => c.CodeName == summary.CategoryCode);
                     if (category == null)
@@ -68,7 +74,7 @@
                         summary.Category = category.FullName;
                         summary.CategoryCode = category.CodeName;
                     }
-                }
+                }*/
 
                 return summary;
             }
