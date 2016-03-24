@@ -204,7 +204,8 @@
     <Compile Include="Processes\VacancyStatusSummarySubscriberTests.cs" />
     <Compile Include="Processes\VacancySummaryCompleteSubscriberTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Raa\Extensions\VacancyExtensionsTests.cs" />
+    <Compile Include="Raa\Extensions\VacancyExtensions\GetCategoryTests.cs" />
+    <Compile Include="Raa\Extensions\VacancyExtensions\VacancyExtensionsTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipSummaryMapperTests.cs" />
     <Compile Include="ScheduledJobs\Application\ApplicationStatusSummarySubscriberTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
