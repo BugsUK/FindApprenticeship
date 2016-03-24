@@ -8,7 +8,7 @@
     {
         IList<County> GetCounties();
 
-        IList<Region> GetRegions();
+        //IList<Region> GetRegions();
 
         IList<LocalAuthority> GetLocalAuthorities();
 

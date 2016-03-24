@@ -25,7 +25,7 @@
         {
             _logger.Debug("Calling database to get all counties");
 
-            var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.County WHERE CountyId <> 0 ORDER BY FullName");
+            var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM dbo.County WHERE CountyId <> 0 ORDER BY FullName");
 
             _logger.Debug($"Found {dbCounties.Count} counties");
 
@@ -34,24 +34,24 @@
             return counties;
         }
 
-        public IList<Region> GetRegions()
-        {
-            _logger.Debug("Calling database to get all regions");
+        //public IList<Region> GetRegions()
+        //{
+        //    _logger.Debug("Calling database to get all regions");
 
-            var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region ORDER BY RegionId");
+        //    var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region ORDER BY RegionId");
 
-            _logger.Debug($"Found {dbRegions.Count} regions");
+        //    _logger.Debug($"Found {dbRegions.Count} regions");
 
-            var regions = _mapper.Map<IList<Entities.Region>, IList<Region>>(dbRegions);
+        //    var regions = _mapper.Map<IList<Entities.Region>, IList<Region>>(dbRegions);
 
-            return regions;
-        }
+        //    return regions;
+        //}
 
         public IList<LocalAuthority> GetLocalAuthorities()
         {
             _logger.Debug("Calling database to get all local authorities");
 
-            const string sql = @"SELECT * FROM Reference.LocalAuthority la JOIN Reference.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
+            const string sql = @"SELECT * FROM dbo.LocalAuthority la JOIN dbo.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
             var dbLocalAuthorities =
                 _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
                     sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");

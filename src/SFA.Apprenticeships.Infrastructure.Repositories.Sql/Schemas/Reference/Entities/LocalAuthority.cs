@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
     using System.ComponentModel.DataAnnotations.Schema;
     using Address.Entities;
 
-    [Table("Reference.LocalAuthority")]
+    [Table("dbo.LocalAuthority")]
     public class LocalAuthority
     {
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
