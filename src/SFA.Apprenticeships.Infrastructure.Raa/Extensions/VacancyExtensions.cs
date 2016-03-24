@@ -151,7 +151,8 @@
 
                     var subCategories = categories
                         .Where(c => c.SubCategories != null)
-                        .SelectMany(c => c.SubCategories);
+                        .SelectMany(c => c.SubCategories)
+                        .ToList();
 
                     var standards = subCategories
                         .Where(c => c.SubCategories != null && c.SubCategories.Any())
@@ -159,12 +160,14 @@
 
                     var standard = standards
                         .SingleOrDefault(c => c.CodeName == standardCode);
-
+                    
                     if (standard != null)
                     {
+                        var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
                         return new Category
                         {
-                            CodeName = standard.ParentCategoryCodeName
+                            CodeName = standard.ParentCategoryCodeName,
+                            FullName = $"{standardSector.FullName} > {standard.FullName}"
                         };
                     }
                 }
