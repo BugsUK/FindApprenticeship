@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
@@ -40,6 +39,8 @@
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
 
+                LogCategoryAndSubCategory(vacancy, logService, category, subcategory);
+
                 var summary = new ApprenticeshipSummary
                 {
                     Id = (int)vacancy.VacancyReferenceNumber,
@@ -69,41 +70,29 @@
                     SubCategory = subcategory.FullName
                 };
 
-                /*if (!string.IsNullOrEmpty(summary.SubCategoryCode))
-                {
-                    var category = categories.SingleOrDefault(c => c.SubCategories.Any(sc => sc.CodeName == summary.SubCategoryCode));
-                    if (category == null)
-                    {
-                        summary.CategoryCode = "Unknown";
-                        summary.SubCategoryCode = "Unknown";
-                        logService.Warn("Cannot find category containing a subcategory matching code {1} for the vacancy with Id {0}", summary.Id, summary.SubCategoryCode);
-                    }
-                    else
-                    {
-                        summary.Category = category.FullName;
-                        summary.CategoryCode = category.CodeName;
-
-                        var subCategory = category.SubCategories.SingleOrDefault(sc => sc.CodeName == summary.SubCategoryCode);
-                        if (subCategory == null)
-                        {
-                            summary.SubCategory = "Unknown";
-                            summary.SubCategoryCode = "Unknown";
-                            logService.Warn("Cannot find subcatagory matching code {1} in category {3} ({2}) for the vacancy with Id {0}", summary.Id, summary.SubCategoryCode, category.CodeName, category.FullName);
-                        }
-                        else
-                        {
-                            summary.SubCategory = subCategory.FullName;
-                            summary.SubCategoryCode = subCategory.CodeName;
-                        }
-                    }
-                }*/
-
                 return summary;
             }
             catch (Exception ex)
             {
                 logService.Error($"Failed to map apprenticeship with Id: {vacancy.VacancyId}", ex);
                 return null;
+            }
+        }
+
+        private static void LogCategoryAndSubCategory(VacancySummary vacancy, ILogService logService, Category category,
+            Category subcategory)
+        {
+            if (category == Category.UnknownSectorSubjectAreaTier1 ||
+                category == Category.InvalidSectorSubjectAreaTier1)
+            {
+                logService.Warn("Cannot find a category for the apprenticeship with Id {0}", vacancy.VacancyId);
+            }
+            if (subcategory == Category.UnknownFramework ||
+                subcategory == Category.InvalidFramework ||
+                subcategory == Category.UnknownStandardSector ||
+                subcategory == Category.InvalidStandardSector)
+            {
+                logService.Warn("Cannot find a category for the apprenticeship with Id {0}", vacancy.VacancyId);
             }
         }
     }

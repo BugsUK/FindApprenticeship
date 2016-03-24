@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Parties;
@@ -37,6 +36,8 @@
                 var category = vacancy.GetCategory(categories);
                 var subcategory = vacancy.GetSubCategory(categories);
 
+                LogCategory(vacancy, logService, category);
+
                 var summary = new TraineeshipSummary
                 {
                     Id = (int)vacancy.VacancyReferenceNumber,
@@ -61,27 +62,21 @@
                     SubCategory = subcategory.FullName
                 };
 
-                /*if (!string.IsNullOrEmpty(summary.CategoryCode))
-                {
-                    var category = categories.SingleOrDefault(c => c.CodeName == summary.CategoryCode);
-                    if (category == null)
-                    {
-                        summary.CategoryCode = "Unknown";
-                        logService.Warn("Cannot find category matching code {1} for the vacancy with Id {0}", summary.Id, summary.CategoryCode);
-                    }
-                    else
-                    {
-                        summary.Category = category.FullName;
-                        summary.CategoryCode = category.CodeName;
-                    }
-                }*/
-
                 return summary;
             }
             catch (Exception ex)
             {
                 logService.Error($"Failed to map traineeship with Id: {vacancy.VacancyId}", ex);
                 return null;
+            }
+        }
+
+        private static void LogCategory(VacancySummary vacancy, ILogService logService, Category category)
+        {
+            if (category == Category.UnknownSectorSubjectAreaTier1 ||
+                category == Category.InvalidSectorSubjectAreaTier1)
+            {
+                logService.Warn("Cannot find a category for the traineeship with Id {0}", vacancy.VacancyId);
             }
         }
     }

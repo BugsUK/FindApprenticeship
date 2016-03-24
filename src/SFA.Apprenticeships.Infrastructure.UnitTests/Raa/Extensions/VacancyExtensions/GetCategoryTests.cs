@@ -175,5 +175,29 @@
             subCategory.CodeName.Should().Be(expectedSubCategoryCode);
             subCategory.FullName.Should().Be(expectedCategoryName);
         }
+
+        [TestCase(VacancyType.Apprenticeship, "ICT", "SEC.INVALID", "Invalid Sector")]
+        [TestCase(VacancyType.Apprenticeship, null, "SEC.INVALID", "Invalid Sector")]
+        [TestCase(VacancyType.Apprenticeship, "XXX", "SEC.INVALID", "Invalid Sector")]
+        [TestCase(VacancyType.Traineeship, "ICT", "SEC.INVALID", "Invalid Sector")]
+        [TestCase(VacancyType.Traineeship, null, "SEC.INVALID", "Invalid Sector")]
+        public void ShouldGetSubCategoryForSector(
+            VacancyType vacancyType, string sectorCodeName, string expectedSubCategoryCode, string expectedCategoryName)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Sectors)
+                .With(each => each.SectorCodeName, sectorCodeName)
+                .Create();
+
+            // Act.
+            var subCategory = vacancySummary.GetSubCategory(_categories);
+
+            // Assert.
+            subCategory.CodeName.Should().Be(expectedSubCategoryCode);
+            subCategory.FullName.Should().Be(expectedCategoryName);
+        }
     }
 }

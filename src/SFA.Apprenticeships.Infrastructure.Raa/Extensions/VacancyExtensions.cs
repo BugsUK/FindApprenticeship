@@ -189,13 +189,11 @@
                     return GetStandardSubCategory(vacancy, categories);
 
                 case TrainingType.Sectors:
-                    break;
+                    return Category.InvalidSector;
 
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-
-            return null;
         }
 
         private static Category GetFrameworkSubCategory(VacancySummary vacancy, IList<Category> categories)

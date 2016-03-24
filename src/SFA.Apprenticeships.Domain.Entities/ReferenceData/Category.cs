@@ -49,5 +49,11 @@
             CodeName = "STDSEC.INVALID",
             FullName = "Invalid Standard Sector"
         };
+
+        public static readonly Category InvalidSector = new Category
+        {
+            CodeName = "SEC.INVALID",
+            FullName = "Invalid Sector"
+        };
     }
 }
