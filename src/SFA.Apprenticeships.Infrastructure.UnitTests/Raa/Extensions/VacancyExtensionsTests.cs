@@ -30,17 +30,20 @@
                         new Category
                         {
                             CodeName = "FW.101",
+                            ParentCategoryCodeName = "SSAT1.ICT",
                             FullName = "Framework: Software Developer"
                         },
                         new Category
                         {
                             CodeName = "STDSEC.201",
+                            ParentCategoryCodeName = "SSAT1.ICT",
                             FullName = "Standard sector: Digital Industries",
                             SubCategories = new List<Category>
                             {
                                 new Category
                                 {
                                     CodeName = "STD.1",
+                                    ParentCategoryCodeName = "STDSEC.201",
                                     FullName = "Standard: Network Engineer"
                                 },
                                 new Category
@@ -84,9 +87,10 @@
             action.ShouldThrow<ArgumentException>();
         }
 
-        [TestCase(VacancyType.Apprenticeship, "001", "FW.001")]
+        [TestCase(VacancyType.Apprenticeship, "101", "FW.101")]
         [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN")]
-        [TestCase(VacancyType.Traineeship, "001", "FW.INVALID")]
+        [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN")]
+        [TestCase(VacancyType.Traineeship, "101", "FW.INVALID")]
         [TestCase(VacancyType.Traineeship, null, "FW.INVALID")]
         public void ShouldGetPrefixedSubCategoryCodeForFramework(
             VacancyType vacancyType, string frameworkCodeName, string expectedSubCategoryCode)

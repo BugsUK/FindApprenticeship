@@ -68,7 +68,7 @@
             switch (vacancy.TrainingType)
             {
                 case TrainingType.Frameworks:
-                    return GetFrameworkSubCategoryCode(vacancy);
+                    return GetFrameworkSubCategoryCode(vacancy, categories);
 
                 case TrainingType.Standards:
                     return GetStandardSubCategoryCode(vacancy, categories);
@@ -100,18 +100,30 @@
             return $"{sectorSubjectAreaTier1Prefix}INVALID";
         }
 
-        private static string GetFrameworkSubCategoryCode(VacancySummary vacancy)
+        private static string GetFrameworkSubCategoryCode(VacancySummary vacancy, IEnumerable<Category> categories)
         {
             const string frameworkPrefix = "FW.";
 
             if (vacancy.VacancyType == VacancyType.Apprenticeship)
             {
-                if (string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
+                if (!string.IsNullOrWhiteSpace(vacancy.FrameworkCodeName))
                 {
-                    return $"{frameworkPrefix}UNKNOWN";
+                    var frameworkCode = $"{frameworkPrefix}{vacancy.FrameworkCodeName}";
+
+                    var subCategories = categories
+                        .Where(c => c.SubCategories != null)
+                        .SelectMany(c => c.SubCategories);
+
+                    var framework = subCategories
+                        .SingleOrDefault(c => c.CodeName == frameworkCode);
+
+                    if (framework != null)
+                    {
+                        return framework.CodeName;
+                    }
                 }
 
-                return $"{frameworkPrefix}{vacancy.FrameworkCodeName}";
+                return $"{frameworkPrefix}UNKNOWN";
             }
 
             return $"{frameworkPrefix}INVALID";
