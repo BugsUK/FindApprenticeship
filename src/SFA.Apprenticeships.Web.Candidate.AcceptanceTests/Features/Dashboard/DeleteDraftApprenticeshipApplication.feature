@@ -21,6 +21,7 @@ Scenario: As an candidate I want to be able to delete draft applications
 		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
+	And I wait 3 seconds
 	When I choose DeleteDraftLink
 	And I wait 3 seconds
 	Then I am on the MyApplicationsPage page
