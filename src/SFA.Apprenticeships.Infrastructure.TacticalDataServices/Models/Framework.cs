@@ -20,7 +20,7 @@
             {
                 CodeName = $"{CategoryPrefixes.Framework}{CodeName}",
                 FullName = FullName,
-                ParentCategoryCodeName = ParentCategoryCodeName
+                ParentCategoryCodeName = $"{CategoryPrefixes.SectorSubjectAreaTier1}{ParentCategoryCodeName}"
             };
         }
     }

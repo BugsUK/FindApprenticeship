@@ -67,6 +67,7 @@
         {
             switch (vacancy.TrainingType)
             {
+                case TrainingType.Unknown: //Unknown assumes framework as this is a result of migrated data
                 case TrainingType.Frameworks:
                     return GetFrameworkCategory(vacancy, categories);
 
@@ -182,6 +183,7 @@
         {
             switch (vacancy.TrainingType)
             {
+                case TrainingType.Unknown: //Unknown assumes framework as this is a result of migrated data
                 case TrainingType.Frameworks:
                     return GetFrameworkSubCategory(vacancy, categories);
 

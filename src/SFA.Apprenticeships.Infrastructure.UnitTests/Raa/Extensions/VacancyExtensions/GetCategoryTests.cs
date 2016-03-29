@@ -128,6 +128,30 @@
             category.FullName.Should().Be(expectedCategoryName);
         }
 
+        [TestCase(VacancyType.Apprenticeship, "101", "SSAT1.ICT", "Information and Communication Technology")]
+        [TestCase(VacancyType.Apprenticeship, null, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
+        [TestCase(VacancyType.Apprenticeship, "XXX", "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
+        [TestCase(VacancyType.Traineeship, "101", "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
+        [TestCase(VacancyType.Traineeship, null, "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
+        public void ShouldGetCategoryForUnknown(
+            VacancyType vacancyType, string frameworkCodeName, string expectedCategoryCode, string expectedCategoryName)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Unknown)
+                .With(each => each.FrameworkCodeName, frameworkCodeName)
+                .Create();
+
+            // Act.
+            var category = vacancySummary.GetCategory(_categories);
+
+            // Assert.
+            category.CodeName.Should().Be(expectedCategoryCode);
+            category.FullName.Should().Be(expectedCategoryName);
+        }
+
         [TestCase(VacancyType.Apprenticeship, "101", "FW.101", "Software Developer")]
         [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN", "Unknown Framework")]
         [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN", "Unknown Framework")]
@@ -190,6 +214,30 @@
                 .With(each => each.VacancyType, vacancyType)
                 .With(each => each.TrainingType, TrainingType.Sectors)
                 .With(each => each.SectorCodeName, sectorCodeName)
+                .Create();
+
+            // Act.
+            var subCategory = vacancySummary.GetSubCategory(_categories);
+
+            // Assert.
+            subCategory.CodeName.Should().Be(expectedSubCategoryCode);
+            subCategory.FullName.Should().Be(expectedCategoryName);
+        }
+
+        [TestCase(VacancyType.Apprenticeship, "101", "FW.101", "Software Developer")]
+        [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN", "Unknown Framework")]
+        [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN", "Unknown Framework")]
+        [TestCase(VacancyType.Traineeship, "101", "FW.INVALID", "Invalid Framework")]
+        [TestCase(VacancyType.Traineeship, null, "FW.INVALID", "Invalid Framework")]
+        public void ShouldGetSubCategoryForUnknown(
+            VacancyType vacancyType, string frameworkCodeName, string expectedSubCategoryCode, string expectedCategoryName)
+        {
+            // Arrange.
+            var vacancySummary = new Fixture()
+                .Build<VacancySummary>()
+                .With(each => each.VacancyType, vacancyType)
+                .With(each => each.TrainingType, TrainingType.Unknown)
+                .With(each => each.FrameworkCodeName, frameworkCodeName)
                 .Create();
 
             // Act.
