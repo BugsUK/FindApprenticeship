@@ -63,48 +63,48 @@
 
         public static readonly Category UnknownSectorSubjectAreaTier1 = new Category
         {
-            CodeName = $"{CategoryPrefixes.SectorSubjectAreaTier1}UNKNOWN",
+            CodeName = CategoryPrefixes.GetSectorSubjectAreaTier1Code("UNKNOWN"),
             FullName = "Unknown Sector Subject Area Tier 1"
         };
 
         public static readonly Category InvalidSectorSubjectAreaTier1 = new Category
         {
-            CodeName = $"{CategoryPrefixes.SectorSubjectAreaTier1}INVALID",
+            CodeName = CategoryPrefixes.GetSectorSubjectAreaTier1Code("INVALID"),
             FullName = "Invalid Sector Subject Area Tier 1"
         };
 
+        public static readonly Category EmptySectorSubjectAreaTier1 = new Category();
+
         public static readonly Category UnknownFramework = new Category
         {
-            CodeName = $"{CategoryPrefixes.Framework}UNKNOWN",
+            CodeName = CategoryPrefixes.GetFrameworkCode("UNKNOWN"),
             FullName = "Unknown Framework"
         };
 
         public static readonly Category InvalidFramework = new Category
         {
-            CodeName = $"{CategoryPrefixes.Framework}INVALID",
+            CodeName = CategoryPrefixes.GetFrameworkCode("INVALID"),
             FullName = "Invalid Framework"
         };
 
+        public static readonly Category EmptyFramework = new Category();
+
         public static readonly Category UnknownStandardSector = new Category
         {
-            CodeName = $"{CategoryPrefixes.StandardSector}UNKNOWN",
+            CodeName = CategoryPrefixes.GetStandardSectorCode("UNKNOWN"),
             FullName = "Unknown Standard Sector"
         };
 
         public static readonly Category InvalidStandardSector = new Category
         {
-            CodeName = $"{CategoryPrefixes.StandardSector}INVALID",
+            CodeName = CategoryPrefixes.GetStandardSectorCode("INVALID"),
             FullName = "Invalid Standard Sector"
         };
 
         public static readonly Category InvalidSector = new Category
         {
-            CodeName = $"{CategoryPrefixes.Sector}INVALID",
+            CodeName = CategoryPrefixes.GetSectorCode("INVALID"),
             FullName = "Invalid Sector"
         };
-
-        public static readonly Category EmptySectorSubjectAreaTier1 = new Category();
-
-        public static readonly Category EmptyFramework = new Category();
     }
 }

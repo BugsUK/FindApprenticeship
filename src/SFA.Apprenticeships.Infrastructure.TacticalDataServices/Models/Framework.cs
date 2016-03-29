@@ -16,7 +16,7 @@
 
         internal Category ToCategory()
         {
-            return new Category($"{CategoryPrefixes.Framework}{CodeName}", FullName, $"{CategoryPrefixes.SectorSubjectAreaTier1}{ParentCategoryCodeName}", CategoryType.Framework);
+            return new Category(CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework);
         }
     }
 }
