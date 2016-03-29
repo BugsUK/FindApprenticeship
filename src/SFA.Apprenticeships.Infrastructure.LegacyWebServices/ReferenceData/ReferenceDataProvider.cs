@@ -94,7 +94,7 @@
                 response.ApprenticeshipFrameworks
                     .Select(
                         c =>
-                            new Category(c.ApprenticeshipOccupationCodeName, c.ApprenticeshipOccupationFullName,
+                            new Category(CategoryPrefixes.GetSectorSubjectAreaTier1Code(c.ApprenticeshipOccupationCodeName), c.ApprenticeshipOccupationFullName,
                                 CategoryType.SectorSubjectAreaTier1))
                     .Distinct(new CategoryComparer())
                     .OrderBy(c => c.FullName);
@@ -106,7 +106,7 @@
                         c => c.ApprenticeshipOccupationCodeName == topLevelCategory.CodeName)
                         .Select(
                             d =>
-                                new Category(d.ApprenticeshipFrameworkCodeName, d.ApprenticeshipFrameworkFullName,
+                                new Category(CategoryPrefixes.GetFrameworkCode(d.ApprenticeshipFrameworkCodeName), d.ApprenticeshipFrameworkFullName,
                                     topLevelCategory.CodeName, CategoryType.Framework))
                         .OrderBy(c => c.FullName);
 

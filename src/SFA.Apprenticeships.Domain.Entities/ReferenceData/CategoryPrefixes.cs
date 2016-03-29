@@ -23,6 +23,11 @@
             return code.StartsWith(StandardSector) ? code : $"{StandardSector}{code}";
         }
 
+        public static string GetStandardSectorCode(int standardSectorId)
+        {
+            return $"{StandardSector}{standardSectorId}";
+        }
+
         public static string GetStandardCode(int standardId)
         {
             return $"{Standard}{standardId}";
