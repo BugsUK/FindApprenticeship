@@ -116,6 +116,7 @@
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
     <Compile Include="ReferenceData\CategoryPrefixes.cs" />
+    <Compile Include="ReferenceData\CategoryType.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderStatuses.cs" />

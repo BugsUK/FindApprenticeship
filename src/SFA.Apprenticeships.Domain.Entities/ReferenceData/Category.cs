@@ -1,19 +1,65 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.ReferenceData
 {
     using System.Collections.Generic;
-    using System.Linq;
 
     public class Category
     {
-        public string FullName { get; set; }
+        private Category()
+        {
+            
+        }
 
-        public string CodeName { get; set; }
+        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories, long? count)
+        {
+            CodeName = codeName;
+            FullName = fullName;
+            ParentCategoryCodeName = parentCategoryCodeName;
+            CategoryType = categoryType;
+            SubCategories = subCategories ?? new List<Category>();
+            Count = count ?? 0;
+        }
 
-        public string ParentCategoryCodeName { get; set; }
+        public Category(string codeName, string fullName, CategoryType categoryType) : this(codeName, fullName, null, categoryType, null, null)
+        {
+            
+        }
 
-        public IList<Category> SubCategories { get; set; }
+        public Category(string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories) : this(codeName, fullName, null, categoryType, subCategories, null)
+        {
+            
+        }
 
-        public long? Count { get; set; }
+        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType) : this(codeName, fullName, parentCategoryCodeName, categoryType, null, null)
+        {
+            
+        }
+
+        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories) : this(codeName, fullName, parentCategoryCodeName, categoryType, subCategories, null)
+        {
+
+        }
+
+        public Category(string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories, long? count) : this(codeName, fullName, null, categoryType, subCategories, count)
+        {
+
+        }
+
+        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, long? count) : this(codeName, fullName, parentCategoryCodeName, categoryType, null, count)
+        {
+
+        }
+
+        public string FullName { get; private set; }
+
+        public string CodeName { get; private set; }
+
+        public string ParentCategoryCodeName { get; private set; }
+
+        public CategoryType CategoryType { get; private set; }
+
+        public IList<Category> SubCategories { get; private set; }
+
+        public long Count { get; set; }
 
         public static readonly Category UnknownSectorSubjectAreaTier1 = new Category
         {
@@ -56,5 +102,9 @@
             CodeName = $"{CategoryPrefixes.Sector}INVALID",
             FullName = "Invalid Sector"
         };
+
+        public static readonly Category EmptySectorSubjectAreaTier1 = new Category();
+
+        public static readonly Category EmptyFramework = new Category();
     }
 }

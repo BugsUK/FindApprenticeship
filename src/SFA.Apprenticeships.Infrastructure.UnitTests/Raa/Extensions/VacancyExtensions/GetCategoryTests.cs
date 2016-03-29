@@ -18,41 +18,19 @@
         {
             _categories = new List<Category>
             {
-                new Category
-                {
-                    CodeName = "SSAT1.ICT",
-                    FullName = "Information and Communication Technology",
-                    SubCategories = new List<Category>
+                new Category("SSAT1.ICT", "Information and Communication Technology", CategoryType.SectorSubjectAreaTier1,
+                    new List<Category>
                     {
-                        new Category
-                        {
-                            CodeName = "FW.101",
-                            ParentCategoryCodeName = "SSAT1.ICT",
-                            FullName = "Software Developer"
-                        },
-                        new Category
-                        {
-                            CodeName = "STDSEC.201",
-                            ParentCategoryCodeName = "SSAT1.ICT",
-                            FullName = "Digital Industries",
-                            SubCategories = new List<Category>
+                        new Category("FW.101", "Software Developer", "SSAT1.ICT", CategoryType.Framework),
+                        new Category("STDSEC.201", "Digital Industries", "SSAT1.ICT", CategoryType.StandardSector, 
+                            new List<Category>
                             {
-                                new Category
-                                {
-                                    CodeName = "STD.1",
-                                    ParentCategoryCodeName = "STDSEC.201",
-                                    FullName = "Network Engineer"
-                                },
-                                new Category
-                                {
-                                    CodeName = "STD.2",
-                                    ParentCategoryCodeName = "STDSEC.201",
-                                    FullName = "Software Developer"
-                                }
+                                new Category("STD.1", "Network Engineer", "STDSEC.201", CategoryType.Standard),
+                                new Category("STD.2", "Software Developer", "STDSEC.201", CategoryType.Standard)
                             }
-                        }
+                        )
                     }
-                }
+                )
             };
         }
 

@@ -22,13 +22,7 @@
 
         internal Category ToCategory()
         {
-            var category = new Category
-            {
-                CodeName = $"{CategoryPrefixes.SectorSubjectAreaTier1}{CodeName}",
-                FullName = FullName,
-                SubCategories = new List<Category>()
-            };
-
+            var category = new Category($"{CategoryPrefixes.SectorSubjectAreaTier1}{CodeName}", FullName, CategoryType.SectorSubjectAreaTier1);
             Frameworks.ForEach(f => category.SubCategories.Add(f.ToCategory()));
             return category;
         }

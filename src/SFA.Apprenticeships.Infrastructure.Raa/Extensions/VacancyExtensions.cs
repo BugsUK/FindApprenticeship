@@ -100,11 +100,7 @@
                     if (framework != null)
                     {
                         var category = categories.Single(sc => sc.CodeName == framework.ParentCategoryCodeName);
-                        return new Category
-                        {
-                            CodeName = category.CodeName,
-                            FullName = category.FullName
-                        };
+                        return new Category(category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -138,11 +134,7 @@
                     {
                         var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
                         var category = categories.Single(sc => sc.CodeName == standardSector.ParentCategoryCodeName);
-                        return new Category
-                        {
-                            CodeName = category.CodeName,
-                            FullName = category.FullName
-                        };
+                        return new Category(category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -165,11 +157,7 @@
 
                     if (category != null)
                     {
-                        return new Category
-                        {
-                            CodeName = category.CodeName,
-                            FullName = category.FullName
-                        };
+                        return new Category(category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -215,11 +203,7 @@
 
                     if (framework != null)
                     {
-                        return new Category
-                        {
-                            CodeName = framework.CodeName,
-                            FullName = framework.FullName
-                        };
+                        return new Category(framework.CodeName, framework.FullName, framework.CategoryType);
                     }
                 }
 
@@ -252,11 +236,7 @@
                     if (standard != null)
                     {
                         var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
-                        return new Category
-                        {
-                            CodeName = standard.ParentCategoryCodeName,
-                            FullName = $"{standardSector.FullName} > {standard.FullName}"
-                        };
+                        return new Category(standard.ParentCategoryCodeName, $"{standardSector.FullName} > {standard.FullName}", CategoryType.StandardSector);
                     }
                 }
 
