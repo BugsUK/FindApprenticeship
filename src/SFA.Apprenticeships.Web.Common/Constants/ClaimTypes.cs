@@ -4,5 +4,6 @@
     {
         public const string Ukprn = "ukprn";
         public const string RoleList = "roleList";
+        public const string Group = "http://schemas.xmlsoap.org/claims/Group";
     }
 }

@@ -14,6 +14,9 @@
         {
         }
 
+        [ElementLocator(Class = "heading-xlarge")]
+        public IWebElement SearchHeader { get; set; }
+
         [ElementLocator(Id = "SearchField")]
         public IWebElement SearchField { get; set; }
 

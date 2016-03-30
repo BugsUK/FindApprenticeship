@@ -20,5 +20,12 @@
             var roleListClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.RoleList);
             return roleListClaim?.Value;
         }
+
+        public static bool IsInGroup(this IPrincipal principal, string group)
+        {
+            var claimsPrincipal = principal as ClaimsPrincipal;
+
+            return claimsPrincipal?.Claims.Any(c => c.Type == ClaimTypes.Group && c.Value == @group) ?? false;
+        }
     }
 }

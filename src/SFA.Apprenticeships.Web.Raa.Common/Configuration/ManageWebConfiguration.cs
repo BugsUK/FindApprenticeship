@@ -2,5 +2,6 @@
 {
     public class ManageWebConfiguration
     {
+        public string AuthorisationGroupClaim { get; set; }
     }
 }

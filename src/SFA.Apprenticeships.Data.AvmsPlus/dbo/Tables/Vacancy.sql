@@ -121,6 +121,16 @@ CREATE NONCLUSTERED INDEX [idx_Vacancy_EditedInRaa]
 
 
 GO
+CREATE UNIQUE NONCLUSTERED INDEX [idx_Vacancy_VacancyGuid]
+	ON [dbo].[Vacancy] ([VacancyGuid])
+
+
+GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_MasterVacancyId]
+	ON [dbo].[Vacancy](MasterVacancyId ASC)
+
+
+GO
 
 CREATE TRIGGER uDeleteVacancySearch
    ON  Vacancy
@@ -443,3 +453,4 @@ SET NOCOUNT ON;
 	AND i.apprenticeshipframeworkid <> 0
 	AND vs.vacancyid is null
 END
+GO
