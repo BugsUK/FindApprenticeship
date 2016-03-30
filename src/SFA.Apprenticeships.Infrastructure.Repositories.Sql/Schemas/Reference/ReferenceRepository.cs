@@ -103,7 +103,64 @@
 
         public IList<Sector> GetSectors()
         {
-            throw new NotImplementedException();
+            _logger.Debug("Getting all sectors");
+
+            const string sectorSql = "SELECT * FROM Reference.StandardSector;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbSectors = _getOpenConnection
+                .Query<Entities.StandardSector>(sectorSql, sqlParams);
+
+            var educationLevels = GetEducationLevels();
+
+            //set the standards.
+            const string standardSql = "SELECT * FROM Reference.Standard;";
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+            var standards = dbStandards.Select(x =>
+            {
+                var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
+                var levelAsInt = int.Parse(level.CodeName);
+                var std = new Standard()
+                {
+                    ApprenticeshipLevel = (ApprenticeshipLevel) levelAsInt,
+                    Id = x.StandardId,
+                    Name = x.FullName,
+                    ApprenticeshipSectorId = x.StandardSectorId
+                };
+                return std;
+            });
+
+            var sectors = dbSectors.Select(x =>
+            {
+                var result = _mapper.Map<Entities.StandardSector, Sector>(x);
+                result.Standards = standards.Where(std => std.ApprenticeshipSectorId == x.StandardSectorId);
+                return result;
+            }).ToList();
+
+            _logger.Debug("Got all sectors");
+
+            return sectors ;
+        }
+
+        private IList<EducationLevel> GetEducationLevels()
+        {
+            _logger.Debug("Getting all education levels");
+
+            const string sectorSql = "SELECT * FROM Reference.EducationLevel;";
+
+            var sqlParams = new
+            {
+            };
+
+            var levels = _getOpenConnection
+                .Query<Entities.EducationLevel>(sectorSql, sqlParams);
+            
+            _logger.Debug("Got all education levels");
+
+            return levels;
         }
     }
 }

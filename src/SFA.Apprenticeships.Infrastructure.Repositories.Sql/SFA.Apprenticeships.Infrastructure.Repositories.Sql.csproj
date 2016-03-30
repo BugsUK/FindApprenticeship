@@ -142,7 +142,7 @@
     <Compile Include="Schemas\Reference\Entities\County.cs" />
     <Compile Include="Schemas\Reference\Entities\ApprenticeshipFramework.cs" />
     <Compile Include="Schemas\Reference\Entities\FrameworkStatus.cs" />
-    <Compile Include="Schemas\Reference\Entities\Level.cs" />
+    <Compile Include="Schemas\Reference\Entities\EducationLevel.cs" />
     <Compile Include="Schemas\Reference\Entities\ApprenticeshipOccupation.cs" />
     <Compile Include="Schemas\Reference\Entities\OccupationStatus.cs" />
     <Compile Include="Schemas\Reference\Entities\StandardSector.cs" />
