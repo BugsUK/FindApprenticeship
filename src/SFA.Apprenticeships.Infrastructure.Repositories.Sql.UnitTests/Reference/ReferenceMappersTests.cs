@@ -165,7 +165,12 @@
         public void ShouldMapFramework_DbToDomain()
         {
             //Arrange
-            var source = new ApprenticeshipFramework() { FullName = "Fake full name", CodeName = "fakeness", ShortName = "Shortie"};
+            var source = new ApprenticeshipFramework()
+                             {
+                                 FullName = "Fake full name",
+                                 CodeName = "fakeness",
+                                 ShortName = "Shortie"
+                             };
 
             //Act
             var destination = _mapper.Map<ApprenticeshipFramework, DomainFramework>(source);
@@ -175,8 +180,8 @@
             destination.FullName.Should().Be(source.FullName);
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
-            destination.Id.Should().Be(source.ApprenticeshipFrameworkId);
-            destination.Occupation.Should().BeNull();
+            destination.Id.Should().Be(source.ApprenticeshipFrameworkId);            
+            destination.Occupation.Id.Should().Be(source.ApprenticeshipOccupationId);       
         }
 
         [Test]

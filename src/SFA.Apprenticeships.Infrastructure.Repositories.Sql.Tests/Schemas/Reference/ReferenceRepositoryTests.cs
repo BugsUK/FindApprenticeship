@@ -132,9 +132,9 @@
             //Assert
             frameworks.Should().NotBeNullOrEmpty();
             frameworks.Any(std => std.Id == 0
-                                  || !string.IsNullOrWhiteSpace(std.CodeName)
-                                  || !string.IsNullOrWhiteSpace(std.FullName)
-                                  || !string.IsNullOrWhiteSpace(std.ShortName)
+                                  || string.IsNullOrWhiteSpace(std.CodeName)
+                                  || string.IsNullOrWhiteSpace(std.FullName)
+                                  || string.IsNullOrWhiteSpace(std.ShortName)
                                   || std.Occupation == null)
                 .Should().BeFalse();
         }
