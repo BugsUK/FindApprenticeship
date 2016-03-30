@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
+﻿namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 {
     public class Framework
     {
@@ -15,7 +9,5 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         public string ShortName { get; set; }
 
         public string FullName { get; set; }
-
-        public Occupation Occupation { get; set; }
     }
 }

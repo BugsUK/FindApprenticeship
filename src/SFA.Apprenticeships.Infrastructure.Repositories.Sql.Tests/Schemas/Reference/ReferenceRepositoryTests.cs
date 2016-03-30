@@ -76,8 +76,7 @@
             frameworks.Any(std => std.Id == 0
                                   || string.IsNullOrWhiteSpace(std.CodeName)
                                   || string.IsNullOrWhiteSpace(std.FullName)
-                                  || string.IsNullOrWhiteSpace(std.ShortName)
-                                  || std.Occupation == null)
+                                  || string.IsNullOrWhiteSpace(std.ShortName))
                 .Should().BeFalse();
         }
 
@@ -93,10 +92,12 @@
 
             //Assert
             occupations.Should().NotBeNullOrEmpty();
-            occupations.Any(std => std.Id == 0
-                                   || string.IsNullOrWhiteSpace(std.CodeName)
-                                   || string.IsNullOrWhiteSpace(std.FullName)
-                                   || string.IsNullOrWhiteSpace(std.ShortName))
+            occupations.Any(occupation => occupation.Id == 0
+                                   || string.IsNullOrWhiteSpace(occupation.CodeName)
+                                   || string.IsNullOrWhiteSpace(occupation.FullName)
+                                   || string.IsNullOrWhiteSpace(occupation.ShortName)
+                                   || occupation.Frameworks == null
+                                   || !occupation.Frameworks.Any())
                 .Should().BeFalse();
         }
     }

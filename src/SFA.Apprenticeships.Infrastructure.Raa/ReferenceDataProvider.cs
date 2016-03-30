@@ -5,6 +5,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Application.ReferenceData;
+    using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
 
@@ -55,33 +56,68 @@
         public IEnumerable<Category> GetCategories()
         {
             throw new NotImplementedException();
+
+            //var frameworks = _referenceRepository.GetFrameworks().ToList();
+            //var occupations = _referenceRepository.GetOccupations().ToList();
+            //var standardSectors = GetSectors();
+
+            ////set each occupation' Frameworks
+            ////set each occupation.Framework's ParentCategoryName to the occupation's codeName. This is used to set the SSAT1 code.
+            //occupations.ForEach(o =>
+            //{
+            //    o.Frameworks = frameworks.Where(f => f.ApprenticeshipOccupationId == o.ApprenticeshipOccupationId).ToList();
+            //    o.Frameworks.ForEach(f => f.ParentCategoryCodeName = o.CodeName);
+            //});
+
+            ////Combining Frameworks and standards in here with garbage code as this entire service is being replaced
+            //var categories = occupations.Select(o => o.ToCategory()).ToList();
+
+            //foreach (var standardSector in standardSectors)
+            //{
+            //    var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
+            //    var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
+            //    var sectorSubjectAreaTier1Category = categories.Single(c => c.CodeName == sectorSubjectAreaTier1Code);
+            //    var standards = standardSector.Standards.Select(s => new Category(CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
+            //    var standardSectorCategory = new Category(standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
+            //    sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
+            //}
+
+            ////Order the new standard sectors correctly
+            //foreach (var category in categories)
+            //{
+            //    var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ToList();
+            //    category.SubCategories.Clear();
+            //    foreach (var subCategory in orderedSubCategories)
+            //    {
+            //        category.SubCategories.Add(subCategory);
+            //    }
+            //}
+
+            //return categories;
         }
 
         public Category GetSubCategoryByName(string subCategoryName)
         {
-            throw new NotImplementedException();
+            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.FullName == subCategoryName);
         }
 
         public Category GetCategoryByName(string categoryName)
         {
-            throw new NotImplementedException();
+            return GetCategories().FirstOrDefault(c => c.FullName == categoryName);
         }
 
         public Category GetSubCategoryByCode(string subCategoryCode)
         {
-            throw new NotImplementedException();
+            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.CodeName == subCategoryCode);
         }
 
         public Category GetCategoryByCode(string categoryCode)
         {
-            throw new NotImplementedException();
+            return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
         }
 
         public IEnumerable<Sector> GetSectors()
         {
-            const string sql = @"SELECT * FROM [dbo].[ApprenticeshipSector] ORDER BY Name;
-                                 SELECT * FROM [dbo].[ApprenticeshipStandard] ORDER BY Name;";
-
             var sectors = _referenceRepository.GetSectors();
             var standards = _referenceRepository.GetStandards();
 

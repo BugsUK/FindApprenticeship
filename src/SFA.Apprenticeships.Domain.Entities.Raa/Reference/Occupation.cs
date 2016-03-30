@@ -15,5 +15,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         public string ShortName { get; set; }
 
         public string FullName { get; set; }
+
+        public IEnumerable<Framework> Frameworks { get; set; }
     }
 }
