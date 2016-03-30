@@ -181,7 +181,7 @@
             destination.CodeName.Should().Be(source.CodeName);
             destination.ShortName.Should().Be(source.ShortName);
             destination.Id.Should().Be(source.ApprenticeshipFrameworkId);            
-            destination.Occupation.Id.Should().Be(source.ApprenticeshipOccupationId);       
+            destination.Occupation.Should().BeNull();
         }
 
         [Test]
