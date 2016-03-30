@@ -20,6 +20,10 @@
 
         public List<Framework> Frameworks { get; set; }
 
+        /// <summary>
+        /// TODO: Find a better way to do this!
+        /// </summary>
+        /// <returns></returns>
         internal Category ToCategory()
         {
             var category = new Category(CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);

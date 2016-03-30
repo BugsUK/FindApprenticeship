@@ -55,45 +55,39 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            throw new NotImplementedException();
+            var occupations = _referenceRepository.GetOccupations().ToList();
+            var standardSectors = GetSectors();
 
-            //var frameworks = _referenceRepository.GetFrameworks().ToList();
-            //var occupations = _referenceRepository.GetOccupations().ToList();
-            //var standardSectors = GetSectors();
+            occupations.ForEach(o =>
+            {
+                o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
+            });
 
-            ////set each occupation' Frameworks
-            ////set each occupation.Framework's ParentCategoryName to the occupation's codeName. This is used to set the SSAT1 code.
-            //occupations.ForEach(o =>
-            //{
-            //    o.Frameworks = frameworks.Where(f => f.ApprenticeshipOccupationId == o.ApprenticeshipOccupationId).ToList();
-            //    o.Frameworks.ForEach(f => f.ParentCategoryCodeName = o.CodeName);
-            //});
+            //Combining Frameworks and standards in here with garbage code as this entire service is being replaced
+            var categories = occupations.Select(o => o.ToCategory()).ToList();
 
-            ////Combining Frameworks and standards in here with garbage code as this entire service is being replaced
-            //var categories = occupations.Select(o => o.ToCategory()).ToList();
+            foreach (var standardSector in standardSectors)
+            {
+                var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
+                var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
+                var sectorSubjectAreaTier1Category = categories.Single(c => c.CodeName == sectorSubjectAreaTier1Code);
+                var standards = standardSector.Standards.Select(s => new Category(CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
+                var standardSectorCategory = new Category(standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
+                sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
+            }
 
-            //foreach (var standardSector in standardSectors)
-            //{
-            //    var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
-            //    var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
-            //    var sectorSubjectAreaTier1Category = categories.Single(c => c.CodeName == sectorSubjectAreaTier1Code);
-            //    var standards = standardSector.Standards.Select(s => new Category(CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
-            //    var standardSectorCategory = new Category(standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
-            //    sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
-            //}
+            //Order the new standard sectors correctly
+            foreach (var category in categories)
+            {
+                var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ToList();
+                category.SubCategories.Clear();
+                foreach (var subCategory in orderedSubCategories)
+                {
+                    category.SubCategories.Add(subCategory);
+                }
+            }
 
-            ////Order the new standard sectors correctly
-            //foreach (var category in categories)
-            //{
-            //    var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ToList();
-            //    category.SubCategories.Clear();
-            //    foreach (var subCategory in orderedSubCategories)
-            //    {
-            //        category.SubCategories.Add(subCategory);
-            //    }
-            //}
-
-            //return categories;
+            return categories;
         }
 
         public Category GetSubCategoryByName(string subCategoryName)

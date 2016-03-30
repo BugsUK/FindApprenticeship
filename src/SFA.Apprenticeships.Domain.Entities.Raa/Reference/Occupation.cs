@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
 {
+    using ReferenceData;
+
     public class Occupation
     {
         public int Id { get; set; }
@@ -17,5 +19,16 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         public string FullName { get; set; }
 
         public IEnumerable<Framework> Frameworks { get; set; }
+
+        /// <summary>
+        /// TODO: Do this a better way
+        /// </summary>
+        /// <returns></returns>
+        public Category ToCategory()
+        {
+            var category = new Category(CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);
+            Frameworks.ToList().ForEach(f => category.SubCategories.Add(f.ToCategory()));
+            return category;
+        }
     }
 }

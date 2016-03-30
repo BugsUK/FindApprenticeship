@@ -14,6 +14,10 @@
 
         internal string ShortName { get; set; }
 
+        /// <summary>
+        /// TODO: Find a better way to do this!
+        /// </summary>
+        /// <returns></returns>
         internal Category ToCategory()
         {
             return new Category(CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework);
