@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Runtime.Remoting.Messaging;
+
     using Domain.Entities.Raa.Reference;
     using SFA.Infrastructure.Interfaces;
     using Common;
@@ -76,24 +78,52 @@
             {
             };
 
-            var frameworks = _getOpenConnection
-                .Query<Entities.ApprenticeshipFramework>(frameworkSql, sqlParams)
-                .Select(_mapper.Map<Entities.ApprenticeshipFramework, Framework>).ToList();
+            var dbFrameworks = _getOpenConnection
+                .Query<Entities.ApprenticeshipFramework>(frameworkSql, sqlParams);
 
-            //const string occupationSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+            IList<Occupation> occupations = this.GetOccupations();                      
 
-            //var occupations = _getOpenConnection
-            //    .Query<Entities.ApprenticeshipOccupation>(occupationSql, sqlParams)
-            //    .Select(_mapper.Map<Entities.ApprenticeshipOccupation, Occupation>).ToList();
-            
-            _logger.Debug("Got all frameworks");
+            var frameworks = dbFrameworks.Select(
+                x =>
+                    {
+                        Framework result = this._mapper.Map<Entities.ApprenticeshipFramework, Framework>(x);
+                        result.Occupation =
+                            occupations.FirstOrDefault(occu => occu.Id == x.ApprenticeshipOccupationId);
+                        return result;
+                    }).ToList();
 
             return frameworks;
         }
 
         public IList<Occupation> GetOccupations()
         {
-            throw new NotImplementedException();
+            _logger.Debug("Getting all apprenticeship occupations");
+
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbOccupations = this._getOpenConnection
+                .Query<Entities.ApprenticeshipOccupation>(sectorSql, sqlParams);           
+
+            var occupations = dbOccupations.Select(
+                x =>
+                    {
+                        var occupation = new Occupation
+                                             {
+                                                 CodeName = x.CodeName,
+                                                 Id = x.ApprenticeshipOccupationId,
+                                                 FullName = x.FullName,
+                                                 ShortName = x.ShortName
+                                             };
+                        return occupation;
+                    }).ToList();
+
+            _logger.Debug("Got all apprenticeship occupations");
+
+            return occupations;
         }
 
         public IList<Standard> GetStandards()
