@@ -10,8 +10,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ApprenticeshipOccupation()
         {
-            //Frameworks = new HashSet<ApprenticeshipFramework>();
-            //Frameworks1 = new HashSet<ApprenticeshipFramework>();
         }
 
         [Key]
@@ -33,13 +31,5 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
 
         [Column(TypeName = "datetime2")]
         public DateTime? ClosedDate { get; set; }
-
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<ApprenticeshipFramework> Frameworks { get; set; }
-
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<ApprenticeshipFramework> Frameworks1 { get; set; }
-
-        //public virtual OccupationStatus OccupationStatus { get; set; }
     }
 }

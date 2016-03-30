@@ -7,10 +7,10 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
     [Table("dbo.ApprenticeshipFramework")]
     public class ApprenticeshipFramework
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage",
+            "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ApprenticeshipFramework()
         {
-            //Vacancies = new HashSet<Vacancy>();
         }
 
         [Key]
@@ -37,14 +37,5 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         public DateTime? ClosedDate { get; set; }
 
         public int? PreviousApprenticeshipOccupationId { get; set; }
-
-        //public virtual FrameworkStatus FrameworkStatus { get; set; }
-
-        //public virtual Occupation Occupation { get; set; }
-
-        //public virtual Occupation Occupation1 { get; set; }
-
-        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        //public virtual ICollection<Vacancy> Vacancies { get; set; }
     }
 }
