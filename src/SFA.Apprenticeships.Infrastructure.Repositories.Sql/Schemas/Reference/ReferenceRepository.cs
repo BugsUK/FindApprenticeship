@@ -98,7 +98,32 @@
 
         public IList<Standard> GetStandards()
         {
-            throw new NotImplementedException();
+            _logger.Debug("Getting all standards");
+
+            const string standardSql = "SELECT * FROM Reference.Standard;";
+
+            var sqlParams = new
+            {
+            };
+
+            var educationLevels = GetEducationLevels();
+            
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+            var standards = dbStandards.Select(x =>
+            {
+                var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
+                var levelAsInt = int.Parse(level.CodeName);
+                var std = new Standard()
+                {
+                    ApprenticeshipLevel = (ApprenticeshipLevel)levelAsInt,
+                    Id = x.StandardId,
+                    Name = x.FullName,
+                    ApprenticeshipSectorId = x.StandardSectorId
+                };
+                return std;
+            }).ToList();
+
+            return standards;
         }
 
         public IList<Sector> GetSectors()
@@ -114,24 +139,8 @@
             var dbSectors = _getOpenConnection
                 .Query<Entities.StandardSector>(sectorSql, sqlParams);
 
-            var educationLevels = GetEducationLevels();
-
             //set the standards.
-            const string standardSql = "SELECT * FROM Reference.Standard;";
-            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
-            var standards = dbStandards.Select(x =>
-            {
-                var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
-                var levelAsInt = int.Parse(level.CodeName);
-                var std = new Standard()
-                {
-                    ApprenticeshipLevel = (ApprenticeshipLevel) levelAsInt,
-                    Id = x.StandardId,
-                    Name = x.FullName,
-                    ApprenticeshipSectorId = x.StandardSectorId
-                };
-                return std;
-            });
+            var standards = GetStandards();
 
             var sectors = dbSectors.Select(x =>
             {
