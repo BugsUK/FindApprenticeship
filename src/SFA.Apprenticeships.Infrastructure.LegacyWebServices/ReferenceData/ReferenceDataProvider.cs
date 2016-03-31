@@ -75,6 +75,11 @@
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
         }
 
+        public IEnumerable<Category> GetFrameworks()
+        {
+            return GetCategories();
+        }
+
         public IEnumerable<Sector> GetSectors()
         {
             throw new NotImplementedException("Sectors are not exposed via the reference data service");
@@ -92,24 +97,28 @@
 
             var topLevelCategories =
                 response.ApprenticeshipFrameworks
-                .Select(c =>
-                        new Category
-                        {
-                            CodeName = c.ApprenticeshipOccupationCodeName,
-                            FullName = c.ApprenticeshipOccupationFullName
-                        }).Distinct(new CategoryComparer()).OrderBy(c => c.FullName);
+                    .Select(
+                        c =>
+                            new Category(0, CategoryPrefixes.GetSectorSubjectAreaTier1Code(c.ApprenticeshipOccupationCodeName), c.ApprenticeshipOccupationFullName,
+                                CategoryType.SectorSubjectAreaTier1))
+                    .Distinct(new CategoryComparer())
+                    .OrderBy(c => c.FullName);
 
             foreach (var topLevelCategory in topLevelCategories)
             {
-                topLevelCategory.SubCategories =
-                    response.ApprenticeshipFrameworks.Where(c => c.ApprenticeshipOccupationCodeName == topLevelCategory.CodeName)
-                    .Select(d =>
-                        new Category
-                        {
-                            ParentCategoryCodeName = topLevelCategory.CodeName,
-                            CodeName = d.ApprenticeshipFrameworkCodeName,
-                            FullName = d.ApprenticeshipFrameworkFullName
-                        }).OrderBy(c => c.FullName).ToList();
+                var frameworks =
+                    response.ApprenticeshipFrameworks.Where(
+                        c => c.ApprenticeshipOccupationCodeName == topLevelCategory.CodeName)
+                        .Select(
+                            d =>
+                                new Category(0, CategoryPrefixes.GetFrameworkCode(d.ApprenticeshipFrameworkCodeName), d.ApprenticeshipFrameworkFullName,
+                                    topLevelCategory.CodeName, CategoryType.Framework))
+                        .OrderBy(c => c.FullName);
+
+                foreach (var framework in frameworks)
+                {
+                    topLevelCategory.SubCategories.Add(framework);
+                }
 
                 categories.Add(topLevelCategory);
             }

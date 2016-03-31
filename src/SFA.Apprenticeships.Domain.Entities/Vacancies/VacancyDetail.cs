@@ -1,17 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
+    using Candidates;
     using Locations;
 
     public abstract class VacancyDetail
     {
         #region Vacancy
-
-        protected VacancyDetail()
-        {
-            // TODO: US897: AG: why default this?
-            WageUnit = WageUnit.Weekly;
-        }
 
         public int Id { get; set; }
 
@@ -60,6 +55,8 @@
         public DateTime Created { get; set; }
 
         public VacancyStatuses VacancyStatus { get; set; }
+
+        public TrainingType TrainingType { get; set; }
 
         #endregion
 

@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public FrameworkStatus()
         {
-            Frameworks = new HashSet<Framework>();
+            Frameworks = new HashSet<ApprenticeshipFramework>();
         }
 
         [Key]
@@ -28,6 +28,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         public string FullName { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Framework> Frameworks { get; set; }
+        public virtual ICollection<ApprenticeshipFramework> Frameworks { get; set; }
     }
 }

@@ -445,24 +445,18 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category
-                {
-                    CodeName = "1",
-                    SubCategories = new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "1_1"},
-                        new Category {CodeName = "1_2"}
+                        new Category(1, "1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "1_2", "1_2", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = selectedCategoryCode,
-                    SubCategories = new List<Category>
+                ),
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "2_1"},
-                        new Category {CodeName = selectedCategorySubCategory}
+                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
-                }
+                )
             });
 
             var searchViewModel = new ApprenticeshipSearchViewModel
@@ -519,24 +513,18 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category
-                {
-                    CodeName = "1",
-                    SubCategories = new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "1_1"},
-                        new Category {CodeName = "1_2"}
+                        new Category(1, "1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "1_2", "1_2", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = selectedCategoryCode,
-                    SubCategories = new List<Category>
+                ),
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "2_1"},
-                        new Category {CodeName = selectedCategorySubCategory}
+                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
-                }
+                )
             });
 
             var searchViewModel = new ApprenticeshipSearchViewModel

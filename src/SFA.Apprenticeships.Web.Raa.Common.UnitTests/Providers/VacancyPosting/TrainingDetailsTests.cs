@@ -37,62 +37,27 @@
         };
 
         // NOTE: cannot use Fixture here as Category data structure is recursive.
-        private readonly Category[] _categories = {
-            new Category
-            {
-                CodeName = "00",
-                FullName = "Blacklisted Sector - 00",
-                SubCategories = new []
+        private readonly Category[] _categories =
+        {
+            new Category(0, "00", "Blacklisted Sector - 00", CategoryType.SectorSubjectAreaTier1),
+            new Category(2, "02", "Sector - 02", CategoryType.SectorSubjectAreaTier1, new List<Category>
                 {
-                    new Category()
+                    new Category(1, "02.01", "Framework - 02.01", CategoryType.Framework),
+                    new Category(2, "02.02", "Framework - 02.02", CategoryType.Framework)
                 }
-            },
-            new Category
-            {
-                CodeName = "02",
-                FullName = "Sector - 02",
-                SubCategories = new []
+            ),
+            new Category(3, "03", "Sector - 03", CategoryType.SectorSubjectAreaTier1, new List<Category>
                 {
-                    new Category
-                    {
-                        CodeName = "02.01",
-                        FullName = "Framework - 02.01"
-                    },
-                    new Category
-                    {
-                        CodeName = "02.02",
-                        FullName = "Framework - 02.02"
-                    }
+                    new Category(1, "03.01", "Framework - 03.01", CategoryType.Framework)
                 }
-            },
-            new Category
-            {
-                CodeName = "03",
-                FullName = "Sector - 03",
-                SubCategories = new []
+            ),
+            new Category(42, "42", "Sector with no frameworks - 99", CategoryType.SectorSubjectAreaTier1
+            ),
+            new Category(99, "99", "Blacklisted Sector - 99", CategoryType.SectorSubjectAreaTier1, new List<Category>
                 {
-                    new Category
-                    {
-                        CodeName = "03.01",
-                        FullName = "Framework - 03.01"
-                    }
+                    Category.EmptyFramework
                 }
-            },
-            new Category
-            {
-                CodeName = "42",
-                FullName = "Sector with no frameworks - 99"
-            },
-            new Category
-            {
-                CodeName = "99",
-                FullName = "Blacklisted Sector - 99",
-                SubCategories = new []
-                {
-                    new Category()
-                }
-
-            }
+            )
         };
 
         [SetUp]

@@ -16,6 +16,8 @@
 
         Category GetCategoryByCode(string categoryCode);
 
+        IEnumerable<Category> GetFrameworks();
+
         IEnumerable<Sector> GetSectors();
     }
 }

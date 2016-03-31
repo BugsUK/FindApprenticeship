@@ -28,7 +28,7 @@
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
                 .Returns(new ProviderSite {Address = new PostalAddress()});
-            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(Category.EmptyFramework);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
 
@@ -57,7 +57,7 @@
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
-            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(Category.EmptyFramework);
             MockTimeService.Setup(ts => ts.UtcNow).Returns(now);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
@@ -86,7 +86,7 @@
                 .Returns(apprenticeshipVacancy);
             MockProviderService.Setup(ps => ps.GetProviderSite(It.IsAny<string>()))
                 .Returns(new ProviderSite { Address = new PostalAddress() });
-            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(new Category());
+            MockReferenceDataService.Setup(ds => ds.GetSubCategoryByCode(It.IsAny<string>())).Returns(Category.EmptyFramework);
 
             vacancyPostingProvider.SubmitVacancy(referenceNumber);
 

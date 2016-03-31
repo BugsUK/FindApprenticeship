@@ -164,49 +164,34 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         {
             return new List<Category>
             {
-                new Category
-                {
-                    CodeName = "1",
-                    SubCategories = new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "1_1"},
-                        new Category {CodeName = "1_2"}
+                        new Category(1, "1_1", "1_1", CategoryType.Framework),
+                        new Category(1, "1_2", "1_2", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = "2",
-                    SubCategories = new List<Category>
+                ),
+                new Category(2, "2", "2", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "2_1"},
-                        new Category {CodeName = "2_2"},
-                        new Category {CodeName = "2_3"}
+                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(2, "2_2", "2_2", CategoryType.Framework),
+                        new Category(3, "2_3", "2_3", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = "3",
-                    SubCategories = new List<Category>
+                ),
+                new Category(3, String.Empty, "3", "3", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "3_1"}
+                        new Category(1, "3_1", "3_1", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = "00",
-                    SubCategories = new List<Category>
+                ),
+                new Category(0, "00", "00", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "00_1"}
+                        new Category(1, "00_1", "00_1", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = "99",
-                    SubCategories = new List<Category>
+                ),
+                new Category(99, "99", "99", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category {CodeName = "99_1"}
+                        new Category(1, "99_1", "99_1", CategoryType.Framework)
                     }
-                }
+                )
             };
         }
     }

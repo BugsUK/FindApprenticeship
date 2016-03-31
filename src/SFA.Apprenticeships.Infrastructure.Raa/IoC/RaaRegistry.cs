@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
     using Application.Applications;
+    using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancy;
     using Common.Configuration;
@@ -24,6 +25,9 @@
 
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<NullApplicationStatusesProvider>();
+
+                For<IReferenceDataProvider>()
+                    .Use<ReferenceDataProvider>();
             }
         }
     }

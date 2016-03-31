@@ -5,7 +5,7 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
     using System.ComponentModel.DataAnnotations.Schema;
     using Address.Entities;
 
-    [Table("Reference.County")]
+    [Table("dbo.County")]
     public class County // TODO: Move to Address schema?
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]

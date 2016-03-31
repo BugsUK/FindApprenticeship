@@ -1,11 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference
 {
-    using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Reference;
     using SFA.Infrastructure.Interfaces;
     using Common;
+    using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
+    using Entities;
+    using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository
     {
@@ -19,47 +22,146 @@
             _mapper = mapper;
             _logger = logger;
         }
-
-        public IList<County> GetCounties()
+        public IList<Framework> GetFrameworks()
         {
-            _logger.Debug("Calling database to get all counties");
-
-            var dbCounties = _getOpenConnection.QueryCached<Entities.County>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.County WHERE CountyId <> 0 ORDER BY FullName");
-
-            _logger.Debug($"Found {dbCounties.Count} counties");
-
-            var counties = _mapper.Map<IList<Entities.County>, IList<County>>(dbCounties);
-
-            return counties;
+            var dbFrameworks = GetApprenticeshipFrameworks();
+            var frameworks = dbFrameworks.Select(_mapper.Map<Entities.ApprenticeshipFramework, Framework>).ToList();
+            return frameworks;
         }
 
-        public IList<Region> GetRegions()
+        public IList<Occupation> GetOccupations()
         {
-            _logger.Debug("Calling database to get all regions");
+            var dbOccupations = GetApprenticeshipOccupations();
+            var dbFrameworks = GetApprenticeshipFrameworks();
 
-            var dbRegions = _getOpenConnection.QueryCached<Entities.Region>(TimeSpan.FromHours(1), @"SELECT * FROM Reference.Region ORDER BY RegionId");
+            var occupations = dbOccupations.Select(
+                x =>
+                {
+                    return new Occupation
+                    {
+                        CodeName = x.CodeName,
+                        Id = x.ApprenticeshipOccupationId,
+                        FullName = x.FullName,
+                        ShortName = x.ShortName,
+                        Frameworks =
+                            dbFrameworks.Where(af => af.ApprenticeshipOccupationId == x.ApprenticeshipOccupationId)
+                                .Select(_mapper.Map<ApprenticeshipFramework, Framework>)
+                    };
+                }).ToList();
 
-            _logger.Debug($"Found {dbRegions.Count} regions");
+            _logger.Debug("Got all apprenticeship occupations");
 
-            var regions = _mapper.Map<IList<Entities.Region>, IList<Region>>(dbRegions);
-
-            return regions;
+            return occupations;
         }
 
-        public IList<LocalAuthority> GetLocalAuthorities()
+        public IList<Standard> GetStandards()
         {
-            _logger.Debug("Calling database to get all local authorities");
+            _logger.Debug("Getting all standards");
 
-            const string sql = @"SELECT * FROM Reference.LocalAuthority la JOIN Reference.County c ON la.CountyId = c.CountyId WHERE LocalAuthorityId <> 0 ORDER BY c.CountyId";
-            var dbLocalAuthorities =
-                _getOpenConnection.QueryCached<Entities.LocalAuthority, Entities.County, Entities.LocalAuthority>(TimeSpan.FromHours(1),
-                    sql, (localAuthority, county) => { localAuthority.County = county; return localAuthority; }, splitOn: "CountyId");
+            const string standardSql = "SELECT * FROM Reference.Standard;";
 
-            _logger.Debug($"Found {dbLocalAuthorities.Count} local authorities");
+            var sqlParams = new
+            {
+            };
 
-            var localAuthorities = _mapper.Map<IList<Entities.LocalAuthority>, IList<LocalAuthority>>(dbLocalAuthorities);
+            var educationLevels = GetEducationLevels();
+            
+            var dbStandards = _getOpenConnection.Query<Entities.Standard>(standardSql, sqlParams);
+            var standards = dbStandards.Select(x =>
+            {
+                var level = educationLevels.FirstOrDefault(el => el.EducationLevelId == x.EducationLevelId);
+                var levelAsInt = int.Parse(level.CodeName);
+                var std = new Standard()
+                {
+                    ApprenticeshipLevel = (ApprenticeshipLevel)levelAsInt,
+                    Id = x.StandardId,
+                    Name = x.FullName,
+                    ApprenticeshipSectorId = x.StandardSectorId
+                };
+                return std;
+            }).ToList();
 
-            return localAuthorities;
+            return standards;
+        }
+
+        public IList<Sector> GetSectors()
+        {
+            _logger.Debug("Getting all sectors");
+
+            const string sectorSql = "SELECT * FROM Reference.StandardSector;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbSectors = _getOpenConnection
+                .Query<Entities.StandardSector>(sectorSql, sqlParams);
+
+            //set the standards.
+            var standards = GetStandards();
+
+            var sectors = dbSectors.Select(x =>
+            {
+                var result = _mapper.Map<Entities.StandardSector, Sector>(x);
+                result.Standards = standards.Where(std => std.ApprenticeshipSectorId == x.StandardSectorId);
+                return result;
+            }).ToList();
+
+            _logger.Debug("Got all sectors");
+
+            return sectors ;
+        }
+
+        private IList<ApprenticeshipOccupation> GetApprenticeshipOccupations()
+        {
+            _logger.Debug("Getting all apprenticeship occupations");
+
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbOccupations = this._getOpenConnection
+                .Query<Entities.ApprenticeshipOccupation>(sectorSql, sqlParams);
+
+            _logger.Debug("Got all apprenticeship occupations");
+
+            return dbOccupations;
+        } 
+
+        private IList<ApprenticeshipFramework> GetApprenticeshipFrameworks()
+        {
+            _logger.Debug("Getting all frameworks");
+
+            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework;";
+
+            var sqlParams = new
+            {
+            };
+
+            var dbFrameworks = _getOpenConnection
+                .Query<Entities.ApprenticeshipFramework>(frameworkSql, sqlParams);
+
+            return dbFrameworks;
+        } 
+
+        private IList<EducationLevel> GetEducationLevels()
+        {
+            _logger.Debug("Getting all education levels");
+
+            const string sectorSql = "SELECT * FROM Reference.EducationLevel;";
+
+            var sqlParams = new
+            {
+            };
+
+            var levels = _getOpenConnection
+                .Query<Entities.EducationLevel>(sectorSql, sqlParams);
+            
+            _logger.Debug("Got all education levels");
+
+            return levels;
         }
     }
 }

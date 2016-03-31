@@ -9,6 +9,7 @@
     using Candidate.Mappers;
     using Candidate.Providers;
     using Candidate.ViewModels.VacancySearch;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Moq;
@@ -114,7 +115,8 @@
                 {
                     new ApprenticeshipSearchResponse
                     {
-                        VacancyLocationType = locationType
+                        VacancyLocationType = locationType,
+                        WageUnit = WageUnit.Weekly
                     }
                 }, new List<AggregationResult>(0), asp));
 
@@ -124,7 +126,8 @@
                 {
                     new ApprenticeshipSearchResponse
                     {
-                        VacancyLocationType = locationType
+                        VacancyLocationType = locationType,
+                        WageUnit = WageUnit.Weekly
                     }
                 }, new List<AggregationResult>(0), asp));
         }

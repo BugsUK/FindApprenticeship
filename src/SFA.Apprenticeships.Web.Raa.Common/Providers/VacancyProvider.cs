@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -19,8 +18,8 @@
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Reference;
-    using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Factories;
     using Infrastructure.Presentation;
     using ViewModels.Provider;
@@ -260,7 +259,7 @@
         
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : trainingDetailsViewModel.FrameworkCodeName;
+            return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
         }
         
         private int? GetStandardId(TrainingDetailsViewModel trainingDetailsViewModel)
@@ -281,7 +280,7 @@
 
         private string GetSectorCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
-            return trainingDetailsViewModel.VacancyType == VacancyType.Traineeship ? trainingDetailsViewModel.SectorCodeName : null;
+            return trainingDetailsViewModel.VacancyType == VacancyType.Traineeship ? CategoryPrefixes.GetOriginalSectorSubjectAreaTier1Code(trainingDetailsViewModel.SectorCodeName) : null;
         }
 
         private NewVacancyViewModel UpdateExistingVacancy(NewVacancyViewModel newVacancyViewModel)
@@ -488,12 +487,12 @@
             viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             viewModel.ProviderSite = providerSite.Convert();
-            viewModel.FrameworkName = string.IsNullOrEmpty(vacancy.FrameworkCodeName)
-                ? vacancy.FrameworkCodeName
-                : _referenceDataService.GetSubCategoryByCode(vacancy.FrameworkCodeName).FullName;
-            viewModel.SectorName = string.IsNullOrEmpty(vacancy.SectorCodeName)
-                ? vacancy.SectorCodeName
-                : _referenceDataService.GetCategoryByCode(vacancy.SectorCodeName).FullName;
+            viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
+                ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
+                : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
+            viewModel.SectorName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.SectorCodeName)
+                ? viewModel.TrainingDetailsViewModel.SectorCodeName
+                : _referenceDataService.GetCategoryByCode(viewModel.TrainingDetailsViewModel.SectorCodeName).FullName;
             var standard = GetStandard(vacancy.StandardId);
             viewModel.StandardName = standard == null ? "" : standard.Name;
             if (viewModel.Status.CanHaveApplicationsOrClickThroughs() && viewModel.NewVacancyViewModel.OfflineVacancy == false)
@@ -542,7 +541,7 @@
 
         public List<SelectListItem> GetSectorsAndFrameworks()
         {
-            var categories = _referenceDataService.GetCategories();
+            var categories = _referenceDataService.GetFrameworks();
 
             var sectorsAndFrameworkItems = new List<SelectListItem>
             {

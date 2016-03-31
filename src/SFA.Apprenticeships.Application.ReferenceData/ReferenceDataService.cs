@@ -39,6 +39,11 @@
             return _referenceDataProvider.GetCategoryByCode(categoryCode);
         }
 
+        public IEnumerable<Category> GetFrameworks()
+        {
+            return _referenceDataProvider.GetFrameworks();
+        }
+
         public IEnumerable<Sector> GetSectors()
         {
             return _referenceDataProvider.GetSectors();
