@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
     using System;
+    using Candidates;
     using Locations;
 
     public abstract class VacancyDetail
@@ -54,6 +55,8 @@
         public DateTime Created { get; set; }
 
         public VacancyStatuses VacancyStatus { get; set; }
+
+        public TrainingType TrainingType { get; set; }
 
         #endregion
 

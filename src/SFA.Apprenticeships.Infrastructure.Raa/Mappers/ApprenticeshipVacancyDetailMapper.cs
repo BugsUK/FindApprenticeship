@@ -92,7 +92,8 @@
                 SkillsRequired = vacancy.DesiredSkills,
                 VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
-                SubCategory = subcategory.FullName
+                SubCategory = subcategory.FullName,
+                TrainingType = vacancy.TrainingType.GetTrainingType()
             };
 
             return detail;

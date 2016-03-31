@@ -9,6 +9,7 @@
     using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
     using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
+    using TrainingType = Domain.Entities.Raa.Vacancies.TrainingType;
 
     //TODO: This is only used by FAA for conversions - move to that project when found
     public static class VacancyExtensions
@@ -32,6 +33,23 @@
                     return ApprenticeshipLevel.Degree;
                 default:
                     throw new ArgumentException("Apprenticeship Level: " + apprenticeshipLevel + " was not recognized");
+            }
+        }
+
+        public static Domain.Entities.Vacancies.TrainingType GetTrainingType(this TrainingType trainingType)
+        {
+            switch (trainingType)
+            {
+                case TrainingType.Unknown:
+                    return Domain.Entities.Vacancies.TrainingType.Unknown;
+                case TrainingType.Frameworks:
+                    return Domain.Entities.Vacancies.TrainingType.Frameworks;
+                case TrainingType.Standards:
+                    return Domain.Entities.Vacancies.TrainingType.Standards;
+                case TrainingType.Sectors:
+                    return Domain.Entities.Vacancies.TrainingType.Sectors;
+                default:
+                    throw new ArgumentException("Training Type: " + trainingType + " was not recognized");
             }
         }
 

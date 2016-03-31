@@ -84,6 +84,7 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
+                TrainingType = vacancy.TrainingType.GetTrainingType()
             };
 
             return detail;

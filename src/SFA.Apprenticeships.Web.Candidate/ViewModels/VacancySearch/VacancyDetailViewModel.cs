@@ -10,6 +10,7 @@
     using Infrastructure.Presentation;
     using ApprenticeshipLevel = Domain.Entities.Vacancies.Apprenticeships.ApprenticeshipLevel;
     using WageUnit = Domain.Entities.Vacancies.WageUnit;
+    using TrainingType = Domain.Entities.Vacancies.TrainingType;
 
     //TODO move type specific properties into sub classes, remove unused properties
     [Serializable]
@@ -64,6 +65,8 @@
         public WageUnit WageUnit { get; set; }
 
         public string WorkingWeek { get; set; }
+
+        public TrainingType TrainingType { get; set; }
 
         #endregion
 

@@ -176,6 +176,9 @@
 
                 .ForMember(dest => dest.LocalAuthority,
                     opt => opt.Ignore())
+
+                .ForMember(dest => dest.TrainingType,
+                    opt => opt.Ignore())
             ;
         }
     }
