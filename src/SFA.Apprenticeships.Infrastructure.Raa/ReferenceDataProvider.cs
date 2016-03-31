@@ -9,40 +9,7 @@
 
     public class ReferenceDataProvider  : IReferenceDataProvider
     {
-        private IReferenceRepository _referenceRepository;
-
-        private readonly IDictionary<int, string> _standardSectorToSectorSubjectAreaTier1Map = new Dictionary<int, string>
-        {
-            {1, "SSAT1.AHR"}, //Actuarial
-            {2, "SSAT1.MFP"}, //Aerospace
-            {3, "SSAT1.MFP"}, //Automotive
-            {4, "SSAT1.HBY"}, //Automotive retail
-            {5, "SSAT1.HBY"}, //Butchery
-            {6, "SSAT1.AHR"}, //Conveyancing and probate
-            {7, "SSAT1.MFP"}, //Defence
-            {8, "SSAT1.PUB"}, //Dental health
-            {9, "SSAT1.ITC"}, //Digital Industries
-            {10, "SSAT1.MFP"}, //Electrotechnical
-            {11, "SSAT1.MFP"}, //Energy & Utilities
-            {12, "SSAT1.AHR"}, //Financial Services
-            {13, "SSAT1.MFP"}, //Food and Drink
-            {14, "SSAT1.ALB"}, //Horticulture
-            {15, "SSAT1.AHR"}, //Insurance
-            {16, "SSAT1.AHR"}, //Law
-            {17, "SSAT1.AHR"}, //Leadership & Management
-            {18, "SSAT1.MFP"}, //Life and Industrial Sciences
-            {19, "SSAT1.MFP"}, //Maritime
-            {20, "SSAT1.ACC"}, //Newspaper and Broadcast Media
-            {21, "SSAT1.MFP"}, //Nuclear
-            {22, "SSAT1.CST"}, //Property services
-            {23, "SSAT1.PUB"}, //Public Service
-            {24, "SSAT1.MFP"}, //Rail Design
-            {25, "SSAT1.MFP"}, //Refrigeration Air Conditioning and Heat Pump (RACHP)
-            {26, "SSAT1.CST"}, //Surveying
-            {27, "SSAT1.PUB"}, //Housing
-            {28, "SSAT1.MFP"}, //Non-destructive Testing
-            {29, "SSAT1.HBY"} //Energy Management
-        };
+        private readonly IReferenceRepository _referenceRepository;
 
         public ReferenceDataProvider(IReferenceRepository referenceRepository)
         {
@@ -51,17 +18,16 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var categories = GetFrameworks();
+            var categories = GetFrameworks().ToList();
             var standardSectors = GetSectors();
 
-            //Combining Frameworks and standards in here with garbage code as this entire service is being replaced
             foreach (var standardSector in standardSectors)
             {
-                var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
+                var sectorSubjectAreaTier1Id = standardSector.ApprenticeshipOccupationId;
                 var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
-                var sectorSubjectAreaTier1Category = categories.Single(c => c.CodeName == sectorSubjectAreaTier1Code);
+                var sectorSubjectAreaTier1Category = categories.Single(c => c.Id == sectorSubjectAreaTier1Id);
                 var standards = standardSector.Standards.Select(s => new Category(s.Id, CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
-                var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
+                var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, CategoryPrefixes.GetSectorSubjectAreaTier1Code(sectorSubjectAreaTier1Category.CodeName), CategoryType.StandardSector, standards);
                 sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
             }
 

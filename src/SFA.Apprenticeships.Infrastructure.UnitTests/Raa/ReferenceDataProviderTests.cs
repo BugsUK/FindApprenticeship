@@ -32,7 +32,7 @@
             standardA = new Standard() {Id = 1,Name = "Standard A", ApprenticeshipLevel = ApprenticeshipLevel.Degree, ApprenticeshipSectorId = 10};
             standardB = new Standard() {Id = 2,Name = "Standard B", ApprenticeshipLevel = ApprenticeshipLevel.Advanced, ApprenticeshipSectorId = 10};
             standardList = new List<Standard>() { standardA, standardB };
-            standardSector = new Sector() {Id = 10, Name = "Sector A", Standards = standardList};
+            standardSector = new Sector() {Id = 10, Name = "Sector A", ApprenticeshipOccupationId = 1, Standards = standardList};
             standardSectorList = new List<Sector>() { standardSector };
             frameworkA = new Framework(){Id = 1,CodeName = "FW.1",FullName = "Full Name",ShortName = "Short",ParentCategoryCodeName = "SSAT1.MFP" };
             frameworkB = new Framework(){Id = 2,CodeName = "FW.2",FullName = "Full Name2",ShortName = "Short",ParentCategoryCodeName = "SSAT1.MFP" };
