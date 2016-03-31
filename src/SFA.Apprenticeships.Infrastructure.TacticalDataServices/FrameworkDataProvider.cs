@@ -57,30 +57,9 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var sql = @"SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1 ORDER BY FullName;
-                        SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1 ORDER BY FullName;";
-
-            List<Framework> frameworks;
-            List<Occupation> occupations;
-
-            using (var connection = GetConnection())
-            {
-                using (var multi = connection.QueryMultiple(sql))
-                {
-                    occupations = multi.Read<Occupation>().ToList();
-                    frameworks = multi.Read<Framework>().ToList();
-                }
-            }
-
-            occupations.ForEach(o =>
-            {
-                o.Frameworks = frameworks.Where(f => f.ApprenticeshipOccupationId == o.ApprenticeshipOccupationId).ToList();
-                o.Frameworks.ForEach(f => f.ParentCategoryCodeName = o.CodeName);
-            });
-
             //Combining Frameworks and standards in here with garbage code as this entire service is being replaced
+            var categories = GetFrameworks();
             var standardSectors = GetSectors();
-            var categories = occupations.Select(o => o.ToCategory()).ToList();
 
             foreach (var standardSector in standardSectors)
             {
@@ -124,6 +103,32 @@
         public Category GetCategoryByCode(string categoryCode)
         {
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
+        }
+
+        public IEnumerable<Category> GetFrameworks()
+        {
+            var sql = @"SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1 ORDER BY FullName;
+                        SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1 ORDER BY FullName;";
+
+            List<Framework> frameworks;
+            List<Occupation> occupations;
+
+            using (var connection = GetConnection())
+            {
+                using (var multi = connection.QueryMultiple(sql))
+                {
+                    occupations = multi.Read<Occupation>().ToList();
+                    frameworks = multi.Read<Framework>().ToList();
+                }
+            }
+
+            occupations.ForEach(o =>
+            {
+                o.Frameworks = frameworks.Where(f => f.ApprenticeshipOccupationId == o.ApprenticeshipOccupationId).ToList();
+                o.Frameworks.ForEach(f => f.ParentCategoryCodeName = o.CodeName);
+            });
+
+            return occupations.Select(o => o.ToCategory()).ToList();
         }
 
         public IEnumerable<Sector> GetSectors()
