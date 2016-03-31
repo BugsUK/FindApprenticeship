@@ -14,7 +14,7 @@
     {
         private Mock<IReferenceRepository> mockReferenceRepo;
         private ReferenceDataProvider providerUnderTest;
-        private List<Sector> sectorList;
+        private List<Sector> standardSectorList;
         private List<Standard> standardList;
         private List<Framework> frameworkList;
         private List<Occupation> occupationList;
@@ -28,20 +28,21 @@
 
         [SetUp]
         public void SetUpFixture()
-        {
-            mockReferenceRepo = new Mock<IReferenceRepository>();
-            providerUnderTest = new ReferenceDataProvider(mockReferenceRepo.Object);
+        {            
             standardA = new Standard() {Id = 1,Name = "Standard A", ApprenticeshipLevel = ApprenticeshipLevel.Degree, ApprenticeshipSectorId = 10};
             standardB = new Standard() {Id = 2,Name = "Standard B", ApprenticeshipLevel = ApprenticeshipLevel.Advanced, ApprenticeshipSectorId = 10};
             standardList = new List<Standard>() { standardA, standardB };
             standardSector = new Sector() {Id = 10, Name = "Sector A", Standards = standardList};
+            standardSectorList = new List<Sector>() { standardSector };
             frameworkA = new Framework(){Id = 1,CodeName = "FW.1",FullName = "Full Name",ShortName = "Short",ParentCategoryCodeName = "SSAT1.MFP" };
             frameworkB = new Framework(){Id = 2,CodeName = "FW.2",FullName = "Full Name2",ShortName = "Short",ParentCategoryCodeName = "SSAT1.MFP" };
             frameworkList = new List<Framework>() { frameworkA, frameworkB };
-            occupation = new Occupation() { Id = 1, CodeName = "SSAT1.MFP", FullName = "Full Occupation name", Frameworks = frameworkList, ShortName = "short" };
-            sectorList = new List<Sector>() { standardSector };
+            occupation = new Occupation() { Id = 1, CodeName = "SSAT1.MFP", FullName = "Full Occupation name", Frameworks = frameworkList, ShortName = "short" };            
             occupationList = new List<Occupation>() { occupation };
-            mockReferenceRepo.Setup(mrr => mrr.GetSectors()).Returns(sectorList);
+
+            mockReferenceRepo = new Mock<IReferenceRepository>();
+            providerUnderTest = new ReferenceDataProvider(mockReferenceRepo.Object);
+            mockReferenceRepo.Setup(mrr => mrr.GetSectors()).Returns(this.standardSectorList);
             mockReferenceRepo.Setup(mrr => mrr.GetStandards()).Returns(standardList);
             mockReferenceRepo.Setup(mrr => mrr.GetFrameworks()).Returns(frameworkList);
             mockReferenceRepo.Setup(mrr => mrr.GetOccupations()).Returns(occupationList);
