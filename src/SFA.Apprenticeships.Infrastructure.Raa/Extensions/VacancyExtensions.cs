@@ -100,7 +100,7 @@
                     if (framework != null)
                     {
                         var category = categories.Single(sc => sc.CodeName == framework.ParentCategoryCodeName);
-                        return new Category(category.CodeName, category.FullName, category.CategoryType);
+                        return new Category(category.Id, category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -134,7 +134,7 @@
                     {
                         var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
                         var category = categories.Single(sc => sc.CodeName == standardSector.ParentCategoryCodeName);
-                        return new Category(category.CodeName, category.FullName, category.CategoryType);
+                        return new Category(category.Id, category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -157,7 +157,7 @@
 
                     if (category != null)
                     {
-                        return new Category(category.CodeName, category.FullName, category.CategoryType);
+                        return new Category(category.Id, category.CodeName, category.FullName, category.CategoryType);
                     }
                 }
 
@@ -203,7 +203,7 @@
 
                     if (framework != null)
                     {
-                        return new Category(framework.CodeName, framework.FullName, framework.CategoryType);
+                        return new Category(framework.Id, framework.CodeName, framework.FullName, framework.CategoryType);
                     }
                 }
 
@@ -236,7 +236,7 @@
                     if (standard != null)
                     {
                         var standardSector = subCategories.Single(sc => sc.CodeName == standard.ParentCategoryCodeName);
-                        return new Category(standard.ParentCategoryCodeName, $"{standardSector.FullName} > {standard.FullName}", CategoryType.StandardSector);
+                        return new Category(standard.Id, standard.ParentCategoryCodeName, $"{standardSector.FullName} > {standard.FullName}", CategoryType.StandardSector);
                     }
                 }
 

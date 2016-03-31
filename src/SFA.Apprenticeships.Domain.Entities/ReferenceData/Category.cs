@@ -9,8 +9,9 @@
             
         }
 
-        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories, long? count)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories, long? count)
         {
+            Id = id;
             CodeName = codeName;
             FullName = fullName;
             ParentCategoryCodeName = parentCategoryCodeName;
@@ -19,35 +20,37 @@
             Count = count ?? 0;
         }
 
-        public Category(string codeName, string fullName, CategoryType categoryType) : this(codeName, fullName, null, categoryType, null, null)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType) : this(id, codeName, fullName, null, categoryType, null, null)
         {
             
         }
 
-        public Category(string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories) : this(codeName, fullName, null, categoryType, subCategories, null)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories) : this(id, codeName, fullName, null, categoryType, subCategories, null)
         {
             
         }
 
-        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType) : this(codeName, fullName, parentCategoryCodeName, categoryType, null, null)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, null, null)
         {
             
         }
 
-        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories) : this(codeName, fullName, parentCategoryCodeName, categoryType, subCategories, null)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, IList<Category> subCategories) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, subCategories, null)
         {
 
         }
 
-        public Category(string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories, long? count) : this(codeName, fullName, null, categoryType, subCategories, count)
+        public Category(int id, string codeName, string fullName, CategoryType categoryType, IList<Category> subCategories, long? count) : this(id, codeName, fullName, null, categoryType, subCategories, count)
         {
 
         }
 
-        public Category(string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, long? count) : this(codeName, fullName, parentCategoryCodeName, categoryType, null, count)
+        public Category(int id, string codeName, string fullName, string parentCategoryCodeName, CategoryType categoryType, long? count) : this(id, codeName, fullName, parentCategoryCodeName, categoryType, null, count)
         {
 
         }
+
+        public int Id { get; private set; }
 
         public string FullName { get; private set; }
 

@@ -17,5 +17,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
 
         [Required]
         public string FullName { get; set; }
+
+        [Required]
+        public int ApprenticeshipOccupationId { get; set; }
     }
 }

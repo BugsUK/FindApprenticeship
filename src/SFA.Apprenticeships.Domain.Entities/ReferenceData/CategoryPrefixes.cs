@@ -10,6 +10,7 @@
 
         public static string GetSectorSubjectAreaTier1Code(string code)
         {
+            if (string.IsNullOrEmpty(code)) return code;
             return code.StartsWith(SectorSubjectAreaTier1) ? code : $"{SectorSubjectAreaTier1}{code}";
         }
 

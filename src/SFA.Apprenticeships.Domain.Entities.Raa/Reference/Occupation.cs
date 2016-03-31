@@ -26,7 +26,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Reference
         /// <returns></returns>
         public Category ToCategory()
         {
-            var category = new Category(CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);
+            var category = new Category(Id, CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);
             Frameworks.ToList().ForEach(f => category.SubCategories.Add(f.ToCategory()));
             return category;
         }

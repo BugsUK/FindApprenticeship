@@ -152,7 +152,7 @@
             referenceDataService.Setup(rds => rds.GetCategories())
                 .Returns(new[]
                 {
-                    new Category("01", ASector, CategoryType.SectorSubjectAreaTier1, new[] {new Category("02", ASubcategory, CategoryType.Framework)})
+                    new Category(1, "01", ASector, CategoryType.SectorSubjectAreaTier1, new[] {new Category(2, "02", ASubcategory, CategoryType.Framework)})
                 });
         }
     }

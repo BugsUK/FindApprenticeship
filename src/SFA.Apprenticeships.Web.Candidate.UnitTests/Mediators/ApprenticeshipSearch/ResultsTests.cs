@@ -445,16 +445,16 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category("1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category("1_1", "1_1", CategoryType.Framework),
-                        new Category("1_2", "1_2", CategoryType.Framework)
+                        new Category(1, "1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "1_2", "1_2", CategoryType.Framework)
                     }
                 ),
-                new Category(selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category("2_1", "2_1", CategoryType.Framework),
-                        new Category(selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
+                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
                 )
             });
@@ -513,16 +513,16 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category("1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category("1_1", "1_1", CategoryType.Framework),
-                        new Category("1_2", "1_2", CategoryType.Framework)
+                        new Category(1, "1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "1_2", "1_2", CategoryType.Framework)
                     }
                 ),
-                new Category(selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category("2_1", "2_1", CategoryType.Framework),
-                        new Category(selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
+                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
                 )
             });

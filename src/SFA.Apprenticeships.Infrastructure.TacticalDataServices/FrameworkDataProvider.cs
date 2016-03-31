@@ -66,8 +66,8 @@
                 var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
                 var standardSectorCode = CategoryPrefixes.GetStandardSectorCode(standardSector.Id);
                 var sectorSubjectAreaTier1Category = categories.Single(c => c.CodeName == sectorSubjectAreaTier1Code);
-                var standards = standardSector.Standards.Select(s => new Category(CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
-                var standardSectorCategory = new Category(standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
+                var standards = standardSector.Standards.Select(s => new Category(s.Id, CategoryPrefixes.GetStandardCode(s.Id), s.Name, standardSectorCode, CategoryType.Standard)).ToList();
+                var standardSectorCategory = new Category(standardSector.Id, standardSectorCode, standardSector.Name, sectorSubjectAreaTier1Code, CategoryType.StandardSector, standards);
                 sectorSubjectAreaTier1Category.SubCategories.Add(standardSectorCategory);
             }
 
