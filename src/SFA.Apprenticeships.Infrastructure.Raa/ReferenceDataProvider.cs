@@ -55,17 +55,10 @@
 
         public IEnumerable<Category> GetCategories()
         {
-            var occupations = _referenceRepository.GetOccupations().ToList();
+            var categories = GetFrameworks();
             var standardSectors = GetSectors();
 
-            occupations.ForEach(o =>
-            {
-                o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
-            });
-
             //Combining Frameworks and standards in here with garbage code as this entire service is being replaced
-            var categories = occupations.Select(o => o.ToCategory()).ToList();
-
             foreach (var standardSector in standardSectors)
             {
                 var sectorSubjectAreaTier1Code = _standardSectorToSectorSubjectAreaTier1Map[standardSector.Id];
@@ -128,6 +121,18 @@
         public Category GetCategoryByCode(string categoryCode)
         {
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
+        }
+
+        public IEnumerable<Category> GetFrameworks()
+        {
+            var occupations = _referenceRepository.GetOccupations().ToList();
+
+            occupations.ForEach(o =>
+            {
+                o.Frameworks.ToList().ForEach(f => f.ParentCategoryCodeName = o.CodeName);
+            });
+
+            return occupations.Select(o => o.ToCategory()).ToList();
         }
 
         public IEnumerable<Sector> GetSectors()

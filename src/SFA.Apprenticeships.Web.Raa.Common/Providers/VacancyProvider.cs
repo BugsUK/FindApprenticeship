@@ -542,7 +542,7 @@
 
         public List<SelectListItem> GetSectorsAndFrameworks()
         {
-            var categories = _referenceDataService.GetCategories();
+            var categories = _referenceDataService.GetFrameworks();
 
             var sectorsAndFrameworkItems = new List<SelectListItem>
             {

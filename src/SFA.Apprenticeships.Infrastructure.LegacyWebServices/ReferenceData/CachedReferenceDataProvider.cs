@@ -55,6 +55,12 @@
             return _cacheService.Get(CacheKey, GetCategoryByCodeWrap, categoryCode);
         }
 
+        public IEnumerable<Category> GetFrameworks()
+        {
+            _logger.Debug("Calling cached GetFrameworks");
+            return _cacheService.Get(CacheKey, _legcayService.GetFrameworks);
+        }
+
         public IEnumerable<Sector> GetSectors()
         {
             _logger.Debug("Calling cached GetSectors");
