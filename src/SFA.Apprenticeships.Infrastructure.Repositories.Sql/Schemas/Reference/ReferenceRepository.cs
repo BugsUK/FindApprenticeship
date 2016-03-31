@@ -45,9 +45,17 @@
                         ShortName = x.ShortName,
                         Frameworks =
                             dbFrameworks.Where(af => af.ApprenticeshipOccupationId == x.ApprenticeshipOccupationId)
-                                .Select(_mapper.Map<ApprenticeshipFramework, Framework>)
+                                .Select(_mapper.Map<ApprenticeshipFramework, Framework>).ToList()
                     };
                 }).ToList();
+
+            foreach (var occupation in occupations)
+            {
+                foreach (var framework in occupation.Frameworks)
+                {
+                    framework.ParentCategoryCodeName = occupation.CodeName;
+                }
+            }
 
             _logger.Debug("Got all apprenticeship occupations");
 
