@@ -80,7 +80,7 @@
 
         private static void LogCategory(VacancySummary vacancy, ILogService logService, Category category)
         {
-            if (category.IsValid())
+            if (vacancy.SectorCodeName != null && !category.IsValid())
             {
                 logService.Warn("Cannot find a category for the traineeship with Id {0}", vacancy.VacancyId);
             }
