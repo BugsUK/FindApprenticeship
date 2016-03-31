@@ -14,6 +14,10 @@
 
         public string ParentCategoryCodeName { get; set; }
 
+        /// <summary>
+        /// TODO: Do this a better way
+        /// </summary>
+        /// <returns></returns>
         public Category ToCategory()
         {
             return new Category(CategoryPrefixes.GetFrameworkCode(CodeName), FullName, CategoryPrefixes.GetSectorSubjectAreaTier1Code(ParentCategoryCodeName), CategoryType.Framework);

@@ -90,21 +90,41 @@
             return categories;
         }
 
+        /// <summary>
+        /// This searches SubCategories (Frameworks and StandardSectors) by full name
+        /// </summary>
+        /// <param name="subCategoryName"></param>
+        /// <returns></returns>
         public Category GetSubCategoryByName(string subCategoryName)
         {
             return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.FullName == subCategoryName);
         }
 
+        /// <summary>
+        /// This searches Categories (SectorSubjectAreaTier1) by full name
+        /// </summary>
+        /// <param name="categoryName"></param>
+        /// <returns></returns>
         public Category GetCategoryByName(string categoryName)
         {
             return GetCategories().FirstOrDefault(c => c.FullName == categoryName);
         }
 
+        /// <summary>
+        /// This searches SubCategories (Frameworks and StandardSectors) by codename
+        /// </summary>
+        /// <param name="subCategoryCode"></param>
+        /// <returns></returns>
         public Category GetSubCategoryByCode(string subCategoryCode)
         {
             return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.CodeName == subCategoryCode);
         }
 
+        /// <summary>
+        /// This searches Categories (SectorSubjectAreaTier1) by code
+        /// </summary>
+        /// <param name="categoryCode"></param>
+        /// <returns></returns>
         public Category GetCategoryByCode(string categoryCode)
         {
             return GetCategories().FirstOrDefault(c => c.CodeName == categoryCode);
