@@ -15,11 +15,13 @@
 
         public static string GetFrameworkCode(string code)
         {
+            if (string.IsNullOrEmpty(code)) return code;
             return code.StartsWith(Framework) ? code : $"{Framework}{code}";
         }
 
         public static string GetStandardSectorCode(string code)
         {
+            if (string.IsNullOrEmpty(code)) return code;
             return code.StartsWith(StandardSector) ? code : $"{StandardSector}{code}";
         }
 
@@ -35,7 +37,38 @@
 
         public static string GetSectorCode(string code)
         {
+            if (string.IsNullOrEmpty(code)) return code;
             return code.StartsWith(Sector) ? code : $"{Sector}{code}";
+        }
+
+        public static string GetOriginalSectorSubjectAreaTier1Code(string code)
+        {
+            return code?.Replace(SectorSubjectAreaTier1, "");
+        }
+
+        public static string GetOriginalFrameworkCode(string code)
+        {
+            return code?.Replace(Framework, "");
+        }
+
+        public static string GetOriginalStandardSectorCode(string code)
+        {
+            return code?.Replace(StandardSector, "");
+        }
+
+        public static int GetOriginalStandardSectorCode(int standardSectorId)
+        {
+            return standardSectorId;
+        }
+
+        public static int GetOriginalStandardCode(int standardId)
+        {
+            return standardId;
+        }
+
+        public static string GetOriginalSectorCode(string code)
+        {
+            return code?.Replace(Sector, "");
         }
     }
 }
