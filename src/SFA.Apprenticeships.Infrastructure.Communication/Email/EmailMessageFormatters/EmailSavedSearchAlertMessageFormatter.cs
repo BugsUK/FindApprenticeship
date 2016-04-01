@@ -15,6 +15,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
+    using Presentation;
     using SendGrid;
 
     public class EmailSavedSearchAlertMessageFormatter : EmailMessageFormatter

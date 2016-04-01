@@ -6,6 +6,7 @@
     using Application.ReferenceData;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
+    using Presentation;
 
     public class ReferenceDataProvider  : IReferenceDataProvider
     {
@@ -34,11 +35,35 @@
             //Order the new standard sectors correctly
             foreach (var category in categories)
             {
-                var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ToList();
+                var orderedSubCategories = category.SubCategories.OrderBy(c => c.FullName).ThenBy(c => c.CodeName).ToList();
                 category.SubCategories.Clear();
                 foreach (var subCategory in orderedSubCategories)
                 {
-                    category.SubCategories.Add(subCategory);
+                    //Remove duplicated categories
+                    subCategory.FullName = FullNameFormatter.Format(subCategory.FullName);
+                    var duplicateCategory = category.SubCategories.SingleOrDefault(c => c.FullName == subCategory.FullName);
+                    if (duplicateCategory == null)
+                    {
+                        category.SubCategories.Add(subCategory);
+                    }
+                    else
+                    {
+                        //Create combined category and replace duplicates
+                        var combinedCodeName = duplicateCategory.CodeName + "|" + subCategory.CodeName;
+                        var combinedSubcategories = duplicateCategory.SubCategories ?? new List<Category>();
+                        foreach (var standard in subCategory.SubCategories)
+                        {
+                            combinedSubcategories.Add(standard);
+                        }
+                        foreach (var standard in combinedSubcategories)
+                        {
+                            standard.ParentCategoryCodeName = combinedCodeName;
+                        }
+                        var combinedCategory = new Category(0, combinedCodeName, duplicateCategory.FullName, duplicateCategory.ParentCategoryCodeName, CategoryType.Combined, combinedSubcategories);
+                        var currentIndex = category.SubCategories.IndexOf(duplicateCategory);
+                        category.SubCategories.Insert(currentIndex, combinedCategory);
+                        category.SubCategories.Remove(duplicateCategory);
+                    }
                 }
             }
 
@@ -72,7 +97,7 @@
         /// <returns></returns>
         public Category GetSubCategoryByCode(string subCategoryCode)
         {
-            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.CodeName == subCategoryCode);
+            return GetCategories().SelectMany(c => c.SubCategories).FirstOrDefault(sc => sc.CodeName.Split('|').Contains(subCategoryCode));
         }
 
         /// <summary>

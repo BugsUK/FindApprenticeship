@@ -52,11 +52,11 @@
 
         public int Id { get; private set; }
 
-        public string FullName { get; private set; }
+        public string FullName { get; set; }
 
         public string CodeName { get; private set; }
 
-        public string ParentCategoryCodeName { get; private set; }
+        public string ParentCategoryCodeName { get; set; }
 
         public CategoryType CategoryType { get; private set; }
 

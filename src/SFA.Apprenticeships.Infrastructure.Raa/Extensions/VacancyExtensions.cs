@@ -14,6 +14,8 @@
     //TODO: This is only used by FAA for conversions - move to that project when found
     public static class VacancyExtensions
     {
+        private const char CodeDivider = '|';
+
         public static ApprenticeshipLevel GetApprenticeshipLevel(
             this Domain.Entities.Raa.Vacancies.ApprenticeshipLevel apprenticeshipLevel)
         {
@@ -113,7 +115,7 @@
                         .SelectMany(c => c.SubCategories);
 
                     var framework = subCategories
-                        .SingleOrDefault(c => c.CodeName == frameworkCode);
+                        .SingleOrDefault(c => c.CodeName.Split(CodeDivider).Contains(frameworkCode));
 
                     if (framework != null)
                     {
@@ -146,7 +148,7 @@
                         .SelectMany(c => c.SubCategories);
 
                     var standard = standards
-                        .SingleOrDefault(c => c.CodeName == standardCode);
+                        .SingleOrDefault(c => c.CodeName.Split(CodeDivider).Contains(standardCode));
 
                     if (standard != null)
                     {
@@ -171,7 +173,7 @@
                     var code = CategoryPrefixes.GetSectorSubjectAreaTier1Code(vacancy.SectorCodeName);
 
                     var category = categories
-                        .SingleOrDefault(c => c.CodeName == code);
+                        .SingleOrDefault(c => c.CodeName.Split(CodeDivider).Contains(code));
 
                     if (category != null)
                     {
@@ -217,7 +219,7 @@
                         .SelectMany(c => c.SubCategories);
 
                     var framework = subCategories
-                        .SingleOrDefault(c => c.CodeName == frameworkCode);
+                        .SingleOrDefault(c => c.CodeName.Split(CodeDivider).Contains(frameworkCode));
 
                     if (framework != null)
                     {
@@ -249,7 +251,7 @@
                         .SelectMany(c => c.SubCategories);
 
                     var standard = standards
-                        .SingleOrDefault(c => c.CodeName == standardCode);
+                        .SingleOrDefault(c => c.CodeName.Split(CodeDivider).Contains(standardCode));
                     
                     if (standard != null)
                     {

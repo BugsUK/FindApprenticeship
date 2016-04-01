@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Communication.Email.EmailMessageFormatters
+﻿namespace SFA.Apprenticeships.Infrastructure.Presentation
 {
     using System.Text.RegularExpressions;
 

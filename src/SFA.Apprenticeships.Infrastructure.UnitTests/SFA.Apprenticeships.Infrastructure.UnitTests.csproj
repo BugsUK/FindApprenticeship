@@ -191,6 +191,7 @@
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
     <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
+    <Compile Include="Presentation\FullNameFormatterTests.cs" />
     <Compile Include="Presentation\RegionalTeamPresenter.cs" />
     <Compile Include="Presentation\VacancyTypePresenterTests.cs" />
     <Compile Include="Presentation\WagePresenterTests.cs" />

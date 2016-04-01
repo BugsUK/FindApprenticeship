@@ -24,6 +24,7 @@
     using Common.Constants;
     using Domain.Entities.Communication;
     using Helpers;
+    using Infrastructure.Presentation;
     using Mappers;
     using ViewModels.Account;
     using ViewModels.VacancySearch;

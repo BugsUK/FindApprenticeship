@@ -124,7 +124,7 @@
         {
             _logger.Debug("Getting all apprenticeship occupations");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation WHERE ApprenticeshipOccupationStatusTypeId = 1 ORDER BY FullName;";
 
             var sqlParams = new
             {
@@ -142,7 +142,7 @@
         {
             _logger.Debug("Getting all frameworks");
 
-            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
+            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework WHERE ApprenticeshipFrameworkStatusTypeId = 1 ORDER BY FullName;";
 
             var sqlParams = new
             {

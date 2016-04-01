@@ -30,12 +30,25 @@
                             }
                         )
                     }
+                ),
+                new Category(15, "SSAT1.AHR", "Business, Administration and Law", CategoryType.SectorSubjectAreaTier1,
+                    new List<Category>
+                    {
+                        new Category(0, "FW.589|STDSEC.15", "Insurance", "SSAT1.AHR", CategoryType.Combined,
+                            new List<Category>
+                            {
+                                new Category(41, "STD.41", "Insurance Practitioner", "FW.589|STDSEC.15", CategoryType.Standard)
+                            }
+                        )
+                    }
                 )
             };
         }
 
         [TestCase(VacancyType.Apprenticeship, "101", "SSAT1.ICT", "Information and Communication Technology")]
         [TestCase(VacancyType.Apprenticeship, "FW.101", "SSAT1.ICT", "Information and Communication Technology")]
+        [TestCase(VacancyType.Apprenticeship, "589", "SSAT1.AHR", "Business, Administration and Law")]
+        [TestCase(VacancyType.Apprenticeship, "FW.589", "SSAT1.AHR", "Business, Administration and Law")]
         [TestCase(VacancyType.Apprenticeship, null, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Apprenticeship, "XXX", "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Traineeship, "101", "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
@@ -60,6 +73,7 @@
         }
 
         [TestCase(VacancyType.Apprenticeship, 2, "SSAT1.ICT", "Information and Communication Technology")]
+        [TestCase(VacancyType.Apprenticeship, 41, "SSAT1.AHR", "Business, Administration and Law")]
         [TestCase(VacancyType.Apprenticeship, null, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Apprenticeship, -1, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Traineeship, 2, "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
@@ -85,6 +99,8 @@
 
         [TestCase(VacancyType.Traineeship, "ICT", "SSAT1.ICT", "Information and Communication Technology")]
         [TestCase(VacancyType.Traineeship, "SSAT1.ICT", "SSAT1.ICT", "Information and Communication Technology")]
+        [TestCase(VacancyType.Traineeship, "AHR", "SSAT1.AHR", "Business, Administration and Law")]
+        [TestCase(VacancyType.Traineeship, "SSAT1.AHR", "SSAT1.AHR", "Business, Administration and Law")]
         [TestCase(VacancyType.Traineeship, null, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Traineeship, "XXX", "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Apprenticeship, "ICT", "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
@@ -110,6 +126,8 @@
 
         [TestCase(VacancyType.Apprenticeship, "101", "SSAT1.ICT", "Information and Communication Technology")]
         [TestCase(VacancyType.Apprenticeship, "FW.101", "SSAT1.ICT", "Information and Communication Technology")]
+        [TestCase(VacancyType.Apprenticeship, "589", "SSAT1.AHR", "Business, Administration and Law")]
+        [TestCase(VacancyType.Apprenticeship, "FW.589", "SSAT1.AHR", "Business, Administration and Law")]
         [TestCase(VacancyType.Apprenticeship, null, "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Apprenticeship, "XXX", "SSAT1.UNKNOWN", "Unknown Sector Subject Area Tier 1")]
         [TestCase(VacancyType.Traineeship, "101", "SSAT1.INVALID", "Invalid Sector Subject Area Tier 1")]
@@ -135,6 +153,8 @@
 
         [TestCase(VacancyType.Apprenticeship, "101", "FW.101", "Software Developer")]
         [TestCase(VacancyType.Apprenticeship, "FW.101", "FW.101", "Software Developer")]
+        [TestCase(VacancyType.Apprenticeship, "589", "FW.589|STDSEC.15", "Insurance")]
+        [TestCase(VacancyType.Apprenticeship, "FW.589", "FW.589|STDSEC.15", "Insurance")]
         [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN", "Unknown Framework")]
         [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN", "Unknown Framework")]
         [TestCase(VacancyType.Traineeship, "101", "FW.INVALID", "Invalid Framework")]
@@ -159,6 +179,7 @@
         }
 
         [TestCase(VacancyType.Apprenticeship, 2, "STDSEC.201", "Digital Industries > Software Developer")]
+        [TestCase(VacancyType.Apprenticeship, 41, "FW.589|STDSEC.15", "Insurance > Insurance Practitioner")]
         [TestCase(VacancyType.Apprenticeship, null, "STDSEC.UNKNOWN", "Unknown Standard Sector")]
         [TestCase(VacancyType.Apprenticeship, -1, "STDSEC.UNKNOWN", "Unknown Standard Sector")]
         [TestCase(VacancyType.Traineeship, 2, "STDSEC.INVALID", "Invalid Standard Sector")]
@@ -209,6 +230,8 @@
 
         [TestCase(VacancyType.Apprenticeship, "101", "FW.101", "Software Developer")]
         [TestCase(VacancyType.Apprenticeship, "FW.101", "FW.101", "Software Developer")]
+        [TestCase(VacancyType.Apprenticeship, "589", "FW.589|STDSEC.15", "Insurance")]
+        [TestCase(VacancyType.Apprenticeship, "FW.589", "FW.589|STDSEC.15", "Insurance")]
         [TestCase(VacancyType.Apprenticeship, null, "FW.UNKNOWN", "Unknown Framework")]
         [TestCase(VacancyType.Apprenticeship, "XXX", "FW.UNKNOWN", "Unknown Framework")]
         [TestCase(VacancyType.Traineeship, "101", "FW.INVALID", "Invalid Framework")]

@@ -5,6 +5,7 @@
         SectorSubjectAreaTier1 = 1,
         Framework,
         StandardSector,
-        Standard
+        Standard,
+        Combined
     }
 }
