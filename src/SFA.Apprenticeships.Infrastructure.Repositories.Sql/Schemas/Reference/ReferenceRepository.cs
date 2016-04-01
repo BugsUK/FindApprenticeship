@@ -66,7 +66,7 @@
         {
             _logger.Debug("Getting all standards");
 
-            const string standardSql = "SELECT * FROM Reference.Standard;";
+            const string standardSql = "SELECT * FROM Reference.Standard ORDER BY FullName;";
 
             var sqlParams = new
             {
@@ -96,7 +96,7 @@
         {
             _logger.Debug("Getting all sectors");
 
-            const string sectorSql = "SELECT * FROM Reference.StandardSector;";
+            const string sectorSql = "SELECT * FROM Reference.StandardSector ORDER BY FullName;";
 
             var sqlParams = new
             {
@@ -124,7 +124,7 @@
         {
             _logger.Debug("Getting all apprenticeship occupations");
 
-            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation;";
+            const string sectorSql = "SELECT * FROM dbo.ApprenticeshipOccupation ORDER BY FullName;";
 
             var sqlParams = new
             {
@@ -142,7 +142,7 @@
         {
             _logger.Debug("Getting all frameworks");
 
-            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework;";
+            const string frameworkSql = "SELECT * FROM dbo.ApprenticeshipFramework ORDER BY FullName;";
 
             var sqlParams = new
             {

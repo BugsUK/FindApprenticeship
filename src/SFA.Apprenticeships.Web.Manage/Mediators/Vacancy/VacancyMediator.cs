@@ -71,7 +71,7 @@
 
             return nextVacancy == null
                 ? GetMediatorResponse<DashboardVacancySummaryViewModel>(
-                    VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies)
+                    VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies, null, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info)
                 : GetMediatorResponse(VacancyMediatorCodes.ApproveVacancy.Ok, nextVacancy);
         }
 
@@ -89,7 +89,7 @@
 
             return nextVacancy == null
                 ? GetMediatorResponse<DashboardVacancySummaryViewModel>(
-                    VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies)
+                    VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies, null, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info)
                 : GetMediatorResponse(VacancyMediatorCodes.RejectVacancy.Ok, nextVacancy);
         }
 
