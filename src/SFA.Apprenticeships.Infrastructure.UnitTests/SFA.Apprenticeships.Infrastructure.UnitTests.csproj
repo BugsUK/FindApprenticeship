@@ -144,10 +144,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerBuilder.cs" />
-    <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerTests.cs" />
-    <Compile Include="AzureServiceBus\CreateCandidateRequestSubscriberMock.cs" />
-    <Compile Include="AzureServiceBus\SubscriptionClientStub.cs" />
     <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
     <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
     <Compile Include="Communication\Builders\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
@@ -180,40 +176,18 @@
     <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
     <Compile Include="EmployerDataService\EmployerAddressValidationTests.cs" />
     <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
-    <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
-    <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
-    <Compile Include="LegacyWebServices\Candidate\UpdateCandidateTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancyDetailMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayTraineeshipVacancyDetailMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayTraineeshipVacancySummaryMapperTests.cs" />
-    <Compile Include="LegacyWebServices\GatewayApprenticeshipVacancySummaryMapperTests.cs" />
-    <Compile Include="LegacyWebServices\Candidate\CreateCandidateTests.cs" />
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
     <Compile Include="Postcode\PostalAddressLookupProviderTests.cs" />
     <Compile Include="Postcode\PostcodeServiceTests.cs" />
     <Compile Include="Presentation\RegionalTeamPresenter.cs" />
     <Compile Include="Presentation\VacancyTypePresenterTests.cs" />
     <Compile Include="Presentation\WagePresenterTests.cs" />
-    <Compile Include="Processes\ApplicationStatusChangedSubscriberTests.cs" />
-    <Compile Include="Processes\Builders\ApplicationStatusChangedSubscriberBuilder.cs" />
-    <Compile Include="Processes\Builders\EmailRequestSubscriberBuilder.cs" />
-    <Compile Include="Processes\EmailRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SaveCandidateRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SubmitApprenticeshipApplicationRequestSubscriberTests.cs" />
-    <Compile Include="Processes\SubmitTraineeshipApplicationRequestSubscriberTests.cs" />
-    <Compile Include="Processes\VacancyStatusSummarySubscriberTests.cs" />
-    <Compile Include="Processes\VacancySummaryCompleteSubscriberTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raa\Extensions\VacancyExtensions\GetCategoryTests.cs" />
     <Compile Include="Raa\Extensions\VacancyExtensions\VacancyExtensionsTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipSummaryMapperTests.cs" />
     <Compile Include="Raa\ReferenceDataProviderTests.cs" />
-    <Compile Include="ScheduledJobs\Application\ApplicationStatusSummarySubscriberTests.cs" />
-    <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
-    <Compile Include="ScheduledJobs\Vacancy\VacancyStatusControlQueueConsumerTests..cs" />
-    <Compile Include="ScheduledJobs\Vacancy\VacancySchedulerConsumerTests.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriberTests.cs" />
-    <Compile Include="UserDirectory\PasswordHashTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -272,10 +246,6 @@
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.Common\SFA.Apprenticeships.Infrastructure.Azure.Common.csproj">
-      <Project>{4FE5E4BE-91DF-49C6-B6CD-9B69FCD0C0FE}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Azure.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
@@ -288,17 +258,9 @@
       <Project>{D34D27D3-79A9-407E-86EF-AF3AC0EA024B}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Elastic.Common\SFA.Apprenticeships.Infrastructure.Elastic.Common.csproj">
-      <Project>{f75b0c62-89b5-473d-af2d-366a5a6722ac}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Elastic.Common</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
-      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Postcode\SFA.Apprenticeships.Infrastructure.Postcode.csproj">
       <Project>{ABD48D09-C35E-42CE-8A4D-81550C2B8554}</Project>
@@ -308,25 +270,9 @@
       <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
-      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
       <Project>{1f4776f3-884b-4b00-ba97-22bfa06c034e}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.ScheduledJobs\SFA.Apprenticeships.Infrastructure.ScheduledJobs.csproj">
-      <Project>{0491054E-CAF4-4321-BE1D-3E44E739421C}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.ScheduledJobs</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.UserDirectory\SFA.Apprenticeships.Infrastructure.UserDirectory.csproj">
-      <Project>{3FD05F32-F39C-4ACF-8B3B-571B2D20899E}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.UserDirectory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
-      <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.WebServices\SFA.Apprenticeships.Infrastructure.WebServices.csproj">
       <Project>{0D94A2DF-6D5A-4DEC-B6A1-137F3B461B47}</Project>
