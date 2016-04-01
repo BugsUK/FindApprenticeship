@@ -401,6 +401,7 @@
                     SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies:
+                    SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.ApproveVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
@@ -422,6 +423,7 @@
                     SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.NoAvailableVacancies:
+                    SetUserMessage(response.Message);
                     return RedirectToRoute(ManagementRouteNames.Dashboard);
                 case VacancyMediatorCodes.RejectVacancy.Ok:
                     return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
