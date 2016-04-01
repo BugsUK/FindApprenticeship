@@ -53,11 +53,27 @@
     <Reference Include="Moq">
       <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="Ploeh.AutoFixture, Version=3.38.1.0, Culture=neutral, PublicKeyToken=b24654c590009d4f, processorArchitecture=MSIL">
       <HintPath>..\packages\AutoFixture.3.38.1\lib\net40\Ploeh.AutoFixture.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="RestSharp, Version=105.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.105.1.0\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGrid.SmtpApi, Version=1.2.1.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\SendGrid.SmtpApi.1.2.1\lib\net40\SendGrid.SmtpApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SendGridMail, Version=5.1.0.0, Culture=neutral, PublicKeyToken=2ae73662c35d80e4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Sendgrid.5.1.0\lib\SendGridMail.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SFA.Apprenticeships.Application.Interfaces">
@@ -106,6 +122,36 @@
     <Compile Include="AzureServiceBus\AzureServiceBusMessageBrokerTests.cs" />
     <Compile Include="AzureServiceBus\CreateCandidateRequestSubscriberMock.cs" />
     <Compile Include="AzureServiceBus\SubscriptionClientStub.cs" />
+    <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
+    <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
+    <Compile Include="Communication\Builders\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
+    <Compile Include="Communication\Builders\SavedSearchAlertsBuilder.cs" />
+    <Compile Include="Communication\Candidate\CandidateCommunicationHelperTests.cs" />
+    <Compile Include="Communication\Commands\CandidateCommunication\CommandTests.cs" />
+    <Compile Include="Communication\Commands\CandidateCommunication\CommandTestsBase.cs" />
+    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ApplicationStatusAlertTests.cs" />
+    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\CommonTests.cs" />
+    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ExpiringDraftTests.cs" />
+    <Compile Include="Communication\Commands\HelpDeskCommunication\ContactUsCommandTests.cs" />
+    <Compile Include="Communication\Commands\HelpDeskCommunication\FeedbackCommandTests.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\DailyDigestEmailRequestBuilder.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailDailyDigestMessageFormatterBuilder.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailRequestBuilder.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailSavedSearchAlertMessageFormatterBuilder.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\SavedSearchAlertEmailRequestBuilder.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTestsBase.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\ExpiringDraftEmailDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\Helpers\SendGridMessageSubstitution.cs" />
+    <Compile Include="Communication\Email\EmailMessageFormatters\SavedSearchAlertEmailMessageFormatterTests.cs" />
+    <Compile Include="Communication\Sms\Reach\ReachSmsDispatcherTests.cs" />
+    <Compile Include="Communication\Sms\Reach\ReachSmsNumberFormatterTests.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\ApplicationStatusAlertSmsDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\DailyDigestSmsRequestBuilder.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\ExpiringDraftSmsDailyDigestMessageFormatterTests.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
+    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
     <Compile Include="LegacyWebServices\Candidate\CreateCandidateTests.cs" />
     <Compile Include="LegacyWebServices\Candidate\LegacyCandidateProviderBuilder.cs" />
     <Compile Include="LegacyWebServices\Candidate\MockGatewayService.cs" />
@@ -139,9 +185,17 @@
       <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
       <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
+      <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
+      <Name>SFA.Apprenticeships.Application.Communications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
       <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
+      <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
@@ -151,6 +205,10 @@
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Communication\SFA.Apprenticeships.Infrastructure.Communication.csproj">
+      <Project>{D34D27D3-79A9-407E-86EF-AF3AC0EA024B}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Communication</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
       <Project>{1F500137-C8E9-49AA-886E-1922D9D870EB}</Project>
       <Name>SFA.Infrastructure</Name>
@@ -159,6 +217,9 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

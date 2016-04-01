@@ -144,36 +144,6 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Communication\Builders\ApplicationStatusAlertsBuilder.cs" />
-    <Compile Include="Communication\Builders\CommunicationRequestBuilder.cs" />
-    <Compile Include="Communication\Builders\ExpiringApprenticeshipApplicationDraftsBuilder.cs" />
-    <Compile Include="Communication\Builders\SavedSearchAlertsBuilder.cs" />
-    <Compile Include="Communication\Candidate\CandidateCommunicationHelperTests.cs" />
-    <Compile Include="Communication\Commands\CandidateCommunication\CommandTests.cs" />
-    <Compile Include="Communication\Commands\CandidateCommunication\CommandTestsBase.cs" />
-    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ApplicationStatusAlertTests.cs" />
-    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\CommonTests.cs" />
-    <Compile Include="Communication\Commands\CandidateCommunication\DailyDigest\ExpiringDraftTests.cs" />
-    <Compile Include="Communication\Commands\HelpDeskCommunication\FeedbackCommandTests.cs" />
-    <Compile Include="Communication\Commands\HelpDeskCommunication\ContactUsCommandTests.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\ApplicationStatusAlertEmailDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\DailyDigestEmailRequestBuilder.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailDailyDigestMessageFormatterBuilder.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailRequestBuilder.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\EmailSavedSearchAlertMessageFormatterBuilder.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Builders\SavedSearchAlertEmailRequestBuilder.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\EmailDailyDigestMessageFormatterTestsBase.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\ExpiringDraftEmailDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\Helpers\SendGridMessageSubstitution.cs" />
-    <Compile Include="Communication\Email\EmailMessageFormatters\SavedSearchAlertEmailMessageFormatterTests.cs" />
-    <Compile Include="Communication\Sms\Reach\ReachSmsDispatcherTests.cs" />
-    <Compile Include="Communication\Sms\Reach\ReachSmsNumberFormatterTests.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\ApplicationStatusAlertSmsDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\DailyDigestSmsRequestBuilder.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\ExpiringDraftSmsDailyDigestMessageFormatterTests.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterBuilder.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsDailyDigestMessageFormatterTestsBase.cs" />
-    <Compile Include="Communication\Sms\SmsMessageFormatters\SmsRequestBuilder.cs" />
     <Compile Include="EmployerDataService\EmployerAddressValidationTests.cs" />
     <Compile Include="EmployerDataService\Mappers\BsAddressMapperTests.cs" />
     <Compile Include="Postcode\PostalAddressDetailsServiceTests.cs" />
@@ -269,6 +239,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Presentation\SFA.Apprenticeships.Infrastructure.Presentation.csproj">
       <Project>{83500887-e1b7-46bd-945b-4cc3d0069b6e}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Presentation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Processes\SFA.Apprenticeships.Infrastructure.Processes.csproj">
+      <Project>{D1BC4A28-A7AB-475E-B73E-5564897550BA}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Processes</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
       <Project>{1f4776f3-884b-4b00-ba97-22bfa06c034e}</Project>

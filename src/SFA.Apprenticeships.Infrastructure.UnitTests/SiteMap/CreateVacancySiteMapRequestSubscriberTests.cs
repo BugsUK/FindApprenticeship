@@ -5,8 +5,8 @@
     using Application.Vacancies.Entities.SiteMap;
     using Domain.Interfaces.Messaging;
     using FluentAssertions;
-    using Infrastructure.Processes.Configuration;
-    using Infrastructure.Processes.SiteMap;
+    using Processes.Configuration;
+    using Processes.SiteMap;
     using Moq;
     using NUnit.Framework;
 
