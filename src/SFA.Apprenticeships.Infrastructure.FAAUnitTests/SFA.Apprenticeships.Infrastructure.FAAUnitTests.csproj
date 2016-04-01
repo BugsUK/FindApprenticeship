@@ -79,9 +79,6 @@
     <Reference Include="SFA.Apprenticeships.Application.Interfaces">
       <HintPath>..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\bin\Local\SFA.Apprenticeships.Application.Interfaces.dll</HintPath>
     </Reference>
-    <Reference Include="SFA.Apprenticeships.Domain.Entities">
-      <HintPath>..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\bin\Local\SFA.Apprenticeships.Domain.Entities.dll</HintPath>
-    </Reference>
     <Reference Include="SFA.Apprenticeships.Infrastructure.Azure.Common">
       <HintPath>..\SFA.Apprenticeships.Infrastructure.Processes\bin\Local\SFA.Apprenticeships.Infrastructure.Azure.Common.dll</HintPath>
     </Reference>
@@ -196,6 +193,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.UnitTests\SFA.Apprenticeships.Domain.Entities.UnitTests.csproj">
       <Project>{4741B9B0-C694-4D34-8D30-D5B82BC87724}</Project>
       <Name>SFA.Apprenticeships.Domain.Entities.UnitTests</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Interfaces\SFA.Apprenticeships.Domain.Interfaces.csproj">
       <Project>{91DB99C3-50A9-4DED-AB90-2FF94D0B130E}</Project>
