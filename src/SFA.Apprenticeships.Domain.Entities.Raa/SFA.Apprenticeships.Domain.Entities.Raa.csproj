@@ -95,7 +95,9 @@
     <Compile Include="Parties\VerifiedOrganisationSummary.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Reference\County.cs" />
+    <Compile Include="Reference\Framework.cs" />
     <Compile Include="Reference\LocalAuthority.cs" />
+    <Compile Include="Reference\Occupation.cs" />
     <Compile Include="Reference\Region.cs" />
     <Compile Include="Reference\RegionalTeam.cs" />
     <Compile Include="Reference\RegionalTeamMapper.cs" />
@@ -119,7 +121,12 @@
     <Compile Include="Vacancies\WageType.cs" />
     <Compile Include="Vacancies\WageUnit.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities\SFA.Apprenticeships.Domain.Entities.csproj">
+      <Project>{4C2BE232-4DBD-44D0-B427-0450E2D857A5}</Project>
+      <Name>SFA.Apprenticeships.Domain.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

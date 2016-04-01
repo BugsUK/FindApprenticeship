@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Text;
+    using Domain.Entities.Extensions;
     using Domain.Entities.Locations;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -15,17 +15,21 @@
     using Extensions;
     using Presentation;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using VacancySummary = Domain.Entities.Raa.Vacancies.VacancySummary;
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
+            var subcategory = vacancy.GetSubCategory(categories);
+            LogSubCategory(vacancy, logService, subcategory);
+
             var detail = new ApprenticeshipVacancyDetail
             {
-                Id = (int)vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyReferenceNumber,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -87,33 +91,20 @@
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
                 VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
-                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel()
+                ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
+                SubCategory = subcategory.FullName,
+                TrainingType = vacancy.TrainingType.GetTrainingType()
             };
 
-            var frameworkCodeName = vacancy.FrameworkCodeName;
-            if (!string.IsNullOrEmpty(frameworkCodeName))
-            {
-                var category = categories.SingleOrDefault(c => c.SubCategories.Any(sc => sc.CodeName == frameworkCodeName));
-                if (category == null)
-                {
-                    logService.Warn("Cannot find category containing a subcategory matching code {1} for the vacancy with Id {0}", detail.Id, frameworkCodeName);
-                }
-                else
-                {
-                    var subCategory = category.SubCategories.SingleOrDefault(sc => sc.CodeName == frameworkCodeName);
-                    if (subCategory == null)
-                    {
-                        detail.SubCategory = "Unknown";
-                        logService.Warn("Cannot find subcatagory matching code {1} in category {3} ({2}) for the vacancy with Id {0}", detail.Id, frameworkCodeName, category.CodeName, category.FullName);
-                    }
-                    else
-                    {
-                        detail.SubCategory = subCategory.FullName;
-                    }
-                }
-            }
-
             return detail;
+        }
+
+        private static void LogSubCategory(VacancySummary vacancy, ILogService logService, Category subcategory)
+        {
+            if (!subcategory.IsValid())
+            {
+                logService.Warn("Cannot find a sub category for the apprenticship with Id {0}", vacancy.VacancyId);
+            }
         }
 
         private static Address GetVacancyAddress(PostalAddress address)

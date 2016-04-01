@@ -494,8 +494,7 @@
 
             var searchedCategory = (suggestedVacancies.SearchParameters.SubCategoryCodes != null && suggestedVacancies.SearchParameters.SubCategoryCodes.Length == 1
                 ? _referenceDataService.GetSubCategoryByCode(suggestedVacancies.SearchParameters.SubCategoryCodes[0])
-                : _referenceDataService.GetCategoryByCode(suggestedVacancies.SearchParameters.CategoryCode)) ??
-                                        new Category { FullName = "Unknown" };
+                : _referenceDataService.GetCategoryByCode(suggestedVacancies.SearchParameters.CategoryCode)) ?? Category.InvalidSectorSubjectAreaTier1;
 
             whatHappensNextViewModel.SuggestedVacanciesSearchViewModel = new ApprenticeshipSearchViewModel(suggestedVacancies.SearchParameters);
             whatHappensNextViewModel.SuggestedVacanciesCategory = searchedCategory.FullName;

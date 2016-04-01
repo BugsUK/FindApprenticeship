@@ -26,6 +26,7 @@ Scenario: Show validation error message when single character location entered
 	When I enter data
 		 | Field    | Value |
 		 | Location | M     |
+	And I choose SearchHeader
 	When I choose Search
 	And I wait to see ValidationSummary
 	Then I see
@@ -39,6 +40,7 @@ Scenario: Show validation error message when two character location entered that
 	When I enter data
 		 | Field    | Value |
 		 | Location | MA    |
+	And I choose SearchHeader
 	When I choose Search
 	Then I am on the TraineeshipSearchResultPage page
 	And I see

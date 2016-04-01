@@ -215,10 +215,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             table.AddRow(new[] { "ClearLocation", "Equals", "Cleared" });
             Then("I see", table);
 
-            When("I enter data", GetVacancySearchData(location));
+            When("I enter data", GetApprenticeshipVacancySearchData(location));
             And("I choose Search");
             Then("I am on the ApprenticeshipSearchResultPage page");
             When("I enter data", Get50ResultsPerPage());
+            And("I wait 3 seconds");
             Then("I am on the ApprenticeshipSearchResultPage page");
         }
 
@@ -231,10 +232,11 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             table.AddRow(new[] { "ClearLocation", "Equals", "Cleared" });
             Then("I see", table);
 
-            When("I enter data", GetVacancySearchData(location));
+            When("I enter data", GetTraineeshipVacancySearchData(location));
             And("I choose Search");
             Then("I am on the TraineeshipSearchResultPage page");
             When("I enter data", Get50ResultsPerPage());
+            And("I wait 3 seconds");
             Then("I am on the TraineeshipSearchResultPage page");
         }
 
@@ -266,7 +268,20 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Bindings
             _driver.Navigate().GoToUrl(vacancyDetailsUri);
         }
 
-        private Table GetVacancySearchData(string location)
+        private Table GetApprenticeshipVacancySearchData(string location)
+        {
+            string[] header = { "Field", "Value" };
+            string[] row1 = { "Location", location };
+            string[] row2 = { "WithInDistance", "40 miles" };
+            string[] row3 = { "ApprenticeshipLevel", "All levels" };
+            var t = new Table(header);
+            t.AddRow(row1);
+            t.AddRow(row2);
+            t.AddRow(row3);
+            return t;
+        }
+
+        private Table GetTraineeshipVacancySearchData(string location)
         {
             string[] header = { "Field", "Value" };
             string[] row1 = { "Location", location };

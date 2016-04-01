@@ -1,9 +1,7 @@
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.Entities
 {
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using Vacancy.Entities;
 
     [Table("Reference.Standard")]
     public class Standard
@@ -11,26 +9,30 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Reference.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Standard()
         {
-            Vacancies = new HashSet<Vacancy>();
+            //Vacancies = new HashSet<Vacancy>();
         }
 
+        [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int StandardId { get; set; }
 
         [Required]
         public string FullName { get; set; }
 
-        public int SectorId { get; set; }
+        [Required]
+        public int LarsCode { get; set; }
 
         [Required]
-        [StringLength(1)]
-        public string LevelCode { get; set; }
+        public int StandardSectorId { get; set; }
 
-        public virtual Level Level { get; set; }
+        [Required]
+        public int EducationLevelId { get; set; }
 
-        public virtual Sector Sector { get; set; }
+        //public virtual Level Level { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vacancy> Vacancies { get; set; }
+        //public virtual Sector Sector { get; set; }
+
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<Vacancy> Vacancies { get; set; }
     }
 }

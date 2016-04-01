@@ -94,7 +94,7 @@
             var mediator = new VacancyMediatorBuilder().With(provider).Build();
 
             var result = mediator.ApproveVacancy(vacancyReferenceNumber);
-            result.AssertCode(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies);
+            result.AssertMessage(VacancyMediatorCodes.ApproveVacancy.NoAvailableVacancies, VacancyViewModelMessages.NoVacanciesAvailble, UserMessageLevel.Info);
         }
 
         [Test]

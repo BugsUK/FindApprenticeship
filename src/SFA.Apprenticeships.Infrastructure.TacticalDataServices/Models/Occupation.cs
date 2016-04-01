@@ -20,15 +20,13 @@
 
         public List<Framework> Frameworks { get; set; }
 
+        /// <summary>
+        /// TODO: Find a better way to do this!
+        /// </summary>
+        /// <returns></returns>
         internal Category ToCategory()
         {
-            var category = new Category
-            {
-                CodeName = CodeName,
-                FullName = FullName,
-                SubCategories = new List<Category>()
-            };
-
+            var category = new Category(ApprenticeshipOccupationId, CategoryPrefixes.GetSectorSubjectAreaTier1Code(CodeName), FullName, CategoryType.SectorSubjectAreaTier1);
             Frameworks.ForEach(f => category.SubCategories.Add(f.ToCategory()));
             return category;
         }

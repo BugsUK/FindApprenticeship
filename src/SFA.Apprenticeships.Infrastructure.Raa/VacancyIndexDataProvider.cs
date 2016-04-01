@@ -56,7 +56,7 @@
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
             var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
-            var categories = _referenceDataProvider.GetCategories();
+            var categories = _referenceDataProvider.GetCategories().ToList();
             var apprenticeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
                     v =>

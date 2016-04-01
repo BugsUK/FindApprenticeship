@@ -79,7 +79,7 @@ namespace SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Features.Apprentices
 #line 7
 this.ScenarioSetup(scenarioInfo);
 #line 8
- testRunner.Given("I select the \"first\" apprenticeship vacancy in location \"London\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I select the \"first\" apprenticeship vacancy in location \"N7 8LS\"", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 9
  testRunner.Then("I am on the ApprenticeshipDetailsPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 10

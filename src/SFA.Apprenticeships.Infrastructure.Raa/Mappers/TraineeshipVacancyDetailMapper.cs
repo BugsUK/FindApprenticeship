@@ -23,7 +23,7 @@
 
             var detail = new TraineeshipVacancyDetail
             {
-                Id = (int)vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyReferenceNumber,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -84,6 +84,7 @@
                 PersonalQualities = vacancy.PersonalQualities,
                 QualificationRequired = vacancy.DesiredQualifications,
                 SkillsRequired = vacancy.DesiredSkills,
+                TrainingType = vacancy.TrainingType.GetTrainingType()
             };
 
             return detail;

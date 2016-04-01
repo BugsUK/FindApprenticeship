@@ -20,12 +20,9 @@
                     var subCategoryListId = string.Format("sub-category-{0}-list", category.CodeName.ToLower());
 
                     var categoryLabelText = FullNameFormatter.Format(category.FullName);
-                    
-                    if (category.Count.HasValue)
-                    {
-                        categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count.Value);
-                    }
-                    
+
+                    categoryLabelText = string.Format("{0} ({1})", categoryLabelText, category.Count);
+
                     <li>
                         <input @checkedAttr type="radio" name="Category" id="@inputId" value="@category.CodeName"><label for="@inputId">@categoryLabelText</label>
                         <details @openAttr class="@openAttr">
@@ -34,15 +31,12 @@
                                 @foreach (var subCategory in subCategories)
                                 {
                                     checkedAttr = Model.SubCategories != null && Model.SubCategories.Contains(subCategory.CodeName) ? " checked" : "";
-                                    
+
                                     var checkboxId = string.Format("sub-category-{0}", subCategory.CodeName.ToLower());
                                     var subcategoryLabelText = FullNameFormatter.Format(subCategory.FullName);
 
-                                    if (subCategory.Count.HasValue)
-                                    {
-                                        subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count.Value);
-                                    }
-                                    
+                                    subcategoryLabelText = string.Format("{0} ({1})", subcategoryLabelText, subCategory.Count);
+
                                     <li><input @checkedAttr type="checkbox" name="SubCategories" id="@checkboxId" value="@subCategory.CodeName"><label for="@checkboxId">@subcategoryLabelText</label></li>
                                 }
                             </ul>

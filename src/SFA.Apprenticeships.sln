@@ -169,8 +169,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{405A13A6-7
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "SFA.Apprenticeships.Data.Reference", "SFA.Apprenticeships.Data.Reference\SFA.Apprenticeships.Data.Reference.sqlproj", "{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.TacticalDataServices", "SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj", "{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.VacancyPosting", "SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj", "{CE04B708-FF21-41D4-B796-A36EDCE2960D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Employer", "SFA.Apprenticeships.Application.Employer\SFA.Apprenticeships.Application.Employer.csproj", "{DD096F97-415D-4676-9F90-7AEE60213F49}"
@@ -1190,22 +1188,6 @@ Global
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Release|Any CPU.Build.0 = Sit|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Release|Any CPU.Deploy.0 = Sit|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Debug|Any CPU.Build.0 = Demo|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Demo|Any CPU.ActiveCfg = Dev|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Demo|Any CPU.Build.0 = Dev|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Dev|Any CPU.Build.0 = Dev|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Local|Any CPU.ActiveCfg = Local|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Local|Any CPU.Build.0 = Local|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Pre|Any CPU.Build.0 = Pre|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Prod|Any CPU.Build.0 = Prod|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Release|Any CPU.ActiveCfg = Demo|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Release|Any CPU.Build.0 = Demo|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{CE04B708-FF21-41D4-B796-A36EDCE2960D}.Debug|Any CPU.ActiveCfg = Dev|Any CPU
 		{CE04B708-FF21-41D4-B796-A36EDCE2960D}.Debug|Any CPU.Build.0 = Dev|Any CPU
 		{CE04B708-FF21-41D4-B796-A36EDCE2960D}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
@@ -1650,7 +1632,6 @@ Global
 		{502F1A87-8037-4CFB-B1A0-EE1664B45189} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
 		{84881750-9710-4278-94BE-016B1C0C36E6} = {8B52C549-CC01-4411-B801-E09FDCCD54C8}
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
-		{24BDBCAC-42EE-4253-8E8A-34FF5F0F41E7} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 		{CE04B708-FF21-41D4-B796-A36EDCE2960D} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{DD096F97-415D-4676-9F90-7AEE60213F49} = {620A2A3B-BC44-409A-9C74-75D2A9C75F79}
 		{700D41DD-527A-42BD-94D2-FD49A5F00A18} = {22CE73E4-F469-434C-AC5D-D926EBBAC3D5}
@@ -1674,7 +1655,7 @@ Global
 		{E9B83262-916C-4AF9-A55C-F89F623847AE} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

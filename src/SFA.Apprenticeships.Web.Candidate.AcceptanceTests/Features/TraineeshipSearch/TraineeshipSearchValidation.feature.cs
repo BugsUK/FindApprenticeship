@@ -138,8 +138,10 @@ this.FeatureBackground();
 #line 26
  testRunner.When("I enter data", ((string)(null)), table2, "When ");
 #line 29
- testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I choose SearchHeader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 30
+ testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 31
  testRunner.And("I wait to see ValidationSummary", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
@@ -150,7 +152,7 @@ this.FeatureBackground();
                         "ValidationSummaryCount",
                         "Equals",
                         "1"});
-#line 31
+#line 32
  testRunner.Then("I see", ((string)(null)), table3, "Then ");
 #line hidden
             this.ScenarioCleanup();
@@ -165,13 +167,13 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Show validation error message when two character location entered that is not a p" +
                     "artial postcode", new string[] {
                         "SmokeTests"});
-#line 36
+#line 37
 this.ScenarioSetup(scenarioInfo);
 #line 7
 this.FeatureBackground();
-#line 37
- testRunner.Given("I navigated to the TraineeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 38
+ testRunner.Given("I navigated to the TraineeshipSearchPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 39
  testRunner.Then("I clear the Location field", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
@@ -180,11 +182,13 @@ this.FeatureBackground();
             table4.AddRow(new string[] {
                         "Location",
                         "MA"});
-#line 39
+#line 40
  testRunner.When("I enter data", ((string)(null)), table4, "When ");
-#line 42
- testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 43
+ testRunner.And("I choose SearchHeader", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 44
+ testRunner.When("I choose Search", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 45
  testRunner.Then("I am on the TraineeshipSearchResultPage page", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
@@ -195,7 +199,7 @@ this.FeatureBackground();
                         "ValidationFieldErrorCount",
                         "Equals",
                         "1"});
-#line 44
+#line 46
  testRunner.And("I see", ((string)(null)), table5, "And ");
 #line hidden
             TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
@@ -206,7 +210,7 @@ this.FeatureBackground();
                         "Text",
                         "Equals",
                         "Location must be 3 or more characters or a postcode"});
-#line 47
+#line 49
  testRunner.And("I am on ValidationFieldErrorItems list item matching criteria", ((string)(null)), table6, "And ");
 #line hidden
             this.ScenarioCleanup();

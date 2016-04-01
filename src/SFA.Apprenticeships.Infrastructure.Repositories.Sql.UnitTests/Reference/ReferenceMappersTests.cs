@@ -6,6 +6,9 @@
     using SFA.Infrastructure.Interfaces;
     using Schemas.Reference;
     using Schemas.Reference.Entities;
+    using DomainSector = Domain.Entities.Raa.Vacancies.Sector;
+    using DomainFramework = Domain.Entities.Raa.Reference.Framework;
+    using DomainOccupation = Domain.Entities.Raa.Reference.Occupation;
 
     [TestFixture]
     public class ReferenceMappersTests
@@ -23,61 +26,111 @@
         {
             new ReferenceMappers().Mapper.AssertConfigurationIsValid();
         }
-
+       
         [Test]
-        public void ShouldMapCounty()
+        public void ShouldMapSector_DbToDomain()
         {
             //Arrange
-            var source = new Fixture().Build<County>().Without(c => c.PostalAddresses).Create();
+            var source = new StandardSector() {FullName = "my lovely name"};
 
             //Act
-            var viewModel = _mapper.Map<County, County>(source);
+            var destination = _mapper.Map<StandardSector, DomainSector>(source);
 
             //Assert
-            viewModel.Should().NotBeNull();
-            viewModel.CountyId.Should().Be(source.CountyId);
-            viewModel.CodeName.Should().Be(source.CodeName);
-            viewModel.ShortName.Should().Be(source.ShortName);
-            viewModel.FullName.Should().Be(source.FullName);
+            destination.Should().NotBeNull();
+            destination.Name.Should().Be(source.FullName);
+            destination.Id.Should().Be(source.StandardSectorId);
+            destination.Standards.Should().BeNull();
         }
 
         [Test]
-        public void ShouldMapRegion()
+        public void ShouldMapSector_DomainToDb()
         {
             //Arrange
-            var source = new Fixture().Build<Region>().Create();
+            var source = new Fixture().Build<DomainSector>().Create();
 
             //Act
-            var viewModel = _mapper.Map<Region, Region>(source);
+            var destination = _mapper.Map<DomainSector, StandardSector>(source);
 
             //Assert
-            viewModel.Should().NotBeNull();
-            viewModel.RegionId.Should().Be(source.RegionId);
-            viewModel.CodeName.Should().Be(source.CodeName);
-            viewModel.ShortName.Should().Be(source.ShortName);
-            viewModel.FullName.Should().Be(source.FullName);
+            destination.Should().NotBeNull();
+            destination.FullName.Should().Be(source.Name);
+            destination.StandardSectorId.Should().Be(source.Id);
         }
 
         [Test]
-        public void ShouldMapLocalAuthority()
+        public void ShouldMapFramework_DbToDomain()
         {
             //Arrange
-            var source = new Fixture().Build<LocalAuthority>().Create();
+            var source = new ApprenticeshipFramework()
+                             {
+                                 FullName = "Fake full name",
+                                 CodeName = "fakeness",
+                                 ShortName = "Shortie"
+                             };
 
             //Act
-            var viewModel = _mapper.Map<LocalAuthority, LocalAuthority>(source);
+            var destination = _mapper.Map<ApprenticeshipFramework, DomainFramework>(source);
 
             //Assert
-            viewModel.Should().NotBeNull();
-            viewModel.LocalAuthorityId.Should().Be(source.LocalAuthorityId);
-            viewModel.CodeName.Should().Be(source.CodeName);
-            viewModel.ShortName.Should().Be(source.ShortName);
-            viewModel.FullName.Should().Be(source.FullName);
-            viewModel.County.Should().NotBeNull();
-            viewModel.County.CountyId.Should().Be(source.County.CountyId);
-            viewModel.County.CodeName.Should().Be(source.County.CodeName);
-            viewModel.County.ShortName.Should().Be(source.County.ShortName);
-            viewModel.County.FullName.Should().Be(source.County.FullName);
+            destination.Should().NotBeNull();
+            destination.FullName.Should().Be(source.FullName);
+            destination.CodeName.Should().Be(source.CodeName);
+            destination.ShortName.Should().Be(source.ShortName);
+            destination.Id.Should().Be(source.ApprenticeshipFrameworkId);
+        }
+
+        [Test]
+        public void ShouldMapFramework_DomainToDb()
+        {
+            //Arrange
+            var source = new Fixture().Build<DomainFramework>().Create();
+
+            //Act
+            var destination = _mapper.Map<DomainFramework, ApprenticeshipFramework>(source);
+
+            //Assert
+            destination.Should().NotBeNull();
+            destination.FullName.Should().Be(source.FullName);
+            destination.CodeName.Should().Be(source.CodeName);
+            destination.ShortName.Should().Be(source.ShortName);
+            destination.ApprenticeshipFrameworkId.Should().Be(source.Id);
+            destination.ApprenticeshipFrameworkStatusTypeId.Should().Be(0);
+            destination.ClosedDate.Should().NotHaveValue();
+            destination.PreviousApprenticeshipOccupationId.Should().NotHaveValue();
+        }
+
+        [Test]
+        public void ShouldMapOccupation_DomainToDb()
+        {
+            //Arrange
+            var source = new Fixture().Build<DomainOccupation>().Create();
+
+            //Act
+            var destination = _mapper.Map<DomainOccupation, ApprenticeshipOccupation>(source);
+
+            //Assert
+            destination.Should().NotBeNull();
+            destination.FullName.Should().Be(source.FullName);
+            destination.CodeName.Should().Be(source.CodeName);
+            destination.ShortName.Should().Be(source.ShortName);
+        }
+
+        [Test]
+        public void ShouldMapOccupation_DbToDomain()
+        {
+            //Arrange
+            var source = new ApprenticeshipOccupation() { FullName = "Fullness", CodeName = "Coded", ShortName = "Short name"};
+
+            //Act
+            var destination = _mapper.Map<ApprenticeshipOccupation, DomainOccupation>(source);
+
+            //Assert
+            destination.Should().NotBeNull();
+            destination.FullName.Should().Be(source.FullName);
+            destination.CodeName.Should().Be(source.CodeName);
+            destination.ShortName.Should().Be(source.ShortName);
+            destination.Frameworks.Should().BeNull();
         }
     }
 }

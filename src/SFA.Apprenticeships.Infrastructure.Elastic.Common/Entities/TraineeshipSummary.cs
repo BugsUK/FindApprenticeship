@@ -46,6 +46,6 @@
         public string Category { get; set; }
 
         [ElasticProperty(Index = FieldIndexOption.NotAnalyzed)]
-        public string SubCategory { get; set; }
+        public string CategoryCode { get; set; }
     }
 }

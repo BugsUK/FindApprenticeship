@@ -2,5 +2,7 @@
 (
 	[StandardSectorId] INT NOT NULL, 
     [FullName] NVARCHAR(MAX) NOT NULL, 
-    CONSTRAINT [PK_StandardSector] PRIMARY KEY ([StandardSectorId])
+	[ApprenticeshipOccupationId] INT NOT NULL DEFAULT 1, 
+    CONSTRAINT [PK_StandardSector] PRIMARY KEY ([StandardSectorId]),
+    CONSTRAINT [FK_StandardSector_ApprenticeshipOccupation] FOREIGN KEY ([ApprenticeshipOccupationId]) REFERENCES [dbo].[ApprenticeshipOccupation] ([ApprenticeshipOccupationId])
 )

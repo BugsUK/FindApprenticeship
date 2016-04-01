@@ -48,6 +48,8 @@ Scenario: User enters location manually and sees a list of suggested locations
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see 
@@ -60,6 +62,8 @@ Scenario: User enters location manually and location defaults to first suggested
 	When I enter data
 		 | Field    | Value  |
 		 | Location | Covent |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see 
@@ -72,12 +76,16 @@ Scenario: User enters location manually then changes location manually and sees 
 	When I enter data
 		 | Field    | Value      |
 		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	Then I clear the Location field
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
@@ -119,8 +127,10 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	And I am on the ApprenticeshipSearchPage page
 	Then I clear the Location field
 	When I enter data
-		 | Field    | Value |
-		 | Location | Manchester  |
+		 | Field    | Value      |
+		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	Then I am on the ApprenticeshipSearchResultPage page
 	And I see 
@@ -142,8 +152,10 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	And I am on the ApprenticeshipSearchPage page
 	Then I clear the Location field
 	When I enter data
-		 | Field    | Value |
-		 | Location | Manchester  |
+		 | Field    | Value      |
+		 | Location | Manchester |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I wait 3 seconds
 	And I am on the ApprenticeshipSearchResultPage page
@@ -155,6 +167,8 @@ Scenario: User enters location manually then selects from autocomplete then refi
 	When I enter data
 		 | Field    | Value |
 		 | Location | Cov   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I am on the ApprenticeshipSearchResultPage page
 	And I wait 3 seconds
@@ -169,6 +183,8 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	When I enter data
 		 | Field    | Value		 |
 		 | Location | Coventry   |
+	And I wait for 5 seconds to see LocationAutoComplete
+	And I choose SearchHeader
 	And I choose Search
 	And I wait 3 seconds
 	And I am on the ApprenticeshipSearchResultPage page
@@ -195,7 +211,7 @@ Scenario: User enters location manually then selects from autocomplete then chan
 	Then I see 
         | Field                        | Rule           | Value                    |
 		#Don't know exactly what are we choosing?
-        | Location                     | Equals         | Clent (Worcestershire)   | 		
+        | Location                     | Equals         | Coventry (West Midlands) |
         | LocationSuggestionsContainer | Does Not Exist |                          |
 
 @SmokeTests

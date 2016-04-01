@@ -3,46 +3,47 @@
     using SFA.Infrastructure.Interfaces;
     using System;
 
-    public class DummyMutateTarget : IMutateTarget
+    public class DummyMutateTarget : BaseMutateTarget, IMutateTarget
     {
-        private ILogService _log;
-        private ITableDetails _table;
-
-        private int _insertCount;
-        private int _unchangedCount;
-        public int NumberOfUpdates { get; private set; }
-
-
-        public DummyMutateTarget(ILogService log, ITableDetails table)
+        public DummyMutateTarget(ILogService log, ITableDetails table) : base(log, table)
         {
-            _log = log;
-            _table = table;
-            _insertCount = 0;
-            NumberOfUpdates = 0;
-            _unchangedCount = 0;
         }
 
         public void Insert(dynamic record)
         {
-            if (_insertCount++ == 0)
-                _log.Info($"First insert into {_table.Name}: {record}");
+            if (NumberOfInserts++ == 0)
+                _log.Info($"First insert into {_tableDetails.Name}: {record}");
         }
 
         public void Update(dynamic record)
         {
-            if (NumberOfUpdates++ == 0)
-                _log.Info($"First update of {_table.Name}: {record}");
+            //if (NumberOfUpdates == 0)
+            //  _log.Info($"First update of {_tableDetails.Name}: {record}");
+            NumberOfUpdates++;
+        }
+
+        public void Delete(dynamic record)
+        {
+            if (NumberOfDeletes++ == 0)
+                _log.Info($"First delete of {_tableDetails.Name}: {record}");
         }
 
         public void NoChange(dynamic record)
         {
-            if (_unchangedCount++ == 0)
-                _log.Info($"First no change of {_table.Name}: {record}");
+            // if (NumberUnchanged == 0)
+            //  _log.Info($"First no change of {_tableDetails.Name}: {record}");
+            NumberUnchanged++;
         }
 
-        public void Dispose()
+
+        public void FlushInsertsAndUpdates()
         {
-            _log.Info($"Summary for {_table.Name} : {_insertCount} inserts, {NumberOfUpdates} updates, {_unchangedCount} unchanged");
+            _log.Info(SummaryText);
+        }
+
+        public void FlushDeletes()
+        {
+            _log.Info(SummaryTextDeletes);
         }
     }
 }

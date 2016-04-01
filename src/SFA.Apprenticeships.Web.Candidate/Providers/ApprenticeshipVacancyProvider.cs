@@ -344,7 +344,7 @@
                         aggregationResult = unfilteredAggregationResultsList.SingleOrDefault(each => each.Code == subCategory.CodeName);
                     }
 
-                    subCategory.Count = aggregationResult != null ? aggregationResult.Count : 0;
+                    subCategory.Count = aggregationResult?.Count ?? 0;
                 }
 
                 category.Count = category.SubCategories.Sum(each => each.Count);

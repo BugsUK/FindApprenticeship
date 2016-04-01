@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using System.Linq;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
     using SFA.Infrastructure.Interfaces;
@@ -49,7 +50,7 @@
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             var provider = _providerService.GetProvider(providerSite.ProviderId);
-            var categories = _referenceDataProvider.GetCategories();
+            var categories = _referenceDataProvider.GetCategories().ToList();
 
             return ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
         }

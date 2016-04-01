@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using Apprenticeships.Application.VacancyPosting;
+    using Apprenticeships.Application.VacancyPosting.Configuration;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Interfaces.Vacancies;
     using Moq;
     using NUnit.Framework;
     using SFA.Infrastructure.Interfaces;
-    using Web.Raa.Common.Configuration;
 
     [TestFixture]
     public class VacancyLockingServiceTests
@@ -193,8 +193,8 @@
         private IVacancyLockingService GetVacancyLockingServiceWith(int timeout, DateTime utcNow)
         {
             var configurationService = new Mock<IConfigurationService>();
-            configurationService.Setup(cs => cs.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration { QAVacancyTimeout = timeout });
+            configurationService.Setup(cs => cs.Get<VacancyPostingConfiguration>())
+                .Returns(new VacancyPostingConfiguration { QAVacancyTimeout = timeout });
 
             var dateTimeService = new Mock<IDateTimeService>();
             dateTimeService.Setup(ds => ds.UtcNow).Returns(utcNow);
@@ -214,8 +214,8 @@
 
         public VacancyLockingServiceBuilder()
         {
-            _configurationService.Setup(cs => cs.Get<ManageWebConfiguration>())
-                .Returns(new ManageWebConfiguration {QAVacancyTimeout = DefaultTimeout });
+            _configurationService.Setup(cs => cs.Get<VacancyPostingConfiguration>())
+                .Returns(new VacancyPostingConfiguration { QAVacancyTimeout = DefaultTimeout });
 
             _dateTimeService.Setup(ds => ds.UtcNow).Returns(DateTime.MinValue);
         }

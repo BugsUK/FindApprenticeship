@@ -35,7 +35,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
     using StructureMap;
-    using TacticalDataServices.IoC;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
 
@@ -133,7 +132,6 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 });
                 x.AddRegistry<AuthenticationRepositoryRegistry>();
                 x.AddRegistry<EmployerDataServicesRegistry>();
-                x.AddRegistry<TacticalDataServicesRegistry>();
                 x.AddRegistry<ProviderRepositoryRegistry>();
                 x.AddRegistry<EmployerRepositoryRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
