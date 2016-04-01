@@ -62,7 +62,7 @@
             {
                 stringBuilder.AppendLine("<b><a href=\"https://" + SiteDomainName + "/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>");
 
-                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
+                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
                 
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join("", unsuccessfulLineItems)));
                 stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");

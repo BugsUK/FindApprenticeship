@@ -55,7 +55,7 @@
             AddSubstitutionTo(message, sendgridToken, substitutionText);
         }
 
-        protected string GetApplicationStatusAlertsInfoSubstitution(IList<ApplicationStatusAlert> alerts)
+        private string GetApplicationStatusAlertsInfoSubstitution(IList<ApplicationStatusAlert> alerts)
         {
             if (alerts == null || alerts.Count == 0) return string.Empty;
 
@@ -74,7 +74,7 @@
                 stringBuilder.AppendFormat("<b><a href=\"https://{0}/myapplications#dashUnsuccessful\">Unsuccessful applications</a></b>", _siteDomainName);
                 stringBuilder.AppendLine();
                 
-                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}<br/><b>Reason: </b>{2}</li>", d.Title, d.EmployerName, d.UnsuccessfulReason));
+                var unsuccessfulLineItems = alerts.Where(a => a.Status == ApplicationStatuses.Unsuccessful).Select(d => string.Format("<li>{0} with {1}</li>", d.Title, d.EmployerName));
 
                 stringBuilder.AppendLine(string.Format("<ul>{0}</ul>", string.Join(string.Empty, unsuccessfulLineItems)));
                 stringBuilder.Append("<p>If your application's unsuccessful ask your college or training provider for feedback.</p>");
