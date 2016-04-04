@@ -2,6 +2,8 @@
 {
     using System;
     using System.IO;
+    using System.Linq;
+    using Configuration;
     using Moq;
     using SFA.Infrastructure.Azure.Configuration;
     using SFA.Infrastructure.Configuration;
@@ -40,9 +42,18 @@
             var configurationService = new AzureBlobConfigurationService(configurationManager, _logService.Object);
 
             var environment = configurationService.Get<CommonWebConfiguration>().Environment;
+            var connectionString = configurationService.Get<SqlConfiguration>().ConnectionString;
 
-            DatabaseTargetName = $"AvmsPlus-{environment}";
-            TargetConnectionString = $"Server=SQLSERVERTESTING;Database={DatabaseTargetName};Trusted_Connection=True;";
+            var originInitialCatalog = connectionString
+                .Split(';')
+                .Single(p => p.StartsWith("Initial Catalog"))
+                .Split('=')
+                .Last();
+
+            DatabaseTargetName = $"AvmsPlus-{environment}-Test";
+            
+            TargetConnectionString = connectionString.Replace($"Initial Catalog={originInitialCatalog}",
+                $"Initial Catalog={DatabaseTargetName}");
 
             var databaseProjectPath = AppDomain.CurrentDomain.BaseDirectory + $"\\..\\..\\..\\{DatabaseProjectName}";
             var dacPacRelativePath = $"\\bin\\{environment}\\{DatabaseProjectName}.dacpac";

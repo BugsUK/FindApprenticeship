@@ -7,8 +7,8 @@
     <ProjectGuid>{36E83135-5C14-4179-B4AD-3C120B05B73B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -112,7 +112,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />

@@ -20,6 +20,8 @@
     [TestFixture(Category = "Integration")]
     public class VacancyRepositoryTests : TestBase
     {
+        private const string UserName = "IntegrationTestUserName";
+
         private readonly IMapper _mapper = new VacancyMappers();
         private readonly Mock<ILogService> _logger = new Mock<ILogService>();
         private IGetOpenConnection _connection;
@@ -42,6 +44,7 @@
         {
             _dateTimeService.Setup(d => d.MinValue).Returns(DateTime.MinValue);
             _dateTimeService.Setup(d => d.UtcNow).Returns(DateTime.UtcNow);
+            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(UserName);
         }
 
         [Test, Category("Integration")]
@@ -91,7 +94,10 @@
                     .Excluding(x => x.PossibleStartDate)
                     .Excluding(x => x.DateFirstSubmitted)
                     .Excluding(x => x.UpdatedDateTime)
-                    .Excluding(x => x.CreatedDateTime));
+                    .Excluding(x => x.CreatedDateTime)
+                    .Excluding(x => x.CreatedByProviderUsername)
+                    .Excluding(x => x.VacancyLocationType)
+                    .Excluding(x => x.WageUnit)); //remove this after changes in DB
         }
 
         [Test, Category("Integration")]
