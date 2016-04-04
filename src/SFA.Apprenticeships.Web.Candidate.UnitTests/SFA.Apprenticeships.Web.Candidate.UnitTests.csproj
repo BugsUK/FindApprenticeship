@@ -207,7 +207,6 @@
     <Compile Include="Builders\WorkExperienceViewModelBuilder.cs" />
     <Compile Include="Helpers\BaseExtensionTests.cs" />
     <Compile Include="Helpers\FormTextForTests.cs" />
-    <Compile Include="Helpers\FullNameFormatterTests.cs" />
     <Compile Include="Mappers\ApprenticeshipCandidateWebMappersTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyDetailViewModelMapperTests.cs" />
     <Compile Include="Mappers\TraineeshipApplicationViewModelMapperTests.cs" />

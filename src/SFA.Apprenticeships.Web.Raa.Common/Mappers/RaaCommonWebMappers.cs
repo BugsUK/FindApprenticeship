@@ -8,6 +8,7 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Users;
     using Infrastructure.Common.Mappers;
     using Infrastructure.Presentation;
@@ -64,6 +65,8 @@
                 .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore());
 
             Mapper.CreateMap<Vacancy, TrainingDetailsViewModel>()
+                .ForMember(dest => dest.FrameworkCodeName, opt => opt.MapFrom(src => CategoryPrefixes.GetFrameworkCode(src.FrameworkCodeName)))
+                .ForMember(dest => dest.SectorCodeName, opt => opt.MapFrom(src => CategoryPrefixes.GetSectorSubjectAreaTier1Code(src.SectorCodeName)))
                 .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
                 .ForMember(dest => dest.Standards, opt => opt.Ignore())
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())

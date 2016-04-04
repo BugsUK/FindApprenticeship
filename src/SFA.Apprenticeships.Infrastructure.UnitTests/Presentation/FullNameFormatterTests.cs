@@ -1,8 +1,8 @@
-﻿namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Helpers
+﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Presentation
 {
     using FluentAssertions;
+    using Infrastructure.Presentation;
     using NUnit.Framework;
-    using Candidate.Helpers;
 
     [TestFixture]
     public class FullNameFormatterTests

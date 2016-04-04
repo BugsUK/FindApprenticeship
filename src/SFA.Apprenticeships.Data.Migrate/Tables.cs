@@ -3,12 +3,27 @@
     using SFA.Infrastructure.Interfaces;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public interface ITableSpec : ITableDetails
     {
         decimal BatchSizeMultiplier { get; }
         IEnumerable<ITableSpec> DependsOn { get; }
-        Func<dynamic, dynamic, bool> Transform { get; }
+
+        /// <summary>
+        /// Table, OldRecordFromTarget, NewRecordFromSource
+        /// OldRecordFromTarget will be null for inserts
+        /// NewRecordFromSource will always be set as this is not called for deletes.
+        /// Changes can be made to NewRecord to effect a transform 
+        /// </summary>
+        Action<ITableSpec, dynamic, dynamic> Transform { get; }
+
+        /// <summary>
+        /// Table, OldRecordFromTarget, NewRecordFromSource, Operation => Whether to apply the change
+        /// OldRecordFromTarget will be null for inserts
+        /// NewRecordFromSource will be null for deletes
+        /// </summary>
+        Func<ITableSpec, dynamic, dynamic, Operation, bool> CanMutate { get; }
     }
 
     public class AvmsToAvmsPlusTables
@@ -25,7 +40,7 @@
         private const int VacancyTypeApprenticeship = 1;
         private const int VacancyTypeTraineeship = 2;
 
-        public AvmsToAvmsPlusTables(ILogService log, IMigrateConfiguration migrateConfig, IAvmsSyncRespository avmsSyncRepository, bool full = true)
+        public AvmsToAvmsPlusTables(ILogService log, IMigrateConfiguration migrateConfig, IAvmsSyncRespository avmsSyncRepository, bool includeVacancy = true)
         {
             _log = log;
             _migrateConfig = migrateConfig;
@@ -33,93 +48,78 @@
 
             _tables = new TableSpecList();
 
-            if (!full)
-            {
-                //_tables.AddNew("Vacancy", TransformVacancy);
-                //_tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, OwnedByAv);
-                //return;
-
-                /*
-                var Vacancy = _tables.AddNew("Vacancy", new string[] { "VacancyId" }, 0.2m, TransformVacancy);
-                var VacancyHistory = _tables.AddNew("VacancyHistory", OwnedByAv, Vacancy);
-                var VacancyTextField = _tables.AddNew("VacancyTextField", OwnedByAv, Vacancy);
-                var VacancyLocation = _tables.AddNew("VacancyLocation", OwnedByAv, Vacancy);
-                */
-
-                var ProviderSiteRelationship = _tables.AddNew("ProviderSiteRelationship", new string[] { "ProviderSiteRelationshipID" }, OwnedByAv);
-                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, OwnedByAv, ProviderSiteRelationship/*, VacancyOwnerRelationship*/);
-
-                //var SubVacancy                        = _tables.AddNew("SubVacancy",                      OwnedByAv, Vacancy); Seems to be related to applications
-                var SectorSuccessRates = _tables.AddNew("SectorSuccessRates", new string[] { "ProviderID", "SectorID" }, OwnedByAv);
-                /*
-                var AdditionalQuestion = _tables.AddNew("AdditionalQuestion", OwnedByAv, Vacancy);
-                var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, OwnedByAv, Vacancy);
-                var ProviderSiteLocalAuthority = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, OwnedByAv, ProviderSiteRelationship);
-                var ProviderSiteFramework = _tables.AddNew("ProviderSiteFramework", new string[] { "ProviderSiteFrameworkID" }, OwnedByAv, ProviderSiteRelationship);
-                var ProviderSiteOffer = _tables.AddNew("ProviderSiteOffer", new string[] { "ProviderSiteOfferID" }, OwnedByAv, ProviderSiteLocalAuthority, ProviderSiteFramework);
-                var VacancyOwnerRelationshipHistory = _tables.AddNew("VacancyOwnerRelationshipHistory", OwnedByAv);
-                */
-                return;
-            }
-
             {
                 // Reference / bottom level
-                var VacancyProvisionRelationshipHistoryEventType = _tables.AddNew("VacancyProvisionRelationshipHistoryEventType", OwnedByAv);
-                var VacancyProvisionRelationshipStatusType = _tables.AddNew("VacancyProvisionRelationshipStatusType", OwnedByAv);
-                var MimeType                           = _tables.AddNew("MIMEType",                               OwnedByAv);
-                var EmployerHistoryEventType           = _tables.AddNew("EmployerHistoryEventType",               OwnedByAv);
-                var ProviderSiteHistoryEventType       = _tables.AddNew("ProviderSiteHistoryEventType",           OwnedByAv);
-                var PersonTitleType                    = _tables.AddNew("PersonTitleType",                        OwnedByAv);
-                var ContactPreferenceType              = _tables.AddNew("ContactPreferenceType",                  OwnedByAv);
-                var VacancyHistoryEventType            = _tables.AddNew("VacancyHistoryEventType",           OwnedByAv);
-                var PersonType                         = _tables.AddNew("PersonType",                        OwnedByAv);
-                // var SicCode                            = _tables.AddNew("SICCode",                           OwnedByAv); Probably not required
-                var EmployerTrainingProviderStatus     = _tables.AddNew("EmployerTrainingProviderStatus",    OwnedByAv);
-                var VacancyTextFieldValue              = _tables.AddNew("VacancyTextFieldValue",             OwnedByAv);
-                var ApprenticeshipType                 = _tables.AddNew("ApprenticeshipType",                OwnedByAv);
-                var ProviderSiteRelationshipType       = _tables.AddNew("ProviderSiteRelationshipType", new string[] { "ProviderSiteRelationshipTypeID" }, OwnedByAv);
-                var VacancyStatusType                  = _tables.AddNew("VacancyStatusType",                 OwnedByAv);
-                var ApprenticeshipOccupationStatusType = _tables.AddNew("ApprenticeshipOccupationStatusType", OwnedByAv);
-                var ApprenticeshipFrameworkStatusType  = _tables.AddNew("ApprenticeshipFrameworkStatusType", OwnedByAv);
-                var VacancyReferralCommentsFieldType   = _tables.AddNew("VacancyReferralCommentsFieldType",  OwnedByAv);
+                var VacancyProvisionRelationshipHistoryEventType = _tables.AddNew("VacancyProvisionRelationshipHistoryEventType", Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var VacancyProvisionRelationshipStatusType = _tables.AddNew("VacancyProvisionRelationshipStatusType", Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var MimeType                           = _tables.AddNew("MIMEType",                               Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var EmployerHistoryEventType           = _tables.AddNew("EmployerHistoryEventType",               Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ProviderSiteHistoryEventType       = _tables.AddNew("ProviderSiteHistoryEventType",           Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var PersonTitleType                    = _tables.AddNew("PersonTitleType",                        Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ContactPreferenceType              = _tables.AddNew("ContactPreferenceType",                  Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var VacancyHistoryEventType            = _tables.AddNew("VacancyHistoryEventType",                Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var PersonType                         = _tables.AddNew("PersonType",                             Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+
+                // See EmployerSicCodes below
+                // var SicCode                         = _tables.AddNew("SICCode",                                OwnedByAv, DeleteShouldNeverHappen);
+
+                var EmployerTrainingProviderStatus     = _tables.AddNew("EmployerTrainingProviderStatus",         Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var VacancyTextFieldValue              = _tables.AddNew("VacancyTextFieldValue",                  Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ApprenticeshipType                 = _tables.AddNew("ApprenticeshipType",                     Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ProviderSiteRelationshipType       = _tables.AddNew("ProviderSiteRelationshipType", new string[] { "ProviderSiteRelationshipTypeID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var VacancyStatusType                  = _tables.AddNew("VacancyStatusType",                      Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ApprenticeshipOccupationStatusType = _tables.AddNew("ApprenticeshipOccupationStatusType",     Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var ApprenticeshipFrameworkStatusType  = _tables.AddNew("ApprenticeshipFrameworkStatusType",      Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var VacancyReferralCommentsFieldType   = _tables.AddNew("VacancyReferralCommentsFieldType",       Unchanged, OwnedByAVUnlessNegativeNoDeletes);
 
                 // Not in diagram
-                var County         = _tables.AddNew("County",         OwnedByAv);
-                var LocalAuthority = _tables.AddNew("LocalAuthority", OwnedByAv, County);
+                var County         = _tables.AddNew("County",         Unchanged, OwnedByAVUnlessNegativeNoDeletes);
+                var LocalAuthority = _tables.AddNew("LocalAuthority", Unchanged, OwnedByAVUnlessNegativeNoDeletes, County);
 
                 // Other tables
-                var AttachedDocument                  = _tables.AddNew("AttachedDocument",    new string[] { "AttachedDocumentId" }, 0.1m, TransformAttachedDocument, MimeType);
-                var Person                            = _tables.AddNew("Person",                          AnonymisePerson,          PersonTitleType, PersonType);
-                var EmployerContact                   = _tables.AddNew("EmployerContact",                 AnonymiseEmployerContact, ContactPreferenceType, County, LocalAuthority, Person);
-                var Employer                          = _tables.AddNew("Employer",                        TransformEmployer, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
-                var EmployerHistory                   = _tables.AddNew("EmployerHistory",                 OwnedByAv, EmployerHistoryEventType, Employer, County, LocalAuthority);
-                var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            AnonymiseProviderSite, EmployerTrainingProviderStatus, LocalAuthority);
-                var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, AnonymiseProviderSiteHistory, ProviderSiteHistoryEventType, ProviderSite);
-                //var EmployerSicCodes                  = _tables.AddNew("EmployerSICCodes",    new string[] { "EmployerSICCodes" },          OwnedByAv,         Employer, SicCode); Causing problems because AVMS deletes and recreates records
-                var Provider                          = _tables.AddNew("Provider",            new string[] { "ProviderID" },                TransformProvider, EmployerTrainingProviderStatus);
-                var ApprenticeshipOccupation          = _tables.AddNew("ApprenticeshipOccupation",        OwnedByAv, ApprenticeshipOccupationStatusType);
-                var ApprenticeshipFramework           = _tables.AddNew("ApprenticeshipFramework",         OwnedByAv, ApprenticeshipOccupation, ApprenticeshipFrameworkStatusType);
+                var AttachedDocument                  = _tables.AddNew("AttachedDocument",          0.1m, TransformAttachedDocument, OwnedByAVUnlessNegative, MimeType);
+                var Person                            = _tables.AddNew("Person",                          AnonymisePerson,           OwnedByAVUnlessNegative, PersonTitleType, PersonType);
+                var EmployerContact                   = _tables.AddNew("EmployerContact",                 AnonymiseEmployerContact,  OwnedByAVUnlessNegative, ContactPreferenceType, County, LocalAuthority, Person);
+                var Employer                          = _tables.AddNew("Employer",                        TransformEmployer,         OwnedByAVUnlessNegative, EmployerTrainingProviderStatus, EmployerContact, County, LocalAuthority);
+                var EmployerHistory                   = _tables.AddNew("EmployerHistory",                 Unchanged,                 OwnedByAVUnlessNegative, EmployerHistoryEventType, Employer, County, LocalAuthority);
+                var ProviderSite                      = _tables.AddNew("ProviderSite",        new string[] { "ProviderSiteID" },            AnonymiseProviderSite,        OwnedByAVUnlessNegativeNoDeletes, EmployerTrainingProviderStatus, LocalAuthority);
+                var ProviderSiteHistory               = _tables.AddNew("ProviderSiteHistory", new string[] { "TrainingProviderHistoryId" }, AnonymiseProviderSiteHistory, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteHistoryEventType, ProviderSite);
 
-                var VacancyOwnerRelationship          = _tables.AddNew("VacancyOwnerRelationship",        CanMutateVacancyOwnerRelationship,
+                // This isn't really needed, plus records can be deleted (outside of archiving activity) which we don't support yet (also, records get deleted and re-added by the AVMS GUI when editing)
+                // var EmployerSicCodes               = _tables.AddNew("EmployerSICCodes",    new string[] { "EmployerSICCodes" },          OwnedByAv, DeleteShouldNeverHappen,         Employer, SicCode);
+
+                var Provider                          = _tables.AddNew("Provider",            new string[] { "ProviderID" },                TransformProvider, OwnedByAVUnlessNegativeNoDeletes, EmployerTrainingProviderStatus);
+                var ApprenticeshipOccupation          = _tables.AddNew("ApprenticeshipOccupation",        Unchanged, OwnedByAVUnlessNegativeNoDeletes, ApprenticeshipOccupationStatusType);
+                var ApprenticeshipFramework           = _tables.AddNew("ApprenticeshipFramework",         Unchanged, OwnedByAVUnlessNegativeNoDeletes, ApprenticeshipOccupation, ApprenticeshipFrameworkStatusType);
+
+                var VacancyOwnerRelationship          = _tables.AddNew("VacancyOwnerRelationship",        Unchanged, CanMutateVacancyOwnerRelationship,
                     ProviderSite, Employer, AttachedDocument, VacancyProvisionRelationshipStatusType);
-                var VacancyOwnerRelationshipHistory   = _tables.AddNew("VacancyOwnerRelationshipHistory", CanMutateVacancyOwnerRelationshipHistory, VacancyOwnerRelationship, VacancyProvisionRelationshipHistoryEventType);
+                var VacancyOwnerRelationshipHistory   = _tables.AddNew("VacancyOwnerRelationshipHistory", Unchanged, CanMutateVacancyOwnerRelationshipHistory, VacancyOwnerRelationship, VacancyProvisionRelationshipHistoryEventType);
 
-                var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   OwnedByAv, Provider, ProviderSite, ProviderSiteRelationshipType);
-                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, OwnedByAv, VacancyOwnerRelationship, ProviderSiteRelationship);
-                var SectorSuccessRates                = _tables.AddNew("SectorSuccessRates",         new string[] { "ProviderID", "SectorID" },       OwnedByAv, Provider, ApprenticeshipOccupation);
-                //var SubVacancy                        = _tables.AddNew("SubVacancy",                      OwnedByAv, Vacancy); Seems to be related to applications
-                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, OwnedByAv, ProviderSiteRelationship);
-                var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      OwnedByAv, ProviderSiteRelationship, ApprenticeshipFramework);
-                var ProviderSiteOffer                 = _tables.AddNew("ProviderSiteOffer",          new string[] { "ProviderSiteOfferID" },          OwnedByAv, ProviderSiteLocalAuthority, ProviderSiteFramework);
+                var ProviderSiteRelationship          = _tables.AddNew("ProviderSiteRelationship",   new string[] { "ProviderSiteRelationshipID" },   Unchanged, OwnedByAVUnlessNegativeNoDeletes, Provider, ProviderSite, ProviderSiteRelationshipType);
+                var RecruitmentAgentLinkedRelationships = _tables.AddNew("RecruitmentAgentLinkedRelationships", new string[] { "VacancyOwnerRelationshipID", "ProviderSiteRelationshipID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, VacancyOwnerRelationship, ProviderSiteRelationship);
+                var SectorSuccessRates                = _tables.AddNew("SectorSuccessRates",         new string[] { "ProviderID", "SectorID" },       Unchanged, OwnedByAVUnlessNegativeNoDeletes, Provider, ApprenticeshipOccupation);
 
-                var Vacancy                 = _tables.AddNew("Vacancy",                 new string[] { "VacancyId" }, 0.3m,           TransformVacancy,
-                    VacancyOwnerRelationship, ProviderSite, Provider, ApprenticeshipType, VacancyStatusType, ApprenticeshipFramework, County, LocalAuthority);
-                var VacancyHistory          = _tables.AddNew("VacancyHistory",                                                        NotOwnedByVacancyOwner, Vacancy, VacancyHistoryEventType);
-                var VacancyTextField        = _tables.AddNew("VacancyTextField",                                                      NotOwnedByVacancyOwner, Vacancy, VacancyTextFieldValue);
-                var VacancyLocation         = _tables.AddNew("VacancyLocation",                                                       NotOwnedByVacancyOwner, Vacancy, County, LocalAuthority);
-                var AdditionalQuestion      = _tables.AddNew("AdditionalQuestion",                                                    NotOwnedByVacancyOwner, Vacancy);
-                var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, NotOwnedByVacancyOwner, Vacancy, VacancyReferralCommentsFieldType);
+                // Seems to be related to applications rather than vacancies
+                // var SubVacancy                     = _tables.AddNew("SubVacancy",                                                                  OwnedByAv, Vacancy);
 
+                var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship);
+                var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship, ApprenticeshipFramework);
+
+                // This isn't really needed, plus records can be deleted (outside of archiving activity) which we don't support yet (also, records get deleted and re-added by the AVMS GUI when editing)
+                // var ProviderSiteOffer              = _tables.AddNew("ProviderSiteOffer",          new string[] { "ProviderSiteOfferID" },          OwnedByAv, DoDelete,                ProviderSiteLocalAuthority, ProviderSiteFramework);
+
+                if (includeVacancy)
+                {
+                    // These take a while so don't always do them
+                    var Vacancy                 = _tables.AddNew("Vacancy",                                                         0.2m, TransformVacancy, CanMutateVacancy,
+                        VacancyOwnerRelationship, ProviderSite, Provider, ApprenticeshipType, VacancyStatusType, ApprenticeshipFramework, County, LocalAuthority);
+                    var VacancyHistory          = _tables.AddNew("VacancyHistory",                                                  2.0m, Unchanged, CanMutateVacancyChild,   Vacancy, VacancyHistoryEventType);
+                    var VacancyTextField        = _tables.AddNew("VacancyTextField",                                                2.0m, Unchanged, CanMutateVacancyChild,   Vacancy, VacancyTextFieldValue);
+                    var VacancyLocation         = _tables.AddNew("VacancyLocation",                                                       Unchanged, CanMutateVacancyChild,   Vacancy, County, LocalAuthority);
+                    var AdditionalQuestion      = _tables.AddNew("AdditionalQuestion",                                              2.0m, Unchanged, CanMutateVacancyChild,   Vacancy);
+                    var VacancyReferralComments = _tables.AddNew("VacancyReferralComments", new string[] { "VacancyReferralCommentsID" }, 2.0m, Unchanged, CanMutateVacancyChild,   Vacancy, VacancyReferralCommentsFieldType);
+                }
 
                 /*if (false) // TODO: Stakeholder
                 {
@@ -202,23 +202,29 @@ select top 10 * from VacancyReferralComments
             /// to add or change fields. If this function then returns true AND "source" and "originalTarget" are then found to vary then the record will be inserted/updated, otherwise it will be left alone.</param>
             /// <param name="dependsOn"></param>
             /// <returns></returns>
-            public TableSpec AddNew(string tableName, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec AddNew(string tableName, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, new string[] { tableName + "Id" }, 1, transform, dependsOn);
+                var table = new TableSpec(tableName, new string[] { tableName + "Id" }, 1, transform, canMutate, dependsOn);
                 All.Add(table);
                 return table;
             }
 
-            public TableSpec AddNew(string tableName, string[] primaryKeys, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec AddNew(string tableName, string[] primaryKeys, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, primaryKeys, 1, transform, dependsOn);
+                var table = new TableSpec(tableName, primaryKeys, 1, transform, canMutate, dependsOn);
                 All.Add(table);
                 return table;
             }
 
-            public TableSpec AddNew(string tableName, string[] primaryKeys, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec AddNew(string tableName, string[] primaryKeys, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
             {
-                var table = new TableSpec(tableName, primaryKeys, batchSizeMultiplier, transform, dependsOn);
+                var table = new TableSpec(tableName, primaryKeys, batchSizeMultiplier, transform, canMutate, dependsOn);
+                All.Add(table);
+                return table;
+            }
+            public TableSpec AddNew(string tableName, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
+            {
+                var table = new TableSpec(tableName, new string[] { tableName + "Id" }, batchSizeMultiplier, transform, canMutate, dependsOn);
                 All.Add(table);
                 return table;
             }
@@ -231,13 +237,15 @@ select top 10 * from VacancyReferralComments
 
             public string Name { get; private set; }
 
-            public Func<dynamic, dynamic, bool> Transform { get; private set; }
+            public Action<ITableSpec, dynamic, dynamic> Transform { get; private set; }
+
+            public Func<ITableSpec, dynamic, dynamic, Operation, bool> CanMutate { get; private set; }
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
             public decimal BatchSizeMultiplier { get; private set; }
 
-            public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Func<dynamic, dynamic, bool> transform, params TableSpec[] dependsOn)
+            public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
             {
                 for (int i = 0; i < dependsOn.Length; i++)
                 {
@@ -249,23 +257,126 @@ select top 10 * from VacancyReferralComments
                 PrimaryKeys = primaryKeys;
                 BatchSizeMultiplier = batchSizeMultiplier;
                 Transform = transform;
+                CanMutate = canMutate;
                 _dependsOn = new List<TableSpec>(dependsOn);
             }
         }
 
-        public static bool OwnedByAv(dynamic source, dynamic originalTarget)
+        #region ShouldApplyChange methods
+
+        /// <summary>
+        /// Tables that are in AV and where records are normally owned by them.
+        /// We never edit these records.
+        /// </summary>
+        public bool OwnedByAVUnlessNegative(ITableSpec table, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
         {
-            return true;
+            var primaryKeys = Keys.GetPrimaryKeys((IDictionary<string, object>)(oldRecordFromTarget ?? newRecordFromSource), table);
+
+            if (primaryKeys.First() < 0)
+            {
+                if (operation == Operation.Delete)
+                {
+                    // Migrate will identify these for deletion as they are not on the source system
+                    return false;
+                }
+                else
+                {
+                    // If Migrate is trying to insert or update them then are assertion that only we create negative ids is wrong
+                    _log.Error($"AVMS somehow has record in {table.Name} for {primaryKeys}");
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
         }
 
-        public bool TransformVacancy(dynamic oldRecord, dynamic newRecord)
+        /// <summary>
+        /// Tables that are in AV and where records are normally owned by them.
+        /// As far as we know they are never deleted and (although this might not have been fully analysed), deletion might fail because we might be using them.
+        /// Generally used for reference data.
+        /// </summary>
+        public bool OwnedByAVUnlessNegativeNoDeletes(ITableSpec table, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
         {
-            if (oldRecord != null && oldRecord.EditedInRaa)
+            var primaryKeys = Keys.GetPrimaryKeys((IDictionary<string, object>)(oldRecordFromTarget ?? newRecordFromSource), table);
+
+            if (primaryKeys.First() < 0)
             {
-                _log.Warn($"Ignored change to Vacancy from AVMS with VacancyId = {newRecord.VacancyId}");
+                if (operation == Operation.Delete)
+                {
+                    // Migrate will identify these for deletion as they are not on the source system
+                    return false;
+                }
+                else
+                {
+                    // If Migrate is trying to insert or update them then are assertion that only we create negative ids is wrong
+                    _log.Error($"AVMS somehow has record in {table.Name} for {primaryKeys}");
+                    return false;
+                }
+            }
+            else
+            {
+                if (operation == Operation.Delete)
+                {
+                    // If Migrate is trying to delete its own records then the assumption it never does is wrong
+                    _log.Error($"AVMS unexpectedly trying to delete {table.Name} for {primaryKeys}");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        public bool CanMutateVacancyOwnerRelationship(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
+        {
+            // Deletes could potentially be a problem, but since using a VacancyOwnerRelationship in a Vacancy results in editing of the EmployerDescription and setting of EditedInRaa, all is good
+
+            if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
+            {
+                _log.Warn($"Ignored {operation} to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {oldRecordFromTarget.VacancyOwnerRelationshipId}");
                 return false;
             }
 
+            return true;
+        }
+
+        public bool CanMutateVacancyOwnerRelationshipHistory(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
+        {
+            var record = oldRecordFromTarget ?? newRecordFromSource;
+            return !_avmsSyncRepository.IsVacancyOwnerRelationshipOwnedByTargetDatabase(record.VacancyOwnerRelationshipId);
+        }
+
+        public bool CanMutateVacancy(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
+        {
+            if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
+            {
+                _log.Warn($"Ignored change to Vacancy from AVMS with VacancyId = {oldRecordFromTarget.VacancyId}");
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool CanMutateVacancyChild(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
+        {
+            var record = oldRecordFromTarget ?? newRecordFromSource;
+            return !_avmsSyncRepository.IsVacancyOwnedByTargetDatabase(record.VacancyId);
+        }
+
+        #endregion
+
+        #region Normal transformations
+
+        public void Unchanged(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
+        {
+
+        }
+
+        public void TransformVacancy(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
+        {
             if (oldRecord == null)
             {
                 newRecord.VacancyGuid = (object)Guid.NewGuid(); // Need to manually box object (possible Dapper bug)
@@ -279,7 +390,7 @@ select top 10 * from VacancyReferralComments
             }
             newRecord.VacancyTypeId = (object) vacancyTypeId;
 
-            //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in VacancyTextField instead
+            //newRecord.OtherImportantInformation = string.Join(" ", newRecord.OtherImportantInformation, newRecord.RealityCheck); // TODO: This must be in vacancytextfield instead
 
             // The old values in this field would not be recognised by our system (although they will probably have timed out)
             newRecord.BeingSupportedBy      = null;
@@ -297,61 +408,39 @@ select top 10 * from VacancyReferralComments
             // newRecord.EmployerAnonymousName = null;
             // newRecord.VacancyManagerAnonymous = false;
 
-            AnonymiseVacancy(oldRecord, newRecord);
-
-            return true;
+            AnonymiseVacancy(tableSpec, oldRecord, newRecord);
         }
 
-        public bool TransformEmployer(dynamic oldRecord, dynamic newRecord)
+        public void TransformEmployer(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
         {
             // The old values in this field would not be recognised by our system (although they will probably have timed out)
             newRecord.BeingSupportedBy = null;
             newRecord.LockedForSupportUntil = null;
-
-            return true;
         }
 
-        public bool TransformProvider(dynamic oldRecord, dynamic newRecord)
+        public void TransformProvider(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
         {
             newRecord.UPIN = null; // We can't always populate this, so always set it to null to prove it isn't used.
-            return true;
         }
 
-        public bool NotOwnedByVacancyOwner(dynamic oldRecord, dynamic newRecord)
+
+        public void TransformAttachedDocument(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
         {
-            return !_avmsSyncRepository.IsVacancyOwnedByTargetDatabase(newRecord.VacancyId);
+            //newRecord.Attachment = new byte[0]; // These are rather large and causing timeouts
         }
 
-        public bool CanMutateVacancyOwnerRelationship(dynamic oldRecord, dynamic newRecord)
-        {
-            if (oldRecord != null && oldRecord.EditedInRaa)
-            {
-                _log.Warn($"Ignored change to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {newRecord.VacancyOwnerRelationshipId}");
-                return false;
-            }
-
-            return true;
-        }
-
-        public bool TransformAttachedDocument(dynamic oldRecord, dynamic newRecord)
-        {
-            newRecord.Attachment = new byte[0];
-            return true;
-        }
-
-        public bool CanMutateVacancyOwnerRelationshipHistory(dynamic oldRecord, dynamic newRecord)
-        {
-            return !_avmsSyncRepository.IsVacancyOwnerRelationshipOwnedByTargetDatabase(newRecord.VacancyOwnerRelationshipId);
-        }
+        #endregion
 
 
-        #region Anonymisation
+
+
+        #region Anonymisation transformations
 
         // This is based on the anonymisation script used to create the static anonymised database
         // The following were anonymised there, but not here because they are not being migrated:
         // Candidate, Stakeholder, VacancySearch, ApplicationUnsuccessfulReasonType, CAFFields, NASSupportContact, Application, AdditionalAnswer
 
-        public bool AnonymisePerson(dynamic oldRecord, dynamic newRecord)
+        public void AnonymisePerson(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecord)
         {
             if (_migrateConfig.AnonymiseData)
             {
@@ -367,11 +456,9 @@ select top 10 * from VacancyReferralComments
                 newRecord.MobileNumber = anon.TelephoneNumber;
                 newRecord.Email = anon.EmailAddress;
             }
-
-            return true;
         }
 
-        public bool AnonymiseEmployerContact(dynamic oldRecord, dynamic newRecord)
+        public void AnonymiseEmployerContact(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecord)
         {
             if (_migrateConfig.AnonymiseData)
             {
@@ -393,11 +480,9 @@ select top 10 * from VacancyReferralComments
                 newRecord.FaxNumber = anon1.TelephoneNumber; // TODO
                 newRecord.AlternatePhoneNumber = anon2.TelephoneNumber;
             }
-
-            return true;
         }
 
-        public bool AnonymiseProviderSite(dynamic oldRecord, dynamic newRecord)
+        public void AnonymiseProviderSite(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecord)
         {
             if (_migrateConfig.AnonymiseData)
             {
@@ -409,22 +494,18 @@ select top 10 * from VacancyReferralComments
                 newRecord.ContactDetailsForEmployer = $"{anon1.GivenName} on {anon1.TelephoneNumber}";
                 newRecord.ContactDetailsForCandidate = $"{anon1.GivenName} on {anon2.TelephoneNumber}";
             }
-
-            return true;
         }
 
-        public bool AnonymiseProviderSiteHistory(dynamic oldRecord, dynamic newRecord)
+        public void AnonymiseProviderSiteHistory(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
         {
             if (_migrateConfig.AnonymiseData)
             {
                 newRecord.Comment = "[Training provider history]";
             }
-
-            return true;
         }
 
 
-        public bool AnonymiseVacancy(dynamic oldRecord, dynamic newRecord)
+        public void AnonymiseVacancy(ITableSpec tableSpec, dynamic oldRecord, dynamic newRecord)
         {
             if (_migrateConfig.AnonymiseData)
             {
@@ -432,11 +513,7 @@ select top 10 * from VacancyReferralComments
 
                 newRecord.ContactName = $"{anon.GivenName} {anon.Surname}";
             }
-
-            return true;
         }
-
-        // TODO: Could blank being supported by / until on employer
 
         #endregion
     }

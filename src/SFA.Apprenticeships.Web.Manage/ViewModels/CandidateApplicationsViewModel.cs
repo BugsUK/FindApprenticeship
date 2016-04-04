@@ -52,5 +52,7 @@
                         (each.ApplicationStatus == ApplicationStatuses.ExpiredOrWithdrawn && each.DateApplied.HasValue));
             }
         }
+
+        public string NextStepUrl { get; set; }
     }
 }

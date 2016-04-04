@@ -87,6 +87,7 @@
     <Compile Include="DatePresenter.cs" />
     <Compile Include="DistancePresenter.cs" />
     <Compile Include="DurationPresenter.cs" />
+    <Compile Include="FullNameFormatter.cs" />
     <Compile Include="NamePresenter.cs" />
     <Compile Include="ProviderVacancyStatusPresenter.cs" />
     <Compile Include="QualificationPresenter.cs" />

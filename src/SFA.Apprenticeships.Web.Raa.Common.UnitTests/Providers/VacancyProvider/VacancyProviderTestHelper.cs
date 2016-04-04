@@ -52,7 +52,8 @@
                 mapper.Setup(m => m.Map<Vacancy, VacancyViewModel>(It.IsAny<Vacancy>())).Returns(new VacancyViewModel
                 {
                     VacancyReferenceNumber = vacancyReferenceNumber,
-                    NewVacancyViewModel = new NewVacancyViewModel()
+                    NewVacancyViewModel = new NewVacancyViewModel(),
+                    TrainingDetailsViewModel = new TrainingDetailsViewModel()
                 });
             }
 

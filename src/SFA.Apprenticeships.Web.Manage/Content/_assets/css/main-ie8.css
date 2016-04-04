@@ -6313,6 +6313,11 @@ h2 a i.raa-icon-comment {
 .candidate-address {
   list-style-type: none; }
 
+table.reactive .reactive-sub-title {
+  font-weight: 700;
+  display: block;
+  margin-top: 20px; }
+
 @media screen and (max-width: 768px) {
   table.reactive {
     border-top: 1px solid #bfc1c3;
@@ -6341,6 +6346,8 @@ h2 a i.raa-icon-comment {
             line-height: 1.25; } }
 
 @media screen and (max-width: 768px) {
+        table.reactive tr td .reactive-sub-title {
+          display: none; }
         table.reactive tr td.reactive-header:before {
           content: attr(data-label) ": ";
           font-family: "nta", Arial, sans-serif;

@@ -111,9 +111,12 @@
     <Compile Include="ErrorCodes.cs" />
     <Compile Include="Exceptions\DomainException.cs" />
     <Compile Include="Exceptions\ExceptionExtensions.cs" />
+    <Compile Include="Extensions\CategoryExtensions.cs" />
     <Compile Include="Extensions\CollectionExtensions.cs" />
     <Compile Include="Extensions\DecimalExtensions.cs" />
     <Compile Include="ReferenceData\Category.cs" />
+    <Compile Include="ReferenceData\CategoryPrefixes.cs" />
+    <Compile Include="ReferenceData\CategoryType.cs" />
     <Compile Include="ReferenceNumber.cs" />
     <Compile Include="Users\Name.cs" />
     <Compile Include="Users\ProviderStatuses.cs" />
@@ -122,6 +125,7 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\TrainingType.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyHelper.cs" />
     <Compile Include="Vacancies\VacancyStatuses.cs" />

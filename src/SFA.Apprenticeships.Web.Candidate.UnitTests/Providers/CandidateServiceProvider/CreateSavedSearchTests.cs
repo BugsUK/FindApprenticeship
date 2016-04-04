@@ -74,24 +74,12 @@
 
             var categories = new List<Category>
             {
-                new Category
-                {
-                    CodeName = category,
-                    FullName = categoryFullName,
-                    SubCategories = new []
+                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category
-                        {
-                            CodeName = "513",
-                            FullName = "Surveying"
-                        },
-                        new Category
-                        {
-                            CodeName = "540",
-                            FullName = "Construction Civil Engineering"
-                        }
+                        new Category(255, "513", "Surveying", CategoryType.Framework),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
                     }
-                }
+                )
             };
 
             SavedSearch savedSearch = null;
@@ -154,35 +142,17 @@
 
             var categories = new List<Category>
             {
-                new Category
-                {
-                    CodeName = category,
-                    SubCategories = new []
+                new Category(17, category, category, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category
-                        {
-                            CodeName = "513",
-                            FullName = "Surveying"
-                        },
-                        new Category
-                        {
-                            CodeName = "540",
-                            FullName = "Construction Civil Engineering"
-                        }
+                        new Category(255, "513", "Surveying", CategoryType.Framework),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
                     }
-                },
-                new Category
-                {
-                    CodeName = "OTHER",
-                    SubCategories = new[]
+                ),
+                new Category(0, "OTHER", "OTHER", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category
-                        {
-                            CodeName = "600",
-                            FullName = "Should not be included"
-                        }
+                        new Category(329, "600", "Should not be included", CategoryType.Framework)
                     }
-                }
+                )
             };
 
             SavedSearch savedSearch = null;
@@ -265,24 +235,12 @@
 
             var categories = new List<Category>
             {
-                new Category
-                {
-                    CodeName = category,
-                    FullName = categoryFullName,
-                    SubCategories = new []
+                new Category(17, category, categoryFullName, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category
-                        {
-                            CodeName = "513",
-                            FullName = "Surveying"
-                        },
-                        new Category
-                        {
-                            CodeName = "540",
-                            FullName = "Construction Civil Engineering"
-                        }
+                        new Category(255, "513", "Surveying", CategoryType.Framework),
+                        new Category(273, "540", "Construction Civil Engineering", CategoryType.Framework)
                     }
-                }
+                )
             };
 
             var existingSavedSearch = new SavedSearchBuilder()

@@ -126,6 +126,11 @@ CREATE UNIQUE NONCLUSTERED INDEX [idx_Vacancy_VacancyGuid]
 
 
 GO
+CREATE NONCLUSTERED INDEX [idx_Vacancy_MasterVacancyId]
+	ON [dbo].[Vacancy](MasterVacancyId ASC)
+
+
+GO
 
 CREATE TRIGGER uDeleteVacancySearch
    ON  Vacancy

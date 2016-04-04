@@ -20,7 +20,7 @@
     [TestFixture]
     public class ApprenticeshipVacancySearchTests
     {
-        private const string RetailAndCommercialEnterprise = "HBY"; //"Retail and Commercial Enterprise";
+        private const string RetailAndCommercialEnterprise = "SSAT1.HBY"; //"Retail and Commercial Enterprise";
         private IElasticsearchClientFactory _elasticsearchClientFactory;
         private IConfigurationService _configurationService;
         private IMapper _mapper;

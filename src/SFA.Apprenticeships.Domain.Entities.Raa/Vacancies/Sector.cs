@@ -8,6 +8,8 @@
 
         public string Name { get; set; }
 
+        public int ApprenticeshipOccupationId { get; set; }
+
         public IEnumerable<Standard> Standards { get; set; }
     }
 }

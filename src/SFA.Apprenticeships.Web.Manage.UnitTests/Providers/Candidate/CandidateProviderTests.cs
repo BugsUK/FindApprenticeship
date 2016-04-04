@@ -24,14 +24,13 @@
     public class CandidateProviderTests
     {
         private ICandidateProvider _provider;
-        private Mock<ICandidateSearchService> _candidateSearchService;
+        private Mock<ICandidateSearchService> _candidateSearchService;        
 
         [SetUp]
         public void SetUp()
         {
-            _candidateSearchService = new Mock<ICandidateSearchService>();
-
-            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<ITraineeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<IProviderService>().Object, new Mock<IEmployerService>().Object, new Mock<ILogService>().Object);
+            _candidateSearchService = new Mock<ICandidateSearchService>();            
+            _provider = new CandidateProvider(_candidateSearchService.Object, new CandidateMappers(), new Mock<ICandidateApplicationService>().Object, new Mock<IApprenticeshipApplicationService>().Object, new Mock<ITraineeshipApplicationService>().Object, new Mock<IVacancyPostingService>().Object, new Mock<IProviderService>().Object, new Mock<IEmployerService>().Object, new Mock<ILogService>().Object, new Mock<IConfigurationService>().Object);
         }
 
         [Test]

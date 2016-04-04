@@ -392,10 +392,6 @@
       <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.TacticalDataServices\SFA.Apprenticeships.Infrastructure.TacticalDataServices.csproj">
-      <Project>{24bdbcac-42ee-4253-8e8a-34ff5f0f41e7}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.TacticalDataServices</Name>
-    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.VacancyIndexer\SFA.Apprenticeships.Infrastructure.VacancyIndexer.csproj">
       <Project>{02D19199-A4BB-484A-AA48-208C7B6D819F}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.VacancyIndexer</Name>

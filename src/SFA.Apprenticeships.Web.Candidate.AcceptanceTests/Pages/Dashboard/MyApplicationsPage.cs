@@ -33,7 +33,7 @@
         [ElementLocator(Class = "resume-link")]
         public IWebElement ResumeLink { get; set; }
 
-        [ElementLocator(Class = "delete-draft")]
+        [ElementLocator(Id = "delete-draft-1")]
         public IWebElement DeleteDraftLink { get; set; }
 
         [ElementLocator(Class = "archive-successful")]

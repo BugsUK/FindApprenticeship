@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Reference
 {
+    using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -9,7 +11,6 @@
     using Sql.Schemas.Reference;
 
     [TestFixture(Category = "Integration")]
-    [Ignore("Un-ignore, once we start using the reference data")]
     public class ReferenceRepositoryTests
     {
         private readonly IMapper _mapper = new ReferenceMappers();
@@ -23,61 +24,81 @@
         }
 
         [Test]
-        public void GetCounties()
+        public void GetStandards()
         {
             //Arrange
             var logger = new Mock<ILogService>();
             var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
 
             //Act
-            var counties = repository.GetCounties();
+            var standards = repository.GetStandards();
 
             //Assert
-            counties.Count.Should().Be(47);
-            counties[0].CountyId.Should().Be(1);
-            counties[0].CodeName.Should().Be("BED");
-            counties[0].ShortName.Should().Be("BED");
-            counties[0].FullName.Should().Be("Bedfordshire");
+            standards.Should().NotBeNullOrEmpty();
+            standards.Any(std => std.ApprenticeshipLevel == ApprenticeshipLevel.Unknown
+                                 || std.ApprenticeshipSectorId == 0
+                                 || std.Id == 0
+                                 || string.IsNullOrWhiteSpace(std.Name))
+                                 .Should().BeFalse();
         }
 
         [Test]
-        public void GetRegions()
+        public void GetSectors()
         {
             //Arrange
             var logger = new Mock<ILogService>();
             var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
 
             //Act
-            var counties = repository.GetRegions();
+            var sectors = repository.GetSectors();
 
             //Assert
-            counties.Count.Should().Be(10);
-            counties[0].RegionId.Should().Be(0);
-            counties[0].CodeName.Should().Be("NUL");
-            counties[0].ShortName.Should().Be("NUL");
-            counties[0].FullName.Should().Be("Unspecified");
+            sectors.Should().NotBeNullOrEmpty();
+            sectors.Any(std => std.Id == 0
+                               || string.IsNullOrWhiteSpace(std.Name)
+                               || !std.Standards.Any()
+                               || std.Standards.Any(x => x.ApprenticeshipSectorId != std.Id))
+                               .Should().BeFalse();
         }
 
         [Test]
-        public void GetLocalAuthorities()
+        public void GetFrameworks()
         {
             //Arrange
             var logger = new Mock<ILogService>();
             var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
 
             //Act
-            var counties = repository.GetLocalAuthorities();
+            var frameworks = repository.GetFrameworks();
 
             //Assert
-            counties.Count.Should().Be(326);
-            counties[0].LocalAuthorityId.Should().Be(1);
-            counties[0].CodeName.Should().Be("45UB");
-            counties[0].ShortName.Should().Be("45UB");
-            counties[0].FullName.Should().Be("Adur");
-            counties[0].County.CountyId.Should().Be(42);
-            counties[0].County.CodeName.Should().Be("WSX");
-            counties[0].County.ShortName.Should().Be("WSX");
-            counties[0].County.FullName.Should().Be("West Sussex");
+            frameworks.Should().NotBeNullOrEmpty();
+            frameworks.Any(std => std.Id == 0
+                                  || string.IsNullOrWhiteSpace(std.CodeName)
+                                  || string.IsNullOrWhiteSpace(std.FullName)
+                                  || string.IsNullOrWhiteSpace(std.ShortName))
+                .Should().BeFalse();
+        }
+
+        [Test]
+        public void GetOccupations()
+        {
+            //Arrange
+            var logger = new Mock<ILogService>();
+            var repository = new ReferenceRepository(_connection, _mapper, logger.Object);
+
+            //Act
+            var occupations = repository.GetOccupations();
+
+            //Assert
+            occupations.Should().NotBeNullOrEmpty();
+            occupations.Any(occupation => occupation.Id == 0
+                                   || string.IsNullOrWhiteSpace(occupation.CodeName)
+                                   || string.IsNullOrWhiteSpace(occupation.FullName)
+                                   || string.IsNullOrWhiteSpace(occupation.ShortName)
+                                   || occupation.Frameworks == null
+                                   || !occupation.Frameworks.Any())
+                .Should().BeFalse();
         }
     }
 }

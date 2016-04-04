@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Raa.Extensions
+﻿namespace SFA.Apprenticeships.Infrastructure.UnitTests.Raa.Extensions.VacancyExtensions
 {
     using System;
     using Domain.Entities.Raa.Vacancies;

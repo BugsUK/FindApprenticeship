@@ -99,6 +99,7 @@
     <Compile Include="NullApplicationStatusesProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ApprenticeshipVacancyDataProvider.cs" />
+    <Compile Include="ReferenceDataProvider.cs" />
     <Compile Include="TraineeshipVacancyDataProvider.cs" />
     <Compile Include="VacancyIndexDataProvider.cs" />
   </ItemGroup>
