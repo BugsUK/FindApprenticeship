@@ -191,6 +191,11 @@ h2{
 }
 
 table.reactive {
+    .reactive-sub-title {
+        font-weight: 700;
+        display: block;
+        margin-top: 20px;
+    }
     @media screen and ( max-width: 768px ) {
         border-top: 1px solid $grey-2;
         display: block;
@@ -208,6 +213,9 @@ table.reactive {
                 padding: 0.25em 0;
                 .reactive-title {
                     @include bold-19;
+                }
+                .reactive-sub-title {
+                    display: none;
                 }
                 &.reactive-header {
                     &:before {
