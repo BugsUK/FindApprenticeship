@@ -229,7 +229,9 @@ else
                             <col>
                         </colgroup>
                         <tbody>
-                            @foreach (var application in @Model.DraftApprenticeshipApplications)
+                        @{
+                            var index = 0;
+                            foreach (var application in @Model.DraftApprenticeshipApplications)
                             {
                                 <tr>
                                     <td>
@@ -271,10 +273,12 @@ else
                                         }
                                     </td>
                                     <td class="ta-center">
-                                        <a title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(@CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
+                                        <a id="delete-draft-@index" title="Remove from my applications" class="icon-black delete-draft" href="@Url.RouteUrl(@CandidateRouteNames.ApprenticeshipDelete, new { id = application.VacancyId })"><i class="copy-16 fa fa-times-circle"></i><span class="visuallyhidden">Remove from my applications</span></a>
                                     </td>
                                 </tr>
+                                index++;
                             }
+                        }
                         </tbody>
                     </table>
                 }
