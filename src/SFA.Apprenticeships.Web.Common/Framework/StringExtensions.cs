@@ -1,6 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Common.Framework
 {
     using System;
+    using System.Text;
+    using System.Text.RegularExpressions;
 
     public static class StringExtensions
     {
@@ -20,5 +22,14 @@
             if (string.IsNullOrEmpty(valueAsString)) return defaultValue;
             return (T)Convert.ChangeType(valueAsString, typeof(T));
         }
+
+        public static string RemoveHtmlTag(this string valueAsString)
+        {
+            const string HTML_TAG_PATTERN = "<.*?>";
+            StringBuilder sb = new StringBuilder(valueAsString);
+            sb.Replace("& bull;", string.Empty);
+            return Regex.Replace(sb.ToString(), HTML_TAG_PATTERN, string.Empty);             
+        }
+
     }
 }

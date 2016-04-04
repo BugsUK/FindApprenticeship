@@ -5,6 +5,9 @@
     using System.Linq;
     using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
+
+    using SFA.Apprenticeships.Web.Common.Framework;
+
     using ViewModels.Vacancy;
     using Web.Common.ViewModels;
 
@@ -32,7 +35,7 @@
                     ClosingDateComment = vacancy.ClosingDateComment,
                     PossibleStartDateComment = vacancy.PossibleStartDateComment,
                 },
-                LongDescription = vacancy.LongDescription,
+                LongDescription = vacancy.LongDescription.RemoveHtmlTag(),
                 WageComment = vacancy.WageComment,
                 DurationComment = vacancy.DurationComment,
                 LongDescriptionComment = vacancy.LongDescriptionComment,
