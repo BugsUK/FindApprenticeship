@@ -25,7 +25,7 @@
     using ViewModels;
 
     public class CandidateProvider : ICandidateProvider
-    {
+    {        
         private readonly CultureInfo _dateCultureInfo = new CultureInfo("en-GB");
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
@@ -36,7 +36,9 @@
         private readonly IProviderService _providerService;
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
+        private readonly IConfigurationService _configurationService;
 
+        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService, IConfigurationService configurationService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
@@ -47,6 +49,7 @@
             _providerService = providerService;
             _employerService = employerService;
             _logService = logService;
+            _configurationService = configurationService;
         }
 
         public CandidateSearchResultsViewModel SearchCandidates(CandidateSearchViewModel searchViewModel)
@@ -72,6 +75,8 @@
 
         public CandidateApplicationsViewModel GetCandidateApplications(Guid candidateId)
         {
+            var webSettings = _configurationService.Get<CommonWebConfiguration>();
+            var domainUrl = webSettings.SiteDomainName;            
             _logService.Debug("Calling CandidateApprenticeshipApplicationProvider to get the applications for candidate ID: {0}.",
                 candidateId);
 
@@ -106,6 +111,8 @@
                     CandidateId = candidateId,
                     CandidateName = candidateName,
                     CandidateApprenticeshipApplications = apprenticeshipApplications,
+                    CandidateTraineeshipApplications = traineeshipApplications,
+                    NextStepUrl = string.Format($"https://{domainUrl}/nextsteps")
                 };
             }
             catch (Exception e)
