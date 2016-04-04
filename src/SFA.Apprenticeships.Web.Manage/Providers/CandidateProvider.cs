@@ -19,13 +19,14 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
+
+    using SFA.Apprenticeships.Web.Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     public class CandidateProvider : ICandidateProvider
     {
         private readonly CultureInfo _dateCultureInfo = new CultureInfo("en-GB");
-
         private readonly ICandidateSearchService _candidateSearchService;
         private readonly IMapper _mapper;
         private readonly ICandidateApplicationService _candidateApplicationService;
@@ -36,7 +37,6 @@
         private readonly IEmployerService _employerService;
         private readonly ILogService _logService;
 
-        public CandidateProvider(ICandidateSearchService candidateSearchService, IMapper mapper, ICandidateApplicationService candidateApplicationService, IApprenticeshipApplicationService apprenticeshipApplicationService, ITraineeshipApplicationService traineeshipApplicationService, IVacancyPostingService vacancyPostingService, IProviderService providerService, IEmployerService employerService, ILogService logService)
         {
             _candidateSearchService = candidateSearchService;
             _mapper = mapper;
@@ -106,7 +106,6 @@
                     CandidateId = candidateId,
                     CandidateName = candidateName,
                     CandidateApprenticeshipApplications = apprenticeshipApplications,
-                    CandidateTraineeshipApplications = traineeshipApplications
                 };
             }
             catch (Exception e)
