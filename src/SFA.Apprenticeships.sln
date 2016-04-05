@@ -936,6 +936,7 @@ Global
 		{84881750-9710-4278-94BE-016B1C0C36E6}.Sit|Any CPU.Build.0 = Sit|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Dev|Any CPU.Build.0 = Dev|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Local|Any CPU.ActiveCfg = Local|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
 		{94542DBF-B9D4-42C2-B9D1-DCEB75AB3AB1}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
@@ -1147,6 +1148,7 @@ Global
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Demo|Any CPU.Deploy.0 = Demo|Any CPU
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Dev|Any CPU.Build.0 = Dev|Any CPU
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Dev|Any CPU.Deploy.0 = Dev|Any CPU
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Local|Any CPU.ActiveCfg = Local|Any CPU
 		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
@@ -1315,7 +1317,7 @@ Global
 		{E9B83262-916C-4AF9-A55C-F89F623847AE} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal
