@@ -372,7 +372,9 @@
     <None Include="Content\scss\_components.scss" />
     <None Include="Content\scss\_ie8-hacks.scss" />
     <None Include="Content\scss\_modules.scss" />
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
     <Content Include="Content\scss\main.css">
       <DependentUpon>main.scss</DependentUpon>
     </Content>
