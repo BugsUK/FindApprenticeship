@@ -51,6 +51,7 @@
         public string DurationComment { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
+        [UIHint("tinymce_jquery_full"), AllowHtml]
         public string LongDescription { get; set; }
 
         [Display(Name = VacancyViewModelMessages.LongDescriptionComment.LabelText)]

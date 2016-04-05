@@ -28,7 +28,8 @@
             const string HTML_TAG_PATTERN = "<.*?>";
             StringBuilder sb = new StringBuilder(valueAsString);
             sb.Replace("& bull;", string.Empty);
-            return Regex.Replace(sb.ToString(), HTML_TAG_PATTERN, string.Empty);             
+            sb.Replace("&nbsp;", string.Empty);
+            return Regex.Replace(sb.ToString(), HTML_TAG_PATTERN, string.Empty);
         }
 
     }

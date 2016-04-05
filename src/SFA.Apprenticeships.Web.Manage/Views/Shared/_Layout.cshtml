@@ -23,6 +23,8 @@
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.CdnImage("apple-touch-icon-120x120.png")">
     <link rel="apple-touch-icon-precomposed" sizes="76x76" href="@Url.CdnImage("apple-touch-icon-76x76.png")">
     <link rel="apple-touch-icon-precomposed" href="@Url.CdnImage("apple-touch-icon-60x60.png")">
+    <script src="@Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/tinymce/jquery.tinymce.js")" type="text/javascript"></script>
     @Styles.Render("~/bundles/font-awesome")
     @Html.Partial("_Scripts")
 </head>
@@ -154,8 +156,16 @@
             <p>Telephone (from mobiles): 02476 826482</p>
         </div>
     </footer>
+    @*<script type="text/javascript">
+        if (typeof jQuery === 'undefined') {
+            var e = document.createElement("script");
 
-    @Scripts.Render("~/bundles/jquery")
+            e.src = '@Url.Content("~/Content/_assets/js/vendor/jquery-1.11.1.js")';
+            e.type = "text/javascript";
+            document.getElementsByTagName("head")[0].appendChild(e);
+        }
+    </script>*@
+    @*@Scripts.Render("~/bundles/jquery")*@
     @Scripts.Render("~/bundles/vendor")
     @Scripts.Render("~/bundles/fastclick")
     @Scripts.Render("~/bundles/underscore")
