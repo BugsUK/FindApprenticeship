@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests
 {
     using Domain.Entities.Raa.Parties;
     using AgencyUser = Sql.Schemas.UserProfile.Entities.AgencyUser;

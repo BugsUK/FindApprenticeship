@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.ProviderSite
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.ProviderSite
 {
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Repositories;

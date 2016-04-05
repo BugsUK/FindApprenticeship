@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.Vacancy
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.Vacancy
 {
     using System;
     using System.Collections.Generic;

@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Common
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Common
 {
     using System;
     using System.Collections.Generic;

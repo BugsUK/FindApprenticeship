@@ -1,11 +1,8 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.Employer
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.Employer
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
-    using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using NUnit.Framework;

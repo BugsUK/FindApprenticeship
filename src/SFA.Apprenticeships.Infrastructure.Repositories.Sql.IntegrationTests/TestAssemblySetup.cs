@@ -1,10 +1,9 @@
-﻿using System;
-using NUnit.Framework;
-using SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Common;
-
-// ReSharper disable HeuristicUnreachableCode
-namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests
+﻿// ReSharper disable HeuristicUnreachableCode
+namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests
 {
+    using System;
+    using Common;
+    using NUnit.Framework;
 
     [SetUpFixture]
     public class TestAssemblySetup

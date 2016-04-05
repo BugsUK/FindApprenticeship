@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.UserProfile
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.UserProfile
 {
     using System;
     using Common;

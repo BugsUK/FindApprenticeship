@@ -1,6 +1,5 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.dbo.VacancyParty
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.dbo.VacancyParty
 {
-    using System;
     using System.Diagnostics.CodeAnalysis;
     using System.Linq;
     using Common;

@@ -1,8 +1,7 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests.Schemas.Provider
+﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.Schemas.Provider
 {
     using System.Linq;
     using Common;
-    using Domain.Entities.Raa.Users;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;

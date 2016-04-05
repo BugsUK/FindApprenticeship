@@ -199,7 +199,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql", "SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj", "{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests", "SFA.Apprenticeships.Infrastructure.Repositories.Sql.Tests\SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.csproj", "{36E83135-5C14-4179-B4AD-3C120B05B73B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests", "SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests\SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests.csproj", "{36E83135-5C14-4179-B4AD-3C120B05B73B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Domain.Raa.Interfaces", "SFA.Apprenticeships.Domain.Raa.Interfaces\SFA.Apprenticeships.Domain.Raa.Interfaces.csproj", "{CF497DD1-550D-4203-8FBF-C0A3B0109D2B}"
 EndProject
