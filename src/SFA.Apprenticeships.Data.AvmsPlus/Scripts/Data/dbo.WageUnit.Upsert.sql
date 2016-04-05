@@ -3,7 +3,6 @@ GO
 
 MERGE INTO [dbo].[WageUnit] AS Target 
 USING (VALUES 
-  (1, 'NAP', 'NAP', 'NotApplicable'),
   (2, 'WKY', 'WKY', 'Weekly'),
   (3, 'MTY', 'MTY', 'Monthly'),
   (4, 'ANY', 'ANY', 'Annually')
