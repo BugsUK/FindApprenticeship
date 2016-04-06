@@ -905,4 +905,7 @@
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
   </ItemGroup>
+  <Target 
+    Name="Publish" 
+    Condition="'false'=='true'" />
 </Project>
