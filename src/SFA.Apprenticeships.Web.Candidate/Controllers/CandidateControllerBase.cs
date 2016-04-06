@@ -147,7 +147,7 @@
             var userContextCandidateId = UserContext.CandidateId;
             if (originalCandidateId != userContextCandidateId)
             {
-                _logService.Error($"SESSION HIJACK: CandidateId {originalCandidateId} does not match UserContext.CandidateId {userContextCandidateId}");
+                _logService.Error("SESSION HIJACK: CandidateId {0} does not match UserContext.CandidateId {1}", originalCandidateId, userContextCandidateId);
             }
         }
 
@@ -156,7 +156,7 @@
             var userContextUserName = UserContext.UserName;
             if (originalUserName != userContextUserName)
             {
-                _logService.Error($"SESSION HIJACK: UserName {originalUserName} does not match UserContext.UserName {userContextUserName}");
+                _logService.Error("SESSION HIJACK: UserName {0} does not match UserContext.UserName {1}", originalUserName, userContextUserName);
             }
         }
     }
