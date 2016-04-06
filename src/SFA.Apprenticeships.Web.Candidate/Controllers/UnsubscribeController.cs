@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using Application.Interfaces.Communications;
+    using Application.Interfaces.Logging;
     using Common.Constants;
     using Constants;
     using Domain.Interfaces.Configuration;
@@ -15,8 +16,8 @@
 
         public UnsubscribeController(
             IConfigurationService configurationService,
-            IUnsubscribeMediator unsubscribeMediator)
-            : base(configurationService)
+            IUnsubscribeMediator unsubscribeMediator, ILogService logService)
+            : base(configurationService, logService)
         {
             _unsubscribeMediator = unsubscribeMediator;
         }
@@ -24,10 +25,11 @@
         [HttpGet]
         public async Task<ActionResult> Index(Guid subscriberId, int subscriptionTypeId)
         {
+            var originalCandidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _unsubscribeMediator.Unsubscribe(candidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId);
+                var response = _unsubscribeMediator.Unsubscribe(originalCandidateId, subscriberId, (SubscriptionTypes)subscriptionTypeId);
 
                 SetUserMessage(response.Message.Text, response.Message.Level);
 

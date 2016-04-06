@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using System.Web;
     using System.Web.Mvc;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Framework;
@@ -20,8 +21,8 @@
         private readonly IHomeMediator _homeMediator;
 
         public HomeController(IHomeMediator homeMediator, 
-            IConfigurationService configurationService) 
-            : base(configurationService)
+            IConfigurationService configurationService, ILogService logService) 
+            : base(configurationService, logService)
         {
             _homeMediator = homeMediator;
         }

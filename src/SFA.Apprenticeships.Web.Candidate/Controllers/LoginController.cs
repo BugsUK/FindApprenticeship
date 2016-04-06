@@ -35,7 +35,7 @@
             ILoginMediator loginMediator,
             IConfigurationService configurationService,
             ILogService logService)
-            : base(configurationService)
+            : base(configurationService, logService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
             _candidateServiceProvider = candidateServiceProvider; //todo: shouldn't be in here, move to Provider layer?

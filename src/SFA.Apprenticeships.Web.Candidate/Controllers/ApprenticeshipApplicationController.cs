@@ -26,7 +26,7 @@
         public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator,
             ILogService logService,
             IConfigurationService configurationService)
-            : base(configurationService)
+            : base(configurationService, logService)
         {
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
             _logService = logService;
@@ -37,9 +37,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Resume(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.Resume(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.Resume(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -63,9 +66,13 @@
         [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+
+                var response = _apprenticeshipApplicationMediator.Apply(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -95,9 +102,12 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Apply(int id, ApprenticeshipApplicationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.PreviewAndSubmit(UserContext.CandidateId, id, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.PreviewAndSubmit(originalCandidateId, id, model);
 
                 switch (response.Code)
                 {
@@ -131,13 +141,16 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "ApplicationAction")]
         public async Task<ActionResult> Save(int id, ApprenticeshipApplicationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
+                ValidateCandidateId(originalCandidateId);
                 MediatorResponse<ApprenticeshipApplicationViewModel> response;
 
                 try
                 {
-                    response = _apprenticeshipApplicationMediator.Save(UserContext.CandidateId, id, model);
+                    response = _apprenticeshipApplicationMediator.Save(originalCandidateId, id, model);
                 }
                 catch (Exception)
                 {
@@ -179,13 +192,16 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<JsonResult> AutoSave(int id, ApprenticeshipApplicationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run(() =>
             {
+                ValidateCandidateId(originalCandidateId);
                 MediatorResponse<AutoSaveResultViewModel> response;
 
                 try
                 {
-                    response = _apprenticeshipApplicationMediator.AutoSave(UserContext.CandidateId, id, model);
+                    response = _apprenticeshipApplicationMediator.AutoSave(originalCandidateId, id, model);
                 }
                 catch (Exception)
                 {
@@ -274,9 +290,12 @@
         [SessionTimeout]
         public async Task<ActionResult> Preview(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.Preview(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.Preview(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -305,9 +324,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Preview(int id, ApprenticeshipApplicationPreviewViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.Submit(originalCandidateId, id, model);
 
                 switch (response.Code)
                 {
@@ -342,9 +364,12 @@
         [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle, ViewBag.SearchReturnUrl as string);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.WhatHappensNext(originalCandidateId, id, vacancyReference, vacancyTitle, ViewBag.SearchReturnUrl as string);
 
                 switch (response.Code)
                 {
@@ -366,9 +391,12 @@
         [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _apprenticeshipApplicationMediator.View(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.View(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -392,9 +420,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<JsonResult> SaveVacancy(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run(() =>
             {
-                var response = _apprenticeshipApplicationMediator.SaveVacancy(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.SaveVacancy(originalCandidateId, id);
 
                 return SavedVacancyResultFromViewModel(response);
             });
@@ -406,9 +437,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<JsonResult> DeleteSavedVacancy(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run(() =>
             {
-                var response = _apprenticeshipApplicationMediator.DeleteSavedVacancy(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipApplicationMediator.DeleteSavedVacancy(originalCandidateId, id);
 
                 return SavedVacancyResultFromViewModel(response);
             });

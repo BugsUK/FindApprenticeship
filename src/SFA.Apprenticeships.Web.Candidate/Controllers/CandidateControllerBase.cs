@@ -4,6 +4,7 @@
     using System.Globalization;
     using System.Linq;
     using System.Web.Mvc;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Configuration;
@@ -27,10 +28,12 @@
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         public readonly IConfigurationService ConfigurationService;
+        private readonly ILogService _logService;
 
-        protected CandidateControllerBase(IConfigurationService configurationService)
+        protected CandidateControllerBase(IConfigurationService configurationService, ILogService logService)
         {
             ConfigurationService = configurationService;
+            _logService = logService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -137,6 +140,24 @@
             }
 
             return candidateId;
+        }
+
+        protected void ValidateCandidateId(Guid originalCandidateId)
+        {
+            var userContextCandidateId = UserContext.CandidateId;
+            if (originalCandidateId != userContextCandidateId)
+            {
+                _logService.Error($"SESSION HIJACK: CandidateId {originalCandidateId} does not match UserContext.CandidateId {userContextCandidateId}");
+            }
+        }
+
+        protected void ValidateUserName(string originalUserName)
+        {
+            var userContextUserName = UserContext.UserName;
+            if (originalUserName != userContextUserName)
+            {
+                _logService.Error($"SESSION HIJACK: UserName {originalUserName} does not match UserContext.UserName {userContextUserName}");
+            }
         }
     }
 }

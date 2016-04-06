@@ -5,6 +5,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -26,8 +27,8 @@
         private readonly IHelpCookieProvider _helpCookieProvider;
 
         public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator, IHelpCookieProvider helpCookieProvider,
-            IConfigurationService configurationService)
-            : base(configurationService)
+            IConfigurationService configurationService, ILogService logService)
+            : base(configurationService, logService)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
             _helpCookieProvider = helpCookieProvider;
@@ -37,19 +38,20 @@
         [SessionTimeout]
         public async Task<ActionResult> Index(ApprenticeshipSearchMode searchMode = ApprenticeshipSearchMode.Keyword, bool reset = false)
         {
+            var originalCandidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
                 //Originally done in PopulateSortType
                 ModelState.Remove("SortType");
 
-                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.Index(candidateId, searchMode, reset);
+                var response = _apprenticeshipSearchMediator.Index(originalCandidateId, searchMode, reset);
 
                 switch (response.Code)
                 {
                     case ApprenticeshipSearchMediatorCodes.Index.Ok:
                     {
-                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, candidateId);
+                        ViewBag.ShowSearchTour = _helpCookieProvider.ShowSearchTour(HttpContext, originalCandidateId);
                         return View(response.ViewModel);
                     }
                 }
@@ -63,12 +65,13 @@
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Index(ApprenticeshipSearchViewModel model)
         {
+            var originalCandidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 
-                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.SearchValidation(candidateId, model);
+                var response = _apprenticeshipSearchMediator.SearchValidation(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -83,7 +86,7 @@
                     case ApprenticeshipSearchMediatorCodes.SearchValidation.RunSavedSearch:
                     {
                         // ReSharper disable once PossibleInvalidOperationException
-                        var savedSearchResponse = _apprenticeshipSearchMediator.RunSavedSearch(candidateId.Value, model);
+                        var savedSearchResponse = _apprenticeshipSearchMediator.RunSavedSearch(originalCandidateId.Value, model);
 
                         switch (savedSearchResponse.Code)
                         {
@@ -109,12 +112,13 @@
         [SessionTimeout]
         public async Task<ActionResult> Results(ApprenticeshipSearchViewModel model)
         {
+            var originalCandidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
                 ViewBag.SearchReturnUrl = (Request != null && Request.Url != null) ? Request.Url.PathAndQuery : null;
 
-                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.Results(candidateId, model);
+                var response = _apprenticeshipSearchMediator.Results(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -146,10 +150,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> SaveSearch(ApprenticeshipSearchViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var candidateId = UserContext.CandidateId;
-                var response = _apprenticeshipSearchMediator.SaveSearch(candidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _apprenticeshipSearchMediator.SaveSearch(originalCandidateId, model);
 
                 switch (response.Code)
                 {

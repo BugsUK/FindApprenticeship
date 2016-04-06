@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Security;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -29,7 +30,7 @@
         public AccountController(IAccountMediator accountMediator, 
             IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider,
             IConfigurationService configurationService,
-            IUserDataProvider userDataProvider) : base(configurationService)
+            IUserDataProvider userDataProvider, ILogService logService) : base(configurationService, logService)
         {
             _accountMediator = accountMediator;
             _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;
@@ -41,9 +42,12 @@
         [SessionTimeout]
         public async Task<ActionResult> Index()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Index(UserContext.CandidateId, UserData.Pop(CandidateDataItemNames.DeletedVacancyId), UserData.Pop(CandidateDataItemNames.DeletedVacancyTitle));
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Index(originalCandidateId, UserData.Pop(CandidateDataItemNames.DeletedVacancyId), UserData.Pop(CandidateDataItemNames.DeletedVacancyTitle));
                 return View(response.ViewModel);
             });
         }
@@ -66,9 +70,12 @@
         [SessionTimeout]
         public async Task<ActionResult> Settings()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.YourAccount);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Settings(originalCandidateId, SettingsViewModel.SettingsMode.YourAccount);
                 return View(response.ViewModel);
             });
         }
@@ -78,9 +85,12 @@
         [SessionTimeout]
         public async Task<ActionResult> SavedSearchesSettings()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Settings(UserContext.CandidateId, SettingsViewModel.SettingsMode.SavedSearches);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Settings(originalCandidateId, SettingsViewModel.SettingsMode.SavedSearches);
                 return View("Settings", response.ViewModel);
             });
         }
@@ -90,9 +100,14 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Settings(SettingsViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+            var originalUserName = UserContext.UserName;
+            var originalAcceptedTermsAndConditionsVersion = UserContext.AcceptedTermsAndConditionsVersion;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.SaveSettings(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.SaveSettings(originalCandidateId, model);
                 ModelState.Clear();
 
                 switch (response.Code)
@@ -107,7 +122,7 @@
                         return RedirectToRoute(CandidateRouteNames.VerifyMobile);
                     case AccountMediatorCodes.Settings.Success:
                     case AccountMediatorCodes.Settings.SuccessWithWarning:
-                        UserData.SetUserContext(UserContext.UserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, UserContext.AcceptedTermsAndConditionsVersion);
+                        UserData.SetUserContext(originalUserName, response.ViewModel.Firstname + " " + response.ViewModel.Lastname, originalAcceptedTermsAndConditionsVersion);
                         if (response.Code == AccountMediatorCodes.Settings.SuccessWithWarning)
                             SetUserMessage(response.Message.Text, response.Message.Level);
                         else
@@ -123,9 +138,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> DeleteSavedSearch(Guid id, bool isJavascript)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.DeleteSavedSearch(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.DeleteSavedSearch(originalCandidateId, id);
 
                 if (isJavascript)
                 {
@@ -155,9 +173,12 @@
         [SessionTimeout]
         public async Task<ActionResult> VerifyMobile(string returnUrl)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.VerifyMobile(UserContext.CandidateId, returnUrl);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.VerifyMobile(originalCandidateId, returnUrl);
 
                 switch (response.Code)
                 {
@@ -184,9 +205,12 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "VerifyMobileAction")]
         public async Task<ActionResult> VerifyMobile(VerifyMobileViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.VerifyMobile(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.VerifyMobile(originalCandidateId, model);
                 ModelState.Clear();
 
                 switch (response.Code)
@@ -223,9 +247,12 @@
         [MultipleFormActionsButton(SubmitButtonActionName = "VerifyMobileAction")]
         public async Task<ActionResult> Resend(VerifyMobileViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Resend(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Resend(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -254,9 +281,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> UpdateEmailAddress(EmailViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.UpdateEmailAddress(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.UpdateEmailAddress(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -279,9 +309,12 @@
         [SessionTimeout]
         public async Task<ActionResult> ResendUpdateEmailAddressCode()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.ResendUpdateEmailAddressCode(UserContext.CandidateId);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.ResendUpdateEmailAddressCode(originalCandidateId);
                 SetUserMessage(response.Message.Text, response.Message.Level);
                 return RedirectToRoute(RouteNames.VerifyUpdatedEmail);
             });
@@ -327,9 +360,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Archive(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Archive(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Archive(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -351,9 +387,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> Delete(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Delete(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Delete(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -400,9 +439,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> DismissTraineeshipPrompts()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.DismissTraineeshipPrompts(UserContext.CandidateId);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.DismissTraineeshipPrompts(originalCandidateId);
 
                 switch (response.Code)
                 {
@@ -424,9 +466,12 @@
         public async Task<ActionResult> Track(int id)
         {
             // called when a user clicks "Track application status" from vacancy details for a live vacancy previously applied for
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.Track(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.Track(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -461,15 +506,18 @@
         [HttpGet]
         public async Task<ActionResult> AcceptTermsAndConditions(string returnUrl)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
+                ValidateCandidateId(originalCandidateId);
                 if (UserContext == null)
                 {
                     //todo: check needed as AuthorizeCandidate attribute not on action
                     return RedirectToRoute(CandidateRouteNames.ApprenticeshipSearch);
                 }
 
-                var response = _accountMediator.AcceptTermsAndConditions(UserContext.CandidateId);
+                var response = _accountMediator.AcceptTermsAndConditions(originalCandidateId);
 
                 switch (response.Code)
                 {
@@ -509,9 +557,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> ApprenticeshipVacancyDetails(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.ApprenticeshipVacancyDetails(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.ApprenticeshipVacancyDetails(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -535,9 +586,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> TraineeshipVacancyDetails(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _accountMediator.TraineeshipVacancyDetails(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _accountMediator.TraineeshipVacancyDetails(originalCandidateId, id);
 
                 switch (response.Code)
                 {

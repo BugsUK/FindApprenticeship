@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using System.Web.Routing;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Configuration;
@@ -28,8 +29,8 @@
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
             IAccountProvider accountProvider,
             IRegisterMediator registerMediator,
-            IConfigurationService configurationService) 
-            : base(configurationService)
+            IConfigurationService configurationService, ILogService logService) 
+            : base(configurationService, logService)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _accountProvider = accountProvider;
@@ -77,9 +78,12 @@
         [AllowReturnUrl(Allow = false)]
         public async Task<ActionResult> Activation(string returnUrl)
         {
+            var originalUserName = UserContext.UserName;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var model = new ActivationViewModel { EmailAddress = UserContext.UserName };
+                ValidateUserName(originalUserName);
+                var model = new ActivationViewModel { EmailAddress = originalUserName };
 
                 if (!string.IsNullOrWhiteSpace(returnUrl))
                 {
@@ -95,9 +99,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Unactivated)]
         public async Task<ActionResult> Activate(ActivationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _registerMediator.Activate(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _registerMediator.Activate(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -129,9 +136,12 @@
         [SessionTimeout]
         public async Task<ActionResult> MonitoringInformation()
         {
-            return await Task.Run(() =>
+            var originalCandidateId = UserContext.CandidateId;
+
+            return await Task.Run<ActionResult>(() =>
             {
-                var settingsViewModel = _accountProvider.GetSettingsViewModel(UserContext.CandidateId);
+                ValidateCandidateId(originalCandidateId);
+                var settingsViewModel = _accountProvider.GetSettingsViewModel(originalCandidateId);
                 return View("MonitoringInformation", settingsViewModel.MonitoringInformation);
             });
         }
@@ -141,9 +151,12 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> MonitoringInformation(MonitoringInformationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _registerMediator.UpdateMonitoringInformation(UserContext.CandidateId, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _registerMediator.UpdateMonitoringInformation(originalCandidateId, model);
 
                 switch (response.Code)
                 {
@@ -163,13 +176,16 @@
         [AuthorizeCandidate(Roles = UserRoleNames.Activated)]
         public async Task<ActionResult> SkipMonitoringInformation()
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
+                ValidateCandidateId(originalCandidateId);
                 // ReturnUrl takes precedence over last view vacancy id.
                 var returnUrl = UserData.Pop(UserDataItemNames.ReturnUrl);
 
                 //Following registration, user should be prompted to verify their mobile number
-                var response = _registerMediator.SendMobileVerificationCode(UserContext.CandidateId, Url.RouteUrl(CandidateRouteNames.VerifyMobile, new RouteValueDictionary { { "ReturnUrl", returnUrl } }));
+                var response = _registerMediator.SendMobileVerificationCode(originalCandidateId, Url.RouteUrl(CandidateRouteNames.VerifyMobile, new RouteValueDictionary { { "ReturnUrl", returnUrl } }));
                 if (response.Code == RegisterMediatorCodes.SendMobileVerificationCode.Success)
                 {
                     var message = response.Message;
@@ -206,7 +222,12 @@
         [SessionTimeout]
         public async Task<ActionResult> Complete()
         {
-            return await Task.Run(() => View(UserContext.UserName));
+            var originalUserName = UserContext.UserName;
+            return await Task.Run<ActionResult>(() =>
+            {
+                ValidateUserName(originalUserName);
+                return View(originalUserName);
+            });
         }
 
         [HttpGet]

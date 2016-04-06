@@ -3,6 +3,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Common.Constants;
@@ -19,7 +20,7 @@
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
 
         public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }
@@ -30,9 +31,12 @@
         [SessionTimeout]
         public async Task<ActionResult> Apply(string id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _traineeshipApplicationMediator.Apply(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _traineeshipApplicationMediator.Apply(originalCandidateId, id);
 
                 switch (response.Code)
                 {
@@ -54,9 +58,12 @@
         [ClearSearchReturnUrl(false)]
         public async Task<ActionResult> Apply(int id, TraineeshipApplicationViewModel model)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _traineeshipApplicationMediator.Submit(UserContext.CandidateId, id, model);
+                ValidateCandidateId(originalCandidateId);
+                var response = _traineeshipApplicationMediator.Submit(originalCandidateId, id, model);
 
                 switch (response.Code)
                 {
@@ -134,9 +141,12 @@
         [SessionTimeout]
         public async Task<ActionResult> WhatHappensNext(string id, string vacancyReference, string vacancyTitle)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _traineeshipApplicationMediator.WhatHappensNext(UserContext.CandidateId, id, vacancyReference, vacancyTitle);
+                ValidateCandidateId(originalCandidateId);
+                var response = _traineeshipApplicationMediator.WhatHappensNext(originalCandidateId, id, vacancyReference, vacancyTitle);
 
                 switch (response.Code)
                 {
@@ -156,9 +166,12 @@
         [SessionTimeout]
         public async Task<ActionResult> View(int id)
         {
+            var originalCandidateId = UserContext.CandidateId;
+
             return await Task.Run<ActionResult>(() =>
             {
-                var response = _traineeshipApplicationMediator.View(UserContext.CandidateId, id);
+                ValidateCandidateId(originalCandidateId);
+                var response = _traineeshipApplicationMediator.View(originalCandidateId, id);
 
                 switch (response.Code)
                 {

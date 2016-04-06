@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
+    using Application.Interfaces.Logging;
     using Attributes;
     using Common.Attributes;
     using Constants;
@@ -21,7 +22,7 @@
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
 
         public TraineeshipSearchController(ITraineeshipSearchMediator traineeshipSearchMediator,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _traineeshipSearchMediator = traineeshipSearchMediator;
         }
@@ -35,10 +36,10 @@
         [HttpGet]
         public async Task<ActionResult> Index()
         {
+            var originalCandidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
             return await Task.Run<ActionResult>(() =>
             {
-                var candidateId = UserContext == null ? default(Guid?) : UserContext.CandidateId;
-                var response = _traineeshipSearchMediator.Index(candidateId);
+                var response = _traineeshipSearchMediator.Index(originalCandidateId);
 
                 return View(response.ViewModel);
             });
