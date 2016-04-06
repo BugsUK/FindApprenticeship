@@ -21,8 +21,9 @@ Scenario: As an candidate I want to be able to delete draft applications
 		| Password     | {PasswordToken} |
 	And I choose SignInButton
 	Then I am on the MyApplicationsPage page
-	When I choose DeleteDraftLink	
+	When I choose DeleteDraftLink
 	Then I am on the MyApplicationsPage page
+	And I wait to not see DeleteDraftLink
 	And I see
 		| Field                         | Rule   | Value |
 		| DraftApplicationsCount        | Equals | 1     |
@@ -41,6 +42,7 @@ Scenario: As an candidate I want to be able to delete expired or withdrawn draft
 	Then I am on the MyApplicationsPage page
 	When I choose DeleteDraftLink	
 	Then I am on the MyApplicationsPage page
+	And I wait to not see DeleteDraftLink
 	And I see
 		| Field                         | Rule   | Value |
 		| DraftApplicationsCount        | Equals | 1     |

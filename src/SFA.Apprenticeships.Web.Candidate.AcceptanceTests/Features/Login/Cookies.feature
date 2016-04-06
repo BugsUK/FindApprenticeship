@@ -3,6 +3,7 @@
 	As a user
 	I want my cookies to managed correctly as I log in and out of the site
 
+@USCookies
 Scenario: As a registered user when I logout I want my cookies to be cleared
 	Given I registered an account and activated it
 	And I navigated to the LoginPage page
@@ -25,7 +26,7 @@ Scenario: As a registered user when I logout I want my cookies to be cleared
 	And I have the cookie 'User.Data' with a populated value 'Data.ApprenticeshipLevel'
 	And I have the cookie 'User.Data' with a populated value 'UserJourney'
 	And I have the cookie 'User.Data' with a populated value 'Data.VacancyDistance'
-	And I have the cookie 'User.Data' with a populated value 'Data.LastVacancyID'
+	And I have the cookie 'User.Data' with a populated value 'Data.LastViewedVacancy'
 	And I have the cookie 'User.Data' with a populated value 'Data.LastSearchedLocation'
 	And I have the cookie 'User.Data' with a populated value 'SearchReturnUrl'
 	When I Logout
@@ -33,7 +34,7 @@ Scenario: As a registered user when I logout I want my cookies to be cleared
 	And I do not have the cookie 'User.Context'
 	And I have the cookie 'User.Data' without a value 'Data.ApprenticeshipLevel'
 	And I have the cookie 'User.Data' without a value 'Data.VacancyDistance'
-	And I have the cookie 'User.Data' without a value 'Data.LastVacancyID'
+	And I have the cookie 'User.Data' without a value 'Data.LastViewedVacancy'
 	And I have the cookie 'User.Data' without a value 'SearchReturnUrl'
 	And I have the cookie 'User.Data' with a populated value 'Data.LastSearchedLocation'
 	And I have the cookie 'User.Data' with a populated value 'UserJourney'

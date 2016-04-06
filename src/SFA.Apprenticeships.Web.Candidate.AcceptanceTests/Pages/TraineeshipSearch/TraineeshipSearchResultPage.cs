@@ -4,7 +4,6 @@
     using System.Linq;
     using ApprenticeshipSearch;
     using OpenQA.Selenium;
-    using SFA.Apprenticeships.Web.Candidate.AcceptanceTests.Pages.VacancySearch;
     using SpecBind.Pages;
     using SpecBind.Selenium;
 
@@ -18,6 +17,9 @@
             : base(context)
         {
         }
+
+        [ElementLocator(Class = "heading-xlarge")]
+        public IWebElement SearchHeader { get; set; }
 
         [ElementLocator(Id = "Location")]
         public IWebElement Location { get; set; }
