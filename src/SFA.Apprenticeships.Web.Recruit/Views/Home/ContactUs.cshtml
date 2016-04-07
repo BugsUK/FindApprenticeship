@@ -1,7 +1,39 @@
-﻿@{
+﻿@model SFA.Apprenticeships.Web.Recruit.ViewModels.Home.ContactMessageViewModel
+
+@using SFA.Apprenticeships.Web.Recruit.Constants
+@{
     ViewBag.Title = "Contact us - Recruit an Apprentice";
 }
 
 <div class="hgroup">
     <h1 class="heading-xlarge">Contact us</h1>
 </div>
+
+@using (Html.BeginRouteForm(RecruitmentRouteNames.ContactUs, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.FormTextFor(
+            m => m.Name,
+            containerHtmlAttributes: new { @class = "form-group-compound" },
+            controlHtmlAttributes: new { type = "text", autocorrect = "off", maxlength = "71" })
+
+    @Html.FormTextFor(
+            m => m.Email,
+            containerHtmlAttributes: new { @class = "form-group-compound" },
+                controlHtmlAttributes: new { type = "email", spellcheck = "false", maxlength = "100" },
+            hintHtmlAttributes: new { @class = "text" })
+    <div class="form-group">
+        <label for="contact-subject" class="form-label">Briefly describe your question</label>
+        @Html.FormTextFor(
+            m => m.Enquiry,
+            containerHtmlAttributes: new { @class = "form-group-compound" },
+          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
+    </div>
+
+    @Html.FormTextAreaFor(m => m.Details,
+                controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
+                hintHtmlAttributes: new { @class = "text" })
+    <div class="form-group">
+        <button id="send-contact-form-button" class="button">Send</button>
+    </div>
+}

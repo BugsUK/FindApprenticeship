@@ -1,6 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System.Threading.Tasks;
     using System.Web.Mvc;
+
+    using SFA.Apprenticeships.Web.Common.Attributes;
+    using SFA.Apprenticeships.Web.Common.Constants;
+    using SFA.Apprenticeships.Web.Common.Mediators;
+    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
 
     public class HomeController : RecruitmentControllerBase
     {
@@ -19,9 +25,19 @@
             return View();
         }
 
-        public ActionResult ContactUs()
+        [HttpGet]        
+        public async Task<ActionResult> ContactUs()
         {
-            return View();
+            return await Task.Run<ActionResult>(() => this.View());
         }
+
+        [HttpPost]       
+        public async Task<ActionResult> ContactUs(ContactMessageViewModel model)
+        {
+            return await Task.Run<ActionResult>(() => this.View());
+        }
+
+    
+
     }
 }
