@@ -1,9 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.ViewModels.Home
 {
     using System.ComponentModel.DataAnnotations;
-
     using FluentValidation.Attributes;
-
     using Constants.ViewModels;
     using Validators;
 
@@ -16,6 +14,7 @@
         [Display(Name = ContactMessageViewModelMessages.EmailAddressMessages.LabelText)]
         public string Email { get; set; }
 
+        [Display(Name = ContactMessageViewModelMessages.EnquiryMessages.LabelText)]
         public string Enquiry { get; set; }
 
         [Display(Name = ContactMessageViewModelMessages.DetailsMessages.LabelText)]

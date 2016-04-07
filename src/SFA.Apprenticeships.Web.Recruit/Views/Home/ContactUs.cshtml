@@ -23,12 +23,9 @@
             hintHtmlAttributes: new { @class = "text" })
 
     <div class="form-group">
-        <label for="contact-subject" class="form-label">Briefly describe your question</label>        
-        @Html.FormTextFor(
-            m => m.Enquiry,
-            containerHtmlAttributes: new { @class = "form-group-compound" },
-          controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" }, labelText: string.Empty)
+        @Html.FormTextFor(m => m.Enquiry, containerHtmlAttributes: new { @class = "form-group-compound" }, controlHtmlAttributes: new { type = "text", autocorrect = "off", @class = "select-injected", maxlength = "100" })
     </div>
+
     @Html.FormTextAreaFor(m => m.Details,
                 controlHtmlAttributes: new { @data_val_length_max = "4000", rows = "4", role = "textbox", aria_multiline = "true" },
                 hintHtmlAttributes: new { @class = "text" })
