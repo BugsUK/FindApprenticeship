@@ -9,8 +9,8 @@
     {
         private readonly ILogService _logger;
 
-        private const string GettingItemFromCacheFormat = "Getting item with key: {0} from cache";
-        private const string ItemReturnedFromCacheFormat = "Item with key: {0} returned from cache";
+        //private const string GettingItemFromCacheFormat = "Getting item with key: {0} from cache";
+        //private const string ItemReturnedFromCacheFormat = "Item with key: {0} returned from cache";
         private const string ItemNotInCacheFormat = "Item with key: {0} not in cache";
 
         private const string DataCacheClientConfigurationName = "nascache";
@@ -69,7 +69,7 @@
 
         public T Get<T>(string key) where T : class
         {
-            _logger.Debug(GettingItemFromCacheFormat, key);
+            //_logger.Debug(GettingItemFromCacheFormat, key);
             T result;
             
             try
@@ -88,7 +88,7 @@
                 _logger.Debug(ItemNotInCacheFormat, key);
             }
 
-            _logger.Debug(ItemReturnedFromCacheFormat, key);
+            //_logger.Debug(ItemReturnedFromCacheFormat, key);
 
             return result;
         }
@@ -130,7 +130,7 @@
         {
             var cacheKey = cacheEntry.Key();
 
-            _logger.Debug(GettingItemFromCacheFormat, cacheKey);
+            //_logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
             var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
@@ -142,7 +142,7 @@
                 return result;
             }
 
-            _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+            //_logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
@@ -153,7 +153,7 @@
         {
             var cacheKey = cacheEntry.Key(funcParam1);
 
-            _logger.Debug(GettingItemFromCacheFormat, cacheKey);
+            //_logger.Debug(GettingItemFromCacheFormat, cacheKey);
 
             var result = Get<TResult>(cacheKey);
             if (result == null || result.Equals(default(TResult)))
@@ -165,7 +165,7 @@
                 return result;
             }
 
-            _logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
+            //_logger.Debug(ItemReturnedFromCacheFormat, cacheKey);
 
             return result;
         }
