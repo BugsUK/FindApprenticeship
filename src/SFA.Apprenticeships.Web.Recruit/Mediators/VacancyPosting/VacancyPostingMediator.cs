@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
-    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
@@ -29,6 +28,7 @@
         private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
         private readonly ILocationsProvider _locationsProvider;
+        private readonly IGeoCodingProvider _geoCodingProvider;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -49,6 +49,7 @@
             IVacancyPostingProvider vacancyPostingProvider,
             IProviderProvider providerProvider,
             IEmployerProvider employerProvider,
+            IGeoCodingProvider geoCodingProvider,
             NewVacancyViewModelServerValidator newVacancyViewModelServerValidator,
             NewVacancyViewModelClientValidator newVacancyViewModelClientValidator,
             VacancySummaryViewModelServerValidator vacancySummaryViewModelServerValidator,
@@ -62,7 +63,6 @@
             VacancyPartyViewModelValidator vacancyPartyViewModelValidator, 
             EmployerSearchViewModelServerValidator employerSearchViewModelServerValidator, 
             LocationSearchViewModelServerValidator locationSearchViewModelServerValidator, 
-            IAddressLookupProvider addressLookupProvider, 
             ILocationsProvider locationsProvider, 
             TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator, 
             TrainingDetailsViewModelClientValidator trainingDetailsViewModelClientValidator)
@@ -70,6 +70,7 @@
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
             _employerProvider = employerProvider;
+            _geoCodingProvider = geoCodingProvider;
             _newVacancyViewModelServerValidator = newVacancyViewModelServerValidator;
             _newVacancyViewModelClientValidator = newVacancyViewModelClientValidator;
             _vacancyPartyViewModelValidator = vacancyPartyViewModelValidator;
@@ -177,6 +178,12 @@
 
             // TODO: if the vacancy already exists, we should update it removing the old locations and the number of positions
 
+            if (_geoCodingProvider.GeoCodeAddress(viewModel.Employer.EmployerId) == GeoCodeAddressResult.InvalidAddress)
+            {
+                return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
+                    viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
+            }
+            
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 

@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="AddressSearchService.cs" />
     <Compile Include="IAddressLookupProvider.cs" />
+    <Compile Include="IGeoCodeLookupProvider.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
     <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />

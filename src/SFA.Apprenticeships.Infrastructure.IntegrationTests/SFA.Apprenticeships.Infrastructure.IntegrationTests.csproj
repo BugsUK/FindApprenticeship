@@ -167,6 +167,7 @@
     <Compile Include="Elastic\Configuration\ElasticsearchClientFactoryTests.cs" />
     <Compile Include="Elastic\Configuration\ElastricsearchConfigurationTests.cs" />
     <Compile Include="EmployerDataService\EmployerDataServiceTests.cs" />
+    <Compile Include="GeoCode\GeoCodeLookupProviderTests.cs" />
     <Compile Include="LegacyWebServices\GatewayVacancyDataProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServices\GatewayVacancyIndexDataProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServices\Helpers\TestApplicationBuilder.cs" />

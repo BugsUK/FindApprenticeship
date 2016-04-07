@@ -112,6 +112,8 @@
     <Compile Include="Entities\PostcodeInfo.cs" />
     <Compile Include="Entities\PostcodeInfoResult.cs" />
     <Compile Include="FindPostcodeService.cs" />
+    <Compile Include="GeoCodeLookupProvider.cs" />
+    <Compile Include="Configuration\GeoCodingServiceConfiguration.cs" />
     <Compile Include="IFindPostcodeService.cs" />
     <Compile Include="IoC\PostcodeRegistry.cs" />
     <Compile Include="IPostalAddressDetailsService.cs" />

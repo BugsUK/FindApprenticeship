@@ -163,6 +163,7 @@
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
     <Compile Include="Mediators\Provider\ProviderMediatorTests.cs" />
+    <Compile Include="Mediators\VacancyPosting\GetEmployerTests.cs" />
     <Compile Include="Mediators\VacancyPosting\ManageDatesTests.cs" />
     <Compile Include="Mediators\VacancyPosting\PreviewVacancyTests.cs" />
     <Compile Include="Mediators\VacancyPosting\CloneVacancyTests.cs" />

@@ -14,6 +14,7 @@
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
         protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
+        protected Mock<IGeoCodingProvider> GeoCodingProvider;
 
         [SetUp]
         public void SetUp()
@@ -21,6 +22,7 @@
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
+            GeoCodingProvider = new Mock<IGeoCodingProvider>();
         }
 
         protected IVacancyPostingMediator GetMediator()
@@ -29,6 +31,7 @@
                 VacancyPostingProvider.Object,
                 ProviderProvider.Object,
                 EmployerProvider.Object,
+                GeoCodingProvider.Object,
                 new NewVacancyViewModelServerValidator(),
                 new NewVacancyViewModelClientValidator(),
                 new VacancySummaryViewModelServerValidator(),
@@ -42,7 +45,6 @@
                 new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
                 new LocationSearchViewModelServerValidator(),
-                new Mock<IAddressLookupProvider>().Object,
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),
                 new TrainingDetailsViewModelClientValidator());
