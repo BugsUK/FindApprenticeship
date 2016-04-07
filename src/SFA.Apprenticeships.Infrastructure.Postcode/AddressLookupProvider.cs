@@ -11,11 +11,11 @@
     {
         private readonly ILogService _logger;
 
-        private readonly FindPostcodeService _findPostcodeService;
-        private readonly RetrieveAddressService _retrieveAddressService;
+        private readonly IFindPostcodeService _findPostcodeService;
+        private readonly IRetrieveAddressService _retrieveAddressService;
 
 
-        public AddressLookupProvider(ILogService logger, FindPostcodeService findPostcodeService, RetrieveAddressService retrieveAddressService)
+        public AddressLookupProvider(ILogService logger, IFindPostcodeService findPostcodeService, IRetrieveAddressService retrieveAddressService)
         {
             _logger = logger;
             _findPostcodeService = findPostcodeService;
