@@ -336,7 +336,7 @@ select top 10 * from VacancyReferralComments
 
             if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
             {
-                _log.Warn($"Ignored {operation} to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {oldRecordFromTarget.VacancyOwnerRelationshipId}");
+                _log.Info($"Ignored {operation} to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {oldRecordFromTarget.VacancyOwnerRelationshipId}");
                 return false;
             }
 
@@ -353,7 +353,7 @@ select top 10 * from VacancyReferralComments
         {
             if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
             {
-                _log.Warn($"Ignored change to Vacancy from AVMS with VacancyId = {oldRecordFromTarget.VacancyId}");
+                _log.Info($"Ignored change to Vacancy from AVMS with VacancyId = {oldRecordFromTarget.VacancyId}");
                 return false;
             }
 
