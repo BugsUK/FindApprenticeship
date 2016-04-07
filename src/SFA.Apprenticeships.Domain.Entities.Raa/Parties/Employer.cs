@@ -13,5 +13,6 @@
         public string TradingName { get; set; }
         public int PrimaryContact { get; set; }
         public PostalAddress Address { get; set; }
+        public bool IsPositiveAboutDisability { get; set; }
     }
 }
