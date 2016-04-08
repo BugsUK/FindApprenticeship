@@ -41,3 +41,4 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\Reference.Standard.Upsert.sql"
 :r ".\Scripts\Data\dbo.Person.Upsert.sql"
 :r ".\Scripts\Data\dbo.EmployerContact.Upsert.sql"
+:r ".\Scripts\Data\dbo.SystemParameters.Upsert.sql"

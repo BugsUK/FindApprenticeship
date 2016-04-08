@@ -889,6 +889,7 @@
     <None Include="Scripts\Data\dbo.VacancyProvisionRelationshipStatusType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\Data\dbo.Person.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.SystemParameters.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
@@ -905,7 +906,5 @@
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
   </ItemGroup>
-  <Target 
-    Name="Publish" 
-    Condition="'false'=='true'" />
+  <Target Name="Publish" Condition="'false'=='true'" />
 </Project>
