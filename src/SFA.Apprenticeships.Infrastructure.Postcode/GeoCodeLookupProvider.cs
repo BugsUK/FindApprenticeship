@@ -9,16 +9,16 @@
 
     public class GeoCodeLookupProvider : RestService, IGeoCodeLookupProvider
     {
-        //private readonly IConfigurationService _configurationService;
-        //private readonly ILogService _logService;
+        private readonly IConfigurationService _configurationService;
+        private readonly ILogService _logService;
         private GeoCodingServiceConfiguration Config { get; }
 
         public GeoCodeLookupProvider(IConfigurationService configurationService, ILogService logService)
         {
-            //_configurationService = configurationService;
-            //_logService = logService;
-            //Config = configurationService.Get<GeoCodingServiceConfiguration>();
-            //BaseUrl = new Uri(Config.GeoCodingEndpoint);
+            _configurationService = configurationService;
+            _logService = logService;
+            Config = configurationService.Get<GeoCodingServiceConfiguration>();
+            BaseUrl = new Uri(Config.GeoCodingEndpoint);
         }
 
         public GeoPoint GetGeoCodingFor(PostalAddress address)
