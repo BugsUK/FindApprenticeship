@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/_searchResults.cshtml")]
@@ -351,14 +352,14 @@ WriteLiteral(">Cycling</option>\r\n                                        </sel
 WriteLiteral(" class=\"journey-time\"");
 
 WriteLiteral("></span>\r\n                                    </div>\r\n                           " +
-"     </li>\r\n                                <li><b>Closing date:</b> <span");
+"     </li>\r\n\r\n                                <li><b>Closing date:</b> <span");
 
 WriteLiteral(" class=\"closing-date-value\"");
 
 WriteLiteral(" data-date=\"");
 
             
-            #line 70 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 71 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
                                                                                                 Write(vacancy.ClosingDate.ToString("u"));
 
             
@@ -369,7 +370,7 @@ WriteLiteral("\"");
 WriteLiteral(">");
 
             
-            #line 70 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 71 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
                                                                                                                                     Write(vacancy.ClosingDate.ToFriendlyClosingWeek());
 
             
@@ -383,14 +384,81 @@ WriteLiteral(" class=\"start-date-value\"");
 WriteLiteral(">");
 
             
-            #line 71 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 72 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
                                                                                           Write(Html.DisplayFor(m => vacancy.StartDate, "Date"));
 
             
             #line default
             #line hidden
-WriteLiteral("</span></li>\r\n                            </ul>\r\n                        </div>\r\n" +
-"                        <div");
+WriteLiteral("</span></li>\r\n\r\n");
+
+            
+            #line 74 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                
+            
+            #line default
+            #line hidden
+            
+            #line 74 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                 if (vacancy.IsPositiveAboutDisability)
+                                {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                                    <li");
+
+WriteLiteral(" class=\"small-btm-margin\"");
+
+WriteLiteral(">\r\n                                        <a");
+
+WriteLiteral(" class=\"inl-block\"");
+
+WriteAttribute("id", Tuple.Create(" id=\"", 4716), Tuple.Create("\"", 4756)
+, Tuple.Create(Tuple.Create("", 4721), Tuple.Create("positive-about-disabled-", 4721), true)
+            
+            #line 77 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+         , Tuple.Create(Tuple.Create("", 4745), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+            
+            #line default
+            #line hidden
+, 4745), false)
+);
+
+WriteLiteral(" href=\"https://www.gov.uk/looking-for-work-if-disabled\"");
+
+WriteLiteral(" target=\"_blank\"");
+
+WriteLiteral(">\r\n                                            <img");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 4879), Tuple.Create("\"", 4925)
+            
+            #line 78 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+, Tuple.Create(Tuple.Create("", 4885), Tuple.Create<System.Object, System.Int32>(Url.CdnImage("logo-ticks-small-2x.png")
+            
+            #line default
+            #line hidden
+, 4885), false)
+);
+
+WriteLiteral(" height=\"30\"");
+
+WriteLiteral(" width=\"38\"");
+
+WriteLiteral(" alt=\"Two ticks logo - Positive about disabled people\"");
+
+WriteLiteral(">\r\n                                        </a>\r\n                                " +
+"    </li>\r\n");
+
+            
+            #line 81 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                }
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                            </ul>\r\n                        </div>\r\n              " +
+"          <div");
 
 WriteLiteral(" class=\"hide-tablet\"");
 
@@ -408,24 +476,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin to
 
 WriteLiteral(">\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4910), Tuple.Create("\"", 5020)
-, Tuple.Create(Tuple.Create("", 4917), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 4917), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 5563), Tuple.Create("\"", 5673)
+, Tuple.Create(Tuple.Create("", 5570), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 5570), true)
             
-            #line 78 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-     , Tuple.Create(Tuple.Create("", 4965), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
-            
-            #line default
-            #line hidden
-, 4965), false)
-, Tuple.Create(Tuple.Create("", 4991), Tuple.Create(",", 4991), true)
-            
-            #line 78 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                , Tuple.Create(Tuple.Create("", 4992), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+            #line 88 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+     , Tuple.Create(Tuple.Create("", 5618), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 4992), false)
-, Tuple.Create(Tuple.Create("", 5019), Tuple.Create("\'", 5019), true)
+, 5618), false)
+, Tuple.Create(Tuple.Create("", 5644), Tuple.Create(",", 5644), true)
+            
+            #line 88 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+                                , Tuple.Create(Tuple.Create("", 5645), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+            
+            #line default
+            #line hidden
+, 5645), false)
+, Tuple.Create(Tuple.Create("", 5672), Tuple.Create("\'", 5672), true)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -442,7 +510,7 @@ WriteLiteral("></div>\r\n                        </div>\r\n                    <
 "    </li>\r\n");
 
             
-            #line 83 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 93 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
                         itemPosition++;
             }
         }
@@ -453,7 +521,7 @@ WriteLiteral("></div>\r\n                        </div>\r\n                    <
 WriteLiteral("    </ul>\r\n");
 
             
-            #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 97 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
 
         Html.RenderPartial("_pagination", Model);
 
@@ -478,7 +546,7 @@ WriteLiteral(">Display results</label>\r\n");
 WriteLiteral("            ");
 
             
-            #line 94 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 104 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
        Write(Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" }));
 
             
@@ -495,7 +563,7 @@ WriteLiteral(" value=\"ResultsPerPage\"");
 WriteLiteral(">View</button>\r\n            </noscript>\r\n        </div>\r\n");
 
             
-            #line 99 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
+            #line 109 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
     }
 }
             

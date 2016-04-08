@@ -26,6 +26,7 @@
 
                 LogCategory(vacancy, logService, category);
 
+
                 var summary = new TraineeshipSummary
                 {
                     Id = vacancy.VacancyReferenceNumber,
@@ -41,8 +42,7 @@
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = employer.Name,
                     ProviderName = provider.Name,
-                    //TODO: Are we going to add this to RAA?
-                    //IsPositiveAboutDisability = vacancy.,
+                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,
