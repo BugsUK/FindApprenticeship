@@ -69,6 +69,7 @@
 
         private void RegisterServices()
         {
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();

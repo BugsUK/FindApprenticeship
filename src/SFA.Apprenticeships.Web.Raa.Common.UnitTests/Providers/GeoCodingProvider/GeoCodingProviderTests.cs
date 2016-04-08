@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvider
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvider
 {
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;

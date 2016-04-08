@@ -106,6 +106,7 @@
         private void RegisterServices()
         {
             For<ILocationSearchService>().Use<LocationSearchService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
             For<ICandidateService>().Use<CandidateService>();

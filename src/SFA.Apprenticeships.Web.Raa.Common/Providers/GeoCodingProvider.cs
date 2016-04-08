@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
