@@ -42,3 +42,7 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.Person.Upsert.sql"
 :r ".\Scripts\Data\dbo.EmployerContact.Upsert.sql"
 :r ".\Scripts\Data\dbo.SystemParameters.Upsert.sql"
+:r ".\Scripts\Data\dbo.LocalAuthorityGroupType.Upsert.sql"
+:r ".\Scripts\Data\dbo.LocalAuthorityGroupPurpose.Upsert.sql"
+:r ".\Scripts\Data\dbo.LocalAuthorityGroup.Upsert.sql"
+:r ".\Scripts\Data\dbo.LocalAuthorityGroupMembership.Upsert.sql"

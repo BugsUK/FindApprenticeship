@@ -890,6 +890,10 @@
     <None Include="Scripts\Data\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\Data\dbo.Person.Upsert.sql" />
     <None Include="Scripts\Data\dbo.SystemParameters.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupMembership.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroup.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupPurpose.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
