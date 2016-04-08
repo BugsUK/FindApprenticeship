@@ -46,3 +46,8 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.LocalAuthorityGroupPurpose.Upsert.sql"
 :r ".\Scripts\Data\dbo.LocalAuthorityGroup.Upsert.sql"
 :r ".\Scripts\Data\dbo.LocalAuthorityGroupMembership.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApplicationHistoryEvent.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApplicationNextAction.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApplicationStatusType.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApplicationUnsuccessfulReasonType.Upsert.sql"
+:r ".\Scripts\Data\dbo.ApplicationWithdrawnOrDeclinedReasonType.Upsert.sql"
