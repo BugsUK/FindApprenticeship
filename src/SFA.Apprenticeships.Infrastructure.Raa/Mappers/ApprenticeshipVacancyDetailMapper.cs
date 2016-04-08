@@ -65,8 +65,7 @@
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
                 //TODO: How is this captured in RAA?
                 //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
+                IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
