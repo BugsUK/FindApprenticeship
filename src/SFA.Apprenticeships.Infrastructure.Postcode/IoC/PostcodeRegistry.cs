@@ -15,6 +15,7 @@
             For<IPostalAddressDetailsService>().Use<PostalAddressDetailsService>();
             For<IPostalAddressLookupProvider>().Use<PostalAddressLookupProvider>();
             For<IPostalAddressSearchService>().Use<PostalAddressSearchService>();
+            For<IGeoCodeLookupProvider>().Use<GeoCodeLookupProvider>();
         }
     }
 }
