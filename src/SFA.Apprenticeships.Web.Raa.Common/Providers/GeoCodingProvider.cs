@@ -1,8 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using Application.Interfaces.Employers;
+    using Application.Interfaces.Locations;
     using Application.Location;
-    using Domain.Entities.Raa.Locations;
 
     public class GeoCodingProvider : IGeoCodingProvider
     {

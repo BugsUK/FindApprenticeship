@@ -87,9 +87,9 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AddressSearchService.cs" />
+    <Compile Include="GeoCodeLookupService.cs" />
     <Compile Include="IAddressLookupProvider.cs" />
     <Compile Include="IGeoCodeLookupProvider.cs" />
-    <Compile Include="IGeoCodeLookupService.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
     <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />

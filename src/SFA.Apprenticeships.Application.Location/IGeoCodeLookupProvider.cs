@@ -4,6 +4,6 @@
 
     public interface IGeoCodeLookupProvider
     {
-        GeoPoint GetGeoCodingFor(string addressOrPostCode);
+        GeoPoint GetGeoCodingFor(PostalAddress address);
     }
 }

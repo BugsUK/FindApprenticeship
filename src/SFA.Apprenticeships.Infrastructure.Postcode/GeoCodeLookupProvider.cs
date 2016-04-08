@@ -21,7 +21,7 @@
             BaseUrl = new Uri(Config.GeoCodingEndpoint);
         }
 
-        public GeoPoint GetGeoCodingFor(string addressOrPostCode)
+        public GeoPoint GetGeoCodingFor(PostalAddress address)
         {
             throw new System.NotImplementedException();
         }

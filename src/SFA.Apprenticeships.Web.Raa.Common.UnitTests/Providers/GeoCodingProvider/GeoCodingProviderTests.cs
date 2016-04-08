@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvider
 {
     using Application.Interfaces.Employers;
+    using Application.Interfaces.Locations;
     using Application.Location;
     using Common.Providers;
     using Domain.Entities.Raa.Locations;

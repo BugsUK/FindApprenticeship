@@ -2,7 +2,9 @@
 {
     using Application.Location;
     using Common.IoC;
+    using Domain.Entities.Raa.Locations;
     using FluentAssertions;
+    using Infrastructure.Postcode;
     using Infrastructure.Postcode.IoC;
     using Logging.IoC;
     using NUnit.Framework;
@@ -27,9 +29,12 @@
         [Test, Category("Integration")]
         public void ShouldReturnTheGeoCodingForAValidPostCode()
         {
-            var service = _container.GetInstance<IGeoCodeLookupProvider>();
-
-            var geoPoint = service.GetGeoCodingFor("CV1 2WT");
+            var provider = _container.GetInstance<IGeoCodeLookupProvider>();
+            var postalAddress = new PostalAddress
+            {
+                Postcode = "CV1 2WT"
+            };
+            var geoPoint = provider.GetGeoCodingFor(postalAddress);
 
             geoPoint.Latitude.Should().Be(52.401);
             geoPoint.Longitude.Should().Be(-1.5081);
@@ -38,10 +43,13 @@
         [Test, Category("Integration")]
         public void ShouldReturnTheGeoCodingForAValidAddress()
         {
-            const string validAddress = "31 Clerkenwell Close,London, EC1R 0AT"; // TODO: check this address
-            var service = _container.GetInstance<IGeoCodeLookupProvider>();
-
-            var geoPoint = service.GetGeoCodingFor(validAddress);
+            var provider = _container.GetInstance<IGeoCodeLookupProvider>();
+            var postalAddres = new PostalAddress // TODO: check this Address
+            {
+                AddressLine1 = "31 Clerkenwell Close",
+                AddressLine3 = "London"
+            };
+            var geoPoint = provider.GetGeoCodingFor(postalAddres);
 
             geoPoint.Latitude.Should().Be(52.401); //TODO: check this values
             geoPoint.Longitude.Should().Be(-1.5081); //TODO: check this values
@@ -50,10 +58,13 @@
         [Test, Category("Integration")]
         public void ShouldReturnNullForAnInvalidAddressOrPostcode()
         {
-            const string validAddress = "SW12 ZZZ";
+            var postalAddress = new PostalAddress
+            {
+                Postcode = "SW12 ZZZ"
+            };
             var service = _container.GetInstance<IGeoCodeLookupProvider>();
 
-            var geoPoint = service.GetGeoCodingFor(validAddress);
+            var geoPoint = service.GetGeoCodingFor(postalAddress);
 
             geoPoint.Should().BeNull();
         }
