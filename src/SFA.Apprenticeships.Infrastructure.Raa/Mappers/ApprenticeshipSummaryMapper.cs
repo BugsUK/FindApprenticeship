@@ -43,8 +43,7 @@
                     NumberOfPositions = vacancy.NumberOfPositions,
                     EmployerName = employer.Name,
                     ProviderName = provider.Name,
-                    //TODO: Are we going to add this to RAA?
-                    //IsPositiveAboutDisability = vacancy.,
+                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
