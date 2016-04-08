@@ -64,6 +64,7 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
+            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
         }
 
         private void RegisterServices()

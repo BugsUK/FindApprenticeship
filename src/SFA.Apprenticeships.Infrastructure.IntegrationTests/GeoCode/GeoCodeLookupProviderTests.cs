@@ -46,10 +46,10 @@
             var provider = _container.GetInstance<IGeoCodeLookupProvider>();
             var postalAddres = new PostalAddress // TODO: check this Address
             {
-                AddressLine1 = "31 Clerkenwell Close",
+                AddressLine1 = "Clerkenwell Close",
                 AddressLine3 = "London"
             };
-            var geoPoint = provider.GetGeoCodingFor(postalAddres);
+            var geoPoint = provider.GetGeoCodingFor(postalAddres); 
 
             geoPoint.Latitude.Should().Be(52.401); //TODO: check this values
             geoPoint.Longitude.Should().Be(-1.5081); //TODO: check this values
@@ -62,9 +62,9 @@
             {
                 Postcode = "SW12 ZZZ"
             };
-            var service = _container.GetInstance<IGeoCodeLookupProvider>();
+            var provider = _container.GetInstance<IGeoCodeLookupProvider>();
 
-            var geoPoint = service.GetGeoCodingFor(postalAddress);
+            var geoPoint = provider.GetGeoCodingFor(postalAddress);
 
             geoPoint.Should().BeNull();
         }

@@ -2,7 +2,6 @@
 {
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
-    using Application.Location;
 
     public class GeoCodingProvider : IGeoCodingProvider
     {

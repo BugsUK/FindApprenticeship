@@ -14,7 +14,7 @@
         {
             var provider = new Mock<IGeoCodeLookupProvider>();
             var postalAddress = new PostalAddress();
-            IGeoCodeLookupService service = new GeoCodeLookupService();
+            IGeoCodeLookupService service = new GeoCodeLookupService(provider.Object);
             service.GetGeoPointFor(postalAddress);
 
             provider.Verify(p => p.GetGeoCodingFor(postalAddress));

@@ -23,7 +23,14 @@
 
         public GeoPoint GetGeoCodingFor(PostalAddress address)
         {
-            throw new System.NotImplementedException();
+            // Clerkenwell Close, London -> returns values
+            // 31 Clerkenwell Close, London -> doesn't return values
+            // 31, Clerkenwell Close, London -> return values
+            return new GeoPoint
+            {
+                Latitude = 53.4808,
+                Longitude = -2.2426
+            };
         }
     }
 }
