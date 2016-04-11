@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Collections.Generic;
@@ -44,13 +46,14 @@
         private readonly IUserProfileService _userProfileService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
+        private readonly IGeoCodeLookupService _geoCodingService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -65,6 +68,7 @@
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
+            _geoCodingService = geocodingService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -235,6 +239,11 @@
             var vacancyParty =
                 _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
+            if (employer.Address.GeoPoint == null)
+            {
+                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            }
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
