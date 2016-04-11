@@ -14,19 +14,18 @@
             _geoCodeLookupService = geoCodeLookupService;
         }
 
-        public GeoCodeAddressResult GeoCodeAddress(int employerId)
+        public GeoCodeAddressResult EmployerHasAValidAddress(int employerId)
         {
             var employer = _employerService.GetEmployer(employerId);
-            var geoPoint = _geoCodeLookupService.GetGeoPointFor(employer.Address);
 
-            if (!geoPoint.IsValid())
+            const bool testing = false;
+
+            if (employer.Address.GeoPoint == null || testing)
             {
-                return GeoCodeAddressResult.InvalidAddress;
+                var geoPoint = _geoCodeLookupService.GetGeoPointFor(employer.Address);
+
+                return !geoPoint.IsSet() ? GeoCodeAddressResult.InvalidAddress : GeoCodeAddressResult.Ok;
             }
-
-            employer.Address.GeoPoint = geoPoint;
-
-            _employerService.SaveEmployer(employer);
 
             return GeoCodeAddressResult.Ok;
         }

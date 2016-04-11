@@ -7,7 +7,7 @@
         public int Easting { get; set; }
         public int Northing { get; set; }
 
-        public static GeoPoint Invalid => new GeoPoint
+        public static GeoPoint NotSet => new GeoPoint
         {
             Latitude = double.NaN,
             Longitude = double.NaN,
@@ -20,9 +20,9 @@
             return $"Latitude:{Latitude}, Longitude:{Longitude}, Easting: {Easting}, Northing:{Northing}";
         }
 
-        public bool IsValid()
+        public bool IsSet()
         {
-            return !Equals(Invalid);
+            return !Equals(NotSet);
         }
 
         public override bool Equals(object obj)

@@ -176,10 +176,11 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             }
 
-            // TODO: if the vacancy already exists, we should update it removing the old locations and the number of positions
-
-            if (_geoCodingProvider.GeoCodeAddress(viewModel.Employer.EmployerId) == GeoCodeAddressResult.InvalidAddress)
+            if (_geoCodingProvider.EmployerHasAValidAddress(viewModel.Employer.EmployerId) == GeoCodeAddressResult.InvalidAddress)
             {
+                viewModel.IsEmployerAddressValid = false;
+                viewModel.IsEmployerLocationMainApprenticeshipLocation = false;
+
                 return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress,
                     viewModel, VacancyPartyViewModelMessages.InvalidEmployerAddress.ErrorText, UserMessageLevel.Info);
             }

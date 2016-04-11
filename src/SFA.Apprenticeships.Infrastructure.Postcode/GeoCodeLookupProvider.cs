@@ -26,7 +26,7 @@
 
             var geoPoint = GetGeoPointFor(address.Postcode);
 
-            if (!geoPoint.IsValid())
+            if (!geoPoint.IsSet())
             {
                 geoPoint = GetGeoPointFor(GetServiceAddressFrom(address));
             }
@@ -56,6 +56,12 @@
 
         private GeoPoint GetGeoPointFor(string addressOrPostCode)
         {
+            //TODO: return this for testing purposes
+            //return GeoPoint.NotSet;
+
+
+                // Code to test in an integration test
+
             //Build the url
             var url = "http://services.postcodeanywhere.co.uk/Geocoding/UK/Geocode/v2.00/dataset.ws?";
             url += "&Key=" + System.Web.HttpUtility.UrlEncode(Config.Key);
@@ -72,9 +78,9 @@
                 _logService.Error("An error has occurred accessing GeoCode service for location {0}: {1}",
                     addressOrPostCode, dataSet.Tables[0].Rows[0].ItemArray[1].ToString());
 
-                return GeoPoint.Invalid;
+                return GeoPoint.NotSet;
             }
-
+            
             //Return the dataset
             // return dataSet;
 
@@ -94,6 +100,7 @@
                 Latitude = double.Parse(dataSet.Tables[0].Rows[0].ItemArray[3].ToString()),
                 Longitude = double.Parse(dataSet.Tables[0].Rows[0].ItemArray[4].ToString()),
             };
+
         }
     }
 }

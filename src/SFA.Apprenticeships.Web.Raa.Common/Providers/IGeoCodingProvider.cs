@@ -2,6 +2,6 @@
 {
     public interface IGeoCodingProvider
     {
-        GeoCodeAddressResult GeoCodeAddress(int employerId);
+        GeoCodeAddressResult EmployerHasAValidAddress(int employerId);
     }
 }

@@ -26,7 +26,13 @@
     <div class="grid grid-1-2 hide-print">
         <div class="ad-details__map">
             <div class="map-overlay" onClick="style.pointerEvents = 'none'"></div>
-            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Model.Employer.Address.Postcode,+United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+
+            @{
+                var postcodeForMap = Model.IsEmployerAddressValid ? (Model.Employer.Address.Postcode + ",+") : string.Empty;
+            }
+
+            <iframe width="700" height="250" frameborder="0" style="border: 0" src="https://www.google.com/maps/embed/v1/place?q=@Html.Raw(postcodeForMap)United+Kingdom&key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8"></iframe>
+
             <p class="nojs-notice">You must have JavaScript enabled to view a map of the location</p>
         </div>
     </div>
@@ -38,14 +44,24 @@
                     <a name="@Html.NameFor(m => m.IsEmployerLocationMainApprenticeshipLocation).ToString().ToLower()"></a>
                     <h4 class="bold-small">Is this address the vacancy location?</h4>
 
-                    <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new { id = "location-type-main-location", aria_controls = "location-type-main-location-panel" })
-                        Yes, this will be the vacancy location
-                    </label>
-                    <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
-                        @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
-                        No, I need to add a different location
-                    </label>
+                    @if (Model.IsEmployerAddressValid)
+                    {
+                        <label data-target="location-type-main-location-panel" for="location-type-main-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                            @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, true, new {id = "location-type-main-location", aria_controls = "location-type-main-location-panel"})
+                            Yes, this will be the vacancy location
+                        </label>
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                            @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new {id = "location-type-different-location", aria_controls = "location-type-different-location-panel"})
+                            No, I need to add a different location
+                        </label>
+                    }
+                    else
+                    {
+                        <label data-target="location-type-different-location-panel" for="location-type-different-location" class="block-label @Model.IsEmployerLocationMainApprenticeshipLocation ">
+                            @Html.RadioButtonFor(m => m.IsEmployerLocationMainApprenticeshipLocation, false, new { id = "location-type-different-location", aria_controls = "location-type-different-location-panel" })
+                            Yes, but I need to complete the full address
+                        </label>
+                    }
                 </div>
                 <div id="location-type-main-location-panel" class="toggle-content blocklabel-content location">
                     @Html.FormTextFor(model => model.NumberOfPositions, controlHtmlAttributes: new { type = "text", @class = "form-control-small", @maxlength = "5", size = 12, id = "NumberOfPositionsJS", Name = "NumberOfPositionsJS" }, labelHtmlAttributes: new { @class = "bold-small" })

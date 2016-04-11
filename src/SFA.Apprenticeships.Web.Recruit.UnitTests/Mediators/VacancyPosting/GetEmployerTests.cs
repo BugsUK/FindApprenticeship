@@ -35,7 +35,7 @@
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
 
-            GeoCodingProvider.Verify(gp => gp.GeoCodeAddress(employerId));
+            GeoCodingProvider.Verify(gp => gp.EmployerHasAValidAddress(employerId));
         }
 
         [Test]
@@ -55,7 +55,7 @@
                     }
                 });
 
-            GeoCodingProvider.Setup(gp => gp.GeoCodeAddress(employerId)).Returns(GeoCodeAddressResult.InvalidAddress);
+            GeoCodingProvider.Setup(gp => gp.EmployerHasAValidAddress(employerId)).Returns(GeoCodeAddressResult.InvalidAddress);
 
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);
@@ -81,7 +81,7 @@
                     }
                 });
 
-            GeoCodingProvider.Setup(gp => gp.GeoCodeAddress(employerId)).Returns(GeoCodeAddressResult.Ok);
+            GeoCodingProvider.Setup(gp => gp.EmployerHasAValidAddress(employerId)).Returns(GeoCodeAddressResult.Ok);
 
             var mediator = GetMediator();
             var mediatorResponse = mediator.GetEmployer(providerSiteId, edsurn, Guid.NewGuid(), null, null);

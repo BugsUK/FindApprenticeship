@@ -7,16 +7,15 @@
     {
         public static VacancyPartyViewModel Convert(this VacancyParty vacancyParty, Employer employer)
         {
-            var viewModel = new VacancyPartyViewModel
+            return new VacancyPartyViewModel
             {
                 VacancyPartyId = vacancyParty.VacancyPartyId,
                 ProviderSiteId = vacancyParty.ProviderSiteId,
                 EmployerDescription = vacancyParty.EmployerDescription,
                 EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl,
-                Employer = employer.Convert()
+                Employer = employer.Convert(),
+                IsEmployerAddressValid = true
             };
-
-            return viewModel;
         }
     }
 }
