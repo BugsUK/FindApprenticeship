@@ -41,17 +41,18 @@
             // 31, Clerkenwell Close, London -> return values
 
             var addressLine1Splitted = address.AddressLine1.Split(' ');
-            int number;
-            var startsWithNumber = int.TryParse(addressLine1Splitted.First(), out number);
+            int doorNumber;
+            var startsWithNumber = int.TryParse(addressLine1Splitted.First(), out doorNumber);
+            var numberOfParts = addressLine1Splitted.Length;
 
-            var addressLine1 = startsWithNumber
-                ? $"{number},{string.Join(" ", addressLine1Splitted.Skip(1))}"
+            var newAddressLine1 = startsWithNumber && numberOfParts > 1
+                ? $"{doorNumber}, {string.Join(" ", addressLine1Splitted.Skip(1))}"
                 : address.AddressLine1;
 
             var addressLines = new[]
-                {addressLine1, address.AddressLine2, address.AddressLine3, address.AddressLine4, address.AddressLine5};
+                {newAddressLine1, address.AddressLine2, address.AddressLine3, address.AddressLine4, address.AddressLine5};
 
-            return string.Join(",", addressLines.Where(l => !string.IsNullOrWhiteSpace(l))); 
+            return string.Join(",", addressLines.Where(line => !string.IsNullOrWhiteSpace(line))); 
         }
 
         private GeoPoint GetGeoPointFor(string addressOrPostCode)
