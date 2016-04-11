@@ -12,6 +12,13 @@
         }
     }
 
+    public class ContactMessageServerViewModelValidator : AbstractValidator<ContactMessageViewModel>
+    {
+        public ContactMessageServerViewModelValidator()
+        {
+            this.AddCommonRules();
+        }
+    }
     internal static class ContactMessageValidationRules
     {
         internal static void AddCommonRules(this AbstractValidator<ContactMessageViewModel> validator)

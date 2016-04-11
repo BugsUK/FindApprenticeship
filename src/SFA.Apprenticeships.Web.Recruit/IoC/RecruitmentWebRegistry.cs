@@ -29,6 +29,9 @@
     using Mediators.VacancyPosting;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
+
+    using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -105,6 +108,7 @@
             For<IApplicationMediator>().Use<ApplicationMediator>();
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
+            For<IHomeMediator>().Use<HomeMediator>();
         }
     }
 }
