@@ -33,7 +33,7 @@
 
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
+                        av.Address.GeoPoint = new GeoPoint
                         {
                             Latitude = (double)v.Latitude.Value,
                             Longitude = (double)v.Longitude.Value

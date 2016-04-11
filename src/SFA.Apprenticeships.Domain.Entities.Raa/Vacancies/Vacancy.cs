@@ -77,6 +77,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 AdditionalLocationInformation = AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = NumberOfPositions,
+                EmployerAnonymousName = null,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,
                 LocationAddressesComment = LocationAddressesComment,
@@ -108,6 +109,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string DesiredQualificationsComment { get; set; }
         public string FirstQuestion { get; set; }
         public string SecondQuestion { get; set; }
+        public string EmployerAnonymousName { get; set; }
         public string EmployerDescription { get; set; }
         public string EmployerWebsiteUrl { get; set; }
         public string OfflineApplicationUrl { get; set; }
