@@ -47,11 +47,12 @@
             var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
             var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
-            _communicationService.SendMessageToProviderUser(contactMessage.Name, MessageTypes.ProviderContactUsMessage, new[]
+            _communicationService.SendMessageToProviderUser(contactMessage.Email, MessageTypes.ProviderContactUsMessage, new[]
             {
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskEmailAddress),
                 new CommunicationToken(CommunicationTokens.UserEmailAddress, contactMessage.Email),
-                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),                
+                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),
+                new CommunicationToken(CommunicationTokens.UserEnquiry, contactMessage.Enquiry),
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, userEnquiryDetails)
             });
         }

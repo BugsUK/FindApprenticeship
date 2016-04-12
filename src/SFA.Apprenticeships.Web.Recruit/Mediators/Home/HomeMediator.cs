@@ -14,7 +14,7 @@
     using SFA.Infrastructure.Interfaces;
 
     public class HomeMediator : MediatorBase, IHomeMediator
-    {
+    {        
         private readonly IProviderUserProvider _providerUserProvider;               
         private readonly ILogService _logService;
         private readonly ContactMessageServerViewModelValidator _contactMessageServerViewModelValidator;                
@@ -69,7 +69,7 @@
                 {                    
                     var provider = _providerUserProvider.GetProviderUser(username);
                     viewModel.Email = provider.Email;
-                    viewModel.Name = provider.Fullname;
+                    viewModel.Name = provider.Username;
                 }
                 catch (Exception ex)
                 {

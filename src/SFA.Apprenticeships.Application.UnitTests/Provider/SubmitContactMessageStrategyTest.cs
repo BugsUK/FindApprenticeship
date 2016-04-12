@@ -53,7 +53,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
                                                                     Email = "someone@sfa.com",
                                                                     Details = "Message Details",
                                                                     Name = ValidUsername,
-                                                                    Type =ContactMessageTypes.ContactUs
+                                                                    Type =ContactMessageTypes.ContactUs,
+                                                                    Enquiry = "Message Enquiry"
                                                                 };
 
             var communicationTokens = default(IEnumerable<CommunicationToken>);
@@ -81,7 +82,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
                 new CommunicationToken(CommunicationTokens.UserFullName, providerContactMessage.Name),
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, providerContactMessage.Details),
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, ValidHelpdeskEmailAddress),
-                new CommunicationToken(CommunicationTokens.UserEmailAddress, providerContactMessage.Email)                               
+                new CommunicationToken(CommunicationTokens.UserEmailAddress, providerContactMessage.Email),
+                new CommunicationToken(CommunicationTokens.UserEnquiry, providerContactMessage.Enquiry)
             });
         }
     }

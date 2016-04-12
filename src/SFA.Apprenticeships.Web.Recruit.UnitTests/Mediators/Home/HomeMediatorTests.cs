@@ -1,20 +1,19 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Home
 {
-    using System;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.Home;
-    using Application.Interfaces.Users;
+
     using Domain.Entities.Raa.Users;
     using Common.Mediators;
 
     using FluentValidation.Results;
 
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Raa.Common.Providers;
-    using SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser;
-    using SFA.Apprenticeships.Web.Recruit.Validators;
+    using Common.Constants;
+    using Raa.Common.Providers;
+    using Recruit.Mediators.ProviderUser;
+    using Recruit.Validators;
 
     using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
@@ -70,10 +69,10 @@
             var contactMessageViewModel=new ContactMessageViewModel
                                             {
                                                 Details = "Can you please guide me to the right job?",
-                                                Email = "shoma@sfa.com",
+                                                Email = "jane.doe@example.com",
                                                 Enquiry = "How to apply for a apprenticeship",
-                                                Name = "Shoma Gujjar"
-                                            };            
+                                                Name = "Jane Doe"
+            };            
 
             //Act       
             _contactMessageServerViewModelValidator.Setup(validator => validator.Validate(It.IsAny<ContactMessageViewModel>()))
