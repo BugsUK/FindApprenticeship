@@ -16,7 +16,7 @@ For careers advice and support visit the <a href="https://nationalcareersservice
 (4, N'UUC', N'UUC', N'You didn’t attend the interview', 3, N'Thank you for your application. You&rsquo;ve been unsuccessful because you didn&rsquo;t attend the interview. Please contact the training provider for further&nbsp;information.<br />
 <br />
 For careers advice and support visit the <a href="https://nationalcareersservice.direct.gov.uk/pages/home.aspx" target="_blank">National Careers Service</a>.', N'', 0),
-(5, N'VAF', N'VAF', N'he apprenticeship has been withdrawn', 1, N'Thank you for your application. Unfortunately the apprenticeship has been withdrawn. Please contact the training provider for further information.<br />
+(5, N'VAF', N'VAF', N'The apprenticeship has been withdrawn', 1, N'Thank you for your application. Unfortunately the apprenticeship has been withdrawn. Please contact the training provider for further information.<br />
 <br />
 For careers advice and support visit the <a href="https://nationalcareersservice.direct.gov.uk/pages/home.aspx" target="_blank">National Careers Service</a>.<br />', N'', 0),
 (6, N'CNS', N'CNS', N'You''ve been unsuccessful - other', 6, N'Thank you for your application. Unfortunately you&rsquo;ve been unsuccessful on this occasion. Please contact the training provider for further information.<br />
