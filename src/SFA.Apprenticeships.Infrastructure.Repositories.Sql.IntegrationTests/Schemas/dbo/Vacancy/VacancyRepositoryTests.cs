@@ -317,7 +317,7 @@
                 _dateTimeService.Object, _logger.Object, _currentUserService.Object);
 
             IVacancyLocationWriteRepository locationWriteRepository = new VacancyLocationRepository(_connection, _mapper,
-                _dateTimeService.Object, _logger.Object);
+                _logger.Object);
 
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;

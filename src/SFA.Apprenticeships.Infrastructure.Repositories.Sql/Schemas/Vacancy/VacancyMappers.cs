@@ -396,6 +396,7 @@
 
             Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(dvl => dvl.LocalAuthorityCode)
                 .AfterMap((dbvl, dvl) =>
                 {
                     dvl.Address = new DomainPostalAddress

@@ -141,6 +141,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             {
                 //Set address
                 vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
+                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
             }
             else
@@ -152,6 +153,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
+                    vacancyLocation.LocalAuthorityCode =
+                        _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
             }
