@@ -2,45 +2,53 @@
 {
     using System;
 
-    using SFA.Apprenticeships.Application.Interfaces.Users;
+    using FluentValidation.Results;
+
+    using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Mediators;
+    using SFA.Apprenticeships.Web.Raa.Common.Providers;
+    using SFA.Apprenticeships.Web.Recruit.Constants.Messages;
+    using SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser;
+    using SFA.Apprenticeships.Web.Recruit.Validators;
     using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
 
     public class HomeMediator : MediatorBase, IHomeMediator
     {
-        private readonly IUserProfileService _userProfileService;               
+        private readonly IProviderUserProvider _providerUserProvider;               
         private readonly ILogService _logService;
+        private readonly ContactMessageServerViewModelValidator _contactMessageServerViewModelValidator;                
+        private readonly IProviderUserMediator _providerUserMediator;
 
         public HomeMediator(
             ILogService logService,
-            IUserProfileService userProfileService)
+            IProviderUserProvider providerUserProvider,
+            ContactMessageServerViewModelValidator contactMessageServerViewModelValidator,
+            IProviderUserMediator providerUserMediator)
         {
             _logService = logService;
-            _userProfileService = userProfileService;                      
+            _providerUserProvider = providerUserProvider;
+            _contactMessageServerViewModelValidator = contactMessageServerViewModelValidator;
+            _providerUserMediator = providerUserMediator;
         }
 
-        public MediatorResponse<ContactMessageViewModel> SendContactMessage(string username, ContactMessageViewModel contactMessageViewModel)
+        public MediatorResponse<ContactMessageViewModel> SendContactMessage(ContactMessageViewModel contactMessageViewModel)
         {
-            //var validationResult = _contactMessageServerViewModelValidator.Validate(contactMessageViewModel);
+            ValidationResult validationResult = _contactMessageServerViewModelValidator.Validate(contactMessageViewModel);
 
-            //if (!validationResult.IsValid)
-            //{                
-            //    return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
-            //}
+            if (!validationResult.IsValid)
+            {
+                return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
+            }
 
-            //if (this._userProfileService.SendContactMessage(candidateId, contactMessageViewModel))
-            //{
-            //    var viewModel = this.InternalGetContactMessageViewModel(candidateId);                
-            //    return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
-            //        viewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
-            //}
+           if (this._providerUserMediator.SendContactMessage(contactMessageViewModel))            
+            {                
+                return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
+                    contactMessageViewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
+            }
 
-            //PopulateContactMessageViewModelEnquiries(contactMessageViewModel);
-
-            //return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,
-            //    ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning);
-            return null;
+            return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,
+                ApplicationPageMessages.SendContactMessageFailed, UserMessageLevel.Warning);            
         }        
 
         public MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(string username)
@@ -59,7 +67,7 @@
             {
                 try
                 {                    
-                    var provider = _userProfileService.GetProviderUser(username);
+                    var provider = _providerUserProvider.GetProviderUser(username);
                     viewModel.Email = provider.Email;
                     viewModel.Name = provider.Fullname;
                 }

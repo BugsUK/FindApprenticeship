@@ -30,6 +30,7 @@
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
 
+    using SFA.Apprenticeships.Application.Provider.Strategies;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 
     using StructureMap;
@@ -75,6 +76,7 @@
             For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
+            For<ICommunicationService>().Use<CommunicationService>();
         }
 
         private void RegisterStrategies()
@@ -98,6 +100,10 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
+            For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
+            //For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
+            //For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
         }
 
         private void RegisterMediators()
@@ -108,7 +114,7 @@
             For<IApplicationMediator>().Use<ApplicationMediator>();
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
-            For<IHomeMediator>().Use<HomeMediator>();
+            For<IHomeMediator>().Use<HomeMediator>();            
         }
     }
 }

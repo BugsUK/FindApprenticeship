@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
 
     public class HomeController : RecruitmentControllerBase
     {
@@ -31,8 +32,14 @@
         {
             var userName = GetProviderUserName();
             var response = _homeMediator.GetContactMessageViewModel(userName);
-            return View(response.ViewModel);
-            
-        }        
+            return View(response.ViewModel);            
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ContactUs(ContactMessageViewModel viewModel)
+        {            
+            return null;
+        }
     }
 }
