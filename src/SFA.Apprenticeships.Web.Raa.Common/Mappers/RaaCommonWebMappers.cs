@@ -27,14 +27,14 @@
         public override void Initialise()
         {
             Mapper.CreateMap<Domain.Entities.Raa.Locations.GeoPoint, GeoPointViewModel>();
+            Mapper.CreateMap<GeoPointViewModel, Domain.Entities.Raa.Locations.GeoPoint>();
             Mapper.CreateMap<PostalAddress, AddressViewModel>()
                 .ForMember(dest => dest.Uprn, opt => opt.Ignore());
             Mapper.CreateMap<AddressViewModel, PostalAddress>()
                 .ForMember(dest => dest.PostalAddressId, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceCode, opt => opt.Ignore())
                 .ForMember(dest => dest.ValidationSourceKeyValue, opt => opt.Ignore())
-                .ForMember(dest => dest.DateValidated, opt => opt.Ignore())
-                .ForMember(dest => dest.GeoPoint, opt => opt.Ignore());
+                .ForMember(dest => dest.DateValidated, opt => opt.Ignore());
             Mapper.CreateMap<Employer, EmployerViewModel>();
             Mapper.CreateMap<VacancyParty, VacancyPartyViewModel>()
                 .ForMember(dest => dest.IsEmployerLocationMainApprenticeshipLocation, opt => opt.Ignore())
@@ -86,7 +86,6 @@
                 .ForMember(dest => dest.AddressLine5, opt => opt.Ignore())
                 .ForMember(dest => dest.Town, opt => opt.Ignore())
                 .ForMember(dest => dest.County, opt => opt.Ignore());
-            Mapper.CreateMap<Domain.Entities.Locations.GeoPoint, GeoPointViewModel>();
 
             Mapper.CreateMap<Vacancy, ApplicationVacancyViewModel>()
                 .ForMember(v => v.EmployerName, opt => opt.Ignore());

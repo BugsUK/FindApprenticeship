@@ -167,6 +167,7 @@
     <Compile Include="Providers\ProviderUser\ProviderUserProviderBuilder.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
     <Compile Include="Providers\VacancyPosting\CloneVacancyTests.cs" />
+    <Compile Include="Providers\VacancyPosting\GeocodeVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\GetNewVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\ManageDatesTests.cs" />

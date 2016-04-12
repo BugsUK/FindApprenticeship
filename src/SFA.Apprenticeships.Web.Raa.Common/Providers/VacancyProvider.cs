@@ -124,12 +124,21 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
             };
 
+            foreach (var vacancyLocationAddressViewModel in locationSearchViewModel.Addresses)
+            {
+                var geoPoint =
+                    _geoCodingService.GetGeoPointFor(
+                        _mapper.Map<AddressViewModel, PostalAddress>(vacancyLocationAddressViewModel.Address));
+
+                vacancyLocationAddressViewModel.Address.GeoPoint =
+                    _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
+            }
+
             if (locationSearchViewModel.Addresses.Count == 1)
             {
                 //Set address
                 vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
                 _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-
             }
             else
             {
