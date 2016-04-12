@@ -177,6 +177,7 @@
     <Compile Include="LegacyWebServices\LegacyCandidateProviderIntegrationTests.cs" />
     <Compile Include="LegacyWebServices\ReferenceDataProviderTests.cs" />
     <Compile Include="LegacyWebServices\VacancyServiceTests.cs" />
+    <Compile Include="LocalAuthority\LocalAuthorityLookupProviderTests.cs" />
     <Compile Include="Location\LocationLookupProviderTests.cs" />
     <Compile Include="Monitor\Repositories\ApprenticeshipMetricsRepositoryTests.cs" />
     <Compile Include="Monitor\Repositories\CandidateMetricsRepositoryTests.cs" />

@@ -75,6 +75,7 @@
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
         }
 
         private void RegisterStrategies()

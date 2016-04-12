@@ -55,7 +55,7 @@
         }
 
         [Test, Category("Integration")]
-        public void ShouldReturnNullForAnInvalidAddressOrPostcode()
+        public void ShouldReturnNotSetForAnInvalidAddressOrPostcode()
         {
             var postalAddress = new PostalAddress
             {
@@ -65,7 +65,7 @@
 
             var geoPoint = provider.GetGeoCodingFor(postalAddress);
 
-            geoPoint.Should().BeNull();
+            geoPoint.Should().Be(GeoPoint.NotSet);
         }
     }
 }

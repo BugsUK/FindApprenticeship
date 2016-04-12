@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="AddressLookupProvider.cs" />
     <Compile Include="Configuration\AddressConfiguration.cs" />
+    <Compile Include="Configuration\LocalAuthorityServiceConfiguration.cs" />
     <Compile Include="Configuration\PostalAddressServiceConfiguration.cs" />
     <Compile Include="Configuration\PostcodeConfiguration.cs" />
     <Compile Include="Entities\AddressInfo.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="IoC\PostcodeRegistry.cs" />
     <Compile Include="IPostalAddressDetailsService.cs" />
     <Compile Include="IRetrieveAddressService.cs" />
+    <Compile Include="LocalAuthorityLookupProvider.cs" />
     <Compile Include="PostalAddressDetailsService.cs" />
     <Compile Include="PostalAddressLookupProvider.cs" />
     <Compile Include="PostcodeLookupProvider.cs" />

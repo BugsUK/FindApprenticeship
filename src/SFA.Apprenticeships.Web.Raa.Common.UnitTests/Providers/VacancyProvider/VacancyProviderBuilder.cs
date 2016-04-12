@@ -35,7 +35,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
         private Mock<IVacancyPostingService> _vacancyPostingService = new Mock<IVacancyPostingService>();
         private Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
         private readonly Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
-        private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService;
+        private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService = new Mock<IGeoCodeLookupService>();
+        private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
 
 
         public VacancyProviderBuilder()
@@ -59,7 +60,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
                 _vacancyLockingService.Object,
                 _currentUserService.Object,
                 _userProfileService.Object,
-                _mockGeoCodeLookupService.Object);
+                _mockGeoCodeLookupService.Object,
+                _mockLocalAuthorityLookupService.Object);
         }
 
         public Mock<IVacancyPostingService> VacancyPostingService => _vacancyPostingService;

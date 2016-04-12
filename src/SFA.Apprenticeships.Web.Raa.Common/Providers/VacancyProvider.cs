@@ -47,13 +47,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
         private readonly IGeoCodeLookupService _geoCodingService;
+        private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
+            ILocalAuthorityLookupService localAuthLookupService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -69,6 +71,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
             _geoCodingService = geocodingService;
+            _localAuthorityLookupService = localAuthLookupService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -269,7 +272,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
                 Address = employer.Address,
-                // VacancyManagerId = vacancyParty.ProviderSiteId //TODO VGA: is this correct?
+                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode)
             });
 
             return vacancy;

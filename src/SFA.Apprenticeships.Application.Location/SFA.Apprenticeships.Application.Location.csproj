@@ -90,9 +90,11 @@
     <Compile Include="GeoCodeLookupService.cs" />
     <Compile Include="IAddressLookupProvider.cs" />
     <Compile Include="IGeoCodeLookupProvider.cs" />
+    <Compile Include="ILocalAuthorityLookupProvider.cs" />
     <Compile Include="ILocationLookupProvider.cs" />
     <Compile Include="IPostalAddressLookupProvider.cs" />
     <Compile Include="IPostcodeLookupProvider.cs" />
+    <Compile Include="LocalAuthorityLookupService.cs" />
     <Compile Include="LocationSearchService.cs" />
     <Compile Include="PostalAddressSearchService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
