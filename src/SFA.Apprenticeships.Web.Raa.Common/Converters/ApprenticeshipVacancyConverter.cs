@@ -35,7 +35,7 @@
                     ClosingDateComment = vacancy.ClosingDateComment,
                     PossibleStartDateComment = vacancy.PossibleStartDateComment,
                 },
-                LongDescription = vacancy.LongDescription.RemoveHtmlTag(),
+                LongDescription = vacancy.LongDescription,//.RemoveHtmlTag(),
                 WageComment = vacancy.WageComment,
                 DurationComment = vacancy.DurationComment,
                 LongDescriptionComment = vacancy.LongDescriptionComment,
