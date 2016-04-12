@@ -18,6 +18,7 @@
         protected Mock<IVacancyPostingProvider> MockVacancyProvider;
         protected Mock<IMapper> Mapper;
         protected Mock<IProviderService> MockProviderService;
+        protected Mock<ILogService> MockLogService;
 
         [SetUp]
         public void SetUp()
@@ -28,6 +29,7 @@
             MockAuthorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
             Mapper=new Mock<IMapper>();
             MockProviderService=new Mock<IProviderService>();
+            MockLogService=new Mock<ILogService>();
         }
 
         protected IProviderUserMediator GetMediator()
@@ -41,7 +43,8 @@
                 MockAuthorizationErrorProvider.Object,
                 MockVacancyProvider.Object,
                 providerUserViewModelValidator,
-                verifyEmailViewModelValidator,MockProviderService.Object,Mapper.Object);
+                verifyEmailViewModelValidator,MockProviderService.Object,Mapper.Object,
+                MockLogService.Object);
         }
     }
 }

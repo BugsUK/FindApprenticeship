@@ -34,7 +34,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         private readonly IProviderService _providerService;
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
-        IMapper _mapper;
+        private readonly IMapper _mapper;
+        private readonly ILogService _logService;
 
         public ProviderUserMediator(IProviderUserProvider providerUserProvider,
             IProviderProvider providerProvider,
@@ -42,7 +43,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             IVacancyPostingProvider vacancyProvider,
             ProviderUserViewModelValidator providerUserViewModelValidator,
             VerifyEmailViewModelValidator verifyEmailViewModelValidator,
-            IProviderService providerService,IMapper mapper)
+            IProviderService providerService,IMapper mapper,
+            ILogService logService)
         {
             _providerUserProvider = providerUserProvider;
             _providerProvider = providerProvider;
@@ -52,6 +54,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             _verifyEmailViewModelValidator = verifyEmailViewModelValidator;
             _providerService = providerService;
             _mapper = mapper;
+            _logService = logService;
         }
 
         public MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal)
@@ -271,15 +274,16 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         {
             try
             {
-                ContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ContactMessage>(contactMessageViewModel);
+                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);
 
                 //candidate.UserId = candidateId;
                 _providerService.SubmitContactMessage(contactMessage);
 
                 return true;
             }
-            catch
+            catch(Exception exception)
             {
+                _logService.Error($"Exception occured while sending contact us email:{exception.Message}");
                 return false;
             }
         }

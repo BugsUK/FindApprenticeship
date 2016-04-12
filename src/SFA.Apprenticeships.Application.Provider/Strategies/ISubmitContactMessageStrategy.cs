@@ -4,6 +4,6 @@
 
     public interface ISubmitContactMessageStrategy
     {
-        void SubmitMessage(ContactMessage contactMessage);
+        void SubmitMessage(ProviderContactMessage contactMessage);
     }
 }

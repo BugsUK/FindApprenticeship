@@ -91,6 +91,7 @@
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
+            For<ISendProviderCommunicationStrategy>().Use<QueueProviderCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
@@ -100,10 +101,7 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
-            For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();
-            For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
-            //For<ISendContactMessageStrategy>().Use<QueueContactMessageStrategy>();
-            //For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
+            For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();                      
         }
 
         private void RegisterMediators()

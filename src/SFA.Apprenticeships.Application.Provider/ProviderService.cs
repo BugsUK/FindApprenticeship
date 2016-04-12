@@ -194,7 +194,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return pageable;
         }
 
-        public void SubmitContactMessage(ContactMessage contactMessage)
+        public void SubmitContactMessage(ProviderContactMessage contactMessage)
         {
             Condition.Requires(contactMessage);
 

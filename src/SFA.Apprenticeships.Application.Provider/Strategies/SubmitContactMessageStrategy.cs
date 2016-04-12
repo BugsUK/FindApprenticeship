@@ -3,7 +3,6 @@
     using SFA.Apprenticeships.Application.Interfaces.Communications;
     using SFA.Apprenticeships.Application.UserAccount.Configuration;
     using SFA.Apprenticeships.Domain.Entities.Communication;
-    using SFA.Apprenticeships.Domain.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
@@ -11,26 +10,23 @@
         public const string DefaultUserFullName = "(anonymous)";
         public const string DefaultUserEnquiryDetails = "(no details provided)";
 
-        private readonly ILogService _logService;
-        private readonly ICommunicationService _communicationService;
+        private readonly ILogService _logService;        
         private readonly IConfigurationService _configurationService;
-        private readonly IContactMessageRepository _contactMessageRepository;
+        private readonly IProviderCommunicationService _communicationService;        
 
         public SubmitContactMessageStrategy(
             ILogService logService,
-            ICommunicationService communicationService,
-            IConfigurationService configurationService,
-            IContactMessageRepository contactMessageRepository)
+            IProviderCommunicationService communicationService,
+            IConfigurationService configurationService)
         {
             _logService = logService;
             _communicationService = communicationService;
-            _configurationService = configurationService;
-            _contactMessageRepository = contactMessageRepository;
+            _configurationService = configurationService;            
         }
 
-        public void SubmitMessage(ContactMessage contactMessage)
+        public void SubmitMessage(ProviderContactMessage contactMessage)
         {
-            _contactMessageRepository.Save(contactMessage);
+           // _contactMessageRepository.Save(contactMessage);
 
             switch (contactMessage.Type)
             {
@@ -46,17 +42,16 @@
 
         #region Helpers        
 
-        private void SubmitContactUsMessage(ContactMessage contactMessage)
+        private void SubmitContactUsMessage(ProviderContactMessage contactMessage)
         {
             var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
             var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
-            _communicationService.SendContactMessage(contactMessage.UserId, MessageTypes.CandidateContactUsMessage, new[]
+            _communicationService.SendMessageToProviderUser(contactMessage.Name, MessageTypes.ProviderContactUsMessage, new[]
             {
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskEmailAddress),
                 new CommunicationToken(CommunicationTokens.UserEmailAddress, contactMessage.Email),
-                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),
-                new CommunicationToken(CommunicationTokens.UserEnquiry, contactMessage.Enquiry),
+                new CommunicationToken(CommunicationTokens.UserFullName, contactMessage.Name),                
                 new CommunicationToken(CommunicationTokens.UserEnquiryDetails, userEnquiryDetails)
             });
         }

@@ -38,8 +38,9 @@
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ContactUs(ContactMessageViewModel viewModel)
-        {            
-            return null;
+        {
+            var response = _homeMediator.SendContactMessage(viewModel);
+            return View(response.ViewModel);
         }
     }
 }

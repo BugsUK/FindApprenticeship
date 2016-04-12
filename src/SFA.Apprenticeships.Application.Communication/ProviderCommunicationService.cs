@@ -9,14 +9,17 @@
     public class ProviderCommunicationService : IProviderCommunicationService
     {
         private readonly ISendProviderUserCommunicationStrategy _sendProviderUserCommunicationStrategy;
+        private readonly ISendProviderCommunicationStrategy _sendProviderCommunicationStrategy;
         private readonly ILogService _logger;
 
         public ProviderCommunicationService(
             ILogService logger,
-            ISendProviderUserCommunicationStrategy sendProviderUserCommunicationStrategy)
+            ISendProviderUserCommunicationStrategy sendProviderUserCommunicationStrategy,
+            ISendProviderCommunicationStrategy sendProviderCommunicationStrategy)
         {
             _logger = logger;
             _sendProviderUserCommunicationStrategy = sendProviderUserCommunicationStrategy;
+            _sendProviderCommunicationStrategy = sendProviderCommunicationStrategy;
         }
 
         public void SendMessageToProviderUser(string username, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
@@ -29,6 +32,9 @@
                     _sendProviderUserCommunicationStrategy.Send(username, messageType, tokens);
                     break;
 
+                case MessageTypes.ProviderContactUsMessage:
+                    _sendProviderCommunicationStrategy.Send(username, messageType, tokens);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(messageType));
             }
