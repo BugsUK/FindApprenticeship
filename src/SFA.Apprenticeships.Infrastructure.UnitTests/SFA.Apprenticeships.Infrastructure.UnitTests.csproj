@@ -208,6 +208,7 @@
     <Compile Include="Raa\Extensions\VacancyExtensions\GetCategoryTests.cs" />
     <Compile Include="Raa\Extensions\VacancyExtensions\VacancyExtensionsTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipSummaryMapperTests.cs" />
+    <Compile Include="Raa\Mappers\ApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="Raa\ReferenceDataProviderTests.cs" />
     <Compile Include="ScheduledJobs\Application\ApplicationStatusSummarySubscriberTests.cs" />
     <Compile Include="ScheduledJobs\Vacancy\ApprenticeshipSummaryUpdateProcessorTests.cs" />
