@@ -48,7 +48,7 @@
             var options = new FindOptions<User>
             {
                 Sort = sort,
-                Limit = 5000
+                Limit = 500
             };
 
             var cursor = _database.GetCollection<User>("users").FindAsync(filter, options);

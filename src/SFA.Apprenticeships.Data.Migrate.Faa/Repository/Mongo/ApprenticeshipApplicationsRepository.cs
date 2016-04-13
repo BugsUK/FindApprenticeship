@@ -18,7 +18,13 @@
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
 
-        /// <summary>
+        public async Task<long> GetApprenticeshipApplicationsCount()
+        {
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10));
+            return await cursor;
+        }
+
+        /// <summary>   
         /// Returns all applications apart from those in the saved state
         /// </summary>
         /// <param name="lastId">Pass null or empty for the first page or the Id of the last item in the current page</param>
@@ -41,10 +47,40 @@
             var options = new FindOptions<ApprenticeshipApplication>
             {
                 Sort = sort,
-                Limit = 5000
+                Limit = 500,
+                Projection = Builders<ApprenticeshipApplication>.Projection
+                .Include(a => a.Id)
+                .Include(a => a.Status)
+                .Include(a => a.CandidateId)
+                .Include(a => a.LegacyApplicationId)
+                .Include(a => a.WithdrawnOrDeclinedReason)
+                .Include(a => a.UnsuccessfulReason)
+                .Include(a => a.Vacancy.Id)
+                .Include(a => a.Vacancy.VacancyReference)
+                .Include(a => a.Vacancy.Title)
             };
 
             var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+            return await cursor;
+        }
+
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplications()
+        {
+            var options = new FindOptions<ApprenticeshipApplication>
+            {
+                BatchSize = 1000,
+                Projection = Builders<ApprenticeshipApplication>.Projection
+                .Include(a => a.Id)
+                .Include(a => a.Status)
+                .Include(a => a.CandidateId)
+                .Include(a => a.LegacyApplicationId)
+                .Include(a => a.WithdrawnOrDeclinedReason)
+                .Include(a => a.UnsuccessfulReason)
+                .Include(a => a.Vacancy.Id)
+                .Include(a => a.Vacancy.VacancyReference)
+                .Include(a => a.Vacancy.Title)
+            };
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), options);
             return await cursor;
         }
     }

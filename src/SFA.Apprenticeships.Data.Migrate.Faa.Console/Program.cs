@@ -7,8 +7,10 @@
     using System.Collections.Generic;
     using System.Linq;
     using Entities.Mongo;
+    using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using Repository.Mongo;
+    using Repository.Sql;
 
     public class Program
     {
@@ -21,40 +23,42 @@
             var configService = new AzureBlobConfigurationService(new MyConfigurationManager(), log);
             var persistentConfig = configService.Get<MigrateFromAvmsConfiguration>();
 
-            var candidateRepository = new CandidateRepository(configService);
+            var sourceDatabase = new GetOpenConnectionFromConnectionString(persistentConfig.SourceConnectionString);
+            var targetDatabase = new GetOpenConnectionFromConnectionString(persistentConfig.TargetConnectionString);
+            var genericSyncRepository = new GenericSyncRespository(log, sourceDatabase, targetDatabase);
+
+            var applicationTable = new ApplicationTable();
+            genericSyncRepository.DeleteAll(applicationTable);
+
+            var candidateRepository = new CandidateRepository(configService, log);
             var apprenticeshipApplicationsRepository = new ApprenticeshipApplicationsRepository(configService);
 
-            var lastId = default(Guid?);
-            var running = true;
+            log.Info("Loading candidates");
+            var candidates = candidateRepository.GetAllCandidatesAsync().Result;
+            log.Info($"Completed loading {candidates.Count} candidates");
+
+            var expectedCount = apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCount().Result;
             var count = 0;
 
-            while (running)
+            var cursor = apprenticeshipApplicationsRepository.GetAllApprenticeshipApplications().Result;
+            while (cursor.MoveNextAsync().Result)
             {
-                var cursor = apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsPageAsync(lastId).Result;
-                while (cursor.MoveNextAsync().Result)
+                var batch = cursor.Current.ToList();
+                log.Info($"Processing {batch.Count} Applications");
+
+                var applications = batch.Where(a => candidates.ContainsKey(a.CandidateId)).Select(a => a.ToApplicationDictionary(candidates[a.CandidateId])).ToList();
+                count += applications.Count;
+                log.Info($"Inserting {applications.Count} Applications");
+                try
                 {
-                    var batch = cursor.Current.ToList();
-
-                    var candidates = new Dictionary<Guid, Candidate>(batch.Count);
-                    var candidatesCursor = candidateRepository.GetCandidatesByIds(batch.Select(b => b.CandidateId)).Result;
-                    while (candidatesCursor.MoveNextAsync().Result)
-                    {
-                        var candidatesBatch = candidatesCursor.Current.ToList();
-                        foreach (var candidate in candidatesBatch)
-                        {
-                            candidates[candidate.Id] = candidate;
-                        }
-                    }
-
-                    var applications = batch.Where(a => candidates.ContainsKey(a.CandidateId)).Select(a => (IDictionary<string, object>)a.ToApplication(candidates[a.CandidateId])).ToList();
-                    running = applications.Any();
-                    count += applications.Count;
-                    if (running)
-                    {
-                        //syncrepo.BulkInsert(table, applications);
-                        lastId = (Guid)applications.Last()["ApplicationGuid"];
-                    }
+                    genericSyncRepository.BulkInsert(applicationTable, applications);
                 }
+                catch (Exception ex)
+                {
+                    log.Error("Error while inserting applications", ex);
+                }
+                var percentage = ((double)count / expectedCount) * 100;
+                log.Info($"Inserted {applications.Count} Applications and {count} Applications out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete");
             }
 
             Console.WriteLine(count);

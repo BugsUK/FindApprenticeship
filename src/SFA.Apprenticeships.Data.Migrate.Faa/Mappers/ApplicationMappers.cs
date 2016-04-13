@@ -4,9 +4,12 @@
     using System.Collections.Generic;
     using System.Linq;
     using Entities.Mongo;
+    using Entities.Sql;
 
     public static class ApplicationMappers
     {
+        private static int applicationId = -1;
+
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
         {
             {"No longer interested", 1},
@@ -41,15 +44,15 @@
             {"You’re not eligible for a traineeship", 15},
             {"The training provider couldn’t contact you", 16},
             {"Offered the position but turned it down", 17}
-        }; 
+        };
 
-        public static dynamic ToApplication(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        public static Application ToApplication(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
-            /*return new Application
+            return new Application
             {
-                ApplicationId = apprenticeshipApplication.LegacyApplicationId,
-                CandidateId = candidate.LegacyCandidateId,
+                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
+                CandidateId = GetCandidateId(candidate),
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
                 WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
@@ -63,12 +66,16 @@
                 LockedForSupportUntil = null,
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
                 ApplicationGuid = apprenticeshipApplication.Id
-            };*/
+            };
+        }
 
+        public static dynamic ToApplicationDynamic(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        {
+            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new
             {
-                ApplicationId = apprenticeshipApplication.LegacyApplicationId,
-                CandidateId = candidate.LegacyCandidateId,
+                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
+                CandidateId = GetCandidateId(candidate),
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
                 WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
@@ -83,6 +90,44 @@
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
                 ApplicationGuid = apprenticeshipApplication.Id
             };
+        }
+
+        public static IDictionary<string, object> ToApplicationDictionary(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        {
+            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            return new Dictionary<string, object>
+            {
+                {"ApplicationId", GetApplicationId(apprenticeshipApplication.LegacyApplicationId)},
+                {"CandidateId", GetCandidateId(candidate)},
+                {"VacancyId", apprenticeshipApplication.Vacancy.Id},
+                {"ApplicationStatusTypeId", GetApplicationStatusTypeId(apprenticeshipApplication.Status)},
+                {"WithdrawnOrDeclinedReasonId", GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason)},
+                {"UnsuccessfulReasonId", unsuccessfulReasonId},
+                {"OutcomeReasonOther", GetOutcomeReasonOther(unsuccessfulReasonId)},
+                {"NextActionId", 0},
+                {"NextActionOther", null},
+                {"AllocatedTo", GetAllocatedTo(unsuccessfulReasonId)},
+                {"CVAttachmentId", null},
+                {"BeingSupportedBy", null},
+                {"LockedForSupportUntil", null},
+                {"WithdrawalAcknowledged", GetWithdrawalAcknowledged(unsuccessfulReasonId)},
+                {"ApplicationGuid", apprenticeshipApplication.Id}
+            };
+        }
+
+        private static int GetApplicationId(int legacyApplicationId)
+        {
+            if (legacyApplicationId == 0)
+            {
+                return applicationId--;
+            }
+
+            return legacyApplicationId;
+        }
+
+        private static int GetCandidateId(Candidate candidate)
+        {
+            return candidate?.LegacyCandidateId ?? 0;
         }
 
         private static int GetApplicationStatusTypeId(int status)
