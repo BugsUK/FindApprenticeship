@@ -75,7 +75,7 @@
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,
