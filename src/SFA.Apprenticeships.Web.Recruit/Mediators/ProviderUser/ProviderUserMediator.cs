@@ -275,11 +275,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         {
             try
             {
-                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);
-
-                //candidate.UserId = candidateId;
+                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
                 _providerService.SubmitContactMessage(contactMessage);
-
                 return true;
             }
             catch(Exception exception)

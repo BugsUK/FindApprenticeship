@@ -68,6 +68,28 @@
             return MapProviderUser(dbProviderUser);
         }
 
+        public ProviderUser GetByEmail(string email)
+        {
+            _logger.Debug("Getting provider user with username=\"{0}\"", email);
+
+            const string sql = "SELECT * FROM Provider.ProviderUser WHERE Email = @email";
+
+            var sqlParams = new
+            {
+                email
+            };
+
+            var dbProviderUser = _getOpenConnection
+                .Query<Entities.ProviderUser>(sql, sqlParams)
+                .SingleOrDefault();
+
+            _logger.Debug(dbProviderUser == null
+                ? "Did not find provider user with username=\"{0}\""
+                : "Got provider user with username=\"{0}\"", email);
+
+            return MapProviderUser(dbProviderUser);
+        }
+
         public IEnumerable<ProviderUser> GetAllByUkprn(string ukprn)
         {
             _logger.Debug("Getting provider users for provider with Ukprn=\"{0}\"", ukprn);

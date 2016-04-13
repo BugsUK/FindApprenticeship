@@ -68,8 +68,8 @@
                 try
                 {                    
                     var provider = _providerUserProvider.GetProviderUser(username);
-                    viewModel.Email = provider.Email;
-                    viewModel.Name = provider.Username;
+                    viewModel.Name = provider.Fullname;
+                    viewModel.Email = provider.Email;                    
                 }
                 catch (Exception ex)
                 {

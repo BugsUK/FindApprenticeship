@@ -19,9 +19,9 @@
             _serviceBus = serviceBus;
         }
 
-        public void Send(string username, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
+        public void Send(string email, MessageTypes messageType, IEnumerable<CommunicationToken> tokens)
         {
-            var providerUser = _providerUserReadRepository.GetByUsername(username);
+            var providerUser = _providerUserReadRepository.GetByEmail(email);
 
             if (providerUser != null)
             {

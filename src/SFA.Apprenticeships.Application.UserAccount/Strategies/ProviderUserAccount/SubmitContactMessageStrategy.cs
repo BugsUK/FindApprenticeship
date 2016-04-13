@@ -25,9 +25,7 @@
         }
 
         public void SubmitMessage(ProviderContactMessage contactMessage)
-        {
-           // _contactMessageRepository.Save(contactMessage);
-
+        {           
             switch (contactMessage.Type)
             {
                 case ContactMessageTypes.ContactUs:

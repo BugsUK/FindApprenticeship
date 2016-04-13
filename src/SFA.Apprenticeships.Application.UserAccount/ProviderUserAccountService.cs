@@ -50,7 +50,6 @@
         public void SubmitContactMessage(ProviderContactMessage contactMessage)
         {
             Condition.Requires(contactMessage);
-
             _submitContactMessageStrategy.SubmitMessage(contactMessage);
         }
     }
