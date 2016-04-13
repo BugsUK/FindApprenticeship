@@ -32,7 +32,7 @@
             _providerUserMediator = providerUserMediator;
         }
 
-        public MediatorResponse<ContactMessageViewModel> SendContactMessage(ContactMessageViewModel contactMessageViewModel)
+        public MediatorResponse<ContactMessageViewModel> SendContactMessage(string username, ContactMessageViewModel contactMessageViewModel)
         {
             ValidationResult validationResult = _contactMessageServerViewModelValidator.Validate(contactMessageViewModel);
 
@@ -41,10 +41,11 @@
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.ValidationError, contactMessageViewModel, validationResult);
             }
 
-           if (this._providerUserMediator.SendContactMessage(contactMessageViewModel))            
-            {                
+           if (_providerUserMediator.SendContactMessage(contactMessageViewModel))            
+            {
+                var viewModel = InternalGetContactMessageViewModel(username);
                 return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.SuccessfullySent,
-                    contactMessageViewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
+                    viewModel, ApplicationPageMessages.SendContactMessageSucceeded, UserMessageLevel.Success);
             }
 
             return GetMediatorResponse(HomeMediatorCodes.SendContactMessage.Error, contactMessageViewModel,

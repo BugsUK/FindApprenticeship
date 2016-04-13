@@ -1,6 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
     using System.Web.Mvc;
+
+    using FluentValidation.Mvc;
+
+    using SFA.Apprenticeships.Web.Common.Mediators;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
     using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
 
@@ -39,9 +43,24 @@
         [ValidateAntiForgeryToken]
         public ActionResult ContactUs(ContactMessageViewModel viewModel)
         {
-            var response = _homeMediator.SendContactMessage(viewModel);
-            ModelState.Clear();
-            return View();
+            var userName = GetProviderUserName();
+            var response = _homeMediator.SendContactMessage(userName,viewModel);
+            switch (response.Code)
+            {
+                case HomeMediatorCodes.SendContactMessage.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(viewModel);
+                case HomeMediatorCodes.SendContactMessage.SuccessfullySent:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+                case HomeMediatorCodes.SendContactMessage.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+            }
+
+            throw new InvalidMediatorCodeException(response.Code);
         }
     }
 }

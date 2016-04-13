@@ -7,7 +7,7 @@
 
     public interface IHomeMediator
     {
-        MediatorResponse<ContactMessageViewModel> SendContactMessage(ContactMessageViewModel registerViewModel);
+        MediatorResponse<ContactMessageViewModel> SendContactMessage(string username, ContactMessageViewModel registerViewModel);
 
         MediatorResponse<ContactMessageViewModel> GetContactMessageViewModel(string username);       
     }

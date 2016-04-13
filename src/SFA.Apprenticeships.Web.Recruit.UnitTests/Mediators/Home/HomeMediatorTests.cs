@@ -66,6 +66,7 @@
         public void SendContactMessageTest_WithUserName()
         {
             //Arrange            
+            const string username = "a.user";
             var contactMessageViewModel=new ContactMessageViewModel
                                             {
                                                 Details = "Can you please guide me to the right job?",
@@ -80,7 +81,7 @@
 
             _providerUserMediator.Setup(mediator => mediator.SendContactMessage(contactMessageViewModel)).Returns(true);
 
-            MediatorResponse<ContactMessageViewModel> response = _homeMediator.SendContactMessage(                
+            MediatorResponse<ContactMessageViewModel> response = _homeMediator.SendContactMessage(username,
                 contactMessageViewModel);
 
             //Assert
