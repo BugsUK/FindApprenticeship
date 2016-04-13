@@ -154,11 +154,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
             viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
 
             vacancy.IsEmployerLocationMainApprenticeshipLocation =
                 viewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = null;
+            vacancy.Address = employer.Address;
             vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
             vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
             vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
@@ -168,6 +171,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             if (viewModel.Addresses.Count() == 1)
             {
                 vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(viewModel.Addresses.Single().Address);
+                vacancy.NumberOfPositions = viewModel.Addresses.Single().NumberOfPositions;
                 vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -235,22 +239,29 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
                 };
-
+                
                 var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
-                locationAddresses?.ForEach(v => viewModel.Addresses.Add(new VacancyLocationAddressViewModel
+                if (locationAddresses.Any())
                 {
-                    Address = new AddressViewModel
+                    viewModel.Addresses =
+                        _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
+                }
+                else
+                {
+                    if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false)
                     {
-                        AddressLine1 = v.Address.AddressLine1,
-                        AddressLine2 = v.Address.AddressLine2,
-                        AddressLine3 = v.Address.AddressLine3,
-                        AddressLine4 = v.Address.AddressLine4,
-                        Postcode = v.Address.Postcode,
-                        //Uprn = v.Address.Uprn
-                    },
-                    NumberOfPositions = v.NumberOfPositions
-                }));
-
+                        viewModel.Addresses = new List<VacancyLocationAddressViewModel>
+                        {
+                            new VacancyLocationAddressViewModel
+                            {
+                                Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
+                                NumberOfPositions = vacancy.NumberOfPositions.Value
+                            }
+                        };
+                    }
+                }
+                
                 return viewModel;
             }
             else
