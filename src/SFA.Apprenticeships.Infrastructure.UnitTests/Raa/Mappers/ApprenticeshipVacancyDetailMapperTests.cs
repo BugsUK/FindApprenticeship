@@ -136,5 +136,38 @@
                 detail.SkillsRequired.Should().Be(vacancy.DesiredSkills);
             }
         }
+
+        [TestCase("Anonymous Employer Name", true)]
+        [TestCase(null, false)]
+        [TestCase("", false)]
+        public void ShouldHandleEmployerNameAnonymisation(
+            string anonymousEmployerName, bool anonymised)
+        {
+            // Arrange.
+            var fixture = new Fixture();
+
+            var vacancy = fixture
+                .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+                .With(each => each.EmployerAnonymousName, anonymousEmployerName)
+                .Create();
+
+            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
+            var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
+            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+
+            var categories = fixture
+                .Build<Domain.Entities.ReferenceData.Category>()
+                .CreateMany(1)
+                .ToList();
+
+            // Act.
+            var detail = ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(
+                vacancy, vacancyParty, employer, provider, categories, _mockLogService.Object);
+
+            // Assert.
+            detail.Should().NotBeNull();
+            detail.AnonymousEmployerName.Should().Be(anonymousEmployerName);
+            detail.IsEmployerAnonymous.Should().Be(anonymised);
+        }
     }
 }
