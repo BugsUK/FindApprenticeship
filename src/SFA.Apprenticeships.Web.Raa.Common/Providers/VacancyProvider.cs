@@ -127,7 +127,82 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
             };
 
-            foreach (var vacancyLocationAddressViewModel in locationSearchViewModel.Addresses)
+            GeoCodeVacancyLocations(locationSearchViewModel);
+
+            if (locationSearchViewModel.Addresses.Count == 1)
+            {
+                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
+                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
+
+                _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            }
+            else
+            {
+                vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+
+                var vacancyLocations = GetVacancyLocationsFrom(locationSearchViewModel, vacancy);
+
+                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+            }
+
+            return locationSearchViewModel;
+        }
+
+        public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
+        {
+            var vacancyParty =
+                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
+            viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
+
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
+
+            vacancy.IsEmployerLocationMainApprenticeshipLocation =
+                viewModel.IsEmployerLocationMainApprenticeshipLocation;
+            vacancy.NumberOfPositions = null;
+            vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
+            vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
+            vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
+
+            GeoCodeVacancyLocations(viewModel);
+
+            if (viewModel.Addresses.Count() == 1)
+            {
+                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(viewModel.Addresses.Single().Address);
+                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
+
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
+                _vacancyPostingService.UpdateVacancy(vacancy);
+            }
+            else
+            {
+                _vacancyPostingService.UpdateVacancy(vacancy);
+
+                var vacancyLocations = GetVacancyLocationsFrom(viewModel, vacancy);
+
+                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
+                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
+            }
+
+            return viewModel;
+        }
+
+        private List<VacancyLocation> GetVacancyLocationsFrom(LocationSearchViewModel locationSearchViewModel, Vacancy vacancy)
+        {
+            var vacancyLocations =
+                _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                    locationSearchViewModel.Addresses);
+            foreach (var vacancyLocation in vacancyLocations)
+            {
+                vacancyLocation.VacancyId = vacancy.VacancyId;
+                vacancyLocation.LocalAuthorityCode =
+                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
+            }
+            return vacancyLocations;
+        }
+
+        private void GeoCodeVacancyLocations(LocationSearchViewModel viewModel)
+        {
+            foreach (var vacancyLocationAddressViewModel in viewModel.Addresses)
             {
                 var geoPoint =
                     _geoCodingService.GetGeoPointFor(
@@ -136,30 +211,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 vacancyLocationAddressViewModel.Address.GeoPoint =
                     _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
             }
-
-            if (locationSearchViewModel.Addresses.Count == 1)
-            {
-                //Set address
-                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
-                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
-                _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-            }
-            else
-            {
-                vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-                var vacancyLocations =
-                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        locationSearchViewModel.Addresses);
-                foreach (var vacancyLocation in vacancyLocations)
-                {
-                    vacancyLocation.VacancyId = vacancy.VacancyId;
-                    vacancyLocation.LocalAuthorityCode =
-                        _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
-                }
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
-            }
-
-            return locationSearchViewModel;
         }
 
         public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid)
@@ -1304,61 +1355,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
             return new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);
         }
-
-        public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
-        {
-            var addresses = viewModel.Addresses.Select(a => new VacancyLocation
-            {
-                Address = new PostalAddress
-                {
-                    AddressLine1 = a.Address.AddressLine1,
-                    AddressLine2 = a.Address.AddressLine2,
-                    AddressLine3 = a.Address.AddressLine3,
-                    AddressLine4 = a.Address.AddressLine4,
-                    Postcode = a.Address.Postcode,
-                },
-                NumberOfPositions = a.NumberOfPositions.Value
-            });
-
-            var vacancyParty =
-                _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
-            viewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
-
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
-
-            vacancy.IsEmployerLocationMainApprenticeshipLocation =
-                viewModel.IsEmployerLocationMainApprenticeshipLocation;
-            vacancy.NumberOfPositions = null;
-            vacancy.LocationAddressesComment = viewModel.LocationAddressesComment;
-            vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
-            vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
-
-            
-            if (addresses.Count() == 1)
-            {
-                //Set address
-                vacancy.Address = addresses.Single().Address;
-                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.UpdateVacancy(vacancy);
-
-            }
-            else
-            {
-                _vacancyPostingService.UpdateVacancy(vacancy);
-                var vacancyLocations =
-                    _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
-                        viewModel.Addresses);
-                foreach (var vacancyLocation in vacancyLocations)
-                {
-                    vacancyLocation.VacancyId = vacancy.VacancyId;
-                }
-                _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
-                _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
-            }
-
-            return viewModel;
-        }
-
+        
         public void RemoveVacancyLocationInformation(Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
