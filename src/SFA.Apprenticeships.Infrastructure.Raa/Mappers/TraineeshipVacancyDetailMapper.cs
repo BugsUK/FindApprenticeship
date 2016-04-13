@@ -50,16 +50,13 @@
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.Name,
-                //TODO: How is this captured in RAA?
-                //AnonymousEmployerName = vacancy.,
+                AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancyParty.EmployerDescription,
                 EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
-                //TODO: How is this captured in RAA?
-                //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
                 IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
@@ -72,7 +69,7 @@
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,
