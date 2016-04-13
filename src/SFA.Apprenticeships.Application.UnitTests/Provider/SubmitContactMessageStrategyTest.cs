@@ -13,9 +13,11 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
     using NUnit.Framework;
 
     using Interfaces.Communications;
-    using Apprenticeships.Application.Provider.Strategies;
+
     using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
+
+    using SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]

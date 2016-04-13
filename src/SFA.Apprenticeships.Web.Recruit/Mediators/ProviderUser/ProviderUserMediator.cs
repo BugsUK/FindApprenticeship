@@ -18,6 +18,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Raa.Common.Validators.ProviderUser;
 
     using SFA.Apprenticeships.Application.Interfaces.Providers;
+    using SFA.Apprenticeships.Application.Interfaces.Users;
     using SFA.Apprenticeships.Domain.Entities.Communication;
     using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
@@ -31,7 +32,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
         private readonly IProviderProvider _providerProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
         private readonly IVacancyPostingProvider _vacancyProvider;
-        private readonly IProviderService _providerService;
+        private readonly IProviderUserAccountService _providerService;
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
         private readonly IMapper _mapper;
@@ -43,7 +44,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             IVacancyPostingProvider vacancyProvider,
             ProviderUserViewModelValidator providerUserViewModelValidator,
             VerifyEmailViewModelValidator verifyEmailViewModelValidator,
-            IProviderService providerService,IMapper mapper,
+            IProviderUserAccountService providerService,IMapper mapper,
             ILogService logService)
         {
             _providerUserProvider = providerUserProvider;

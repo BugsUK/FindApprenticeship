@@ -7,7 +7,7 @@
     using Interfaces.Providers;
     using Moq;
 
-    using SFA.Apprenticeships.Application.Provider.Strategies;
+    using SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
 
     public class ProviderServiceBuilder
     {
@@ -34,7 +34,7 @@
         {
             var provider = new ProviderService(_providerReadRepository, _providerSiteReadRepository, 
                 _vacancyPartyReadRepository, _vacancyPartyWriteRepository, _logService, 
-                _employerService,_submitContactMessageStrategy);
+                _employerService);
             return provider;
         }
 

@@ -98,8 +98,6 @@
     </Compile>
     <Compile Include="ProviderService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Strategies\ISubmitContactMessageStrategy.cs" />
-    <Compile Include="Strategies\SubmitContactMessageStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">

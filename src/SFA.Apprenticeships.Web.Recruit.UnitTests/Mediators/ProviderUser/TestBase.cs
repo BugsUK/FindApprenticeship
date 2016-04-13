@@ -6,8 +6,7 @@
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
     using Recruit.Mediators.ProviderUser;
-
-    using SFA.Apprenticeships.Application.Interfaces.Providers;
+    using SFA.Apprenticeships.Application.Interfaces.Users;
     using SFA.Infrastructure.Interfaces;
 
     public class TestBase
@@ -17,7 +16,7 @@
         protected Mock<IProviderUserProvider> MockProviderUserProvider;
         protected Mock<IVacancyPostingProvider> MockVacancyProvider;
         protected Mock<IMapper> Mapper;
-        protected Mock<IProviderService> MockProviderService;
+        protected Mock<IProviderUserAccountService> MockProviderService;
         protected Mock<ILogService> MockLogService;
 
         [SetUp]
@@ -28,7 +27,7 @@
             MockVacancyProvider = new Mock<IVacancyPostingProvider>();
             MockAuthorizationErrorProvider = new Mock<IAuthorizationErrorProvider>();
             Mapper=new Mock<IMapper>();
-            MockProviderService=new Mock<IProviderService>();
+            MockProviderService=new Mock<IProviderUserAccountService>();
             MockLogService=new Mock<ILogService>();
         }
 

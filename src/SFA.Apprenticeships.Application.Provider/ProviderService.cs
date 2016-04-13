@@ -11,7 +11,7 @@ namespace SFA.Apprenticeships.Application.Provider
     using SFA.Infrastructure.Interfaces;
     using Interfaces.Providers;
 
-    using SFA.Apprenticeships.Application.Provider.Strategies;
+    using SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
     using SFA.Apprenticeships.Domain.Entities.Communication;
 
     public class ProviderService : IProviderService
@@ -22,22 +22,20 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
-        private readonly ISubmitContactMessageStrategy _submitContactMessageStrategy;
+        
 
         public ProviderService(IProviderReadRepository providerReadRepository, 
             IProviderSiteReadRepository providerSiteReadRepository, 
             IVacancyPartyReadRepository vacancyPartyReadRepository, 
             IVacancyPartyWriteRepository vacancyPartyWriteRepository, 
-            ILogService logService, IEmployerService employerService,
-            ISubmitContactMessageStrategy submitContactMessageStrategy)
+            ILogService logService, IEmployerService employerService)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _vacancyPartyReadRepository = vacancyPartyReadRepository;
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
-            _employerService = employerService;
-            _submitContactMessageStrategy = submitContactMessageStrategy;
+            _employerService = employerService;            
         }
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
@@ -192,13 +190,6 @@ namespace SFA.Apprenticeships.Application.Provider
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;
 
             return pageable;
-        }
-
-        public void SubmitContactMessage(ProviderContactMessage contactMessage)
-        {
-            Condition.Requires(contactMessage);
-
-            _submitContactMessageStrategy.SubmitMessage(contactMessage);
-        }
+        }       
     }
 }

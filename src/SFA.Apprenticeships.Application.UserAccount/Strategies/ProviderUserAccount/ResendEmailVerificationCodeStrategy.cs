@@ -1,10 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
-    using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Users;
-    using Domain.Entities.Users;
     using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
     using ErrorCodes = Interfaces.Users.ErrorCodes;

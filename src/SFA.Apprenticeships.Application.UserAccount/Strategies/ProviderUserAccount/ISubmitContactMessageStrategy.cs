@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Application.Provider.Strategies
+﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
     using SFA.Apprenticeships.Domain.Entities.Communication;
 

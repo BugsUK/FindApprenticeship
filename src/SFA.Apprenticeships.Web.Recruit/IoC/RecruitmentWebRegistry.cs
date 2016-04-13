@@ -30,7 +30,6 @@
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
 
-    using SFA.Apprenticeships.Application.Provider.Strategies;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
 
     using StructureMap;
