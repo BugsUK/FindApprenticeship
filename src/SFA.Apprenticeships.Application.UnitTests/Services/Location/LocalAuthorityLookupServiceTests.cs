@@ -11,11 +11,16 @@ namespace SFA.Apprenticeships.Application.UnitTests.Services.Location
         [Test]
         public void GetGeoPointForShouldCallLookupProvider()
         {
+            //Arrange
             const string postcode = "CV1 2WT";
             var provider = new Mock<ILocalAuthorityLookupProvider>();
             ILocalAuthorityLookupService service = new LocalAuthorityLookupService(provider.Object);
+
+            //Act
             service.GetLocalAuthorityCode(postcode);
 
+
+            //Assert
             provider.Verify(p => p.GetLocalAuthorityCode(postcode));
         }
     }

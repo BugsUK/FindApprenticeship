@@ -28,21 +28,29 @@
         [Test, Category("Integration")]
         public void ShouldReturnNullForAnInvalidAddressOrPostcode()
         {
+            //Arrange
             const string postcode = "SW12 ZZZ";
             var provider = _container.GetInstance<ILocalAuthorityLookupProvider>();
 
+            //Act
             var localAuthorityCode = provider.GetLocalAuthorityCode(postcode);
 
+            //Assert
             localAuthorityCode.Should().BeNull();
         }
 
         [Test, Category("Integration")]
         public void ShouldReturnTheLocalAuthorityForAValidPostCode()
         {
+            //Arrange
             var provider = _container.GetInstance<ILocalAuthorityLookupProvider>();
             const string postcode = "CV1 2WT";
+
+            //Act
             var localAuthorityCode = provider.GetLocalAuthorityCode(postcode);
 
+
+            //Assert
             localAuthorityCode.Should().Be("00CQ");
         }
     }
