@@ -207,6 +207,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Raa\Extensions\VacancyExtensions\GetCategoryTests.cs" />
     <Compile Include="Raa\Extensions\VacancyExtensions\VacancyExtensionsTests.cs" />
+    <Compile Include="Raa\Mappers\TraineeshipSummaryMapperTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipSummaryMapperTests.cs" />
     <Compile Include="Raa\Mappers\ApprenticeshipVacancyDetailMapperTests.cs" />
     <Compile Include="Raa\ReferenceDataProviderTests.cs" />
