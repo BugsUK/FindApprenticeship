@@ -12,6 +12,7 @@
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
+    using Configuration;
     using ViewModels.Vacancy;
     using Web.Common.Configuration;
     using Converters;
@@ -78,7 +79,9 @@
             if (existingVacancy != null)
             {
                 var vacancyViewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(existingVacancy);
-                vacancyViewModel.OwnerParty = vacancyPartyViewModel;    
+                vacancyViewModel.OwnerParty = vacancyPartyViewModel;
+                vacancyViewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
                 return vacancyViewModel;
             }
             
@@ -86,7 +89,8 @@
             {
                 OwnerParty = vacancyPartyViewModel,
                 IsEmployerLocationMainApprenticeshipLocation = numberOfPositions.HasValue,
-                NumberOfPositions = numberOfPositions
+                NumberOfPositions = numberOfPositions,
+                AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
             };
         }
 
@@ -97,6 +101,8 @@
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             viewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.AutoSaveTimeoutInSeconds =
+                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
             viewModel.VacancyGuid = vacancy.VacancyGuid;
             return viewModel;
@@ -163,7 +169,8 @@
                     IsEmployerLocationMainApprenticeshipLocation = false,
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     LocationAddressesComment = vacancy.LocationAddressesComment,
-                    AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment
+                    AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment,
+                    AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
                 };
                 
                 var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
@@ -199,7 +206,8 @@
                     EmployerEdsUrn = employer.EdsUrn,
                     VacancyGuid = vacancyGuid,
                     Ukprn = ukprn,
-                    Addresses = new List<VacancyLocationAddressViewModel>()
+                    Addresses = new List<VacancyLocationAddressViewModel>(),
+                    AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
                 };
             }
         }
@@ -338,6 +346,9 @@
             viewModel.SectorsAndFrameworks = sectorsAndFrameworks;
             viewModel.Standards = standards;
             viewModel.Sectors = sectors;
+            viewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
             return viewModel;
         }
 
@@ -366,6 +377,10 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancySummaryViewModel();
+
+            viewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
             return viewModel;
         }
 
@@ -402,6 +417,9 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyRequirementsProspectsViewModel();
+            viewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
             return viewModel;
         }
 
@@ -425,6 +443,9 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var viewModel = vacancy.ConvertToVacancyQuestionsViewModel();
+            viewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
             return viewModel;
         }
 
@@ -1384,7 +1405,12 @@
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
-            return _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
+            var viewModel = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
+
+            viewModel.AutoSaveTimeoutInSeconds =
+                    _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
+            return viewModel;
         }
     }
 }
