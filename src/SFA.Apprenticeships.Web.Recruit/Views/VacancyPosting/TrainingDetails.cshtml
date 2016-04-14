@@ -29,6 +29,8 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/autosave")
+
     <script>
         $("#@Html.NameFor(m => m.StandardId)").change(function () {
             var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
@@ -37,6 +39,16 @@
             }
             $("#apprenticeship-level-name").text(apprenticeshipLevel);
             $("#apprenticeship-level-container").show();
+        });
+
+        @*autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;*@
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: 10000,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveTrainingDetails)'
+            });
         });
     </script>
 }

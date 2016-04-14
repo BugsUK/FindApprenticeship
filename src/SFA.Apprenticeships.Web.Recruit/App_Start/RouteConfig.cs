@@ -140,6 +140,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveTrainingDetails,
+               url: "vacancy/autosavetrainingdetails",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveTrainingDetails" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewTrainingDetails,
                url: "vacancy/training/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewTrainingDetails" }

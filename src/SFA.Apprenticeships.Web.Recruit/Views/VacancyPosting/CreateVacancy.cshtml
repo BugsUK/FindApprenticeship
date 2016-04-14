@@ -40,9 +40,7 @@
             }
         });
 
-        @*autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;
-        url: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)',*@
-
+        @*autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;*@
 
         $(window).on('load', function() {
             autoSave.initialise({

@@ -213,12 +213,12 @@ WriteLiteral(@"
 
         ");
 
-WriteLiteral("\r\n\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise(" +
-"{\r\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n     " +
-"           postUrl: \'");
+WriteLiteral("\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise({\r" +
+"\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n       " +
+"         postUrl: \'");
 
             
-            #line 51 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 49 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                      Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy));
 
             

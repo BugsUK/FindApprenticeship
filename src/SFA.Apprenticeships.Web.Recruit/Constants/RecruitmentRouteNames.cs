@@ -33,6 +33,7 @@
         public const string AutoSaveCreateVacancy = "AutoSaveCreateVacancy";
         public const string ReviewCreateVacancy = "ReviewCreateVacancy";
         public const string TrainingDetails = "TrainingDetails";
+        public const string AutoSaveTrainingDetails = "AutoSaveTrainingDetails";
         public const string ReviewTrainingDetails = "ReviewTrainingDetails";
         public const string VacancySummary = "VacancySummary";
         public const string ReviewVacancySummary = "ReviewVacancySummary";

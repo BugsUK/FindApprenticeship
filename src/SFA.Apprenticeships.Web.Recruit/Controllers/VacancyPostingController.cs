@@ -259,7 +259,6 @@
         }
 
         [HttpPost]
-        //[ValidateInput(false)]
         public JsonResult AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
         {
             // Call autosave instead of CreateVacancy?
@@ -335,6 +334,24 @@
                     {
                         vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                     }));
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveTrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
