@@ -2,9 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Configuration;
     using Entities.Mongo;
-    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver;
     using SFA.Infrastructure.Interfaces;
 
@@ -21,48 +22,15 @@
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
 
-        public async Task<long> GetCandidatesCount()
+        public async Task<long> GetCandidatesCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<Candidate>("candidates").CountAsync(Builders<Candidate>.Filter.Empty);
+            var cursor = _database.GetCollection<Candidate>("candidates").CountAsync(Builders<Candidate>.Filter.Empty, cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="lastId">Pass null or empty for the first page or the Id of the last item in the current page</param>
-        public async Task<IAsyncCursor<Candidate>> GetCandidatesPageAsync(Guid? lastId)
+        public async Task<IDictionary<Guid, Candidate>> GetAllCandidatesAsync(CancellationToken cancellationToken)
         {
-            //http://stackoverflow.com/questions/31675598/how-to-efficiently-page-batches-of-results-with-mongodb
-
-            FilterDefinition<Candidate> filter;
-            var filterBuilder = Builders<Candidate>.Filter;
-            if (lastId == null || lastId == Guid.Empty)
-            {
-                filter = filterBuilder.Empty;
-            }
-            else
-            {
-                filter = filterBuilder.Gt(c => c.Id, lastId.Value);
-            }
-
-            var sort = Builders<Candidate>.Sort.Ascending(c => c.Id);
-            var options = new FindOptions<Candidate>
-            {
-                Sort = sort,
-                Limit = 500,
-                Projection = Builders<Candidate>.Projection
-                .Include(a => a.Id)
-                .Include(a => a.LegacyCandidateId)
-            };
-
-            var cursor = _database.GetCollection<Candidate>("candidates").FindAsync(filter, options);
-            return await cursor;
-        }
-
-        public async Task<IDictionary<Guid, Candidate>> GetAllCandidatesAsync()
-        {
-            var candidatesCount = await GetCandidatesCount();
+            var candidatesCount = await GetCandidatesCount(cancellationToken);
 
             var candidates = new Dictionary<Guid, Candidate>((int)candidatesCount);
 
@@ -74,9 +42,9 @@
                    .Include(a => a.LegacyCandidateId)
             };
 
-            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(Builders<Candidate>.Filter.Empty, options);
+            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(Builders<Candidate>.Filter.Empty, options, cancellationToken);
 
-            while (await cursor.MoveNextAsync())
+            while (await cursor.MoveNextAsync(cancellationToken))
             {
                 var batch = cursor.Current;
                 var count = 0;
@@ -91,15 +59,15 @@
             return candidates;
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetCandidateById(Guid id)
+        public async Task<IAsyncCursor<Candidate>> GetCandidateById(Guid id, CancellationToken cancellationToken)
         {
             var filter = Builders<Candidate>.Filter.Eq(c => c.Id, id);
-            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(filter);
-            await cursor.MoveNextAsync();
+            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(filter, cancellationToken: cancellationToken);
+            await cursor.MoveNextAsync(cancellationToken);
             return cursor;
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetCandidatesByIds(IEnumerable<Guid> ids)
+        public async Task<IAsyncCursor<Candidate>> GetCandidatesByIds(IEnumerable<Guid> ids, CancellationToken cancellationToken)
         {
             var options = new FindOptions<Candidate>
             {
@@ -108,7 +76,7 @@
                    .Include(a => a.LegacyCandidateId)
             };
             var filter = Builders<Candidate>.Filter.In(c => c.Id, ids);
-            var cursor = _database.GetCollection<Candidate>("candidates").FindAsync(filter, options);
+            var cursor = _database.GetCollection<Candidate>("candidates").FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
     }

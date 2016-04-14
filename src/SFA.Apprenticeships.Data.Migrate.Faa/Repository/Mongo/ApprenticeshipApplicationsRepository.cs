@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Repository.Mongo
 {
     using System;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Configuration;
     using Entities.Mongo;
-    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver;
     using SFA.Infrastructure.Interfaces;
 
@@ -18,27 +19,27 @@
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
 
-        public async Task<long> GetApprenticeshipApplicationsCount()
+        public async Task<long> GetApprenticeshipApplicationsCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10));
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        public async Task<long> GetApprenticeshipApplicationsCreatedSinceCount(DateTime lastCreatedDate)
+        public async Task<long> GetApprenticeshipApplicationsCreatedSinceCount(DateTime lastCreatedDate, CancellationToken cancellationToken)
         {
             var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        public async Task<long> GetApprenticeshipApplicationsUpdatedSinceCount(DateTime lastUpdatedDate)
+        public async Task<long> GetApprenticeshipApplicationsUpdatedSinceCount(DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
             var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplications()
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplications(CancellationToken cancellationToken)
         {
             var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateCreated);
             var options = new FindOptions<ApprenticeshipApplication>
@@ -47,11 +48,11 @@
                 BatchSize = 1000,
                 Projection = GetApprenticeshipApplicationProjection()
             };
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), options);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), options, cancellationToken);
             return await cursor;
         }
 
-        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsCreatedSince(DateTime lastCreatedDate)
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsCreatedSince(DateTime lastCreatedDate, CancellationToken cancellationToken)
         {
             var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateCreated);
             var options = new FindOptions<ApprenticeshipApplication>
@@ -61,11 +62,11 @@
                 Projection = GetApprenticeshipApplicationProjection()
             };
             var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
 
-        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsUpdatedSince(DateTime lastUpdatedDate)
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsUpdatedSince(DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
             var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateUpdated);
             var options = new FindOptions<ApprenticeshipApplication>
@@ -75,7 +76,7 @@
                 Projection = GetApprenticeshipApplicationProjection()
             };
             var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
 

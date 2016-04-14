@@ -14,7 +14,7 @@
 
             var processor = new MigrationProcessor(configService, log);
 
-            processor.Execute();
+            processor.Execute(new System.Threading.CancellationTokenSource().Token);
 
             Console.ReadKey();
         }

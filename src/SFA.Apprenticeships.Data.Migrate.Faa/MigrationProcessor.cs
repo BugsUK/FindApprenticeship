@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using Entities.Mongo;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
@@ -39,22 +40,42 @@
             _vacancyRepository = new VacancyRepository(targetDatabase);
         }
 
-        public void Execute()
+        public void Execute(CancellationToken cancellationToken)
         {
-            var lastCreatedDate = _syncRepository.GetApplicationLastCreatedDate();
-            var lastUpdatedDate = _syncRepository.GetApplicationLastUpdatedDate();
+            _logService.Info("Execute Started");
 
-            if (lastCreatedDate == null || lastUpdatedDate == null)
+            while (!cancellationToken.IsCancellationRequested)
             {
-                ExecuteFullSync();
+                try
+                {
+                    var lastCreatedDate = _syncRepository.GetApplicationLastCreatedDate();
+                    var lastUpdatedDate = _syncRepository.GetApplicationLastUpdatedDate();
+
+                    if (lastCreatedDate == null || lastUpdatedDate == null)
+                    {
+                        ExecuteFullSync(cancellationToken);
+                    }
+                    else
+                    {
+                        ExecutePartialSync(new DateTime(lastCreatedDate.Value.Ticks, DateTimeKind.Utc), new DateTime(lastUpdatedDate.Value.Ticks, DateTimeKind.Utc), cancellationToken);
+                    }
+                }
+                catch (FatalException)
+                {
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error("Error occurred. Sleeping before trying again", ex);
+                }
+
+                Thread.Sleep(10000);
             }
-            else
-            {
-                ExecutePartialSync(new DateTime(lastCreatedDate.Value.Ticks, DateTimeKind.Utc), new DateTime(lastUpdatedDate.Value.Ticks, DateTimeKind.Utc));
-            }
+
+            _logService.Info("DoAll Cancelled");
         }
 
-        private void ExecuteFullSync()
+        private void ExecuteFullSync(CancellationToken cancellationToken)
         {
             _logService.Warn("ExecuteFullSync");
 
@@ -66,17 +87,17 @@
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
             _logService.Info("Loading candidates");
-            var candidates = _candidateRepository.GetAllCandidatesAsync().Result;
+            var candidates = _candidateRepository.GetAllCandidatesAsync(cancellationToken).Result;
             _logService.Info($"Completed loading {candidates.Count} candidates");
 
-            var expectedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCount().Result;
+            var expectedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCount(cancellationToken).Result;
             var count = 0;
 
             var lastCreatedDate = DateTime.MinValue;
             var lastUpdatedDate = DateTime.MinValue;
 
-            var cursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplications().Result;
-            while (cursor.MoveNextAsync().Result)
+            var cursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplications(cancellationToken).Result;
+            while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
             {
                 var batch = cursor.Current.ToList();
                 if (batch.Count == 0) continue;
@@ -107,7 +128,7 @@
             }
         }
 
-        private void ExecutePartialSync(DateTime lastCreatedDate, DateTime lastUpdatedDate)
+        private void ExecutePartialSync(DateTime lastCreatedDate, DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
             _logService.Warn($"ExecutePartialSync with lastCreatedDate: {lastCreatedDate} and lastUpdatedDate: {lastUpdatedDate}");
 
@@ -115,23 +136,23 @@
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
-            var expectedCreatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCreatedSinceCount(lastCreatedDate).Result;
-            var createdCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsCreatedSince(lastCreatedDate).Result;
-            ProcessApplications(createdCursor, expectedCreatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications));
+            var expectedCreatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCreatedSinceCount(lastCreatedDate, cancellationToken).Result;
+            var createdCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsCreatedSince(lastCreatedDate, cancellationToken).Result;
+            ProcessApplications(createdCursor, expectedCreatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications), cancellationToken);
 
-            var expectedUpdatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsUpdatedSinceCount(lastUpdatedDate).Result;
-            var updatedCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsUpdatedSince(lastUpdatedDate).Result;
-            ProcessApplications(updatedCursor, expectedUpdatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications));
+            var expectedUpdatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsUpdatedSinceCount(lastUpdatedDate, cancellationToken).Result;
+            var updatedCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsUpdatedSince(lastUpdatedDate, cancellationToken).Result;
+            ProcessApplications(updatedCursor, expectedUpdatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications), cancellationToken);
         }
 
-        private void ProcessApplications(IAsyncCursor<ApprenticeshipApplication> cursor, long expectedCount, DateTime lastCreatedDate, DateTime lastUpdatedDate, HashSet<int> vacancyIds, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction)
+        private void ProcessApplications(IAsyncCursor<ApprenticeshipApplication> cursor, long expectedCount, DateTime lastCreatedDate, DateTime lastUpdatedDate, HashSet<int> vacancyIds, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
         {
             var applicationTable = new ApplicationTable();
 
             var candidates = new Dictionary<Guid, Candidate>();
 
             var count = 0;
-            while (cursor.MoveNextAsync().Result)
+            while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
             {
                 var batch = cursor.Current.ToList();
                 if(batch.Count == 0) continue;
@@ -141,8 +162,8 @@
                 var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
 
                 _logService.Info("Loading candidates");
-                var candidatesCursor = _candidateRepository.GetCandidatesByIds(batch.Select(a => a.CandidateId).Except(candidates.Keys)).Result;
-                while (candidatesCursor.MoveNextAsync().Result)
+                var candidatesCursor = _candidateRepository.GetCandidatesByIds(batch.Select(a => a.CandidateId).Except(candidates.Keys), cancellationToken).Result;
+                while (candidatesCursor.MoveNextAsync(cancellationToken).Result)
                 {
                     var candidatesBatch = candidatesCursor.Current.ToList();
                     foreach (var candidate in candidatesBatch)

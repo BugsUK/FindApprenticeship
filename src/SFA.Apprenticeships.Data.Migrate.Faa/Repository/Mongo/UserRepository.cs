@@ -2,9 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Threading;
     using System.Threading.Tasks;
+    using Configuration;
     using Entities.Mongo;
-    using Infrastructure.Repositories.Mongo.Common.Configuration;
     using MongoDB.Driver;
     using SFA.Infrastructure.Interfaces;
 
@@ -19,9 +20,9 @@
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
 
-        public async Task<long> GetUsersCount()
+        public async Task<long> GetUsersCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<User>("users").CountAsync(Builders<User>.Filter.Empty);
+            var cursor = _database.GetCollection<User>("users").CountAsync(Builders<User>.Filter.Empty, cancellationToken: cancellationToken);
             return await cursor;
         }
 
@@ -29,7 +30,8 @@
         /// 
         /// </summary>
         /// <param name="lastId">Pass null or empty for the first page or the Id of the last item in the current page</param>
-        public async Task<IAsyncCursor<User>> GetActiveUsersPageAsync(Guid? lastId)
+        /// <param name="cancellationToken"></param>
+        public async Task<IAsyncCursor<User>> GetActiveUsersPageAsync(Guid? lastId, CancellationToken cancellationToken)
         {
             //http://stackoverflow.com/questions/31675598/how-to-efficiently-page-batches-of-results-with-mongodb
 
@@ -51,19 +53,19 @@
                 Limit = 500
             };
 
-            var cursor = _database.GetCollection<User>("users").FindAsync(filter, options);
+            var cursor = _database.GetCollection<User>("users").FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
 
-        public async Task<long> GetActiveUsersCount()
+        public async Task<long> GetActiveUsersCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<User>("users").CountAsync(Builders<User>.Filter.Gte(u => u.Status, 20));
+            var cursor = _database.GetCollection<User>("users").CountAsync(Builders<User>.Filter.Gte(u => u.Status, 20), cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        public async Task<IDictionary<Guid, User>> GetAllActiveUsersAsync()
+        public async Task<IDictionary<Guid, User>> GetAllActiveUsersAsync(CancellationToken cancellationToken)
         {
-            var usersCount = await GetActiveUsersCount();
+            var usersCount = await GetActiveUsersCount(cancellationToken);
 
             var users = new Dictionary<Guid, User>((int)usersCount);
 
@@ -72,8 +74,8 @@
 
             while (running)
             {
-                var cursor = await GetActiveUsersPageAsync(lastId);
-                while (await cursor.MoveNextAsync())
+                var cursor = await GetActiveUsersPageAsync(lastId, cancellationToken);
+                while (await cursor.MoveNextAsync(cancellationToken))
                 {
                     var batch = cursor.Current;
                     running = false;
