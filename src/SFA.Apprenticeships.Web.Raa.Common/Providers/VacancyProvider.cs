@@ -293,7 +293,9 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value);
+            var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
+                ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
+                : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
@@ -311,9 +313,15 @@
             return newVacancyViewModel;
         }
 
-        private static bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
+        private bool VacancyExists(NewVacancyViewModel newVacancyViewModel)
         {
-            return newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
+            var hasReferenceNumber = newVacancyViewModel.VacancyReferenceNumber.HasValue && newVacancyViewModel.VacancyReferenceNumber > 0;
+
+            if (hasReferenceNumber) return true;
+
+            var vacancy = _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+
+            return vacancy != null;
         }
 
         public TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber)

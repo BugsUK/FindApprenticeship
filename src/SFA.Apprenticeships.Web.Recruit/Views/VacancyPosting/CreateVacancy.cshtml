@@ -29,13 +29,27 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/autosave")
+
     <script>
-        $("input[name='OfflineVacancy']").change(function () {
+        $("input[name='OfflineVacancy']").change(function() {
             var selectedValue = $("input[name='OfflineVacancy']:checked").val();
             if (selectedValue === "False") {
                 $("#apprenticeship-offline-application-url").val("");
                 $("#apprenticheship-offline-application-instructions").val("");
             }
+        });
+
+        @*autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;
+        url: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)',*@
+
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: 10000,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy)'
+            });
         });
     </script>
 }

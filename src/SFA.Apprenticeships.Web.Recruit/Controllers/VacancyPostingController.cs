@@ -258,6 +258,29 @@
             return HandleCreateVacancy(response, okAction);
         }
 
+        [HttpPost]
+        //[ValidateInput(false)]
+        public JsonResult AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
+        {
+            // Call autosave instead of CreateVacancy?
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                case VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning:
+                    ModelState.Clear();
+                    return new JsonResult { Data = response.ViewModel };
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         private ActionResult HandleCreateVacancy(MediatorResponse<NewVacancyViewModel> response, Func<ActionResult> okAction )
         {
             ModelState.Clear();

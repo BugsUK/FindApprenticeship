@@ -114,14 +114,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 797), Tuple.Create("\"", 821)
+WriteAttribute("value", Tuple.Create(" value=\"", 793), Tuple.Create("\"", 817)
             
             #line 21 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 805), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                   , Tuple.Create(Tuple.Create("", 801), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 805), false)
+, 801), false)
 );
 
 WriteLiteral(">");
@@ -189,17 +189,42 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 32 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Scripts.Render("~/bundles/autosave"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"
+
     <script>
-        $(""input[name='OfflineVacancy']"").change(function () {
+        $(""input[name='OfflineVacancy']"").change(function() {
             var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
             if (selectedValue === ""False"") {
                 $(""#apprenticeship-offline-application-url"").val("""");
                 $(""#apprenticheship-offline-application-instructions"").val("""");
             }
         });
-    </script>
-");
+
+        ");
+
+WriteLiteral("\r\n\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise(" +
+"{\r\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n     " +
+"           postUrl: \'");
+
+            
+            #line 51 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                     Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
 
 });
 

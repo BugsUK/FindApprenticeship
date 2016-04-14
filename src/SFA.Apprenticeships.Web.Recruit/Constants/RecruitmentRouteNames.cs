@@ -30,6 +30,7 @@
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
+        public const string AutoSaveCreateVacancy = "AutoSaveCreateVacancy";
         public const string ReviewCreateVacancy = "ReviewCreateVacancy";
         public const string TrainingDetails = "TrainingDetails";
         public const string ReviewTrainingDetails = "ReviewTrainingDetails";

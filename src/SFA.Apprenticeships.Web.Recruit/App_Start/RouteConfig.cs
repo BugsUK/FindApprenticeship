@@ -122,6 +122,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveCreateVacancy,
+               url: "vacancy/autosavecreate",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveCreateVacancy" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewCreateVacancy,
                url: "vacancy/create/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewCreateVacancy" }
