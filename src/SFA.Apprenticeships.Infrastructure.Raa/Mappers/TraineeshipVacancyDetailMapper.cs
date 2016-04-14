@@ -9,10 +9,12 @@
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using WageUnit = Domain.Entities.Vacancies.WageUnit;
 
     public class TraineeshipVacancyDetailMapper
     {
@@ -34,10 +36,10 @@
                 PostedDate = vacancy.DateQAApproved ?? DateTime.MinValue,
                 //TODO: Where should this come from?
                 InterviewFromDate = DateTime.MinValue,
-                Wage = vacancy.Wage ?? 0,
-                WageUnit = wage.GetWageUnit(),
-                WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = vacancy.WageType.GetLegacyWageType(),
+                Wage = 0.0m,
+                WageUnit = WageUnit.NotApplicable,
+                WageDescription = null,
+                WageType = LegacyWageType.NotApplicable,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.ThingsToConsider,
                 FutureProspects = vacancy.FutureProspects,

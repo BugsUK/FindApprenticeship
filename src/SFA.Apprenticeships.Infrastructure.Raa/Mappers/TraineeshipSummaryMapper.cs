@@ -26,7 +26,6 @@
 
                 LogCategory(vacancy, logService, category);
 
-
                 var summary = new TraineeshipSummary
                 {
                     Id = vacancy.VacancyReferenceNumber,
@@ -40,7 +39,7 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrWhiteSpace(employer.TradingName) ? employer.Name : employer.TradingName,
+                    EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
                     ProviderName = provider.Name,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,

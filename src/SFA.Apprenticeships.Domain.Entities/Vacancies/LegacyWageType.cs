@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Vacancies
 {
+    // TODO: AG: rename to WageType.
     public enum LegacyWageType
     {
-        // NOTE: enum starts at zero to support direct mapping to legacy system.
+        // Wages are not applicable for traineeships.
+        NotApplicable = -1,
+        // Starts at zero to support direct mapping to legacy system.
         LegacyText = 0,
         LegacyWeekly = 1,
         ApprenticeshipMinimum = 2,

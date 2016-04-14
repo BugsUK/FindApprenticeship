@@ -2,7 +2,6 @@
 {
     using System;
     using System.Linq;
-    using Domain.Entities.Vacancies;
     using FluentAssertions;
     using Infrastructure.Presentation;
     using Infrastructure.Raa.Extensions;
@@ -54,21 +53,18 @@
                 detail.Description.Should().Be(vacancy.ShortDescription);
                 detail.FullDescription.Should().Be(vacancy.LongDescription);
 
-                // NOTE: hard to unit test.
-                // detail.SubCategory.Should().Be("XXX");
+                detail.SubCategory.Should().BeNull();
 
                 detail.StartDate.Should().Be(vacancy.PossibleStartDate ?? DateTime.MinValue);
                 detail.ClosingDate.Should().Be(vacancy.ClosingDate ?? DateTime.MinValue);
                 detail.PostedDate.Should().Be(vacancy.DateQAApproved ?? DateTime.MinValue);
                 detail.InterviewFromDate.Should().Be(DateTime.MinValue);
 
-                detail.Wage.Should().Be(vacancy.Wage ?? 0);
+                detail.Wage.Should().Be(0.0m);
+                detail.WageUnit.Should().Be(Domain.Entities.Vacancies.WageUnit.NotApplicable);
+                detail.WageDescription.Should().BeNull();
 
-                // NOTE: hard to unit test.
-                // detail.WageUnit.Should().Be(-42);
-                // detail.WageDescription.Should().Be("XXX");
-
-                detail.WageType.Should().Be((LegacyWageType)vacancy.WageType);
+                detail.WageType.Should().Be(Domain.Entities.Vacancies.LegacyWageType.NotApplicable);
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
                 detail.OtherInformation.Should().Be(vacancy.ThingsToConsider);
@@ -92,7 +88,7 @@
                 detail.IsEmployerAnonymous.Should().Be(!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName));
                 detail.IsPositiveAboutDisability.Should().Be(employer.IsPositiveAboutDisability);
 
-                // detail.ExpectedDuration.Should().Be("XXX");
+                detail.ExpectedDuration.Should().EndWith($"{vacancy.Duration ?? 0} weeks");
 
                 detail.VacancyAddress.Should().NotBeNull();
 
@@ -104,6 +100,8 @@
 
                 // NOTE: hard to unit test.
                 detail.VacancyAddress.GeoPoint.Should().NotBeNull();
+                detail.VacancyAddress.GeoPoint.Latitude.Should().NotBe(0.0);
+                detail.VacancyAddress.GeoPoint.Longitude.Should().NotBe(0.0);
 
                 detail.IsRecruitmentAgencyAnonymous.Should().Be(false);
                 detail.IsSmallEmployerWageIncentive.Should().Be(false);

@@ -70,23 +70,22 @@
                 mock.Error(It.IsAny<string>(), It.IsAny<Exception>()), Times.Once);
         }
 
-        [TestCase("Acme Corp", "Anonymous Employer Name", true)]
-        [TestCase("Evil Inc", null, false)]
-        [TestCase("Awesome Ltd", "", false)]
+        [TestCase("Anonymous Employer Name", true)]
+        [TestCase(null, false)]
+        [TestCase("", false)]
         public void ShouldHandleEmployerNameAnonymisation(
-            string employerName, string anonymousEmployerName, bool anonymised)
+            string anonymousEmployerName, bool anonymised)
         {
             // Arrange.
             var fixture = new Fixture();
 
-            var vacancy = fixture.Create<Domain.Entities.Raa.Vacancies.VacancySummary>();
-            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
-
-            var employer = fixture
-                .Build<Domain.Entities.Raa.Parties.Employer>()
-                .With(each => each.Name, employerName)
-                .With(each => each.TradingName, anonymousEmployerName)
+            var vacancy = fixture
+                .Build<Domain.Entities.Raa.Vacancies.VacancySummary>()
+                .With(each => each.EmployerAnonymousName, anonymousEmployerName)
                 .Create();
+
+            var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+            var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
 
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
@@ -99,7 +98,7 @@
 
             // Assert.
             summary.Should().NotBeNull();
-            summary.EmployerName.Should().Be(anonymised ? anonymousEmployerName : employerName);
+            summary.EmployerName.Should().Be(anonymised ? string.Empty : employer.Name);
         }
     }
 }

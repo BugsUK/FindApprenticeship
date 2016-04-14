@@ -41,7 +41,7 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = string.IsNullOrWhiteSpace(employer.TradingName) ? employer.Name : employer.TradingName,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
                     ProviderName = provider.Name,
                     IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,

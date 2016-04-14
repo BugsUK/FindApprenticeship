@@ -269,6 +269,7 @@
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
@@ -310,7 +311,6 @@
                         };
                     }
                 })
-
                 .End();
 
             Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()
