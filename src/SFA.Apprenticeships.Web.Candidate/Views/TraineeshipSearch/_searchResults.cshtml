@@ -12,7 +12,7 @@ else
         <div class="float-right-wrap">
             <div class="form-group form-group-compound">
                 <label for="sort-results" class="heading-medium inline">Sort results</label>
-                @Html.DropDownList("sortType", Model.SortTypes, new {@id = "sort-results"})
+                @Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" })
                 <noscript>
                     <button class="button show-nojs" name="SearchAction" value="Sort">Sort</button>
                 </noscript>
@@ -44,7 +44,7 @@ else
                                         <span>- @vacancy.NumberOfPositions positions available)</span>
                                     }
                                 </span>
-                                
+
                             </span>
                         </p>
                     </div>
@@ -67,18 +67,8 @@ else
                                         <span class="journey-time"></span>
                                     </div>
                                 </li>
-
                                 <li><b>Closing date:</b> <span class="closing-date-value" data-date="@vacancy.ClosingDate.ToString("u")">@vacancy.ClosingDate.ToFriendlyClosingWeek()</span></li>
                                 <li><b>Possible start date:</b> <span class="start-date-value">@Html.DisplayFor(m => vacancy.StartDate, "Date")</span></li>
-
-                                @if (vacancy.IsPositiveAboutDisability)
-                                {
-                                    <li class="small-btm-margin">
-                                        <a class="inl-block" id="positive-about-disabled-@vacancy.Id" href="https://www.gov.uk/looking-for-work-if-disabled" target="_blank">
-                                            <img src="@Url.CdnImage("logo-ticks-small-2x.png")" height="30" width="38" alt="Two ticks logo - Positive about disabled people">
-                                        </a>
-                                    </li>
-                                }
                             </ul>
                         </div>
                         <div class="hide-tablet">
@@ -90,15 +80,15 @@ else
                         </div>
                     </div>
                 </li>
-                        itemPosition++;
+                itemPosition++;
             }
         }
     </ul>
 
-        Html.RenderPartial("_pagination", Model);
+    Html.RenderPartial("_pagination", Model);
 
-        if (Model.TotalHits > 5)
-        {
+    if (Model.TotalHits > 5)
+    {
         <div class="form-group">
             <label for="results-per-page" class="heading-small inline">Display results</label>
             @Html.DropDownList("resultsPerPage", Model.ResultsPerPageSelectList, new { @id = "results-per-page" })
