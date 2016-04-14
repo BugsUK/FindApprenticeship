@@ -8,7 +8,8 @@
 
     public static class ApplicationMappers
     {
-        private static int applicationId = -1;
+        private static int _applicationId = -1;
+        private static int _candidateId = -1;
 
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
         {
@@ -119,7 +120,7 @@
         {
             if (legacyApplicationId == 0)
             {
-                return applicationId--;
+                return _applicationId--;
             }
 
             return legacyApplicationId;
@@ -127,7 +128,7 @@
 
         private static int GetCandidateId(Candidate candidate)
         {
-            return candidate?.LegacyCandidateId ?? 0;
+            return candidate?.LegacyCandidateId ?? _candidateId--;
         }
 
         private static int GetApplicationStatusTypeId(int status)
@@ -144,9 +145,9 @@
                 case 40:
                     return 3;
                 case 80:
-                    return 5;
-                case 90:
                     return 6;
+                case 90:
+                    return 5;
                 default: throw new ArgumentException($"Status value {status} was not recognised.");
             }
         }
@@ -158,9 +159,12 @@
                 return 0;
             }
 
-            var map = UnsuccessfulReasonIdMap.SingleOrDefault(kvp => kvp.Key.StartsWith(withdrawnOrDeclinedReason));
+            if (WithdrawnOrDeclinedReasonIdMap.ContainsKey(withdrawnOrDeclinedReason))
+            {
+                return WithdrawnOrDeclinedReasonIdMap[withdrawnOrDeclinedReason];
+            }
 
-            return map.Equals(default(KeyValuePair<string, int>)) ? 0 : map.Value;
+            return 0;
         }
 
         private static int GetUnsuccessfulReasonId(string unsuccessfulReason)
@@ -170,9 +174,9 @@
                 return 0;
             }
 
-            if (WithdrawnOrDeclinedReasonIdMap.ContainsKey(unsuccessfulReason))
+            if (UnsuccessfulReasonIdMap.ContainsKey(unsuccessfulReason))
             {
-                return WithdrawnOrDeclinedReasonIdMap[unsuccessfulReason];
+                return UnsuccessfulReasonIdMap[unsuccessfulReason];
             }
 
             return 0;
