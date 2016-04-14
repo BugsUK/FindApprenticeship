@@ -302,6 +302,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveManageDates,
+               url: "vacancy/autosaveManageDates",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveManageDates" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.VacancyApplications,
                url: "vacancy/applications",
                defaults: new { controller = "Application", action = "VacancyApplications" }

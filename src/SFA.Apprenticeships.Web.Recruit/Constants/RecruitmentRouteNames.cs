@@ -53,6 +53,8 @@
         public const string SearchAddresses = "SearchAddresses";
         public const string AddLocations = "AddLocations";
         public const string ShowLocations = "ShowLocations";
+        public const string ManageDates = "ManageDates";
+        public const string AutoSaveManageDates = "AutoSaveManageDates";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
@@ -76,7 +78,5 @@
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
-
-        public const string ManageDates = "ManageDates";
     }
 }

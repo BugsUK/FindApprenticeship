@@ -1089,6 +1089,24 @@
             }
         }
 
+        [HttpPost]
+        public JsonResult AutoSaveManageDates(VacancyDatesViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications:
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications:
+                case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
+                case VacancyPostingMediatorCodes.ManageDates.InvalidState:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         private ActionResult RedirectToShowLocations(LocationSearchViewModel viewModel)
         {
             TempData["AlreadyAddedLocations"] = viewModel.Addresses;
