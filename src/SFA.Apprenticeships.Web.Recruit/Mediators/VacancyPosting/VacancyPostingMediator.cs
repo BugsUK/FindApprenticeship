@@ -4,7 +4,6 @@
     using System.Collections.Generic;
     using Raa.Common.Validators.Vacancy;
     using System.Linq;
-    using Apprenticeships.Application.Location;
     using FluentValidation;
     using Common.Constants;
     using Common.Mediators;
@@ -15,7 +14,6 @@
     using Domain.Entities.Raa.Vacancies;
     using Raa.Common.Constants.ViewModels;
     using Infrastructure.Presentation;
-    using Raa.Common.Configuration;
     using Raa.Common.Validators.Provider;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
@@ -23,7 +21,6 @@
     using Raa.Common.ViewModels.VacancyPosting;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
-    using SFA.Infrastructure.Interfaces;
 
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
@@ -31,7 +28,6 @@
         private readonly IProviderProvider _providerProvider;
         private readonly IEmployerProvider _employerProvider;
         private readonly ILocationsProvider _locationsProvider;
-        private readonly IConfigurationService _configurationService;
         private readonly NewVacancyViewModelServerValidator _newVacancyViewModelServerValidator;
         private readonly NewVacancyViewModelClientValidator _newVacancyViewModelClientValidator;
         private readonly VacancySummaryViewModelServerValidator _vacancySummaryViewModelServerValidator;
@@ -67,8 +63,7 @@
             LocationSearchViewModelServerValidator locationSearchViewModelServerValidator, 
             ILocationsProvider locationsProvider, 
             TrainingDetailsViewModelServerValidator trainingDetailsViewModelServerValidator, 
-            TrainingDetailsViewModelClientValidator trainingDetailsViewModelClientValidator, 
-            IConfigurationService configurationService)
+            TrainingDetailsViewModelClientValidator trainingDetailsViewModelClientValidator)
         {
             _vacancyPostingProvider = vacancyPostingProvider;
             _providerProvider = providerProvider;
@@ -81,7 +76,6 @@
             _locationsProvider = locationsProvider;
             _trainingDetailsViewModelServerValidator = trainingDetailsViewModelServerValidator;
             _trainingDetailsViewModelClientValidator = trainingDetailsViewModelClientValidator;
-            _configurationService = configurationService;
             _vacancySummaryViewModelServerValidator = vacancySummaryViewModelServerValidator;
             _vacancySummaryViewModelClientValidator = vacancySummaryViewModelClientValidator;
             _vacancyRequirementsProspectsViewModelServerValidator = vacancyRequirementsProspectsViewModelServerValidator;

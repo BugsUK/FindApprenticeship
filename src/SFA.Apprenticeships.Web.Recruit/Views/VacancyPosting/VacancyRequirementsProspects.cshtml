@@ -6,6 +6,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";

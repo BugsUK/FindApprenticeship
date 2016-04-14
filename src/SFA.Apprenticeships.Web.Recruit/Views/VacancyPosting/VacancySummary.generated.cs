@@ -78,13 +78,27 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 9 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
+Write(Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds));
 
             
             #line default
             #line hidden
             
             #line 9 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                                                    
+    
+            
+            #line default
+            #line hidden
+            
+            #line 10 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+Write(Html.DisplayFor(m => m, FurtherVacancyDetailsViewModel.PartialView));
+
+            
+            #line default
+            #line hidden
+            
+            #line 10 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                                                         
 
     var saveButtonText = "Save and continue";
@@ -114,20 +128,20 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 823), Tuple.Create("\"", 847)
+WriteAttribute("value", Tuple.Create(" value=\"", 877), Tuple.Create("\"", 901)
             
-            #line 21 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                     , Tuple.Create(Tuple.Create("", 831), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                     , Tuple.Create(Tuple.Create("", 885), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 831), false)
+, 885), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 22 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                                                                                                  Write(saveButtonText);
 
             
@@ -148,13 +162,13 @@ WriteLiteral(" value=\"VacancySummaryAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n");
 
             
-            #line 23 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
          if (Model.ComeFromPreview)
         {
             
@@ -162,14 +176,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
        Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                                                                                                                                           
         }
 
@@ -179,7 +193,7 @@ WriteLiteral(">Save and exit</button>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
 
             
@@ -194,7 +208,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 32 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 33 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 Write(Scripts.Render("~/bundles/autosave"));
 
             
@@ -203,7 +217,7 @@ Write(Scripts.Render("~/bundles/autosave"));
 WriteLiteral("\r\n\r\n    <script>\r\n        var autoSaveTimeout = ");
 
             
-            #line 35 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 36 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                          Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
 
             
@@ -214,7 +228,7 @@ WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n   
 "eTimeout,\r\n                postUrl: \'");
 
             
-            #line 41 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+            #line 42 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
                      Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveVacancySummary));
 
             

@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
-    using Application.Location;
-    using Infrastructure.Common.Configuration;
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.VacancyPosting;
@@ -45,8 +43,7 @@
                 new LocationSearchViewModelServerValidator(),
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),
-                new TrainingDetailsViewModelClientValidator(),
-                new Mock<ConfigurationService>().Object);
+                new TrainingDetailsViewModelClientValidator());
         }
     }
 }
