@@ -958,6 +958,23 @@
 
         }
 
+        [HttpPost]
+        public JsonResult AutoSaveLocations(LocationSearchViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.AddLocations(viewModel);
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
         [HttpPost]
         public ActionResult SearchLocations(LocationSearchViewModel viewModel)

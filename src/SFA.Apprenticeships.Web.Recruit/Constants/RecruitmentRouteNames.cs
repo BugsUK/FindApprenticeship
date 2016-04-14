@@ -52,6 +52,7 @@
         public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
         public const string SearchAddresses = "SearchAddresses";
         public const string AddLocations = "AddLocations";
+        public const string AutoSaveLocations = "AutoSaveLocations";
         public const string ShowLocations = "ShowLocations";
         public const string ManageDates = "ManageDates";
         public const string AutoSaveManageDates = "AutoSaveManageDates";

@@ -146,6 +146,9 @@
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
             }
 
+            locationSearchViewModel.AutoSaveTimeoutInSeconds =
+                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
+
             return locationSearchViewModel;
         }
 
@@ -1410,6 +1413,9 @@
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
             }
+
+            viewModel.AutoSaveTimeoutInSeconds =
+                _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
             return viewModel;
         }

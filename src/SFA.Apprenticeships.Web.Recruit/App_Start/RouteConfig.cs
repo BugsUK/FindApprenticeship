@@ -284,6 +284,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveLocations,
+               url: "vacancy/autosavelocations",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveLocations" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.SearchAddresses,
                url: "vacancy/searchAddresses",
                defaults: new { controller = "VacancyPosting", action = "SearchAddresses" }
