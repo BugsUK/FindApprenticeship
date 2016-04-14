@@ -24,53 +24,67 @@
             return await cursor;
         }
 
-        /// <summary>   
-        /// Returns all applications apart from those in the saved state
-        /// </summary>
-        /// <param name="lastId">Pass null or empty for the first page or the Id of the last item in the current page</param>
-        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetApprenticeshipApplicationsPageAsync(Guid? lastId)
+        public async Task<long> GetApprenticeshipApplicationsCreatedSinceCount(DateTime lastCreatedDate)
         {
-            //http://stackoverflow.com/questions/31675598/how-to-efficiently-page-batches-of-results-with-mongodb
+            var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter);
+            return await cursor;
+        }
 
-            FilterDefinition<ApprenticeshipApplication> filter;
-            var filterBuilder = Builders<ApprenticeshipApplication>.Filter;
-            if (lastId == null || lastId == Guid.Empty)
-            {
-                filter = filterBuilder.Gte(a => a.Status, 10);
-            }
-            else
-            {
-                filter = filterBuilder.Gte(a => a.Status, 10) & filterBuilder.Gt(a => a.Id, lastId.Value);
-            }
-
-            var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.Id);
-            var options = new FindOptions<ApprenticeshipApplication>
-            {
-                Sort = sort,
-                Limit = 500,
-                Projection = Builders<ApprenticeshipApplication>.Projection
-                .Include(a => a.Id)
-                .Include(a => a.Status)
-                .Include(a => a.CandidateId)
-                .Include(a => a.LegacyApplicationId)
-                .Include(a => a.WithdrawnOrDeclinedReason)
-                .Include(a => a.UnsuccessfulReason)
-                .Include(a => a.Vacancy.Id)
-                .Include(a => a.Vacancy.VacancyReference)
-                .Include(a => a.Vacancy.Title)
-            };
-
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+        public async Task<long> GetApprenticeshipApplicationsUpdatedSinceCount(DateTime lastUpdatedDate)
+        {
+            var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").CountAsync(filter);
             return await cursor;
         }
 
         public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplications()
         {
+            var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateCreated);
             var options = new FindOptions<ApprenticeshipApplication>
             {
+                Sort = sort,
                 BatchSize = 1000,
-                Projection = Builders<ApprenticeshipApplication>.Projection
+                Projection = GetApprenticeshipApplicationProjection()
+            };
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), options);
+            return await cursor;
+        }
+
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsCreatedSince(DateTime lastCreatedDate)
+        {
+            var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateCreated);
+            var options = new FindOptions<ApprenticeshipApplication>
+            {
+                Sort = sort,
+                BatchSize = 1000,
+                Projection = GetApprenticeshipApplicationProjection()
+            };
+            var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+            return await cursor;
+        }
+
+        public async Task<IAsyncCursor<ApprenticeshipApplication>> GetAllApprenticeshipApplicationsUpdatedSince(DateTime lastUpdatedDate)
+        {
+            var sort = Builders<ApprenticeshipApplication>.Sort.Ascending(a => a.DateUpdated);
+            var options = new FindOptions<ApprenticeshipApplication>
+            {
+                Sort = sort,
+                BatchSize = 1000,
+                Projection = GetApprenticeshipApplicationProjection()
+            };
+            var filter = Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10) & Builders<ApprenticeshipApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(filter, options);
+            return await cursor;
+        }
+
+        private static ProjectionDefinition<ApprenticeshipApplication> GetApprenticeshipApplicationProjection()
+        {
+            return Builders<ApprenticeshipApplication>.Projection
                 .Include(a => a.Id)
+                .Include(a => a.DateCreated)
+                .Include(a => a.DateUpdated)
                 .Include(a => a.Status)
                 .Include(a => a.CandidateId)
                 .Include(a => a.LegacyApplicationId)
@@ -78,10 +92,7 @@
                 .Include(a => a.UnsuccessfulReason)
                 .Include(a => a.Vacancy.Id)
                 .Include(a => a.Vacancy.VacancyReference)
-                .Include(a => a.Vacancy.Title)
-            };
-            var cursor = _database.GetCollection<ApprenticeshipApplication>("apprenticeships").FindAsync(Builders<ApprenticeshipApplication>.Filter.Gte(a => a.Status, 10), options);
-            return await cursor;
+                .Include(a => a.Vacancy.Title);
         }
     }
 }

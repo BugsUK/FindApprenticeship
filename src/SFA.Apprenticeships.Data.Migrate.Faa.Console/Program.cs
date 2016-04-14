@@ -14,7 +14,7 @@
 
             var processor = new MigrationProcessor(configService, log);
 
-            processor.ExecuteFullSync();
+            processor.Execute();
 
             Console.ReadKey();
         }

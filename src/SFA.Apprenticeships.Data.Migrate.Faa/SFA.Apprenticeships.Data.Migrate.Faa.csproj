@@ -121,6 +121,7 @@
     <Compile Include="Repository\Mongo\CandidateRepository.cs" />
     <Compile Include="Repository\Mongo\UserRepository.cs" />
     <Compile Include="Repository\Sql\ApplicationTable.cs" />
+    <Compile Include="Repository\Sql\SyncRepository.cs" />
     <Compile Include="Repository\Sql\VacancyRepository.cs" />
   </ItemGroup>
   <ItemGroup>
