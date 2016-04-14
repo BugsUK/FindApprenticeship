@@ -130,7 +130,7 @@
 
         private void ExecutePartialSync(DateTime lastCreatedDate, DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
-            _logService.Warn($"ExecutePartialSync with lastCreatedDate: {lastCreatedDate} and lastUpdatedDate: {lastUpdatedDate}");
+            _logService.Info($"ExecutePartialSync with lastCreatedDate: {lastCreatedDate} and lastUpdatedDate: {lastUpdatedDate}");
 
             _logService.Info("Loading Vacancy Ids");
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
