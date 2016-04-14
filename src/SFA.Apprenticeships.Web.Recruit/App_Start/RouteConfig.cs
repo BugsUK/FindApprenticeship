@@ -158,6 +158,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveVacancySummary,
+               url: "vacancy/autosaveVacancySummary",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveVacancySummary" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewVacancySummary,
                url: "vacancy/summary/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewVacancySummary" }
@@ -170,6 +176,12 @@
                );
 
             routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveRequirementsProspects,
+               url: "vacancy/autosaveRequirementsProspects",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveRequirementsProspects" }
+               );
+
+            routes.MapRoute(
                name: RecruitmentRouteNames.ReviewVacancyRequirementsProspects,
                url: "vacancy/requirementsprospects/review",
                defaults: new { controller = "VacancyPosting", action = "ReviewVacancyRequirementsProspects" }
@@ -179,6 +191,12 @@
                name: RecruitmentRouteNames.VacancyQuestions,
                url: "vacancy/questions",
                defaults: new { controller = "VacancyPosting", action = "VacancyQuestions" }
+               );
+
+            routes.MapRoute(
+               name: RecruitmentRouteNames.AutoSaveVacancyQuestions,
+               url: "vacancy/autosaveVacancyQuestions",
+               defaults: new { controller = "VacancyPosting", action = "AutoSaveVacancyQuestions" }
                );
 
             routes.MapRoute(

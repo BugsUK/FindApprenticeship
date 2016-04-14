@@ -114,14 +114,14 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"VacancySummary\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 827), Tuple.Create("\"", 851)
+WriteAttribute("value", Tuple.Create(" value=\"", 823), Tuple.Create("\"", 847)
             
             #line 21 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
-                     , Tuple.Create(Tuple.Create("", 835), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+                     , Tuple.Create(Tuple.Create("", 831), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 835), false)
+, 831), false)
 );
 
 WriteLiteral(">");
@@ -181,9 +181,42 @@ WriteLiteral("    </div>\r\n");
             
             #line 28 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
 }
+
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 32 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+Write(Scripts.Render("~/bundles/autosave"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <script>\r\n        ");
+
+WriteLiteral("\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise({\r" +
+"\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n       " +
+"         postUrl: \'");
+
+            
+            #line 41 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                     Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveVacancySummary));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+
+});
+
         }
     }
 }

@@ -159,9 +159,42 @@ WriteLiteral("    </div>\r\n");
             
             #line 20 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
 }
+
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+DefineSection("scripts", () => {
+
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 24 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+Write(Scripts.Render("~/bundles/autosave"));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\r\n\r\n    <script>\r\n        ");
+
+WriteLiteral("\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise({\r" +
+"\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n       " +
+"         postUrl: \'");
+
+            
+            #line 33 "..\..\Views\VacancyPosting\VacancyQuestions.cshtml"
+                     Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveVacancyQuestions));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
+
+});
+
         }
     }
 }

@@ -19,3 +19,20 @@
         }
     </div>
 }
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/autosave")
+
+    <script>
+        @*autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeInMinutes)) * 60 * 1000;*@
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: 10000,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveRequirementsProspects)'
+            });
+        });
+    </script>
+}
