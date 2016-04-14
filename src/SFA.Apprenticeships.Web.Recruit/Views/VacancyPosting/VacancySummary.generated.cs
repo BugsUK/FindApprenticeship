@@ -200,11 +200,18 @@ Write(Scripts.Render("~/bundles/autosave"));
             
             #line default
             #line hidden
-WriteLiteral("\r\n\r\n    <script>\r\n        ");
+WriteLiteral("\r\n\r\n    <script>\r\n        var autoSaveTimeout = ");
 
-WriteLiteral("\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise({\r" +
-"\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n       " +
-"         postUrl: \'");
+            
+            #line 35 "..\..\Views\VacancyPosting\VacancySummary.cshtml"
+                         Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initi" +
+"alise({\r\n                formSelector: \"form\",\r\n                timeout: autoSav" +
+"eTimeout,\r\n                postUrl: \'");
 
             
             #line 41 "..\..\Views\VacancyPosting\VacancySummary.cshtml"

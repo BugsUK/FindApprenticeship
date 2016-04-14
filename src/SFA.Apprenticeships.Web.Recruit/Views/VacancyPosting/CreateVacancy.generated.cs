@@ -211,11 +211,18 @@ WriteLiteral(@"
             }
         });
 
-        ");
+        var autoSaveTimeout = ");
 
-WriteLiteral("\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initialise({\r" +
-"\n                formSelector: \"form\",\r\n                timeout: 10000,\r\n       " +
-"         postUrl: \'");
+            
+            #line 43 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                         Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initi" +
+"alise({\r\n                formSelector: \"form\",\r\n                timeout: autoSav" +
+"eTimeout,\r\n                postUrl: \'");
 
             
             #line 49 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"

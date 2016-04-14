@@ -50,7 +50,9 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
+                .Returns(vacancyWithLocationAddresses.LocationAddresses);
+            
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
