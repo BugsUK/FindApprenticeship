@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
     using Entities.Mongo;
     using Infrastructure.Repositories.Mongo.Common.Configuration;
@@ -14,16 +13,12 @@
         private readonly ILogService _logService;
         private readonly IMongoDatabase _database;
 
-        private readonly UserRepository _userRepository;
-
         public CandidateRepository(IConfigurationService configurationService, ILogService logService)
         {
             _logService = logService;
             var connectionString = configurationService.Get<MongoConfiguration>().MetricsCandidatesDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
-
-            _userRepository = new UserRepository(configurationService);
         }
 
         public async Task<long> GetCandidatesCount()

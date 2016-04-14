@@ -110,23 +110,23 @@
         private void ExecutePartialSync(DateTime lastCreatedDate, DateTime lastUpdatedDate)
         {
             _logService.Warn($"ExecutePartialSync with lastCreatedDate: {lastCreatedDate} and lastUpdatedDate: {lastUpdatedDate}");
-            
-            var expectedCreatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCreatedSinceCount(lastCreatedDate).Result;
-            var createdCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsCreatedSince(lastCreatedDate).Result;
-            ProcessApplications(createdCursor, expectedCreatedCount, lastCreatedDate, lastUpdatedDate, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications));
-
-            var expectedUpdatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsUpdatedSinceCount(lastUpdatedDate).Result;
-            var updatedCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsUpdatedSince(lastUpdatedDate).Result;
-            ProcessApplications(updatedCursor, expectedUpdatedCount, lastCreatedDate, lastUpdatedDate, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications));
-        }
-
-        private void ProcessApplications(IAsyncCursor<ApprenticeshipApplication> cursor, long expectedCount, DateTime lastCreatedDate, DateTime lastUpdatedDate, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction)
-        {
-            var applicationTable = new ApplicationTable();
 
             _logService.Info("Loading Vacancy Ids");
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
+
+            var expectedCreatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsCreatedSinceCount(lastCreatedDate).Result;
+            var createdCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsCreatedSince(lastCreatedDate).Result;
+            ProcessApplications(createdCursor, expectedCreatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications));
+
+            var expectedUpdatedCount = _apprenticeshipApplicationsRepository.GetApprenticeshipApplicationsUpdatedSinceCount(lastUpdatedDate).Result;
+            var updatedCursor = _apprenticeshipApplicationsRepository.GetAllApprenticeshipApplicationsUpdatedSince(lastUpdatedDate).Result;
+            ProcessApplications(updatedCursor, expectedUpdatedCount, lastCreatedDate, lastUpdatedDate, vacancyIds, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications));
+        }
+
+        private void ProcessApplications(IAsyncCursor<ApprenticeshipApplication> cursor, long expectedCount, DateTime lastCreatedDate, DateTime lastUpdatedDate, HashSet<int> vacancyIds, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction)
+        {
+            var applicationTable = new ApplicationTable();
 
             var candidates = new Dictionary<Guid, Candidate>();
 
