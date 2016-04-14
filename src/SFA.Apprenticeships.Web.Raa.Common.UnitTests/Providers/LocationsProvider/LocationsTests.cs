@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -50,7 +51,18 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
+                .Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                        It.Is<List<VacancyLocation>>(
+                            l => l.Count == vacancyWithLocationAddresses.LocationAddresses.Count)))
+                .Returns(
+                    Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
+                        .Select(i => new VacancyLocationAddressViewModel())
+                        .ToList());
+
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
