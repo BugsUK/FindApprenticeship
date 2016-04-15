@@ -30,7 +30,11 @@
                 // Arrange.
                 var fixture = new Fixture();
 
-                var vacancy = fixture.Create<Domain.Entities.Raa.Vacancies.Vacancy>();
+                var vacancy = fixture
+                    .Build<Domain.Entities.Raa.Vacancies.Vacancy>()
+                    .With(each => each.WageType, Domain.Entities.Raa.Vacancies.WageType.NationalMinimum)
+                    .Create();
+
                 var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
                 var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
@@ -60,11 +64,12 @@
                 detail.PostedDate.Should().Be(vacancy.DateQAApproved ?? DateTime.MinValue);
                 detail.InterviewFromDate.Should().Be(DateTime.MinValue);
 
-                detail.Wage.Should().Be(0.0m);
-                detail.WageUnit.Should().Be(Domain.Entities.Vacancies.WageUnit.NotApplicable);
-                detail.WageDescription.Should().BeNull();
+                // NOTE: hard to unit test.
+                detail.Wage.Should().Be(vacancy.Wage ?? 0m);
+                detail.WageUnit.Should().Be(Domain.Entities.Vacancies.WageUnit.Weekly);
+                detail.WageDescription.Should().NotBeNull();
+                detail.WageType.Should().Be((Domain.Entities.Vacancies.LegacyWageType)vacancy.WageType);
 
-                detail.WageType.Should().Be(Domain.Entities.Vacancies.LegacyWageType.NotApplicable);
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
                 detail.OtherInformation.Should().Be(vacancy.ThingsToConsider);
