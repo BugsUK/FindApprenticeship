@@ -205,6 +205,12 @@
                defaults: new { controller = "Candidate", action = "TraineeshipVacancy" }
                );
 
+            routes.MapRoute(
+               name: "reports",
+               url: "reports",
+               defaults: new { controller = "Report", action = "Index" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }
