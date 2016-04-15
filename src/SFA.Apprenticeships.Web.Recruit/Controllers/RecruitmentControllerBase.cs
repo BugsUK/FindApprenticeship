@@ -43,5 +43,15 @@
             var headers = Request.Headers.AllKeys.Select(key => string.Format("{0}={1}", key, Request.Headers[key]));
             MappedDiagnosticsLogicalContext.Set("Headers", string.Join(",", headers));
         }
+
+        protected string GetProviderUserName()
+        {            
+            var userName = string.Empty;
+            if (Request.IsAuthenticated)
+            {                
+                userName = User.Identity.Name;
+            }
+            return userName;
+        }
     }
 }

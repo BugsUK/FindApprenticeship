@@ -96,8 +96,10 @@
     <Compile Include="Strategies\ISendAccountUnlockCodeStrategy.cs" />
     <Compile Include="Strategies\ProviderUserAccount\IResendEmailVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\ProviderUserAccount\ISendEmailVerificationCodeStrategy.cs" />
+    <Compile Include="Strategies\ProviderUserAccount\ISubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\ProviderUserAccount\ResendEmailVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\ProviderUserAccount\SendEmailVerificationCodeStrategy.cs" />
+    <Compile Include="Strategies\ProviderUserAccount\SubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\SendPendingUsernameCodeStrategy.cs" />
     <Compile Include="Strategies\ISendPendingUsernameCodeStrategy.cs" />
     <Compile Include="Strategies\IUnlockAccountStrategy.cs" />
