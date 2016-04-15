@@ -4,17 +4,13 @@
     using Moq;
     using NUnit.Framework;
     using Recruit.Mediators.Home;
-
     using Domain.Entities.Raa.Users;
     using Common.Mediators;
-
     using FluentValidation.Results;
-
     using Common.Constants;
     using Raa.Common.Providers;
     using Recruit.Mediators.ProviderUser;
     using Recruit.Validators;
-
     using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
 

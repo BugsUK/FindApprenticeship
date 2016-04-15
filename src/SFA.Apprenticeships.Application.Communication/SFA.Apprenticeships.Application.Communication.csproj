@@ -85,11 +85,9 @@
     </Compile>
     <Compile Include="CommunicationService.cs" />
     <Compile Include="ProviderCommunicationService.cs" />
-    <Compile Include="Strategies\ISendProviderCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendProviderUserCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendUsernameUpdateCommunicationStrategy.cs" />
     <Compile Include="Strategies\ISendContactMessageStrategy.cs" />
-    <Compile Include="Strategies\QueueProviderCommunicationStrategy.cs" />
     <Compile Include="Strategies\QueueProviderUserCommunicationStrategy.cs" />
     <Compile Include="Strategies\QueueUsernameUpdateCommunicationStrategy.cs" />
     <Compile Include="Strategies\QueueContactMessageStrategy.cs" />

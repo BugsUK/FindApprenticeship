@@ -16,8 +16,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Constants.Messages;
     using Domain.Entities.Raa;
     using Raa.Common.Validators.ProviderUser;
-
-    using SFA.Apprenticeships.Application.Interfaces.Providers;
     using SFA.Apprenticeships.Application.Interfaces.Users;
     using SFA.Apprenticeships.Domain.Entities.Communication;
     using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;

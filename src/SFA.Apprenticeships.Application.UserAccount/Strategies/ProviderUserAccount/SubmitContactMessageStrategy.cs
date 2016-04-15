@@ -1,8 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
+    using System.Linq;
+
     using SFA.Apprenticeships.Application.Interfaces.Communications;
     using SFA.Apprenticeships.Application.UserAccount.Configuration;
     using SFA.Apprenticeships.Domain.Entities.Communication;
+    using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
@@ -12,16 +15,19 @@
 
         private readonly ILogService _logService;        
         private readonly IConfigurationService _configurationService;
-        private readonly IProviderCommunicationService _communicationService;        
+        private readonly IProviderCommunicationService _communicationService;
+        private readonly IProviderUserReadRepository _providerReadRepository;
 
         public SubmitContactMessageStrategy(
             ILogService logService,
             IProviderCommunicationService communicationService,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService, 
+            IProviderUserReadRepository providerReadRepository)
         {
             _logService = logService;
             _communicationService = communicationService;
-            _configurationService = configurationService;            
+            _configurationService = configurationService;
+            _providerReadRepository = providerReadRepository;
         }
 
         public void SubmitMessage(ProviderContactMessage contactMessage)
@@ -45,7 +51,10 @@
             var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
             var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
-            _communicationService.SendMessageToProviderUser(contactMessage.Email, MessageTypes.ProviderContactUsMessage, new[]
+            var userName = _providerReadRepository.GetByEmail(contactMessage.Email);
+            var userContact = userName != null ? userName.Username : contactMessage.Email;
+
+            _communicationService.SendMessageToProviderUser(userContact, MessageTypes.ProviderContactUsMessage, new[]
             {
                 new CommunicationToken(CommunicationTokens.RecipientEmailAddress, helpdeskEmailAddress),
                 new CommunicationToken(CommunicationTokens.UserEmailAddress, contactMessage.Email),

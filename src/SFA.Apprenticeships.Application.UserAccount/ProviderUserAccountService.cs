@@ -3,15 +3,12 @@
     using CuttingEdge.Conditions;
     using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
-
     using SFA.Apprenticeships.Domain.Entities.Communication;
-
     using Strategies.ProviderUserAccount;
 
     public class ProviderUserAccountService : IProviderUserAccountService
     {
         private readonly ILogService _logService;
-
         private readonly ISendEmailVerificationCodeStrategy _sendEmailVerificationCodeStrategy;
         private readonly IResendEmailVerificationCodeStrategy _resendEmailVerificationCodeStrategy;
         private readonly ISubmitContactMessageStrategy _submitContactMessageStrategy;

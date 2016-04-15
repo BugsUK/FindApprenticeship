@@ -90,7 +90,6 @@
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
             For<ISendProviderUserCommunicationStrategy>().Use<QueueProviderUserCommunicationStrategy>();
-            For<ISendProviderCommunicationStrategy>().Use<QueueProviderCommunicationStrategy>();
             For<ISendEmailVerificationCodeStrategy>().Use<SendEmailVerificationCodeStrategy>()
                 .Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IResendEmailVerificationCodeStrategy>().Use<ResendEmailVerificationCodeStrategy>();
