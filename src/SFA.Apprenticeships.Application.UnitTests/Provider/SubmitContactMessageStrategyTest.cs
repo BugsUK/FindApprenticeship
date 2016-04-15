@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace SFA.Apprenticeships.Application.UnitTests.Provider
 {
@@ -11,13 +7,12 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
     using Moq;
 
     using NUnit.Framework;
-
     using Interfaces.Communications;
-
     using Apprenticeships.Application.UserAccount.Configuration;
     using Domain.Entities.Communication;
-
-    using SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
+    using Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount;
+    using Domain.Entities.Raa.Users;
+    using Domain.Raa.Interfaces.Repositories;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
@@ -26,6 +21,8 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
         private Mock<ILogService> _logService;
         private Mock<IConfigurationService> _configurationService;
         private Mock<IProviderCommunicationService> _communicationService;
+
+        private Mock<IProviderUserReadRepository> _providerReadRepository;
         private SubmitContactMessageStrategy _submitContactMessageStrategy;
         private const string ValidUsername = "john.doe@example.com";
         private const string ValidHelpdeskEmailAddress = "helpdesk@example.com";
@@ -37,7 +34,13 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
             _logService=new Mock<ILogService>();
             _configurationService=new Mock<IConfigurationService>();
             _communicationService = new Mock<IProviderCommunicationService>();
-            _submitContactMessageStrategy=new SubmitContactMessageStrategy(_logService.Object,_communicationService.Object,_configurationService.Object);
+            _providerReadRepository=new Mock<IProviderUserReadRepository>();
+            _providerReadRepository.Setup(repo => repo.GetByEmail("someone@sfa.com")).Returns(new ProviderUser
+                                                                                              {
+                                                                                                  Email = "someone@sfa.com",
+                                                                                                  Username = "john"
+                                                                                              });
+            _submitContactMessageStrategy =new SubmitContactMessageStrategy(_logService.Object,_communicationService.Object,_configurationService.Object, _providerReadRepository.Object);
             _configurationService.Setup(
                cm => cm.Get<UserAccountConfiguration>())
                .Returns(new UserAccountConfiguration
@@ -74,7 +77,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
 
             _communicationService.Verify(mock =>
                mock.SendMessageToProviderUser(
-                   ValidUsername,
+                   "john",
                    MessageTypes.ProviderContactUsMessage,
                    It.IsAny<IEnumerable<CommunicationToken>>()),
                    Times.Once);
