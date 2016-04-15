@@ -85,14 +85,18 @@
             var candidates = new Dictionary<Guid, Candidate>();
 
             //Inserts
+            _logService.Info($"Processing new {_vacancyApplicationsUpdater.CollectionName}");
             var expectedCreatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCreatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
             var createdCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsCreatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
             ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications), cancellationToken);
+            _logService.Info($"Completed processing new {_vacancyApplicationsUpdater.CollectionName}");
 
             //Updates
+            _logService.Info($"Processing updated {_vacancyApplicationsUpdater.CollectionName}");
             var expectedUpdatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsUpdatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsUpdatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
             ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications), cancellationToken);
+            _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
         private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
