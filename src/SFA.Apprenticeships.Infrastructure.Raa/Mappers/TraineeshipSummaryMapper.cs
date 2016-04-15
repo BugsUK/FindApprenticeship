@@ -39,10 +39,9 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = employer.Name,
+                    EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
                     ProviderName = provider.Name,
-                    //TODO: Are we going to add this to RAA?
-                    //IsPositiveAboutDisability = vacancy.,
+                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,
@@ -54,7 +53,7 @@
             }
             catch (Exception ex)
             {
-                logService.Error($"Failed to map traineeship with Id: {vacancy.VacancyId}", ex);
+                logService.Error($"Failed to map traineeship with Id: {vacancy?.VacancyId ?? 0}", ex);
                 return null;
             }
         }

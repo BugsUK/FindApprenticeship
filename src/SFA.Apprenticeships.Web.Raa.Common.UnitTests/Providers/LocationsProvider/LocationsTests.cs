@@ -51,12 +51,45 @@
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
+                .Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                        It.Is<List<VacancyLocation>>(
+                            l => l.Count == vacancyWithLocationAddresses.LocationAddresses.Count)))
+                .Returns(
+                    Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
+                        .Select(i => new VacancyLocationAddressViewModel())
+                        .ToList());
+
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
 
             result.Addresses.Count.Should().Be(2);
+        }
+
+        [Test]
+        public void IfTheVacancyHasOnlyOneAddressAndItsDifferentFromTheEmployerAddressShouldAddTheVacancyAddressToVacancyLocationsList()
+        {
+            const string ukprn = "ukprn";
+            const int employerId = 2;
+            const int providerSiteId = 43;
+            const string additionalLocationInformation = "additional location information";
+            const int numberOfPositions = 4;
+
+            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, false, additionalLocationInformation);
+
+            MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId))
+                .Returns(new List<VacancyLocation>());
+
+            var provider = GetVacancyPostingProvider();
+
+            var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
+
+            result.Addresses.Count.Should().Be(1);
         }
 
         [Test]
@@ -156,6 +189,76 @@
             MockVacancyPostingService.Verify(
                 s =>
                     s.DeleteVacancyLocationsFor(It.IsAny<int>()));
+        }
+
+        [Test]
+        public void AddLocationsSetVacancyNumberOfPositionsFromVacancyLocationsIfTheresOnlyOneLocationAndItsDifferentFromEmployerAddress()
+        {
+            const int vacancyReferenceNumber = 1;
+            const int numberOfPositions = 4;
+            const string additionalLocationInformation = "additional location information";
+
+            var vacancy = GetVacancy(_vacancyGuid, 1, numberOfPositions, false, additionalLocationInformation);
+
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber)).Returns(vacancy);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancy.VacancyId)).Returns(new List<VacancyLocation>());
+            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), It.IsAny<string>()))
+                .Returns(new VacancyParty());
+
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
+                        It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
+
+            var provider = GetVacancyPostingProvider();
+
+            var locationSearchViewModel =
+                GetLocationSearchViewModelWithOneLocationDifferentFromEmployerAddress(vacancyReferenceNumber,
+                    numberOfPositions);
+
+            provider.AddLocations(locationSearchViewModel);
+
+            MockVacancyPostingService.Verify(
+                s =>
+                    s.UpdateVacancy(
+                        It.Is<Vacancy>(
+                            v =>
+                                v.IsEmployerLocationMainApprenticeshipLocation ==
+                                locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation &&
+                                v.NumberOfPositions == numberOfPositions)));
+
+
+
+            MockVacancyPostingService.Verify(
+                s =>
+                    s.DeleteVacancyLocationsFor(It.IsAny<int>()));
+        }
+
+        private static LocationSearchViewModel GetLocationSearchViewModelWithOneLocationDifferentFromEmployerAddress(int vacancyReferenceNumber, int numberOfPositions)
+        {
+            var locationSearchViewModel = new LocationSearchViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation = false,
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                Addresses = new List<VacancyLocationAddressViewModel>
+                {
+                    new VacancyLocationAddressViewModel
+                    {
+                        Address = new AddressViewModel
+                        {
+                            AddressLine4 = "address line 4 - 1",
+                            AddressLine3 = "address line 3 - 1",
+                            AddressLine2 = "address line 2 - 1",
+                            AddressLine1 = "address line 1 - 1",
+                            Postcode = "postcode",
+                            Uprn = "uprn"
+                        },
+                        NumberOfPositions = numberOfPositions
+                    }
+                }
+            };
+
+            return locationSearchViewModel;
         }
 
         private static LocationSearchViewModel GetLocationSearchViewModel(string aNewAdditionalLocationInformation,
@@ -278,6 +381,28 @@
             };
 
             return vacancyWithLocationAddresses;
+        }
+
+        private static Vacancy GetVacancy(Guid vacancyGuid, int vacancyReferenceNumber, int? numberOfPositions, bool? isEmployerLocationMainApprenticeshipLocation, string additionalLocationInformation)
+        {
+            var vacancy = new Vacancy
+            {
+                Address = new PostalAddress
+                {
+                    AddressLine4 = "address line 4",
+                    AddressLine3 = "address line 3",
+                    AddressLine2 = "address line 2",
+                    AddressLine1 = "address line 1",
+                    Postcode = "postcode",
+                },
+                AdditionalLocationInformation = additionalLocationInformation,
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                VacancyGuid = vacancyGuid,
+                NumberOfPositions = numberOfPositions,
+                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation
+            };
+
+            return vacancy;
         }
 
         private class VacancyWithLocationAddresses

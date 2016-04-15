@@ -41,10 +41,9 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = employer.Name,
+                    EmployerName = string.IsNullOrEmpty(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
                     ProviderName = provider.Name,
-                    //TODO: Are we going to add this to RAA?
-                    //IsPositiveAboutDisability = vacancy.,
+                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                     ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
@@ -61,7 +60,7 @@
             }
             catch (Exception ex)
             {
-                logService.Error($"Failed to map apprenticeship with Id: {vacancy.VacancyId}", ex);
+                logService.Error($"Failed to map apprenticeship with Id: {vacancy?.VacancyId ?? 0}", ex);
                 return null;
             }
         }

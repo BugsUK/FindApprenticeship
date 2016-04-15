@@ -262,10 +262,12 @@ FETCH NEXT @PageSize ROWS ONLY
             MapApprenticeshipTypes(dbVacancies, results);
             MapFrameworkIds(dbVacancies, results);
             MapSectorIds(dbVacancies, results);
+
             for (var i = 0; i < dbVacancies.Count; i++)
             {
                 var dbVacancy = dbVacancies[i];
                 var vacancySummary = results[i];
+
                 MapDateFirstSubmitted(dbVacancy, vacancySummary);
                 MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);

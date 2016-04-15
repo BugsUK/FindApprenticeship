@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipSearch/_searchResults.cshtml")]
@@ -100,7 +101,7 @@ WriteLiteral("                ");
 
             
             #line 15 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-           Write(Html.DropDownList("sortType", Model.SortTypes, new {@id = "sort-results"}));
+           Write(Html.DropDownList("sortType", Model.SortTypes, new { @id = "sort-results" }));
 
             
             #line default
@@ -179,15 +180,15 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</h2>\r\n                        <p");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 1955), Tuple.Create("\"", 1983)
-, Tuple.Create(Tuple.Create("", 1960), Tuple.Create("posted-date-", 1960), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 1957), Tuple.Create("\"", 1985)
+, Tuple.Create(Tuple.Create("", 1962), Tuple.Create("posted-date-", 1962), true)
             
             #line 34 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 1972), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 1974), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 1972), false)
+, 1974), false)
 );
 
 WriteLiteral(" class=\"subtitle\"");
@@ -218,15 +219,15 @@ WriteLiteral(">\r\n                                (Added ");
             #line hidden
 WriteLiteral("\r\n                                <span");
 
-WriteAttribute("id", Tuple.Create(" id=\"", 2198), Tuple.Create("\"", 2234)
-, Tuple.Create(Tuple.Create("", 2203), Tuple.Create("number-of-positions-", 2203), true)
+WriteAttribute("id", Tuple.Create(" id=\"", 2200), Tuple.Create("\"", 2236)
+, Tuple.Create(Tuple.Create("", 2205), Tuple.Create("number-of-positions-", 2205), true)
             
             #line 37 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-, Tuple.Create(Tuple.Create("", 2223), Tuple.Create<System.Object, System.Int32>(vacancy.Id
+, Tuple.Create(Tuple.Create("", 2225), Tuple.Create<System.Object, System.Int32>(vacancy.Id
             
             #line default
             #line hidden
-, 2223), false)
+, 2225), false)
 );
 
 WriteLiteral(" class=\"hidden-subcategory\"");
@@ -276,9 +277,9 @@ WriteLiteral(" positions available)</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                                </span>\r\n                                \r\n      " +
-"                      </span>\r\n                        </p>\r\n                   " +
-" </div>\r\n                    <p>\r\n");
+WriteLiteral("                                </span>\r\n\r\n                            </span>\r\n " +
+"                       </p>\r\n                    </div>\r\n                    <p>" +
+"\r\n");
 
 WriteLiteral("                        ");
 
@@ -408,24 +409,24 @@ WriteLiteral(" class=\"grid grid-1-3 map-container hide-nojs small-btm-margin to
 
 WriteLiteral(">\r\n                            <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4910), Tuple.Create("\"", 5020)
-, Tuple.Create(Tuple.Create("", 4917), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 4917), true)
+WriteAttribute("href", Tuple.Create(" href=\"", 4880), Tuple.Create("\"", 4990)
+, Tuple.Create(Tuple.Create("", 4887), Tuple.Create("https://www.google.com/maps/dir/LocationLatLon/\'", 4887), true)
             
             #line 78 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-     , Tuple.Create(Tuple.Create("", 4965), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
+     , Tuple.Create(Tuple.Create("", 4935), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Latitude
             
             #line default
             #line hidden
-, 4965), false)
-, Tuple.Create(Tuple.Create("", 4991), Tuple.Create(",", 4991), true)
+, 4935), false)
+, Tuple.Create(Tuple.Create("", 4961), Tuple.Create(",", 4961), true)
             
             #line 78 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                                , Tuple.Create(Tuple.Create("", 4992), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
+                                , Tuple.Create(Tuple.Create("", 4962), Tuple.Create<System.Object, System.Int32>(vacancy.Location.Longitude
             
             #line default
             #line hidden
-, 4992), false)
-, Tuple.Create(Tuple.Create("", 5019), Tuple.Create("\'", 5019), true)
+, 4962), false)
+, Tuple.Create(Tuple.Create("", 4989), Tuple.Create("\'", 4989), true)
 );
 
 WriteLiteral(" target=\"_blank\"");
@@ -443,7 +444,7 @@ WriteLiteral("></div>\r\n                        </div>\r\n                    <
 
             
             #line 83 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
-                        itemPosition++;
+                itemPosition++;
             }
         }
 
@@ -455,10 +456,10 @@ WriteLiteral("    </ul>\r\n");
             
             #line 87 "..\..\Views\TraineeshipSearch\_searchResults.cshtml"
 
-        Html.RenderPartial("_pagination", Model);
+    Html.RenderPartial("_pagination", Model);
 
-        if (Model.TotalHits > 5)
-        {
+    if (Model.TotalHits > 5)
+    {
 
             
             #line default

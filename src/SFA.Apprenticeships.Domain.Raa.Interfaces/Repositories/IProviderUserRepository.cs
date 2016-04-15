@@ -10,6 +10,8 @@
         ProviderUser GetByUsername(string username);
 
         IEnumerable<ProviderUser> GetAllByUkprn(string ukprn);
+
+        ProviderUser GetByEmail(string email);
     }
 
     public interface IProviderUserWriteRepository
