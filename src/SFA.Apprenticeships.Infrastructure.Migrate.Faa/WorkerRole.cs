@@ -87,16 +87,16 @@ namespace SFA.Apprenticeships.Infrastructure.Migrate.Faa
 
         private void Start()
         {
-            _logService.Info("Starting {ProcessName}");
+            _logService.Info($"Starting {ProcessName}");
 
-            _logService.Info("Started {ProcessName}");
+            _logService.Info($"Started {ProcessName}");
         }
 
         private void Stop()
         {
-            _logService.Debug("Stopping {ProcessName}");
+            _logService.Info($"Stopping {ProcessName}");
 
-            _logService.Debug("Stopped {ProcessName}");
+            _logService.Info($"Stopped {ProcessName}");
         }
     }
 }
