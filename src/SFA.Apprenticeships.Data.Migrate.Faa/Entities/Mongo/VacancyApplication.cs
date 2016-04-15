@@ -4,7 +4,7 @@
     using MongoDB.Bson.Serialization.Attributes;
 
     [BsonIgnoreExtraElements]
-    public class ApprenticeshipApplication
+    public class VacancyApplication
     {
         [BsonId]
         public Guid Id { get; set; }

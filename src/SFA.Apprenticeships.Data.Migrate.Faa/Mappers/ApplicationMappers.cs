@@ -2,7 +2,6 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using Entities.Mongo;
     using Entities.Sql;
 
@@ -47,7 +46,7 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public static Application ToApplication(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        public static Application ToApplication(this VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Application
@@ -70,7 +69,7 @@
             };
         }
 
-        public static dynamic ToApplicationDynamic(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        public static dynamic ToApplicationDynamic(this VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new
@@ -93,7 +92,7 @@
             };
         }
 
-        public static IDictionary<string, object> ToApplicationDictionary(this ApprenticeshipApplication apprenticeshipApplication, Candidate candidate)
+        public static IDictionary<string, object> ToApplicationDictionary(this VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Dictionary<string, object>
@@ -128,7 +127,12 @@
 
         private static int GetCandidateId(Candidate candidate)
         {
-            return candidate?.LegacyCandidateId ?? _candidateId--;
+            if (candidate == null || candidate.LegacyCandidateId == 0)
+            {
+                return _candidateId--;
+            }
+
+            return candidate.LegacyCandidateId;
         }
 
         private static int GetApplicationStatusTypeId(int status)
