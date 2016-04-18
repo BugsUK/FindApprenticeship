@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -45,13 +46,21 @@
             const string ukprn = "ukprn";
             const int employerId = 2;
             const int providerSiteId = 43;
-            const string additionalLocationInformation = "additional location information";
             
-            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
+            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(_vacancyGuid);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
                 .Returns(vacancyWithLocationAddresses.LocationAddresses);
+
+            MockMapper.Setup(
+                mm =>
+                    mm.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                        vacancyWithLocationAddresses.LocationAddresses))
+                .Returns(
+                    Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
+                        .Select(e => new VacancyLocationAddressViewModel())
+                        .ToList());
             
             var provider = GetVacancyPostingProvider();
 
@@ -315,6 +324,11 @@
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, string.Empty);
+        }
+
+        private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid)
+        {
+            return GetVacancyWithLocationAddresses(vacancyGuid, 1, string.Empty);
         }
 
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, string additionalLocationInformation)
