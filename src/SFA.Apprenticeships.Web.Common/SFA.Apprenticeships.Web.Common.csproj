@@ -199,6 +199,7 @@
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="BundleConfig.cs" />
+    <Compile Include="Configuration\ReportServerConfiguration.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />

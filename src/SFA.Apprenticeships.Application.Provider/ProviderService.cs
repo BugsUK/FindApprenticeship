@@ -8,7 +8,7 @@ namespace SFA.Apprenticeships.Application.Provider
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Providers;
 
     public class ProviderService : IProviderService
@@ -19,15 +19,20 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
+        
 
-        public ProviderService(IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
+        public ProviderService(IProviderReadRepository providerReadRepository, 
+            IProviderSiteReadRepository providerSiteReadRepository, 
+            IVacancyPartyReadRepository vacancyPartyReadRepository, 
+            IVacancyPartyWriteRepository vacancyPartyWriteRepository, 
+            ILogService logService, IEmployerService employerService)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _vacancyPartyReadRepository = vacancyPartyReadRepository;
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
-            _employerService = employerService;
+            _employerService = employerService;            
         }
 
         public Provider GetProviderViaOwnerParty(int vacancyPartyId)
@@ -182,6 +187,6 @@ namespace SFA.Apprenticeships.Application.Provider
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;
 
             return pageable;
-        }
+        }       
     }
 }

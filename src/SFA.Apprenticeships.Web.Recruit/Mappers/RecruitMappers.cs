@@ -7,6 +7,9 @@
     using Raa.Common.Mappers;
     using Raa.Common.ViewModels.Application;
 
+    using Domain.Entities.Communication;
+    using ViewModels.Home;
+
     public class RecruitMappers : RaaCommonWebMappers
     {
         public override void Initialise()
@@ -25,6 +28,13 @@
             
             Mapper.CreateMap<ApplicationSummary, ApplicationSummaryViewModel>()
                 .ForMember(v => v.ApplicantName, opt => opt.MapFrom(src => new Name(src.CandidateDetails.FirstName, src.CandidateDetails.MiddleNames, src.CandidateDetails.LastName).GetDisplayText()));
+
+            Mapper.CreateMap<ContactMessageViewModel, ProviderContactMessage>()
+                .ForMember(c => c.Type, opt => opt.UseValue(ContactMessageTypes.ContactUs))
+                .ForMember(c => c.EntityId, opt => opt.Ignore())
+                .ForMember(c => c.UserId, opt => opt.Ignore())
+                .ForMember(c => c.DateCreated, opt => opt.Ignore())
+                .ForMember(c => c.DateUpdated, opt => opt.Ignore());
         }
     }
 }
