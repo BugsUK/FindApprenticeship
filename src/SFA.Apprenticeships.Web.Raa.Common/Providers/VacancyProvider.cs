@@ -702,7 +702,9 @@
             var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
-            var newApplications = vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount((int)v.VacancyReferenceNumber) > 0).ToList();
+            var newApplications = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
+                vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList() :
+                vacancies.Where(v => v.Status == VacancyStatus.Live && _traineeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList();
             var withdrawn = vacancies.Where(v => v.Status == VacancyStatus.Withdrawn).ToList();
             var completed = vacancies.Where(v => v.Status == VacancyStatus.Completed).ToList();
 
