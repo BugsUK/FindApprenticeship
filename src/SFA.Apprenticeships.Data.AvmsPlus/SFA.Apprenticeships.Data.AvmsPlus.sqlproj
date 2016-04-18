@@ -899,6 +899,15 @@
     <None Include="Scripts\Data\dbo.ApplicationStatusType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApplicationUnsuccessfulReasonType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.ApplicationWithdrawnOrDeclinedReasonType.Upsert.sql" />
+    <Build Include="dbo\Functions\fnGetEndOfDay.function.sql" />
+    <Build Include="dbo\Functions\fnReportSplitListToTable.function.sql" />
+    <Build Include="dbo\Functions\ReportGetChildManagingAreas.function.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAllProviderSites.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetDisplayNames.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetGeoRegionsIncludingAll.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetManagedBy.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetTrainingProviderByStatusAndManagedBy.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
