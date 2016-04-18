@@ -4,6 +4,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Common.Providers;
+    using Configuration;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions;
     using Moq;
@@ -30,7 +31,8 @@
                 SecondQuestion = aString,
                 FirstQuestionComment = aString,
                 SecondQuestionComment = aString,
-                VacancyReferenceNumber = vacancyReferenceNumber
+                VacancyReferenceNumber = vacancyReferenceNumber,
+                AutoSaveTimeoutInSeconds = 60
             };
 
             var vacancy = new Fixture().Build<Vacancy>()
@@ -48,6 +50,9 @@
             dateTimeService.Setup(dts => dts.UtcNow).Returns(utcNow);
             var vacancylockingService = new Mock<IVacancyLockingService>();
             vacancylockingService.Setup(vls => vls.IsVacancyAvailableToQABy(userName, vacancy)).Returns(true);
+            var configurationService = new Mock<IConfigurationService>();
+            configurationService.Setup(x => x.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = 60 });
 
             //Arrange: get AV, update retrieved AV with NVVM, save modified AV returning same modified AV, map AV to new NVVM with same properties as input
             vacancyPostingService.Setup(
@@ -65,6 +70,7 @@
                     .With(currentUserService)
                     .With(dateTimeService)
                     .With(vacancylockingService)
+                    .With(configurationService)
                     .Build();
 
             var expectedResult = new QAActionResult<VacancyQuestionsViewModel>(QAActionResultCode.Ok, viewModel);

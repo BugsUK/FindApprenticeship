@@ -17,8 +17,8 @@
     @Html.Partial("ValidationSummary", ViewData.ModelState)
     @Html.HiddenFor(m => m.WarningsHash)
     @Html.HiddenFor(m => m.VacancyReferenceNumber)
-
-
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
+    
     <fieldset class="form-group inline-fixed date-input @HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.ClosingDate))">
         <a name="@Html.NameFor(m => m.ClosingDate).ToString().Replace(".", "_").ToLower()"></a>
         <legend class="form-label">@Model.GetMetadata(m => m.ClosingDate).DisplayName</legend>
@@ -37,4 +37,22 @@
         <button class="button" type="submit">Save and return</button>
         @Html.RouteLink("Cancel", RecruitmentRouteNames.VacancyApplications, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
     </div>
+}
+
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/autosave")
+
+    <script>
+        var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: autoSaveTimeout,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveManageDates)'
+            });
+        });
+    </script>
 }

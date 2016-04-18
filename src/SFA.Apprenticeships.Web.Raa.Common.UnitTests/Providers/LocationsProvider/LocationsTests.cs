@@ -46,9 +46,8 @@
             const string ukprn = "ukprn";
             const int employerId = 2;
             const int providerSiteId = 43;
-            const string additionalLocationInformation = "additional location information";
             
-            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
+            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(_vacancyGuid);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
@@ -325,6 +324,11 @@
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, string.Empty);
+        }
+
+        private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid)
+        {
+            return GetVacancyWithLocationAddresses(vacancyGuid, 1, string.Empty);
         }
 
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, string additionalLocationInformation)

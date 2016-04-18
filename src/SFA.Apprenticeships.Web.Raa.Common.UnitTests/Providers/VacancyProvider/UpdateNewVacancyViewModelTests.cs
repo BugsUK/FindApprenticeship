@@ -81,6 +81,8 @@
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+            configurationService.Setup(x => x.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
             providerService.Setup(ps => ps.GetProvider(ukprn)).Returns(new Provider());

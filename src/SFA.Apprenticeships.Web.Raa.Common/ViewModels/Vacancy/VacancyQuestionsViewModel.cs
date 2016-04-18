@@ -30,5 +30,7 @@
         public VacancyStatus Status { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }
