@@ -29,6 +29,9 @@
                     _sendProviderUserCommunicationStrategy.Send(username, messageType, tokens);
                     break;
 
+                case MessageTypes.ProviderContactUsMessage:
+                    _sendProviderUserCommunicationStrategy.Send(username, messageType, tokens);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(messageType));
             }

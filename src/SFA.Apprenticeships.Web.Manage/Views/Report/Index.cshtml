@@ -1,0 +1,15 @@
+﻿@using ReportViewerForMvc;
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div>
+    <h1 class="heading-xlarge">
+        Reports
+    </h1>
+    <div>
+        @Html.ReportViewer(ViewBag.ReportViewer as Microsoft.Reporting.WebForms.ReportViewer)
+    </div>
+</div>

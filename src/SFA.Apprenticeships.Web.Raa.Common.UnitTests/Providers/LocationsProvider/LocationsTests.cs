@@ -52,16 +52,16 @@
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
                 .Returns(vacancyWithLocationAddresses.LocationAddresses);
-
             MockMapper.Setup(
-                mm =>
-                    mm.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
-                        vacancyWithLocationAddresses.LocationAddresses))
+                m =>
+                    m.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                        It.Is<List<VacancyLocation>>(
+                            l => l.Count == vacancyWithLocationAddresses.LocationAddresses.Count)))
                 .Returns(
                     Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
-                        .Select(e => new VacancyLocationAddressViewModel())
+                        .Select(i => new VacancyLocationAddressViewModel())
                         .ToList());
-            
+
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);

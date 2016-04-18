@@ -6,6 +6,8 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     using System.Collections.Generic;
     using Domain.Entities.Raa.Parties;
 
+    using SFA.Apprenticeships.Domain.Entities.Communication;
+
     /// <summary>
     /// For maintaining provider profiles, sites, etc.
     /// </summary>
@@ -37,6 +39,6 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
-        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);
+        Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);        
     }
 }

@@ -889,6 +889,16 @@
     <None Include="Scripts\Data\dbo.VacancyProvisionRelationshipStatusType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\Data\dbo.Person.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.SystemParameters.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupMembership.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroup.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupPurpose.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationHistoryEvent.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationNextAction.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationUnsuccessfulReasonType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationWithdrawnOrDeclinedReasonType.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
@@ -905,7 +915,5 @@
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
   </ItemGroup>
-  <Target 
-    Name="Publish" 
-    Condition="'false'=='true'" />
+  <Target Name="Publish" Condition="'false'=='true'" />
 </Project>

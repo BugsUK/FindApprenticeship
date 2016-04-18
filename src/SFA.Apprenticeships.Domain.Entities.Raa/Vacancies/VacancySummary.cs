@@ -40,6 +40,7 @@
         public string SectorCodeName { get; set; }
         public VacancyStatus Status { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public string EmployerAnonymousName { get; set; }
         public int? NumberOfPositions { get; set; }
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }

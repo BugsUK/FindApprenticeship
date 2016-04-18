@@ -6,10 +6,21 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
   </Role>
+  <Role name="SFA.Apprenticeships.Infrastructure.Migrate.Faa">
+    <Instances count="1" />
+    <ConfigurationSettings>
+      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
+    </ConfigurationSettings>
+  </Role>
   <NetworkConfiguration>
     <VirtualNetworkSite name="naspre" />
     <AddressAssignments>
       <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Migrate">
+        <Subnets>
+          <Subnet name="BackendServices" />
+        </Subnets>
+      </InstanceAddress>
+      <InstanceAddress roleName="SFA.Apprenticeships.Infrastructure.Migrate.Faa">
         <Subnets>
           <Subnet name="BackendServices" />
         </Subnets>

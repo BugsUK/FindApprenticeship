@@ -99,7 +99,7 @@
                 .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
-                .IgnoreMember(v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.EmployerDescription)
                 .MapMemberFrom(v => v.EmployersWebsite, av => av.EmployerWebsiteUrl)
                 .IgnoreMember(v => v.MaxNumberofApplications)
@@ -170,6 +170,7 @@
                 .IgnoreMember(av => av.FirstQuestionComment)
                 .IgnoreMember(av => av.SecondQuestionComment)
                 .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
                 .IgnoreMember(av => av.EmployerWebsiteUrlComment)
                 .IgnoreMember(av => av.LocationAddressesComment)
@@ -268,6 +269,7 @@
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
@@ -309,7 +311,6 @@
                         };
                     }
                 })
-
                 .End();
 
             Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()

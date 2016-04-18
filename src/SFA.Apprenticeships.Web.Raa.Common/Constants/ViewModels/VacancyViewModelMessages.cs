@@ -62,9 +62,9 @@
 
         public static class HoursPerWeek
         {
-            public const string LabelText = "Hours per week";
-            public const string RequiredErrorText = "Enter the hours per week";
-            public const string HoursPerWeekShouldBeGreaterThan16 = "The hours per week must be more than 16";
+            public const string LabelText = "Paid hours per week";
+            public const string RequiredErrorText = "Enter the paid hours per week";
+            public const string HoursPerWeekShouldBeGreaterThan16 = "The paid hours per week must be more than 16";
         }
 
         public static class WageType
