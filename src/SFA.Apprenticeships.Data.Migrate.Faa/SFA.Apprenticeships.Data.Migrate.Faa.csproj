@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
+    <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MongoConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

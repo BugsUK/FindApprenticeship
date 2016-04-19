@@ -2,13 +2,30 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading;
     using Entities.Mongo;
     using Entities.Sql;
+    using Infrastructure.Repositories.Sql.Common;
 
-    public static class ApplicationMappers
+    public class ApplicationMappers : IApplicationMappers
     {
-        private static int _applicationId = -1;
-        private static int _candidateId = -1;
+        private int _applicationId;
+        private int _candidateId;
+
+        public ApplicationMappers(IGetOpenConnection targetDatabase)
+        {
+            _applicationId = targetDatabase.Query<int>($"SELECT ISNULL(min(ApplicationId), 0) FROM Application").Single() - 1;
+            if (_applicationId > -1)
+            {
+                _applicationId = -1;
+            }
+            _candidateId = targetDatabase.Query<int>($"SELECT ISNULL(min(CandidateId), 0) FROM Application").Single() - 1;
+            if (_candidateId > -1)
+            {
+                _candidateId = -1;
+            }
+        }
 
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
         {
@@ -46,7 +63,7 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public static Application ToApplication(this VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Application
@@ -69,7 +86,7 @@
             };
         }
 
-        public static dynamic ToApplicationDynamic(this VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public dynamic MapApplicationDynamic(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new
@@ -92,7 +109,7 @@
             };
         }
 
-        public static IDictionary<string, object> ToApplicationDictionary(this VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Dictionary<string, object>
@@ -115,21 +132,25 @@
             };
         }
 
-        private static int GetApplicationId(int legacyApplicationId)
+        private int GetApplicationId(int legacyApplicationId)
         {
             if (legacyApplicationId == 0)
             {
-                return _applicationId--;
+                var applicationId = _applicationId;
+                Interlocked.Decrement(ref _applicationId);
+                return applicationId;
             }
 
             return legacyApplicationId;
         }
 
-        private static int GetCandidateId(Candidate candidate)
+        private int GetCandidateId(Candidate candidate)
         {
             if (candidate == null || candidate.LegacyCandidateId == 0)
             {
-                return _candidateId--;
+                var candidateId = _candidateId;
+                Interlocked.Decrement(ref _candidateId);
+                return candidateId;
             }
 
             return candidate.LegacyCandidateId;

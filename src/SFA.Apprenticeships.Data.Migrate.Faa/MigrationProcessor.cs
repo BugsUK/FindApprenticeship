@@ -2,8 +2,10 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using Infrastructure.Repositories.Sql.Common;
+    using Mappers;
     using Repository.Sql;
     using SFA.Infrastructure.Interfaces;
 
@@ -29,12 +31,12 @@
             var syncRepository = new SyncRepository(targetDatabase);
             var genericSyncRespository = new GenericSyncRespository(_logService, sourceDatabase, targetDatabase);
 
+            var applicationMappers = new ApplicationMappers(targetDatabase);
+
             _migrationProcessors = new List<IMigrationProcessor>
             {
-                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository),
-                    genericSyncRespository, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository),
-                    genericSyncRespository, targetDatabase, configurationService, logService)
+                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService),
+                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService)
             };
         }
 

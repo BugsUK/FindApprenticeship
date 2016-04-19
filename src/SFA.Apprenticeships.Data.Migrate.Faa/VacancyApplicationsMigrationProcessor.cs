@@ -2,9 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Data.SqlClient;
     using System.Linq;
     using System.Threading;
+    using Dapper;
     using Entities.Mongo;
+    using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using MongoDB.Driver;
@@ -15,7 +18,9 @@
     public class VacancyApplicationsMigrationProcessor : IMigrationProcessor
     {
         private readonly IVacancyApplicationsUpdater _vacancyApplicationsUpdater;
+        private readonly IApplicationMappers _applicationMappers;
         private readonly IGenericSyncRespository _genericSyncRespository;
+        private readonly IGetOpenConnection _targetDatabase;
         private readonly ILogService _logService;
         
         private readonly VacancyRepository _vacancyRepository;
@@ -24,10 +29,12 @@
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
 
-        public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
+        public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
             _vacancyApplicationsUpdater = vacancyApplicationsUpdater;
+            _applicationMappers = applicationMappers;
             _genericSyncRespository = genericSyncRespository;
+            _targetDatabase = targetDatabase;
             _logService = logService;
 
             _vacancyRepository = new VacancyRepository(targetDatabase);
@@ -71,7 +78,7 @@
 
             var expectedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCount(cancellationToken).Result;
             var cursor = _vacancyApplicationsRepository.GetAllVacancyApplications(cancellationToken).Result;
-            ProcessApplications(cursor, expectedCount, vacancyIds, candidates, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications), cancellationToken);
+            ProcessApplications(cursor, expectedCount, vacancyIds, candidates, BulkInsert, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(CancellationToken cancellationToken)
@@ -88,18 +95,35 @@
             _logService.Info($"Processing new {_vacancyApplicationsUpdater.CollectionName}");
             var expectedCreatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCreatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
             var createdCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsCreatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
-            ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, (applicationTable, applications) => _genericSyncRespository.BulkInsert(applicationTable, applications), cancellationToken);
+            ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, BulkInsert, cancellationToken);
             _logService.Info($"Completed processing new {_vacancyApplicationsUpdater.CollectionName}");
 
             //Updates
             _logService.Info($"Processing updated {_vacancyApplicationsUpdater.CollectionName}");
             var expectedUpdatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsUpdatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsUpdatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
-            ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, (applicationTable, applications) => _genericSyncRespository.BulkUpdate(applicationTable, applications), cancellationToken);
+            ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, BulkUpdate, cancellationToken);
             _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
-        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<ITableDetails, IEnumerable<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
+        private void BulkInsert(IList<IDictionary<string, object>> applications)
+        {
+            _genericSyncRespository.BulkInsert(_applicationTable, applications);
+        }
+
+        private void BulkUpdate(IList<IDictionary<string, object>> applications)
+        {
+            //Updates can edit the ApplicationId value so delete the existing records and recreate
+            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
+            {
+                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applications.Select(a => (Guid)a["ApplicationGuid"]) });
+            }
+
+            //Then create the new ones
+            _genericSyncRespository.BulkInsert(_applicationTable, applications);
+        }
+
+        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<IList<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -111,7 +135,32 @@
                 var maxDateCreated = batch.Max(a => a.DateCreated);
                 var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
 
-                var candidateIds = batch.Select(a => a.CandidateId).Except(candidates.Keys).ToArray();
+                LoadCandidates(candidates, batch, cancellationToken);
+
+                var applications = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationDictionary(a, candidates[a.CandidateId])).ToList();
+                count += applications.Count;
+                _logService.Info($"Processing {applications.Count} {_vacancyApplicationsUpdater.CollectionName}");
+                try
+                {
+                    bulkAction(applications);
+                }
+                catch (Exception ex)
+                {
+                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}", ex);
+                }
+
+                _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
+
+                var percentage = ((double)count / expectedCount) * 100;
+                _logService.Info($"Processed batch of {applications.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
+            }
+        }
+
+        private void LoadCandidates(IDictionary<Guid, Candidate> candidates, IEnumerable<VacancyApplication> vacancyApplications, CancellationToken cancellationToken)
+        {
+            var candidateIds = vacancyApplications.Select(a => a.CandidateId).Except(candidates.Keys).ToArray();
+            if (candidateIds.Any())
+            {
                 _logService.Info($"Loading {candidateIds.Length} candidates");
                 var candidatesCursor = _candidateRepository.GetCandidatesByIds(candidateIds, cancellationToken).Result;
                 while (candidatesCursor.MoveNextAsync(cancellationToken).Result)
@@ -123,24 +172,6 @@
                     }
                     _logService.Info($"Completed loading batch of {candidatesBatch.Count} candidates");
                 }
-
-                var applications = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => a.ToApplicationDictionary(candidates[a.CandidateId])).ToList();
-                count += applications.Count;
-                _logService.Info($"Processing {applications.Count} {_vacancyApplicationsUpdater.CollectionName}");
-                try
-                {
-                    //TODO: Check if the application now has an Id?
-                    bulkAction(_applicationTable, applications);
-                }
-                catch (Exception ex)
-                {
-                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}", ex);
-                }
-
-                _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
-
-                var percentage = ((double)count / expectedCount) * 100;
-                _logService.Info($"Processed batch of {applications.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
             }
         }
     }
