@@ -815,6 +815,8 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
+            vacancy.EmployerAnonymousName = null;
+
             //Comments
             vacancy.TitleComment = null;
             vacancy.ShortDescriptionComment = null;
