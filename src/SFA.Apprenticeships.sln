@@ -219,6 +219,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Data.Mi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Infrastructure.Migrate.Faa", "SFA.Apprenticeships.Infrastructure.Migrate.Faa\SFA.Apprenticeships.Infrastructure.Migrate.Faa.csproj", "{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Data.Migrate.UnitTests", "SFA.Apprenticeships.Data.Migrate.UnitTests\SFA.Apprenticeships.Data.Migrate.UnitTests.csproj", "{A934E9C3-9B2D-4AF4-8570-47C193A9834F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -1244,6 +1246,18 @@ Global
 		{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}.Prod|Any CPU.Build.0 = Prod|Any CPU
 		{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Local|Any CPU.Build.0 = Local|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1344,9 +1358,10 @@ Global
 		{E9B83262-916C-4AF9-A55C-F89F623847AE} = {50739E9C-CFCF-4A42-95B9-443D46850B77}
 		{A8BFD333-2D6B-4D91-B544-97C269212B06} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
 		{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15} = {18D67FE8-091F-4873-871A-8B81E455DA79}
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
 	EndGlobalSection
 EndGlobal

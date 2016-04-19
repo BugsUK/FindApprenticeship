@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Local</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A8BFD333-2D6B-4D91-B544-97C269212B06}</ProjectGuid>
+    <ProjectGuid>{A934E9C3-9B2D-4AF4-8570-47C193A9834F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SFA.Apprenticeships.Data.Migrate.Faa</RootNamespace>
-    <AssemblyName>SFA.Apprenticeships.Data.Migrate.Faa</AssemblyName>
+    <RootNamespace>SFA.Apprenticeships.Data.Migrate.UnitTests</RootNamespace>
+    <AssemblyName>SFA.Apprenticeships.Data.Migrate.UnitTests</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -87,73 +87,37 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
+    <Reference Include="FluentAssertions, Version=4.4.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.4.0\lib\net45\FluentAssertions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Bson, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Bson.2.2.3\lib\net45\MongoDB.Bson.dll</HintPath>
+    <Reference Include="FluentAssertions.Core, Version=4.4.0.0, Culture=neutral, PublicKeyToken=33f2691a05b67b6a, processorArchitecture=MSIL">
+      <HintPath>..\packages\FluentAssertions.4.4.0\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MongoDB.Driver, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.2.2.3\lib\net45\MongoDB.Driver.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core, Version=2.2.3.3, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\MongoDB.Driver.Core.2.2.3\lib\net45\MongoDB.Driver.Core.dll</HintPath>
+    <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Entities\Sql\ApplicationHistory.cs" />
-    <Compile Include="IMigrationProcessor.cs" />
-    <Compile Include="IVacancyApplicationsUpdater.cs" />
-    <Compile Include="Mappers\IApplicationMappers.cs" />
-    <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
-    <Compile Include="Configuration\MongoConfiguration.cs" />
-    <Compile Include="Entities\Mongo\VacancyApplication.cs" />
-    <Compile Include="Entities\Mongo\Candidate.cs" />
-    <Compile Include="Entities\Mongo\User.cs" />
-    <Compile Include="Entities\Mongo\Vacancy.cs" />
-    <Compile Include="Entities\Sql\Application.cs" />
-    <Compile Include="Entities\Sql\SyncParams.cs" />
-    <Compile Include="Mappers\ApplicationMappers.cs" />
-    <Compile Include="MigrationProcessor.cs" />
+    <Compile Include="Faa\Mappers\ApplicationMappersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\Mongo\VacancyApplicationsRepository.cs" />
-    <Compile Include="Repository\Mongo\CandidateRepository.cs" />
-    <Compile Include="Repository\Mongo\UserRepository.cs" />
-    <Compile Include="Repository\Sql\ApplicationTable.cs" />
-    <Compile Include="Repository\Sql\SyncRepository.cs" />
-    <Compile Include="Repository\Sql\VacancyRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate.Faa\SFA.Apprenticeships.Data.Migrate.Faa.csproj">
+      <Project>{a8bfd333-2d6b-4d91-b544-97c269212b06}</Project>
+      <Name>SFA.Apprenticeships.Data.Migrate.Faa</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <ProjectReference Include="..\SFA.Apprenticeships.Data.Migrate\SFA.Apprenticeships.Data.Migrate.csproj">
-      <Project>{73c8a0c0-3b18-4ed6-8d14-15f3e009c26c}</Project>
-      <Name>SFA.Apprenticeships.Data.Migrate</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Sql\SFA.Apprenticeships.Infrastructure.Repositories.Sql.csproj">
-      <Project>{b633ee4e-7a58-4acf-bbd9-0b19730b22fd}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Repositories.Sql</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

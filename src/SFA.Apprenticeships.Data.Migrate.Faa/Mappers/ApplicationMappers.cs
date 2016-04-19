@@ -27,6 +27,12 @@
             }
         }
 
+        public ApplicationMappers(int applicationId, int candidateId)
+        {
+            _applicationId = applicationId;
+            _candidateId = candidateId;
+        }
+
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
         {
             {"No longer interested", 1},
