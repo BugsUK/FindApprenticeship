@@ -6,6 +6,6 @@
 
     public interface IReportingRepository
     {
-        IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
+        List<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
     }
 }
