@@ -6,9 +6,6 @@
     //  - postUrl: url to send the form
     var autoSaveTimeout = null,
         initialise = function(settings) {
-            // settings.formSelector
-            // settings.timeout
-            // settings.postUrl
 
             function timeoutReset() {
                 setTimeout(function() {
@@ -16,25 +13,29 @@
                 }, autoSaveTimeout);
             }
 
-            function timeoutTrigger() {
+            function saveForm() {
                 $.ajax({
                     type: "POST",
                     url: settings.postUrl,
                     cache: false,
                     timeout: 30000,
-                    // data: $("form").serialize()
                     data: $(settings.formSelector).serialize()
                 });
+            }
 
+            function timeoutTrigger() {
+                saveForm();
                 timeoutReset();
             }
 
             $(function() {
                 autoSaveTimeout = settings.timeout;
+                timeoutReset();
+            });
 
-                setTimeout(function() {
-                    timeoutTrigger();
-                }, autoSaveTimeout);
+            $(window).on('beforeunload', function (e) {
+                saveForm();
+                return;
             });
         };
 
