@@ -92,29 +92,6 @@
             };
         }
 
-        public dynamic MapApplicationDynamic(VacancyApplication apprenticeshipApplication, Candidate candidate)
-        {
-            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
-            return new
-            {
-                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
-                CandidateId = GetCandidateId(candidate),
-                VacancyId = apprenticeshipApplication.Vacancy.Id,
-                ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
-                WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
-                UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId),
-                NextActionId = 0,
-                NextActionOther = default(string),
-                AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
-                CVAttachmentId = default(int?),
-                BeingSupportedBy = default(string),
-                LockedForSupportUntil = default(DateTime?),
-                WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id
-            };
-        }
-
         public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
