@@ -908,6 +908,8 @@
     <Build Include="dbo\Stored Procedures\ReportGetManagedBy.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportGetTrainingProviderByStatusAndManagedBy.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportUnsuccessfulCandidateApplications.proc.sql" />
+    <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
