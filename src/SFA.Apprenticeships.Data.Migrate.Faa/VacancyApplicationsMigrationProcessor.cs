@@ -114,13 +114,26 @@
         private void BulkUpdate(IList<IDictionary<string, object>> applications)
         {
             //Updates can edit the ApplicationId value so delete the existing records and recreate
-            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
-            {
-                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applications.Select(a => (Guid)a["ApplicationGuid"]) });
-            }
+            BulkDelete(applications);
 
             //Then create the new ones
             _genericSyncRespository.BulkInsert(_applicationTable, applications);
+        }
+
+        private void BulkDelete(IList<IDictionary<string, object>> applications)
+        {
+            using (var connection = (SqlConnection) _targetDatabase.GetOpenConnection())
+            {
+                //Delete via guids first
+                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applications.Select(a => (Guid)a["ApplicationGuid"]) });
+                foreach (var application in applications)
+                {
+                    //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid. This deletes them
+                    connection.Execute(
+                        $@"DELETE FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId",
+                        new {vacancyId = application["VacancyId"], candidateId = application["CandidateId"]});
+                }
+            }
         }
 
         private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<IList<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
@@ -146,7 +159,10 @@
                 }
                 catch (Exception ex)
                 {
-                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}", ex);
+                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}. Trying a delete then retry", ex);
+                    //Propagate exception back up the stack rather than silently continuing
+                    BulkDelete(applications);
+                    bulkAction(applications);
                 }
 
                 _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
