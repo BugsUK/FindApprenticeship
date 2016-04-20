@@ -77,7 +77,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 AdditionalLocationInformation = AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = NumberOfPositions,
-                EmployerAnonymousName = null,
                 EmployerDescriptionComment = EmployerDescriptionComment,
                 EmployerWebsiteUrlComment = EmployerWebsiteUrlComment,
                 LocationAddressesComment = LocationAddressesComment,

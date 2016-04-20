@@ -129,9 +129,10 @@
             if (locationSearchViewModel.Addresses.Count == 1)
             {
                 //Set address
-                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
+                var addressViewModel = locationSearchViewModel.Addresses.Single();
+                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(addressViewModel.Address);
+                vacancy.NumberOfPositions = addressViewModel.NumberOfPositions;
                 _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-
             }
             else
             {
@@ -192,7 +193,7 @@
                             new VacancyLocationAddressViewModel
                             {
                                 Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
-                                NumberOfPositions = vacancy.NumberOfPositions.Value
+                                NumberOfPositions = vacancy.NumberOfPositions
                             });
                     }
                 }
@@ -319,7 +320,7 @@
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
-            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
+            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
@@ -548,7 +549,7 @@
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
@@ -815,6 +816,8 @@
             vacancy.ClosingDate = null;
             vacancy.PossibleStartDate = null;
             vacancy.SubmissionCount = 0;
+            vacancy.EmployerAnonymousName = null;
+
             //Comments
             vacancy.TitleComment = null;
             vacancy.ShortDescriptionComment = null;
