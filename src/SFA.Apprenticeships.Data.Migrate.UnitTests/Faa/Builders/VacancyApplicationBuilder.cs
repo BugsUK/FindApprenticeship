@@ -15,7 +15,7 @@
             return new VacancyApplication
             {
                 Id = Guid.NewGuid(),
-                DateCreated = DateTime.Now,
+                DateCreated = DateTime.Now.AddDays(-7),
                 DateUpdated = DateTime.Now,
                 Status = _status,
                 CandidateId = Guid.NewGuid(),

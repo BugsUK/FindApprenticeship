@@ -72,9 +72,10 @@
         public Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            var applicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId);
             return new Application
             {
-                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
+                ApplicationId = applicationId,
                 CandidateId = GetCandidateId(candidate),
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
@@ -88,16 +89,17 @@
                 BeingSupportedBy = null,
                 LockedForSupportUntil = null,
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id
+                ApplicationGuid = apprenticeshipApplication.Id,
             };
         }
 
         public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            var applicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId);
             return new Dictionary<string, object>
             {
-                {"ApplicationId", GetApplicationId(apprenticeshipApplication.LegacyApplicationId)},
+                {"ApplicationId", applicationId},
                 {"CandidateId", GetCandidateId(candidate)},
                 {"VacancyId", apprenticeshipApplication.Vacancy.Id},
                 {"ApplicationStatusTypeId", GetApplicationStatusTypeId(apprenticeshipApplication.Status)},
