@@ -38,5 +38,9 @@
         public const string ViewCandidateTraineeshipApplication = "ViewCandidateTraineeshipApplication";
         public const string ViewCandidateApprenticeshipVacancy = "ViewCandidateApprenticeshipVacancy";
         public const string ViewCandidateTraineeshipVacancy = "ViewCandidateTraineeshipVacancy";
+
+        //Reports
+        public const string ReportVacanciesList = "ReportVacanciesList";
+
     }
 }

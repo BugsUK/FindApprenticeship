@@ -16,7 +16,7 @@
 
         public IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate)
         {
-            throw new System.NotImplementedException();
+            return _reportingProvider.ReportVacanciesList(fromDate, toDate);
         }
     }
 }
