@@ -38,7 +38,7 @@
                 var x = f.GetValue(o);
 
                 if (x != null)
-                    linie.Append("\"x.ToString()\"");
+                    linie.Append($"\"{x.ToString()}\"");
             }
 
             return linie.ToString();
