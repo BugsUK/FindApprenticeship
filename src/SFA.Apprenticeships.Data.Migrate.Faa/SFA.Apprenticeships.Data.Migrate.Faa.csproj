@@ -120,6 +120,7 @@
     <Compile Include="IVacancyApplicationsUpdater.cs" />
     <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
+    <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MongoConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

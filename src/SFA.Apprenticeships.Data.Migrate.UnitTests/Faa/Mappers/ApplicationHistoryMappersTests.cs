@@ -69,7 +69,7 @@
             submittedHistory.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
             submittedHistory.UserName.Should().Be("");
             // ReSharper disable once PossibleInvalidOperationException
-            submittedHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.DateUpdated.Value);
+            submittedHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.DateApplied.Value);
             submittedHistory.ApplicationHistoryEventTypeId.Should().Be(1);
             submittedHistory.ApplicationHistoryEventSubTypeId.Should().Be(2);
             submittedHistory.Comment.Should().Be("Status Change");

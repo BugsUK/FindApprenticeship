@@ -13,6 +13,8 @@
 
         public DateTime? DateUpdated { get; set; }
 
+        public DateTime? DateApplied { get; set; }
+
         public int Status { get; set; }
 
         public Guid CandidateId { get; set; }

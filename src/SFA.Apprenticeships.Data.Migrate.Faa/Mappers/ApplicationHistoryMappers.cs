@@ -32,7 +32,7 @@
             if (vacancyApplication.Status >= 30)
             {
                 //Submitted
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSent));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateApplied ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSent));
             }
             if (vacancyApplication.Status >= 40)
             {

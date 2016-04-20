@@ -6,8 +6,8 @@
     using System.Linq;
     using System.Threading;
     using Dapper;
+    using Entities;
     using Entities.Mongo;
-    using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using MongoDB.Driver;
@@ -28,6 +28,7 @@
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
+        private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
 
         public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
@@ -58,6 +59,8 @@
         {
             _logService.Warn($"ExecuteFullSync on {_vacancyApplicationsUpdater.CollectionName} collection with LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
 
+            //TODO: These deletes would have to be done outside of this class as it affects traineeships and apprenticeships at the same time
+            //_genericSyncRespository.DeleteAll(_applicationHistoryTable);
             //_genericSyncRespository.DeleteAll(_applicationTable);
 
             _logService.Info("Loading Vacancy Ids");
@@ -106,27 +109,29 @@
             _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
-        private void BulkInsert(IList<IDictionary<string, object>> applications)
+        private void BulkInsert(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
         {
-            _genericSyncRespository.BulkInsert(_applicationTable, applications);
+            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Select(a => a.Application));
+
+            _genericSyncRespository.BulkInsert(_applicationHistoryTable, applicationsWithHistory.SelectMany(a => a.ApplicationHistory));
         }
 
-        private void BulkUpdate(IList<IDictionary<string, object>> applications)
+        private void BulkUpdate(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
         {
             //Updates can edit the ApplicationId value so delete the existing records and recreate
-            BulkDelete(applications);
+            BulkDelete(applicationsWithHistory);
 
             //Then create the new ones
-            _genericSyncRespository.BulkInsert(_applicationTable, applications);
+            BulkInsert(applicationsWithHistory);
         }
 
-        private void BulkDelete(IList<IDictionary<string, object>> applications)
+        private void BulkDelete(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
         {
             using (var connection = (SqlConnection) _targetDatabase.GetOpenConnection())
             {
                 //Delete via guids first
-                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applications.Select(a => (Guid)a["ApplicationGuid"]) });
-                foreach (var application in applications)
+                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) });
+                foreach (var application in applicationsWithHistory.Select(a => a.Application))
                 {
                     //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid. This deletes them
                     connection.Execute(
@@ -136,7 +141,7 @@
             }
         }
 
-        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<IList<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
+        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<IList<ApplicationWithHistoryDictionary>> bulkAction, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -150,25 +155,25 @@
 
                 LoadCandidates(candidates, batch, cancellationToken);
 
-                var applications = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationDictionary(a, candidates[a.CandidateId])).ToList();
-                count += applications.Count;
-                _logService.Info($"Processing {applications.Count} {_vacancyApplicationsUpdater.CollectionName}");
+                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistoryDictionary(a, candidates[a.CandidateId])).ToList();
+                count += applicationsWithHistory.Count;
+                _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
                 try
                 {
-                    bulkAction(applications);
+                    bulkAction(applicationsWithHistory);
                 }
                 catch (Exception ex)
                 {
                     _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}. Trying a delete then retry", ex);
                     //Propagate exception back up the stack rather than silently continuing
-                    BulkDelete(applications);
-                    bulkAction(applications);
+                    BulkDelete(applicationsWithHistory);
+                    bulkAction(applicationsWithHistory);
                 }
 
-                _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
+                //_vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
 
                 var percentage = ((double)count / expectedCount) * 100;
-                _logService.Info($"Processed batch of {applications.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
+                _logService.Info($"Processed batch of {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
             }
         }
 

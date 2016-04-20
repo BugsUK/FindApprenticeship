@@ -91,6 +91,7 @@
                 .Include(a => a.DateCreated)
                 .Include(a => a.DateUpdated)
                 .Include(a => a.Status)
+                .Include(a => a.DateApplied)
                 .Include(a => a.CandidateId)
                 .Include(a => a.LegacyApplicationId)
                 .Include(a => a.WithdrawnOrDeclinedReason)

@@ -243,6 +243,8 @@ select top 10 * from VacancyReferralComments
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
+            public bool IdentityInsert => true;
+
             public decimal BatchSizeMultiplier { get; private set; }
 
             public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)

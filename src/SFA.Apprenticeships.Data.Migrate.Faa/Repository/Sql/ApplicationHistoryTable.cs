@@ -2,13 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
-    using Migrate;
 
-    public class ApplicationTable : ITableSpec
+    public class ApplicationHistoryTable : ITableSpec
     {
-        public string Name => "Application";
-        public IEnumerable<string> PrimaryKeys => new []{"ApplicationId"};
-        public bool IdentityInsert => true;
+        public string Name => "ApplicationHistory";
+        public IEnumerable<string> PrimaryKeys => new[] { "ApplicationHistoryId" };
+        public bool IdentityInsert => false;
         public decimal BatchSizeMultiplier => 1;
         public IEnumerable<ITableSpec> DependsOn { get; }
         public Action<ITableSpec, dynamic, dynamic> Transform { get; }

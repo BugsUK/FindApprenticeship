@@ -171,10 +171,14 @@ END CATCH
 
         private void InsertFromTemp(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
         {
-            connection.Execute($@"
-{GetSetIdentityInsertSql(table)};
-{GetInsertSql(table, columnTypes, tempTable)};
-");
+            if (table.IdentityInsert)
+            {
+                connection.Execute($@"{GetSetIdentityInsertSql(table)};{GetInsertSql(table, columnTypes, tempTable)};");
+            }
+            else
+            {
+                connection.Execute($@"{GetInsertSql(table, columnTypes, tempTable)};");
+            }
         }
 
 
