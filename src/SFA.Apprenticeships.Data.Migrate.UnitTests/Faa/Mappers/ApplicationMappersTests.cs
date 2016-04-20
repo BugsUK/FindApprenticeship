@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Builders;
     using FluentAssertions;
     using Migrate.Faa.Mappers;
@@ -255,6 +256,37 @@
         }
 
         [Test]
+        public void SuccessfulApplicationWithHistoryTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
+            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+
+            //Act
+            var application = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate);
+
+            //Assert
+            application.Application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
+            application.Application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            application.Application.VacancyId.Should().Be(vacancyApplication.Vacancy.Id);
+            application.Application.ApplicationStatusTypeId.Should().Be(6);
+            application.Application.WithdrawnOrDeclinedReasonId.Should().Be(0);
+            application.Application.UnsuccessfulReasonId.Should().Be(0);
+            application.Application.OutcomeReasonOther.Should().Be(null);
+            application.Application.NextActionId.Should().Be(0);
+            application.Application.NextActionOther.Should().Be(null);
+            application.Application.AllocatedTo.Should().Be(null);
+            application.Application.CVAttachmentId.Should().Be(null);
+            application.Application.BeingSupportedBy.Should().Be(null);
+            application.Application.LockedForSupportUntil.Should().Be(null);
+            application.Application.WithdrawalAcknowledged.Should().Be(true);
+            application.Application.ApplicationGuid.Should().Be(vacancyApplication.Id);
+            application.ApplicationHistory.Should().NotBeNullOrEmpty();
+            application.ApplicationHistory.Count.Should().Be(4);
+            application.ApplicationHistory.All(a => a.ApplicationId == application.Application.ApplicationId).Should().BeTrue();
+        }
+
+        [Test]
         public void NoLegacyIdsVacancyApplicationTest()
         {
             //Arrange
@@ -295,6 +327,37 @@
             application["LockedForSupportUntil"].Should().Be(null);
             application["WithdrawalAcknowledged"].Should().Be(true);
             application["ApplicationGuid"].Should().Be(vacancyApplication.Id);
+        }
+
+        [Test]
+        public void SubmittedApplicationWithHistoryDictionaryTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
+            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+
+            //Act
+            var application = _applicationMappers.MapApplicationWithHistoryDictionary(vacancyApplication, candidate);
+
+            //Assert
+            application.Application["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
+            application.Application["CandidateId"].Should().Be(candidate.LegacyCandidateId);
+            application.Application["VacancyId"].Should().Be(vacancyApplication.Vacancy.Id);
+            application.Application["ApplicationStatusTypeId"].Should().Be(2);
+            application.Application["WithdrawnOrDeclinedReasonId"].Should().Be(0);
+            application.Application["UnsuccessfulReasonId"].Should().Be(0);
+            application.Application["OutcomeReasonOther"].Should().Be(null);
+            application.Application["NextActionId"].Should().Be(0);
+            application.Application["NextActionOther"].Should().Be(null);
+            application.Application["AllocatedTo"].Should().Be(null);
+            application.Application["CVAttachmentId"].Should().Be(null);
+            application.Application["BeingSupportedBy"].Should().Be(null);
+            application.Application["LockedForSupportUntil"].Should().Be(null);
+            application.Application["WithdrawalAcknowledged"].Should().Be(true);
+            application.Application["ApplicationGuid"].Should().Be(vacancyApplication.Id);
+            application.ApplicationHistory.Should().NotBeNull();
+            application.ApplicationHistory.Count.Should().Be(2);
+            application.ApplicationHistory.All(a => (int)a["ApplicationId"] == (int)application.Application["ApplicationId"]).Should().BeTrue();
         }
     }
 }

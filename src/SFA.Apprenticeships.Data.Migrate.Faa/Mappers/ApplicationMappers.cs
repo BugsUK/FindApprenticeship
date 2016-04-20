@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Entities;
     using Entities.Mongo;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
@@ -72,10 +73,9 @@
         public Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
-            var applicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId);
             return new Application
             {
-                ApplicationId = applicationId,
+                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
                 CandidateId = GetCandidateId(candidate),
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
@@ -91,6 +91,13 @@
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
                 ApplicationGuid = apprenticeshipApplication.Id,
             };
+        }
+
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        {
+            var application = MapApplication(apprenticeshipApplication, candidate);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId);
+            return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
         }
 
         public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
@@ -115,6 +122,13 @@
                 {"WithdrawalAcknowledged", GetWithdrawalAcknowledged(unsuccessfulReasonId)},
                 {"ApplicationGuid", apprenticeshipApplication.Id}
             };
+        }
+
+        public ApplicationWithHistoryDictionary MapApplicationWithHistoryDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        {
+            var application = MapApplicationDictionary(apprenticeshipApplication, candidate);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistoryDictionary((int)application["ApplicationId"]);
+            return new ApplicationWithHistoryDictionary { Application = application, ApplicationHistory = applicationHistory };
         }
 
         private int GetApplicationId(int legacyApplicationId)

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Entities.Sql
 {
     using System;
-    using System.Collections.Generic;
 
     public class Application
     {
