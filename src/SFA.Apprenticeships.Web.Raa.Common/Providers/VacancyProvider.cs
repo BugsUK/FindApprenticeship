@@ -314,6 +314,10 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
+            var vacancyParty =
+                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
@@ -326,6 +330,7 @@
             vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
+            vacancy.Address = employer.Address;
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
