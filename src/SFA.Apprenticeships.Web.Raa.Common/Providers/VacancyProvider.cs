@@ -548,7 +548,7 @@
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
