@@ -8,6 +8,7 @@
     using Attributes;
     using Common.Configuration;
     using Domain.Entities.Raa;
+    using Mediators.Reporting;
     using Microsoft.Reporting.WebForms;
     using SFA.Infrastructure.Interfaces;
 
@@ -15,10 +16,20 @@
     public class ReportController : ManagementControllerBase
     {
         private readonly ReportServerConfiguration _reportServerConfiguration;
+        private readonly IReportingMediator _reportingMediator;
 
-        public ReportController(IConfigurationService configurationService)
+        public ReportController(IConfigurationService configurationService, IReportingMediator reportingMediator)
         {
             _reportServerConfiguration = configurationService.Get<ReportServerConfiguration>();
+            _reportingMediator = reportingMediator;
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public FileContentResult VacanciesListCsv(DateTime fromDate, DateTime toDate)
+        {
+            var csvBytes = _reportingMediator.ReportVacanciesList(fromDate, toDate);
+            return File(csvBytes, "text/csv", "ReportVacanciesList.csv");
         }
 
         public ActionResult Index()
