@@ -2,7 +2,9 @@
 {
     using Common;
     using Configuration;
+    using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Repositories;
+    using Reporting;
     using Schemas.Provider;
     using Schemas.Reference;
     using Schemas.UserProfile;
@@ -27,6 +29,7 @@
             For<IProviderUserWriteRepository>().Use<ProviderUserRepository>().Ctor<IMapper>().Named("ProviderUserMappers");
             For<IAgencyUserReadRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
             For<IAgencyUserWriteRepository>().Use<AgencyUserRepository>().Ctor<IMapper>().Named("AgencyUserMappers");
+            For<IReportingRepository>().Use<ReportingRepository>();
         }
     }
 }

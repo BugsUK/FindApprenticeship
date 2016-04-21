@@ -211,6 +211,12 @@
                defaults: new { controller = "Report", action = "Index" }
                );
 
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportVacanciesList,
+               url: "reports/vacancies",
+               defaults: new { controller = "Report", action = "VacanciesListCsv" }
+               );
+
             routes.LowercaseUrls = true;
         }
     }

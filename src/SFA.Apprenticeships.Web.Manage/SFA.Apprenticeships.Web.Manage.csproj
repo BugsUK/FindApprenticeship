@@ -343,6 +343,8 @@
     <Compile Include="Mediators\Candidate\CandidateMediator.cs" />
     <Compile Include="Mediators\Candidate\CandidateMediatorCodes.cs" />
     <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
+    <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
+    <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
@@ -664,6 +666,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.ReferenceData\SFA.Apprenticeships.Application.ReferenceData.csproj">
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{f7b7b49b-0b08-4edc-afe2-7e88a6a5a3f6}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>

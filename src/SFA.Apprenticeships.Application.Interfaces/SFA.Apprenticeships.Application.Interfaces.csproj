@@ -111,6 +111,7 @@
     <Compile Include="Organisations\IOrganisationService.cs" />
     <Compile Include="Providers\IProviderService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
+    <Compile Include="Reporting\IReportingService.cs" />
     <Compile Include="Search\AggregationResult.cs" />
     <Compile Include="Users\IProviderUserAccountService.cs" />
     <Compile Include="Users\IUserProfileService.cs" />
