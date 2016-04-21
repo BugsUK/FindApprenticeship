@@ -9,5 +9,7 @@
         public DateTime DateCreated { get; set; }
 
         public DateTime? DateUpdated { get; set; }
+
+        public RegistrationDetails RegistrationDetails { get; set; }
     }
 }

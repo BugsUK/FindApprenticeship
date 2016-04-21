@@ -16,7 +16,23 @@
                 Id = _candidateId,
                 DateCreated = DateTime.Now.AddDays(-7),
                 DateUpdated = DateTime.Now,
-                LegacyCandidateId = _legacyCandidateId
+                LegacyCandidateId = _legacyCandidateId,
+                RegistrationDetails = new RegistrationDetails
+                {
+                    DateOfBirth = new DateTime(1978, 10, 23),
+                    Address = new Address
+                    {
+                        AddressLine1 = "Address Line 1",
+                        AddressLine2 = "Address Line 2",
+                        AddressLine3 = "Address Line 3",
+                        AddressLine4 = "Address Line 4",
+                        GeoPoint = new GeoPoint
+                        {
+                            Latitude = 52.8810974569710030,
+                            Longitude = -1.7005217601595300
+                        }
+                    }
+                }
             };
 
             var user = new User

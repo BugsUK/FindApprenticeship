@@ -90,8 +90,8 @@
         private static ProjectionDefinition<CandidateSummary> GetCandidateSummaryProjection()
         {
             return Builders<CandidateSummary>.Projection
-                   .Include(a => a.Id)
-                   .Include(a => a.LegacyCandidateId);
+                   .Include(c => c.Id)
+                   .Include(c => c.LegacyCandidateId);
         }
 
         public async Task<List<CandidateUser>> GetAllCandidateUsers(CancellationToken cancellationToken)
@@ -169,10 +169,11 @@
         private static ProjectionDefinition<Candidate> GetCandidateProjection()
         {
             return Builders<Candidate>.Projection
-                .Include(a => a.Id)
-                .Include(a => a.DateCreated)
-                .Include(a => a.DateUpdated)
-                   .Include(a => a.LegacyCandidateId);
+                .Include(c => c.Id)
+                .Include(c => c.DateCreated)
+                .Include(c => c.DateUpdated)
+                .Include(c => c.LegacyCandidateId)
+                .Include(c => c.RegistrationDetails);
         }
     }
 }

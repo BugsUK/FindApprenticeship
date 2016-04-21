@@ -15,21 +15,24 @@
 
         public Candidate MapCandidate(CandidateUser candidateUser)
         {
+            var address = candidateUser.Candidate.RegistrationDetails.Address;
+            var town = address.AddressLine4 ?? address.AddressLine3 ?? address.AddressLine2;
+
             return new Candidate
             {
                 CandidateId = candidateUser.Candidate.LegacyCandidateId,
                 PersonId = -1, //Unspecified person
                 CandidateStatusTypeId = CandidateStatusTypeIdPreRegistered,
-                /*DateofBirth = candidateUser.Candidate.,
-                AddressLine1 = candidateUser.Candidate.,
-                AddressLine2 = candidateUser.Candidate.,
-                AddressLine3 = candidateUser.Candidate.,
-                AddressLine4 = candidateUser.Candidate.,
-                AddressLine5 = candidateUser.Candidate.,
-                Town = candidateUser.Candidate.,
-                CountyId = candidateUser.Candidate.,
-                Postcode = candidateUser.Candidate.,
-                LocalAuthorityId = candidateUser.Candidate.,
+                DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
+                AddressLine1 = address.AddressLine1,
+                AddressLine2 = address.AddressLine2 ?? "",
+                AddressLine3 = address.AddressLine3 ?? "",
+                AddressLine4 = "",
+                AddressLine5 = null,
+                Town = town,
+                //CountyId = candidateUser.Candidate.,
+                Postcode = address.Postcode,
+                /*LocalAuthorityId = candidateUser.Candidate.,
                 Longitude = candidateUser.Candidate.,
                 Latitude = candidateUser.Candidate.,
                 GeocodeEasting = candidateUser.Candidate.,
@@ -71,7 +74,60 @@
 
         public IDictionary<string, object> MapCandidateDictionary(CandidateUser candidateUser)
         {
-            throw new System.NotImplementedException();
+            var candidate = MapCandidate(candidateUser);
+
+            return new Dictionary<string, object>
+            {
+                {"CandidateId", candidate.CandidateId},
+                {"PersonId", candidate.PersonId},
+                {"CandidateStatusTypeId", candidate.CandidateStatusTypeId},
+                {"DateofBirth", candidate.DateofBirth},
+                {"AddressLine1", candidate.AddressLine1},
+                {"AddressLine2", candidate.AddressLine2},
+                {"AddressLine3", candidate.AddressLine3},
+                {"AddressLine4", candidate.AddressLine4},
+                {"AddressLine5", candidate.AddressLine5},
+                {"Town", candidate.Town},
+                {"CountyId", candidate.CountyId},
+                {"Postcode", candidate.Postcode},
+                {"LocalAuthorityId", candidate.LocalAuthorityId},
+                {"Longitude", candidate.Longitude},
+                {"Latitude", candidate.Latitude},
+                {"GeocodeEasting", candidate.GeocodeEasting},
+                {"GeocodeNorthing", candidate.GeocodeNorthing},
+                {"NiReference", candidate.NiReference},
+                {"VoucherReferenceNumber", candidate.VoucherReferenceNumber},
+                {"UniqueLearnerNumber", candidate.UniqueLearnerNumber},
+                {"UlnStatusId", candidate.UlnStatusId},
+                {"Gender", candidate.Gender},
+                {"EthnicOrigin", candidate.EthnicOrigin},
+                {"EthnicOriginOther", candidate.EthnicOriginOther},
+                {"ApplicationLimitEnforced", candidate.ApplicationLimitEnforced},
+                {"LastAccessedDate", candidate.LastAccessedDate},
+                {"AdditionalEmail", candidate.AdditionalEmail},
+                {"Disability", candidate.Disability},
+                {"DisabilityOther", candidate.DisabilityOther},
+                {"HealthProblems", candidate.HealthProblems},
+                {"ReceivePushedContent", candidate.ReceivePushedContent},
+                {"ReferralAgent", candidate.ReferralAgent},
+                {"DisableAlerts", candidate.DisableAlerts},
+                {"UnconfirmedEmailAddress", candidate.UnconfirmedEmailAddress},
+                {"MobileNumberUnconfirmed", candidate.MobileNumberUnconfirmed},
+                {"DoBFailureCount", candidate.DoBFailureCount},
+                {"ForgottenUsernameRequested", candidate.ForgottenUsernameRequested},
+                {"ForgottenPasswordRequested", candidate.ForgottenPasswordRequested},
+                {"TextFailureCount", candidate.TextFailureCount},
+                {"EmailFailureCount", candidate.EmailFailureCount},
+                {"LastAccessedManageApplications", candidate.LastAccessedManageApplications},
+                {"ReferralPoints", candidate.ReferralPoints},
+                {"BeingSupportedBy", candidate.BeingSupportedBy},
+                {"LockedForSupportUntil", candidate.LockedForSupportUntil},
+                {"NewVacancyAlertEmail", candidate.NewVacancyAlertEmail},
+                {"NewVacancyAlertSMS", candidate.NewVacancyAlertSMS},
+                {"AllowMarketingMessages", candidate.AllowMarketingMessages},
+                {"ReminderMessageSent", candidate.ReminderMessageSent},
+                {"CandidateGuid", candidate.CandidateGuid}
+            };
         }
     }
 }

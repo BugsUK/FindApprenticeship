@@ -4,11 +4,9 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Entities;
     using Entities.Mongo;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
-    using MongoDB.Driver;
     using Repository.Mongo;
     using Repository.Sql;
     using SFA.Infrastructure.Interfaces;
@@ -22,12 +20,14 @@
         private readonly ILogService _logService;
 
         private readonly CandidateRepository _candidateRepository;
+        private readonly SyncRepository _syncRepository;
 
         private readonly ITableSpec _candidateTable = new CandidateTable();
 
-        public CandidateMigrationProcessor(ICandidateMappers candidateMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
+        public CandidateMigrationProcessor(ICandidateMappers candidateMappers, SyncRepository syncRepository, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
             _candidateMappers = candidateMappers;
+            _syncRepository = syncRepository;
             _genericSyncRespository = genericSyncRespository;
             _targetDatabase = targetDatabase;
             _configurationService = configurationService;
@@ -58,40 +58,60 @@
             _genericSyncRespository.BulkInsert(_candidateTable, candidates);
         }
 
+        private void BulkDelete(IList<IDictionary<string, object>> candidates)
+        {
+            /*var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
+            //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
+            foreach (var application in applicationsWithHistory.Select(a => a.Application))
+            {
+                var applicationId = _targetDatabase.Query<int?>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId", new { vacancyId = application["VacancyId"], candidateId = application["CandidateId"] }).SingleOrDefault();
+                if (applicationId.HasValue && !applicationIds.Contains(applicationId.Value))
+                {
+                    applicationIds.Add(applicationId.Value);
+                }
+            }
+
+            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
+            {
+                //Delete application history associated with application
+                connection.Execute($@"DELETE FROM {_applicationHistoryTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
+
+                //Delete applications
+                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
+            }*/
+        }
+
         private void ProcessCandidates(IList<CandidateUser> candidateUsers, long expectedCount, Action<IList<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
         {
-            /*var count = 0;
-            while (candidateUsers.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested) return;
+
+            var count = 0;
+
+            var maxDateCreated = candidateUsers.Max(c => c.Candidate.DateCreated);
+            var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
+
+            var applicationsWithHistory = candidateUsers.Select(c => _candidateMappers.MapCandidateDictionary(c)).ToList();
+            count += applicationsWithHistory.Count;
+            _logService.Info($"Processing {applicationsWithHistory.Count} candidates");
+            try
             {
-                var batch = candidateUsers.Current.ToList();
-                if (batch.Count == 0) continue;
-                _logService.Info($"Processing {batch.Count} {_vacancyApplicationsUpdater.CollectionName}");
+                bulkAction(applicationsWithHistory);
+            }
+            catch (Exception ex)
+            {
+                _logService.Error("Error while processing candidates. Trying a delete then retry", ex);
+                //Propagate exception back up the stack rather than silently continuing
+                BulkDelete(applicationsWithHistory);
+                bulkAction(applicationsWithHistory);
+            }
 
-                var maxDateCreated = batch.Max(a => a.DateCreated);
-                var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
+            var syncParams = _syncRepository.GetSyncParams();
+            syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
+            syncParams.CandidateLastUpdatedDate = maxDateUpdated > syncParams.CandidateLastUpdatedDate ? maxDateUpdated : syncParams.CandidateLastUpdatedDate;
+            _syncRepository.SetCandidateSyncParams(syncParams);
 
-                LoadCandidates(candidates, batch, cancellationToken);
-
-                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistoryDictionary(a, candidates[a.CandidateId])).ToList();
-                count += applicationsWithHistory.Count;
-                _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
-                try
-                {
-                    bulkAction(applicationsWithHistory);
-                }
-                catch (Exception ex)
-                {
-                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}. Trying a delete then retry", ex);
-                    //Propagate exception back up the stack rather than silently continuing
-                    BulkDelete(applicationsWithHistory);
-                    bulkAction(applicationsWithHistory);
-                }
-
-                _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
-
-                var percentage = ((double)count / expectedCount) * 100;
-                _logService.Info($"Processed batch of {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
-            }*/
+            var percentage = ((double)count / expectedCount) * 100;
+            _logService.Info($"Processed batch of {applicationsWithHistory.Count} candidates and {count} candidates out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
         }
     }
 }

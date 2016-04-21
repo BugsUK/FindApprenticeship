@@ -116,8 +116,11 @@
     <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistoryDictionary.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
+    <Compile Include="Entities\Mongo\Address.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Mongo\CandidateUser.cs" />
+    <Compile Include="Entities\Mongo\GeoPoint.cs" />
+    <Compile Include="Entities\Mongo\RegistrationDetails.cs" />
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
     <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="IMigrationProcessor.cs" />

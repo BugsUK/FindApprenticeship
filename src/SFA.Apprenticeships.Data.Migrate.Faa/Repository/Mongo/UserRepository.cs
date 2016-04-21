@@ -38,8 +38,8 @@
         private static ProjectionDefinition<User> GetUserProjection()
         {
             return Builders<User>.Projection
-                   .Include(a => a.Id)
-                   .Include(a => a.Status);
+                   .Include(u => u.Id)
+                   .Include(u => u.Status);
         }
     }
 }

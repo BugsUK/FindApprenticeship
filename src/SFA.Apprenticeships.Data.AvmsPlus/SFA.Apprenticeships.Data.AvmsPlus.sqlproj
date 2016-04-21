@@ -910,6 +910,12 @@
     <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportUnsuccessfulCandidateApplications.proc.sql" />
     <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
+    <None Include="Scripts\Data\dbo.CandidateDisability.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateEthnicOrigin.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateGender.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateHistoryEvent.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateULNStatus.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
