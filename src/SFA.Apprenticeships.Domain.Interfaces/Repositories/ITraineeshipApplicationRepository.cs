@@ -21,6 +21,8 @@
         int GetApplicationCount(int vacancyId);
 
         int GetNewApplicationCount(int vacancyId);
+        
+        int GetNewApplicationsCount(List<int> liveVacancyIds);
     }
 
     public interface ITraineeshipApplicationWriteRepository : IWriteRepository<TraineeshipApplicationDetail>
