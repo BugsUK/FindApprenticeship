@@ -21,6 +21,7 @@
         private readonly ILogService _logService;
 
         private readonly CandidateRepository _candidateRepository;
+        private readonly PersonRepository _personRepository;
         private readonly SyncRepository _syncRepository;
 
         private readonly ITableSpec _candidateTable = new CandidateTable();
@@ -35,6 +36,7 @@
             _logService = logService;
 
             _candidateRepository = new CandidateRepository(configurationService, _logService);
+            _personRepository = new PersonRepository(targetDatabase);
         }
 
         public void Process(CancellationToken cancellationToken)
@@ -56,6 +58,12 @@
 
         private void BulkInsert(IList<CandidatePersonDictionary> candidates)
         {
+            //Have to do these one at a time as need to get the id for the inserted person records
+            foreach (var candidatePersonDictionary in candidates)
+            {
+                
+            }
+
             _genericSyncRespository.BulkInsert(_candidateTable, candidates.Select(c => c.Candidate));
         }
 
@@ -91,7 +99,9 @@
             var maxDateCreated = candidateUsers.Max(c => c.Candidate.DateCreated);
             var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
-            var applicationsWithHistory = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePersonDictionary(c)).ToList();
+            var persons = _personRepository.GetPersonsByEmails(candidateUsers.Select(c => c.Candidate.RegistrationDetails.EmailAddress));
+            var applicationsWithHistory = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePersonDictionary(c, persons)).ToList();
+
             count += applicationsWithHistory.Count;
             _logService.Info($"Processing {applicationsWithHistory.Count} candidates");
             try

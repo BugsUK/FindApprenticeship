@@ -131,6 +131,7 @@
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
+    <Compile Include="Repository\Sql\PersonRepository.cs" />
     <Compile Include="Repository\Sql\PersonTable.cs" />
     <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
     <Compile Include="Repository\Sql\CandidateTable.cs" />

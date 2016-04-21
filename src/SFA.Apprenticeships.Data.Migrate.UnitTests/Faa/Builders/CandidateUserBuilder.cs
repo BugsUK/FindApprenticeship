@@ -19,6 +19,9 @@
                 LegacyCandidateId = _legacyCandidateId,
                 RegistrationDetails = new RegistrationDetails
                 {
+                    FirstName = "FirstName",
+                    MiddleNames = "MiddleNames",
+                    LastName = "LastName",
                     DateOfBirth = new DateTime(1978, 10, 23),
                     Address = new Address
                     {
@@ -31,7 +34,9 @@
                             Latitude = 52.8810974569710030,
                             Longitude = -1.7005217601595300
                         }
-                    }
+                    },
+                    EmailAddress = "Test@TEST.CoM",
+                    PhoneNumber = "07895123456"
                 }
             };
 
