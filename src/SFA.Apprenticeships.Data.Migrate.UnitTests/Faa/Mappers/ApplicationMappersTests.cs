@@ -18,7 +18,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(5).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -32,7 +32,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -60,7 +60,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(20).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -88,7 +88,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -116,7 +116,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(40).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -156,7 +156,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(15).WithWithdrawnOrDeclinedReason(withdrawnOrDeclinedReason).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -204,7 +204,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(90).WithUnsuccessfulReason(unsuccessfulReason).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -232,7 +232,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -260,7 +260,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate);
@@ -291,7 +291,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
 
             //Act
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
@@ -306,7 +306,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplicationDictionary(vacancyApplication, candidate);
@@ -334,7 +334,7 @@
         {
             //Arrange
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
-            var candidate = new CandidateBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
             var application = _applicationMappers.MapApplicationWithHistoryDictionary(vacancyApplication, candidate);

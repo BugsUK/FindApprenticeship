@@ -11,6 +11,8 @@
 
     public class CandidateRepository
     {
+        private const string CollectionName = "candidates";
+
         private readonly ILogService _logService;
         private readonly IMongoDatabase _database;
 
@@ -24,25 +26,37 @@
 
         public async Task<long> GetCandidatesCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<Candidate>("candidates").CountAsync(Builders<Candidate>.Filter.Empty, cancellationToken: cancellationToken);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).CountAsync(Builders<Candidate>.Filter.Empty, cancellationToken: cancellationToken);
             return await cursor;
         }
 
-        public async Task<IDictionary<Guid, Candidate>> GetAllCandidatesAsync(CancellationToken cancellationToken)
+        public async Task<long> GetCandidatesCreatedSinceCount(DateTime lastCreatedDate, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Candidate>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).CountAsync(filter, cancellationToken: cancellationToken);
+            return await cursor;
+        }
+
+        public async Task<long> GetCandidatesUpdatedSinceCount(DateTime lastUpdatedDate, CancellationToken cancellationToken)
+        {
+            var filter = Builders<Candidate>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).CountAsync(filter, cancellationToken: cancellationToken);
+            return await cursor;
+        }
+
+        public async Task<IDictionary<Guid, CandidateSummary>> GetAllCandidateSummaries(CancellationToken cancellationToken)
         {
             var candidatesCount = await GetCandidatesCount(cancellationToken);
 
-            var candidates = new Dictionary<Guid, Candidate>((int)candidatesCount);
+            var candidates = new Dictionary<Guid, CandidateSummary>((int)candidatesCount);
 
-            var options = new FindOptions<Candidate>
+            var options = new FindOptions<CandidateSummary>
             {
                 BatchSize = 10000,
-                Projection = Builders<Candidate>.Projection
-                   .Include(a => a.Id)
-                   .Include(a => a.LegacyCandidateId)
+                Projection = GetCandidateSummaryProjection()
             };
 
-            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(Builders<Candidate>.Filter.Empty, options, cancellationToken);
+            var cursor = await _database.GetCollection<CandidateSummary>(CollectionName).FindAsync(Builders<CandidateSummary>.Filter.Empty, options, cancellationToken);
 
             while (await cursor.MoveNextAsync(cancellationToken))
             {
@@ -59,25 +73,59 @@
             return candidates;
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetCandidateById(Guid id, CancellationToken cancellationToken)
+        public async Task<IAsyncCursor<CandidateSummary>> GetCandidateSummariesByIds(IEnumerable<Guid> ids, CancellationToken cancellationToken)
         {
-            var filter = Builders<Candidate>.Filter.Eq(c => c.Id, id);
-            var cursor = await _database.GetCollection<Candidate>("candidates").FindAsync(filter, cancellationToken: cancellationToken);
-            await cursor.MoveNextAsync(cancellationToken);
-            return cursor;
+            var options = new FindOptions<CandidateSummary>
+            {
+                Projection = GetCandidateSummaryProjection()
+            };
+            var filter = Builders<CandidateSummary>.Filter.In(c => c.Id, ids);
+            var cursor = _database.GetCollection<CandidateSummary>(CollectionName).FindAsync(filter, options, cancellationToken);
+            return await cursor;
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetCandidatesByIds(IEnumerable<Guid> ids, CancellationToken cancellationToken)
+        private static ProjectionDefinition<CandidateSummary> GetCandidateSummaryProjection()
         {
+            return Builders<CandidateSummary>.Projection
+                   .Include(a => a.Id)
+                   .Include(a => a.LegacyCandidateId);
+        }
+
+        public async Task<IAsyncCursor<Candidate>> GetAllCandidatesCreatedSince(DateTime lastCreatedDate, CancellationToken cancellationToken)
+        {
+            var sort = Builders<Candidate>.Sort.Ascending(a => a.DateCreated);
             var options = new FindOptions<Candidate>
             {
-                Projection = Builders<Candidate>.Projection
-                   .Include(a => a.Id)
-                   .Include(a => a.LegacyCandidateId)
+                Sort = sort,
+                BatchSize = 1000,
+                Projection = GetCandidateProjection()
             };
-            var filter = Builders<Candidate>.Filter.In(c => c.Id, ids);
-            var cursor = _database.GetCollection<Candidate>("candidates").FindAsync(filter, options, cancellationToken);
+            var filter = Builders<Candidate>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
             return await cursor;
+        }
+
+        public async Task<IAsyncCursor<Candidate>> GetAllCandidatesUpdatedSince(DateTime lastUpdatedDate, CancellationToken cancellationToken)
+        {
+            var sort = Builders<Candidate>.Sort.Ascending(a => a.DateUpdated);
+            var options = new FindOptions<Candidate>
+            {
+                Sort = sort,
+                BatchSize = 1000,
+                Projection = GetCandidateProjection()
+            };
+            var filter = Builders<Candidate>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var cursor = _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
+            return await cursor;
+        }
+
+        private static ProjectionDefinition<Candidate> GetCandidateProjection()
+        {
+            return Builders<Candidate>.Projection
+                .Include(a => a.Id)
+                .Include(a => a.DateCreated)
+                .Include(a => a.DateUpdated)
+                   .Include(a => a.LegacyCandidateId);
         }
     }
 }

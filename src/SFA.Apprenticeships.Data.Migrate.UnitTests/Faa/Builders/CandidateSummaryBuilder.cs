@@ -3,27 +3,27 @@
     using System;
     using Migrate.Faa.Entities.Mongo;
 
-    public class CandidateBuilder
+    public class CandidateSummaryBuilder
     {
         private Guid _candidateId = Guid.NewGuid();
         private int _legacyCandidateId = 456789;
 
-        public Candidate Build()
+        public CandidateSummary Build()
         {
-            return new Candidate
+            return new CandidateSummary
             {
                 Id = _candidateId,
                 LegacyCandidateId = _legacyCandidateId
             };
         }
 
-        public CandidateBuilder WithCandidateId(Guid candidateId)
+        public CandidateSummaryBuilder WithCandidateId(Guid candidateId)
         {
             _candidateId = candidateId;
             return this;
         }
 
-        public CandidateBuilder WithLegacyCandidateId(int legacyCandidateId)
+        public CandidateSummaryBuilder WithLegacyCandidateId(int legacyCandidateId)
         {
             _legacyCandidateId = legacyCandidateId;
             return this;

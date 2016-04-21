@@ -70,7 +70,7 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public Application MapApplication(VacancyApplication apprenticeshipApplication, CandidateSummary candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Application
@@ -93,14 +93,14 @@
             };
         }
 
-        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, CandidateSummary candidate)
         {
             var application = MapApplication(apprenticeshipApplication, candidate);
             var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId);
             return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
         }
 
-        public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, CandidateSummary candidate)
         {
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             var applicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId);
@@ -124,7 +124,7 @@
             };
         }
 
-        public ApplicationWithHistoryDictionary MapApplicationWithHistoryDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public ApplicationWithHistoryDictionary MapApplicationWithHistoryDictionary(VacancyApplication apprenticeshipApplication, CandidateSummary candidate)
         {
             var application = MapApplicationDictionary(apprenticeshipApplication, candidate);
             var applicationHistory = apprenticeshipApplication.MapApplicationHistoryDictionary((int)application["ApplicationId"]);
@@ -143,7 +143,7 @@
             return legacyApplicationId;
         }
 
-        private int GetCandidateId(Candidate candidate)
+        private int GetCandidateId(CandidateSummary candidate)
         {
             if (candidate == null || candidate.LegacyCandidateId == 0)
             {

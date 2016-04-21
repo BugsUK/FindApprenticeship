@@ -67,16 +67,16 @@
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
-            IDictionary<Guid, Candidate> candidates;
+            IDictionary<Guid, CandidateSummary> candidates;
             if (_vacancyApplicationsUpdater.LoadAllCandidatesBeforeProcessing)
             {
                 _logService.Info("Loading candidates");
-                candidates = _candidateRepository.GetAllCandidatesAsync(cancellationToken).Result;
+                candidates = _candidateRepository.GetAllCandidateSummaries(cancellationToken).Result;
                 _logService.Info($"Completed loading {candidates.Count} candidates");
             }
             else
             {
-                candidates = new Dictionary<Guid, Candidate>();
+                candidates = new Dictionary<Guid, CandidateSummary>();
             }
 
             var expectedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCount(cancellationToken).Result;
@@ -92,7 +92,7 @@
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
-            var candidates = new Dictionary<Guid, Candidate>();
+            var candidates = new Dictionary<Guid, CandidateSummary>();
 
             //Inserts
             _logService.Info($"Processing new {_vacancyApplicationsUpdater.CollectionName}");
@@ -148,7 +148,7 @@
             }
         }
 
-        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, Candidate> candidates, Action<IList<ApplicationWithHistoryDictionary>> bulkAction, CancellationToken cancellationToken)
+        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, CandidateSummary> candidates, Action<IList<ApplicationWithHistoryDictionary>> bulkAction, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -184,13 +184,13 @@
             }
         }
 
-        private void LoadCandidates(IDictionary<Guid, Candidate> candidates, IEnumerable<VacancyApplication> vacancyApplications, CancellationToken cancellationToken)
+        private void LoadCandidates(IDictionary<Guid, CandidateSummary> candidates, IEnumerable<VacancyApplication> vacancyApplications, CancellationToken cancellationToken)
         {
             var candidateIds = vacancyApplications.Select(a => a.CandidateId).Except(candidates.Keys).ToArray();
             if (candidateIds.Any())
             {
                 _logService.Info($"Loading {candidateIds.Length} candidates");
-                var candidatesCursor = _candidateRepository.GetCandidatesByIds(candidateIds, cancellationToken).Result;
+                var candidatesCursor = _candidateRepository.GetCandidateSummariesByIds(candidateIds, cancellationToken).Result;
                 while (candidatesCursor.MoveNextAsync(cancellationToken).Result)
                 {
                     var candidatesBatch = candidatesCursor.Current.ToList();

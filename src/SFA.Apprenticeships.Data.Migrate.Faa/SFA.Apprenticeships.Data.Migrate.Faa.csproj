@@ -113,8 +113,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistoryDictionary.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
+    <Compile Include="Entities\Mongo\CandidateSummary.cs" />
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />

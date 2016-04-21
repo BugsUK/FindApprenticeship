@@ -7,9 +7,9 @@
 
     public interface IApplicationMappers
     {
-        Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate);
-        ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, Candidate candidate);
-        IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate);
-        ApplicationWithHistoryDictionary MapApplicationWithHistoryDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate);
+        Application MapApplication(VacancyApplication apprenticeshipApplication, CandidateSummary candidate);
+        ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, CandidateSummary candidate);
+        IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, CandidateSummary candidate);
+        ApplicationWithHistoryDictionary MapApplicationWithHistoryDictionary(VacancyApplication apprenticeshipApplication, CandidateSummary candidate);
     }
 }
