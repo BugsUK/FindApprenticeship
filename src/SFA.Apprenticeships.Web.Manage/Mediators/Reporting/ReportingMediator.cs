@@ -5,6 +5,7 @@
     using System.Text;
     using Application.Interfaces.Reporting;
     using Infrastructure.Presentation;
+    using ViewModels;
 
     public class ReportingMediator : IReportingMediator
     {
@@ -15,11 +16,26 @@
             _reportingService = reportingService;
         }
 
-        public byte[] ReportVacanciesList(DateTime fromDate, DateTime toDate)
+        public byte[] GetVacanciesListReportBytes(ReportVacanciesParameters parameters)
         {
-            var reportResult = _reportingService.ReportVacanciesList(fromDate, toDate);
+            var reportResult = _reportingService.ReportVacanciesList(parameters.FromDate, parameters.ToDate);
             var bytes = GetCsvBytes(reportResult);
             return bytes;
+        }
+
+        public byte[] GetSuccessfulCandidatesReportBytes(ReportSuccessfulCandidatesParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] GetUnsuccessfulCandidatesReportBytes(ReportUnsuccessfulCandidatesParameters parameters)
+        {
+            throw new NotImplementedException();
+        }
+
+        public byte[] GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters)
+        {
+            throw new NotImplementedException();
         }
 
         private byte[] GetCsvBytes<T>(IEnumerable<T> items) where T : class

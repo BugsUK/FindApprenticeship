@@ -1,23 +1,18 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
-    using System;
     using System.Web.Mvc;
     using Attributes;
-    using Common.Configuration;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
-    using SFA.Infrastructure.Interfaces;
     using ViewModels;
 
     [AuthorizeUser(Roles = Roles.Raa)]
     public class ReportController : ManagementControllerBase
     {
-        private readonly ReportServerConfiguration _reportServerConfiguration;
         private readonly IReportingMediator _reportingMediator;
 
-        public ReportController(IConfigurationService configurationService, IReportingMediator reportingMediator)
+        public ReportController(IReportingMediator reportingMediator)
         {
-            _reportServerConfiguration = configurationService.Get<ReportServerConfiguration>();
             _reportingMediator = reportingMediator;
         }
 
@@ -30,10 +25,40 @@
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public FileContentResult VacanciesListCsv(DateTime fromDate, DateTime toDate)
+        public FileContentResult VacanciesListCsv(ReportVacanciesParameters parameters)
         {
-            var csvBytes = _reportingMediator.ReportVacanciesList(fromDate, toDate);
-            return File(csvBytes, "text/csv", "ReportVacanciesList.csv");
+            var csvBytes = _reportingMediator.GetVacanciesListReportBytes(parameters);
+            return File(csvBytes, "text/csv", "VacanciesList.csv");
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult SuccessfulCandidatesCsv()
+        {
+            return View(new ReportSuccessfulCandidatesParameters());
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public FileContentResult SuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        {
+            var csvBytes = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
+            return File(csvBytes, "text/csv", "SuccessfulCandidates.csv");
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult UnsuccessfulCandidatesCsv()
+        {
+            return View(new ReportUnsuccessfulCandidatesParameters());
+        }
+
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public FileContentResult UnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        {
+            var csvBytes = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
+            return File(csvBytes, "text/csv", "UnsuccessfulCandidatesCsv.csv");
         }
 
         [HttpGet]
@@ -43,60 +68,19 @@
             return View(new ReportMenu());
         }
 
-        //public ActionResult Index()
-        //{
-        //    var reportViewer = new ReportViewer();
-        //    reportViewer.ProcessingMode = ProcessingMode.Remote;
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult VacancyExtensionsCsv()
+        {
+            return View(new ReportVacancyExtensionsParameters());
+        }
 
-        //    reportViewer.ServerReport.ReportPath = "/NAVMS/VacanciesCSV";
-        //    reportViewer.ServerReport.ReportServerUrl = new Uri(_reportServerConfiguration.ReportServerUrl);
-        //    reportViewer.ServerReport.ReportServerCredentials = new ReportServerCredentials(_reportServerConfiguration);
-
-        //    reportViewer.Width = Unit.Pixel(900);
-        //    reportViewer.Height = Unit.Pixel(1200);
-
-        //    ViewBag.ReportViewer = reportViewer;
-
-        //    return View();
-        //}
-
-        //public class ReportServerCredentials : IReportServerCredentials
-        //{
-        //    private readonly ReportServerConfiguration _reportServerConfiguration;
-
-        //    public ReportServerCredentials(ReportServerConfiguration reportServerConfiguration)
-        //    {
-        //        _reportServerConfiguration = reportServerConfiguration;
-        //    }
-
-        //    public bool GetFormsCredentials(out Cookie authCookie, out string userName, out string password, out string authority)
-        //    {
-        //        authCookie = null;
-        //        userName = null;
-        //        password = null;
-        //        authority = null;
-
-        //        // Not using form credentials
-        //        return false;
-        //    }
-
-        //    public WindowsIdentity ImpersonationUser
-        //    {
-        //        get
-        //        {
-        //            // Use the default Windows user.  Credentials will be
-        //            // provided by the NetworkCredentials property.
-        //            return null;
-        //        }
-        //    }
-
-        //    public ICredentials NetworkCredentials
-        //    {
-        //        get
-        //        {
-        //            return new NetworkCredential(_reportServerConfiguration.NetworkUsername, _reportServerConfiguration.NetworkPassword, _reportServerConfiguration.NetworkDomain);
-        //        }
-        //    }
-        //}
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public FileContentResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var csvBytes = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
+            return File(csvBytes, "text/csv", "VacancyExtensions.csv");
+        }
     }
 }

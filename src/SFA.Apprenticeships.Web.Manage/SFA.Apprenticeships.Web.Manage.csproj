@@ -366,7 +366,10 @@
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\CandidateTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\ReportMenu.cs" />
+    <Compile Include="ViewModels\ReportUnsuccessfulCandidatesParameters.cs" />
+    <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacanciesParameters.cs" />
+    <Compile Include="ViewModels\ReportVacancyExtensionsParameters.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -565,9 +568,11 @@
     <Content Include="Views\Candidate\_Apply.cshtml" />
     <Content Include="Views\AgencyUser\_DashboardTeamMetrics.cshtml" />
     <Content Include="Views\AgencyUser\_DashboardVacancyCounts.cshtml" />
-    <Content Include="Views\Report\ReportViewerIndex.cshtml" />
     <Content Include="Views\Report\Index.cshtml" />
     <Content Include="Views\Report\VacanciesListCsv.cshtml" />
+    <Content Include="Views\Report\SuccessfulCandidatesCsv.cshtml" />
+    <Content Include="Views\Report\UnsuccessfulCandidatesCsv.cshtml" />
+    <Content Include="Views\Report\VacancyExtensionsCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
