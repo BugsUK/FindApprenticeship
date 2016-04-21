@@ -640,10 +640,24 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
         private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
         {
-            if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
+            if (StatusHasChanged(previousVacancyState, actualVacancyState) ||
+                ClosingDateHasBeenUpdated(previousVacancyState, actualVacancyState))
             {
-                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName,
+                    VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
             }
+        }
+
+        private static bool StatusHasChanged(Vacancy previousVacancy, Vacancy actualVacancy)
+        {
+            return previousVacancy.VacancyStatusId != actualVacancy.VacancyStatusId;
+        }
+
+        private static bool ClosingDateHasBeenUpdated(Vacancy previousVacancy, Vacancy actualVacancy)
+        {
+            return previousVacancy.VacancyStatusId == (int)VacancyStatus.Live && 
+                actualVacancy.VacancyStatusId == (int)VacancyStatus.Live &&
+                previousVacancy.ApplicationClosingDate != actualVacancy.ApplicationClosingDate;
         }
 
         private void CreateVacancyHistoryRow(int vacancyId, string userName, VacancyHistoryEventType vacancyHistoryEventType, int vacancyStatus)
