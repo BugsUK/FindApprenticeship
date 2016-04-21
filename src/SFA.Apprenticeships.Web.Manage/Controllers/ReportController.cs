@@ -36,6 +36,8 @@
             return File(csvBytes, "text/csv", "ReportVacanciesList.csv");
         }
 
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult Index()
         {
             return View(new ReportMenu());

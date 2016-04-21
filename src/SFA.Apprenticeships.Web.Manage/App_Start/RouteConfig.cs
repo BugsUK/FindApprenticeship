@@ -206,7 +206,7 @@
                );
 
             routes.MapRoute(
-               name: "reports",
+               name: ManagementRouteNames.ReportList,
                url: "reports",
                defaults: new { controller = "Report", action = "Index" }
                );
@@ -215,6 +215,24 @@
                name: ManagementRouteNames.ReportVacanciesList,
                url: "reports/vacancies",
                defaults: new { controller = "Report", action = "VacanciesListCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportSuccessfulCandidates,
+               url: "reports/successfulcandidates",
+               defaults: new { controller = "Report", action = "SuccessfulCandidatesCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportUnsuccessfulCandidates,
+               url: "reports/unsuccessfulcandidates",
+               defaults: new { controller = "Report", action = "UnsuccessfulCandidatesCsv" }
+               );
+
+            routes.MapRoute(
+               name: ManagementRouteNames.ReportVacancyExtensions,
+               url: "reports/vacancyextensions",
+               defaults: new { controller = "Report", action = "VacancyExtensionsCsv" }
                );
 
             routes.LowercaseUrls = true;

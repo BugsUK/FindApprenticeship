@@ -566,6 +566,8 @@
     <Content Include="Views\AgencyUser\_DashboardTeamMetrics.cshtml" />
     <Content Include="Views\AgencyUser\_DashboardVacancyCounts.cshtml" />
     <Content Include="Views\Report\ReportViewerIndex.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\VacanciesListCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

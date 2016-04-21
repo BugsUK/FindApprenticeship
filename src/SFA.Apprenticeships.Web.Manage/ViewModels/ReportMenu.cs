@@ -13,9 +13,9 @@ namespace SFA.Apprenticeships.Web.Manage.ViewModels
             ReportList = new Dictionary<string, string>
             {
                 {"Live Vacancies", ManagementRouteNames.ReportVacanciesList},
-                {"VacanciesCSV", ManagementRouteNames.ReportVacanciesList},
-                {"VacanciesCSV", ManagementRouteNames.ReportVacanciesList},
-                {"VacanciesCSV", ManagementRouteNames.ReportVacanciesList}
+                {"Successful Candidates", ManagementRouteNames.ReportSuccessfulCandidates},
+                {"Unsuccessful Candidates", ManagementRouteNames.ReportUnsuccessfulCandidates},
+                {"Vacancy Extensions", ManagementRouteNames.ReportVacancyExtensions}
             };
         }
 
