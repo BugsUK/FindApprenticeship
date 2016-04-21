@@ -127,17 +127,24 @@
 
         private void BulkDelete(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
         {
+            var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
+            //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
+            foreach (var application in applicationsWithHistory.Select(a => a.Application))
+            {
+                var applicationId = _targetDatabase.Query<int?>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId", new { vacancyId = application["VacancyId"], candidateId = application["CandidateId"] }).SingleOrDefault();
+                if (applicationId.HasValue && !applicationIds.Contains(applicationId.Value))
+                {
+                    applicationIds.Add(applicationId.Value);
+                }
+            }
+
             using (var connection = (SqlConnection) _targetDatabase.GetOpenConnection())
             {
-                //Delete via guids first
-                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) });
-                foreach (var application in applicationsWithHistory.Select(a => a.Application))
-                {
-                    //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid. This deletes them
-                    connection.Execute(
-                        $@"DELETE FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId",
-                        new {vacancyId = application["VacancyId"], candidateId = application["CandidateId"]});
-                }
+                //Delete application history associated with application
+                connection.Execute($@"DELETE FROM {_applicationHistoryTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
+
+                //Delete applications
+                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
             }
         }
 
@@ -170,7 +177,7 @@
                     bulkAction(applicationsWithHistory);
                 }
 
-                //_vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
+                _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
 
                 var percentage = ((double)count / expectedCount) * 100;
                 _logService.Info($"Processed batch of {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName} and {count} {_vacancyApplicationsUpdater.CollectionName} out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
