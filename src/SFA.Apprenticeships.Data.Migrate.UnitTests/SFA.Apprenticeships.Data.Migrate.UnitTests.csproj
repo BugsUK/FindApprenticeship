@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Faa\Builders\CandidateSummaryBuilder.cs" />
+    <Compile Include="Faa\Builders\CandidateUserBuilder.cs" />
     <Compile Include="Faa\Builders\VacancyApplicationBuilder.cs" />
     <Compile Include="Faa\Mappers\ApplicationHistoryMappersTests.cs" />
     <Compile Include="Faa\Mappers\ApplicationMappersTests.cs" />
