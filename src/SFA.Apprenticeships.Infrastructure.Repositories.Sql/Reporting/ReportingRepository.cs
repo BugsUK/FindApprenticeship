@@ -44,7 +44,7 @@
             command.Parameters.Add("EmployerID", SqlDbType.Int).Value = -1;
             command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
 
-            command.CommandTimeout = 60;
+            command.CommandTimeout = 180;
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
