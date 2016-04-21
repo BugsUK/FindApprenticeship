@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using Configuration;
@@ -15,6 +16,7 @@
 
         private readonly ILogService _logService;
         private readonly IMongoDatabase _database;
+        private readonly UserRepository _userRepository;
 
         public CandidateRepository(IConfigurationService configurationService, ILogService logService)
         {
@@ -22,6 +24,7 @@
             var connectionString = configurationService.Get<MongoConfiguration>().MetricsCandidatesDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
+            _userRepository = new UserRepository(configurationService, logService);
         }
 
         public async Task<long> GetCandidatesCount(CancellationToken cancellationToken)
@@ -91,8 +94,27 @@
                    .Include(a => a.LegacyCandidateId);
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetAllCandidatesCreatedSince(DateTime lastCreatedDate, CancellationToken cancellationToken)
+        public async Task<List<CandidateUser>> GetAllCandidateUsers(CancellationToken cancellationToken)
         {
+            var candidateUsers = new List<CandidateUser>(1000);
+
+            var sort = Builders<Candidate>.Sort.Ascending(a => a.DateCreated);
+            var options = new FindOptions<Candidate>
+            {
+                Sort = sort,
+                BatchSize = 1000,
+                Projection = GetCandidateProjection()
+            };
+            var cursor = await _database.GetCollection<Candidate>(CollectionName).FindAsync(Builders<Candidate>.Filter.Empty, options, cancellationToken);
+            await PopulateCandidateUsers(cursor, candidateUsers, cancellationToken);
+
+            return candidateUsers;
+        }
+
+        public async Task<List<CandidateUser>> GetAllCandidateUsersCreatedSince(DateTime lastCreatedDate, CancellationToken cancellationToken)
+        {
+            var candidateUsers = new List<CandidateUser>(1000);
+
             var sort = Builders<Candidate>.Sort.Ascending(a => a.DateCreated);
             var options = new FindOptions<Candidate>
             {
@@ -101,12 +123,17 @@
                 Projection = GetCandidateProjection()
             };
             var filter = Builders<Candidate>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
-            var cursor = _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
-            return await cursor;
+
+            var cursor = await _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
+            await PopulateCandidateUsers(cursor, candidateUsers, cancellationToken);
+
+            return candidateUsers;
         }
 
-        public async Task<IAsyncCursor<Candidate>> GetAllCandidatesUpdatedSince(DateTime lastUpdatedDate, CancellationToken cancellationToken)
+        public async Task<List<CandidateUser>> GetAllCandidateUsersUpdatedSince(DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
+            var candidateUsers = new List<CandidateUser>(1000);
+
             var sort = Builders<Candidate>.Sort.Ascending(a => a.DateUpdated);
             var options = new FindOptions<Candidate>
             {
@@ -115,8 +142,28 @@
                 Projection = GetCandidateProjection()
             };
             var filter = Builders<Candidate>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
-            var cursor = _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
-            return await cursor;
+
+            var cursor = await _database.GetCollection<Candidate>(CollectionName).FindAsync(filter, options, cancellationToken);
+            await PopulateCandidateUsers(cursor, candidateUsers, cancellationToken);
+
+            return candidateUsers;
+        }
+
+        private async Task PopulateCandidateUsers(IAsyncCursor<Candidate> cursor, List<CandidateUser> candidateUsers, CancellationToken cancellationToken)
+        {
+            while (await cursor.MoveNextAsync(cancellationToken) && !cancellationToken.IsCancellationRequested)
+            {
+                var batch = cursor.Current.ToDictionary(c => c.Id, c => c);
+                if (batch.Count == 0) continue;
+
+                var usersCursor = await _userRepository.GetUsersByIds(batch.Keys, cancellationToken);
+                while (await usersCursor.MoveNextAsync(cancellationToken) && !cancellationToken.IsCancellationRequested)
+                {
+                    var usersBatch = usersCursor.Current.ToList();
+                    candidateUsers.AddRange(
+                        usersBatch.Select(user => new CandidateUser {Candidate = batch[user.Id], User = user}));
+                }
+            }
         }
 
         private static ProjectionDefinition<Candidate> GetCandidateProjection()

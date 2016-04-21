@@ -117,12 +117,17 @@
     <Compile Include="Entities\ApplicationWithHistoryDictionary.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
+    <Compile Include="Entities\Mongo\CandidateUser.cs" />
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
+    <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
     <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
+    <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
+    <Compile Include="Mappers\ICandidateMappers.cs" />
     <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
+    <Compile Include="Repository\Sql\CandidateTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MongoConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

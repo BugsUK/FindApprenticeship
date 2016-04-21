@@ -114,6 +114,7 @@
     <Compile Include="Faa\Builders\VacancyApplicationBuilder.cs" />
     <Compile Include="Faa\Mappers\ApplicationHistoryMappersTests.cs" />
     <Compile Include="Faa\Mappers\ApplicationMappersTests.cs" />
+    <Compile Include="Faa\Mappers\CandidateMappersTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
