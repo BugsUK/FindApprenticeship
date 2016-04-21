@@ -38,10 +38,6 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.IntegrationTests
             };
 
             dbInitialiser.Seed(scriptFilePaths);
-
-            // dbInitialiser.Seed(SeedData.Providers);
-            // dbInitialiser.Seed(SeedData.ProviderUsers);
-            // dbInitialiser.Seed(SeedData.AgencyUsers);
         }
     }
 }
