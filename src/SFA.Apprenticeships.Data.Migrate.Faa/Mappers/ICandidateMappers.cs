@@ -1,11 +1,11 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Mappers
 {
-    using System.Collections.Generic;
+    using Entities;
     using Entities.Mongo;
 
     public interface ICandidateMappers
     {
-        Entities.Sql.Candidate MapCandidate(CandidateUser candidateUser);
-        IDictionary<string, object> MapCandidateDictionary(CandidateUser candidateUser);
+        CandidatePerson MapCandidatePerson(CandidateUser candidateUser);
+        CandidatePersonDictionary MapCandidatePersonDictionary(CandidateUser candidateUser);
     }
 }

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Entities;
     using Entities.Mongo;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
@@ -53,12 +54,12 @@
             ProcessCandidates(candidateUsers, expectedCount, BulkInsert, cancellationToken);
         }
 
-        private void BulkInsert(IList<IDictionary<string, object>> candidates)
+        private void BulkInsert(IList<CandidatePersonDictionary> candidates)
         {
-            _genericSyncRespository.BulkInsert(_candidateTable, candidates);
+            _genericSyncRespository.BulkInsert(_candidateTable, candidates.Select(c => c.Candidate));
         }
 
-        private void BulkDelete(IList<IDictionary<string, object>> candidates)
+        private void BulkDelete(IList<CandidatePersonDictionary> candidates)
         {
             /*var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
             //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
@@ -81,7 +82,7 @@
             }*/
         }
 
-        private void ProcessCandidates(IList<CandidateUser> candidateUsers, long expectedCount, Action<IList<IDictionary<string, object>>> bulkAction, CancellationToken cancellationToken)
+        private void ProcessCandidates(IList<CandidateUser> candidateUsers, long expectedCount, Action<IList<CandidatePersonDictionary>> bulkAction, CancellationToken cancellationToken)
         {
             if (cancellationToken.IsCancellationRequested) return;
 
@@ -90,7 +91,7 @@
             var maxDateCreated = candidateUsers.Max(c => c.Candidate.DateCreated);
             var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
-            var applicationsWithHistory = candidateUsers.Select(c => _candidateMappers.MapCandidateDictionary(c)).ToList();
+            var applicationsWithHistory = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePersonDictionary(c)).ToList();
             count += applicationsWithHistory.Count;
             _logService.Info($"Processing {applicationsWithHistory.Count} candidates");
             try

@@ -8,7 +8,7 @@
     [TestFixture]
     public class CandidateMappersTests
     {
-        private readonly ICandidateMappers _candidateMappers = new CandidateMappers();
+        private readonly ICandidateMappers _candidateMappers = new CandidateMappers(-1);
 
         [Test]
         public void PendingActivationCandidateUserTest()
@@ -17,7 +17,8 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidate = _candidateMappers.MapCandidate(candidateUser);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser);
+            var candidate = candidatePerson.Candidate;
 
             //Assert
             candidate.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
@@ -78,59 +79,75 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidate = _candidateMappers.MapCandidate(candidateUser);
-            var candidatDictionary = _candidateMappers.MapCandidateDictionary(candidateUser);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser);
+            var candidate = candidatePerson.Candidate;
+            var candidatePersonDictionary = _candidateMappers.MapCandidatePersonDictionary(candidateUser);
+            var candidateDictionary = candidatePersonDictionary.Candidate;
 
             //Assert
-            candidatDictionary["CandidateId"].Should().Be(candidate.CandidateId);
-            candidatDictionary["PersonId"].Should().Be(candidate.PersonId);
-            candidatDictionary["CandidateStatusTypeId"].Should().Be(candidate.CandidateStatusTypeId);
-            candidatDictionary["DateofBirth"].Should().Be(candidate.DateofBirth);
-            candidatDictionary["AddressLine1"].Should().Be(candidate.AddressLine1);
-            candidatDictionary["AddressLine2"].Should().Be(candidate.AddressLine2);
-            candidatDictionary["AddressLine3"].Should().Be(candidate.AddressLine3);
-            candidatDictionary["AddressLine4"].Should().Be(candidate.AddressLine4);
-            candidatDictionary["AddressLine5"].Should().Be(candidate.AddressLine5);
-            candidatDictionary["Town"].Should().Be(candidate.Town);
-            candidatDictionary["CountyId"].Should().Be(candidate.CountyId);
-            candidatDictionary["Postcode"].Should().Be(candidate.Postcode);
-            candidatDictionary["LocalAuthorityId"].Should().Be(candidate.LocalAuthorityId);
-            candidatDictionary["Longitude"].Should().Be(candidate.Longitude);
-            candidatDictionary["Latitude"].Should().Be(candidate.Latitude);
-            candidatDictionary["GeocodeEasting"].Should().Be(candidate.GeocodeEasting);
-            candidatDictionary["GeocodeNorthing"].Should().Be(candidate.GeocodeNorthing);
-            candidatDictionary["NiReference"].Should().Be(candidate.NiReference);
-            candidatDictionary["VoucherReferenceNumber"].Should().Be(candidate.VoucherReferenceNumber);
-            candidatDictionary["UniqueLearnerNumber"].Should().Be(candidate.UniqueLearnerNumber);
-            candidatDictionary["UlnStatusId"].Should().Be(candidate.UlnStatusId);
-            candidatDictionary["Gender"].Should().Be(candidate.Gender);
-            candidatDictionary["EthnicOrigin"].Should().Be(candidate.EthnicOrigin);
-            candidatDictionary["EthnicOriginOther"].Should().Be(candidate.EthnicOriginOther);
-            candidatDictionary["ApplicationLimitEnforced"].Should().Be(candidate.ApplicationLimitEnforced);
-            candidatDictionary["LastAccessedDate"].Should().Be(candidate.LastAccessedDate);
-            candidatDictionary["AdditionalEmail"].Should().Be(candidate.AdditionalEmail);
-            candidatDictionary["Disability"].Should().Be(candidate.Disability);
-            candidatDictionary["DisabilityOther"].Should().Be(candidate.DisabilityOther);
-            candidatDictionary["HealthProblems"].Should().Be(candidate.HealthProblems);
-            candidatDictionary["ReceivePushedContent"].Should().Be(candidate.ReceivePushedContent);
-            candidatDictionary["ReferralAgent"].Should().Be(candidate.ReferralAgent);
-            candidatDictionary["DisableAlerts"].Should().Be(candidate.DisableAlerts);
-            candidatDictionary["UnconfirmedEmailAddress"].Should().Be(candidate.UnconfirmedEmailAddress);
-            candidatDictionary["MobileNumberUnconfirmed"].Should().Be(candidate.MobileNumberUnconfirmed);
-            candidatDictionary["DoBFailureCount"].Should().Be(candidate.DoBFailureCount);
-            candidatDictionary["ForgottenUsernameRequested"].Should().Be(candidate.ForgottenUsernameRequested);
-            candidatDictionary["ForgottenPasswordRequested"].Should().Be(candidate.ForgottenPasswordRequested);
-            candidatDictionary["TextFailureCount"].Should().Be(candidate.TextFailureCount);
-            candidatDictionary["EmailFailureCount"].Should().Be(candidate.EmailFailureCount);
-            candidatDictionary["LastAccessedManageApplications"].Should().Be(candidate.LastAccessedManageApplications);
-            candidatDictionary["ReferralPoints"].Should().Be(candidate.ReferralPoints);
-            candidatDictionary["BeingSupportedBy"].Should().Be(candidate.BeingSupportedBy);
-            candidatDictionary["LockedForSupportUntil"].Should().Be(candidate.LockedForSupportUntil);
-            candidatDictionary["NewVacancyAlertEmail"].Should().Be(candidate.NewVacancyAlertEmail);
-            candidatDictionary["NewVacancyAlertSMS"].Should().Be(candidate.NewVacancyAlertSMS);
-            candidatDictionary["AllowMarketingMessages"].Should().Be(candidate.AllowMarketingMessages);
-            candidatDictionary["ReminderMessageSent"].Should().Be(candidate.ReminderMessageSent);
-            candidatDictionary["CandidateGuid"].Should().Be(candidate.CandidateGuid);
+            candidateDictionary["CandidateId"].Should().Be(candidate.CandidateId);
+            candidateDictionary["PersonId"].Should().Be(candidate.PersonId);
+            candidateDictionary["CandidateStatusTypeId"].Should().Be(candidate.CandidateStatusTypeId);
+            candidateDictionary["DateofBirth"].Should().Be(candidate.DateofBirth);
+            candidateDictionary["AddressLine1"].Should().Be(candidate.AddressLine1);
+            candidateDictionary["AddressLine2"].Should().Be(candidate.AddressLine2);
+            candidateDictionary["AddressLine3"].Should().Be(candidate.AddressLine3);
+            candidateDictionary["AddressLine4"].Should().Be(candidate.AddressLine4);
+            candidateDictionary["AddressLine5"].Should().Be(candidate.AddressLine5);
+            candidateDictionary["Town"].Should().Be(candidate.Town);
+            candidateDictionary["CountyId"].Should().Be(candidate.CountyId);
+            candidateDictionary["Postcode"].Should().Be(candidate.Postcode);
+            candidateDictionary["LocalAuthorityId"].Should().Be(candidate.LocalAuthorityId);
+            candidateDictionary["Longitude"].Should().Be(candidate.Longitude);
+            candidateDictionary["Latitude"].Should().Be(candidate.Latitude);
+            candidateDictionary["GeocodeEasting"].Should().Be(candidate.GeocodeEasting);
+            candidateDictionary["GeocodeNorthing"].Should().Be(candidate.GeocodeNorthing);
+            candidateDictionary["NiReference"].Should().Be(candidate.NiReference);
+            candidateDictionary["VoucherReferenceNumber"].Should().Be(candidate.VoucherReferenceNumber);
+            candidateDictionary["UniqueLearnerNumber"].Should().Be(candidate.UniqueLearnerNumber);
+            candidateDictionary["UlnStatusId"].Should().Be(candidate.UlnStatusId);
+            candidateDictionary["Gender"].Should().Be(candidate.Gender);
+            candidateDictionary["EthnicOrigin"].Should().Be(candidate.EthnicOrigin);
+            candidateDictionary["EthnicOriginOther"].Should().Be(candidate.EthnicOriginOther);
+            candidateDictionary["ApplicationLimitEnforced"].Should().Be(candidate.ApplicationLimitEnforced);
+            candidateDictionary["LastAccessedDate"].Should().Be(candidate.LastAccessedDate);
+            candidateDictionary["AdditionalEmail"].Should().Be(candidate.AdditionalEmail);
+            candidateDictionary["Disability"].Should().Be(candidate.Disability);
+            candidateDictionary["DisabilityOther"].Should().Be(candidate.DisabilityOther);
+            candidateDictionary["HealthProblems"].Should().Be(candidate.HealthProblems);
+            candidateDictionary["ReceivePushedContent"].Should().Be(candidate.ReceivePushedContent);
+            candidateDictionary["ReferralAgent"].Should().Be(candidate.ReferralAgent);
+            candidateDictionary["DisableAlerts"].Should().Be(candidate.DisableAlerts);
+            candidateDictionary["UnconfirmedEmailAddress"].Should().Be(candidate.UnconfirmedEmailAddress);
+            candidateDictionary["MobileNumberUnconfirmed"].Should().Be(candidate.MobileNumberUnconfirmed);
+            candidateDictionary["DoBFailureCount"].Should().Be(candidate.DoBFailureCount);
+            candidateDictionary["ForgottenUsernameRequested"].Should().Be(candidate.ForgottenUsernameRequested);
+            candidateDictionary["ForgottenPasswordRequested"].Should().Be(candidate.ForgottenPasswordRequested);
+            candidateDictionary["TextFailureCount"].Should().Be(candidate.TextFailureCount);
+            candidateDictionary["EmailFailureCount"].Should().Be(candidate.EmailFailureCount);
+            candidateDictionary["LastAccessedManageApplications"].Should().Be(candidate.LastAccessedManageApplications);
+            candidateDictionary["ReferralPoints"].Should().Be(candidate.ReferralPoints);
+            candidateDictionary["BeingSupportedBy"].Should().Be(candidate.BeingSupportedBy);
+            candidateDictionary["LockedForSupportUntil"].Should().Be(candidate.LockedForSupportUntil);
+            candidateDictionary["NewVacancyAlertEmail"].Should().Be(candidate.NewVacancyAlertEmail);
+            candidateDictionary["NewVacancyAlertSMS"].Should().Be(candidate.NewVacancyAlertSMS);
+            candidateDictionary["AllowMarketingMessages"].Should().Be(candidate.AllowMarketingMessages);
+            candidateDictionary["ReminderMessageSent"].Should().Be(candidate.ReminderMessageSent);
+            candidateDictionary["CandidateGuid"].Should().Be(candidate.CandidateGuid);
+        }
+
+        [Test]
+        public void NoLegacyIdCandidateTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser);
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.CandidateId.Should().Be(-1);
         }
     }
 }
