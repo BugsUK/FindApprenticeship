@@ -53,7 +53,7 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
             }
             else
             {
-                SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
+                SetUserMessage(AuthorizeMessages.CloseDownWindow, UserMessageLevel.Warning);
             }
 
             return RedirectToRoute(ManagementRouteNames.LandingPage, new {returnUrl});

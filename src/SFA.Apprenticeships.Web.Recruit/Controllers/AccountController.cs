@@ -81,7 +81,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             }
             else
             {
-                SetUserMessage(AuthorizeMessages.SignedOut, UserMessageLevel.Info);
+                SetUserMessage(AuthorizeMessages.CloseDownWindow, UserMessageLevel.Warning);
             }
 
             return RedirectToRoute(RecruitmentRouteNames.LandingPage);
