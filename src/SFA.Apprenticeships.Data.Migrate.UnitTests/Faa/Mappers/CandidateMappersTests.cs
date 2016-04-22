@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.UnitTests.Faa.Mappers
 {
+    using System;
     using System.Collections.Generic;
     using Builders;
     using FluentAssertions;
@@ -18,7 +19,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -91,12 +92,11 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
-            var candidatePersonDictionary = _candidateMappers.MapCandidatePersonDictionary(candidateUser, new Dictionary<string, int>());
-            var candidateDictionary = candidatePersonDictionary.Candidate;
-            var personDictionary = candidatePersonDictionary.Person;
+            var candidateDictionary = _candidateMappers.MapCandidateDictionary(candidate);
+            var personDictionary = _candidateMappers.MapPersonDictionary(person);
 
             //Assert
             candidateDictionary["CandidateId"].Should().Be(candidate.CandidateId);
@@ -167,11 +167,49 @@
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
-            candidate.CandidateId.Should().Be(-1);
+            candidate.CandidateId.Should().BeLessOrEqualTo(-1);
+        }
+
+        [Test]
+        public void MatchingCandidateIdCandidateTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
+            const int candidateId = 42;
+            var candidateIds = new Dictionary<Guid, int>
+            {
+                {candidateUser.Candidate.Id, candidateId}
+            };
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateIds, new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.CandidateId.Should().Be(candidateId);
+        }
+
+        [Test]
+        public void MatchingPersonIdCandidateTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
+            const int personId = 42;
+            var personIds = new Dictionary<string, int>
+            {
+                {candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower(), personId}
+            };
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), personIds);
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.PersonId.Should().Be(personId);
         }
     }
 }

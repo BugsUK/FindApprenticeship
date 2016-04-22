@@ -24,7 +24,7 @@
         private readonly ILogService _logService;
         
         private readonly VacancyRepository _vacancyRepository;
-        private readonly CandidateRepository _candidateRepository;
+        private readonly CandidateUserRepository _candidateUserRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
@@ -39,7 +39,8 @@
             _logService = logService;
 
             _vacancyRepository = new VacancyRepository(targetDatabase);
-            _candidateRepository = new CandidateRepository(configurationService, _logService);
+            //TODO: Replace with CandidateRepository now that the candidates have been migrated
+            _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
 
@@ -71,7 +72,7 @@
             if (_vacancyApplicationsUpdater.LoadAllCandidatesBeforeProcessing)
             {
                 _logService.Info("Loading candidates");
-                candidates = _candidateRepository.GetAllCandidateSummaries(cancellationToken).Result;
+                candidates = _candidateUserRepository.GetAllCandidateSummaries(cancellationToken).Result;
                 _logService.Info($"Completed loading {candidates.Count} candidates");
             }
             else
@@ -190,7 +191,7 @@
             if (candidateIds.Any())
             {
                 _logService.Info($"Loading {candidateIds.Length} candidates");
-                var candidatesCursor = _candidateRepository.GetCandidateSummariesByIds(candidateIds, cancellationToken).Result;
+                var candidatesCursor = _candidateUserRepository.GetCandidateSummariesByIds(candidateIds, cancellationToken).Result;
                 while (candidatesCursor.MoveNextAsync(cancellationToken).Result)
                 {
                     var candidatesBatch = candidatesCursor.Current.ToList();

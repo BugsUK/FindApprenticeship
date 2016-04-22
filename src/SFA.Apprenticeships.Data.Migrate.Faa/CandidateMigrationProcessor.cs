@@ -6,6 +6,7 @@
     using System.Threading;
     using Entities;
     using Entities.Mongo;
+    using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using Repository.Mongo;
@@ -22,9 +23,11 @@
 
         private readonly CandidateRepository _candidateRepository;
         private readonly PersonRepository _personRepository;
+        private readonly CandidateUserRepository _candidateUserRepository;
         private readonly SyncRepository _syncRepository;
 
         private readonly ITableSpec _candidateTable = new CandidateTable();
+        private readonly ITableSpec _personTable = new PersonTable();
 
         public CandidateMigrationProcessor(ICandidateMappers candidateMappers, SyncRepository syncRepository, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
@@ -35,86 +38,102 @@
             _configurationService = configurationService;
             _logService = logService;
 
-            _candidateRepository = new CandidateRepository(configurationService, _logService);
+            _candidateRepository = new CandidateRepository(targetDatabase);
             _personRepository = new PersonRepository(targetDatabase);
+            _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
         }
 
         public void Process(CancellationToken cancellationToken)
         {
-            ExecuteFullSync(cancellationToken);
+            var syncParams = _syncRepository.GetSyncParams();
+            if (syncParams.IsValidForCandidateIncrementalSync)
+            {
+                ExecuteIncrementalSync(syncParams, cancellationToken);
+            }
+            else
+            {
+                ExecuteFullSync(syncParams, cancellationToken);
+            }
         }
 
-        private void ExecuteFullSync(CancellationToken cancellationToken)
+        private void ExecuteFullSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
-            //_logService.Warn($"ExecuteFullSync on candidates collection with LastCreatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate} LastUpdatedDate: {_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate}");
+            _logService.Warn($"ExecuteFullSync on candidates collection with LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
 
             //TODO: This delete would have to be done outside of this class as it affects traineeships and apprenticeships at the same time
             //_genericSyncRespository.DeleteAll(_candidateTable);
 
-            var expectedCount = _candidateRepository.GetCandidatesCount(cancellationToken).Result;
-            var candidateUsers = _candidateRepository.GetAllCandidateUsers(cancellationToken).Result;
+            var expectedCount = _candidateUserRepository.GetCandidatesCount(cancellationToken).Result;
+            var candidateUsers = _candidateUserRepository.GetAllCandidateUsers(cancellationToken).Result;
             ProcessCandidates(candidateUsers, expectedCount, BulkInsert, cancellationToken);
         }
 
-        private void BulkInsert(IList<CandidatePersonDictionary> candidates)
+        private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
+        {
+            _logService.Info($"ExecutePartialSync on candidates collection with LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
+
+            //Inserts
+            _logService.Info("Processing new candidates");
+            var expectedCreatedCount = _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
+            var createdCursor = _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
+            ProcessCandidates(createdCursor, expectedCreatedCount, BulkInsert, cancellationToken);
+            _logService.Info("Completed processing new candidates");
+
+            //Updates
+            _logService.Info("Processing updated candidates");
+            var expectedUpdatedCount = _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
+            var updatedCursor = _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
+            ProcessCandidates(updatedCursor, expectedUpdatedCount, BulkUpdate, cancellationToken);
+            _logService.Info("Completed processing updated candidates");
+        }
+
+        private void BulkInsert(IList<CandidatePerson> candidatePersons)
         {
             //Have to do these one at a time as need to get the id for the inserted person records
-            foreach (var candidatePersonDictionary in candidates)
+            foreach (var candidatePerson in candidatePersons.Where(c => c.Candidate.PersonId == 0))
             {
-                
+                //Insert any new person records to match with candidate records
+                var personId = _targetDatabase.Insert(candidatePerson.Person);
+                candidatePerson.Candidate.PersonId = (int)personId;
             }
 
-            _genericSyncRespository.BulkInsert(_candidateTable, candidates.Select(c => c.Candidate));
-        }
+            //Bulk insert any candidates with valid ids
+            _genericSyncRespository.BulkInsert(_candidateTable, candidatePersons.Where(c => c.Candidate.CandidateId != 0).Select(c => _candidateMappers.MapCandidateDictionary(c.Candidate)));
 
-        private void BulkDelete(IList<CandidatePersonDictionary> candidates)
-        {
-            /*var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
-            //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
-            foreach (var application in applicationsWithHistory.Select(a => a.Application))
+            //Now insert any remaining candidates one at a time
+            foreach (var candidate in candidatePersons.Where(c => c.Candidate.CandidateId == 0).Select(c => c.Candidate))
             {
-                var applicationId = _targetDatabase.Query<int?>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId", new { vacancyId = application["VacancyId"], candidateId = application["CandidateId"] }).SingleOrDefault();
-                if (applicationId.HasValue && !applicationIds.Contains(applicationId.Value))
-                {
-                    applicationIds.Add(applicationId.Value);
-                }
+                //Insert any new person records to match with candidate records
+                var candidateId = _targetDatabase.Insert(candidate);
+                candidate.CandidateId = (int)candidateId;
             }
-
-            using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
-            {
-                //Delete application history associated with application
-                connection.Execute($@"DELETE FROM {_applicationHistoryTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
-
-                //Delete applications
-                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
-            }*/
         }
 
-        private void ProcessCandidates(IList<CandidateUser> candidateUsers, long expectedCount, Action<IList<CandidatePersonDictionary>> bulkAction, CancellationToken cancellationToken)
+        private void BulkUpdate(IList<CandidatePerson> candidatePersons)
         {
-            if (cancellationToken.IsCancellationRequested) return;
+            //Update candidate records
+            _genericSyncRespository.BulkUpdate(_personTable, candidatePersons.Select(c => _candidateMappers.MapCandidateDictionary(c.Candidate)));
+
+            //Update person records
+            _genericSyncRespository.BulkUpdate(_personTable, candidatePersons.Select(c => _candidateMappers.MapPersonDictionary(c.Person)));
+        }
+
+        private void ProcessCandidates(IList<CandidateUser> candidateUsers, long expectedCount, Action<IList<CandidatePerson>> bulkAction, CancellationToken cancellationToken)
+        {
+            if (cancellationToken.IsCancellationRequested || !candidateUsers.Any()) return;
 
             var count = 0;
 
             var maxDateCreated = candidateUsers.Max(c => c.Candidate.DateCreated);
             var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
-            var persons = _personRepository.GetPersonsByEmails(candidateUsers.Select(c => c.Candidate.RegistrationDetails.EmailAddress));
-            var applicationsWithHistory = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePersonDictionary(c, persons)).ToList();
+            var candidateIds = _candidateRepository.GetCandidateIdsByGuid(candidateUsers.Select(c => c.Candidate.Id));
+            var personIds = _personRepository.GetPersonIdsByEmails(candidateUsers.Select(c => c.Candidate.RegistrationDetails.EmailAddress));
+            var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePerson(c, candidateIds, personIds)).ToList();
 
-            count += applicationsWithHistory.Count;
-            _logService.Info($"Processing {applicationsWithHistory.Count} candidates");
-            try
-            {
-                bulkAction(applicationsWithHistory);
-            }
-            catch (Exception ex)
-            {
-                _logService.Error("Error while processing candidates. Trying a delete then retry", ex);
-                //Propagate exception back up the stack rather than silently continuing
-                BulkDelete(applicationsWithHistory);
-                bulkAction(applicationsWithHistory);
-            }
+            count += candidatePersons.Count;
+            _logService.Info($"Processing {candidatePersons.Count} candidates");
+            bulkAction(candidatePersons);
 
             var syncParams = _syncRepository.GetSyncParams();
             syncParams.CandidateLastCreatedDate = maxDateCreated > syncParams.CandidateLastCreatedDate ? maxDateCreated : syncParams.CandidateLastCreatedDate;
@@ -122,7 +141,7 @@
             _syncRepository.SetCandidateSyncParams(syncParams);
 
             var percentage = ((double)count / expectedCount) * 100;
-            _logService.Info($"Processed batch of {applicationsWithHistory.Count} candidates and {count} candidates out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
+            _logService.Info($"Processed batch of {candidatePersons.Count} candidates and {count} candidates out of {expectedCount} in total. {Math.Round(percentage, 2)}% complete. LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
         }
     }
 }

@@ -10,7 +10,7 @@
     using MongoDB.Driver;
     using SFA.Infrastructure.Interfaces;
 
-    public class CandidateRepository
+    public class CandidateUserRepository
     {
         private const string CollectionName = "candidates";
 
@@ -18,7 +18,7 @@
         private readonly IMongoDatabase _database;
         private readonly UserRepository _userRepository;
 
-        public CandidateRepository(IConfigurationService configurationService, ILogService logService)
+        public CandidateUserRepository(IConfigurationService configurationService, ILogService logService)
         {
             _logService = logService;
             var connectionString = configurationService.Get<MongoConfiguration>().MetricsCandidatesDb;

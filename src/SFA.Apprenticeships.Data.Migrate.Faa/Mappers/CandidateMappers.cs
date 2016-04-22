@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Mappers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
@@ -7,6 +8,7 @@
     using Entities.Mongo;
     using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
+    using SFA.Infrastructure.Interfaces;
     using Candidate = Entities.Sql.Candidate;
 
     public class CandidateMappers : ICandidateMappers
@@ -18,10 +20,13 @@
         private const int CandidateStatusTypeIdPendingDelete = 5;
         private const int CandidateStatusTypeIdDeleted = 6;
 
+        private readonly ILogService _logService;
+
         private int _candidateId;
 
-        public CandidateMappers(IGetOpenConnection targetDatabase)
+        public CandidateMappers(IGetOpenConnection targetDatabase, ILogService logService)
         {
+            _logService = logService;
             _candidateId = targetDatabase.Query<int>($"SELECT ISNULL(min(CandidateId), 0) FROM Candidate").Single() - 1;
             if (_candidateId > -1)
             {
@@ -34,15 +39,17 @@
             _candidateId = candidateId;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<string, int> persons)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, int> candidateIds, IDictionary<string, int> personIds)
         {
             var address = candidateUser.Candidate.RegistrationDetails.Address;
             var town = address.AddressLine4 ?? address.AddressLine3 ?? address.AddressLine2;
+            var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
+            var personId = personIds.ContainsKey(email) ? personIds[email] : 0;//Unspecified person. Filled in later
 
             var candidate = new Candidate
             {
-                CandidateId = GetCandidateId(candidateUser.Candidate.LegacyCandidateId),
-                PersonId = 0, //Unspecified person. Filled in later
+                CandidateId = GetCandidateId(candidateUser.Candidate, candidateIds),
+                PersonId = personId,
                 CandidateStatusTypeId = CandidateStatusTypeIdPreRegistered,
                 DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
                 AddressLine1 = address.AddressLine1,
@@ -101,7 +108,7 @@
                 Surname = candidateUser.Candidate.RegistrationDetails.LastName,
                 LandlineNumber = candidateUser.Candidate.RegistrationDetails.PhoneNumber,
                 MobileNumber = "",
-                Email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower(),
+                Email = email,
                 PersonTypeId = 1
             };
 
@@ -112,93 +119,90 @@
             };
         }
 
-        public CandidatePersonDictionary MapCandidatePersonDictionary(CandidateUser candidateUser, IDictionary<string, int> persons)
+        public Dictionary<string, object> MapCandidateDictionary(Candidate candidate)
         {
-            var candidatePerson = MapCandidatePerson(candidateUser, persons);
-
-            var candidateDictionary = new Dictionary<string, object>
+            return new Dictionary<string, object>
             {
-                {"CandidateId", candidatePerson.Candidate.CandidateId},
-                {"PersonId", candidatePerson.Candidate.PersonId},
-                {"CandidateStatusTypeId", candidatePerson.Candidate.CandidateStatusTypeId},
-                {"DateofBirth", candidatePerson.Candidate.DateofBirth},
-                {"AddressLine1", candidatePerson.Candidate.AddressLine1},
-                {"AddressLine2", candidatePerson.Candidate.AddressLine2},
-                {"AddressLine3", candidatePerson.Candidate.AddressLine3},
-                {"AddressLine4", candidatePerson.Candidate.AddressLine4},
-                {"AddressLine5", candidatePerson.Candidate.AddressLine5},
-                {"Town", candidatePerson.Candidate.Town},
-                {"CountyId", candidatePerson.Candidate.CountyId},
-                {"Postcode", candidatePerson.Candidate.Postcode},
-                {"LocalAuthorityId", candidatePerson.Candidate.LocalAuthorityId},
-                {"Longitude", candidatePerson.Candidate.Longitude},
-                {"Latitude", candidatePerson.Candidate.Latitude},
-                {"GeocodeEasting", candidatePerson.Candidate.GeocodeEasting},
-                {"GeocodeNorthing", candidatePerson.Candidate.GeocodeNorthing},
-                {"NiReference", candidatePerson.Candidate.NiReference},
-                {"VoucherReferenceNumber", candidatePerson.Candidate.VoucherReferenceNumber},
-                {"UniqueLearnerNumber", candidatePerson.Candidate.UniqueLearnerNumber},
-                {"UlnStatusId", candidatePerson.Candidate.UlnStatusId},
-                {"Gender", candidatePerson.Candidate.Gender},
-                {"EthnicOrigin", candidatePerson.Candidate.EthnicOrigin},
-                {"EthnicOriginOther", candidatePerson.Candidate.EthnicOriginOther},
-                {"ApplicationLimitEnforced", candidatePerson.Candidate.ApplicationLimitEnforced},
-                {"LastAccessedDate", candidatePerson.Candidate.LastAccessedDate},
-                {"AdditionalEmail", candidatePerson.Candidate.AdditionalEmail},
-                {"Disability", candidatePerson.Candidate.Disability},
-                {"DisabilityOther", candidatePerson.Candidate.DisabilityOther},
-                {"HealthProblems", candidatePerson.Candidate.HealthProblems},
-                {"ReceivePushedContent", candidatePerson.Candidate.ReceivePushedContent},
-                {"ReferralAgent", candidatePerson.Candidate.ReferralAgent},
-                {"DisableAlerts", candidatePerson.Candidate.DisableAlerts},
-                {"UnconfirmedEmailAddress", candidatePerson.Candidate.UnconfirmedEmailAddress},
-                {"MobileNumberUnconfirmed", candidatePerson.Candidate.MobileNumberUnconfirmed},
-                {"DoBFailureCount", candidatePerson.Candidate.DoBFailureCount},
-                {"ForgottenUsernameRequested", candidatePerson.Candidate.ForgottenUsernameRequested},
-                {"ForgottenPasswordRequested", candidatePerson.Candidate.ForgottenPasswordRequested},
-                {"TextFailureCount", candidatePerson.Candidate.TextFailureCount},
-                {"EmailFailureCount", candidatePerson.Candidate.EmailFailureCount},
-                {"LastAccessedManageApplications", candidatePerson.Candidate.LastAccessedManageApplications},
-                {"ReferralPoints", candidatePerson.Candidate.ReferralPoints},
-                {"BeingSupportedBy", candidatePerson.Candidate.BeingSupportedBy},
-                {"LockedForSupportUntil", candidatePerson.Candidate.LockedForSupportUntil},
-                {"NewVacancyAlertEmail", candidatePerson.Candidate.NewVacancyAlertEmail},
-                {"NewVacancyAlertSMS", candidatePerson.Candidate.NewVacancyAlertSMS},
-                {"AllowMarketingMessages", candidatePerson.Candidate.AllowMarketingMessages},
-                {"ReminderMessageSent", candidatePerson.Candidate.ReminderMessageSent},
-                {"CandidateGuid", candidatePerson.Candidate.CandidateGuid}
-            };
-
-            var personDictionary = new Dictionary<string, object>
-            {
-                {"Title", candidatePerson.Person.Title},
-                {"OtherTitle", candidatePerson.Person.OtherTitle},
-                {"FirstName", candidatePerson.Person.FirstName},
-                {"MiddleNames", candidatePerson.Person.MiddleNames},
-                {"Surname", candidatePerson.Person.Surname},
-                {"LandlineNumber", candidatePerson.Person.LandlineNumber},
-                {"MobileNumber", candidatePerson.Person.MobileNumber},
-                {"Email", candidatePerson.Person.Email},
-                {"PersonTypeId", candidatePerson.Person.PersonTypeId}
-            };
-
-            return new CandidatePersonDictionary
-            {
-                Candidate = candidateDictionary,
-                Person = personDictionary
+                {"CandidateId", candidate.CandidateId},
+                {"PersonId", candidate.PersonId},
+                {"CandidateStatusTypeId", candidate.CandidateStatusTypeId},
+                {"DateofBirth", candidate.DateofBirth},
+                {"AddressLine1", candidate.AddressLine1},
+                {"AddressLine2", candidate.AddressLine2},
+                {"AddressLine3", candidate.AddressLine3},
+                {"AddressLine4", candidate.AddressLine4},
+                {"AddressLine5", candidate.AddressLine5},
+                {"Town", candidate.Town},
+                {"CountyId", candidate.CountyId},
+                {"Postcode", candidate.Postcode},
+                {"LocalAuthorityId", candidate.LocalAuthorityId},
+                {"Longitude", candidate.Longitude},
+                {"Latitude", candidate.Latitude},
+                {"GeocodeEasting", candidate.GeocodeEasting},
+                {"GeocodeNorthing", candidate.GeocodeNorthing},
+                {"NiReference", candidate.NiReference},
+                {"VoucherReferenceNumber", candidate.VoucherReferenceNumber},
+                {"UniqueLearnerNumber", candidate.UniqueLearnerNumber},
+                {"UlnStatusId", candidate.UlnStatusId},
+                {"Gender", candidate.Gender},
+                {"EthnicOrigin", candidate.EthnicOrigin},
+                {"EthnicOriginOther", candidate.EthnicOriginOther},
+                {"ApplicationLimitEnforced", candidate.ApplicationLimitEnforced},
+                {"LastAccessedDate", candidate.LastAccessedDate},
+                {"AdditionalEmail", candidate.AdditionalEmail},
+                {"Disability", candidate.Disability},
+                {"DisabilityOther", candidate.DisabilityOther},
+                {"HealthProblems", candidate.HealthProblems},
+                {"ReceivePushedContent", candidate.ReceivePushedContent},
+                {"ReferralAgent", candidate.ReferralAgent},
+                {"DisableAlerts", candidate.DisableAlerts},
+                {"UnconfirmedEmailAddress", candidate.UnconfirmedEmailAddress},
+                {"MobileNumberUnconfirmed", candidate.MobileNumberUnconfirmed},
+                {"DoBFailureCount", candidate.DoBFailureCount},
+                {"ForgottenUsernameRequested", candidate.ForgottenUsernameRequested},
+                {"ForgottenPasswordRequested", candidate.ForgottenPasswordRequested},
+                {"TextFailureCount", candidate.TextFailureCount},
+                {"EmailFailureCount", candidate.EmailFailureCount},
+                {"LastAccessedManageApplications", candidate.LastAccessedManageApplications},
+                {"ReferralPoints", candidate.ReferralPoints},
+                {"BeingSupportedBy", candidate.BeingSupportedBy},
+                {"LockedForSupportUntil", candidate.LockedForSupportUntil},
+                {"NewVacancyAlertEmail", candidate.NewVacancyAlertEmail},
+                {"NewVacancyAlertSMS", candidate.NewVacancyAlertSMS},
+                {"AllowMarketingMessages", candidate.AllowMarketingMessages},
+                {"ReminderMessageSent", candidate.ReminderMessageSent},
+                {"CandidateGuid", candidate.CandidateGuid}
             };
         }
 
-        private int GetCandidateId(int legacyCandidateId)
+        public Dictionary<string, object> MapPersonDictionary(Person person)
         {
-            if (legacyCandidateId == 0)
+            return new Dictionary<string, object>
             {
-                var candidateId = _candidateId;
-                Interlocked.Decrement(ref _candidateId);
-                return candidateId;
+                {"Title", person.Title},
+                {"OtherTitle", person.OtherTitle},
+                {"FirstName", person.FirstName},
+                {"MiddleNames", person.MiddleNames},
+                {"Surname", person.Surname},
+                {"LandlineNumber", person.LandlineNumber},
+                {"MobileNumber", person.MobileNumber},
+                {"Email", person.Email},
+                {"PersonTypeId", person.PersonTypeId}
+            };
+        }
+
+        private int GetCandidateId(CandidateSummary candidate, IDictionary<Guid, int> candidateIds)
+        {
+            var candidateId = candidateIds.ContainsKey(candidate.Id) ? candidateIds[candidate.Id] : candidate.LegacyCandidateId;
+
+            if (candidate.LegacyCandidateId != 0 && candidateId != candidate.LegacyCandidateId)
+            {
+                var message = $"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}";
+                _logService.Error(message);
+                throw new Exception(message);
             }
 
-            return legacyCandidateId;
+            return candidateId;
         }
     }
 }
