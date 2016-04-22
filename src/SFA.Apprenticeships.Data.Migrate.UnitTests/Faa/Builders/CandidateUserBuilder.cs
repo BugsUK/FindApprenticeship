@@ -11,6 +11,7 @@
         private int _gender;
         private int _disabilityStatus;
         private int _ethnicity;
+        private string _emailAddress = "Test@TEST.CoM";
 
         public CandidateUser Build()
         {
@@ -38,7 +39,7 @@
                             Longitude = -1.7005217601595300
                         }
                     },
-                    EmailAddress = "Test@TEST.CoM",
+                    EmailAddress = _emailAddress,
                     PhoneNumber = "07895123456"
                 },
                 MonitoringInformation = new MonitoringInformation
@@ -96,6 +97,12 @@
         public CandidateUserBuilder WithEthnicity(int ethnicity)
         {
             _ethnicity = ethnicity;
+            return this;
+        }
+
+        public CandidateUserBuilder WithEmailAddress(string emailAddress)
+        {
+            _emailAddress = emailAddress;
             return this;
         }
     }

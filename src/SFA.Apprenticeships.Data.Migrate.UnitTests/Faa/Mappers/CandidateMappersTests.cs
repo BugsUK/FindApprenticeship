@@ -251,6 +251,7 @@
             candidateDictionary["ReminderMessageSent"].Should().Be(candidate.ReminderMessageSent);
             candidateDictionary["CandidateGuid"].Should().Be(candidate.CandidateGuid);
 
+            personDictionary["PersonId"].Should().Be(person.PersonId);
             personDictionary["Title"].Should().Be(person.Title);
             personDictionary["OtherTitle"].Should().Be(person.OtherTitle);
             personDictionary["FirstName"].Should().Be(person.FirstName);
@@ -309,9 +310,28 @@
             //Act
             var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), personIds);
             var candidate = candidatePerson.Candidate;
+            var person = candidatePerson.Person;
 
             //Assert
             candidate.PersonId.Should().Be(personId);
+            person.PersonId.Should().Be(personId);
+        }
+
+        [Test]
+        public void VeryLongEmailTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithEmailAddress("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@testtesttesttesttesttesttest.com").Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+            var person = candidatePerson.Person;
+
+            //Assert
+            candidate.AdditionalEmail.Should().Be("");
+
+            person.Email.Should().Be(candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower());
         }
     }
 }

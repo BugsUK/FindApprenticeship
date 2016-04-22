@@ -210,5 +210,38 @@
             successfulHistory["ApplicationHistoryEventSubTypeId"].Should().Be(6);
             successfulHistory["Comment"].Should().Be("Status Change");
         }
+
+        [Test]
+        public void NoApplicationIdVacancyApplicationTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+
+            //Act
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
+
+            //Assert
+            applicationHistory[0].ApplicationHistoryId.Should().Be(0);
+        }
+
+        [Test]
+        public void MatchingApplicationIdVacancyApplicationTest()
+        {
+            //Arrange
+            const int applicationId = 42;
+            const int applicationHistoryId = 43;
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).WithLegacyApplicationId(applicationId).Build();
+            var applicationHistoryIds = new Dictionary<int, Dictionary<int, int>>
+            {
+                { applicationId, new Dictionary<int, int> {{ 1, applicationHistoryId }}}
+            };
+
+            //Act
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, applicationHistoryIds);
+
+            //Assert
+            applicationHistory[0].ApplicationHistoryId.Should().Be(43);
+            applicationHistory[1].ApplicationHistoryId.Should().Be(0);
+        }
     }
 }

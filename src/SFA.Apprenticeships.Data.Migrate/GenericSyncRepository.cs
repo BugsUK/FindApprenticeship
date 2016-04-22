@@ -177,6 +177,11 @@ END CATCH
             }
             else
             {
+                foreach (var primaryKey in table.PrimaryKeys)
+                {
+                    columnTypes.Remove(primaryKey);
+                }
+
                 connection.Execute($@"{GetInsertSql(table, columnTypes, tempTable)};");
             }
         }

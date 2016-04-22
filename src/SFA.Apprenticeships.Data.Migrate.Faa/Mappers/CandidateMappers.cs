@@ -93,7 +93,7 @@
                 EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
                 ApplicationLimitEnforced = false,
                 LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
-                AdditionalEmail = email,
+                AdditionalEmail = email.Length > 50 ? "" : email,
                 Disability = GetDisability(monitoringInformation.DisabilityStatus),
                 DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
                 HealthProblems = "",
@@ -120,6 +120,7 @@
 
             var person = new Person
             {
+                PersonId = personId,
                 Title = 0,
                 OtherTitle = "",
                 FirstName = candidateUser.Candidate.RegistrationDetails.FirstName,
@@ -198,6 +199,7 @@
         {
             return new Dictionary<string, object>
             {
+                {"PersonId", person.PersonId},
                 {"Title", person.Title},
                 {"OtherTitle", person.OtherTitle},
                 {"FirstName", person.FirstName},
@@ -235,16 +237,17 @@
 
         private int GetCandidateId(CandidateSummary candidate, IDictionary<Guid, int> candidateIds)
         {
-            var candidateId = candidateIds.ContainsKey(candidate.Id) ? candidateIds[candidate.Id] : candidate.LegacyCandidateId;
-
-            if (candidate.LegacyCandidateId != 0 && candidateId != candidate.LegacyCandidateId)
+            if (candidateIds.ContainsKey(candidate.Id))
             {
-                var message = $"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}";
-                _logService.Error(message);
-                throw new Exception(message);
+                var candidateId = candidateIds[candidate.Id];
+                if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
+                {
+                    _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
+                }
+                return candidateId;
             }
 
-            return candidateId;
+            return candidate.LegacyCandidateId;
         }
 
         private int GetGender(int? gender)

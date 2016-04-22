@@ -77,7 +77,7 @@
 
             var expectedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCount(cancellationToken).Result;
             var cursor = _vacancyApplicationsRepository.GetAllVacancyApplications(cancellationToken).Result;
-            ProcessApplications(cursor, expectedCount, vacancyIds, candidateIds, BulkInsert, cancellationToken);
+            ProcessApplications(cursor, expectedCount, vacancyIds, candidateIds, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(CancellationToken cancellationToken)
@@ -94,57 +94,41 @@
             _logService.Info($"Processing new {_vacancyApplicationsUpdater.CollectionName}");
             var expectedCreatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCreatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
             var createdCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsCreatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastCreatedDate, cancellationToken).Result;
-            ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, BulkInsert, cancellationToken);
+            ProcessApplications(createdCursor, expectedCreatedCount, vacancyIds, candidates, cancellationToken);
             _logService.Info($"Completed processing new {_vacancyApplicationsUpdater.CollectionName}");
 
             //Updates
             _logService.Info($"Processing updated {_vacancyApplicationsUpdater.CollectionName}");
             var expectedUpdatedCount = _vacancyApplicationsRepository.GetVacancyApplicationsUpdatedSinceCount(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _vacancyApplicationsRepository.GetAllVacancyApplicationsUpdatedSince(_vacancyApplicationsUpdater.VacancyApplicationLastUpdatedDate, cancellationToken).Result;
-            ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, BulkUpdate, cancellationToken);
+            ProcessApplications(updatedCursor, expectedUpdatedCount, vacancyIds, candidates, cancellationToken);
             _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
-        private void BulkInsert(IList<ApplicationWithHistory> applicationsWithHistory)
+        public void BulkUpsert(IList<ApplicationWithHistory> applicationsWithHistory, IDictionary<Guid, int> applicationIds)
         {
-            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
+            //Bulk insert any applications with valid ids that are not already in the database
+            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
 
-            _genericSyncRespository.BulkInsert(_applicationHistoryTable, applicationsWithHistory.SelectMany(a => a.ApplicationHistory.MapApplicationHistoryDictionary()));
-        }
-
-        private void BulkUpdate(IList<ApplicationWithHistory> applicationsWithHistory)
-        {
-            //Updates can edit the ApplicationId value so delete the existing records and recreate
-            BulkDelete(applicationsWithHistory);
-
-            //Then create the new ones
-            BulkInsert(applicationsWithHistory);
-        }
-
-        private void BulkDelete(IList<ApplicationWithHistory> applicationsWithHistory)
-        {
-            /*var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
-            //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
-            foreach (var application in applicationsWithHistory.Select(a => a.Application))
+            //Now insert any remaining applications one at a time
+            foreach (var application in applicationsWithHistory.Where(a => a.Application.ApplicationId == 0).Select(a => a.Application))
             {
-                var applicationId = _targetDatabase.Query<int?>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE VacancyId = @vacancyId AND CandidateId = @candidateId", new { vacancyId = application["VacancyId"], candidateId = application["CandidateId"] }).SingleOrDefault();
-                if (applicationId.HasValue && !applicationIds.Contains(applicationId.Value))
-                {
-                    applicationIds.Add(applicationId.Value);
-                }
+                _targetDatabase.Insert(application);
             }
 
-            using (var connection = (SqlConnection) _targetDatabase.GetOpenConnection())
-            {
-                //Delete application history associated with application
-                connection.Execute($@"DELETE FROM {_applicationHistoryTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
+            //Finally, update existing applications
+            _genericSyncRespository.BulkUpdate(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
 
-                //Delete applications
-                connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
-            }*/
+            //Insert new application history records
+            var newApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId == 0);
+            _genericSyncRespository.BulkInsert(_applicationHistoryTable, newApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+
+            //Update existing application history records
+            var existingApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId != 0);
+            _genericSyncRespository.BulkInsert(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
         }
 
-        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, Action<IList<ApplicationWithHistory>> bulkAction, CancellationToken cancellationToken)
+        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -164,18 +148,8 @@
 
                 count += applicationsWithHistory.Count;
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
-                try
-                {
-                    bulkAction(applicationsWithHistory);
-                }
-                catch (Exception ex)
-                {
-                    _logService.Error($"Error while processing {_vacancyApplicationsUpdater.CollectionName}. Trying a delete then retry", ex);
-                    //Propagate exception back up the stack rather than silently continuing
-                    BulkDelete(applicationsWithHistory);
-                    bulkAction(applicationsWithHistory);
-                }
-
+                BulkUpsert(applicationsWithHistory, applicationIds);
+                
                 _vacancyApplicationsUpdater.UpdateSyncDates(maxDateCreated, maxDateUpdated);
 
                 var percentage = ((double)count / expectedCount) * 100;

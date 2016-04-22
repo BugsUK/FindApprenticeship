@@ -6,12 +6,14 @@
     using Builders;
     using FluentAssertions;
     using Migrate.Faa.Mappers;
+    using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class ApplicationMappersTests
     {
-        private readonly IApplicationMappers _applicationMappers = new ApplicationMappers(-1);
+        private readonly IApplicationMappers _applicationMappers = new ApplicationMappers(new Mock<ILogService>().Object);
 
         [Test]
         public void SavedVacancyApplicationTest()
@@ -297,7 +299,27 @@
             var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
-            application.ApplicationId.Should().Be(-1);
+            application.ApplicationId.Should().Be(0);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+        }
+
+        [Test]
+        public void MatchingIdVacancyApplicationTest()
+        {
+            //Arrange
+            var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).WithLegacyApplicationId(0).Build();
+            var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
+            const int applicationId = 42;
+            var applicationIds = new Dictionary<Guid, int>
+            {
+                {vacancyApplication.Id, applicationId}
+            };
+
+            //Act
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, applicationIds);
+
+            //Assert
+            application.ApplicationId.Should().Be(applicationId);
             application.CandidateId.Should().Be(candidate.LegacyCandidateId);
         }
 

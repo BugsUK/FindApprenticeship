@@ -2,29 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
-    using Infrastructure.Repositories.Sql.Common;
+    using SFA.Infrastructure.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers
     {
-        private int _applicationId;
+        private readonly ILogService _logService;
 
-        public ApplicationMappers(IGetOpenConnection targetDatabase)
+        public ApplicationMappers(ILogService logService)
         {
-            _applicationId = targetDatabase.Query<int>($"SELECT ISNULL(min(ApplicationId), 0) FROM Application").Single() - 1;
-            if (_applicationId > -1)
-            {
-                _applicationId = -1;
-            }
-        }
-
-        public ApplicationMappers(int applicationId)
-        {
-            _applicationId = applicationId;
+            _logService = logService;
         }
 
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
@@ -68,7 +57,7 @@
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Application
             {
-                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
+                ApplicationId = GetApplicationId(apprenticeshipApplication, applicationIds),
                 CandidateId = candidateId,
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
@@ -115,16 +104,19 @@
             };
         }
 
-        private int GetApplicationId(int legacyApplicationId)
+        private int GetApplicationId(VacancyApplication apprenticeshipApplication, IDictionary<Guid, int> applicationIds)
         {
-            if (legacyApplicationId == 0)
+            if (applicationIds.ContainsKey(apprenticeshipApplication.Id))
             {
-                var applicationId = _applicationId;
-                Interlocked.Decrement(ref _applicationId);
+                var applicationId = applicationIds[apprenticeshipApplication.Id];
+                if (apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
+                {
+                    _logService.Warn($"ApplicationId: {applicationId} does not match the LegacyApplicationId: {apprenticeshipApplication.LegacyApplicationId} for application with Id: {apprenticeshipApplication.Id}. This shouldn't change post submission");
+                }
                 return applicationId;
             }
 
-            return legacyApplicationId;
+            return apprenticeshipApplication.LegacyApplicationId;
         }
 
         private static int GetApplicationStatusTypeId(int status)

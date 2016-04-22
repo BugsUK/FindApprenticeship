@@ -31,7 +31,7 @@
             var syncRepository = new SyncRepository(targetDatabase);
             var genericSyncRespository = new GenericSyncRespository(_logService, sourceDatabase, targetDatabase);
 
-            var applicationMappers = new ApplicationMappers(targetDatabase);
+            var applicationMappers = new ApplicationMappers(_logService);
 
             _migrationProcessors = new List<IMigrationProcessor>
             {
