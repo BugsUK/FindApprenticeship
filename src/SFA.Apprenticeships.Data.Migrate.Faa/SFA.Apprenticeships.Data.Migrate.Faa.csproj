@@ -114,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CandidateMigrationProcessor.cs" />
-    <Compile Include="Entities\ApplicationWithHistoryDictionary.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
     <Compile Include="Entities\CandidatePerson.cs" />
     <Compile Include="Entities\Mongo\Address.cs" />
@@ -131,6 +130,8 @@
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mappers\IApplicationMappers.cs" />
     <Compile Include="Mappers\ICandidateMappers.cs" />
+    <Compile Include="Repository\Sql\ApplicationRepository.cs" />
+    <Compile Include="Repository\Sql\ApplicationHistoryRepository.cs" />
     <Compile Include="Repository\Sql\CandidateRepository.cs" />
     <Compile Include="Repository\Sql\PersonRepository.cs" />
     <Compile Include="Repository\Sql\PersonTable.cs" />

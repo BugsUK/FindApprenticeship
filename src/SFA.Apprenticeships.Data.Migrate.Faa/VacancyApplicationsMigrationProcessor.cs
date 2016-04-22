@@ -24,7 +24,9 @@
         private readonly ILogService _logService;
         
         private readonly VacancyRepository _vacancyRepository;
-        private readonly CandidateUserRepository _candidateUserRepository;
+        private readonly CandidateRepository _candidateRepository;
+        private readonly ApplicationRepository _applicationRepository;
+        private readonly ApplicationHistoryRepository _applicationHistoryRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
@@ -39,8 +41,9 @@
             _logService = logService;
 
             _vacancyRepository = new VacancyRepository(targetDatabase);
-            //TODO: Replace with CandidateRepository now that the candidates have been migrated
-            _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
+            _candidateRepository = new CandidateRepository(targetDatabase);
+            _applicationRepository = new ApplicationRepository(targetDatabase);
+            _applicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
 
@@ -68,21 +71,13 @@
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
-            IDictionary<Guid, CandidateSummary> candidates;
-            if (_vacancyApplicationsUpdater.LoadAllCandidatesBeforeProcessing)
-            {
-                _logService.Info("Loading candidates");
-                candidates = _candidateUserRepository.GetAllCandidateSummaries(cancellationToken).Result;
-                _logService.Info($"Completed loading {candidates.Count} candidates");
-            }
-            else
-            {
-                candidates = new Dictionary<Guid, CandidateSummary>();
-            }
+            _logService.Info("Loading candidates");
+            var candidateIds = _candidateRepository.GetAllCandidateIds();
+            _logService.Info($"Completed loading {candidateIds.Count} candidates");
 
             var expectedCount = _vacancyApplicationsRepository.GetVacancyApplicationsCount(cancellationToken).Result;
             var cursor = _vacancyApplicationsRepository.GetAllVacancyApplications(cancellationToken).Result;
-            ProcessApplications(cursor, expectedCount, vacancyIds, candidates, BulkInsert, cancellationToken);
+            ProcessApplications(cursor, expectedCount, vacancyIds, candidateIds, BulkInsert, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(CancellationToken cancellationToken)
@@ -93,7 +88,7 @@
             var vacancyIds = _vacancyRepository.GetAllVacancyIds();
             _logService.Info($"Completed loading {vacancyIds.Count} Vacancy Ids");
 
-            var candidates = new Dictionary<Guid, CandidateSummary>();
+            var candidates = new Dictionary<Guid, int>();
 
             //Inserts
             _logService.Info($"Processing new {_vacancyApplicationsUpdater.CollectionName}");
@@ -110,14 +105,14 @@
             _logService.Info($"Completed processing updated {_vacancyApplicationsUpdater.CollectionName}");
         }
 
-        private void BulkInsert(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
+        private void BulkInsert(IList<ApplicationWithHistory> applicationsWithHistory)
         {
-            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Select(a => a.Application));
+            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
 
-            _genericSyncRespository.BulkInsert(_applicationHistoryTable, applicationsWithHistory.SelectMany(a => a.ApplicationHistory));
+            _genericSyncRespository.BulkInsert(_applicationHistoryTable, applicationsWithHistory.SelectMany(a => a.ApplicationHistory.MapApplicationHistoryDictionary()));
         }
 
-        private void BulkUpdate(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
+        private void BulkUpdate(IList<ApplicationWithHistory> applicationsWithHistory)
         {
             //Updates can edit the ApplicationId value so delete the existing records and recreate
             BulkDelete(applicationsWithHistory);
@@ -126,9 +121,9 @@
             BulkInsert(applicationsWithHistory);
         }
 
-        private void BulkDelete(IList<ApplicationWithHistoryDictionary> applicationsWithHistory)
+        private void BulkDelete(IList<ApplicationWithHistory> applicationsWithHistory)
         {
-            var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
+            /*var applicationIds = _targetDatabase.Query<int>($@"SELECT ApplicationId FROM {_applicationTable.Name} WHERE ApplicationGuid IN @applicationGuids", new { applicationGuids = applicationsWithHistory.Select(a => (Guid)a.Application["ApplicationGuid"]) }).ToList();
             //Haven't identified why but there are cases where we end up with duplicate applications that aren't identified correctly by their guid so select those Ids too
             foreach (var application in applicationsWithHistory.Select(a => a.Application))
             {
@@ -146,10 +141,10 @@
 
                 //Delete applications
                 connection.Execute($@"DELETE FROM {_applicationTable.Name} WHERE ApplicationId IN @applicationIds", new { applicationIds });
-            }
+            }*/
         }
 
-        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, CandidateSummary> candidates, Action<IList<ApplicationWithHistoryDictionary>> bulkAction, CancellationToken cancellationToken)
+        private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, Action<IList<ApplicationWithHistory>> bulkAction, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -161,9 +156,12 @@
                 var maxDateCreated = batch.Max(a => a.DateCreated);
                 var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
 
-                LoadCandidates(candidates, batch, cancellationToken);
+                LoadCandidates(candidateIds, batch);
 
-                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidates.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistoryDictionary(a, candidates[a.CandidateId])).ToList();
+                var applicationIds = _applicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var applicationHistoryIds = _applicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
+                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, applicationHistoryIds)).ToList();
+
                 count += applicationsWithHistory.Count;
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
                 try
@@ -185,22 +183,17 @@
             }
         }
 
-        private void LoadCandidates(IDictionary<Guid, CandidateSummary> candidates, IEnumerable<VacancyApplication> vacancyApplications, CancellationToken cancellationToken)
+        private void LoadCandidates(IDictionary<Guid, int> candidateIds, IEnumerable<VacancyApplication> vacancyApplications)
         {
-            var candidateIds = vacancyApplications.Select(a => a.CandidateId).Except(candidates.Keys).ToArray();
-            if (candidateIds.Any())
+            var newCandidateIds = vacancyApplications.Select(a => a.CandidateId).Except(candidateIds.Keys).ToArray();
+            if (newCandidateIds.Any())
             {
-                _logService.Info($"Loading {candidateIds.Length} candidates");
-                var candidatesCursor = _candidateUserRepository.GetCandidateSummariesByIds(candidateIds, cancellationToken).Result;
-                while (candidatesCursor.MoveNextAsync(cancellationToken).Result)
+                _logService.Info($"Loading {newCandidateIds.Length} candidates");
+                foreach (var candidateIdKvp in _candidateRepository.GetCandidateIdsByGuid(newCandidateIds))
                 {
-                    var candidatesBatch = candidatesCursor.Current.ToList();
-                    foreach (var candidate in candidatesBatch)
-                    {
-                        candidates[candidate.Id] = candidate;
-                    }
-                    _logService.Info($"Completed loading batch of {candidatesBatch.Count} candidates");
+                    candidateIds.Add(candidateIdKvp);
                 }
+                _logService.Info($"Completed loading batch of {newCandidateIds.Length} candidates");
             }
         }
     }

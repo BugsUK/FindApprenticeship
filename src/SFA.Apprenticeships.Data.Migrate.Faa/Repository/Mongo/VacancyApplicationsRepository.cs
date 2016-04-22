@@ -10,6 +10,8 @@
 
     public class VacancyApplicationsRepository
     {
+        private const int Status = 30;
+
         private readonly string _collectionName;
         private readonly ILogService _logService;
         private readonly IMongoDatabase _database;
@@ -25,20 +27,20 @@
 
         public async Task<long> GetVacancyApplicationsCount(CancellationToken cancellationToken)
         {
-            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10), cancellationToken: cancellationToken);
+            var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status), cancellationToken: cancellationToken);
             return await cursor;
         }
 
         public async Task<long> GetVacancyApplicationsCreatedSinceCount(DateTime lastCreatedDate, CancellationToken cancellationToken)
         {
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
 
         public async Task<long> GetVacancyApplicationsUpdatedSinceCount(DateTime lastUpdatedDate, CancellationToken cancellationToken)
         {
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).CountAsync(filter, cancellationToken: cancellationToken);
             return await cursor;
         }
@@ -65,7 +67,7 @@
                 BatchSize = 1000,
                 Projection = GetVacancyApplicationProjection()
             };
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateCreated, lastCreatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(filter, options, cancellationToken);
             return await cursor;
         }
@@ -79,7 +81,7 @@
                 BatchSize = 1000,
                 Projection = GetVacancyApplicationProjection()
             };
-            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, 10) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
+            var filter = Builders<VacancyApplication>.Filter.Gte(a => a.Status, Status) & Builders<VacancyApplication>.Filter.Gt(a => a.DateUpdated, lastUpdatedDate);
             var cursor = _database.GetCollection<VacancyApplication>(_collectionName).FindAsync(filter, options, cancellationToken);
             return await cursor;
         }

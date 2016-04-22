@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.UnitTests.Faa.Mappers
 {
+    using System.Collections.Generic;
     using System.Linq;
     using Builders;
     using FluentAssertions;
@@ -16,7 +17,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(10).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -37,7 +38,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(20).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -58,7 +59,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(30).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -82,7 +83,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(40).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -108,7 +109,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(15).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -132,7 +133,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(90).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -160,7 +161,7 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
             applicationHistory.Should().NotBeNullOrEmpty();
@@ -188,18 +189,19 @@
             var vacancyApplication = new VacancyApplicationBuilder().WithStatus(80).Build();
 
             //Act
-            var applicationHistory = vacancyApplication.MapApplicationHistoryDictionary(vacancyApplication.LegacyApplicationId);
+            var applicationHistory = vacancyApplication.MapApplicationHistory(vacancyApplication.LegacyApplicationId, new Dictionary<int, Dictionary<int, int>>());
+            var applicationHistoryDictionary = applicationHistory.MapApplicationHistoryDictionary();
 
             //Assert
-            applicationHistory.Should().NotBeNullOrEmpty();
-            applicationHistory.Count.Should().Be(4);
-            var draftHistory = applicationHistory[0];
+            applicationHistoryDictionary.Should().NotBeNullOrEmpty();
+            applicationHistoryDictionary.Count.Should().Be(4);
+            var draftHistory = applicationHistoryDictionary[0];
             draftHistory["ApplicationHistoryEventSubTypeId"].Should().Be(1);
-            var submittedHistory = applicationHistory[1];
+            var submittedHistory = applicationHistoryDictionary[1];
             submittedHistory["ApplicationHistoryEventSubTypeId"].Should().Be(2);
-            var inProgressHistory = applicationHistory[2];
+            var inProgressHistory = applicationHistoryDictionary[2];
             inProgressHistory["ApplicationHistoryEventSubTypeId"].Should().Be(3);
-            var successfulHistory = applicationHistory[3];
+            var successfulHistory = applicationHistoryDictionary[3];
             successfulHistory["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
             successfulHistory["UserName"].Should().Be("");
             // ReSharper disable once PossibleInvalidOperationException

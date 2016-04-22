@@ -39,8 +39,8 @@
             candidate.CountyId.Should().Be(0);
             candidate.Postcode.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.Postcode);
             candidate.LocalAuthorityId.Should().Be(0);
-            candidate.Longitude.Should().Be((decimal)candidateUser.Candidate.RegistrationDetails.Address.GeoPoint.Longitude);
-            candidate.Latitude.Should().Be((decimal)candidateUser.Candidate.RegistrationDetails.Address.GeoPoint.Latitude);
+            candidate.Longitude.Should().Be(null);
+            candidate.Latitude.Should().Be(null);
             candidate.GeocodeEasting.Should().Be(null);
             candidate.GeocodeNorthing.Should().Be(null);
             candidate.NiReference.Should().Be("");
@@ -85,6 +85,26 @@
             person.MobileNumber.Should().Be("");
             person.Email.Should().Be(candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower());
             person.PersonTypeId.Should().Be(1);
+        }
+
+        [TestCase(0, 1)] //Unknown
+        [TestCase(10, 1)] //PendingActivation
+        [TestCase(20, 2)] //Active
+        [TestCase(30, 4)] //Inactive
+        [TestCase(90, 4)] //Locked
+        [TestCase(100, 4)] //Dormant
+        [TestCase(999, 6)] //PendingDeletion
+        public void StatusTest(int status, int expectedCandidateStatusTypeId)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.CandidateStatusTypeId.Should().Be(expectedCandidateStatusTypeId);
         }
 
         [TestCase(0, 0)]

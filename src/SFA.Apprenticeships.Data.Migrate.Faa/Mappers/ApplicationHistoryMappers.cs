@@ -16,7 +16,7 @@
         private const int ApplicationStatusTypeIdSuccessful = 6;
         private const int ApplicationStatusTypeIdPastApplication = 7;
 
-        public static IList<ApplicationHistory> MapApplicationHistory(this VacancyApplication vacancyApplication, int applicationId)
+        public static IList<ApplicationHistory> MapApplicationHistory(this VacancyApplication vacancyApplication, int applicationId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds)
         {
             var applicationHistory = new List<ApplicationHistory>
             {
@@ -53,9 +53,9 @@
             return applicationHistory;
         }
 
-        public static IList<IDictionary<string, object>> MapApplicationHistoryDictionary(this VacancyApplication vacancyApplication, int applicationId)
+        public static IList<IDictionary<string, object>> MapApplicationHistoryDictionary(this IList<ApplicationHistory> applicationHistories)
         {
-            return vacancyApplication.MapApplicationHistory(applicationId).Select(ah => ah.MapApplicationHistoryDictionary()).ToList();
+            return applicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()).ToList();
         }
 
         private static IDictionary<string, object> MapApplicationHistoryDictionary(this ApplicationHistory applicationHistory)

@@ -63,12 +63,13 @@
             var address = candidateUser.Candidate.RegistrationDetails.Address;
             var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
             var personId = personIds.ContainsKey(email) ? personIds[email] : 0;//Unspecified person. Filled in later
+            var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
 
             var candidate = new Candidate
             {
                 CandidateId = GetCandidateId(candidateUser.Candidate, candidateIds),
                 PersonId = personId,
-                CandidateStatusTypeId = CandidateStatusTypeIdPreRegistered,
+                CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
                 DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
                 AddressLine1 = address.AddressLine1,
                 AddressLine2 = address.AddressLine2 ?? "",
@@ -79,22 +80,22 @@
                 CountyId = 0,
                 Postcode = address.Postcode,
                 LocalAuthorityId = 0,
-                Longitude = (decimal)address.GeoPoint.Longitude,
-                Latitude = (decimal)address.GeoPoint.Latitude,
+                Longitude = null,
+                Latitude = null,
                 GeocodeEasting = null,
                 GeocodeNorthing = null,
                 NiReference = "",
                 VoucherReferenceNumber = null,
                 UniqueLearnerNumber = null,
                 UlnStatusId = 0,
-                Gender = GetGender(candidateUser.Candidate.MonitoringInformation.Gender),
-                EthnicOrigin = GetEthnicOrigin(candidateUser.Candidate.MonitoringInformation.Ethnicity),
-                EthnicOriginOther = GetEthnicOriginOther(candidateUser.Candidate.MonitoringInformation.Ethnicity),
+                Gender = GetGender(monitoringInformation.Gender),
+                EthnicOrigin = GetEthnicOrigin(monitoringInformation.Ethnicity),
+                EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
                 ApplicationLimitEnforced = false,
                 LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
                 AdditionalEmail = email,
-                Disability = GetDisability(candidateUser.Candidate.MonitoringInformation.DisabilityStatus),
-                DisabilityOther = GetDisabilityOther(candidateUser.Candidate.MonitoringInformation.DisabilityStatus),
+                Disability = GetDisability(monitoringInformation.DisabilityStatus),
+                DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
                 HealthProblems = "",
                 ReceivePushedContent = false,
                 ReferralAgent = false,
@@ -207,6 +208,29 @@
                 {"Email", person.Email},
                 {"PersonTypeId", person.PersonTypeId}
             };
+        }
+
+        private int GetCandidateStatusTypeId(int status)
+        {
+            switch (status)
+            {
+                case 0:
+                    return CandidateStatusTypeIdPreRegistered;
+                case 10:
+                    return CandidateStatusTypeIdPreRegistered;
+                case 20:
+                    return CandidateStatusTypeIdActivated;
+                case 30:
+                    return CandidateStatusTypeIdSuspended;
+                case 90:
+                    return CandidateStatusTypeIdSuspended;
+                case 100:
+                    return CandidateStatusTypeIdSuspended;
+                case 999:
+                    return CandidateStatusTypeIdDeleted;
+            }
+
+            return CandidateStatusTypeIdPreRegistered;
         }
 
         private int GetCandidateId(CandidateSummary candidate, IDictionary<Guid, int> candidateIds)

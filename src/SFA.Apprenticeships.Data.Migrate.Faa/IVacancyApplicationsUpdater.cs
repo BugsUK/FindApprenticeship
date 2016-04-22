@@ -7,7 +7,6 @@
     {
         string CollectionName { get; }
         bool IsValidForIncrementalSync { get; }
-        bool LoadAllCandidatesBeforeProcessing { get; }
         DateTime VacancyApplicationLastCreatedDate { get; }
         DateTime VacancyApplicationLastUpdatedDate { get; }
         void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated);
@@ -24,7 +23,6 @@
 
         public string CollectionName => "apprenticeships";
         public bool IsValidForIncrementalSync => _syncRepository.GetSyncParams().IsValidForApprenticeshipIncrementalSync;
-        public bool LoadAllCandidatesBeforeProcessing => true;
         public DateTime VacancyApplicationLastCreatedDate => _syncRepository.GetSyncParams().ApprenticeshipLastCreatedDate;
         public DateTime VacancyApplicationLastUpdatedDate => _syncRepository.GetSyncParams().ApprenticeshipLastUpdatedDate;
         public void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated)
@@ -47,7 +45,6 @@
 
         public string CollectionName => "traineeships";
         public bool IsValidForIncrementalSync => _syncRepository.GetSyncParams().IsValidForTraineeshipIncrementalSync;
-        public bool LoadAllCandidatesBeforeProcessing => false;
         public DateTime VacancyApplicationLastCreatedDate => _syncRepository.GetSyncParams().TraineeshipLastCreatedDate;
         public DateTime VacancyApplicationLastUpdatedDate => _syncRepository.GetSyncParams().TraineeshipLastUpdatedDate;
         public void UpdateSyncDates(DateTime maxDateCreated, DateTime maxDateUpdated)

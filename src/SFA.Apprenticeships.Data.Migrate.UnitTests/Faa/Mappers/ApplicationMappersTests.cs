@@ -11,7 +11,7 @@
     [TestFixture]
     public class ApplicationMappersTests
     {
-        private readonly IApplicationMappers _applicationMappers = new ApplicationMappers(-1, -1);
+        private readonly IApplicationMappers _applicationMappers = new ApplicationMappers(-1);
 
         [Test]
         public void SavedVacancyApplicationTest()
@@ -21,7 +21,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate);
+            Action mapApplicationAction = () => _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             mapApplicationAction.ShouldThrow<ArgumentException>();
@@ -35,7 +35,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -63,7 +63,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -91,7 +91,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -119,7 +119,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -159,7 +159,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -207,7 +207,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -235,7 +235,7 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
@@ -263,27 +263,27 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate);
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, Dictionary<int, int>>());
 
             //Assert
-            application.Application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
-            application.Application.CandidateId.Should().Be(candidate.LegacyCandidateId);
-            application.Application.VacancyId.Should().Be(vacancyApplication.Vacancy.Id);
-            application.Application.ApplicationStatusTypeId.Should().Be(6);
-            application.Application.WithdrawnOrDeclinedReasonId.Should().Be(0);
-            application.Application.UnsuccessfulReasonId.Should().Be(0);
-            application.Application.OutcomeReasonOther.Should().Be(null);
-            application.Application.NextActionId.Should().Be(0);
-            application.Application.NextActionOther.Should().Be(null);
-            application.Application.AllocatedTo.Should().Be(null);
-            application.Application.CVAttachmentId.Should().Be(null);
-            application.Application.BeingSupportedBy.Should().Be(null);
-            application.Application.LockedForSupportUntil.Should().Be(null);
-            application.Application.WithdrawalAcknowledged.Should().Be(true);
-            application.Application.ApplicationGuid.Should().Be(vacancyApplication.Id);
-            application.ApplicationHistory.Should().NotBeNullOrEmpty();
-            application.ApplicationHistory.Count.Should().Be(4);
-            application.ApplicationHistory.All(a => a.ApplicationId == application.Application.ApplicationId).Should().BeTrue();
+            applicationWithHistory.Application.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
+            applicationWithHistory.Application.CandidateId.Should().Be(candidate.LegacyCandidateId);
+            applicationWithHistory.Application.VacancyId.Should().Be(vacancyApplication.Vacancy.Id);
+            applicationWithHistory.Application.ApplicationStatusTypeId.Should().Be(6);
+            applicationWithHistory.Application.WithdrawnOrDeclinedReasonId.Should().Be(0);
+            applicationWithHistory.Application.UnsuccessfulReasonId.Should().Be(0);
+            applicationWithHistory.Application.OutcomeReasonOther.Should().Be(null);
+            applicationWithHistory.Application.NextActionId.Should().Be(0);
+            applicationWithHistory.Application.NextActionOther.Should().Be(null);
+            applicationWithHistory.Application.AllocatedTo.Should().Be(null);
+            applicationWithHistory.Application.CVAttachmentId.Should().Be(null);
+            applicationWithHistory.Application.BeingSupportedBy.Should().Be(null);
+            applicationWithHistory.Application.LockedForSupportUntil.Should().Be(null);
+            applicationWithHistory.Application.WithdrawalAcknowledged.Should().Be(true);
+            applicationWithHistory.Application.ApplicationGuid.Should().Be(vacancyApplication.Id);
+            applicationWithHistory.ApplicationHistory.Should().NotBeNullOrEmpty();
+            applicationWithHistory.ApplicationHistory.Count.Should().Be(4);
+            applicationWithHistory.ApplicationHistory.All(a => a.ApplicationId == applicationWithHistory.Application.ApplicationId).Should().BeTrue();
         }
 
         [Test]
@@ -294,11 +294,11 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).WithLegacyCandidateId(0).Build();
 
             //Act
-            var application = _applicationMappers.MapApplication(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
 
             //Assert
             application.ApplicationId.Should().Be(-1);
-            application.CandidateId.Should().Be(-1);
+            application.CandidateId.Should().Be(candidate.LegacyCandidateId);
         }
 
         [Test]
@@ -309,24 +309,25 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplicationDictionary(vacancyApplication, candidate);
+            var application = _applicationMappers.MapApplication(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>());
+            var applicationDictionary = _applicationMappers.MapApplicationDictionary(application);
 
             //Assert
-            application["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
-            application["CandidateId"].Should().Be(candidate.LegacyCandidateId);
-            application["VacancyId"].Should().Be(vacancyApplication.Vacancy.Id);
-            application["ApplicationStatusTypeId"].Should().Be(2);
-            application["WithdrawnOrDeclinedReasonId"].Should().Be(0);
-            application["UnsuccessfulReasonId"].Should().Be(0);
-            application["OutcomeReasonOther"].Should().Be(null);
-            application["NextActionId"].Should().Be(0);
-            application["NextActionOther"].Should().Be(null);
-            application["AllocatedTo"].Should().Be(null);
-            application["CVAttachmentId"].Should().Be(null);
-            application["BeingSupportedBy"].Should().Be(null);
-            application["LockedForSupportUntil"].Should().Be(null);
-            application["WithdrawalAcknowledged"].Should().Be(true);
-            application["ApplicationGuid"].Should().Be(vacancyApplication.Id);
+            applicationDictionary["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
+            applicationDictionary["CandidateId"].Should().Be(candidate.LegacyCandidateId);
+            applicationDictionary["VacancyId"].Should().Be(vacancyApplication.Vacancy.Id);
+            applicationDictionary["ApplicationStatusTypeId"].Should().Be(2);
+            applicationDictionary["WithdrawnOrDeclinedReasonId"].Should().Be(0);
+            applicationDictionary["UnsuccessfulReasonId"].Should().Be(0);
+            applicationDictionary["OutcomeReasonOther"].Should().Be(null);
+            applicationDictionary["NextActionId"].Should().Be(0);
+            applicationDictionary["NextActionOther"].Should().Be(null);
+            applicationDictionary["AllocatedTo"].Should().Be(null);
+            applicationDictionary["CVAttachmentId"].Should().Be(null);
+            applicationDictionary["BeingSupportedBy"].Should().Be(null);
+            applicationDictionary["LockedForSupportUntil"].Should().Be(null);
+            applicationDictionary["WithdrawalAcknowledged"].Should().Be(true);
+            applicationDictionary["ApplicationGuid"].Should().Be(vacancyApplication.Id);
         }
 
         [Test]
@@ -337,27 +338,29 @@
             var candidate = new CandidateSummaryBuilder().WithCandidateId(vacancyApplication.CandidateId).Build();
 
             //Act
-            var application = _applicationMappers.MapApplicationWithHistoryDictionary(vacancyApplication, candidate);
+            var applicationWithHistory = _applicationMappers.MapApplicationWithHistory(vacancyApplication, candidate.LegacyCandidateId, new Dictionary<Guid, int>(), new Dictionary<int, Dictionary<int, int>>());
+            var applicationDictionary = _applicationMappers.MapApplicationDictionary(applicationWithHistory.Application);
+            var applicationHistoryDictionary = applicationWithHistory.ApplicationHistory.MapApplicationHistoryDictionary();
 
             //Assert
-            application.Application["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
-            application.Application["CandidateId"].Should().Be(candidate.LegacyCandidateId);
-            application.Application["VacancyId"].Should().Be(vacancyApplication.Vacancy.Id);
-            application.Application["ApplicationStatusTypeId"].Should().Be(2);
-            application.Application["WithdrawnOrDeclinedReasonId"].Should().Be(0);
-            application.Application["UnsuccessfulReasonId"].Should().Be(0);
-            application.Application["OutcomeReasonOther"].Should().Be(null);
-            application.Application["NextActionId"].Should().Be(0);
-            application.Application["NextActionOther"].Should().Be(null);
-            application.Application["AllocatedTo"].Should().Be(null);
-            application.Application["CVAttachmentId"].Should().Be(null);
-            application.Application["BeingSupportedBy"].Should().Be(null);
-            application.Application["LockedForSupportUntil"].Should().Be(null);
-            application.Application["WithdrawalAcknowledged"].Should().Be(true);
-            application.Application["ApplicationGuid"].Should().Be(vacancyApplication.Id);
-            application.ApplicationHistory.Should().NotBeNull();
-            application.ApplicationHistory.Count.Should().Be(2);
-            application.ApplicationHistory.All(a => (int)a["ApplicationId"] == (int)application.Application["ApplicationId"]).Should().BeTrue();
+            applicationDictionary["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
+            applicationDictionary["CandidateId"].Should().Be(candidate.LegacyCandidateId);
+            applicationDictionary["VacancyId"].Should().Be(vacancyApplication.Vacancy.Id);
+            applicationDictionary["ApplicationStatusTypeId"].Should().Be(2);
+            applicationDictionary["WithdrawnOrDeclinedReasonId"].Should().Be(0);
+            applicationDictionary["UnsuccessfulReasonId"].Should().Be(0);
+            applicationDictionary["OutcomeReasonOther"].Should().Be(null);
+            applicationDictionary["NextActionId"].Should().Be(0);
+            applicationDictionary["NextActionOther"].Should().Be(null);
+            applicationDictionary["AllocatedTo"].Should().Be(null);
+            applicationDictionary["CVAttachmentId"].Should().Be(null);
+            applicationDictionary["BeingSupportedBy"].Should().Be(null);
+            applicationDictionary["LockedForSupportUntil"].Should().Be(null);
+            applicationDictionary["WithdrawalAcknowledged"].Should().Be(true);
+            applicationDictionary["ApplicationGuid"].Should().Be(vacancyApplication.Id);
+            applicationHistoryDictionary.Should().NotBeNull();
+            applicationHistoryDictionary.Count.Should().Be(2);
+            applicationHistoryDictionary.All(a => (int)a["ApplicationId"] == (int)applicationDictionary["ApplicationId"]).Should().BeTrue();
         }
     }
 }
