@@ -173,7 +173,19 @@
                 .Include(c => c.DateCreated)
                 .Include(c => c.DateUpdated)
                 .Include(c => c.LegacyCandidateId)
-                .Include(c => c.RegistrationDetails);
+                .Include(c => c.RegistrationDetails.FirstName)
+                .Include(c => c.RegistrationDetails.MiddleNames)
+                .Include(c => c.RegistrationDetails.LastName)
+                .Include(c => c.RegistrationDetails.DateOfBirth)
+                .Include(c => c.RegistrationDetails.Address.AddressLine1)
+                .Include(c => c.RegistrationDetails.Address.AddressLine2)
+                .Include(c => c.RegistrationDetails.Address.AddressLine3)
+                .Include(c => c.RegistrationDetails.Address.AddressLine4)
+                .Include(c => c.RegistrationDetails.Address.Postcode)
+                .Include(c => c.RegistrationDetails.Address.GeoPoint.Longitude)
+                .Include(c => c.RegistrationDetails.Address.GeoPoint.Latitude)
+                .Include(c => c.RegistrationDetails.EmailAddress)
+                .Include(c => c.RegistrationDetails.PhoneNumber);
         }
     }
 }

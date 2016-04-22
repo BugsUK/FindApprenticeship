@@ -41,13 +41,13 @@
             }
             if (vacancyApplication.Status == 80)
             {
-                //Unsuccessful
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSuccessful));
+                //Successful
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.SuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSuccessful));
             }
             if (vacancyApplication.Status == 90)
             {
                 //Unsuccessful
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsuccessful));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.UnsuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsuccessful));
             }
 
             return applicationHistory;

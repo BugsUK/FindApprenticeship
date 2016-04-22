@@ -147,7 +147,7 @@
             unsuccessfulHistory.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
             unsuccessfulHistory.UserName.Should().Be("");
             // ReSharper disable once PossibleInvalidOperationException
-            unsuccessfulHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.DateUpdated.Value);
+            unsuccessfulHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.UnsuccessfulDateTime.Value);
             unsuccessfulHistory.ApplicationHistoryEventTypeId.Should().Be(1);
             unsuccessfulHistory.ApplicationHistoryEventSubTypeId.Should().Be(5);
             unsuccessfulHistory.Comment.Should().Be("Status Change");
@@ -175,7 +175,7 @@
             successfulHistory.ApplicationId.Should().Be(vacancyApplication.LegacyApplicationId);
             successfulHistory.UserName.Should().Be("");
             // ReSharper disable once PossibleInvalidOperationException
-            successfulHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.DateUpdated.Value);
+            successfulHistory.ApplicationHistoryEventDate.Should().Be(vacancyApplication.SuccessfulDateTime.Value);
             successfulHistory.ApplicationHistoryEventTypeId.Should().Be(1);
             successfulHistory.ApplicationHistoryEventSubTypeId.Should().Be(6);
             successfulHistory.Comment.Should().Be("Status Change");
@@ -203,7 +203,7 @@
             successfulHistory["ApplicationId"].Should().Be(vacancyApplication.LegacyApplicationId);
             successfulHistory["UserName"].Should().Be("");
             // ReSharper disable once PossibleInvalidOperationException
-            successfulHistory["ApplicationHistoryEventDate"].Should().Be(vacancyApplication.DateUpdated.Value);
+            successfulHistory["ApplicationHistoryEventDate"].Should().Be(vacancyApplication.SuccessfulDateTime.Value);
             successfulHistory["ApplicationHistoryEventTypeId"].Should().Be(1);
             successfulHistory["ApplicationHistoryEventSubTypeId"].Should().Be(6);
             successfulHistory["Comment"].Should().Be("Status Change");

@@ -94,6 +94,8 @@
                 .Include(a => a.DateApplied)
                 .Include(a => a.CandidateId)
                 .Include(a => a.LegacyApplicationId)
+                .Include(a => a.SuccessfulDateTime)
+                .Include(a => a.UnsuccessfulDateTime)
                 .Include(a => a.WithdrawnOrDeclinedReason)
                 .Include(a => a.UnsuccessfulReason)
                 .Include(a => a.Vacancy.Id)

@@ -21,6 +21,10 @@
 
         public int LegacyApplicationId { get; set; }
 
+        public DateTime? SuccessfulDateTime { get; set; }
+
+        public DateTime? UnsuccessfulDateTime { get; set; }
+
         public string WithdrawnOrDeclinedReason { get; set; }
 
         public string UnsuccessfulReason { get; set; }

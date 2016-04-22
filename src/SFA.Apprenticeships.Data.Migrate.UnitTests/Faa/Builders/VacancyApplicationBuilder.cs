@@ -18,9 +18,11 @@
                 DateCreated = DateTime.Now.AddDays(-7),
                 DateUpdated = DateTime.Now,
                 Status = _status,
-                DateApplied = DateTime.Now.AddDays(-4),
+                DateApplied = DateTime.Now.AddDays(-6),
                 CandidateId = Guid.NewGuid(),
                 LegacyApplicationId = _legacyApplicationId,
+                SuccessfulDateTime = DateTime.Now.AddDays(-1),
+                UnsuccessfulDateTime = DateTime.Now.AddDays(-2),
                 WithdrawnOrDeclinedReason = _withdrawnOrDeclinedReason,
                 UnsuccessfulReason = _unsuccessfulReason,
                 Vacancy = new Vacancy
