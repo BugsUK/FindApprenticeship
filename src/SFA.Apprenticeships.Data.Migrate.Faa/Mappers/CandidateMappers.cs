@@ -90,30 +90,30 @@
                 Gender = GetGender(candidateUser.Candidate.MonitoringInformation.Gender),
                 EthnicOrigin = GetEthnicOrigin(candidateUser.Candidate.MonitoringInformation.Ethnicity),
                 EthnicOriginOther = GetEthnicOriginOther(candidateUser.Candidate.MonitoringInformation.Ethnicity),
-                /*ApplicationLimitEnforced = candidateUser.Candidate.,
-                LastAccessedDate = candidateUser.Candidate.,
-                AdditionalEmail = candidateUser.Candidate.,
-                Disability = candidateUser.Candidate.,
-                DisabilityOther = candidateUser.Candidate.,
-                HealthProblems = candidateUser.Candidate.,
-                ReceivePushedContent = candidateUser.Candidate.,
-                ReferralAgent = candidateUser.Candidate.,
-                DisableAlerts = candidateUser.Candidate.,
-                UnconfirmedEmailAddress = candidateUser.Candidate.,
-                MobileNumberUnconfirmed = candidateUser.Candidate.,
-                DoBFailureCount = candidateUser.Candidate.,
-                ForgottenUsernameRequested = candidateUser.Candidate.,
-                ForgottenPasswordRequested = candidateUser.Candidate.,
-                TextFailureCount = candidateUser.Candidate.,
-                EmailFailureCount = candidateUser.Candidate.,
-                LastAccessedManageApplications = candidateUser.Candidate.,
-                ReferralPoints = candidateUser.Candidate.,
-                BeingSupportedBy = candidateUser.Candidate.,
-                LockedForSupportUntil = candidateUser.Candidate.,
-                NewVacancyAlertEmail = candidateUser.Candidate.,
-                NewVacancyAlertSMS = candidateUser.Candidate.,
-                AllowMarketingMessages = candidateUser.Candidate.,
-                ReminderMessageSent = candidateUser.Candidate.,*/
+                ApplicationLimitEnforced = false,
+                LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
+                AdditionalEmail = email,
+                Disability = GetDisability(candidateUser.Candidate.MonitoringInformation.DisabilityStatus),
+                DisabilityOther = GetDisabilityOther(candidateUser.Candidate.MonitoringInformation.DisabilityStatus),
+                HealthProblems = "",
+                ReceivePushedContent = false,
+                ReferralAgent = false,
+                DisableAlerts = false,
+                UnconfirmedEmailAddress = "",
+                MobileNumberUnconfirmed = false,
+                DoBFailureCount = null,
+                ForgottenUsernameRequested = false,
+                ForgottenPasswordRequested = false,
+                TextFailureCount = 0,
+                EmailFailureCount = 0,
+                LastAccessedManageApplications = null,
+                ReferralPoints = 0,
+                BeingSupportedBy = "NAS Exemplar",
+                LockedForSupportUntil = null,
+                NewVacancyAlertEmail = null,
+                NewVacancyAlertSMS = null,
+                AllowMarketingMessages = false,
+                ReminderMessageSent = true,
                 CandidateGuid = candidateUser.Candidate.Id
             };
 
@@ -261,6 +261,25 @@
                     case 99:
                         return "Not provided";
                 }
+            }
+            return "";
+        }
+
+        private int GetDisability(int? disabilityStatus)
+        {
+            if (disabilityStatus.HasValue && disabilityStatus != 2)
+            {
+                return disabilityStatus == 1 ? 13 : 14;
+            }
+
+            return 0;
+        }
+
+        private string GetDisabilityOther(int? disabilityStatus)
+        {
+            if (disabilityStatus.HasValue && disabilityStatus == 1)
+            {
+                return "Other";
             }
             return "";
         }

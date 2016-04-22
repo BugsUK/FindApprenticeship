@@ -8,8 +8,9 @@
         private Guid _candidateId = Guid.NewGuid();
         private int _legacyCandidateId = 456789;
         private int _status = 20;
-        private int _gender = 0;
-        private int _ethnicity = 0;
+        private int _gender;
+        private int _disabilityStatus;
+        private int _ethnicity;
 
         public CandidateUser Build()
         {
@@ -43,6 +44,7 @@
                 MonitoringInformation = new MonitoringInformation
                 {
                     Gender = _gender,
+                    DisabilityStatus = _disabilityStatus,
                     Ethnicity = _ethnicity
                 }
             };
@@ -50,7 +52,8 @@
             var user = new User
             {
                 Id = _candidateId,
-                Status = _status
+                Status = _status,
+                LastLogin = DateTime.Now.AddHours(-12)
             };
 
             return new CandidateUser
@@ -81,6 +84,12 @@
         public CandidateUserBuilder WithGender(int gender)
         {
             _gender = gender;
+            return this;
+        }
+
+        public CandidateUserBuilder WithDisabilityStatus(int disabilityStatus)
+        {
+            _disabilityStatus = disabilityStatus;
             return this;
         }
 

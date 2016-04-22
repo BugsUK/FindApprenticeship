@@ -50,30 +50,30 @@
             candidate.Gender.Should().Be(0);
             candidate.EthnicOrigin.Should().Be(0);
             candidate.EthnicOriginOther.Should().Be("");
-            /*candidate.ApplicationLimitEnforced.Should().Be(0);
-            candidate.LastAccessedDate.Should().Be(0);
-            candidate.AdditionalEmail.Should().Be(0);
-            candidate.Disability.Should().Be(0);
-            candidate.DisabilityOther.Should().Be(0);
-            candidate.HealthProblems.Should().Be(0);
-            candidate.ReceivePushedContent.Should().Be(0);
-            candidate.ReferralAgent.Should().Be(0);
-            candidate.DisableAlerts.Should().Be(0);
-            candidate.UnconfirmedEmailAddress.Should().Be(0);
-            candidate.MobileNumberUnconfirmed.Should().Be(0);
-            candidate.DoBFailureCount.Should().Be(0);
-            candidate.ForgottenUsernameRequested.Should().Be(0);
-            candidate.ForgottenPasswordRequested.Should().Be(0);
+            candidate.ApplicationLimitEnforced.Should().BeFalse();
+            candidate.LastAccessedDate.Should().Be(candidateUser.User.LastLogin);
+            candidate.AdditionalEmail.Should().Be(candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower());
+            candidate.Disability.Should().Be(14);
+            candidate.DisabilityOther.Should().Be("");
+            candidate.HealthProblems.Should().Be("");
+            candidate.ReceivePushedContent.Should().BeFalse();
+            candidate.ReferralAgent.Should().BeFalse();
+            candidate.DisableAlerts.Should().BeFalse();
+            candidate.UnconfirmedEmailAddress.Should().Be("");
+            candidate.MobileNumberUnconfirmed.Should().BeFalse();
+            candidate.DoBFailureCount.Should().Be(null);
+            candidate.ForgottenUsernameRequested.Should().BeFalse();
+            candidate.ForgottenPasswordRequested.Should().BeFalse();
             candidate.TextFailureCount.Should().Be(0);
             candidate.EmailFailureCount.Should().Be(0);
-            candidate.LastAccessedManageApplications.Should().Be(0);
+            candidate.LastAccessedManageApplications.Should().Be(null);
             candidate.ReferralPoints.Should().Be(0);
-            candidate.BeingSupportedBy.Should().Be(0);
-            candidate.LockedForSupportUntil.Should().Be(0);
-            candidate.NewVacancyAlertEmail.Should().Be(0);
-            candidate.NewVacancyAlertSMS.Should().Be(0);
-            candidate.AllowMarketingMessages.Should().Be(0);
-            candidate.ReminderMessageSent.Should().Be(0);*/
+            candidate.BeingSupportedBy.Should().Be("NAS Exemplar");
+            candidate.LockedForSupportUntil.Should().Be(null);
+            candidate.NewVacancyAlertEmail.Should().Be(null);
+            candidate.NewVacancyAlertSMS.Should().Be(null);
+            candidate.AllowMarketingMessages.Should().BeFalse();
+            candidate.ReminderMessageSent.Should().BeTrue();
             candidate.CandidateGuid.Should().Be(candidateUser.Candidate.Id);
 
             person.Title.Should().Be(0);
@@ -147,6 +147,24 @@
             //Assert
             candidate.EthnicOrigin.Should().Be(expectedEthnicOrigin);
             candidate.EthnicOriginOther.Should().Be(expectedEthnicOriginOther);
+        }
+
+        [TestCase(0, 14, "")]
+        [TestCase(1, 13, "Other")]
+        [TestCase(2, 0, "")]
+        [TestCase(3, 14, "")]
+        public void DisabilityTest(int disabilityStatus, int expectedDisability, string expectedDisabilityOther)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(10).WithDisabilityStatus(disabilityStatus).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.Disability.Should().Be(expectedDisability);
+            candidate.DisabilityOther.Should().Be(expectedDisabilityOther);
         }
 
         [Test]
