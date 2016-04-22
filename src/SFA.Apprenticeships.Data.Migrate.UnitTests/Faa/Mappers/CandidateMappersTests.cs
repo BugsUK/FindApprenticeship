@@ -5,12 +5,14 @@
     using Builders;
     using FluentAssertions;
     using Migrate.Faa.Mappers;
+    using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class CandidateMappersTests
     {
-        private readonly ICandidateMappers _candidateMappers = new CandidateMappers(-1);
+        private readonly ICandidateMappers _candidateMappers = new CandidateMappers(new Mock<ILogService>().Object);
 
         [Test]
         public void PendingActivationCandidateUserTest()
@@ -31,24 +33,24 @@
             candidate.AddressLine1.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine1);
             candidate.AddressLine2.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine2);
             candidate.AddressLine3.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine3);
-            candidate.AddressLine4.Should().Be("");
-            candidate.AddressLine5.Should().Be(null);
-            candidate.Town.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine4);
-            //candidate.CountyId.Should().Be(0);
+            candidate.AddressLine4.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine4);
+            candidate.AddressLine5.Should().Be("");
+            candidate.Town.Should().Be("N/A");
+            candidate.CountyId.Should().Be(0);
             candidate.Postcode.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.Postcode);
-            /*candidate.LocalAuthorityId.Should().Be(0);
-            candidate.Longitude.Should().Be(0);
-            candidate.Latitude.Should().Be(0);
-            candidate.GeocodeEasting.Should().Be(0);
-            candidate.GeocodeNorthing.Should().Be(0);
-            candidate.NiReference.Should().Be(0);
-            candidate.VoucherReferenceNumber.Should().Be(0);
-            candidate.UniqueLearnerNumber.Should().Be(0);
+            candidate.LocalAuthorityId.Should().Be(0);
+            candidate.Longitude.Should().Be((decimal)candidateUser.Candidate.RegistrationDetails.Address.GeoPoint.Longitude);
+            candidate.Latitude.Should().Be((decimal)candidateUser.Candidate.RegistrationDetails.Address.GeoPoint.Latitude);
+            candidate.GeocodeEasting.Should().Be(null);
+            candidate.GeocodeNorthing.Should().Be(null);
+            candidate.NiReference.Should().Be("");
+            candidate.VoucherReferenceNumber.Should().Be(null);
+            candidate.UniqueLearnerNumber.Should().Be(null);
             candidate.UlnStatusId.Should().Be(0);
             candidate.Gender.Should().Be(0);
             candidate.EthnicOrigin.Should().Be(0);
-            candidate.EthnicOriginOther.Should().Be(0);
-            candidate.ApplicationLimitEnforced.Should().Be(0);
+            candidate.EthnicOriginOther.Should().Be("");
+            /*candidate.ApplicationLimitEnforced.Should().Be(0);
             candidate.LastAccessedDate.Should().Be(0);
             candidate.AdditionalEmail.Should().Be(0);
             candidate.Disability.Should().Be(0);
@@ -83,6 +85,68 @@
             person.MobileNumber.Should().Be("");
             person.Email.Should().Be(candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower());
             person.PersonTypeId.Should().Be(1);
+        }
+
+        [TestCase(0, 0)]
+        [TestCase(1, 1)]
+        [TestCase(2, 2)]
+        [TestCase(3, 3)]
+        [TestCase(4, 3)]
+        public void GenderTest(int gender, int expectedGender)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(10).WithGender(gender).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.Gender.Should().Be(expectedGender);
+        }
+
+        // Prefer not to say
+        [TestCase(99, 20, "Not provided")] 
+
+        // White
+        [TestCase(31, 16, "")] // English / Welsh / Scottish / Northern Irish / British
+        [TestCase(32, 17, "")] // Irish
+        [TestCase(33, 20, "Gypsy or Irish Traveller")] // Gypsy or Irish Traveller
+        [TestCase(34, 18, "")] // Any other White background
+
+        // Mixed / Multiple ethnic groups
+        [TestCase(35, 13, "")] // White and Black Caribbean
+        [TestCase(36, 12, "")] // White and Black African
+        [TestCase(37, 11, "")] // White and Asian
+        [TestCase(38, 14, "")] // Any other Mixed / Multiple ethnic background
+
+        // Asian / Asian British
+        [TestCase(39, 3, "")] // Indian
+        [TestCase(40, 4, "")] // Pakistani
+        [TestCase(41, 2, "")] // Bangladeshi
+        [TestCase(42, 19, "")] // Chinese
+        [TestCase(43, 5, "")] // Any other Asian background
+
+        // Black / African / Caribbean / Black British
+        [TestCase(44, 7, "")] // African
+        [TestCase(45, 8, "")] // Caribbean
+        [TestCase(46, 9, "")] // Any other Black / African / Caribbean background
+
+        // Other ethnic group
+        [TestCase(47, 20, "Arab")] // Arab
+        [TestCase(98, 20, "")] // Any other ethnic group
+        public void EthnicOriginTest(int ethnicity, int expectedEthnicOrigin, string expectedEthnicOriginOther)
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(10).WithEthnicity(ethnicity).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.EthnicOrigin.Should().Be(expectedEthnicOrigin);
+            candidate.EthnicOriginOther.Should().Be(expectedEthnicOriginOther);
         }
 
         [Test]
@@ -171,7 +235,7 @@
             var candidate = candidatePerson.Candidate;
 
             //Assert
-            candidate.CandidateId.Should().BeLessOrEqualTo(-1);
+            candidate.CandidateId.Should().Be(0);
         }
 
         [Test]

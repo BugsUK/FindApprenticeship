@@ -8,6 +8,8 @@
         private Guid _candidateId = Guid.NewGuid();
         private int _legacyCandidateId = 456789;
         private int _status = 20;
+        private int _gender = 0;
+        private int _ethnicity = 0;
 
         public CandidateUser Build()
         {
@@ -37,6 +39,11 @@
                     },
                     EmailAddress = "Test@TEST.CoM",
                     PhoneNumber = "07895123456"
+                },
+                MonitoringInformation = new MonitoringInformation
+                {
+                    Gender = _gender,
+                    Ethnicity = _ethnicity
                 }
             };
 
@@ -68,6 +75,18 @@
         public CandidateUserBuilder WithStatus(int status)
         {
             _status = status;
+            return this;
+        }
+
+        public CandidateUserBuilder WithGender(int gender)
+        {
+            _gender = gender;
+            return this;
+        }
+
+        public CandidateUserBuilder WithEthnicity(int ethnicity)
+        {
+            _ethnicity = ethnicity;
             return this;
         }
     }

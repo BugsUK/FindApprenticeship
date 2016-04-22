@@ -11,5 +11,7 @@
         public DateTime? DateUpdated { get; set; }
 
         public RegistrationDetails RegistrationDetails { get; set; }
+
+        public MonitoringInformation MonitoringInformation { get; set; }
     }
 }

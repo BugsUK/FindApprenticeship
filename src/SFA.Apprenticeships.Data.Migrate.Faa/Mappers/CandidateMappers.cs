@@ -2,12 +2,9 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
-    using Infrastructure.Repositories.Sql.Common;
     using SFA.Infrastructure.Interfaces;
     using Candidate = Entities.Sql.Candidate;
 
@@ -20,29 +17,50 @@
         private const int CandidateStatusTypeIdPendingDelete = 5;
         private const int CandidateStatusTypeIdDeleted = 6;
 
+        private readonly IDictionary<int, int> _ethnicities = new Dictionary<int, int>
+        {
+            // Prefer not to say
+            {99, 20}, 
+
+            // White
+            {31, 16}, // English / Welsh / Scottish / Northern Irish / British
+            {32, 17}, // Irish
+            {33, 20}, // Gypsy or Irish Traveller
+            {34, 18}, // Any other White background
+
+            // Mixed / Multiple ethnic groups
+            {35, 13}, // White and Black Caribbean
+            {36, 12}, // White and Black African
+            {37, 11}, // White and Asian
+            {38, 14}, // Any other Mixed / Multiple ethnic background
+
+            // Asian / Asian British
+            {39, 3}, // Indian
+            {40, 4}, // Pakistani
+            {41, 2}, // Bangladeshi
+            {42, 19}, // Chinese
+            {43, 5}, // Any other Asian background
+
+            // Black / African / Caribbean / Black British
+            {44, 7}, // African
+            {45, 8}, // Caribbean
+            {46, 9}, // Any other Black / African / Caribbean background
+
+            // Other ethnic group
+            {47, 20}, // Arab
+            {98, 20} // Any other ethnic group
+        };
+
         private readonly ILogService _logService;
 
-        private int _candidateId;
-
-        public CandidateMappers(IGetOpenConnection targetDatabase, ILogService logService)
+        public CandidateMappers(ILogService logService)
         {
             _logService = logService;
-            _candidateId = targetDatabase.Query<int>($"SELECT ISNULL(min(CandidateId), 0) FROM Candidate").Single() - 1;
-            if (_candidateId > -1)
-            {
-                _candidateId = -1;
-            }
-        }
-
-        public CandidateMappers(int candidateId)
-        {
-            _candidateId = candidateId;
         }
 
         public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, int> candidateIds, IDictionary<string, int> personIds)
         {
             var address = candidateUser.Candidate.RegistrationDetails.Address;
-            var town = address.AddressLine4 ?? address.AddressLine3 ?? address.AddressLine2;
             var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
             var personId = personIds.ContainsKey(email) ? personIds[email] : 0;//Unspecified person. Filled in later
 
@@ -55,24 +73,24 @@
                 AddressLine1 = address.AddressLine1,
                 AddressLine2 = address.AddressLine2 ?? "",
                 AddressLine3 = address.AddressLine3 ?? "",
-                AddressLine4 = "",
-                AddressLine5 = null,
-                Town = town,
-                //CountyId = candidateUser.Candidate.,
+                AddressLine4 = address.AddressLine4 ?? "",
+                AddressLine5 = "",
+                Town = "N/A",
+                CountyId = 0,
                 Postcode = address.Postcode,
-                /*LocalAuthorityId = candidateUser.Candidate.,
-                Longitude = candidateUser.Candidate.,
-                Latitude = candidateUser.Candidate.,
-                GeocodeEasting = candidateUser.Candidate.,
-                GeocodeNorthing = candidateUser.Candidate.,
-                NiReference = candidateUser.Candidate.,
-                VoucherReferenceNumber = candidateUser.Candidate.,
-                UniqueLearnerNumber = candidateUser.Candidate.,
-                UlnStatusId = candidateUser.Candidate.,
-                Gender = candidateUser.Candidate.,
-                EthnicOrigin = candidateUser.Candidate.,
-                EthnicOriginOther = candidateUser.Candidate.,
-                ApplicationLimitEnforced = candidateUser.Candidate.,
+                LocalAuthorityId = 0,
+                Longitude = (decimal)address.GeoPoint.Longitude,
+                Latitude = (decimal)address.GeoPoint.Latitude,
+                GeocodeEasting = null,
+                GeocodeNorthing = null,
+                NiReference = "",
+                VoucherReferenceNumber = null,
+                UniqueLearnerNumber = null,
+                UlnStatusId = 0,
+                Gender = GetGender(candidateUser.Candidate.MonitoringInformation.Gender),
+                EthnicOrigin = GetEthnicOrigin(candidateUser.Candidate.MonitoringInformation.Ethnicity),
+                EthnicOriginOther = GetEthnicOriginOther(candidateUser.Candidate.MonitoringInformation.Ethnicity),
+                /*ApplicationLimitEnforced = candidateUser.Candidate.,
                 LastAccessedDate = candidateUser.Candidate.,
                 AdditionalEmail = candidateUser.Candidate.,
                 Disability = candidateUser.Candidate.,
@@ -203,6 +221,48 @@
             }
 
             return candidateId;
+        }
+
+        private int GetGender(int? gender)
+        {
+            if (gender.HasValue)
+            {
+                if (gender == 4)
+                    return 3;
+                return gender.Value;
+            }
+            return 0;
+        }
+
+        private int GetEthnicOrigin(int? ethnicity)
+        {
+            if (ethnicity.HasValue)
+            {
+                if (_ethnicities.ContainsKey(ethnicity.Value))
+                {
+                    return _ethnicities[ethnicity.Value];
+                }
+            }
+            return 0;
+        }
+
+        private string GetEthnicOriginOther(int? ethnicity)
+        {
+            if (ethnicity.HasValue)
+            {
+                switch (ethnicity)
+                {
+                    case 33:
+                        return "Gypsy or Irish Traveller";
+
+                    case 47:
+                        return "Arab";
+
+                    case 99:
+                        return "Not provided";
+                }
+            }
+            return "";
         }
     }
 }
