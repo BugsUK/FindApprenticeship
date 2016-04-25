@@ -2,10 +2,8 @@
 {
     using System;
 
-    public class Candidate
+    public class Candidate : CandidateSummary
     {
-        public int CandidateId { get; set; }
-        public int PersonId { get; set; }
         public int CandidateStatusTypeId { get; set; }
         public DateTime DateofBirth { get; set; }
         public string AddressLine1 { get; set; }
@@ -52,6 +50,5 @@
         public bool? NewVacancyAlertSMS { get; set; }
         public bool? AllowMarketingMessages { get; set; }
         public bool ReminderMessageSent { get; set; }
-        public Guid CandidateGuid { get; set; }
     }
 }
