@@ -36,8 +36,8 @@
             _migrationProcessors = new List<IMigrationProcessor>
             {
                 new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService)
+                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService),
+                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService)
             };
         }
 

@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Entities.Sql;
     using Infrastructure.Repositories.Sql.Common;
 
     public class ApplicationHistoryRepository
@@ -26,6 +27,12 @@
             public int ApplicationHistoryId { get; set; }
             public int ApplicationId { get; set; }
             public int ApplicationHistoryEventSubTypeId { get; set; }
+        }
+
+        public IDictionary<int, List<ApplicationHistorySummary>> GetApplicationHistorySummariesByApplicationIds(IEnumerable<int> applicationIds)
+        {
+            var applicationHistorySummaries = _getOpenConnection.Query<ApplicationHistorySummary>("SELECT ApplicationHistoryId, ApplicationId, ApplicationHistoryEventDate, ApplicationHistoryEventSubTypeId FROM ApplicationHistory WHERE ApplicationId in @applicationIds", new { applicationIds });
+            return applicationHistorySummaries.GroupBy(ah => ah.ApplicationId).ToDictionary(g => g.Key, g => g.ToList());
         }
     }
 }

@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Data.SqlClient;
     using System.Linq;
     using System.Threading;
-    using Dapper;
     using Entities;
     using Entities.Mongo;
     using Infrastructure.Repositories.Sql.Common;
@@ -25,14 +23,16 @@
         
         private readonly VacancyRepository _vacancyRepository;
         private readonly CandidateRepository _candidateRepository;
-        private readonly ApplicationRepository _applicationRepository;
-        private readonly ApplicationHistoryRepository _applicationHistoryRepository;
+        private readonly ApplicationRepository _sourceApplicationRepository;
+        private readonly ApplicationHistoryRepository _sourceApplicationHistoryRepository;
+        private readonly ApplicationRepository _destinationApplicationRepository;
+        private readonly ApplicationHistoryRepository _destinationApplicationHistoryRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
         private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
 
-        public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
+        public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
             _vacancyApplicationsUpdater = vacancyApplicationsUpdater;
             _applicationMappers = applicationMappers;
@@ -42,8 +42,10 @@
 
             _vacancyRepository = new VacancyRepository(targetDatabase);
             _candidateRepository = new CandidateRepository(targetDatabase);
-            _applicationRepository = new ApplicationRepository(targetDatabase);
-            _applicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
+            _sourceApplicationRepository = new ApplicationRepository(sourceDatabase);
+            _sourceApplicationHistoryRepository = new ApplicationHistoryRepository(sourceDatabase);
+            _destinationApplicationRepository = new ApplicationRepository(targetDatabase);
+            _destinationApplicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
 
@@ -146,8 +148,8 @@
 
                 LoadCandidates(candidateIds, batch);
 
-                var applicationIds = _applicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
-                var applicationHistoryIds = _applicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
+                var applicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var applicationHistoryIds = _destinationApplicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
                 var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, applicationHistoryIds)).ToList();
 
                 count += applicationsWithHistory.Count;
