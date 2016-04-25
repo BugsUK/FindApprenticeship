@@ -7,6 +7,7 @@
     {
         public string Name => "ApplicationHistory";
         public IEnumerable<string> PrimaryKeys => new[] { "ApplicationHistoryId" };
+        public IEnumerable<string> ErrorKeys => new[] { "ApplicationId" };
         public bool IdentityInsert => false;
         public decimal BatchSizeMultiplier => 1;
         public IEnumerable<ITableSpec> DependsOn { get; }

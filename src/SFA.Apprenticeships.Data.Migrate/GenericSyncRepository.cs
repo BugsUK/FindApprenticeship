@@ -44,6 +44,14 @@
             var tempTable = "_InsertTemp_" + table.Name;
             var columnTypes = GetColumnTypes(records);
 
+            if (!table.IdentityInsert)
+            {
+                foreach (var primaryKey in table.PrimaryKeys)
+                {
+                    columnTypes.Remove(primaryKey);
+                }
+            }
+
             using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
             {
                 if (tempTable == null)
@@ -177,11 +185,6 @@ END CATCH
             }
             else
             {
-                foreach (var primaryKey in table.PrimaryKeys)
-                {
-                    columnTypes.Remove(primaryKey);
-                }
-
                 connection.Execute($@"{GetInsertSql(table, columnTypes, tempTable)};");
             }
         }
@@ -190,14 +193,22 @@ END CATCH
         private IEnumerable<dynamic> InsertFromTempOneAtATime(ITableDetails table, IDictionary<String, Type> columnTypes, string tempTable, IDbConnection connection)
         {
             string primaryKeyList = $"{string.Join(", ", table.PrimaryKeys)}";
+            string errorKeyList = $"{string.Join(", ", table.ErrorKeys)}";
+
+            var identityInsert = GetSetIdentityInsertSql(table) + ";";
+            if (!table.IdentityInsert)
+            {
+                primaryKeyList = errorKeyList;
+                identityInsert = "";
+            }
 
             var sql = $@"
 DECLARE @totalRecords INT = (SELECT COUNT(*) FROM {tempTable});
 DECLARE @thisRecord   INT = 0;
 
-CREATE TABLE #Errors ({string.Join(", ", table.PrimaryKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
+CREATE TABLE #Errors ({string.Join(", ", table.ErrorKeys.Select(k => new KeyValuePair<string, Type>(k, columnTypes[k])).Select(col => $"{col.Key} {SqlTypeFor(col.Value)}"))}, Error NVARCHAR(MAX))
 
-{GetSetIdentityInsertSql(table)};
+{identityInsert}
 
 WHILE @thisRecord < @totalRecords
 BEGIN
@@ -208,9 +219,9 @@ BEGIN
     END TRY
     BEGIN CATCH
         INSERT INTO #Errors
-        SELECT {primaryKeyList}, ERROR_MESSAGE()
+        SELECT {errorKeyList}, ERROR_MESSAGE()
         FROM   {tempTable}
-        ORDER BY {primaryKeyList}
+        ORDER BY {errorKeyList}
         OFFSET (@thisRecord) ROWS FETCH NEXT (1) ROWS ONLY;
     END CATCH
     SET @thisRecord = @thisRecord + 1;

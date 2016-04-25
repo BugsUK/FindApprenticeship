@@ -48,6 +48,8 @@
 
         IEnumerable<string> PrimaryKeys { get; }
 
+        IEnumerable<string> ErrorKeys { get; }
+
         bool IdentityInsert { get; }
     }
 

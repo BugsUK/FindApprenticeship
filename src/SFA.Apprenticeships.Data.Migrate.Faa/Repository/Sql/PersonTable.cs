@@ -7,6 +7,7 @@
     {
         public string Name => "Person";
         public IEnumerable<string> PrimaryKeys => new[] { "PersonId" };
+        public IEnumerable<string> ErrorKeys => PrimaryKeys;
         public bool IdentityInsert => false;
         public decimal BatchSizeMultiplier => 1;
         public IEnumerable<ITableSpec> DependsOn { get; }

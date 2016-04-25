@@ -111,9 +111,13 @@
             _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
 
             //Now insert any remaining applications one at a time
-            foreach (var application in applicationsWithHistory.Where(a => a.Application.ApplicationId == 0).Select(a => a.Application))
+            foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.Application.ApplicationId == 0))
             {
-                _targetDatabase.Insert(application);
+                var applicationId = _targetDatabase.Insert(applicationWithHistory.Application);
+                foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
+                {
+                    applicationHistory.ApplicationId = (int)applicationId;
+                }
             }
 
             //Finally, update existing applications
@@ -125,7 +129,7 @@
 
             //Update existing application history records
             var existingApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId != 0);
-            _genericSyncRespository.BulkInsert(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+            _genericSyncRespository.BulkUpdate(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
         }
 
         private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, CancellationToken cancellationToken)

@@ -113,7 +113,7 @@
 
                 var candidateIds = _candidateRepository.GetCandidateIdsByGuid(candidateUsers.Select(c => c.Candidate.Id));
                 var personIds = _personRepository.GetPersonIdsByEmails(candidateUsers.Select(c => c.Candidate.RegistrationDetails.EmailAddress));
-                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20).Select(c => _candidateMappers.MapCandidatePerson(c, candidateIds, personIds)).ToList();
+                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateIds, personIds)).ToList();
                 
                 count += candidatePersons.Count;
                 _logService.Info($"Processing {candidatePersons.Count} active candidates");

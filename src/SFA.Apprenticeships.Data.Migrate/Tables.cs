@@ -243,6 +243,8 @@ select top 10 * from VacancyReferralComments
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
+            public IEnumerable<string> ErrorKeys => PrimaryKeys;
+
             public bool IdentityInsert => true;
 
             public decimal BatchSizeMultiplier { get; private set; }
