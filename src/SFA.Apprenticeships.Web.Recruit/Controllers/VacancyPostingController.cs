@@ -618,6 +618,7 @@
                 case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
                 case VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit:
                 case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
+                case VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk:
                     ModelState.Clear();
                     return new JsonResult();
                 default:

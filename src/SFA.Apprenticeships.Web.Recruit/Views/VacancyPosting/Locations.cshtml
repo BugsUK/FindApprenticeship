@@ -54,7 +54,7 @@
 
     @Scripts.Render("~/bundles/autosave")
 
-    <script>
+    @*<script>
             var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
 
             $(window).on('load', function() {
@@ -64,5 +64,5 @@
                     postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveLocations)'
                 });
             });
-    </script>
+    </script>*@
 }
