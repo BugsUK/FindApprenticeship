@@ -15,7 +15,14 @@
 
         public IDictionary<string, int> GetPersonIdsByEmails(IEnumerable<string> emails)
         {
-            return _getOpenConnection.Query<KeyValuePair<string, int>>("SELECT Email as [Key], PersonId as Value FROM Person WHERE Email in @emails", new { emails }).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            var personIds = new Dictionary<string, int>();
+            //There are duplicates in the person table so use the most recent based on id
+            var keyValuePairs = _getOpenConnection.Query<KeyValuePair<string, int>>("SELECT Email as [Key], PersonId as Value FROM Person WHERE Email in @emails ORDER BY Value", new { emails });
+            foreach (var keyValuePair in keyValuePairs)
+            {
+                personIds[keyValuePair.Key] = keyValuePair.Value;
+            }
+            return personIds;
         }
     }
 }
