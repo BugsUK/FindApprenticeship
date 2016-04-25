@@ -403,8 +403,9 @@ select top 10 * from VacancyReferralComments
             // TODO: Check that new vacancies are really setting to null and not the vacancy owner site id (etc)
             newRecord.VacancyManagerID        = null;
             newRecord.DeliveryOrganisationID  = null;
-            newRecord.ContractOwnerID         = null;
-            newRecord.OriginalContractOwnerId = null;
+            // Required by unsuccessful candidates report and now correctly set in RAA so keeping
+            //newRecord.ContractOwnerID         = null;
+            //newRecord.OriginalContractOwnerId = null;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;

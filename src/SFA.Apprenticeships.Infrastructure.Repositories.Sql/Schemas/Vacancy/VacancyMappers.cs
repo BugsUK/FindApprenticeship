@@ -128,6 +128,7 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
+                .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -219,6 +220,7 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress
