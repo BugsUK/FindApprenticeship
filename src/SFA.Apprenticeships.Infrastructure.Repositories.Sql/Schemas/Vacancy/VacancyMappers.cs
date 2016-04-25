@@ -55,11 +55,9 @@
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
-                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
-                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
@@ -129,6 +127,7 @@
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
                 .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
+                .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
