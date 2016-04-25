@@ -16,5 +16,6 @@
         public string BeingSupportedBy { get; set; }
         public DateTime? LockedForSupportUntil { get; set; }
         public bool? WithdrawalAcknowledged { get; set; }
+        public Guid ApplicationGuid { get; set; }
     }
 }

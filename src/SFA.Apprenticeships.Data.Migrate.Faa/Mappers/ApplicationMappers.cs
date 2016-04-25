@@ -52,18 +52,20 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public Application MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds)
+        public Application MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries)
         {
+            var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(applicationId) ? sourceApplicationSummaries[applicationId] : null;
             return new Application
             {
-                ApplicationId = GetApplicationId(apprenticeshipApplication, applicationIds),
+                ApplicationId = applicationId,
                 CandidateId = candidateId,
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
                 WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
                 UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId),
+                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
                 NextActionId = 0,
                 NextActionOther = null,
                 AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
@@ -75,10 +77,10 @@
             };
         }
 
-        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, Dictionary<int, int>> applicationHistoryIds)
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var application = MapApplication(apprenticeshipApplication, candidateId, applicationIds);
-            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId, applicationHistoryIds);
+            var application = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
             return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
         }
 
@@ -170,8 +172,10 @@
             return 0;
         }
 
-        private static string GetOutcomeReasonOther(int unsuccessfulReasonId)
+        private static string GetOutcomeReasonOther(int unsuccessfulReasonId, ApplicationSummary sourceApplicationSummary)
         {
+            //We don't store any outcome reasons in RAA so copy over existing value from source if present
+            if (sourceApplicationSummary != null) return sourceApplicationSummary.OutcomeReasonOther;
             return unsuccessfulReasonId == 0 ? null : "";
         }
 

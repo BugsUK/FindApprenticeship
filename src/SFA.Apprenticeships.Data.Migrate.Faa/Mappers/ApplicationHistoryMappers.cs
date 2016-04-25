@@ -16,38 +16,38 @@
         private const int ApplicationStatusTypeIdSuccessful = 6;
         private const int ApplicationStatusTypeIdPastApplication = 7;
 
-        public static IList<ApplicationHistory> MapApplicationHistory(this VacancyApplication vacancyApplication, int applicationId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds)
+        public static IList<ApplicationHistory> MapApplicationHistory(this VacancyApplication vacancyApplication, int applicationId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
             var applicationHistory = new List<ApplicationHistory>
             {
                 //Draft
-                GetApplicationHistory(applicationId, vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsent, applicationHistoryIds)
+                GetApplicationHistory(applicationId, vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsent, applicationHistoryIds, sourceApplicationHistorySummaries)
             };
 
             if (vacancyApplication.Status == 15)
             {
                 //Withdrawn
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdWithdrawn, applicationHistoryIds));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdWithdrawn, applicationHistoryIds, sourceApplicationHistorySummaries));
             }
             if (vacancyApplication.Status >= 30)
             {
                 //Submitted
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateApplied ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSent, applicationHistoryIds));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateApplied ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSent, applicationHistoryIds, sourceApplicationHistorySummaries));
             }
             if (vacancyApplication.Status >= 40)
             {
                 //In Progress
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdInProgress, applicationHistoryIds));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdInProgress, applicationHistoryIds, sourceApplicationHistorySummaries));
             }
             if (vacancyApplication.Status == 80)
             {
                 //Successful
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.SuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSuccessful, applicationHistoryIds));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.SuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdSuccessful, applicationHistoryIds, sourceApplicationHistorySummaries));
             }
             if (vacancyApplication.Status == 90)
             {
                 //Unsuccessful
-                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.UnsuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsuccessful, applicationHistoryIds));
+                applicationHistory.Add(GetApplicationHistory(applicationId, vacancyApplication.UnsuccessfulDateTime ?? vacancyApplication.DateUpdated ?? vacancyApplication.DateCreated, ApplicationStatusTypeIdUnsuccessful, applicationHistoryIds, sourceApplicationHistorySummaries));
             }
 
             return applicationHistory;
@@ -72,7 +72,25 @@
             };
         }
 
-        private static ApplicationHistory GetApplicationHistory(int applicationId, DateTime applicationHistoryEventDate, int applicationHistoryEventSubTypeId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds)
+        private static ApplicationHistory GetApplicationHistory(int applicationId, DateTime applicationHistoryEventDate, int applicationHistoryEventSubTypeId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
+        {
+            var applicationHistoryId = GetApplicationHistoryId(applicationId, applicationHistoryEventSubTypeId, applicationHistoryIds);
+
+            applicationHistoryEventDate = GetApplicationHistoryEventDate(applicationId, applicationHistoryEventSubTypeId, sourceApplicationHistorySummaries) ?? applicationHistoryEventDate;
+
+            return new ApplicationHistory
+            {
+                ApplicationHistoryId = applicationHistoryId,
+                ApplicationId = applicationId,
+                UserName = "",
+                ApplicationHistoryEventDate = applicationHistoryEventDate,
+                ApplicationHistoryEventTypeId = 1,
+                ApplicationHistoryEventSubTypeId = applicationHistoryEventSubTypeId,
+                Comment = "Status Change"
+            };
+        }
+
+        private static int GetApplicationHistoryId(int applicationId, int applicationHistoryEventSubTypeId, IDictionary<int, Dictionary<int, int>> applicationHistoryIds)
         {
             var applicationHistoryId = 0;
 
@@ -85,16 +103,19 @@
                 }
             }
 
-            return new ApplicationHistory
+            return applicationHistoryId;
+        }
+
+        private static DateTime? GetApplicationHistoryEventDate(int applicationId, int applicationHistoryEventSubTypeId, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
+        {
+            if (sourceApplicationHistorySummaries.ContainsKey(applicationId))
             {
-                ApplicationHistoryId = applicationHistoryId,
-                ApplicationId = applicationId,
-                UserName = "",
-                ApplicationHistoryEventDate = applicationHistoryEventDate,
-                ApplicationHistoryEventTypeId = 1,
-                ApplicationHistoryEventSubTypeId = applicationHistoryEventSubTypeId,
-                Comment = "Status Change"
-            };
+                var applicationHistorySummaries = sourceApplicationHistorySummaries[applicationId].OrderByDescending(ahs => ahs.ApplicationHistoryEventDate);
+                var applicationHistoryEventDate = applicationHistorySummaries.FirstOrDefault(ahs => ahs.ApplicationHistoryEventSubTypeId == applicationHistoryEventSubTypeId)?.ApplicationHistoryEventDate;
+                return applicationHistoryEventDate;
+            }
+
+            return null;
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Repository.Sql
 {
-    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Entities.Sql;
@@ -24,9 +23,11 @@
         // ReSharper disable once ClassNeverInstantiated.Local
         private class ApplicationHistoryIds
         {
+            // ReSharper disable UnusedAutoPropertyAccessor.Local
             public int ApplicationHistoryId { get; set; }
             public int ApplicationId { get; set; }
             public int ApplicationHistoryEventSubTypeId { get; set; }
+            // ReSharper restore UnusedAutoPropertyAccessor.Local
         }
 
         public IDictionary<int, List<ApplicationHistorySummary>> GetApplicationHistorySummariesByApplicationIds(IEnumerable<int> applicationIds)

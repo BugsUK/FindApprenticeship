@@ -20,9 +20,9 @@
             return _getOpenConnection.Query<KeyValuePair<Guid, int>>("SELECT ApplicationGuid as [Key], ApplicationId as Value FROM Application WHERE ApplicationGuid in @applicationGuids", new { applicationGuids }).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        public IDictionary<Guid, ApplicationSummary> GetApplicationSummariesByGuid(IEnumerable<Guid> applicationGuids)
+        public IDictionary<int, ApplicationSummary> GetApplicationSummariesByIds(IEnumerable<int> applicationIds)
         {
-            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, OutcomeReasonOther, ApplicationGuid FROM Application WHERE ApplicationGuid in @applicationGuids", new { applicationGuids }).ToDictionary(a => a.ApplicationGuid, a => a);
+            return _getOpenConnection.Query<ApplicationSummary>("SELECT ApplicationId, OutcomeReasonOther FROM Application WHERE ApplicationId in @applicationIds", new { applicationIds }).ToDictionary(a => a.ApplicationId, a => a);
         }
     }
 }
