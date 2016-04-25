@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Repository.Sql
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Infrastructure.Repositories.Sql.Common;
@@ -13,6 +14,7 @@
             _getOpenConnection = getOpenConnection;
         }
 
+        [Obsolete("Does not work correctly as emails are non unique")]
         public IDictionary<string, int> GetPersonIdsByEmails(IEnumerable<string> emails)
         {
             var personIds = new Dictionary<string, int>();

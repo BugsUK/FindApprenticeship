@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Builders;
     using FluentAssertions;
+    using Migrate.Faa.Entities.Sql;
     using Migrate.Faa.Mappers;
     using Moq;
     using NUnit.Framework;
@@ -21,7 +22,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -100,7 +101,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -118,7 +119,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithGender(gender).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -161,7 +162,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithEthnicity(ethnicity).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -179,7 +180,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithDisabilityStatus(disabilityStatus).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -194,7 +195,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
             var candidateDictionary = _candidateMappers.MapCandidateDictionary(candidate);
@@ -270,7 +271,7 @@
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -278,41 +279,24 @@
         }
 
         [Test]
-        public void MatchingCandidateIdCandidateTest()
+        public void MatchingCandidateAndPersonIdCandidateTest()
         {
             //Arrange
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
             const int candidateId = 42;
-            var candidateIds = new Dictionary<Guid, int>
+            const int personId = 43;
+            var candidateSummaries = new Dictionary<Guid, CandidateSummary>
             {
-                {candidateUser.Candidate.Id, candidateId}
+                {candidateUser.Candidate.Id, new CandidateSummary {CandidateGuid = candidateUser.Candidate.Id, CandidateId = candidateId, PersonId = personId}}
             };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateIds, new Dictionary<string, int>());
-            var candidate = candidatePerson.Candidate;
-
-            //Assert
-            candidate.CandidateId.Should().Be(candidateId);
-        }
-
-        [Test]
-        public void MatchingPersonIdCandidateTest()
-        {
-            //Arrange
-            var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
-            const int personId = 42;
-            var personIds = new Dictionary<string, int>
-            {
-                {candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower(), personId}
-            };
-
-            //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), personIds);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
             //Assert
+            candidate.CandidateId.Should().Be(candidateId);
             candidate.PersonId.Should().Be(personId);
             person.PersonId.Should().Be(personId);
         }
@@ -324,7 +308,7 @@
             var candidateUser = new CandidateUserBuilder().WithEmailAddress("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@testtesttesttesttesttesttest.com").Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, int>(), new Dictionary<string, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 

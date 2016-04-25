@@ -6,6 +6,7 @@
     using Entities.Mongo;
     using Entities.Sql;
     using SFA.Infrastructure.Interfaces;
+    using CandidateSummary = Entities.Sql.CandidateSummary;
     using Candidate = Entities.Sql.Candidate;
 
     public class CandidateMappers : ICandidateMappers
@@ -58,17 +59,18 @@
             _logService = logService;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, int> candidateIds, IDictionary<string, int> personIds)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries)
         {
+            var candidateGuid = candidateUser.Candidate.Id;
+            var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
             var address = candidateUser.Candidate.RegistrationDetails.Address;
             var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
-            var personId = personIds.ContainsKey(email) ? personIds[email] : 0;//Unspecified person. Filled in later
             var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
 
             var candidate = new Candidate
             {
-                CandidateId = GetCandidateId(candidateUser.Candidate, candidateIds),
-                PersonId = personId,
+                CandidateId = GetCandidateId(candidateUser, candidateSummary),
+                PersonId = candidateSummary.PersonId,
                 CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
                 DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
                 AddressLine1 = address.AddressLine1,
@@ -115,12 +117,12 @@
                 NewVacancyAlertSMS = null,
                 AllowMarketingMessages = false,
                 ReminderMessageSent = true,
-                CandidateGuid = candidateUser.Candidate.Id
+                CandidateGuid = candidateGuid
             };
 
             var person = new Person
             {
-                PersonId = personId,
+                PersonId = candidateSummary.PersonId,
                 Title = 0,
                 OtherTitle = "",
                 FirstName = candidateUser.Candidate.RegistrationDetails.FirstName,
@@ -235,11 +237,12 @@
             return CandidateStatusTypeIdPreRegistered;
         }
 
-        private int GetCandidateId(CandidateSummary candidate, IDictionary<Guid, int> candidateIds)
+        private int GetCandidateId(CandidateUser candidateUser, CandidateSummary candidateSummary)
         {
-            if (candidateIds.ContainsKey(candidate.Id))
+            var candidate = candidateUser.Candidate;
+            if (candidateSummary.CandidateId != 0)
             {
-                var candidateId = candidateIds[candidate.Id];
+                var candidateId = candidateSummary.CandidateId;
                 if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
                 {
                     _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
