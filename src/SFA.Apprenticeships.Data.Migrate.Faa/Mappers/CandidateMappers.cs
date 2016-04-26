@@ -258,7 +258,7 @@
             if (gender.HasValue)
             {
                 if (gender == 4)
-                    return 3;
+                    return 0;
                 return gender.Value;
             }
             return 0;

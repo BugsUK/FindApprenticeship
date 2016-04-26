@@ -112,7 +112,7 @@
         [TestCase(1, 1)]
         [TestCase(2, 2)]
         [TestCase(3, 3)]
-        [TestCase(4, 3)]
+        [TestCase(4, 0)]
         public void GenderTest(int gender, int expectedGender)
         {
             //Arrange
