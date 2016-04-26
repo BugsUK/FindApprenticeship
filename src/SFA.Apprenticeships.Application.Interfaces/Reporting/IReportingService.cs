@@ -7,5 +7,8 @@
     public interface IReportingService
     {
         IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
+        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange);
+        Dictionary<string, string> LocalAuthorityManagerGroups();
+        Dictionary<string, string> RegionsIncludingAll();
     }
 }
