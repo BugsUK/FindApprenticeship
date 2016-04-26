@@ -44,7 +44,7 @@
         public int GetNewApplicationCount(int vacancyId)
         {
             return _apprenticeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
-        }
+        }        
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
         {
@@ -69,6 +69,11 @@
         public void SetUnsuccessfulDecision(Guid applicationId)
         {
             SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
+        }
+
+        public int GetNewApplicationsCount(List<int> liveVacancyIds)
+        {
+            return _apprenticeshipApplicationReadRepository.GetNewApplicationsCount(liveVacancyIds);
         }
 
         #region Helpers

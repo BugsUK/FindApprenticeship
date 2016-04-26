@@ -179,6 +179,18 @@
             return count;
         }
 
+        public int GetNewApplicationsCount(List<int> liveVacancyIds)
+        {            
+            var newApplicationsCount = 0;
+            _logger.Debug("Calling repository to get new apprenticeship applications for the specified live vacancies");
+            foreach (int id in liveVacancyIds)
+            {
+                newApplicationsCount += Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == id);
+            }
+            _logger.Debug($"Got new apprenticeship applications for the specified live vacancies:{newApplicationsCount}");
+            return newApplicationsCount;
+        }      
+
         public TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
             _logger.Debug("Calling repository to get ApplicationSummary list for candidate with Id={0}", candidateId);
