@@ -57,3 +57,4 @@ Post-Deployment Script Template
 :r ".\Scripts\Data\dbo.CandidateHistoryEvent.Upsert.sql"
 :r ".\Scripts\Data\dbo.CandidateStatus.Upsert.sql"
 :r ".\Scripts\Data\dbo.CandidateULNStatus.Upsert.sql"
+:r ".\Scripts\Data\dbo.PostcodeOutcode.Upsert"

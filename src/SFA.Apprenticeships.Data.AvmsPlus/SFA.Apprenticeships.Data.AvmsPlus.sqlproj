@@ -916,6 +916,7 @@
     <None Include="Scripts\Data\dbo.CandidateHistoryEvent.Upsert.sql" />
     <None Include="Scripts\Data\dbo.CandidateStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.CandidateULNStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.PostcodeOutcode.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
