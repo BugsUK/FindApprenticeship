@@ -12,21 +12,20 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        @*<h4>ReportUnsuccessfulCandidatesParameters</h4>*@
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        @Html.Partial("ValidationSummary", ViewData.ModelState)
+        <div class="form-group, inline-fixed">
             @Html.LabelFor(model => model.FromDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FromDate, "Date", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.FromDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FromDate, "", new { @class = "text-danger" })
             </div>
         </div>
 
-        <div class="form-group">
+        <div class="form-group, inline-fixed">
             @Html.LabelFor(model => model.ToDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ToDate, "Date", new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.ToDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.ToDate, "", new { @class = "text-danger" })
             </div>
         </div>

@@ -320,6 +320,7 @@
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
     <Compile Include="Constants\Url.cs" />
+    <Compile Include="Constants\ViewModels\ReportViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
     <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
     <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
+    <Compile Include="Mediators\Reporting\ReportingMediatorCodes.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
@@ -353,6 +355,7 @@
     <Compile Include="Providers\ICandidateProvider.cs" />
     <Compile Include="Validators\CandidateSearchResultsViewModelValidator.cs" />
     <Compile Include="Validators\CandidateSearchViewModelValidator.cs" />
+    <Compile Include="Validators\ReportParametersDateRangeValidator.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -366,6 +369,7 @@
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\CandidateTraineeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\ReportMenu.cs" />
+    <Compile Include="ViewModels\ReportParameterBase.cs" />
     <Compile Include="ViewModels\ReportUnsuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacanciesParameters.cs" />

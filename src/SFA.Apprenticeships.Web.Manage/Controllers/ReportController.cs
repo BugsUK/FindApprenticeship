@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Attributes;
+    using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
     using ViewModels;
@@ -25,40 +26,111 @@
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public FileContentResult VacanciesListCsv(ReportVacanciesParameters parameters)
+        public ActionResult VacanciesListCsv(ReportVacanciesParameters parameters)
         {
-            var csvBytes = _reportingMediator.GetVacanciesListReportBytes(parameters);
-            return File(csvBytes, "text/csv", "VacanciesList.csv");
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
+                    switch (response.Code)
+                    {
+                        case ReportingMediatorCodes.ReportCodes.Ok:
+                            return File(response.ViewModel, "text/csv", "VacanciesList.csv");
+                        case ReportingMediatorCodes.ReportCodes.Error:
+                        default:
+                            ModelState.Clear();
+                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                            return View(parameters);
+                    }
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(validationResponse.ViewModel);
+            }
         }
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult SuccessfulCandidatesCsv()
         {
-            return View(_reportingMediator.GetSuccessfulCandidatesReportParams());
+            var response = _reportingMediator.GetSuccessfulCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
         }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public FileContentResult SuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        public ActionResult SuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
         {
-            var csvBytes = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
-            return File(csvBytes, "text/csv", "SuccessfulCandidates.csv");
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    var response = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
+                    switch (response.Code)
+                    {
+                        case ReportingMediatorCodes.ReportCodes.Ok:
+                            return File(response.ViewModel, "text/csv", "SuccessfulCandidates.csv");
+                        case ReportingMediatorCodes.ReportCodes.Error:
+                        default:
+                            ModelState.Clear();
+                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                            return View(parameters);
+                    }
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+                    validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+                    validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
+                    return View(validationResponse.ViewModel);
+            }
         }
 
         [HttpGet]
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult UnsuccessfulCandidatesCsv()
         {
-            return View(_reportingMediator.GetUnsuccessfulCandidatesReportParams());
+            var response = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            if (response.Code != ReportingMediatorCodes.ReportCodes.Ok)
+                RedirectToAction("Index");
+
+            return View(response.ViewModel);
         }
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public FileContentResult UnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        public ActionResult UnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
         {
-            var csvBytes = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
-            return File(csvBytes, "text/csv", "UnsuccessfulCandidatesCsv.csv");
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    var response = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
+                    switch (response.Code)
+                    {
+                        case ReportingMediatorCodes.ReportCodes.Ok:
+                            return File(response.ViewModel, "text/csv", "UnsuccessfulCandidatesCsv.csv");
+                        case ReportingMediatorCodes.ReportCodes.Error:
+                        default:
+                            ModelState.Clear();
+                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                            return View(parameters);
+                    }
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+                    validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+                    validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
+                    return View(validationResponse.ViewModel);
+            }
         }
 
         [HttpGet]
@@ -77,10 +149,29 @@
 
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public FileContentResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        public ActionResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
         {
-            var csvBytes = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
-            return File(csvBytes, "text/csv", "VacancyExtensions.csv");
+            var validationResponse = _reportingMediator.Validate(parameters);
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
+                    switch (response.Code)
+                    {
+                        case ReportingMediatorCodes.ReportCodes.Ok:
+                            return File(response.ViewModel, "text/csv", "VacancyExtensions.csv");
+                        case ReportingMediatorCodes.ReportCodes.Error:
+                        default:
+                            ModelState.Clear();
+                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                            return View(parameters);
+                    }
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View(validationResponse.ViewModel);
+            }
         }
     }
 }
