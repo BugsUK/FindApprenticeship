@@ -22,7 +22,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -101,7 +101,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -119,7 +119,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithGender(gender).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -162,7 +162,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithEthnicity(ethnicity).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -180,7 +180,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithDisabilityStatus(disabilityStatus).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -195,7 +195,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
             var candidateDictionary = _candidateMappers.MapCandidateDictionary(candidate);
@@ -271,7 +271,7 @@
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -291,7 +291,7 @@
             };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries, new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -308,7 +308,7 @@
             var candidateUser = new CandidateUserBuilder().WithEmailAddress("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@testtesttesttesttesttesttest.com").Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -316,6 +316,27 @@
             candidate.AdditionalEmail.Should().Be("");
 
             person.Email.Should().Be(candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower());
+        }
+
+        [TestCase("B26 2LW", "B262L")]
+        [TestCase("B26 2LW", "B262")]
+        [TestCase("B26 2LW", "B26")]
+        public void CountyLocalAuthorityTests(string postCode, string vacancyPostCode)
+        {
+            //Arrange
+            const int countyId = 12;
+            const int localAuthorityId = 42;
+            var candidateUser = new CandidateUserBuilder().WithStatus(10).WithPostCode(postCode).Build();
+            var vacancyLocalAuthorities = new Dictionary<string, int> {{vacancyPostCode, localAuthorityId}};
+            var localAuthorityCountyIds = new Dictionary<int, int> {{ localAuthorityId, countyId } };
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), vacancyLocalAuthorities, localAuthorityCountyIds);
+            var candidate = candidatePerson.Candidate;
+
+            //Assert
+            candidate.CountyId.Should().Be(countyId);
+            candidate.LocalAuthorityId.Should().Be(localAuthorityId);
         }
     }
 }

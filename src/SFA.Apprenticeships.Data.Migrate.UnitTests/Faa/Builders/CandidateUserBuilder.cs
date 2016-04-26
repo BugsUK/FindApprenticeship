@@ -12,6 +12,7 @@
         private int _disabilityStatus;
         private int _ethnicity;
         private string _emailAddress = "Test@TEST.CoM";
+        private string _postCode = "B26 2LW";
 
         public CandidateUser Build()
         {
@@ -37,7 +38,8 @@
                         {
                             Latitude = 52.8810974569710030,
                             Longitude = -1.7005217601595300
-                        }
+                        },
+                        Postcode = _postCode
                     },
                     EmailAddress = _emailAddress,
                     PhoneNumber = "07895123456"
@@ -103,6 +105,12 @@
         public CandidateUserBuilder WithEmailAddress(string emailAddress)
         {
             _emailAddress = emailAddress;
+            return this;
+        }
+
+        public CandidateUserBuilder WithPostCode(string postCode)
+        {
+            _postCode = postCode;
             return this;
         }
     }

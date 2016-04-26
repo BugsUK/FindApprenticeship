@@ -13,6 +13,7 @@
     using Repository.Mongo;
     using Repository.Sql;
     using SFA.Infrastructure.Interfaces;
+    using Candidate = Entities.Mongo.Candidate;
     using CandidateSummary = Entities.Sql.CandidateSummary;
 
     public class CandidateMigrationProcessor : IMigrationProcessor
@@ -22,6 +23,8 @@
         private readonly IGetOpenConnection _targetDatabase;
         private readonly ILogService _logService;
 
+        private readonly VacancyRepository _vacancyRepository;
+        private readonly LocalAuthorityRepository _localAuthorityRepository;
         private readonly CandidateRepository _candidateRepository;
         private readonly CandidateUserRepository _candidateUserRepository;
         private readonly UserRepository _userRepository;
@@ -38,6 +41,8 @@
             _targetDatabase = targetDatabase;
             _logService = logService;
 
+            _vacancyRepository = new VacancyRepository(targetDatabase);
+            _localAuthorityRepository = new LocalAuthorityRepository(targetDatabase);
             _candidateRepository = new CandidateRepository(targetDatabase);
             _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _userRepository = new UserRepository(configurationService, logService);
@@ -65,29 +70,34 @@
 
             var expectedCount = _candidateUserRepository.GetCandidatesCount(cancellationToken).Result;
             var candidateUsers = _candidateUserRepository.GetAllCandidateUsers(cancellationToken).Result;
-            ProcessCandidates(candidateUsers, expectedCount, cancellationToken);
+            var vacancyLocalAuthorities = _vacancyRepository.GetAllVacancyLocalAuthorities();
+            var localAuthorityCountyIds = _localAuthorityRepository.GetLocalAuthorityCountyIds();
+            ProcessCandidates(candidateUsers, expectedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
         }
 
         private void ExecuteIncrementalSync(SyncParams syncParams, CancellationToken cancellationToken)
         {
             _logService.Info($"ExecutePartialSync on candidates collection with LastCreatedDate: {syncParams.CandidateLastCreatedDate} LastUpdatedDate: {syncParams.CandidateLastUpdatedDate}");
 
+            var vacancyLocalAuthorities = _vacancyRepository.GetAllVacancyLocalAuthorities();
+            var localAuthorityCountyIds = _localAuthorityRepository.GetLocalAuthorityCountyIds();
+
             //Inserts
             _logService.Info("Processing new candidates");
             var expectedCreatedCount = _candidateUserRepository.GetCandidatesCreatedSinceCount(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
             var createdCursor = _candidateUserRepository.GetAllCandidateUsersCreatedSince(syncParams.CandidateLastCreatedDate, cancellationToken).Result;
-            ProcessCandidates(createdCursor, expectedCreatedCount, cancellationToken);
+            ProcessCandidates(createdCursor, expectedCreatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
             _logService.Info("Completed processing new candidates");
 
             //Updates
             _logService.Info("Processing updated candidates");
             var expectedUpdatedCount = _candidateUserRepository.GetCandidatesUpdatedSinceCount(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
             var updatedCursor = _candidateUserRepository.GetAllCandidateUsersUpdatedSince(syncParams.CandidateLastUpdatedDate, cancellationToken).Result;
-            ProcessCandidates(updatedCursor, expectedUpdatedCount, cancellationToken);
+            ProcessCandidates(updatedCursor, expectedUpdatedCount, vacancyLocalAuthorities, localAuthorityCountyIds, cancellationToken);
             _logService.Info("Completed processing updated candidates");
         }
 
-        private void ProcessCandidates(IAsyncCursor<Entities.Mongo.Candidate> cursor, long expectedCount, CancellationToken cancellationToken)
+        private void ProcessCandidates(IAsyncCursor<Candidate> cursor, long expectedCount, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, CancellationToken cancellationToken)
         {
             var count = 0;
             while (cursor.MoveNextAsync(cancellationToken).Result && !cancellationToken.IsCancellationRequested)
@@ -109,7 +119,7 @@
                 var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
-                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries)).ToList();
+                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds)).ToList();
                 
                 count += candidatePersons.Count;
                 _logService.Info($"Processing {candidatePersons.Count} active candidates");

@@ -10,7 +10,7 @@
 
     public interface ICandidateMappers
     {
-        CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries);
+        CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds);
         Dictionary<string, object> MapCandidateDictionary(Candidate candidate);
         Dictionary<string, object> MapPersonDictionary(Person person);
     }

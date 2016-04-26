@@ -59,13 +59,17 @@
             _logService = logService;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds)
         {
             var candidateGuid = candidateUser.Candidate.Id;
             var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
             var address = candidateUser.Candidate.RegistrationDetails.Address;
             var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
             var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
+
+            //TODO: Use PCA to validate these lookups when the service is complete and we have the keys
+            var localAuthorityId = GetLocalAuthorityId(address.Postcode, vacancyLocalAuthorities);
+            var countyId = localAuthorityCountyIds.ContainsKey(localAuthorityId) ? localAuthorityCountyIds[localAuthorityId] : 0;
 
             var candidate = new Candidate
             {
@@ -79,9 +83,9 @@
                 AddressLine4 = address.AddressLine4 ?? "",
                 AddressLine5 = "",
                 Town = "N/A",
-                CountyId = 0,
+                CountyId = countyId,
                 Postcode = address.Postcode,
-                LocalAuthorityId = 0,
+                LocalAuthorityId = localAuthorityId,
                 Longitude = null,
                 Latitude = null,
                 GeocodeEasting = null,
@@ -214,6 +218,22 @@
             };
         }
 
+        private int GetCandidateId(CandidateUser candidateUser, CandidateSummary candidateSummary)
+        {
+            var candidate = candidateUser.Candidate;
+            if (candidateSummary.CandidateId != 0)
+            {
+                var candidateId = candidateSummary.CandidateId;
+                if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
+                {
+                    _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
+                }
+                return candidateId;
+            }
+
+            return candidate.LegacyCandidateId;
+        }
+
         private int GetCandidateStatusTypeId(int status)
         {
             switch (status)
@@ -237,20 +257,32 @@
             return CandidateStatusTypeIdPreRegistered;
         }
 
-        private int GetCandidateId(CandidateUser candidateUser, CandidateSummary candidateSummary)
+        private int GetLocalAuthorityId(string postCode, IDictionary<string, int> vacancyLocalAuthorities)
         {
-            var candidate = candidateUser.Candidate;
-            if (candidateSummary.CandidateId != 0)
+            var postCodeKey = postCode.Replace(" ", "");
+
+            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
+
+            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
             {
-                var candidateId = candidateSummary.CandidateId;
-                if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
-                {
-                    _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
-                }
-                return candidateId;
+                return vacancyLocalAuthorities[postCodeKey];
             }
 
-            return candidate.LegacyCandidateId;
+            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
+
+            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
+            {
+                return vacancyLocalAuthorities[postCodeKey];
+            }
+
+            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
+
+            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
+            {
+                return vacancyLocalAuthorities[postCodeKey];
+            }
+
+            return 0;
         }
 
         private int GetGender(int? gender)
