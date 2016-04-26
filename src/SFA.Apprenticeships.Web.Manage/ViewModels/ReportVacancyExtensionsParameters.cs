@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Web.Manage.ViewModels
 
         public DateTime ToDate { get; set; }
 
-        public VacancyStatus  Status { get; set; }
+        public VacancyStatus?  Status { get; set; }
 
         public int? UKPRN { get; set; }
     }

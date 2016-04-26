@@ -19,5 +19,20 @@
         {
             return _reportingRepository.ReportVacanciesList(fromDate, toDate);
         }
+
+        public IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange)
+        {
+            return _reportingRepository.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange);
+        }
+
+        public Dictionary<string, string> LocalAuthorityManagerGroups()
+        {
+            return _reportingRepository.LocalAuthorityManagerGroups();
+        }
+
+        public Dictionary<string, string> RegionsIncludingAll()
+        {
+            return _reportingRepository.GeoRegionsIncludingAll();
+        }
     }
 }

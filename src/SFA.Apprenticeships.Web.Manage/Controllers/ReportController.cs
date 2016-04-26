@@ -35,7 +35,7 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult SuccessfulCandidatesCsv()
         {
-            return View(new ReportSuccessfulCandidatesParameters());
+            return View(_reportingMediator.GetSuccessfulCandidatesReportParams());
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult UnsuccessfulCandidatesCsv()
         {
-            return View(new ReportUnsuccessfulCandidatesParameters());
+            return View(_reportingMediator.GetUnsuccessfulCandidatesReportParams());
         }
 
         [HttpPost]

@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Text;
     using Application.Interfaces.Reporting;
+    using Common.Extensions;
     using Infrastructure.Presentation;
     using ViewModels;
 
@@ -30,7 +31,29 @@
 
         public byte[] GetUnsuccessfulCandidatesReportBytes(ReportUnsuccessfulCandidatesParameters parameters)
         {
-            throw new NotImplementedException();
+            var reportResult = _reportingService.ReportUnsuccessfulCandidates(parameters.Type, parameters.FromDate, parameters.ToDate, parameters.AgeRange);
+            var bytes = GetCsvBytes(reportResult);
+            return bytes;
+        }
+
+        public ReportUnsuccessfulCandidatesParameters GetUnsuccessfulCandidatesReportParams()
+        {
+            var result = new ReportUnsuccessfulCandidatesParameters();
+            var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
+            result.ManagedByList = localAuthorities.ToListOfListItem();
+            var regions = _reportingService.RegionsIncludingAll();
+            result.RegionList = regions.ToListOfListItem();
+            return result;
+        }
+
+        public ReportSuccessfulCandidatesParameters GetSuccessfulCandidatesReportParams()
+        {
+            var result = new ReportSuccessfulCandidatesParameters();
+            var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
+            result.ManagedByList = localAuthorities.ToListOfListItem();
+            var regions = _reportingService.RegionsIncludingAll();
+            result.RegionList = regions.ToListOfListItem();
+            return result;
         }
 
         public byte[] GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters)

@@ -1,10 +1,10 @@
 ﻿@model SFA.Apprenticeships.Web.Manage.ViewModels.ReportVacancyExtensionsParameters
 
 @{
-    ViewBag.Title = "VacancyExtensionsCsv";
+    ViewBag.Title = "Vacancy Extensions Csv";
 }
 
-<h2>VacancyExtensionsCsv</h2>
+<h2>Vacancy Extensions Csv</h2>
 
 
 @using (Html.BeginForm())
@@ -12,7 +12,7 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ReportVacancyExtensionsParameters</h4>
+        @*<h4>ReportVacancyExtensionsParameters</h4>*@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
