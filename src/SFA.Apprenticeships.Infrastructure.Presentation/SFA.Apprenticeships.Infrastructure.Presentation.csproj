@@ -84,6 +84,7 @@
     </Compile>
     <Compile Include="AddressPresenter.cs" />
     <Compile Include="Constants\Wages.cs" />
+    <Compile Include="CsvPresenter.cs" />
     <Compile Include="DatePresenter.cs" />
     <Compile Include="DistancePresenter.cs" />
     <Compile Include="DurationPresenter.cs" />

@@ -119,6 +119,7 @@
     <Compile Include="Configuration\SqlConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IoC\RepositoriesRegistry.cs" />
+    <Compile Include="Reporting\ReportingRepository.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />

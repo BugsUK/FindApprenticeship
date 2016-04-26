@@ -17,5 +17,7 @@
         TraineeshipApplicationDetail GetApplicationForReview(Guid applicationId);
 
         void UpdateApplicationNotes(Guid applicationId, string notes);
+        
+        int GetNewApplicationsCount(List<int> liveVacancyIds);
     }
 }
