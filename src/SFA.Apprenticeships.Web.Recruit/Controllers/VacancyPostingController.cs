@@ -165,13 +165,15 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                         response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyPartyId = response.ViewModel.VacancyPartyId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
@@ -887,13 +889,15 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                         response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
