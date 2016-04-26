@@ -11,7 +11,6 @@
         public const string NoUserProfile = "Enter your user profile";
         public const string EmailAddressNotVerified = "Verify your email address";
         public const string SignedOut = "You have successfully signed out";
-        public const string SignedOutTimeout = "You have been signed out due to inactivity";
-        public const string CloseDownWindow = "You must close down this window to fully sign out";
+        public const string SignedOutTimeout = "You have been signed out due to inactivity";        
     }
 }

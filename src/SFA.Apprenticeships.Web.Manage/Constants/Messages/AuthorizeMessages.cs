@@ -7,6 +7,5 @@
         public const string MissingRoleListClaim = "We have not been able to identify your role. Please contact helpdesk";
         public const string SignedOut = "You have successfully signed out";
         public const string SignedOutTimeout = "You have been signed out due to inactivity";
-        public const string CloseDownWindow = "You must close down this window to fully sign out";
     }
 }

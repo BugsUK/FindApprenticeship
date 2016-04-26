@@ -388,6 +388,8 @@
 
             var storedVacancy = GetStoredVacancy(newVacancyViewModel);
 
+            newVacancyViewModel.LocationAddresses = storedVacancy?.LocationAddresses;
+            
             var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
