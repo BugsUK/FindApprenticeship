@@ -77,5 +77,52 @@
 
             return response;
         }
+
+        public List<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Dictionary<string, string> LocalAuthorityManagerGroups()
+        {
+            _logger.Debug($"Getting local authorities for report [dbo].[ReportGetManagedBy]...");
+
+            var response = new Dictionary<string, string>();
+
+            var command = new SqlCommand("dbo.ReportGetManagedBy", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandTimeout = 180;
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(reader[1].ToString(), reader[0].ToString());
+            }
+
+            _logger.Debug($"Done getting local authorities.");
+
+            return response;
+        }
+
+        public Dictionary<string, string> GeoRegionsIncludingAll()
+        {
+            _logger.Debug($"Getting regions for report [dbo].[ReportGetGeoRegionsIncludingAll]...");
+
+            var response = new Dictionary<string, string>();
+
+            var command = new SqlCommand("dbo.ReportGetGeoRegionsIncludingAll", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.CommandTimeout = 180;
+
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(reader[1].ToString(), reader[0].ToString());
+            }
+
+            _logger.Debug($"Done getting regions.");
+
+            return response;
+        }
     }
 }

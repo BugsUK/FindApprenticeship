@@ -40,7 +40,11 @@
         public const string ViewCandidateTraineeshipVacancy = "ViewCandidateTraineeshipVacancy";
 
         //Reports
+        public const string ReportList = "ReportList";
         public const string ReportVacanciesList = "ReportVacanciesList";
+        public const string ReportSuccessfulCandidates = "ReportSuccessfulCandidates";
+        public const string ReportUnsuccessfulCandidates = "ReportUnsuccessfulCandidates";
+        public const string ReportVacancyExtensions = "ReportVacancyExtensions";
 
     }
 }
