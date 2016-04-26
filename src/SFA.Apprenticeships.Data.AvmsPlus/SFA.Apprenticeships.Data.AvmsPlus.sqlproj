@@ -920,6 +920,8 @@
     <None Include="Scripts\Data\dbo.CandidateStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.CandidateULNStatus.Upsert.sql" />
     <None Include="Scripts\Data\dbo.PostcodeOutcode.Upsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportILRStartDateList.proc.sql" />
+    <Build Include="dbo\Functions\fnReportGenerateVacancyRefNo.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
