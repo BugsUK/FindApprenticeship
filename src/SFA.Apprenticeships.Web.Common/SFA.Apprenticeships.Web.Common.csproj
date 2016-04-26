@@ -207,6 +207,7 @@
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
+    <Compile Include="Extensions\ListItemExtensions.cs" />
     <Compile Include="Extensions\MetadataExtensions.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />

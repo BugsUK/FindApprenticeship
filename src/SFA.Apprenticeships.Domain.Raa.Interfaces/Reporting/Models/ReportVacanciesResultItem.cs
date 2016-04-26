@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Reporting.Models
+﻿namespace SFA.Apprenticeships.Domain.Raa.Interfaces.Reporting.Models
 {
     public class ReportVacanciesResultItem
     {
