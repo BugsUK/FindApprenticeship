@@ -131,9 +131,10 @@
             if (locationSearchViewModel.Addresses.Count == 1)
             {
                 //Set address
-                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(locationSearchViewModel.Addresses.Single().Address);
+                var addressViewModel = locationSearchViewModel.Addresses.Single();
+                vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(addressViewModel.Address);
+                vacancy.NumberOfPositions = addressViewModel.NumberOfPositions;
                 _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
-
             }
             else
             {
@@ -194,7 +195,7 @@
                             new VacancyLocationAddressViewModel
                             {
                                 Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
-                                NumberOfPositions = vacancy.NumberOfPositions.Value
+                                NumberOfPositions = vacancy.NumberOfPositions
                             });
                     }
                 }
@@ -317,18 +318,23 @@
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
+            var vacancyParty =
+                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
-            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy.Value; // At this point we'll always have a value
+            vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
             vacancy.OfflineApplicationUrl = offlineApplicationUrl;
             vacancy.OfflineApplicationInstructions = newVacancyViewModel.OfflineApplicationInstructions;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
+            vacancy.Address = employer.Address;
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -550,7 +556,7 @@
             var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer);
+            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             viewModel.ProviderSite = providerSite.Convert();
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
@@ -698,6 +704,8 @@
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
             var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
+            var liveVacancyIds = live.Select(vacancySummary => vacancySummary.VacancyReferenceNumber).ToList();
+
             var submitted = vacancies.Where(v => v.Status == VacancyStatus.Submitted || v.Status == VacancyStatus.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
             //TODO: Agree on closing soon range and make configurable
@@ -707,6 +715,9 @@
             var newApplications = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
                 vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList() :
                 vacancies.Where(v => v.Status == VacancyStatus.Live && _traineeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList();
+            var newApplicationsCount = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
+                _apprenticeshipApplicationService.GetNewApplicationsCount(liveVacancyIds):
+                _traineeshipApplicationService.GetNewApplicationsCount(liveVacancyIds);
             var withdrawn = vacancies.Where(v => v.Status == VacancyStatus.Withdrawn).ToList();
             var completed = vacancies.Where(v => v.Status == VacancyStatus.Completed).ToList();
 
@@ -789,7 +800,7 @@
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,
                 DraftCount = draft.Count,
-                NewApplicationsCount = newApplications.Count,
+                NewApplicationsCount = newApplicationsCount,
                 WithdrawnCount = withdrawn.Count,
                 CompletedCount = completed.Count,
                 HasVacancies = hasVacancies,

@@ -199,7 +199,7 @@
 
             var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
             if (existingVacancy != null && viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == true)
+                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }
@@ -682,6 +682,7 @@
 
             return
                 GetMediatorResponse(
+                    completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy.HasValue &&
                     completeViewModel.ViewModel.NewVacancyViewModel.OfflineVacancy.Value
                         ? VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk
                         : VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk, updatedViewModel);

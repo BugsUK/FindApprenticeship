@@ -115,7 +115,6 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="Provider" />
-    <Folder Include="dbo\Schemas" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\TestData" />
     <Folder Include="Scripts\Data" />
@@ -124,6 +123,8 @@
     <Folder Include="Sync" />
     <Folder Include="UserProfile" />
     <Folder Include="Reference" />
+    <Folder Include="Vacancy" />
+    <Folder Include="dbo\Sequences" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -910,6 +911,8 @@
     <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportUnsuccessfulCandidateApplications.proc.sql" />
     <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
+    <Build Include="dbo\Sequences\dbo.LegacyApplicationIdSequence.sql" />
+    <Build Include="dbo\Sequences\dbo.VacancyReferenceNumberSequence.sql" />
     <None Include="Scripts\Data\dbo.CandidateDisability.Upsert.sql" />
     <None Include="Scripts\Data\dbo.CandidateEthnicOrigin.Upsert.sql" />
     <None Include="Scripts\Data\dbo.CandidateGender.Upsert.sql" />
