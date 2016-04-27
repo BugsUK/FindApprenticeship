@@ -7,8 +7,7 @@
     public interface IReportingService
     {
         IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
-
-        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange);
+        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region);
 
         IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate,
             int? providerUkprn, int? vacancyStatus);

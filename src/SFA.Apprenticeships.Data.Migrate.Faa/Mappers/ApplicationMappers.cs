@@ -2,29 +2,18 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Threading;
+    using Entities;
     using Entities.Mongo;
     using Entities.Sql;
-    using Infrastructure.Repositories.Sql.Common;
+    using SFA.Infrastructure.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers
     {
-        private int _applicationId;
-        private int _candidateId;
+        private readonly ILogService _logService;
 
-        public ApplicationMappers(IGetOpenConnection targetDatabase)
+        public ApplicationMappers(ILogService logService)
         {
-            _applicationId = targetDatabase.Query<int>($"SELECT ISNULL(min(ApplicationId), 0) FROM Application").Single() - 1;
-            if (_applicationId > -1)
-            {
-                _applicationId = -1;
-            }
-            _candidateId = targetDatabase.Query<int>($"SELECT ISNULL(min(CandidateId), 0) FROM Application").Single() - 1;
-            if (_candidateId > -1)
-            {
-                _candidateId = -1;
-            }
+            _logService = logService;
         }
 
         private static readonly IDictionary<string, int> WithdrawnOrDeclinedReasonIdMap = new Dictionary<string, int>
@@ -63,18 +52,20 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public Application MapApplication(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public Application MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries)
         {
+            var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
+            var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(applicationId) ? sourceApplicationSummaries[applicationId] : null;
             return new Application
             {
-                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
-                CandidateId = GetCandidateId(candidate),
+                ApplicationId = applicationId,
+                CandidateId = candidateId,
                 VacancyId = apprenticeshipApplication.Vacancy.Id,
                 ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
                 WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
                 UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId),
+                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
                 NextActionId = 0,
                 NextActionOther = null,
                 AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
@@ -82,78 +73,52 @@
                 BeingSupportedBy = null,
                 LockedForSupportUntil = null,
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id
+                ApplicationGuid = apprenticeshipApplication.Id,
             };
         }
 
-        public dynamic MapApplicationDynamic(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
-            return new
-            {
-                ApplicationId = GetApplicationId(apprenticeshipApplication.LegacyApplicationId),
-                CandidateId = GetCandidateId(candidate),
-                VacancyId = apprenticeshipApplication.Vacancy.Id,
-                ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
-                WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
-                UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId),
-                NextActionId = 0,
-                NextActionOther = default(string),
-                AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
-                CVAttachmentId = default(int?),
-                BeingSupportedBy = default(string),
-                LockedForSupportUntil = default(DateTime?),
-                WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id
-            };
+            var application = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
+            return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
         }
 
-        public IDictionary<string, object> MapApplicationDictionary(VacancyApplication apprenticeshipApplication, Candidate candidate)
+        public IDictionary<string, object> MapApplicationDictionary(Application application)
         {
-            var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             return new Dictionary<string, object>
             {
-                {"ApplicationId", GetApplicationId(apprenticeshipApplication.LegacyApplicationId)},
-                {"CandidateId", GetCandidateId(candidate)},
-                {"VacancyId", apprenticeshipApplication.Vacancy.Id},
-                {"ApplicationStatusTypeId", GetApplicationStatusTypeId(apprenticeshipApplication.Status)},
-                {"WithdrawnOrDeclinedReasonId", GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason)},
-                {"UnsuccessfulReasonId", unsuccessfulReasonId},
-                {"OutcomeReasonOther", GetOutcomeReasonOther(unsuccessfulReasonId)},
-                {"NextActionId", 0},
-                {"NextActionOther", null},
-                {"AllocatedTo", GetAllocatedTo(unsuccessfulReasonId)},
-                {"CVAttachmentId", null},
-                {"BeingSupportedBy", null},
-                {"LockedForSupportUntil", null},
-                {"WithdrawalAcknowledged", GetWithdrawalAcknowledged(unsuccessfulReasonId)},
-                {"ApplicationGuid", apprenticeshipApplication.Id}
+                {"ApplicationId", application.ApplicationId},
+                {"CandidateId", application.CandidateId},
+                {"VacancyId", application.VacancyId},
+                {"ApplicationStatusTypeId", application.ApplicationStatusTypeId},
+                {"WithdrawnOrDeclinedReasonId", application.WithdrawnOrDeclinedReasonId},
+                {"UnsuccessfulReasonId", application.UnsuccessfulReasonId},
+                {"OutcomeReasonOther", application.OutcomeReasonOther},
+                {"NextActionId", application.NextActionId},
+                {"NextActionOther", application.NextActionOther},
+                {"AllocatedTo", application.AllocatedTo},
+                {"CVAttachmentId", application.CVAttachmentId},
+                {"BeingSupportedBy", application.BeingSupportedBy},
+                {"LockedForSupportUntil", application.LockedForSupportUntil},
+                {"WithdrawalAcknowledged", application.WithdrawalAcknowledged},
+                {"ApplicationGuid", application.ApplicationGuid}
             };
         }
 
-        private int GetApplicationId(int legacyApplicationId)
+        private int GetApplicationId(VacancyApplication apprenticeshipApplication, IDictionary<Guid, int> applicationIds)
         {
-            if (legacyApplicationId == 0)
+            if (applicationIds.ContainsKey(apprenticeshipApplication.Id))
             {
-                var applicationId = _applicationId;
-                Interlocked.Decrement(ref _applicationId);
+                var applicationId = applicationIds[apprenticeshipApplication.Id];
+                if (apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
+                {
+                    _logService.Warn($"ApplicationId: {applicationId} does not match the LegacyApplicationId: {apprenticeshipApplication.LegacyApplicationId} for application with Id: {apprenticeshipApplication.Id}. This shouldn't change post submission");
+                }
                 return applicationId;
             }
 
-            return legacyApplicationId;
-        }
-
-        private int GetCandidateId(Candidate candidate)
-        {
-            if (candidate == null || candidate.LegacyCandidateId == 0)
-            {
-                var candidateId = _candidateId;
-                Interlocked.Decrement(ref _candidateId);
-                return candidateId;
-            }
-
-            return candidate.LegacyCandidateId;
+            return apprenticeshipApplication.LegacyApplicationId;
         }
 
         private static int GetApplicationStatusTypeId(int status)
@@ -207,8 +172,10 @@
             return 0;
         }
 
-        private static string GetOutcomeReasonOther(int unsuccessfulReasonId)
+        private static string GetOutcomeReasonOther(int unsuccessfulReasonId, ApplicationSummary sourceApplicationSummary)
         {
+            //We don't store any outcome reasons in RAA so copy over existing value from source if present
+            if (sourceApplicationSummary != null) return sourceApplicationSummary.OutcomeReasonOther;
             return unsuccessfulReasonId == 0 ? null : "";
         }
 

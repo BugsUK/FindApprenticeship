@@ -31,12 +31,13 @@
             var syncRepository = new SyncRepository(targetDatabase);
             var genericSyncRespository = new GenericSyncRespository(_logService, sourceDatabase, targetDatabase);
 
-            var applicationMappers = new ApplicationMappers(targetDatabase);
+            var applicationMappers = new ApplicationMappers(_logService);
 
             _migrationProcessors = new List<IMigrationProcessor>
             {
-                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, targetDatabase, configurationService, logService)
+                new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, configurationService, logService),
+                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService),
+                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService)
             };
         }
 
