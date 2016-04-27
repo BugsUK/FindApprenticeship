@@ -1331,7 +1331,10 @@
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
-            
+            var vacancyParty =
+                _providerService.GetVacancyParty(viewModel.OwnerParty.VacancyPartyId);
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
             //update properties
             vacancy.EmployerDescriptionComment = viewModel.EmployerDescriptionComment;
             vacancy.EmployerWebsiteUrlComment = viewModel.EmployerWebsiteUrlComment;
@@ -1344,15 +1347,17 @@
                 vacancy.NumberOfPositions = viewModel.NumberOfPositions;
                 vacancy.NumberOfPositionsComment = viewModel.NumberOfPositionsComment;
 
-                //vacancy.LocationAddresses = new List<VacancyLocation>();
+                vacancy.Address = employer.Address;
+
                 vacancy.LocationAddressesComment = null;
             }
             else
             {
                 vacancy.NumberOfPositions = null;
                 vacancy.NumberOfPositionsComment = null;
+                vacancy.Address = null;
             }
-            
+
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
 
             viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
