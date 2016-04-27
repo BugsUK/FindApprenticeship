@@ -62,90 +62,99 @@
             _logService = logService;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, bool anonymise)
         {
-            var candidateGuid = candidateUser.Candidate.Id;
-            var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
-            var address = candidateUser.Candidate.RegistrationDetails.Address;
-            var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
-            var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
-
-            //TODO: Use PCA to validate these lookups when the service is complete and we have the keys
-            var localAuthorityId = GetLocalAuthorityId(address.Postcode, vacancyLocalAuthorities);
-            var countyId = localAuthorityCountyIds.ContainsKey(localAuthorityId) ? localAuthorityCountyIds[localAuthorityId] : 0;
-
-            var candidate = new Candidate
+            try
             {
-                CandidateId = GetCandidateId(candidateUser, candidateSummary),
-                PersonId = candidateSummary.PersonId,
-                CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
-                DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
-                AddressLine1 = address.AddressLine1,
-                AddressLine2 = address.AddressLine2 ?? "",
-                AddressLine3 = address.AddressLine3 ?? "",
-                AddressLine4 = address.AddressLine4 ?? "",
-                AddressLine5 = "",
-                Town = "N/A",
-                CountyId = countyId,
-                Postcode = address.Postcode,
-                LocalAuthorityId = localAuthorityId,
-                Longitude = null,
-                Latitude = null,
-                GeocodeEasting = null,
-                GeocodeNorthing = null,
-                NiReference = "",
-                VoucherReferenceNumber = null,
-                UniqueLearnerNumber = null,
-                UlnStatusId = 0,
-                Gender = GetGender(monitoringInformation.Gender),
-                EthnicOrigin = GetEthnicOrigin(monitoringInformation.Ethnicity),
-                EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
-                ApplicationLimitEnforced = false,
-                LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
-                AdditionalEmail = email.Length > 50 ? "" : email,
-                Disability = GetDisability(monitoringInformation.DisabilityStatus),
-                DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
-                HealthProblems = "",
-                ReceivePushedContent = false,
-                ReferralAgent = false,
-                DisableAlerts = false,
-                UnconfirmedEmailAddress = "",
-                MobileNumberUnconfirmed = false,
-                DoBFailureCount = null,
-                ForgottenUsernameRequested = false,
-                ForgottenPasswordRequested = false,
-                TextFailureCount = 0,
-                EmailFailureCount = 0,
-                LastAccessedManageApplications = null,
-                ReferralPoints = 0,
-                BeingSupportedBy = "NAS Exemplar",
-                LockedForSupportUntil = null,
-                NewVacancyAlertEmail = null,
-                NewVacancyAlertSMS = null,
-                AllowMarketingMessages = false,
-                ReminderMessageSent = true,
-                CandidateGuid = candidateGuid
-            };
+                var candidateGuid = candidateUser.Candidate.Id;
+                var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
+                var address = candidateUser.Candidate.RegistrationDetails.Address;
+                var email = candidateUser.Candidate.RegistrationDetails.EmailAddress.ToLower();
+                var monitoringInformation = candidateUser.Candidate.MonitoringInformation ?? new MonitoringInformation();
 
-            var person = new Person
-            {
-                PersonId = candidateSummary.PersonId,
-                Title = 0,
-                OtherTitle = "",
-                FirstName = candidateUser.Candidate.RegistrationDetails.FirstName,
-                MiddleNames = candidateUser.Candidate.RegistrationDetails.MiddleNames,
-                Surname = candidateUser.Candidate.RegistrationDetails.LastName,
-                LandlineNumber = candidateUser.Candidate.RegistrationDetails.PhoneNumber,
-                MobileNumber = "",
-                Email = email,
-                PersonTypeId = 1
-            };
+                //TODO: Use PCA to validate these lookups when the service is complete and we have the keys
+                var localAuthorityId = GetLocalAuthorityId(address.Postcode, vacancyLocalAuthorities);
+                var countyId = localAuthorityCountyIds.ContainsKey(localAuthorityId) ? localAuthorityCountyIds[localAuthorityId] : 0;
 
-            return new CandidatePerson
+                var candidate = new Candidate
+                {
+                    CandidateId = GetCandidateId(candidateUser, candidateSummary),
+                    PersonId = candidateSummary.PersonId,
+                    CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
+                    DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
+                    AddressLine1 = anonymise ? "" : address.AddressLine1,
+                    AddressLine2 = address.AddressLine2 ?? "",
+                    AddressLine3 = address.AddressLine3 ?? "",
+                    AddressLine4 = address.AddressLine4 ?? "",
+                    AddressLine5 = "",
+                    Town = "N/A",
+                    CountyId = countyId,
+                    Postcode = address.Postcode,
+                    LocalAuthorityId = localAuthorityId,
+                    Longitude = null,
+                    Latitude = null,
+                    GeocodeEasting = null,
+                    GeocodeNorthing = null,
+                    NiReference = "",
+                    VoucherReferenceNumber = null,
+                    UniqueLearnerNumber = null,
+                    UlnStatusId = 0,
+                    Gender = GetGender(monitoringInformation.Gender),
+                    EthnicOrigin = GetEthnicOrigin(monitoringInformation.Ethnicity),
+                    EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
+                    ApplicationLimitEnforced = false,
+                    LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
+                    AdditionalEmail = anonymise ? "anonymised@data.com" : email.Length > 50 ? "" : email,
+                    Disability = GetDisability(monitoringInformation.DisabilityStatus),
+                    DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
+                    HealthProblems = "",
+                    ReceivePushedContent = false,
+                    ReferralAgent = false,
+                    DisableAlerts = false,
+                    UnconfirmedEmailAddress = "",
+                    MobileNumberUnconfirmed = false,
+                    DoBFailureCount = null,
+                    ForgottenUsernameRequested = false,
+                    ForgottenPasswordRequested = false,
+                    TextFailureCount = 0,
+                    EmailFailureCount = 0,
+                    LastAccessedManageApplications = null,
+                    ReferralPoints = 0,
+                    BeingSupportedBy = "NAS Exemplar",
+                    LockedForSupportUntil = null,
+                    NewVacancyAlertEmail = null,
+                    NewVacancyAlertSMS = null,
+                    AllowMarketingMessages = false,
+                    ReminderMessageSent = true,
+                    CandidateGuid = candidateGuid
+                };
+
+                var person = new Person
+                {
+                    PersonId = candidateSummary.PersonId,
+                    Title = 0,
+                    OtherTitle = "",
+                    FirstName = anonymise ? "Candidate" : candidateUser.Candidate.RegistrationDetails.FirstName,
+                    MiddleNames = anonymise ? "" : candidateUser.Candidate.RegistrationDetails.MiddleNames,
+                    Surname = anonymise ? candidateGuid.ToString() : candidateUser.Candidate.RegistrationDetails.LastName,
+                    LandlineNumber = anonymise ? "07999999999" : candidateUser.Candidate.RegistrationDetails.PhoneNumber,
+                    MobileNumber = "",
+                    Email = anonymise ? "anonymised@data.com" : email,
+                    PersonTypeId = 1
+                };
+
+                return new CandidatePerson
+                {
+                    Candidate = candidate,
+                    Person = person
+                };
+            }
+            catch (Exception ex)
             {
-                Candidate = candidate,
-                Person = person
-            };
+                //Copes with test data from integration and acceptance tests
+                _logService.Error($"Failed to map Candidate with Id {candidateUser.Candidate.Id}", ex);
+                return null;
+            }
         }
 
         public Dictionary<string, object> MapCandidateDictionary(Candidate candidate)

@@ -22,7 +22,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -101,7 +101,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(status).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -119,7 +119,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithGender(gender).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -162,7 +162,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithEthnicity(ethnicity).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -180,7 +180,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).WithDisabilityStatus(disabilityStatus).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -195,7 +195,7 @@
             var candidateUser = new CandidateUserBuilder().WithStatus(10).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
             var candidateDictionary = _candidateMappers.MapCandidateDictionary(candidate);
@@ -271,7 +271,7 @@
             var candidateUser = new CandidateUserBuilder().WithLegacyCandidateId(0).Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
@@ -291,7 +291,7 @@
             };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries, new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, candidateSummaries, new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -308,7 +308,7 @@
             var candidateUser = new CandidateUserBuilder().WithEmailAddress("testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttest@testtesttesttesttesttesttest.com").Build();
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>());
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), false);
             var candidate = candidatePerson.Candidate;
             var person = candidatePerson.Person;
 
@@ -338,12 +338,85 @@
             var localAuthorityCountyIds = new Dictionary<int, int> {{ localAuthorityId, countyId } };
 
             //Act
-            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), vacancyLocalAuthorities, localAuthorityCountyIds);
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), vacancyLocalAuthorities, localAuthorityCountyIds, false);
             var candidate = candidatePerson.Candidate;
 
             //Assert
             candidate.CountyId.Should().Be(countyId);
             candidate.LocalAuthorityId.Should().Be(localAuthorityId);
+        }
+
+        [Test]
+        public void AnonymisationTestTest()
+        {
+            //Arrange
+            var candidateUser = new CandidateUserBuilder().WithStatus(20).Build();
+
+            //Act
+            var candidatePerson = _candidateMappers.MapCandidatePerson(candidateUser, new Dictionary<Guid, CandidateSummary>(), new Dictionary<string, int>(), new Dictionary<int, int>(), true);
+            var candidate = candidatePerson.Candidate;
+            var person = candidatePerson.Person;
+
+            //Assert
+            candidate.CandidateId.Should().Be(candidateUser.Candidate.LegacyCandidateId);
+            candidate.PersonId.Should().Be(0);
+            candidate.CandidateStatusTypeId.Should().Be(2);
+            candidate.DateofBirth.Should().Be(candidateUser.Candidate.RegistrationDetails.DateOfBirth);
+            candidate.AddressLine1.Should().Be("");
+            candidate.AddressLine2.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine2);
+            candidate.AddressLine3.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine3);
+            candidate.AddressLine4.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.AddressLine4);
+            candidate.AddressLine5.Should().Be("");
+            candidate.Town.Should().Be("N/A");
+            candidate.CountyId.Should().Be(0);
+            candidate.Postcode.Should().Be(candidateUser.Candidate.RegistrationDetails.Address.Postcode);
+            candidate.LocalAuthorityId.Should().Be(0);
+            candidate.Longitude.Should().Be(null);
+            candidate.Latitude.Should().Be(null);
+            candidate.GeocodeEasting.Should().Be(null);
+            candidate.GeocodeNorthing.Should().Be(null);
+            candidate.NiReference.Should().Be("");
+            candidate.VoucherReferenceNumber.Should().Be(null);
+            candidate.UniqueLearnerNumber.Should().Be(null);
+            candidate.UlnStatusId.Should().Be(0);
+            candidate.Gender.Should().Be(0);
+            candidate.EthnicOrigin.Should().Be(0);
+            candidate.EthnicOriginOther.Should().Be("");
+            candidate.ApplicationLimitEnforced.Should().BeFalse();
+            candidate.LastAccessedDate.Should().Be(candidateUser.User.LastLogin);
+            candidate.AdditionalEmail.Should().Be("anonymised@data.com");
+            candidate.Disability.Should().Be(14);
+            candidate.DisabilityOther.Should().Be("");
+            candidate.HealthProblems.Should().Be("");
+            candidate.ReceivePushedContent.Should().BeFalse();
+            candidate.ReferralAgent.Should().BeFalse();
+            candidate.DisableAlerts.Should().BeFalse();
+            candidate.UnconfirmedEmailAddress.Should().Be("");
+            candidate.MobileNumberUnconfirmed.Should().BeFalse();
+            candidate.DoBFailureCount.Should().Be(null);
+            candidate.ForgottenUsernameRequested.Should().BeFalse();
+            candidate.ForgottenPasswordRequested.Should().BeFalse();
+            candidate.TextFailureCount.Should().Be(0);
+            candidate.EmailFailureCount.Should().Be(0);
+            candidate.LastAccessedManageApplications.Should().Be(null);
+            candidate.ReferralPoints.Should().Be(0);
+            candidate.BeingSupportedBy.Should().Be("NAS Exemplar");
+            candidate.LockedForSupportUntil.Should().Be(null);
+            candidate.NewVacancyAlertEmail.Should().Be(null);
+            candidate.NewVacancyAlertSMS.Should().Be(null);
+            candidate.AllowMarketingMessages.Should().BeFalse();
+            candidate.ReminderMessageSent.Should().BeTrue();
+            candidate.CandidateGuid.Should().Be(candidateUser.Candidate.Id);
+
+            person.Title.Should().Be(0);
+            person.OtherTitle.Should().Be("");
+            person.FirstName.Should().Be("Candidate");
+            person.MiddleNames.Should().Be("");
+            person.Surname.Should().Be(candidateUser.Candidate.Id.ToString());
+            person.LandlineNumber.Should().Be("07999999999");
+            person.MobileNumber.Should().Be("");
+            person.Email.Should().Be("anonymised@data.com");
+            person.PersonTypeId.Should().Be(1);
         }
     }
 }
