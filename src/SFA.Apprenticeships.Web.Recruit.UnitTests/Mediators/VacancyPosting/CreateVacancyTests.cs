@@ -10,6 +10,8 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
 
+    using SFA.Apprenticeships.Domain.Entities.Users;
+
     [TestFixture]
     public class CreateVacancyTests : TestsBase
     {
@@ -169,8 +171,8 @@
                 });
 
             var mediator = GetMediator();
-
-            var result = mediator.ConfirmEmployer(viewModel);
+            var ukprn = "";
+            var result = mediator.ConfirmEmployer(viewModel,ukprn);
             result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
                 .Be(isEmployerLocationMainApprenticeshipLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);

@@ -249,6 +249,7 @@
         /// Otherwise, it updates the existing one.
         /// </summary>
         /// <param name="newVacancyViewModel"></param>
+        /// <param name="ukprn"></param>
         /// <returns></returns>
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
