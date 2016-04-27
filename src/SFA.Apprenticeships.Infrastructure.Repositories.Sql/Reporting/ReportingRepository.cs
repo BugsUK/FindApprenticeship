@@ -215,7 +215,7 @@
                     ProviderName = reader["ProviderName"].ToString(),
                     EmployerName = reader["EmployerName"].ToString(),
                     OriginalPostingDate = reader["OriginalPostingDate"].ToString(),
-                    // OriginalClosingDate = reader["OriginalClosingDate"].ToString(), //TODO: do this!!
+                    OriginalClosingDate = reader["OriginalClosingDate"].ToString(),
                     CurrentClosingDate = reader["CurrentClosingDate"].ToString(),
                     NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
                     NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString()

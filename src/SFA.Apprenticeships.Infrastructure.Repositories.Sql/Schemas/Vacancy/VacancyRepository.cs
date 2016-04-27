@@ -652,7 +652,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
                     VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId, StatusChangeText);
 
                 CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName,
-                    VacancyHistoryEventType.Note, actualVacancyState.VacancyStatusId, actualVacancyState.ApplicationClosingDate.Value.ToString("u"));
+                    VacancyHistoryEventType.Note, actualVacancyState.VacancyStatusId, previousVacancyState.ApplicationClosingDate.Value.ToString("yyyy-MM-dd"));
             }
         }
 
