@@ -124,5 +124,44 @@
 
             return response;
         }
+
+        public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
+        {
+            var ukprn = providerUkprn?.ToString() ?? "ALL";
+            var status = vacancyStatus?.ToString() ?? "ALL";
+
+            _logger.Debug($"Executing vacancy extensions report with toDate {toDate} and fromdate {fromDate} for provider with ukprn {ukprn} and for vacancies with status {status}...");
+
+            var response = new List<ReportVacancyExtensionsResultItem>();
+
+            var command = new SqlCommand("dbo.ReportGetVacancyExtensions",
+                (SqlConnection) _getOpenConnection.GetOpenConnection()) {CommandType = CommandType.StoredProcedure};
+
+            command.Parameters.Add("startReportDateTime", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("endReportDateTime", SqlDbType.DateTime).Value = toDate;
+            command.Parameters.Add("providerToStudyUkprn", SqlDbType.Int).Value = providerUkprn;
+            command.Parameters.Add("vacancyStatusToStudy", SqlDbType.Int).Value = (object)vacancyStatus ?? DBNull.Value;
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportVacancyExtensionsResultItem
+                {
+                    VacancyReferenceNumber = reader["VacancyReferenceNumber"].ToString(),
+                    VacancyTitle = reader["VacancyTitle"].ToString(),
+                    ProviderName = reader["ProviderName"].ToString(),
+                    EmployerName = reader["EmployerName"].ToString(),
+                    OriginalPostingDate = reader["OriginalPostingDate"].ToString(),
+                    // OriginalClosingDate = reader["OriginalClosingDate"].ToString(), //TODO: do this!!
+                    CurrentClosingDate = reader["CurrentClosingDate"].ToString(),
+                    NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
+                    NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString()
+                }); 
+            }
+
+            _logger.Debug($"Done executing vacancy extensions report with toDate {toDate} and fromdate {fromDate} for provider with ukprn {ukprn} and for vacancies with status {status}.");
+
+            return response;
+        }
     }
 }

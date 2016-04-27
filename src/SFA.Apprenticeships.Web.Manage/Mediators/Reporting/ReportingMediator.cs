@@ -58,7 +58,18 @@
 
         public byte[] GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters)
         {
-            throw new NotImplementedException();
+            int? vacancyStatus = null;
+
+            if (parameters.Status != "All")
+            {
+                vacancyStatus = int.Parse(parameters.Status);
+            }
+
+            var reportResult = _reportingService.ReportVacancyExtensions(parameters.FromDate, parameters.ToDate,
+                parameters.UKPRN, vacancyStatus);
+            
+            var bytes = GetCsvBytes(reportResult);
+            return bytes;
         }
 
         private byte[] GetCsvBytes<T>(IEnumerable<T> items) where T : class

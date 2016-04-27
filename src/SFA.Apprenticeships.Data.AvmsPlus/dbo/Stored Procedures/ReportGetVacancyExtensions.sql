@@ -7,7 +7,7 @@ AS
 	BEGIN
 
 	declare @VacanciesWithExtensions table (VacancyId int,VacancyOwnerRelationshipId int, ApplicationClosingDate datetime null, ContractOwnerId int, VacancyStatus int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
-	declare @TempResults table (VacancyId int, VacancyStatus int, VacancyOwnerRelationshipId int, EmployerId int, EmployerName nvarchar(255), ProviderSiteId int,
+	declare @TempResults table (VacancyId int, VacancyStatus nvarchar(255), VacancyOwnerRelationshipId int, EmployerId int, EmployerName nvarchar(255), ProviderSiteId int,
 		ContractOwnerId int, OriginalPostingDate datetime, CurrentClosingDate datetime, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @ProvidersToStudy table (ProviderId int)
 	declare @VacancyStatusesToStudy table (VacancyStatusId int)
@@ -65,7 +65,7 @@ AS
 		CurrentClosingDate, NumberOfExtensions, NumberOfApplications, VacancyReferenceNumber, VacancyTitle)
 		SELECT 
 			vwe.VacancyId,
-			vwe.VacancyStatus,
+			vst.FullName,
 			vor.VacancyOwnerRelationshipId,
 			e.EmployerId,
 			e.FullName as EmployerName,
@@ -78,6 +78,7 @@ AS
 			vwe.VacancyReferenceNumber,
 			vwe.VacancyTitle
 		FROM @VacanciesWithExtensions as vwe
+		INNER JOIN VacancyStatusType as vst ON vst.VacancyStatusTypeId = vwe.VacancyStatus
 		INNER JOIN VacancyOwnerRelationship as vor ON vwe.VacancyOwnerRelationshipId=vor.VacancyOwnerRelationshipId
 		INNER JOIN Employer as e ON vor.EmployerId=e.EmployerId
 		INNER JOIN ProviderSite as ps ON ps.ProviderSiteID=vor.ProviderSiteID
@@ -99,7 +100,7 @@ AS
 		WHERE RowNumber = 1
 	)
 
-	SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')), VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
+	SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')) as VacancyReferenceNumber, VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
 		CurrentClosingDate, NumberOfExtensions, ISNULL(NumberOfApplications, 0) as NumberOfApplications, p.FullName as ProviderName
 		FROM @TempResults as tmp
 		INNER JOIN cteProviderId ON cteProviderId.ProviderSiteID = tmp.ProviderSiteID
@@ -107,7 +108,7 @@ AS
 		WHERE tmp.ContractOwnerId is null AND 
 			  p.ProviderID IN ( SELECT ProviderId FROM @ProvidersToStudy)
 	UNION 
-		SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')), VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
+		SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')) as VacancyReferenceNumber, VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
 		CurrentClosingDate, NumberOfExtensions, ISNULL(NumberOfApplications, 0) as NumberOfApplications, p.FullName as ProviderName FROM @TempResults as tmp
 		INNER JOIN dbo.Provider as p ON tmp.ContractOwnerId = p.ProviderID
 		WHERE tmp.ContractOwnerId is not null AND 

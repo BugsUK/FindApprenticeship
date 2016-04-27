@@ -7,7 +7,7 @@
 
     public class ReportingService : IReportingService
     {
-        private IReportingProvider _reportingProvider;
+        private readonly IReportingProvider _reportingProvider;
 
         public ReportingService(IReportingProvider reportingProvider)
         {
@@ -22,6 +22,11 @@
         public IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange)
         {
             return _reportingProvider.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange);
+        }
+
+        public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
+        {
+            return _reportingProvider.ReportVacancyExtensions(fromDate, toDate, providerUkprn, vacancyStatus);
         }
 
         public Dictionary<string, string> LocalAuthorityManagerGroups()
