@@ -195,6 +195,8 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
             }
 
+            var vacancyPreviousState = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
+
             var newViewModel = _providerProvider.ConfirmVacancyParty(viewModel);
 
             var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyReferenceNumber);
@@ -202,6 +204,16 @@
                 viewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
+
+                _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel);
+            }
+
+            
+            if (vacancyPreviousState != null && viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue
+                && viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false
+                && vacancyPreviousState.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
+            {
+                _vacancyPostingProvider.EmptyVacancyLocation(vacancyPreviousState.VacancyReferenceNumber);
             }
 
             newViewModel.VacancyGuid = viewModel.VacancyGuid;

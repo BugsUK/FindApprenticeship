@@ -105,7 +105,8 @@
                     _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);                
             }
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false)
+                vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
+                vacancy.Address != null)
             {
                    
                 locationAddressesVm.Add(
@@ -198,7 +199,8 @@
                     Addresses = new List<VacancyLocationAddressViewModel>(),
                     LocationAddressesComment = vacancy.LocationAddressesComment,
                     AdditionalLocationInformationComment = vacancy.AdditionalLocationInformationComment,
-                    AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds
+                    AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds,
+                    ProviderSiteId = providerSite.ProviderSiteId
                 };
                 
                 var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
@@ -210,7 +212,7 @@
                 else
                 {
                     if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
-                    vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false)
+                    vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false && vacancy.Address != null)
                     {
                         viewModel.Addresses = new List<VacancyLocationAddressViewModel>();
                         viewModel.Addresses.Add(
@@ -553,6 +555,17 @@
             return result;
         }
 
+        public void EmptyVacancyLocation(int vacancyReferenceNumber)
+        {
+            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            vacancy.Address = null;
+            vacancy.NumberOfPositions = null;
+            vacancy.NumberOfPositionsComment = null;
+
+            _vacancyPostingService.UpdateVacancy(vacancy);
+        }
+
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -610,7 +623,10 @@
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
             viewModel.ContactDetailsAndVacancyHistory = ContactDetailsAndVacancyHistoryViewModelConverter.Convert(provider,
                 vacancyManager, vacancy);
-            viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);            
+            var vacancyLocationAddressViewModels = GetLocationsAddressViewModel(vacancy);
+
+            viewModel.LocationAddresses =  vacancyLocationAddressViewModels;   
+            viewModel.NewVacancyViewModel.LocationAddresses = vacancyLocationAddressViewModels;
             return viewModel;
         }
 
@@ -1470,7 +1486,7 @@
                 vacancy.LocationAddressesComment = null;
                 vacancy.AdditionalLocationInformation = null;
                 vacancy.AdditionalLocationInformationComment = null;
-                _vacancyPostingService.SaveVacancy(vacancy);
+                _vacancyPostingService.UpdateVacancy(vacancy);
 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
             }
