@@ -62,7 +62,7 @@
             try
             {
                 var reportResult = _reportingService.ReportUnsuccessfulCandidates(parameters.Type,
-                    parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange);
+                    parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
                 var bytes = GetCsvBytes(reportResult);
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
