@@ -47,6 +47,8 @@
     [NewVacancyAlertSMS]             BIT              NULL,
     [AllowMarketingMessages]         BIT              NULL,
     [ReminderMessageSent]            BIT              DEFAULT ((0)) NOT NULL,
+	-- NEW FIELDS
+	[CandidateGuid]             UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [PK_Candidate] PRIMARY KEY CLUSTERED ([CandidateId] ASC),
     CONSTRAINT [FK_Candidate_CandidateDisability] FOREIGN KEY ([Disability]) REFERENCES [dbo].[CandidateDisability] ([CandidateDisabilityId]),
     CONSTRAINT [FK_Candidate_CandidateEthnicOrigin] FOREIGN KEY ([EthnicOrigin]) REFERENCES [dbo].[CandidateEthnicOrigin] ([CandidateEthnicOriginId]),

@@ -13,6 +13,7 @@
     [TestFixture]
     public class CreateVacancyTests : TestsBase
     {
+        private const string Ukprn = "12345";
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
         private const int AnInt = 1234;
@@ -37,7 +38,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -63,7 +64,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -88,7 +89,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -112,7 +113,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -136,7 +137,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);

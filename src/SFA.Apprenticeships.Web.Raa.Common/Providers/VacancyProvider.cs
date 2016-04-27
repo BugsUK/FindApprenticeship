@@ -108,11 +108,12 @@
             return viewModel;
         }
 
-        public LocationSearchViewModel CreateVacancy(LocationSearchViewModel locationSearchViewModel)
+        public LocationSearchViewModel CreateVacancy(LocationSearchViewModel locationSearchViewModel, string ukprn)
         {
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
                 _providerService.GetVacancyParty(locationSearchViewModel.ProviderSiteId, locationSearchViewModel.EmployerEdsUrn);
+            var provider = _providerService.GetProvider(ukprn);
 
             locationSearchViewModel.VacancyPartyId = vacancyParty.VacancyPartyId;
 
@@ -124,6 +125,7 @@
                 Status = VacancyStatus.Draft,
                 AdditionalLocationInformation = locationSearchViewModel.AdditionalLocationInformation,
                 IsEmployerLocationMainApprenticeshipLocation = locationSearchViewModel.IsEmployerLocationMainApprenticeshipLocation,
+                ProviderId = provider.ProviderId
             };
 
             if (locationSearchViewModel.Addresses.Count == 1)
@@ -222,7 +224,7 @@
         /// </summary>
         /// <param name="newVacancyViewModel"></param>
         /// <returns></returns>
-        public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel)
+        public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             NewVacancyViewModel resultViewModel = null;
 
@@ -236,7 +238,7 @@
 
                 try
                 {
-                    var vacancy = CreateNewVacancy(newVacancyViewModel);
+                    var vacancy = CreateNewVacancy(newVacancyViewModel, ukprn);
 
                     _logService.Debug("Created vacancy with reference number={0}", vacancy.VacancyReferenceNumber);
 
@@ -255,13 +257,14 @@
             return resultViewModel;
         }
 
-        private Vacancy CreateNewVacancy(NewVacancyViewModel newVacancyViewModel)
+        private Vacancy CreateNewVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
                 _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            var provider = _providerService.GetProvider(ukprn);
 
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
@@ -278,6 +281,7 @@
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
                 Address = employer.Address,
+                ProviderId = provider.ProviderId //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 // VacancyManagerId = vacancyParty.ProviderSiteId //TODO VGA: is this correct?
             });
 
@@ -533,8 +537,6 @@
             var viewModel = GetVacancyViewModelFrom(vacancy);
             return viewModel;
         }
-
-        
 
         public VacancyViewModel GetVacancy(Guid vacancyGuid)
         {

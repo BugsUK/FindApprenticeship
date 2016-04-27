@@ -4,11 +4,14 @@
     using MongoDB.Bson.Serialization.Attributes;
 
     [BsonIgnoreExtraElements]
-    public class Candidate
+    public class Candidate : CandidateSummary
     {
-        [BsonId]
-        public Guid Id { get; set; }
+        public DateTime DateCreated { get; set; }
 
-        public int LegacyCandidateId { get; set; }
+        public DateTime? DateUpdated { get; set; }
+
+        public RegistrationDetails RegistrationDetails { get; set; }
+
+        public MonitoringInformation MonitoringInformation { get; set; }
     }
 }
