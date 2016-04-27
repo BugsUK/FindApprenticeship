@@ -95,7 +95,7 @@
             command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("candidateAgeRange", SqlDbType.Int).Value = ageRange;
             command.Parameters.Add("points", SqlDbType.Int).Value = -1;
-            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = 0;
             command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
 
             command.CommandTimeout = 180;
