@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Data.Migrate.Faa.Repository.Sql
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Infrastructure.Repositories.Sql.Common;
 
     public class VacancyRepository
@@ -21,7 +22,7 @@
         {
             var vacancyLocalAuthorities = new Dictionary<string, int>(100000);
 
-            for(var i = 1; i <= 3; i++)
+            for(var i = 1; i <= 5; i++)
             {
                 var sql = GetAllVacancyLocalAuthoritiesSql(i);
                 foreach (var vacancyLocalAuthority in _getOpenConnection.Query<VacancyLocalAuthority>(sql))
@@ -50,6 +51,7 @@ ORDER BY PostCodePrefix, LocalAuthorityIdCount";
             // ReSharper disable UnusedAutoPropertyAccessor.Local
             public string PostCodePrefix { get; set; }
             public int LocalAuthorityId { get; set; }
+            // ReSharper disable once UnusedMember.Local
             public int LocalAuthorityIdCount { get; set; }
             // ReSharper restore UnusedAutoPropertyAccessor.Local
         }

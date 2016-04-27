@@ -321,6 +321,13 @@
         [TestCase("B26 2LW", "B262L")]
         [TestCase("B26 2LW", "B262")]
         [TestCase("B26 2LW", "B26")]
+        [TestCase("B26 2LW", "B2")]
+        [TestCase("B26 2LW", "B")]
+        [TestCase("AL10 9AB", "AL109A")]
+        [TestCase("AL10 9AB", "AL109")]
+        [TestCase("AL10 9AB", "AL10")]
+        [TestCase("AL10 9AB", "AL1")]
+        [TestCase("AL10 9AB", "AL")]
         public void CountyLocalAuthorityTests(string postCode, string vacancyPostCode)
         {
             //Arrange

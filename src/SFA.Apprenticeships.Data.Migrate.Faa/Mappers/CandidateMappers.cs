@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
@@ -13,8 +14,10 @@
     {
         private const int CandidateStatusTypeIdPreRegistered = 1;
         private const int CandidateStatusTypeIdActivated = 2;
+        // ReSharper disable once UnusedMember.Local
         private const int CandidateStatusTypeIdRegistered = 3;
         private const int CandidateStatusTypeIdSuspended = 4;
+        // ReSharper disable once UnusedMember.Local
         private const int CandidateStatusTypeIdPendingDelete = 5;
         private const int CandidateStatusTypeIdDeleted = 6;
 
@@ -257,35 +260,27 @@
             return CandidateStatusTypeIdPreRegistered;
         }
 
-        private int GetLocalAuthorityId(string postCode, IDictionary<string, int> vacancyLocalAuthorities)
+        private static int GetLocalAuthorityId(string postCode, IDictionary<string, int> vacancyLocalAuthorities)
         {
             var postCodeKey = postCode.Replace(" ", "");
 
-            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
-
-            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
+            for (var i = 0; i < 5; i++)
             {
-                return vacancyLocalAuthorities[postCodeKey];
-            }
+                if (postCodeKey.Length > 2 || char.IsDigit(postCodeKey.Last()))
+                {
+                    postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
 
-            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
-
-            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
-            {
-                return vacancyLocalAuthorities[postCodeKey];
-            }
-
-            postCodeKey = postCodeKey.Substring(0, postCodeKey.Length - 1);
-
-            if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
-            {
-                return vacancyLocalAuthorities[postCodeKey];
+                    if (vacancyLocalAuthorities.ContainsKey(postCodeKey))
+                    {
+                        return vacancyLocalAuthorities[postCodeKey];
+                    }
+                }
             }
 
             return 0;
         }
 
-        private int GetGender(int? gender)
+        private static int GetGender(int? gender)
         {
             if (gender.HasValue)
             {
@@ -308,7 +303,7 @@
             return 0;
         }
 
-        private string GetEthnicOriginOther(int? ethnicity)
+        private static string GetEthnicOriginOther(int? ethnicity)
         {
             if (ethnicity.HasValue)
             {
@@ -327,7 +322,7 @@
             return "";
         }
 
-        private int GetDisability(int? disabilityStatus)
+        private static int GetDisability(int? disabilityStatus)
         {
             if (disabilityStatus.HasValue && disabilityStatus != 2)
             {
@@ -337,7 +332,7 @@
             return 0;
         }
 
-        private string GetDisabilityOther(int? disabilityStatus)
+        private static string GetDisabilityOther(int? disabilityStatus)
         {
             if (disabilityStatus.HasValue && disabilityStatus == 1)
             {
