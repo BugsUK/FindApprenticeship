@@ -55,11 +55,9 @@
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
-                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
-                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
@@ -128,6 +126,8 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
+                .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
+                .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -219,6 +219,7 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .AfterMap((v, av) =>
                 {
                     av.Address = new DomainPostalAddress

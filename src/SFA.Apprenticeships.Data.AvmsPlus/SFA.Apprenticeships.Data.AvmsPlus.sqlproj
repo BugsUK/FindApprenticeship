@@ -913,6 +913,15 @@
     <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
     <Build Include="dbo\Sequences\dbo.LegacyApplicationIdSequence.sql" />
     <Build Include="dbo\Sequences\dbo.VacancyReferenceNumberSequence.sql" />
+    <None Include="Scripts\Data\dbo.CandidateDisability.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateEthnicOrigin.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateGender.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateHistoryEvent.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateULNStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.PostcodeOutcode.Upsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportILRStartDateList.proc.sql" />
+    <Build Include="dbo\Functions\fnReportGenerateVacancyRefNo.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
