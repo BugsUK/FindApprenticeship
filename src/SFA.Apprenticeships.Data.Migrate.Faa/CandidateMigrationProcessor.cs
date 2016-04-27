@@ -124,7 +124,7 @@
                 var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
-                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, _anonymiseData)).ToList();
+                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, _anonymiseData)).Where(c => c != null).ToList();
                 
                 count += candidatePersons.Count;
                 _logService.Info($"Processing {candidatePersons.Count} active candidates");
