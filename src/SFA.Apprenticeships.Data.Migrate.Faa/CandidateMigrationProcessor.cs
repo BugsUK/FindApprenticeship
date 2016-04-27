@@ -33,6 +33,8 @@
         private readonly ITableSpec _candidateTable = new CandidateTable();
         private readonly ITableSpec _personTable = new PersonTable();
 
+        private readonly bool _anonymiseData;
+
         public CandidateMigrationProcessor(ICandidateMappers candidateMappers, SyncRepository syncRepository, IGenericSyncRespository genericSyncRespository, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
             _candidateMappers = candidateMappers;
@@ -46,6 +48,9 @@
             _candidateRepository = new CandidateRepository(targetDatabase);
             _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _userRepository = new UserRepository(configurationService, logService);
+
+            var persistentConfig = configurationService.Get<MigrateFromAvmsConfiguration>();
+            _anonymiseData = persistentConfig.AnonymiseData;
         }
 
         public void Process(CancellationToken cancellationToken)
@@ -119,7 +124,7 @@
                 var maxDateUpdated = candidateUsers.Max(c => c.Candidate.DateUpdated) ?? DateTime.MinValue;
 
                 var candidateSummaries = _candidateRepository.GetCandidateSummariesByGuid(candidateUsers.Select(c => c.Candidate.Id));
-                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds)).ToList();
+                var candidatePersons = candidateUsers.Where(c => c.User.Status >= 20 && c.User.Status != 999).Select(c => _candidateMappers.MapCandidatePerson(c, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, _anonymiseData)).ToList();
                 
                 count += candidatePersons.Count;
                 _logService.Info($"Processing {candidatePersons.Count} active candidates");

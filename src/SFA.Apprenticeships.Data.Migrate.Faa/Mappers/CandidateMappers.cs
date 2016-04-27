@@ -62,7 +62,7 @@
             _logService = logService;
         }
 
-        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds)
+        public CandidatePerson MapCandidatePerson(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, bool anonymise)
         {
             var candidateGuid = candidateUser.Candidate.Id;
             var candidateSummary = candidateSummaries.ContainsKey(candidateGuid) ? candidateSummaries[candidateGuid] : new CandidateSummary();
@@ -80,7 +80,7 @@
                 PersonId = candidateSummary.PersonId,
                 CandidateStatusTypeId = GetCandidateStatusTypeId(candidateUser.User.Status),
                 DateofBirth = candidateUser.Candidate.RegistrationDetails.DateOfBirth,
-                AddressLine1 = address.AddressLine1,
+                AddressLine1 = anonymise ? "" : address.AddressLine1,
                 AddressLine2 = address.AddressLine2 ?? "",
                 AddressLine3 = address.AddressLine3 ?? "",
                 AddressLine4 = address.AddressLine4 ?? "",
@@ -102,7 +102,7 @@
                 EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
                 ApplicationLimitEnforced = false,
                 LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
-                AdditionalEmail = email.Length > 50 ? "" : email,
+                AdditionalEmail = anonymise ? "anonymised@data.com" : email.Length > 50 ? "" : email,
                 Disability = GetDisability(monitoringInformation.DisabilityStatus),
                 DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
                 HealthProblems = "",
@@ -132,12 +132,12 @@
                 PersonId = candidateSummary.PersonId,
                 Title = 0,
                 OtherTitle = "",
-                FirstName = candidateUser.Candidate.RegistrationDetails.FirstName,
-                MiddleNames = candidateUser.Candidate.RegistrationDetails.MiddleNames,
-                Surname = candidateUser.Candidate.RegistrationDetails.LastName,
-                LandlineNumber = candidateUser.Candidate.RegistrationDetails.PhoneNumber,
+                FirstName = anonymise ? "Candidate" : candidateUser.Candidate.RegistrationDetails.FirstName,
+                MiddleNames = anonymise ? "" : candidateUser.Candidate.RegistrationDetails.MiddleNames,
+                Surname = anonymise ? candidateGuid.ToString() : candidateUser.Candidate.RegistrationDetails.LastName,
+                LandlineNumber = anonymise ? "07999999999" : candidateUser.Candidate.RegistrationDetails.PhoneNumber,
                 MobileNumber = "",
-                Email = email,
+                Email = anonymise ? "anonymised@data.com" : email,
                 PersonTypeId = 1
             };
 
