@@ -40,7 +40,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
@@ -78,7 +77,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
@@ -119,7 +117,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
@@ -163,7 +160,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
