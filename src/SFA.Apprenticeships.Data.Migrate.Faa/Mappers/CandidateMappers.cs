@@ -136,7 +136,7 @@
                     OtherTitle = "",
                     FirstName = anonymise ? "Candidate" : candidateUser.Candidate.RegistrationDetails.FirstName,
                     MiddleNames = anonymise ? "" : candidateUser.Candidate.RegistrationDetails.MiddleNames,
-                    Surname = anonymise ? candidateGuid.ToString() : candidateUser.Candidate.RegistrationDetails.LastName,
+                    Surname = anonymise ? candidateGuid.ToString().Replace("-", "") : candidateUser.Candidate.RegistrationDetails.LastName,
                     LandlineNumber = anonymise ? "07999999999" : candidateUser.Candidate.RegistrationDetails.PhoneNumber,
                     MobileNumber = "",
                     Email = anonymise ? "anonymised@data.com" : email,
