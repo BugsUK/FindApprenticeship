@@ -243,6 +243,10 @@ select top 10 * from VacancyReferralComments
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
+            public IEnumerable<string> ErrorKeys => PrimaryKeys;
+
+            public bool IdentityInsert => true;
+
             public decimal BatchSizeMultiplier { get; private set; }
 
             public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
@@ -401,8 +405,9 @@ select top 10 * from VacancyReferralComments
             // TODO: Check that new vacancies are really setting to null and not the vacancy owner site id (etc)
             newRecord.VacancyManagerID        = null;
             newRecord.DeliveryOrganisationID  = null;
-            newRecord.ContractOwnerID         = null;
-            newRecord.OriginalContractOwnerId = null;
+            // Required by unsuccessful candidates report and now correctly set in RAA so keeping
+            //newRecord.ContractOwnerID         = null;
+            //newRecord.OriginalContractOwnerId = null;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;

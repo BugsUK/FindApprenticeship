@@ -22,6 +22,8 @@
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
 
+    using SFA.Apprenticeships.Domain.Entities.Users;
+
     public class VacancyPostingMediator : MediatorBase, IVacancyPostingMediator
     {
         private readonly IVacancyPostingProvider _vacancyPostingProvider;
@@ -205,7 +207,7 @@
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 
-                _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel);
+                _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel,User.GetUkprn());
             }
 
             
@@ -386,7 +388,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ManageDates.Ok, viewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel)
+        public MediatorResponse<NewVacancyViewModel> CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var validationResult = _newVacancyViewModelServerValidator.Validate(newVacancyViewModel);
 
@@ -402,7 +404,7 @@
 
             newVacancyViewModel.LocationAddresses = storedVacancy?.LocationAddresses;
             
-            var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
+            var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel, ukprn);
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
                 ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
@@ -410,7 +412,7 @@
                 : GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
 
-        public MediatorResponse<NewVacancyViewModel> CreateVacancyAndExit(NewVacancyViewModel newVacancyViewModel)
+        public MediatorResponse<NewVacancyViewModel> CreateVacancyAndExit(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var validationResult = _newVacancyViewModelClientValidator.Validate(newVacancyViewModel);
 
@@ -422,7 +424,7 @@
                 return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.FailedValidation, newVacancyViewModel, validationResult);
             }
 
-            var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel);
+            var createdVacancyViewModel = _vacancyPostingProvider.CreateVacancy(newVacancyViewModel, ukprn);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
@@ -613,7 +615,7 @@
             }
         }
 
-        public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel)
+        public MediatorResponse<LocationSearchViewModel> AddLocations(LocationSearchViewModel viewModel, string ukprn)
         {
             var validationResult = _locationSearchViewModelServerValidator.Validate(viewModel);
 
@@ -624,7 +626,7 @@
 
             var existingVacancy = _vacancyPostingProvider.GetVacancy(viewModel.VacancyGuid);
             var locationSearchViewModel = existingVacancy == null
-                ? _vacancyPostingProvider.CreateVacancy(viewModel)
+                ? _vacancyPostingProvider.CreateVacancy(viewModel, ukprn)
                 : _vacancyPostingProvider.AddLocations(viewModel);
 
             return GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, locationSearchViewModel);

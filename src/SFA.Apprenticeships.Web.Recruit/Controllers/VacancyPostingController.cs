@@ -19,6 +19,8 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
 
+    using SFA.Apprenticeships.Domain.Entities.Users;
+
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
@@ -223,7 +225,7 @@
         [HttpPost]
         public ActionResult CreateVacancyAndPreview(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                 new
@@ -238,7 +240,7 @@
         [HttpPost]
         public ActionResult CreateVacancyAndExit(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
@@ -249,7 +251,7 @@
         [HttpPost]
         public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.TrainingDetails, 
                 new
@@ -264,7 +266,7 @@
         public JsonResult AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
         {
             // Call autosave instead of CreateVacancy?
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             switch (response.Code)
             {
@@ -941,7 +943,7 @@
         [HttpPost]
         public ActionResult Locations(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.AddLocations(viewModel);
+            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
@@ -966,7 +968,7 @@
         [HttpPost]
         public JsonResult AutoSaveLocations(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.AddLocations(viewModel);
+            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 

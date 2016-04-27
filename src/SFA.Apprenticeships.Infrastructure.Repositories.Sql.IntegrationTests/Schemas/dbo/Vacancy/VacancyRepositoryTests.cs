@@ -74,6 +74,7 @@
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             writeRepository.Create(vacancy);
 
@@ -130,6 +131,7 @@
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             vacancy.Status = VacancyStatus.Submitted;
@@ -172,6 +174,7 @@
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var entity = writeRepository.Create(vacancy);
             vacancy.VacancyId = entity.VacancyId;
@@ -204,6 +207,7 @@
             vacancy.UpdatedDateTime = null;
             vacancy.CreatedDateTime = DateTime.MinValue;
             vacancy.ClosingDate = DateTime.UtcNow.AddDays(2);
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             writeRepository.Create(vacancy);
 
@@ -281,16 +285,19 @@
             vacancy1.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy1.Address.Postcode = "B26 2LW";
             vacancy1.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy1.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy2 = CreateValidDomainVacancy();
             vacancy2.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy2.Address.Postcode = "SW2 4NT";
             vacancy2.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy2.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             var vacancy3 = CreateValidDomainVacancy();
             vacancy3.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy3.Address.Postcode = "DE6 5JA";
             vacancy3.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy3.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy1 = writeRepository.Create(vacancy1);
             vacancy2 = writeRepository.Create(vacancy2);
@@ -324,6 +331,7 @@
             vacancy.Address.Postcode = null;
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
 
             vacancy = writeRepository.Create(vacancy);
             

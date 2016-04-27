@@ -21,8 +21,7 @@
     CONSTRAINT [FK_Application_ApplicationUnsuccessfulReasonType] FOREIGN KEY ([UnsuccessfulReasonId]) REFERENCES [dbo].[ApplicationUnsuccessfulReasonType] ([ApplicationUnsuccessfulReasonTypeId]),
     CONSTRAINT [FK_Application_ApplicationWithdrawnOrDeclinedReasonType] FOREIGN KEY ([WithdrawnOrDeclinedReasonId]) REFERENCES [dbo].[ApplicationWithdrawnOrDeclinedReasonType] ([ApplicationWithdrawnOrDeclinedReasonTypeId]),
     CONSTRAINT [FK_Application_AttachedDocument] FOREIGN KEY ([CVAttachmentId]) REFERENCES [dbo].[AttachedDocument] ([AttachedDocumentId]),
-    --TODO: Reinstate
-	--CONSTRAINT [FK_Application_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
+    CONSTRAINT [FK_Application_Candidate] FOREIGN KEY ([CandidateId]) REFERENCES [dbo].[Candidate] ([CandidateId]),
     CONSTRAINT [FK_Application_Vacancy1] FOREIGN KEY ([VacancyId]) REFERENCES [dbo].[Vacancy] ([VacancyId]),
     CONSTRAINT [uq_idx_application] UNIQUE NONCLUSTERED ([CandidateId] ASC, [VacancyId] ASC)
 );

@@ -45,6 +45,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Applica
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Application.Candidates", "SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj", "{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SFA.Apprenticeships.Data.Migrate.UnitTests", "SFA.Apprenticeships.Data.Migrate.UnitTests\SFA.Apprenticeships.Data.Migrate.UnitTests.csproj", "{A934E9C3-9B2D-4AF4-8570-47C193A9834F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,6 +401,22 @@ Global
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Release|Any CPU.Build.0 = Demo|Any CPU
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
 		{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}.Sit|Any CPU.Build.0 = Sit|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Debug|Any CPU.ActiveCfg = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Debug|Any CPU.Build.0 = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Demo|Any CPU.ActiveCfg = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Demo|Any CPU.Build.0 = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Dev|Any CPU.ActiveCfg = Dev|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Dev|Any CPU.Build.0 = Dev|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Local|Any CPU.ActiveCfg = Local|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Local|Any CPU.Build.0 = Local|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Pre|Any CPU.ActiveCfg = Pre|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Pre|Any CPU.Build.0 = Pre|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Prod|Any CPU.ActiveCfg = Prod|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Prod|Any CPU.Build.0 = Prod|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Release|Any CPU.ActiveCfg = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Release|Any CPU.Build.0 = Demo|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Sit|Any CPU.ActiveCfg = Sit|Any CPU
+		{A934E9C3-9B2D-4AF4-8570-47C193A9834F}.Sit|Any CPU.Build.0 = Sit|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

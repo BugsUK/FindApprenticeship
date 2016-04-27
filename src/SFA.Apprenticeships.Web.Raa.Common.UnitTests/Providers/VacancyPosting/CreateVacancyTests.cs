@@ -17,6 +17,7 @@
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
+        private const string Ukprn = "12345";
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
@@ -94,6 +95,8 @@
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
                 .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn))
+                .Returns(new Provider());
             MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
 
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
@@ -111,7 +114,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -136,7 +139,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -152,7 +155,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -187,7 +190,7 @@
                 OfflineVacancy = offlineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = offlineApplicationInstructions,
-            });
+            }, Ukprn);
 
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.OfflineVacancy == offlineVacancy 
             && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
@@ -214,7 +217,7 @@
                         EmployerId = EmployerId
                     }
                 }
-            });
+            }, Ukprn);
 
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.VacancyGuid == vacancyGuid)));
         }
@@ -306,7 +309,7 @@
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Status == VacancyStatus.Draft)));
@@ -330,7 +333,7 @@
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);

@@ -7,7 +7,7 @@ namespace SFA.Apprenticeships.Application.Reporting
     public interface IReportingProvider
     {
         IList<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate);
-        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange);
+        IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region);
         Dictionary<string, string> LocalAuthorityManagerGroups();
         Dictionary<string, string> RegionsIncludingAll();
     }
