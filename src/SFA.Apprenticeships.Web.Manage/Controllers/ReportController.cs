@@ -146,7 +146,7 @@
             return View(new ReportVacancyExtensionsParameters());
         }
 
-        [HttpPost]
+/*        [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
         public ActionResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
         {
@@ -170,6 +170,34 @@
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                     return View(validationResponse.ViewModel);
             }
+        }*/
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult ValidateVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var validationResponse = _reportingMediator.Validate(parameters);
+            
+            switch (validationResponse.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return View(validationResponse.ViewModel);
+                case ReportingMediatorCodes.ReportCodes.ValidationError:
+                default:
+                    ModelState.Clear();
+                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
+            }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "VacancyExtensionsCsv.csv");
         }
     }
 }

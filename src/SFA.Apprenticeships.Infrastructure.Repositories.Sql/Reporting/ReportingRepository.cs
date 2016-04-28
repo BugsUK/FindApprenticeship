@@ -218,7 +218,8 @@
                     OriginalClosingDate = reader["OriginalClosingDate"].ToString(),
                     CurrentClosingDate = reader["CurrentClosingDate"].ToString(),
                     NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
-                    NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString()
+                    NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString(),
+                    VacancyStatus = reader["VacancyStatus"].ToString()
                 }); 
             }
 
