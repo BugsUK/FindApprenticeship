@@ -178,7 +178,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.GetEmployer.Ok, viewModel);
         }
 
-        public MediatorResponse<VacancyPartyViewModel> ConfirmEmployer(VacancyPartyViewModel viewModel)
+        public MediatorResponse<VacancyPartyViewModel> ConfirmEmployer(VacancyPartyViewModel viewModel, string ukprn)
         {
             var validationResult = _vacancyPartyViewModelValidator.Validate(viewModel);
 
@@ -205,7 +205,7 @@
             {
                 _vacancyPostingProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
 
-                _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel);
+                _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel, ukprn);
             }
 
             

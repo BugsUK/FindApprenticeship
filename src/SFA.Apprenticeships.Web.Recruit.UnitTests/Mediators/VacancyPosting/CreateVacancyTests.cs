@@ -170,7 +170,7 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel);
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
                 .Be(isEmployerLocationMainApprenticeshipLocation);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);

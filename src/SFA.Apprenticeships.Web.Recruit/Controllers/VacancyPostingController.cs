@@ -155,7 +155,7 @@
         [HttpPost]
         public ActionResult ConfirmEmployer(VacancyPartyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             switch (response.Code)
             {
@@ -878,7 +878,7 @@
         [HttpPost]
         public ActionResult ConfirmNewEmployer(VacancyPartyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
