@@ -250,6 +250,8 @@
             };
 
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
+            MockVacancyPostingService.Setup(m => m.GetVacancyLocations(It.IsAny<int>()))
+                .Returns(new List<VacancyLocation>());
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(av);
             var provider = GetVacancyPostingProvider();

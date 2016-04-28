@@ -3,7 +3,6 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading;
     using Common;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
@@ -35,6 +34,7 @@ ApplicationClosingDate, InterviewsFromDate, ExpectedStartDate, ExpectedDuration,
 ApplyOutsideNAVMS, LockedForSupportUntil, NoOfOfflineApplicants, MasterVacancyId, VacancyLocationTypeId, VacancyManagerID, 
 VacancyGuid, SubmissionCount, StartedToQADateTime, StandardId, HoursPerWeek, WageUnitId, DurationTypeId, DurationValue, QAUserName, 
 TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
+        private const string StatusChangeText = "Status Change";
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
             ILogService logger, ICurrentUserService currentUserService)
@@ -609,7 +609,7 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             SaveAdditionalQuestionsFor(dbVacancy.VacancyId, entity);
 
             CreateVacancyHistoryRow(dbVacancy.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange,
-                (int)entity.Status);
+                (int)entity.Status, StatusChangeText);
 
             _logger.Debug("Saved apprenticeship vacancy to database with id={0}", entity.VacancyId);
 
@@ -643,18 +643,41 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
         private void UpdateVacancyHistory(Vacancy previousVacancyState, Vacancy actualVacancyState)
         {
-            if (previousVacancyState.VacancyStatusId != actualVacancyState.VacancyStatusId)
+            if (StatusHasChanged(previousVacancyState, actualVacancyState))
             {
-                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName, VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId);
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName,
+                    VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId, StatusChangeText);
+            }
+
+            if (ClosingDateHasBeenUpdated(previousVacancyState, actualVacancyState))
+            {
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName,
+                    VacancyHistoryEventType.StatusChange, actualVacancyState.VacancyStatusId, StatusChangeText);
+
+                CreateVacancyHistoryRow(actualVacancyState.VacancyId, _currentUserService.CurrentUserName,
+                    VacancyHistoryEventType.Note, actualVacancyState.VacancyStatusId, previousVacancyState.ApplicationClosingDate.Value.ToString("yyyy-MM-dd"));
             }
         }
 
-        private void CreateVacancyHistoryRow(int vacancyId, string userName, VacancyHistoryEventType vacancyHistoryEventType, int vacancyStatus)
+        private static bool StatusHasChanged(Vacancy previousVacancy, Vacancy actualVacancy)
+        {
+            return previousVacancy.VacancyStatusId != actualVacancy.VacancyStatusId;
+        }
+
+        private static bool ClosingDateHasBeenUpdated(Vacancy previousVacancy, Vacancy actualVacancy)
+        {
+            return previousVacancy.VacancyStatusId == (int)VacancyStatus.Live && 
+                actualVacancy.VacancyStatusId == (int)VacancyStatus.Live &&
+                previousVacancy.ApplicationClosingDate != actualVacancy.ApplicationClosingDate;
+        }
+
+        private void CreateVacancyHistoryRow(int vacancyId, string userName,
+            VacancyHistoryEventType vacancyHistoryEventType, int vacancyStatus, string comment)
         {
             var vacancyHistory = new VacancyHistory
             {
                 VacancyId = vacancyId,
-                Comment = "Status Change",
+                Comment = comment,
                 UserName = userName,
                 VacancyHistoryEventTypeId = (int) vacancyHistoryEventType,
                 VacancyHistoryEventSubTypeId = vacancyStatus,

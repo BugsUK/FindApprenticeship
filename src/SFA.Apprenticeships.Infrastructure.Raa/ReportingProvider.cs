@@ -34,5 +34,10 @@
         {
             return _reportingRepository.GeoRegionsIncludingAll();
         }
+
+        public IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus)
+        {
+            return _reportingRepository.ReportVacancyExtensions(fromDate, toDate, providerUkprn, vacancyStatus);
+        }
     }
 }

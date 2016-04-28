@@ -114,7 +114,26 @@
 
         public MediatorResponse<byte[]> GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters)
         {
-            throw new NotImplementedException();
+            try
+            {
+                int? vacancyStatus = null;
+
+                if (parameters.Status != "All")
+                {
+                    vacancyStatus = int.Parse(parameters.Status);
+                }
+
+                var reportResult = _reportingService.ReportVacancyExtensions(parameters.FromDate.Date, parameters.ToDate.Date,
+                    parameters.UKPRN, vacancyStatus);
+
+                var bytes = GetCsvBytes(reportResult);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
         }
 
         private byte[] GetCsvBytes<T>(IEnumerable<T> items) where T : class

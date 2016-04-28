@@ -911,6 +911,7 @@
     <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
     <Build Include="dbo\Stored Procedures\ReportUnsuccessfulCandidateApplications.proc.sql" />
     <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyExtensions.sql" />
     <Build Include="dbo\Sequences\dbo.LegacyApplicationIdSequence.sql" />
     <Build Include="dbo\Sequences\dbo.VacancyReferenceNumberSequence.sql" />
     <None Include="Scripts\Data\dbo.CandidateDisability.Upsert.sql" />

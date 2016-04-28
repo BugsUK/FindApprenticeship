@@ -33,8 +33,7 @@
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    return View(validationResponse.ViewModel);
-                    /*var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
+                    var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
                     switch (response.Code)
                     {
                         case ReportingMediatorCodes.ReportCodes.Ok:
@@ -42,9 +41,8 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
-                    }*/
+                    }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
@@ -83,7 +81,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
@@ -165,7 +162,6 @@
                         case ReportingMediatorCodes.ReportCodes.Error:
                         default:
                             ModelState.Clear();
-                            response.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
                             return View(parameters);
                     }
                 case ReportingMediatorCodes.ReportCodes.ValidationError:

@@ -67,5 +67,34 @@
 
             MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.PossibleStartDate == possibleStartDate)));
         }
+
+        [Test]
+        public void ShouldUpdateStatusToLive()
+        {
+            const int vacancyReferenceNumber = 1;
+            var closingDate = DateTime.Today.AddDays(20);
+            var possibleStartDate = DateTime.Today.AddDays(30);
+
+            var viewModel = new VacancyDatesViewModel
+            {
+                ClosingDate = new DateViewModel(closingDate),
+                PossibleStartDate = new DateViewModel(possibleStartDate),
+                VacancyReferenceNumber = vacancyReferenceNumber
+            };
+
+            var apprenticeshipVacancy = new Vacancy { VacancyReferenceNumber = vacancyReferenceNumber };
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(vacancyReferenceNumber))
+                .Returns(apprenticeshipVacancy);
+            MockVacancyPostingService.Setup(s => s.UpdateVacancy(It.IsAny<Vacancy>()))
+                .Returns(apprenticeshipVacancy);
+            MockMapper.Setup(m => m.Map<Vacancy, VacancyDatesViewModel>(apprenticeshipVacancy))
+                .Returns(viewModel);
+
+            var provider = GetVacancyPostingProvider();
+
+            provider.UpdateVacancy(viewModel);
+
+            MockVacancyPostingService.Verify(s => s.UpdateVacancy(It.Is<Vacancy>(v => v.Status == VacancyStatus.Live)));
+        }
     }
 }

@@ -10,5 +10,6 @@
         List<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region);
         Dictionary<string, string> LocalAuthorityManagerGroups();
         Dictionary<string, string> GeoRegionsIncludingAll();
+        IList<ReportVacancyExtensionsResultItem> ReportVacancyExtensions(DateTime fromDate, DateTime toDate, int? providerUkprn, int? vacancyStatus);
     }
 }
