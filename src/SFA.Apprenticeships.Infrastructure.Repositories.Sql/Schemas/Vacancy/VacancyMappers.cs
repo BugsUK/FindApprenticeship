@@ -222,16 +222,22 @@
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .AfterMap((v, av) =>
                 {
-                    av.Address = new DomainPostalAddress
+                    if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine3) || !string.IsNullOrWhiteSpace(v.AddressLine4)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine5) || !string.IsNullOrWhiteSpace(v.PostCode)
+                        || !string.IsNullOrWhiteSpace(v.Town))
                     {
-                        AddressLine1 = v.AddressLine1,
-                        AddressLine2 = v.AddressLine2,
-                        AddressLine3 = v.AddressLine3,
-                        AddressLine4 = v.AddressLine4,
-                        AddressLine5 = v.AddressLine5,
-                        Postcode = v.PostCode,
-                        Town = v.Town
-                    };
+                        av.Address = new DomainPostalAddress
+                                         {
+                                             AddressLine1 = v.AddressLine1,
+                                             AddressLine2 = v.AddressLine2,
+                                             AddressLine3 = v.AddressLine3,
+                                             AddressLine4 = v.AddressLine4,
+                                             AddressLine5 = v.AddressLine5,
+                                             Postcode = v.PostCode,
+                                             Town = v.Town
+                                         };
+                    }
 
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {

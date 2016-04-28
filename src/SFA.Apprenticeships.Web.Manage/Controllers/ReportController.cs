@@ -2,6 +2,7 @@
 {
     using System.Web.Mvc;
     using Attributes;
+    using Common.Attributes;
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
@@ -66,6 +67,9 @@
         public ActionResult SuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
+            var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+            validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
@@ -83,9 +87,6 @@
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
-                    validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
-                    validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
                     return View(validationResponse.ViewModel);
             }
         }
@@ -101,33 +102,34 @@
             return View(response.ViewModel);
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "UnsuccessfulCandidatesCsv")]
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult UnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        public ActionResult ValidateUnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
+            var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
+            validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
+            validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    var response = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
-                    switch (response.Code)
-                    {
-                        case ReportingMediatorCodes.ReportCodes.Ok:
-                            return File(response.ViewModel, "text/csv", "UnsuccessfulCandidatesCsv.csv");
-                        case ReportingMediatorCodes.ReportCodes.Error:
-                        default:
-                            ModelState.Clear();
-                            return View(parameters);
-                    }
+                    return View(validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
-                    validationResponse.ViewModel.ManagedByList = newParameterSet.ViewModel.ManagedByList;
-                    validationResponse.ViewModel.RegionList = newParameterSet.ViewModel.RegionList;
-                    return View(validationResponse.ViewModel);
+                    return View("UnsuccessfulCandidatesCsv", validationResponse.ViewModel);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "UnsuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadUnsuccessfulCandidatesCsv(ReportUnsuccessfulCandidatesParameters parameters)
+        {
+            var response = _reportingMediator.GetUnsuccessfulCandidatesReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "UnsuccessfulCandidatesCsv.csv");
         }
 
         [HttpGet]

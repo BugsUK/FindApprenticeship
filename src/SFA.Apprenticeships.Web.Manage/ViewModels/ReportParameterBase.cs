@@ -10,5 +10,7 @@
 
         [Required(ErrorMessage = "From date is required")]
         public virtual DateViewModel FromDate { get; set; }
+
+        public virtual bool IsValid { get; set; }
     }
 }

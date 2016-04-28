@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+
+    using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -63,5 +66,7 @@
         VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber);
 
         VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
+
+        void EmptyVacancyLocation(int vacancyReferenceNumber);
     }
 }

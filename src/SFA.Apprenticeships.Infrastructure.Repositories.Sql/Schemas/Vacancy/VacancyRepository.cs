@@ -554,7 +554,10 @@ order by HistoryDate desc
 
         private void MapRegionalTeam(VacancySummary vacancySummary)
         {
-            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode);
+            vacancySummary.RegionalTeam = vacancySummary.Address != null
+                                              ? RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode)
+                                              : RegionalTeam.Other;
+
             if (vacancySummary.RegionalTeam == RegionalTeam.Other)
             {
                 //Try and get region from vacancy locations
@@ -764,7 +767,7 @@ WHERE  CodeName = @CountyCodeName",
         private void PopulateVacancyLocationTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
             // A vacancy is multilocation if IsEmployerAddressMainAddress is set to false
-            var vacancyLocationTypeCodeName = entity.IsEmployerLocationMainApprenticeshipLocation.Value == true
+            var vacancyLocationTypeCodeName = entity.IsEmployerLocationMainApprenticeshipLocation.HasValue && entity.IsEmployerLocationMainApprenticeshipLocation.Value
                 ? "STD"
                 : "MUL";
 

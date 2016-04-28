@@ -43,6 +43,7 @@
         public MediatorResponse<T> Validate<T>(T parameters) where T: ReportParameterBase
         {
             var validationResult = _reportDateRangeValidator.Validate(parameters);
+            parameters.IsValid = validationResult.IsValid;
             if (!validationResult.IsValid)
             {
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.ValidationError, parameters, validationResult);

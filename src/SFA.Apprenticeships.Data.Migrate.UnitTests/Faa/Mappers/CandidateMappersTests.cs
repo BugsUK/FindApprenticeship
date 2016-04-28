@@ -412,7 +412,7 @@
             person.OtherTitle.Should().Be("");
             person.FirstName.Should().Be("Candidate");
             person.MiddleNames.Should().Be("");
-            person.Surname.Should().Be(candidateUser.Candidate.Id.ToString());
+            person.Surname.Should().Be(candidateUser.Candidate.Id.ToString().Replace("-", ""));
             person.LandlineNumber.Should().Be("07999999999");
             person.MobileNumber.Should().Be("");
             person.Email.Should().Be("anonymised@data.com");
