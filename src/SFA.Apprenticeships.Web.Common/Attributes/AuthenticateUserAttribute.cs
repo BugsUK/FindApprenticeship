@@ -20,7 +20,33 @@
         {
             var httpContext = filterContext.RequestContext.HttpContext;
 
+            //Get the ticket as before
             var ticket = AuthenticationTicketService.GetTicket();
+
+            //Get a local instance of the ticket and verify that they match
+            var authenticationTicketService = new AuthenticationTicketService(httpContext, LogService);
+            var localTicket = authenticationTicketService.GetTicket();
+
+            if (ticket != null && localTicket != null && ticket.Name != localTicket.Name)
+            {
+                var message = string.Format(@"SESSION HIJACK. MISMATCHED USER IDS: User id from AuthenticationTicketService property, {0} does not match User id from local AuthenticationTicketService instance, {1}. Throwing exception", ticket.Name, localTicket.Name);
+                LogService.Error(message);
+                throw new Exception(message);
+            }
+
+            if (ticket == null && localTicket != null)
+            {
+                var message = string.Format(@"SESSION HIJACK. USER SHOULD BE LOGGED IN: No ticket found from AuthenticationTicketService property, but the user id from local AuthenticationTicketService instance, {0} suggests that the user should be logged in. Throwing exception", localTicket.Name);
+                LogService.Error(message);
+                throw new Exception(message);
+            }
+
+            if (ticket != null && localTicket == null)
+            {
+                var message = string.Format(@"SESSION HIJACK. USER SHOULD NOT BE LOGGED IN: User id retrieved from AuthenticationTicketService property, {0}, however no ticket was found from local AuthenticationTicketService instance suggesting that the user should not be logged in. Throwing exception", ticket.Name);
+                LogService.Error(message);
+                throw new Exception(message);
+            }
 
             if (ticket == null)
             {
