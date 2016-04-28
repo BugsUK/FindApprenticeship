@@ -149,7 +149,7 @@
 
             MockVacancyPostingService.Verify(
                  s =>
-                     s.SaveVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
+                     s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
                          v.NumberOfPositions == null &&
                          v.LocationAddressesComment == null &&
                          v.AdditionalLocationInformation == null &&
