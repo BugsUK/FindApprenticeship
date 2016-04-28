@@ -3,6 +3,7 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Threading;
     using System.Web.Mvc;
     using Application.Interfaces.Logging;
     using Attributes;
@@ -38,6 +39,8 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            _logService.Info("OnActionExecuting {0} {1}", User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
