@@ -54,7 +54,18 @@
 
         public MediatorResponse<byte[]> GetSuccessfulCandidatesReportBytes(ReportSuccessfulCandidatesParameters parameters)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var reportResult = _reportingService.ReportSuccessfulCandidates(parameters.Type,
+                    parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
+                var bytes = GetCsvBytes(reportResult);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
+            }
+            catch (Exception ex)
+            {
+                _logService.Warn(ex);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+            }
         }
 
         public MediatorResponse<byte[]> GetUnsuccessfulCandidatesReportBytes(

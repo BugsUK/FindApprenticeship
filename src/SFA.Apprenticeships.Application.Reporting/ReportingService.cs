@@ -29,6 +29,12 @@
             return _reportingProvider.ReportVacancyExtensions(fromDate, toDate, providerUkprn, vacancyStatus);
         }
 
+        public IList<ReportSuccessfulCandidatesResultItem> ReportSuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy,
+            string region)
+        {
+            return _reportingProvider.ReportSuccessfulCandidates(type, fromDate, toDate, ageRange, managedBy, region);
+        }
+
         public Dictionary<string, string> LocalAuthorityManagerGroups()
         {
             return _reportingProvider.LocalAuthorityManagerGroups();
