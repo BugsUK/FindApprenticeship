@@ -39,7 +39,7 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            _logService.Info("OnActionExecuting {0} {1}", User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+            _logService.Info("OnActionExecuting {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
 
             UserContext = null;
 
@@ -67,6 +67,13 @@
             SetCandidate();
 
             base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            _logService.Info("OnActionExecuted {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+
+            base.OnActionExecuted(filterContext);
         }
 
         protected void SetUserMessage(string message, UserMessageLevel level = UserMessageLevel.Success)
