@@ -29,26 +29,23 @@
 
             if (ticket != null && localTicket != null && ticket.Name != localTicket.Name)
             {
-                var message = string.Format(@"SESSION HIJACK. MISMATCHED USER IDS: User id from AuthenticationTicketService property, {0} does not match User id from local AuthenticationTicketService instance, {1}. Throwing exception", ticket.Name, localTicket.Name);
-                LogService.Error(message);
-                throw new Exception(message);
+                var message = string.Format(@"Session Issue: User id from AuthenticationTicketService property, {0} does not match User id from local AuthenticationTicketService instance, {1}. Throwing exception", ticket.Name, localTicket.Name);
+                LogService.Warn(message);
             }
 
             if (ticket == null && localTicket != null)
             {
-                var message = string.Format(@"SESSION HIJACK. USER SHOULD BE LOGGED IN: No ticket found from AuthenticationTicketService property, but the user id from local AuthenticationTicketService instance, {0} suggests that the user should be logged in. Throwing exception", localTicket.Name);
-                LogService.Error(message);
-                throw new Exception(message);
+                var message = string.Format(@"Session Issue: No ticket found from AuthenticationTicketService property, but the user id from local AuthenticationTicketService instance, {0} suggests that the user should be logged in. Throwing exception", localTicket.Name);
+                LogService.Warn(message);
             }
 
             if (ticket != null && localTicket == null)
             {
-                var message = string.Format(@"SESSION HIJACK. USER SHOULD NOT BE LOGGED IN: User id retrieved from AuthenticationTicketService property, {0}, however no ticket was found from local AuthenticationTicketService instance suggesting that the user should not be logged in. Throwing exception", ticket.Name);
-                LogService.Error(message);
-                throw new Exception(message);
+                var message = string.Format(@"Session Issue: User id retrieved from AuthenticationTicketService property, {0}, however no ticket was found from local AuthenticationTicketService instance suggesting that the user should not be logged in. Throwing exception", ticket.Name);
+                LogService.Warn(message);
             }
 
-            if (ticket == null)
+            if (localTicket == null)
             {
                 LogService.Debug("User is not logged in (no authentication ticket)");
                 LogService.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
@@ -56,16 +53,16 @@
                 return;
             }
 
-            if (IsCookieExpired(filterContext, ticket))
+            if (IsCookieExpired(filterContext, localTicket))
             {
                 LogService.Debug("User cookie is expired.");
 
                 filterContext.Result = new RedirectToRouteResult(RouteNames.SignOut, new RouteValueDictionary());
             }
 
-            var claims = AuthenticationTicketService.GetClaims(ticket);
+            var claims = AuthenticationTicketService.GetClaims(localTicket);
 
-            httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
+            httpContext.User = new GenericPrincipal(new FormsIdentity(localTicket), claims);
 
             LogService.Debug("User.IsAuthenticated {0}", httpContext.User.Identity.IsAuthenticated);
             LogService.Debug("Claims {0}", string.Join(",", claims));
