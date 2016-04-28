@@ -99,7 +99,7 @@
         {
             var locationAddressesVm = new List<VacancyLocationAddressViewModel>();
             var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
-            if (locationAddresses.Any())
+            if (locationAddresses != null && locationAddresses.Any())
             {
                 return
                     _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);                
