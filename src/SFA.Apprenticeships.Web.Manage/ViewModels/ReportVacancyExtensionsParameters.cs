@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
     using System.Web.UI.WebControls;
+    using System.Collections.Generic;
     using Domain.Entities.Raa.Vacancies;
 
-    public class ReportVacancyExtensionsParameters
+    public class ReportVacancyExtensionsParameters : ReportParameterBase
     {
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
-
         public string Status { get; set; }
 
         public List<ListItem> VacancyStatuses

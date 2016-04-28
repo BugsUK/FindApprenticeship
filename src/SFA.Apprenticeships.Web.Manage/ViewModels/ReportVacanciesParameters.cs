@@ -1,11 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.ViewModels
 {
-    using System;
-
-    public class ReportVacanciesParameters
+    public class ReportVacanciesParameters : ReportParameterBase
     {
-        public DateTime FromDate { get; set; }
-
-        public DateTime ToDate { get; set; }
     }
 }

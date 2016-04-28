@@ -1,15 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Mediators.Reporting
 {
     using System;
+    using Common.Mediators;
     using ViewModels;
 
     public interface IReportingMediator
     {
-        byte[] GetVacanciesListReportBytes(ReportVacanciesParameters parameters);
-        byte[] GetSuccessfulCandidatesReportBytes(ReportSuccessfulCandidatesParameters parameters);
-        byte[] GetUnsuccessfulCandidatesReportBytes(ReportUnsuccessfulCandidatesParameters parameters);
-        ReportUnsuccessfulCandidatesParameters GetUnsuccessfulCandidatesReportParams();
-        ReportSuccessfulCandidatesParameters GetSuccessfulCandidatesReportParams();
-        byte[] GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters);
+        MediatorResponse<T> Validate<T>(T parameters) where T : ReportParameterBase;
+        MediatorResponse<byte[]> GetVacanciesListReportBytes(ReportVacanciesParameters parameters);
+        MediatorResponse<byte[]> GetSuccessfulCandidatesReportBytes(ReportSuccessfulCandidatesParameters parameters);
+        MediatorResponse<ReportSuccessfulCandidatesParameters> GetSuccessfulCandidatesReportParams();
+        MediatorResponse<byte[]> GetUnsuccessfulCandidatesReportBytes(ReportUnsuccessfulCandidatesParameters parameters);
+        MediatorResponse<ReportUnsuccessfulCandidatesParameters> GetUnsuccessfulCandidatesReportParams();
+        MediatorResponse<byte[]> GetVacancyExtensionsReportBytes(ReportVacancyExtensionsParameters parameters);
     }
 }

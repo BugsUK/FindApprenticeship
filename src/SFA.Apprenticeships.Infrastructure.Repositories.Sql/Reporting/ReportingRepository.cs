@@ -22,7 +22,7 @@
 
         public List<ReportVacanciesResultItem> ReportVacanciesList(DateTime fromDate, DateTime toDate)
         {
-            _logger.Debug($"Executing report with toDate {toDate} and fromdate {fromDate}...");
+            _logger.Debug($"Executing ReportVacanciesList report with toDate {toDate} and fromdate {fromDate}...");
 
             var response = new List<ReportVacanciesResultItem>();
 
@@ -78,9 +78,74 @@
             return response;
         }
 
-        public List<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange)
+        public List<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region)
         {
-            throw new NotImplementedException();
+            _logger.Debug($"Executing ReportUnsuccessfulCandidates report with toDate {toDate} and fromdate {fromDate}...");
+
+            var response = new List<ReportUnsuccessfulCandidatesResultItem>();
+
+            var command = new SqlCommand("dbo.ReportUnsuccessfulCandidateApplications", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("ManagedBy", SqlDbType.NVarChar).Value = managedBy;
+            command.Parameters.Add("RegionID", SqlDbType.Int).Value = region;
+            command.Parameters.Add("type", SqlDbType.Int).Value = type;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
+            command.Parameters.Add("candidateAgeRange", SqlDbType.Int).Value = ageRange;
+            command.Parameters.Add("points", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("MarketMessagesOnly", SqlDbType.Int).Value = 0;
+            command.Parameters.Add("rowcount", SqlDbType.Int).Value = 0;
+
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportUnsuccessfulCandidatesResultItem()
+                {
+                    candidateid = reader[0].ToString(),
+                    FirstName = reader[1].ToString(),
+                    MiddleName = reader[2].ToString(),
+                    SurName = reader[3].ToString(),
+                    Gender = reader[4].ToString(),
+                    DateofBirth = reader[5].ToString(),
+                    Disability = reader[6].ToString(),
+                    AllowMarketingMessages=  reader[7].ToString(),
+                    AddressLine1 = reader[8].ToString(),
+                    AddressLine2 = reader[9].ToString(),
+                    AddressLine3 = reader[10].ToString(),
+                    AddressLine4 = reader[11].ToString(),
+                    AddressLine5 = reader[12].ToString(),
+                    Postcode = reader[13].ToString(),
+                    Town = reader[14].ToString(),
+                    AuthorityArea = reader[15].ToString(),
+                    ShortAddress = reader[16].ToString(),
+                    TelephoneNumber = reader[17].ToString(),
+                    MobileNumber = reader[18].ToString(),
+                    Email = reader[19].ToString(),
+                    Unsuccessful = reader[20].ToString(),
+                    Ongoing = reader[21].ToString(),
+                    Withdrawn = reader[22].ToString(),
+                    DateApplied = reader[23].ToString(),
+                    VacancyClosingDate = reader[24].ToString(),
+                    DateOfUnsuccessfulNotification = reader[25].ToString(),
+                    LearningProvider = reader[26].ToString(),
+                    LearningProviderUKPRN = reader[27].ToString(),
+                    VacancyReferenceNumber = reader[28].ToString(),
+                    VacancyTitle = reader[29].ToString(),
+                    VacancyLevel = reader[30].ToString(),
+                    Sector = reader[31].ToString(),
+                    Framework = reader[32].ToString(),
+                    UnsuccessfulReason = reader[33].ToString(),
+                    Notes = reader[34].ToString(),
+                    Points = reader[35].ToString()
+                });
+            }
+
+            _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
+
+            return response;
         }
 
         public Dictionary<string, string> LocalAuthorityManagerGroups()
@@ -91,7 +156,6 @@
 
             var command = new SqlCommand("dbo.ReportGetManagedBy", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandTimeout = 180;
 
             var reader = command.ExecuteReader();
             while (reader.Read())
@@ -112,7 +176,6 @@
 
             var command = new SqlCommand("dbo.ReportGetGeoRegionsIncludingAll", (SqlConnection)_getOpenConnection.GetOpenConnection());
             command.CommandType = CommandType.StoredProcedure;
-            command.CommandTimeout = 180;
 
             var reader = command.ExecuteReader();
             while (reader.Read())

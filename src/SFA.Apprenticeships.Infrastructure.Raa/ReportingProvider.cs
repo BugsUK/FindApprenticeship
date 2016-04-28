@@ -20,9 +20,9 @@
             return _reportingRepository.ReportVacanciesList(fromDate, toDate);
         }
 
-        public IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange)
+        public IList<ReportUnsuccessfulCandidatesResultItem> ReportUnsuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region)
         {
-            return _reportingRepository.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange);
+            return _reportingRepository.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange, managedBy, region);
         }
 
         public Dictionary<string, string> LocalAuthorityManagerGroups()
