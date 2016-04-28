@@ -2,24 +2,95 @@
 {
     using Moq;
     using NUnit.Framework;
+
+    using Ploeh.AutoFixture;
+
     using Recruit.Mediators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
 
+    using SFA.Apprenticeships.Application.Interfaces.Applications;
+    using SFA.Apprenticeships.Application.Interfaces.Employers;
+    using SFA.Apprenticeships.Application.Interfaces.Providers;
+    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
+    using SFA.Apprenticeships.Application.Interfaces.Users;
+    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
+    using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
+    using SFA.Apprenticeships.Domain.Entities.Raa.Parties;
+    using SFA.Apprenticeships.Web.Common.Configuration;
+    using SFA.Apprenticeships.Web.Raa.Common.Configuration;
+    using SFA.Infrastructure.Interfaces;
+
     public class TestsBase
     {
         protected Mock<IVacancyPostingProvider> VacancyPostingProvider;
+        protected Mock<IVacancyPostingService> VacancyPostingService;
         protected Mock<IProviderProvider> ProviderProvider;
         protected Mock<IEmployerProvider> EmployerProvider;
+
+        private Mock<IConfigurationService> _mockConfigurationService;
+        private Mock<ILogService> _mockLogService;
+        private Mock<IReferenceDataService> _mockReferenceDataService;
+        private Mock<IDateTimeService> _mockTimeService;
+        private Mock<IApprenticeshipApplicationService> _mockApprenticeshipApplicationService;
+        private Mock<ITraineeshipApplicationService> _mockTraineeshipApplicationService;
+        private Mock<IVacancyLockingService> _mockVacancyLockingService;
+        protected Mock<IMapper> MockMapper;
+        protected Mock<IProviderService> MockProviderService;
+        protected Mock<IEmployerService> MockEmployerService;
+        protected Mock<IVacancyPostingService> MockVacancyPostingService;
+        private Mock<ICurrentUserService> _mockCurrentUserService;
+        private Mock<IUserProfileService> _mockUserProfileService;
 
         [SetUp]
         public void SetUp()
         {
             VacancyPostingProvider = new Mock<IVacancyPostingProvider>();
+            VacancyPostingService=new Mock<IVacancyPostingService>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
+
+            _mockLogService = new Mock<ILogService>();
+            _mockConfigurationService = new Mock<IConfigurationService>();
+            MockMapper = new Mock<IMapper>();
+            MockVacancyPostingService = new Mock<IVacancyPostingService>();
+            MockProviderService = new Mock<IProviderService>();
+            MockEmployerService = new Mock<IEmployerService>();
+            _mockReferenceDataService = new Mock<IReferenceDataService>();
+
+            MockProviderService.Setup(s => s.GetProviderSite(It.IsAny<int>()))
+                .Returns(new Fixture().Build<ProviderSite>().Create());
+            MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
+                .Returns(new Fixture().Build<Employer>().Create());
+            _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
+            _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = 60 });
+
+            _mockTimeService = new Mock<IDateTimeService>();
+            _mockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();
+            _mockTraineeshipApplicationService = new Mock<ITraineeshipApplicationService>();
+            _mockVacancyLockingService = new Mock<IVacancyLockingService>();
+            _mockCurrentUserService = new Mock<ICurrentUserService>();
+            _mockUserProfileService = new Mock<IUserProfileService>();
+        }
+
+        protected IVacancyPostingProvider GetVacancyPostingProvider()
+        {
+            return new VacancyProvider(_mockLogService.Object,
+                _mockConfigurationService.Object,
+                MockVacancyPostingService.Object,
+                _mockReferenceDataService.Object,
+                MockProviderService.Object,
+                MockEmployerService.Object,
+                _mockTimeService.Object,
+                MockMapper.Object,
+                _mockApprenticeshipApplicationService.Object,
+                _mockTraineeshipApplicationService.Object,
+                _mockVacancyLockingService.Object,
+                _mockCurrentUserService.Object,
+                _mockUserProfileService.Object);
         }
 
         protected IVacancyPostingMediator GetMediator()

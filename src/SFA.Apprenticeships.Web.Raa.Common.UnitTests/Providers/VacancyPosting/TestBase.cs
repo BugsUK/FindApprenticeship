@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
+    using System;
+
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -11,6 +13,8 @@
     using NUnit.Framework;
     using Common.Providers;
     using Configuration;
+
+    using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
@@ -68,6 +72,35 @@
                 _mockVacancyLockingService.Object,
                 _mockCurrentUserService.Object,
                 _mockUserProfileService.Object);
+        }
+
+        private Vacancy GetLiveVacancyWithComments(int initialVacancyReferenceNumber, string initialVacancyTitle)
+        {
+            return new Vacancy
+            {
+                VacancyReferenceNumber = initialVacancyReferenceNumber,
+                Title = initialVacancyTitle,
+                WorkingWeekComment = "some comment",
+                ApprenticeshipLevelComment = "some comment",
+                ClosingDateComment = "some comment",
+                DesiredQualificationsComment = "some comment",
+                DesiredSkillsComment = "some comment",
+                DurationComment = "some comment",
+                FirstQuestionComment = "some comment",
+                FrameworkCodeNameComment = "some comment",
+                FutureProspectsComment = "some comment",
+                LongDescriptionComment = "some comment",
+                CreatedDateTime = DateTime.UtcNow.AddDays(-4),
+                UpdatedDateTime = DateTime.UtcNow.AddDays(-1),
+                DateSubmitted = DateTime.UtcNow.AddHours(-12),
+                DateStartedToQA = DateTime.UtcNow.AddHours(-8),
+                QAUserName = "some user name",
+                DateQAApproved = DateTime.UtcNow.AddHours(-4),
+                Status = VacancyStatus.Live,
+                ClosingDate = DateTime.UtcNow.AddDays(10),
+                OwnerPartyId = 42,
+                EmployerAnonymousName = "Anon Corp"
+            };
         }
     }
 }

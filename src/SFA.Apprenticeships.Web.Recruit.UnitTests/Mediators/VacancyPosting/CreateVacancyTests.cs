@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System;
     using Common.Constants;
     using Common.Mediators;
     using Common.ViewModels.Locations;
@@ -9,6 +10,7 @@
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using Domain.Entities.Raa.Locations;
 
     [TestFixture]
     public class CreateVacancyTests : TestsBase
@@ -155,8 +157,8 @@
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
-                    EmployerId = 7
-                }
+                    EmployerId = 7,
+                }                
             };
 
             ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
@@ -176,11 +178,100 @@
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
+        [Test]
+        public void EmptyVacancyIfPreviousStateEmployerLocationIsDifferentFromCurrentStateEmployerLocation()
+        {
+            var numberOfPositions = 5;                        
+            const string InitialVacancyTitle = "title";
+            var viewModel = new VacancyPartyViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation = false,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7
+                },                
+                EmployerDescription = "Text about Employer Description",
+                VacancyReferenceNumber = AnInt
+            };
+
+        //    ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
+        //        .Returns(new VacancyPartyViewModel
+        //        {
+        //            Employer = new EmployerViewModel
+        //            {
+        //                Address = new AddressViewModel()
+        //            }
+        //        });            
+
+        //    ProviderProvider.Setup(p => p.ConfirmVacancyParty(viewModel))
+        //       .Returns(new VacancyPartyViewModel
+        //       {
+        //           Employer = new EmployerViewModel
+        //           {
+        //               Address = new AddressViewModel()
+        //           },
+        //           VacancyGuid = Guid.NewGuid(),
+        //           IsEmployerLocationMainApprenticeshipLocation = false,
+        //           NumberOfPositions = viewModel.NumberOfPositions,
+        //           VacancyReferenceNumber = AnInt
+        //});
+
+            //VacancyPostingProvider.Setup(s => s.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithSameEmployerLocationForApprenticeship());                                            
+
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
+               .Returns(GetLiveVacancyWithComments(AnInt, InitialVacancyTitle));
+
+            var provider = GetVacancyPostingProvider();
+
+            provider.EmptyVacancyLocation(viewModel.VacancyReferenceNumber);
+
+            MockVacancyPostingService.Verify(
+                 s =>
+                     s.UpdateVacancy(It.Is<Vacancy>(v => v.Address == null &&
+                         v.NumberOfPositions == null &&
+                         v.NumberOfPositionsComment == null)));            
+        }
+
+        private Vacancy GetLiveVacancyWithComments(int initialVacancyReferenceNumber, string initialVacancyTitle)
+        {
+            return new Vacancy
+            {
+                VacancyReferenceNumber = initialVacancyReferenceNumber,
+                Title = initialVacancyTitle,
+                WorkingWeekComment = "some comment",
+                ApprenticeshipLevelComment = "some comment",
+                ClosingDateComment = "some comment",
+                DesiredQualificationsComment = "some comment",
+                DesiredSkillsComment = "some comment",
+                DurationComment = "some comment",
+                FirstQuestionComment = "some comment",
+                FrameworkCodeNameComment = "some comment",
+                FutureProspectsComment = "some comment",
+                LongDescriptionComment = "some comment",
+                CreatedDateTime = DateTime.UtcNow.AddDays(-4),
+                UpdatedDateTime = DateTime.UtcNow.AddDays(-1),
+                DateSubmitted = DateTime.UtcNow.AddHours(-12),
+                DateStartedToQA = DateTime.UtcNow.AddHours(-8),
+                QAUserName = "some user name",
+                DateQAApproved = DateTime.UtcNow.AddHours(-4),
+                Status = VacancyStatus.Live,
+                ClosingDate = DateTime.UtcNow.AddDays(10),
+                OwnerPartyId = 42,
+                EmployerAnonymousName = "Anon Corp",
+                Address = new PostalAddress(),
+                NumberOfPositions = 2,
+                NumberOfPositionsComment = string.Empty
+            };
+        }
+
         private VacancyViewModel BasicVacancy()
         {
             return new VacancyViewModel
             {
-                NewVacancyViewModel = new NewVacancyViewModel { 
+                NewVacancyViewModel = new NewVacancyViewModel
+                {
                     OfflineVacancy = false,
                     OwnerParty = new VacancyPartyViewModel
                     {
@@ -198,6 +289,14 @@
             var vacancy = BasicVacancy();
             vacancy.VacancyQuestionsViewModel.FirstQuestion = AString;
 
+            return vacancy;
+        }
+
+        private VacancyViewModel AVacancyWithSameEmployerLocationForApprenticeship()
+        {
+            var vacancy = BasicVacancy();
+            vacancy.VacancyQuestionsViewModel.FirstQuestion = AString;
+            vacancy.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             return vacancy;
         }
 
