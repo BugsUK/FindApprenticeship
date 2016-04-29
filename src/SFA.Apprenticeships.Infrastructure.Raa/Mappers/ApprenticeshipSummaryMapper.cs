@@ -30,7 +30,7 @@
 
                 var summary = new ApprenticeshipSummary
                 {
-                    Id = vacancy.VacancyReferenceNumber,
+                    Id = vacancy.VacancyId,
                     //Goes into elastic unformatted for searching
                     VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                     Title = vacancy.Title,
