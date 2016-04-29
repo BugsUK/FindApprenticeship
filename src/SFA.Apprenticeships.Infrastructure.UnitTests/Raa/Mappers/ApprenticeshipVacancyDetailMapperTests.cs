@@ -51,7 +51,7 @@
                 // Assert.
                 detail.Should().NotBeNull();
 
-                detail.Id.Should().Be(vacancy.VacancyReferenceNumber);
+                detail.Id.Should().Be(vacancy.VacancyId);
                 detail.ApprenticeshipLevel.Should().Be(vacancy.ApprenticeshipLevel.GetApprenticeshipLevel());
 
                 detail.VacancyLocationType.Should()
