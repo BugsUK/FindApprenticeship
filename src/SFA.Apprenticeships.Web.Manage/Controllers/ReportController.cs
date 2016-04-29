@@ -148,32 +148,6 @@
             return View(new ReportVacancyExtensionsParameters());
         }
 
-/*        [HttpPost]
-        [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
-        {
-            var validationResponse = _reportingMediator.Validate(parameters);
-            switch (validationResponse.Code)
-            {
-                case ReportingMediatorCodes.ReportCodes.Ok:
-                    var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
-                    switch (response.Code)
-                    {
-                        case ReportingMediatorCodes.ReportCodes.Ok:
-                            return File(response.ViewModel, "text/csv", "VacancyExtensions.csv");
-                        case ReportingMediatorCodes.ReportCodes.Error:
-                        default:
-                            ModelState.Clear();
-                            return View(parameters);
-                    }
-                case ReportingMediatorCodes.ReportCodes.ValidationError:
-                default:
-                    ModelState.Clear();
-                    validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return View(validationResponse.ViewModel);
-            }
-        }*/
-
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
