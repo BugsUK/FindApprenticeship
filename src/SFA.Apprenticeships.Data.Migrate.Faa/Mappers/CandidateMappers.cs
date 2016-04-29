@@ -255,15 +255,20 @@
                 case 10:
                     return CandidateStatusTypeIdPreRegistered;
                 case 20:
-                    return CandidateStatusTypeIdActivated;
                 case 30:
+                case 90:
+                case 100:
+                case 999:
+                    return CandidateStatusTypeIdActivated;
+                //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
+                /*case 30:
                     return CandidateStatusTypeIdSuspended;
                 case 90:
                     return CandidateStatusTypeIdSuspended;
                 case 100:
                     return CandidateStatusTypeIdSuspended;
                 case 999:
-                    return CandidateStatusTypeIdDeleted;
+                    return CandidateStatusTypeIdDeleted;*/
             }
 
             return CandidateStatusTypeIdPreRegistered;
