@@ -923,6 +923,7 @@
     <None Include="Scripts\Data\dbo.PostcodeOutcode.Upsert.sql" />
     <Build Include="dbo\Stored Procedures\ReportILRStartDateList.proc.sql" />
     <Build Include="dbo\Functions\fnReportGenerateVacancyRefNo.function.sql" />
+    <Build Include="dbo\Functions\fnReportGetAgeRangeDates.function.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
