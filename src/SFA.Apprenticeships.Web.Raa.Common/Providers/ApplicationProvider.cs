@@ -159,7 +159,7 @@
 
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
@@ -173,7 +173,7 @@
 
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
