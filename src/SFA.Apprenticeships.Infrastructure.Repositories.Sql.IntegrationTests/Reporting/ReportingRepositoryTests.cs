@@ -28,16 +28,75 @@
         }
 
         [Test]
-        public void ReportReturnsResults()
+        public void GeoRegionsIncludingAllCanBeCalled()
         {
             //Arrange
 
             //Act
-            var result = _repoUnderTest.ReportVacanciesList(new DateTime(2016, 1, 1), new DateTime(2016, 1, 6));
+            var result = _repoUnderTest.GeoRegionsIncludingAll();
 
             //Assert
             result.Should().NotBeNull();
-            result.Count.Should().BePositive();
+        }
+
+        [Test]
+        public void LocalAuthorityManagerGroupsCanBeCalled()
+        {
+            //Arrange
+
+            //Act
+            var result = _repoUnderTest.LocalAuthorityManagerGroups();
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void ReportSuccessfulCandidatesCanBeCalled()
+        {
+            //Arrange
+
+            //Act
+            var result = _repoUnderTest.ReportSuccessfulCandidates("-1", DateTime.Now.AddDays(-1), DateTime.Now, "-1", "-1", "-1");
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void ReportUnsuccessfulCandidatesCanBeCalled()
+        {
+            //Arrange
+
+            //Act
+            var result = _repoUnderTest.ReportUnsuccessfulCandidates("-1", DateTime.Now.AddDays(-1), DateTime.Now, "-1", "-1", "-1");
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void ReportVacanciesListCanBeCalled()
+        {
+            //Arrange
+
+            //Act
+            var result = _repoUnderTest.ReportVacanciesList(DateTime.Now.AddDays(-1), DateTime.Now);
+
+            //Assert
+            result.Should().NotBeNull();
+        }
+
+        [Test]
+        public void ReportVacancyExtensionsCanBeCalled()
+        {
+            //Arrange
+
+            //Act
+            var result = _repoUnderTest.ReportVacancyExtensions(DateTime.Now.AddDays(-1), DateTime.Now, null, null);
+
+            //Assert
+            result.Should().NotBeNull();
         }
     }
 }
