@@ -30,7 +30,7 @@
 
         public TraineeshipVacancyDetail GetVacancyDetails(int vacancyId, bool errorIfNotFound = false)
         {
-            var vacancy = _vacancyReadRepository.GetByReferenceNumber(vacancyId);
+            var vacancy = _vacancyReadRepository.Get(vacancyId);
 
             if (vacancy == null)
             {

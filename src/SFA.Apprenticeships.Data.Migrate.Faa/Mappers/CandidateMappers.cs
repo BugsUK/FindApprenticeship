@@ -104,7 +104,7 @@
                     EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
                     ApplicationLimitEnforced = false,
                     LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
-                    AdditionalEmail = anonymise ? "anonymised@data.com" : email.Length > 50 ? "" : email,
+                    AdditionalEmail = anonymise ? candidateGuid + "@anon.com" : email.Length > 50 ? "" : email,
                     Disability = GetDisability(monitoringInformation.DisabilityStatus),
                     DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
                     HealthProblems = "",
@@ -139,7 +139,7 @@
                     Surname = anonymise ? candidateGuid.ToString().Replace("-", "") : candidateUser.Candidate.RegistrationDetails.LastName,
                     LandlineNumber = anonymise ? "07999999999" : candidateUser.Candidate.RegistrationDetails.PhoneNumber,
                     MobileNumber = "",
-                    Email = anonymise ? "anonymised@data.com" : email,
+                    Email = anonymise ? candidateGuid + "@anon.com" : email,
                     PersonTypeId = 1
                 };
 

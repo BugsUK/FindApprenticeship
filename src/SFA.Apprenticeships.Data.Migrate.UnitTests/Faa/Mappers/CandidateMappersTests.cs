@@ -385,7 +385,7 @@
             candidate.EthnicOriginOther.Should().Be("");
             candidate.ApplicationLimitEnforced.Should().BeFalse();
             candidate.LastAccessedDate.Should().Be(candidateUser.User.LastLogin);
-            candidate.AdditionalEmail.Should().Be("anonymised@data.com");
+            candidate.AdditionalEmail.Should().Be(candidateUser.Candidate.Id + "@anon.com");
             candidate.Disability.Should().Be(14);
             candidate.DisabilityOther.Should().Be("");
             candidate.HealthProblems.Should().Be("");
@@ -416,7 +416,7 @@
             person.Surname.Should().Be(candidateUser.Candidate.Id.ToString().Replace("-", ""));
             person.LandlineNumber.Should().Be("07999999999");
             person.MobileNumber.Should().Be("");
-            person.Email.Should().Be("anonymised@data.com");
+            person.Email.Should().Be(candidateUser.Candidate.Id + "@anon.com");
             person.PersonTypeId.Should().Be(1);
         }
     }
