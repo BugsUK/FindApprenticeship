@@ -59,7 +59,7 @@ AS
 		FROM Application as app
 		WHERE app.ApplicationStatusTypeId IN (2,3,5,6) -- Sent, In Progress, Successful, UnSuccessful
 		GROUP BY VacancyId
-	), cteOriginalClosingDate (VacancyId, HistoryDate) AS (
+	), cteOriginalClosingDate (VacancyId, ClosingDate) AS (
 		SELECT tmp.VacancyId, tmp.ClosingDate
 		FROM (
 			SELECT VacancyId, CONVERT(datetime, Comment, 20) as ClosingDate, ROW_NUMBER() OVER (PARTITION BY VacancyId ORDER BY CONVERT(datetime, Comment, 20)) as RowNumber
@@ -71,7 +71,7 @@ AS
 	)
 
 	INSERT INTO @TempResults (VacancyId, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
-		CurrentClosingDate, OriginalClosingDate, NumberOfExtensions, NumberOfApplications, VacancyReferenceNumber, VacancyTitle)
+		OriginalClosingDate, CurrentClosingDate, NumberOfExtensions, NumberOfApplications, VacancyReferenceNumber, VacancyTitle)
 		SELECT 
 			vwe.VacancyId,
 			vst.FullName,
@@ -80,8 +80,8 @@ AS
 			e.FullName as EmployerName,
 			ps.ProviderSiteID, 
 			vwe.ContractOwnerId,
-			cteOriginalPostingDate.HistoryDate as OriginalPostingDate,
-			cteOriginalClosingDate.HistoryDate as OriginalClosingDate,
+			cteOriginalPostingDate.HistoryDate as OriginalPostingDate,			
+			cteOriginalClosingDate.ClosingDate as OriginalClosingDate,
 			vwe.ApplicationClosingDate as CurrentClosingDate,
 			cteNumberOfVacancyExtensions.NumberOfExtensions as NumberOfExtensions,
 			cteNumberOfApplications.NumberOfApplications as NumberOfApplications,
