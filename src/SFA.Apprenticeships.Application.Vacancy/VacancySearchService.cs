@@ -61,7 +61,7 @@
 
         public TVacancyDetail GetVacancyDetails(int vacancyId)
         {
-            Condition.Requires(vacancyId).IsGreaterOrEqual(1);
+            Condition.Requires(vacancyId);
 
             _logger.Debug("Calling VacancyDataProvider to get vacancy details for vacancy {0}.", vacancyId);
 

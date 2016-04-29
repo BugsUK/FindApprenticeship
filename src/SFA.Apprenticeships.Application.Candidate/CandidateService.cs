@@ -357,7 +357,7 @@
         public ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+            Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
@@ -367,7 +367,7 @@
         public TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+            Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 

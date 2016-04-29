@@ -51,8 +51,8 @@
             viewModel.EmployerGeoPoint = _mapper.Map<GeoPoint, GeoPointViewModel>(employer.Address.GeoPoint);
 
             var applications = vacancy.VacancyType == VacancyType.Traineeship
-                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancyApplicationsSearch.VacancyReferenceNumber).Select(a => (ApplicationSummary)a).ToList()
-                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancyApplicationsSearch.VacancyReferenceNumber).Select(a => (ApplicationSummary)a).ToList();
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
 
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
             var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
@@ -159,7 +159,7 @@
 
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
@@ -173,7 +173,7 @@
 
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
-            var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(application.Vacancy.Id);
+            var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);

@@ -553,7 +553,7 @@
             }
             
             result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
-            result.State = _apprenticeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber) > 0 ? UpdateVacancyDatesState.UpdatedHasApplications : UpdateVacancyDatesState.UpdatedNoApplications;
+            result.State = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId) > 0 ? UpdateVacancyDatesState.UpdatedHasApplications : UpdateVacancyDatesState.UpdatedNoApplications;
             result.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
@@ -616,11 +616,11 @@
                 //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
                 if (viewModel.VacancyType == VacancyType.Apprenticeship)
                 {
-                    viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                    viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
                 }
                 else if(viewModel.VacancyType == VacancyType.Traineeship)
                 {
-                    viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(viewModel.VacancyReferenceNumber);
+                    viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
                 }
             }
             var vacancyManager = _userProfileService.GetProviderUser(vacancy.CreatedByProviderUsername);
@@ -746,7 +746,7 @@
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
             var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
-            var liveVacancyIds = live.Select(vacancySummary => vacancySummary.VacancyReferenceNumber).ToList();
+            var liveVacancyIds = live.Select(vacancySummary => vacancySummary.VacancyId).ToList();
 
             var submitted = vacancies.Where(v => v.Status == VacancyStatus.Submitted || v.Status == VacancyStatus.ReservedForQA).ToList();
             var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
@@ -755,8 +755,8 @@
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
             var newApplications = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
-                vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList() :
-                vacancies.Where(v => v.Status == VacancyStatus.Live && _traineeshipApplicationService.GetNewApplicationCount(v.VacancyReferenceNumber) > 0).ToList();
+                vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount(v.VacancyId) > 0).ToList() :
+                vacancies.Where(v => v.Status == VacancyStatus.Live && _traineeshipApplicationService.GetNewApplicationCount(v.VacancyId) > 0).ToList();
             var newApplicationsCount = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
                 _apprenticeshipApplicationService.GetNewApplicationsCount(liveVacancyIds):
                 _traineeshipApplicationService.GetNewApplicationsCount(liveVacancyIds);
@@ -820,11 +820,11 @@
             {
                 if (vacancyViewModel.VacancyType == VacancyType.Apprenticeship)
                 {
-                    vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                    vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
                 }
                 else if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
                 {
-                    vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyReferenceNumber);
+                    vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
                 }
             }
 
