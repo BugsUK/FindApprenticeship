@@ -51,8 +51,8 @@
             viewModel.EmployerGeoPoint = _mapper.Map<GeoPoint, GeoPointViewModel>(employer.Address.GeoPoint);
 
             var applications = vacancy.VacancyType == VacancyType.Traineeship
-                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancyApplicationsSearch.VacancyReferenceNumber).Select(a => (ApplicationSummary)a).ToList()
-                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancyApplicationsSearch.VacancyReferenceNumber).Select(a => (ApplicationSummary)a).ToList();
+                ? _traineeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList()
+                : _apprenticeshipApplicationService.GetSubmittedApplicationSummaries(vacancy.VacancyId).Select(a => (ApplicationSummary)a).ToList();
 
             var @new = applications.Where(v => v.Status == ApplicationStatuses.Submitted).ToList();
             var viewed = applications.Where(v => v.Status == ApplicationStatuses.InProgress).ToList();
