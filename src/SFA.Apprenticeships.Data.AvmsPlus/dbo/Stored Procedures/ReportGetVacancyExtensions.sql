@@ -9,20 +9,10 @@ AS
 	declare @VacanciesWithExtensions table (VacancyId int,VacancyOwnerRelationshipId int, ApplicationClosingDate datetime null, ContractOwnerId int, VacancyStatus int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @TempResults table (VacancyId int, VacancyStatus nvarchar(255), VacancyOwnerRelationshipId int, EmployerId int, EmployerName nvarchar(255), ProviderSiteId int,
 		ContractOwnerId int, OriginalPostingDate datetime, OriginalClosingDate datetime, CurrentClosingDate datetime, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
-	declare @ProvidersToStudy table (ProviderId int)
 	declare @VacancyStatusesToStudy table (VacancyStatusId int)
 
-	IF (@providerToStudyUkprn is null ) BEGIN
-		INSERT INTO @ProvidersToStudy(ProviderId)
-		SELECT ProviderId FROM Provider
-	END
-	ELSE BEGIN
-		INSERT INTO @ProvidersToStudy(ProviderId) SELECT ProviderId FROM Provider WHERE UKPRN = @providerToStudyUkprn
-	END
-
 	IF (@vacancyStatusToStudy is null ) BEGIN
-		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId)
-		SELECT VacancyStatusTypeId FROM VacancyStatusType
+		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId) VALUES (2),(6)
 	END
 	ELSE BEGIN
 		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId) SELECT @vacancyStatusToStudy
@@ -117,13 +107,13 @@ AS
 		INNER JOIN cteProviderId ON cteProviderId.ProviderSiteID = tmp.ProviderSiteID
 		INNER JOIN dbo.Provider as p ON cteProviderId.ProviderID = p.ProviderID
 		WHERE tmp.ContractOwnerId is null AND 
-			  p.ProviderID IN ( SELECT ProviderId FROM @ProvidersToStudy)
+			  (@providerToStudyUkprn IS NULL OR p.UKPRN = @providerToStudyUkprn)
 	UNION 
 		SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')) as VacancyReferenceNumber, VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, 
 		OriginalPostingDate, OriginalClosingDate, CurrentClosingDate, NumberOfExtensions, ISNULL(NumberOfApplications, 0) as NumberOfApplications, p.FullName as ProviderName FROM @TempResults as tmp
 		INNER JOIN dbo.Provider as p ON tmp.ContractOwnerId = p.ProviderID
 		WHERE tmp.ContractOwnerId is not null AND 
-			  p.ProviderID IN ( SELECT ProviderId FROM @ProvidersToStudy)
+			  (@providerToStudyUkprn IS NULL OR p.UKPRN = @providerToStudyUkprn)
 
 	END
 
