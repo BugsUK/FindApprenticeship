@@ -125,7 +125,7 @@
             if (applicationIds.ContainsKey(apprenticeshipApplication.Id))
             {
                 var applicationId = applicationIds[apprenticeshipApplication.Id];
-                if (apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
+                if (applicationId > 0 && apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
                 {
                     _logService.Warn($"ApplicationId: {applicationId} does not match the LegacyApplicationId: {apprenticeshipApplication.LegacyApplicationId} for application with Id: {apprenticeshipApplication.Id}. This shouldn't change post submission");
                 }

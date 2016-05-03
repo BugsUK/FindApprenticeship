@@ -236,7 +236,7 @@
             if (candidateSummary.CandidateId != 0)
             {
                 var candidateId = candidateSummary.CandidateId;
-                if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
+                if (candidateId > 0 && candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
                 {
                     _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
                 }
