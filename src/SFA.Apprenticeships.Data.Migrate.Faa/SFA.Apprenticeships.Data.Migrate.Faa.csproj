@@ -127,6 +127,7 @@
     <Compile Include="Entities\Sql\ApplicationSummary.cs" />
     <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
+    <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
     <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
@@ -142,6 +143,8 @@
     <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
     <Compile Include="Repository\Sql\CandidateTable.cs" />
     <Compile Include="Entities\Sql\Person.cs" />
+    <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
+    <Compile Include="Repository\Sql\SubVacancyTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MongoConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />
