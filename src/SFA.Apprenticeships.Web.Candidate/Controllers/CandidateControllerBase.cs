@@ -3,13 +3,13 @@
     using System;
     using System.Globalization;
     using System.Linq;
+    using System.Threading;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
     using Common.Configuration;
     using Common.Constants;
     using Common.Controllers;
-    using Constants;
     using SFA.Infrastructure.Interfaces;
     using Infrastructure.Logging;
     using NLog.Contrib;
@@ -27,14 +27,17 @@
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         public readonly IConfigurationService ConfigurationService;
+        public readonly ILogService _logService;
 
-        protected CandidateControllerBase(IConfigurationService configurationService)
+        protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService)
         {
             ConfigurationService = configurationService;
+            _logService = loggingService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            _logService.Info("OnActionExecuting {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
@@ -61,6 +64,13 @@
             SetCandidate();
 
             base.OnActionExecuting(filterContext);
+        }
+
+        protected override void OnActionExecuted(ActionExecutedContext filterContext)
+        {
+            _logService.Info("OnActionExecuted {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+
+            base.OnActionExecuted(filterContext);
         }
 
         private void SetAbout()

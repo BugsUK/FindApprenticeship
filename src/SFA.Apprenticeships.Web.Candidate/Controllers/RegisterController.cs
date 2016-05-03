@@ -30,8 +30,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         public RegisterController(ICandidateServiceProvider candidateServiceProvider,
             IAccountProvider accountProvider,
             IRegisterMediator registerMediator,
-            IConfigurationService configurationService) 
-            : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _candidateServiceProvider = candidateServiceProvider;
             _accountProvider = accountProvider;
