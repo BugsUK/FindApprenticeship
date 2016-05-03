@@ -3,7 +3,7 @@
     using CsvHelper.Configuration;
     using Domain.Raa.Interfaces.Reporting.Models;
 
-    public class ReportVacanciesResultItemClassMap : CsvClassMap<ReportVacanciesResultItem>
+    public sealed class ReportVacanciesResultItemClassMap : CsvClassMap<ReportVacanciesResultItem>
     {
         public ReportVacanciesResultItemClassMap()
         {

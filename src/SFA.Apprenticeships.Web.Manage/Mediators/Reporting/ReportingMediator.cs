@@ -62,7 +62,13 @@
             {
                 var reportResult = _reportingService.ReportSuccessfulCandidates(parameters.Type,
                     parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
-                var bytes = GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(reportResult, "");
+
+                var headerBuilder = new StringBuilder();
+                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,");
+                headerBuilder.AppendLine(",,,,,,,,,,,");
+
+                var bytes = GetCsvBytes<ReportSuccessfulCandidatesResultItem, ReportSuccessfulCandidatesResultItemClassMap>(reportResult, headerBuilder.ToString());
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, bytes);
             }
             catch (Exception ex)

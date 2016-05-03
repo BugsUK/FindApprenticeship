@@ -3,12 +3,11 @@
     using CsvHelper.Configuration;
     using Domain.Raa.Interfaces.Reporting.Models;
 
-    public class ReportVacancyExtensionsResultItemClassMap : CsvClassMap<ReportVacancyExtensionsResultItem>
+    public sealed class ReportVacancyExtensionsResultItemClassMap : CsvClassMap<ReportVacancyExtensionsResultItem>
     { 
         public ReportVacancyExtensionsResultItemClassMap()
         {
             Map(m => m.VacancyReferenceNumber).Name("Vacancy Reference Number");
-
             Map(m => m.VacancyTitle).Name("Vacancy Title");
             Map(m => m.VacancyStatus).Name("Vacancy Status");
             Map(m => m.ProviderName).Name("Provider Name");
@@ -18,7 +17,6 @@
             Map(m => m.OriginalClosingDate).Name("Original Closing Date");
             Map(m => m.CurrentClosingDate).Name("Current Closing Date");
             Map(m => m.NumberOfSubmittedApplications).Name("Number Of Submitted Applications");
-
         }
     }
 }

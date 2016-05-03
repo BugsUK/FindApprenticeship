@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
@@ -196,7 +197,7 @@
 
             _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
 
-            return response;
+            return response.OrderBy(r => r.SuccessfulAppDate).ToList();
         }
 
         public Dictionary<string, string> LocalAuthorityManagerGroups()
