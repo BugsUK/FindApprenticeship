@@ -86,7 +86,8 @@
                 var reportResult = _reportingService.ReportUnsuccessfulCandidates(parameters.Type,
                     parameters.FromDate.Date, parameters.ToDate.Date, parameters.AgeRange, parameters.ManagedBy, parameters.Region);
 
-                var headerBuilder = new StringBuilder("PROTECT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
+                var headerBuilder = new StringBuilder();
+                headerBuilder.AppendLine("PROTECT,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine(",,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");
                 headerBuilder.AppendLine("Date,Total_Unsuccessful_Applications,Total_Candidates,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,");

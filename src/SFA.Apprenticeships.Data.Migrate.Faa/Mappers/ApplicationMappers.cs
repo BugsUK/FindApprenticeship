@@ -75,7 +75,7 @@
                 LockedForSupportUntil = null,
                 WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
                 ApplicationGuid = apprenticeshipApplication.Id,
-                SubVacancy = GetSubVacancy(subVacancies, sourceApplicationId)
+                SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId)
             };
         }
 
@@ -212,9 +212,14 @@
             return unsuccessfulReasonId != 10 && unsuccessfulReasonId != 11 && unsuccessfulReasonId != 13;
         }
 
-        private static SubVacancy GetSubVacancy(IDictionary<int, SubVacancy> subVacancies, int sourceApplicationId)
+        private static SubVacancy GetSubVacancy(IDictionary<int, SubVacancy> subVacancies, int applicationId, int sourceApplicationId)
         {
-            return subVacancies.ContainsKey(sourceApplicationId) ? subVacancies[sourceApplicationId] : null;
+            var subVacancy = subVacancies.ContainsKey(sourceApplicationId) ? subVacancies[sourceApplicationId] : null;
+            if (subVacancy != null)
+            {
+                subVacancy.AllocatedApplicationId = applicationId;
+            }
+            return subVacancy;
         }
     }
 }
