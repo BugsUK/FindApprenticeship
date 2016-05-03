@@ -10,6 +10,8 @@
     [ProviderStatusTypeID] INT            NOT NULL,
     [IsNASProvider]        BIT            NOT NULL,
     [OriginalUPIN]         INT            NULL,
+    [ProviderToUseFAA] INT NULL, 
+    [MigrateProviderMessageID] INT NULL, 
     CONSTRAINT [PK_Provider] PRIMARY KEY CLUSTERED ([ProviderID] ASC),
     CONSTRAINT [FK_TrainingProvider_ProviderStatusTypeID] FOREIGN KEY ([ProviderStatusTypeID]) REFERENCES [dbo].[EmployerTrainingProviderStatus] ([EmployerTrainingProviderStatusId]),
     CONSTRAINT [UQ_Provider_UKPRN] UNIQUE NONCLUSTERED ([UKPRN] ASC, [ProviderStatusTypeID] ASC)
