@@ -27,7 +27,7 @@
         {
             //Arrange
             const string ukprn = "ukprn";
-            const int QAVacancyTimeout = 10;
+            //const int QAVacancyTimeout = 10;
             const string userName = "userName";
             var utcNow = DateTime.UtcNow;
             const int vacancyReferenceNumber = 1;
