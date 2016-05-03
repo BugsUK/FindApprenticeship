@@ -8,7 +8,7 @@
         public string Name => "SubVacancy";
         public IEnumerable<string> PrimaryKeys => new[] { "SubVacancyId" };
         public IEnumerable<string> ErrorKeys => PrimaryKeys;
-        public bool IdentityInsert => false;
+        public bool IdentityInsert => true;
         public decimal BatchSizeMultiplier => 1;
         public IEnumerable<ITableSpec> DependsOn { get; }
         public Action<ITableSpec, dynamic, dynamic> Transform { get; }

@@ -6,7 +6,8 @@
     {
         public int SubVacancyId { get; set; }
         public int VacancyId { get; set; }
-        public int? AllocatedApplicationId { get; set; }
+        //Technically nullable but for FAA migration purposes will always be set and in fact always is in AVMS
+        public int AllocatedApplicationId { get; set; }
         public DateTime? StartDate { get; set; }
         public string ILRNumber { get; set; }
     }

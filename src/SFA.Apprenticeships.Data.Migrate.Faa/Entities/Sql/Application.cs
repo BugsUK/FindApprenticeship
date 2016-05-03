@@ -17,5 +17,6 @@
         public DateTime? LockedForSupportUntil { get; set; }
         public bool? WithdrawalAcknowledged { get; set; }
         public Guid ApplicationGuid { get; set; }
+        public SubVacancy SubVacancy { get; set; }
     }
 }
