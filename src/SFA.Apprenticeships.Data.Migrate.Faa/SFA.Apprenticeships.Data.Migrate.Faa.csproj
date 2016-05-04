@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
+    <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
     <Compile Include="Entities\CandidatePerson.cs" />
     <Compile Include="Entities\Mongo\Address.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />

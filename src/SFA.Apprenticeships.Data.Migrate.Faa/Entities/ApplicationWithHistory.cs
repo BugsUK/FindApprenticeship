@@ -5,7 +5,7 @@
 
     public class ApplicationWithHistory
     {
-        public Application Application { get; set; }
+        public ApplicationWithSubVacancy ApplicationWithSubVacancy { get; set; }
         public IList<ApplicationHistory> ApplicationHistory { get; set; }
     }
 }

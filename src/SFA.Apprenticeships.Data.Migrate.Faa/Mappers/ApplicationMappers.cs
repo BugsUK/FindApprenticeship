@@ -52,38 +52,41 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public Application MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies)
+        public ApplicationWithSubVacancy MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies)
         {
             var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
             var sourceApplicationId = GetSourceApplicationId(applicationId, apprenticeshipApplication.LegacyApplicationId);
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
             var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(sourceApplicationId) ? sourceApplicationSummaries[sourceApplicationId] : null;
-            return new Application
+            return new ApplicationWithSubVacancy
             {
-                ApplicationId = applicationId,
-                CandidateId = candidateId,
-                VacancyId = apprenticeshipApplication.Vacancy.Id,
-                ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
-                WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
-                UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
-                NextActionId = 0,
-                NextActionOther = null,
-                AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
-                CVAttachmentId = null,
-                BeingSupportedBy = null,
-                LockedForSupportUntil = null,
-                WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id,
+                Application = new Application
+                {
+                    ApplicationId = applicationId,
+                    CandidateId = candidateId,
+                    VacancyId = apprenticeshipApplication.Vacancy.Id,
+                    ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
+                    WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
+                    UnsuccessfulReasonId = unsuccessfulReasonId,
+                    OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
+                    NextActionId = 0,
+                    NextActionOther = null,
+                    AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
+                    CVAttachmentId = null,
+                    BeingSupportedBy = null,
+                    LockedForSupportUntil = null,
+                    WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
+                    ApplicationGuid = apprenticeshipApplication.Id,
+                },
                 SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId)
             };
         }
 
         public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var application = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries, subVacancies);
-            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
-            return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
+            var applicationWithSubVacancy = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries, subVacancies);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(applicationWithSubVacancy.Application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
+            return new ApplicationWithHistory {ApplicationWithSubVacancy = applicationWithSubVacancy, ApplicationHistory = applicationHistory};
         }
 
         public IDictionary<string, object> MapApplicationDictionary(Application application)

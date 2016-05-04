@@ -115,12 +115,12 @@
         public void BulkUpsert(IList<ApplicationWithHistory> applicationsWithHistory, IDictionary<Guid, int> applicationIds)
         {
             //Bulk insert any applications with valid ids that are not already in the database
-            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
+            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.ApplicationWithSubVacancy.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.ApplicationWithSubVacancy.Application)));
 
             //Now insert any remaining applications one at a time
-            foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.Application.ApplicationId == 0))
+            foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId == 0))
             {
-                var applicationId = _targetDatabase.Insert(applicationWithHistory.Application);
+                var applicationId = _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
                 foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
                 {
                     applicationHistory.ApplicationId = (int)applicationId;
@@ -128,7 +128,7 @@
             }
 
             //Finally, update existing applications
-            _genericSyncRespository.BulkUpdate(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
+            _genericSyncRespository.BulkUpdate(_applicationTable, applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId != 0 && applicationIds.ContainsKey(a.ApplicationWithSubVacancy.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.ApplicationWithSubVacancy.Application)));
 
             //Insert new application history records
             var newApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId == 0);
@@ -138,7 +138,7 @@
             var existingApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId != 0);
             _genericSyncRespository.BulkUpdate(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
 
-            var subVacancies = applicationsWithHistory.Where(a => a.Application.SubVacancy != null).Select(a => a.Application.SubVacancy).ToList();
+            var subVacancies = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SubVacancy != null).Select(a => a.ApplicationWithSubVacancy.SubVacancy).ToList();
             var existingSubVacancies = _destinationSubVacancyRepository.GetApplicationSummariesByIds(subVacancies.Select(sv => sv.AllocatedApplicationId));
             
             //Insert new sub vacancies
