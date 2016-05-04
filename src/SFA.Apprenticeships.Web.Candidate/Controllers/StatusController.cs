@@ -15,8 +15,9 @@
         public StatusController(ISearchProvider searchProvider,
             IApprenticeshipApplicationProvider apprenticeshipApplicationProvider,
             ICandidateServiceProvider candidateServiceProvider,
-            IConfigurationService configurationService)
-            : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _searchProvider = searchProvider;
             _apprenticeshipApplicationProvider = apprenticeshipApplicationProvider;

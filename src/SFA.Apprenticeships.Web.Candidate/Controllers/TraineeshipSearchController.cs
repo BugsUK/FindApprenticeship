@@ -23,7 +23,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly ITraineeshipSearchMediator _traineeshipSearchMediator;
 
         public TraineeshipSearchController(ITraineeshipSearchMediator traineeshipSearchMediator,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _traineeshipSearchMediator = traineeshipSearchMediator;
         }

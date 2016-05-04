@@ -21,7 +21,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
 
         public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator,
-            IConfigurationService configurationService) : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }
