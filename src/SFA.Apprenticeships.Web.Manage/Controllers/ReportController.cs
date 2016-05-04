@@ -158,7 +158,7 @@
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    return View(validationResponse.ViewModel);
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();

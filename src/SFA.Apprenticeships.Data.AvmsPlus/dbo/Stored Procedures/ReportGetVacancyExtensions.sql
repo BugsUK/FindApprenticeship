@@ -8,7 +8,7 @@ AS
 
 	declare @VacanciesWithExtensions table (VacancyId int,VacancyOwnerRelationshipId int, ApplicationClosingDate datetime null, ContractOwnerId int, VacancyStatus int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @TempResults table (VacancyId int, VacancyStatus nvarchar(255), VacancyOwnerRelationshipId int, EmployerId int, EmployerName nvarchar(255), ProviderSiteId int,
-		ContractOwnerId int, OriginalPostingDate datetime, OriginalClosingDate datetime, CurrentClosingDate datetime, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
+		ContractOwnerId int, OriginalPostingDate date, OriginalClosingDate date, CurrentClosingDate date, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @VacancyStatusesToStudy table (VacancyStatusId int)
 
 	IF (@vacancyStatusToStudy is null ) BEGIN
@@ -86,8 +86,8 @@ AS
 		LEFT JOIN cteOriginalClosingDate ON cteOriginalClosingDate.VacancyId = vwe.VacancyId
 		INNER JOIN cteNumberOfVacancyExtensions ON cteNumberOfVacancyExtensions.VacancyId = vwe.VacancyId
 		LEFT JOIN cteNumberOfApplications ON cteNumberOfApplications.VacancyId = vwe.VacancyId
-		WHERE cteOriginalPostingDate.HistoryDate >= @startReportDateTime AND 
-			  cteOriginalPostingDate.HistoryDate <= @endReportDateTime 
+		WHERE cteOriginalPostingDate.HistoryDate >= dbo.fngetStartOfDay(@startReportDateTime) AND 
+			  cteOriginalPostingDate.HistoryDate <= dbo.fngetendOfDay(@endReportDateTime) 
 		ORDER BY VacancyId
 
 	;WITH cteProviderId(ProviderSiteID, ProviderId) AS (

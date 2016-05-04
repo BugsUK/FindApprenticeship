@@ -266,9 +266,9 @@
                     VacancyTitle = reader["VacancyTitle"].ToString(),
                     ProviderName = reader["ProviderName"].ToString(),
                     EmployerName = reader["EmployerName"].ToString(),
-                    OriginalPostingDate = reader["OriginalPostingDate"].ToString(),
-                    OriginalClosingDate = reader["OriginalClosingDate"].ToString(),
-                    CurrentClosingDate = reader["CurrentClosingDate"].ToString(),
+                    OriginalPostingDate = Convert.ToDateTime(reader["OriginalPostingDate"]).ToString("dd/MM/yyy"),
+                    OriginalClosingDate = Convert.ToDateTime(reader["OriginalClosingDate"]).ToString("dd/MM/yyy"),
+                    CurrentClosingDate = Convert.ToDateTime(reader["CurrentClosingDate"]).ToString("dd/MM/yyy"),
                     NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
                     NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString(),
                     VacancyStatus = reader["VacancyStatus"].ToString()
