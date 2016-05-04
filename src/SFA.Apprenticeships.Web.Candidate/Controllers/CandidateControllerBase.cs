@@ -37,6 +37,9 @@
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
+            SetLoggingIds();
+            SetRequestInfo();
+
             _logService.Info("OnActionExecuting {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
             UserContext = null;
 
@@ -58,8 +61,6 @@
                 }
             }
 
-            SetLoggingIds();
-            SetRequestInfo();
             SetAbout();
             SetCandidate();
 
