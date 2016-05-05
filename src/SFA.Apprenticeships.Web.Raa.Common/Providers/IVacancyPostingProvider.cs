@@ -3,6 +3,9 @@
     using System;
     using System.Collections.Generic;
     using System.Web.Mvc;
+
+    using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.Vacancy;
@@ -14,7 +17,7 @@
 
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
-        NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel);
+        NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
@@ -48,7 +51,7 @@
 
         VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber);
 
-        LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel);
+        LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel, string ukprn);
 
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
@@ -63,5 +66,7 @@
         VacancyDatesViewModel GetVacancyDatesViewModel(int vacancyReferenceNumber);
 
         VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
+
+        void EmptyVacancyLocation(int vacancyReferenceNumber);
     }
 }

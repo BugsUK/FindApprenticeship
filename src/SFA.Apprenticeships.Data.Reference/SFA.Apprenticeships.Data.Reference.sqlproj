@@ -146,4 +146,7 @@
   <ItemGroup>
     <PostDeploy Include="Script.PostDeployment.Data.sql" />
   </ItemGroup>
+  <Target 
+    Name="Publish" 
+    Condition="'false'=='true'" />
 </Project>

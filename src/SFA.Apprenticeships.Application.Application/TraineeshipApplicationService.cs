@@ -36,6 +36,11 @@
         public int GetNewApplicationCount(int vacancyId)
         {
             return _traineeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
+        }      
+
+        public int GetNewApplicationsCount(List<int> liveVacancyIds)
+        {
+            return _traineeshipApplicationReadRepository.GetNewApplicationsCount(liveVacancyIds);
         }
 
         public TraineeshipApplicationDetail GetApplication(Guid applicationId)
@@ -51,6 +56,6 @@
         public void UpdateApplicationNotes(Guid applicationId, string notes)
         {
             _updateApplicationNotesStrategy.UpdateApplicationNotes(applicationId, notes);
-        }
+        }        
     }
 }

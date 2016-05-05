@@ -71,11 +71,23 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Migrate.Faa\SFA.Apprenticeships.Infrastructure.Migrate.Faa.csproj">
+      <Name>SFA.Apprenticeships.Infrastructure.Migrate.Faa</Name>
+      <Project>{29EB5CF7-0CE8-423D-BC2C-EEADF535BB15}</Project>
+      <Private>True</Private>
+      <RoleType>Worker</RoleType>
+      <RoleName>SFA.Apprenticeships.Infrastructure.Migrate.Faa</RoleName>
+      <UpdateDiagnosticsConnectionStringOnPublish>True</UpdateDiagnosticsConnectionStringOnPublish>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Profiles" />
+    <Folder Include="SFA.Apprenticeships.Infrastructure.Migrate.FaaContent\" />
     <Folder Include="SFA.Apprenticeships.Infrastructure.MigrateContent\" />
   </ItemGroup>
   <ItemGroup>
     <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.MigrateContent\diagnostics.wadcfgx" />
+    <DiagnosticsConfiguration Include="SFA.Apprenticeships.Infrastructure.Migrate.FaaContent\diagnostics.wadcfgx" />
   </ItemGroup>
   <!-- Import the target files for this project template -->
   <PropertyGroup>

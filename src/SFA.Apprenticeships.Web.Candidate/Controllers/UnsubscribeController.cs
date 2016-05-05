@@ -15,8 +15,9 @@
 
         public UnsubscribeController(
             IConfigurationService configurationService,
-            IUnsubscribeMediator unsubscribeMediator)
-            : base(configurationService)
+            IUnsubscribeMediator unsubscribeMediator,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _unsubscribeMediator = unsubscribeMediator;
         }

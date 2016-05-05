@@ -200,12 +200,14 @@
     <Compile Include="Attributes\RobotsIndexPageAttribute.cs" />
     <Compile Include="Attributes\SessionTimeoutAttribute.cs" />
     <Compile Include="BundleConfig.cs" />
+    <Compile Include="Configuration\ReportServerConfiguration.cs" />
     <Compile Include="Constants\CacheProfiles.cs" />
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\ViewModels\AddressViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\DateViewModelMessages.cs" />
     <Compile Include="Converters\PageableConverters.cs" />
     <Compile Include="Extensions\ClaimsPrincipalExtensions.cs" />
+    <Compile Include="Extensions\ListItemExtensions.cs" />
     <Compile Include="Extensions\MetadataExtensions.cs" />
     <Compile Include="IoC\ControllerConvention.cs" />
     <Compile Include="IoC\FilterConfig.cs" />

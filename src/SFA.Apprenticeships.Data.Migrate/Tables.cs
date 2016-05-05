@@ -243,6 +243,10 @@ select top 10 * from VacancyReferralComments
 
             public IEnumerable<string> PrimaryKeys { get; private set; }
 
+            public IEnumerable<string> ErrorKeys => PrimaryKeys;
+
+            public bool IdentityInsert => true;
+
             public decimal BatchSizeMultiplier { get; private set; }
 
             public TableSpec(string name, string[] primaryKeys, decimal batchSizeMultiplier, Action<ITableSpec, dynamic, dynamic> transform, Func<ITableSpec, dynamic, dynamic, Operation, bool> canMutate, params TableSpec[] dependsOn)
@@ -336,7 +340,7 @@ select top 10 * from VacancyReferralComments
 
             if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
             {
-                _log.Warn($"Ignored {operation} to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {oldRecordFromTarget.VacancyOwnerRelationshipId}");
+                _log.Info($"Ignored {operation} to VacancyOwnerRelationship from AVMS with VacancyOwnerRelationshipId = {oldRecordFromTarget.VacancyOwnerRelationshipId}");
                 return false;
             }
 
@@ -353,7 +357,7 @@ select top 10 * from VacancyReferralComments
         {
             if (oldRecordFromTarget != null && oldRecordFromTarget.EditedInRaa)
             {
-                _log.Warn($"Ignored change to Vacancy from AVMS with VacancyId = {oldRecordFromTarget.VacancyId}");
+                _log.Info($"Ignored change to Vacancy from AVMS with VacancyId = {oldRecordFromTarget.VacancyId}");
                 return false;
             }
 
@@ -401,8 +405,9 @@ select top 10 * from VacancyReferralComments
             // TODO: Check that new vacancies are really setting to null and not the vacancy owner site id (etc)
             newRecord.VacancyManagerID        = null;
             newRecord.DeliveryOrganisationID  = null;
-            newRecord.ContractOwnerID         = null;
-            newRecord.OriginalContractOwnerId = null;
+            // Required by unsuccessful candidates report and now correctly set in RAA so keeping
+            //newRecord.ContractOwnerID         = null;
+            //newRecord.OriginalContractOwnerId = null;
 
             // Believed to be supported by FAA, so don't blank (TODO: Check)
             // newRecord.EmployerAnonymousName = null;

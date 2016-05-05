@@ -17,6 +17,7 @@
     [TestFixture]
     public class CreateVacancyTests : TestBase
     {
+        private const string Ukprn = "12345";
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
@@ -45,6 +46,7 @@
             {
                 VacancyReferenceNumber = 1,
                 OfflineVacancy = false,
+                OwnerParty = new VacancyPartyViewModel()
             };
 
             _validNewVacancyViewModelSansReferenceNumber = new NewVacancyViewModel
@@ -93,7 +95,12 @@
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
                 .Returns(_vacancyParty);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn))
+                .Returns(new Provider());
             MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
+
+            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>()))
+                .Returns(new NewVacancyViewModel());
         }
 
         [Test]
@@ -102,10 +109,12 @@
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
+            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>())).Returns(new VacancyParty());
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(new Employer());
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber);
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -118,6 +127,26 @@
         }
 
         [Test]
+        public void ShouldUpdateVacancyWithTheEmployerAddress()
+        {
+            // Arrange.
+            var employerPostalAddress = new Fixture().Create<PostalAddress>();
+            var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
+            MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
+            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>())).Returns(new VacancyParty());
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>()))
+                .Returns(new Fixture().Build<Employer>().With(e => e.Address, employerPostalAddress).Create());
+            var provider = GetVacancyPostingProvider();
+
+            // Act.
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
+
+            // Assert.
+            MockVacancyPostingService.Verify(mock =>
+                mock.UpdateVacancy(It.Is<Vacancy>(v => v.Address == employerPostalAddress)));
+        }
+
+        [Test]
         public void ShouldCreateNewIfVacancyReferenceIsNotPresent()
         {
             // Arrange.
@@ -126,7 +155,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -161,7 +190,7 @@
                 OfflineVacancy = offlineVacancy,
                 OfflineApplicationUrl = offlineApplicationUrl,
                 OfflineApplicationInstructions = offlineApplicationInstructions,
-            });
+            }, Ukprn);
 
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.OfflineVacancy == offlineVacancy 
             && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
@@ -188,7 +217,7 @@
                         EmployerId = EmployerId
                     }
                 }
-            });
+            }, Ukprn);
 
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.VacancyGuid == vacancyGuid)));
         }
@@ -221,6 +250,8 @@
             };
 
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
+            MockVacancyPostingService.Setup(m => m.GetVacancyLocations(It.IsAny<int>()))
+                .Returns(new List<VacancyLocation>());
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(av);
             var provider = GetVacancyPostingProvider();
@@ -280,7 +311,7 @@
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Status == VacancyStatus.Draft)));
@@ -304,7 +335,7 @@
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
             //Act
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
             MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);

@@ -78,13 +78,27 @@ WriteLiteral("\r\n");
             #line hidden
             
             #line 9 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
+Write(Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds));
 
             
             #line default
             #line hidden
             
             #line 9 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                                                    
+    
+            
+            #line default
+            #line hidden
+            
+            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Html.DisplayFor(m => m, NewVacancyViewModel.PartialView));
+
+            
+            #line default
+            #line hidden
+            
+            #line 10 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                              
 
     var saveButtonText = "Save and continue";
@@ -114,20 +128,20 @@ WriteLiteral(" class=\"button\"");
 
 WriteLiteral(" name=\"CreateVacancy\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 797), Tuple.Create("\"", 821)
+WriteAttribute("value", Tuple.Create(" value=\"", 847), Tuple.Create("\"", 871)
             
-            #line 21 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
-                   , Tuple.Create(Tuple.Create("", 805), Tuple.Create<System.Object, System.Int32>(saveButtonValue
+            #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                   , Tuple.Create(Tuple.Create("", 855), Tuple.Create<System.Object, System.Int32>(saveButtonValue
             
             #line default
             #line hidden
-, 805), false)
+, 855), false)
 );
 
 WriteLiteral(">");
 
             
-            #line 21 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 22 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                                                                                Write(saveButtonText);
 
             
@@ -148,13 +162,13 @@ WriteLiteral(" value=\"CreateVacancyAndExit\"");
 WriteLiteral(">Save and exit</button>\r\n");
 
             
-            #line 23 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
         
             
             #line default
             #line hidden
             
-            #line 23 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 24 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
          if (Model.ComeFromPreview)
         {
             
@@ -162,14 +176,14 @@ WriteLiteral(">Save and exit</button>\r\n");
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
        Write(Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber }));
 
             
             #line default
             #line hidden
             
-            #line 25 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 26 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
                                                                                                                                           
         }
 
@@ -179,7 +193,7 @@ WriteLiteral(">Save and exit</button>\r\n");
 WriteLiteral("    </div>\r\n");
 
             
-            #line 28 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+            #line 29 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
 }
 
             
@@ -189,17 +203,49 @@ WriteLiteral("\r\n");
 
 DefineSection("scripts", () => {
 
+WriteLiteral("\r\n");
+
+WriteLiteral("    ");
+
+            
+            #line 33 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+Write(Scripts.Render("~/bundles/autosave"));
+
+            
+            #line default
+            #line hidden
 WriteLiteral(@"
+
     <script>
-        $(""input[name='OfflineVacancy']"").change(function () {
+        $(""input[name='OfflineVacancy']"").change(function() {
             var selectedValue = $(""input[name='OfflineVacancy']:checked"").val();
             if (selectedValue === ""False"") {
                 $(""#apprenticeship-offline-application-url"").val("""");
                 $(""#apprenticheship-offline-application-instructions"").val("""");
             }
         });
-    </script>
-");
+
+        var autoSaveTimeout = ");
+
+            
+            #line 44 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                         Write(Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)));
+
+            
+            #line default
+            #line hidden
+WriteLiteral(" * 1000;\r\n\r\n        $(window).on(\'load\', function() {\r\n            autoSave.initi" +
+"alise({\r\n                formSelector: \"form\",\r\n                timeout: autoSav" +
+"eTimeout,\r\n                postUrl: \'");
+
+            
+            #line 50 "..\..\Views\VacancyPosting\CreateVacancy.cshtml"
+                     Write(Url.RouteUrl(RecruitmentRouteNames.AutoSaveCreateVacancy));
+
+            
+            #line default
+            #line hidden
+WriteLiteral("\'\r\n            });\r\n        });\r\n    </script>\r\n");
 
 });
 

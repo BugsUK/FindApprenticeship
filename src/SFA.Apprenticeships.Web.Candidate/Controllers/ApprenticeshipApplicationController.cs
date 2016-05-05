@@ -22,15 +22,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     public class ApprenticeshipApplicationController : CandidateControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
-        private readonly ILogService _logService;
 
         public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator,
             ILogService logService,
             IConfigurationService configurationService)
-            : base(configurationService)
+            : base(configurationService, logService)
         {
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
-            _logService = logService;
         }
 
         [HttpGet]

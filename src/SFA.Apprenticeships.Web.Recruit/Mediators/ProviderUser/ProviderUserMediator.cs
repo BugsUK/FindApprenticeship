@@ -16,27 +16,34 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
     using Constants.Messages;
     using Domain.Entities.Raa;
     using Raa.Common.Validators.ProviderUser;
+    using SFA.Apprenticeships.Application.Interfaces.Users;
+    using SFA.Apprenticeships.Domain.Entities.Communication;
+    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
+    using SFA.Infrastructure.Interfaces;
     using ViewModels;
     using ClaimTypes = Common.Constants.ClaimTypes;
 
     public class ProviderUserMediator : MediatorBase, IProviderUserMediator
     {
-        private const int MinProviderSites = 1;
-
+        private const int MinProviderSites = 1;        
         private readonly IProviderUserProvider _providerUserProvider;
         private readonly IProviderProvider _providerProvider;
         private readonly IAuthorizationErrorProvider _authorizationErrorProvider;
         private readonly IVacancyPostingProvider _vacancyProvider;
-
+        private readonly IProviderUserAccountService _providerService;
         private readonly ProviderUserViewModelValidator _providerUserViewModelValidator;
         private readonly VerifyEmailViewModelValidator _verifyEmailViewModelValidator;
+        private readonly IMapper _mapper;
+        private readonly ILogService _logService;
 
         public ProviderUserMediator(IProviderUserProvider providerUserProvider,
             IProviderProvider providerProvider,
             IAuthorizationErrorProvider authorizationErrorProvider,
             IVacancyPostingProvider vacancyProvider,
             ProviderUserViewModelValidator providerUserViewModelValidator,
-            VerifyEmailViewModelValidator verifyEmailViewModelValidator)
+            VerifyEmailViewModelValidator verifyEmailViewModelValidator,
+            IProviderUserAccountService providerService,IMapper mapper,
+            ILogService logService)
         {
             _providerUserProvider = providerUserProvider;
             _providerProvider = providerProvider;
@@ -44,6 +51,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             _vacancyProvider = vacancyProvider;
             _providerUserViewModelValidator = providerUserViewModelValidator;
             _verifyEmailViewModelValidator = verifyEmailViewModelValidator;
+            _providerService = providerService;
+            _mapper = mapper;
+            _logService = logService;
         }
 
         public MediatorResponse<AuthorizeResponseViewModel> Authorize(ClaimsPrincipal principal)
@@ -257,6 +267,21 @@ namespace SFA.Apprenticeships.Web.Recruit.Mediators.ProviderUser
             var sites = providerSites.Select(ps => new SelectListItem { Value = Convert.ToString(ps.ProviderSiteId), Text = ps.DisplayName }).ToList();
 
             return sites;
+        }
+
+        public bool SendContactMessage(ContactMessageViewModel contactMessageViewModel)
+        {
+            try
+            {
+                ProviderContactMessage contactMessage = _mapper.Map<ContactMessageViewModel, ProviderContactMessage>(contactMessageViewModel);                
+                _providerService.SubmitContactMessage(contactMessage);
+                return true;
+            }
+            catch(Exception exception)
+            {
+                _logService.Error($"Exception occured while sending contact us email:{exception.Message}");
+                return false;
+            }
         }
     }
 }

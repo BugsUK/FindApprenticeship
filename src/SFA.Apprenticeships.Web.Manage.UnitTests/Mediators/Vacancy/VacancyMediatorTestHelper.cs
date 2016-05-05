@@ -25,7 +25,6 @@ namespace SFA.Apprenticeships.Web.Manage.UnitTests.Mediators.Vacancy
             return new VacancyViewModel
             {
                 VacancyReferenceNumber = vacancyReferenceNumber,
-                IsEmployerLocationMainApprenticeshipLocation = true,
                 Status = VacancyStatus.Submitted,
                 Address = new AddressViewModel
                 {

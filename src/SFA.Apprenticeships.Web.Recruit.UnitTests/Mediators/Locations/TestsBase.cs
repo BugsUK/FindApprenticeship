@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Locations
 {
-    using Application.Location;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;
@@ -42,7 +41,6 @@
                 new VacancyPartyViewModelValidator(),
                 new EmployerSearchViewModelServerValidator(),
                 new LocationSearchViewModelServerValidator(),
-                new Mock<IAddressLookupProvider>().Object,
                 new Mock<ILocationsProvider>().Object,
                 new TrainingDetailsViewModelServerValidator(),
                 new TrainingDetailsViewModelClientValidator());

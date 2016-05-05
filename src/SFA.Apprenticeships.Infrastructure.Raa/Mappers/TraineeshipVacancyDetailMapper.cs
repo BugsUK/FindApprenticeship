@@ -9,10 +9,12 @@
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
+    using WageUnit = Domain.Entities.Vacancies.WageUnit;
 
     public class TraineeshipVacancyDetailMapper
     {
@@ -37,7 +39,7 @@
                 Wage = vacancy.Wage ?? 0,
                 WageUnit = wage.GetWageUnit(),
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = vacancy.WageType.GetLegacyWageType(),
+                WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
                 OtherInformation = vacancy.ThingsToConsider,
                 FutureProspects = vacancy.FutureProspects,
@@ -50,17 +52,14 @@
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.Name,
-                //TODO: How is this captured in RAA?
-                //AnonymousEmployerName = vacancy.,
+                AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancyParty.EmployerDescription,
                 EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
-                //TODO: How is this captured in RAA?
-                //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
+                IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
@@ -72,7 +71,7 @@
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,

@@ -275,7 +275,12 @@
                     vacancy.IsEmployerLocationMainApprenticeshipLocation;
             viewModel.NumberOfPositions = vacancy.NumberOfPositions;
             viewModel.Status = vacancy.Status;
-            viewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value;
+
+            if (vacancy.VacancyReferenceNumber.HasValue)
+            {
+                viewModel.VacancyReferenceNumber = vacancy.VacancyReferenceNumber.Value;
+            }
+
             viewModel.EmployerDescriptionComment = vacancy.EmployerDescriptionComment;
             viewModel.EmployerWebsiteUrlComment = vacancy.EmployerWebsiteUrlComment;
             viewModel.NumberOfPositionsComment = vacancy.NumberOfPositionsComment;
@@ -403,7 +408,7 @@
 
             _vacancyQaProvider.UpdateEmployerInformationWithComments(existingVacancy);
 
-            if (viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue && viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == true)
+            if (viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue && viewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
             {
                 _vacancyQaProvider.RemoveLocationAddresses(viewModel.VacancyGuid);
             }

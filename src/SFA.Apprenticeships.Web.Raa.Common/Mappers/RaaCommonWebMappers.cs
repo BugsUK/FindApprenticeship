@@ -62,7 +62,8 @@
                 .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
                 .ForMember(dest => dest.Ukprn, opt => opt.Ignore())
                 .ForMember(dest => dest.OwnerParty, opt => opt.Ignore())
-                .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore());
+                .ForMember(dest => dest.LocationAddresses, opt => opt.Ignore())
+                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
 
             Mapper.CreateMap<Vacancy, TrainingDetailsViewModel>()
                 .ForMember(dest => dest.FrameworkCodeName, opt => opt.MapFrom(src => CategoryPrefixes.GetFrameworkCode(src.FrameworkCodeName)))
@@ -70,14 +71,19 @@
                 .ForMember(dest => dest.SectorsAndFrameworks, opt => opt.Ignore())
                 .ForMember(dest => dest.Standards, opt => opt.Ignore())
                 .ForMember(dest => dest.Sectors, opt => opt.Ignore())
-                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
+                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
+                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
 
             Mapper.CreateMap<Vacancy, FurtherVacancyDetailsViewModel>().ConvertUsing<VacancyToFurtherVacancyDetailsViewModelConverter>();
 
             Mapper.CreateMap<Vacancy, VacancyRequirementsProspectsViewModel>()
-                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
+                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
+                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
+
             Mapper.CreateMap<Vacancy, VacancyQuestionsViewModel>()
-                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore());
+                .ForMember(dest => dest.ComeFromPreview, opt => opt.Ignore())
+                .ForMember(dest => dest.AutoSaveTimeoutInSeconds, opt => opt.Ignore());
+
             Mapper.CreateMap<Vacancy, VacancyViewModel>().ConvertUsing<VacancyToVacancyViewModelConverter>();
             Mapper.CreateMap<VacancySummary, VacancySummaryViewModel>().ConvertUsing<VacancyToVacancySummaryViewModelConverter>();
 

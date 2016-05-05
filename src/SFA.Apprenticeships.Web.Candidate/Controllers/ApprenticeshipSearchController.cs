@@ -28,8 +28,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly IHelpCookieProvider _helpCookieProvider;
 
         public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator, IHelpCookieProvider helpCookieProvider,
-            IConfigurationService configurationService)
-            : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
             _helpCookieProvider = helpCookieProvider;

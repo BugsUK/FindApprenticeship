@@ -6,6 +6,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.TrainingDetails, FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, TrainingDetailsViewModel.PartialView)
 
     var saveButtonText = "Save and continue";
@@ -29,6 +30,8 @@
 
 @section scripts
 {
+    @Scripts.Render("~/bundles/autosave")
+
     <script>
         $("#@Html.NameFor(m => m.StandardId)").change(function () {
             var apprenticeshipLevel = $("#@Html.NameFor(m => m.StandardId) option:selected").attr("data-apprenticeship-level");
@@ -37,6 +40,16 @@
             }
             $("#apprenticeship-level-name").text(apprenticeshipLevel);
             $("#apprenticeship-level-container").show();
+        });
+
+        var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: autoSaveTimeout,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveTrainingDetails)'
+            });
         });
     </script>
 }

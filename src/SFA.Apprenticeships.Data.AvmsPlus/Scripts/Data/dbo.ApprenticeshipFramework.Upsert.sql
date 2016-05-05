@@ -418,7 +418,8 @@ USING (VALUES
 (1080,	100,	'055', '055', 'Surveying technician (Level 3)',	1,	NULL,	NULL),
 (1081,	100,	'056', '056', 'Butcher (Level 2)',	1,	NULL,	NULL),
 (1082,	100,	'057', '057', 'Utilities engineering technician (Level 3)',	1,	NULL,	NULL),
-(1083,	100,	'058', '058', 'Chartered manager degree apprenticeship (Level 6)',	1,	NULL,	NULL)
+(1083,	100,	'058', '058', 'Chartered manager degree apprenticeship (Level 6)',	1,	NULL,	NULL),
+(1085,	100,	'059', '059', 'Infrastructure Technician (Level 3)',	1,	NULL,	NULL)
 ) 
 
 AS Source (ApprenticeshipFrameworkId, ApprenticeshipOccupationId, CodeName, ShortName, FullName, ApprenticeshipFrameworkStatusTypeId, ClosedDate, PreviousApprenticeshipOccupationId) 

@@ -26,11 +26,12 @@
         {
             //Arrange
             const string ukprn = "ukprn";
-            const int QAVacancyTimeout = 10;
+            //const int QAVacancyTimeout = 10;
             const string userName = "userName";
             var utcNow = DateTime.UtcNow;
             const int vacancyReferenceNumber = 1;
             const string aString = "aString";
+            const int autoSaveTimeoutInSeconds = 60;
 
             var sectorList = new List<Sector>
             {
@@ -40,7 +41,8 @@
             var viewModel = new VacancyRequirementsProspectsViewModel
             {
                VacancyReferenceNumber = vacancyReferenceNumber,
-               DesiredQualifications = aString
+               DesiredQualifications = aString,
+               AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds
             };
 
             var vacancy = new Fixture().Build<Vacancy>()
@@ -51,6 +53,8 @@
             var configurationService = new Mock<IConfigurationService>();
             configurationService.Setup(x => x.Get<CommonWebConfiguration>())
                 .Returns(new CommonWebConfiguration { BlacklistedCategoryCodes = "" });
+            configurationService.Setup(x => x.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration { AutoSaveTimeoutInSeconds = autoSaveTimeoutInSeconds });
             var referenceDataService = new Mock<IReferenceDataService>();
             referenceDataService.Setup(m => m.GetSectors()).Returns(sectorList);
             var providerService = new Mock<IProviderService>();

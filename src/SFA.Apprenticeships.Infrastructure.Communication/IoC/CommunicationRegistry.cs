@@ -56,7 +56,8 @@
 
             var providerUserEmailFormatters = new[]
             {
-                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendProviderUserEmailVerificationCode, new EmailSimpleMessageFormatter())
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.SendProviderUserEmailVerificationCode, new EmailSimpleMessageFormatter()),
+                new KeyValuePair<MessageTypes, EmailMessageFormatter>(MessageTypes.ProviderContactUsMessage, new EmailSimpleMessageFormatter())
             };
 
             return

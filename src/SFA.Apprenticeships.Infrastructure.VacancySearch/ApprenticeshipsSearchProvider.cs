@@ -125,9 +125,20 @@
 
         private static IEnumerable<AggregationResult> GetAggregationResultsFrom(AggregationsHelper aggregations)
         {
-            return
-                aggregations.Terms(SubCategoriesAggregationName)
-                    .Items.Select(bucket => new AggregationResult {Code = bucket.Key, Count = bucket.DocCount});
+            var terms = aggregations.Terms(SubCategoriesAggregationName);
+
+            if (terms == null)
+            {
+                return Enumerable.Empty<AggregationResult>();
+            }
+
+            var items = terms.Items.Select(bucket => new AggregationResult
+            {
+                Code = bucket.Key,
+                Count = bucket.DocCount
+            });
+
+            return items;
         }
 
         private ISearchResponse<ApprenticeshipSummary> PerformSearch(ApprenticeshipSearchParameters parameters,
