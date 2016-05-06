@@ -161,14 +161,19 @@
                 var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
 
                 LoadCandidates(candidateIds, batch);
+                var destinationCandidateIds = batch.Where(a => candidateIds.ContainsKey(a.CandidateId)).Select(a => candidateIds[a.CandidateId]).ToArray();
+                batch = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).ToList();
 
-                var applicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var candidateApplicationIds = _destinationApplicationRepository.GetApplicationIdsByCandidateIds(destinationCandidateIds);
+                var applicationIds = _applicationMappers.GetApplicationIds(destinationApplicationIds, candidateApplicationIds, batch, candidateIds);
+
                 var legacyApplicationIds = batch.Where(a => a.LegacyApplicationId != 0).Select(a => a.LegacyApplicationId).ToArray();
                 var sourceApplicationSummaries = _sourceApplicationRepository.GetApplicationSummariesByIds(legacyApplicationIds);
                 var applicationHistoryIds = _destinationApplicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
                 var sourceApplicationHistorySummaries = _sourceApplicationHistoryRepository.GetApplicationHistorySummariesByApplicationIds(legacyApplicationIds);
                 var subVacancies = _sourceSubVacancyRepository.GetApplicationSummariesByIds(legacyApplicationIds);
-                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
+                var applicationsWithHistory = batch.Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
 
                 count += applicationsWithHistory.Count;
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");
