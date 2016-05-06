@@ -34,6 +34,9 @@
                 .Use<TraineeshipApplicationRepository>()
                 .Ctor<IMapper>()
                 .Named("TraineeshipApplicationDetailMapper");
+
+            // Register Mongo class maps.
+            new ApplicationBsonClassMaps().Register();
         }
     }
 }

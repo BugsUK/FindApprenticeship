@@ -75,7 +75,9 @@
 
                 .ForMember(dest => dest.CategoryCode, opt => opt.Ignore())
 
-                .ForMember(dest => dest.SubCategoryCode, opt => opt.Ignore());
+                .ForMember(dest => dest.SubCategoryCode, opt => opt.Ignore())
+                
+                .ForMember(dest => dest.WageUnit, opt => opt.Ignore());
         }
 
         private void CreateTraineeshipSummaryMap()

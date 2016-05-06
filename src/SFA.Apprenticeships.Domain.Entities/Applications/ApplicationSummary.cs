@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.Applications
 {
     using System;
+    using Users;
     using Vacancies;
 
     public abstract class ApplicationSummary
@@ -9,7 +10,11 @@
 
         public Guid CandidateId { get; set; }
 
+        public RegistrationDetails CandidateDetails { get; set; }
+
         public VacancyStatuses VacancyStatus { get; set; }
+
+        public ApplicationStatuses Status { get; set; }
 
         public int LegacyVacancyId { get; set; }
 
@@ -28,5 +33,7 @@
         public DateTime DateUpdated { get; set; }
 
         public DateTime? DateApplied { get; set; }
+
+        public string Notes { get; set; }
     }
 }

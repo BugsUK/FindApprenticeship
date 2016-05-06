@@ -115,6 +115,7 @@
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchMode.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipSearchResponse.cs" />
     <Compile Include="Vacancies\Apprenticeships\ApprenticeshipVacancyDetail.cs" />
+    <Compile Include="Vacancies\WageUnit.cs" />
     <Compile Include="Vacancies\Traineeships\TraineeshipVacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyDetail.cs" />
     <Compile Include="Vacancies\VacancyHelper.cs" />
