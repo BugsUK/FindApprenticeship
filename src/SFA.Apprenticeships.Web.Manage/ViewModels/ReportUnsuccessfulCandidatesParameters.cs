@@ -17,8 +17,8 @@
         {
             new ListItem("All", "-1"),
             new ListItem("Region", "1"),
-            new ListItem("LocalAuthority", "2"),
-            new ListItem("Postcode", "3")
+            //new ListItem("LocalAuthority", "2"),
+            //new ListItem("Postcode", "3")
         };
 
         public List<ListItem> ManagedByList { get; set; }
