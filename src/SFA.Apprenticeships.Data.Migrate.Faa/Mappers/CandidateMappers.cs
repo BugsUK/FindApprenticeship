@@ -104,7 +104,7 @@
                     EthnicOriginOther = GetEthnicOriginOther(monitoringInformation.Ethnicity),
                     ApplicationLimitEnforced = false,
                     LastAccessedDate = candidateUser.User.LastLogin ?? candidateUser.Candidate.DateUpdated ?? candidateUser.Candidate.DateCreated,
-                    AdditionalEmail = anonymise ? "anonymised@data.com" : email.Length > 50 ? "" : email,
+                    AdditionalEmail = anonymise ? candidateGuid + "@anon.com" : email.Length > 50 ? "" : email,
                     Disability = GetDisability(monitoringInformation.DisabilityStatus),
                     DisabilityOther = GetDisabilityOther(monitoringInformation.DisabilityStatus),
                     HealthProblems = "",
@@ -139,7 +139,7 @@
                     Surname = anonymise ? candidateGuid.ToString().Replace("-", "") : candidateUser.Candidate.RegistrationDetails.LastName,
                     LandlineNumber = anonymise ? "07999999999" : candidateUser.Candidate.RegistrationDetails.PhoneNumber,
                     MobileNumber = "",
-                    Email = anonymise ? "anonymised@data.com" : email,
+                    Email = anonymise ? candidateGuid + "@anon.com" : email,
                     PersonTypeId = 1
                 };
 
@@ -236,7 +236,7 @@
             if (candidateSummary.CandidateId != 0)
             {
                 var candidateId = candidateSummary.CandidateId;
-                if (candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
+                if (candidateId > 0 && candidate.LegacyCandidateId != 0 && candidate.LegacyCandidateId != candidateId)
                 {
                     _logService.Warn($"CandidateId: {candidateId} does not match the LegacyCandidateId: {candidate.LegacyCandidateId} for candidate with Id: {candidate.Id}. This shouldn't change post activation");
                 }
@@ -255,15 +255,20 @@
                 case 10:
                     return CandidateStatusTypeIdPreRegistered;
                 case 20:
-                    return CandidateStatusTypeIdActivated;
                 case 30:
+                case 90:
+                case 100:
+                case 999:
+                    return CandidateStatusTypeIdActivated;
+                //We don't feed back the status changes to AVMS so users never go from Activated to any other state. As a result always return Activated for reporting purposes
+                /*case 30:
                     return CandidateStatusTypeIdSuspended;
                 case 90:
                     return CandidateStatusTypeIdSuspended;
                 case 100:
                     return CandidateStatusTypeIdSuspended;
                 case 999:
-                    return CandidateStatusTypeIdDeleted;
+                    return CandidateStatusTypeIdDeleted;*/
             }
 
             return CandidateStatusTypeIdPreRegistered;

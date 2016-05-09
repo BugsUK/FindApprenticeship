@@ -44,8 +44,8 @@
             var secondLegacyApplicationId = repository.GetNextLegacyApplicationId();
 
             // Assert.
-            firstLegacyApplicationId.Should().BeNegative();
-            secondLegacyApplicationId.Should().BeLessThan(firstLegacyApplicationId);
+            firstLegacyApplicationId.Should().BePositive();
+            secondLegacyApplicationId.Should().BeGreaterThan(firstLegacyApplicationId);
         }
     }
 }

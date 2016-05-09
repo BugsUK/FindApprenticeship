@@ -115,6 +115,7 @@
   <ItemGroup>
     <Compile Include="CandidateMigrationProcessor.cs" />
     <Compile Include="Entities\ApplicationWithHistory.cs" />
+    <Compile Include="Entities\ApplicationWithSubVacancy.cs" />
     <Compile Include="Entities\CandidatePerson.cs" />
     <Compile Include="Entities\Mongo\Address.cs" />
     <Compile Include="Entities\Mongo\CandidateSummary.cs" />
@@ -124,9 +125,11 @@
     <Compile Include="Entities\Mongo\RegistrationDetails.cs" />
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
     <Compile Include="Entities\Sql\ApplicationHistorySummary.cs" />
+    <Compile Include="Entities\Sql\ApplicationIds.cs" />
     <Compile Include="Entities\Sql\ApplicationSummary.cs" />
     <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="Entities\Sql\CandidateSummary.cs" />
+    <Compile Include="Entities\Sql\SubVacancy.cs" />
     <Compile Include="IMigrationProcessor.cs" />
     <Compile Include="IVacancyApplicationsUpdater.cs" />
     <Compile Include="Mappers\ApplicationHistoryMappers.cs" />
@@ -142,6 +145,8 @@
     <Compile Include="Repository\Sql\ApplicationHistoryTable.cs" />
     <Compile Include="Repository\Sql\CandidateTable.cs" />
     <Compile Include="Entities\Sql\Person.cs" />
+    <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
+    <Compile Include="Repository\Sql\SubVacancyTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
     <Compile Include="Configuration\MongoConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />

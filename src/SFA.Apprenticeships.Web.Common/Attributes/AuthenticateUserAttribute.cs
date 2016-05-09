@@ -20,7 +20,8 @@
         {
             var httpContext = filterContext.RequestContext.HttpContext;
 
-            var ticket = AuthenticationTicketService.GetTicket();
+            var authService = new AuthenticationTicketService(httpContext, LogService);
+            var ticket = authService.GetTicket();
 
             if (ticket == null)
             {
@@ -37,7 +38,7 @@
                 filterContext.Result = new RedirectToRouteResult(RouteNames.SignOut, new RouteValueDictionary());
             }
 
-            var claims = AuthenticationTicketService.GetClaims(ticket);
+            var claims = authService.GetClaims(ticket);
 
             httpContext.User = new GenericPrincipal(new FormsIdentity(ticket), claims);
 
@@ -54,7 +55,7 @@
 
         private bool IsCookieExpired(AuthenticationContext filterContext, FormsAuthenticationTicket ticket)
         {
-            var expirationTime = AuthenticationTicketService.GetExpirationTimeFrom(ticket);
+            var expirationTime = new AuthenticationTicketService(filterContext.RequestContext.HttpContext, LogService).GetExpirationTimeFrom(ticket);
             return (expirationTime < DateTime.UtcNow && !SigningOut(filterContext));
         }
 

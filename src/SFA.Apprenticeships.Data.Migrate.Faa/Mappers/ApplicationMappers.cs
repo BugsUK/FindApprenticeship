@@ -52,36 +52,93 @@
             {"Offered the position but turned it down", 17}
         };
 
-        public Application MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries)
+        public IDictionary<Guid, int> GetApplicationIds(IDictionary<Guid, ApplicationIds> destinationApplicationIds, IDictionary<int, Dictionary<int, ApplicationIds>> candidateApplicationIds, IList<VacancyApplication> vacancyApplications, IDictionary<Guid, int> candidateIds)
+        {
+            var applicationIds = new Dictionary<Guid, int>(destinationApplicationIds.Count);
+
+            foreach (var destinationApplicationId in destinationApplicationIds.Values)
+            {
+                applicationIds[destinationApplicationId.ApplicationGuid] = destinationApplicationId.ApplicationId;
+
+                var candidateId = destinationApplicationId.CandidateId;
+                var vacancyId = destinationApplicationId.VacancyId;
+
+                if (candidateApplicationIds.ContainsKey(candidateId) && candidateApplicationIds[candidateId].ContainsKey(vacancyId))
+                {
+                    var candidateApplicationId = candidateApplicationIds[candidateId][vacancyId];
+                    if (destinationApplicationId.ApplicationGuid != candidateApplicationId.ApplicationGuid)
+                    {
+                        _logService.Warn($"Application with Id {destinationApplicationId.ApplicationId}, {candidateApplicationId.ApplicationId} seems to have changed guid {destinationApplicationId.ApplicationGuid}, {candidateApplicationId.ApplicationGuid}");
+                        applicationIds.Remove(destinationApplicationId.ApplicationGuid);
+                        applicationIds[candidateApplicationId.ApplicationGuid] = candidateApplicationId.ApplicationId;
+                    }
+                }
+            }
+
+            foreach (var vacancyApplication in vacancyApplications)
+            {
+                if (candidateIds.ContainsKey(vacancyApplication.CandidateId))
+                {
+                    var candidateId = candidateIds[vacancyApplication.CandidateId];
+                    var vacancyId = vacancyApplication.Vacancy.Id;
+                    if (candidateApplicationIds.ContainsKey(candidateId) && candidateApplicationIds[candidateId].ContainsKey(vacancyId))
+                    {
+                        var candidateApplicationId = candidateApplicationIds[candidateId][vacancyId];
+                        if (applicationIds.ContainsKey(vacancyApplication.Id))
+                        {
+                            if (applicationIds[vacancyApplication.Id] != candidateApplicationId.ApplicationId)
+                            {
+                                _logService.Warn($"Application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} does not match application id {applicationIds[vacancyApplication.Id]}. This suggests the id has changed post submission");
+                            }
+                        }
+                        else
+                        {
+                            _logService.Warn($"Found application id {candidateApplicationId.ApplicationId} for application guid {vacancyApplication.Id} via candidate id {candidateId} and vacancy id {vacancyId} rather than via application guid {candidateApplicationId.ApplicationGuid}. This suggests the id has changed post submission");
+                        }
+
+                        applicationIds[vacancyApplication.Id] = candidateApplicationId.ApplicationId;
+                    }
+                }
+            }
+
+            return applicationIds;
+        }
+
+        public ApplicationWithSubVacancy MapApplication(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies)
         {
             var applicationId = GetApplicationId(apprenticeshipApplication, applicationIds);
+            var sourceApplicationId = GetSourceApplicationId(applicationId, apprenticeshipApplication.LegacyApplicationId);
             var unsuccessfulReasonId = GetUnsuccessfulReasonId(apprenticeshipApplication.UnsuccessfulReason);
-            var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(applicationId) ? sourceApplicationSummaries[applicationId] : null;
-            return new Application
+            var sourceApplicationSummary = sourceApplicationSummaries.ContainsKey(sourceApplicationId) ? sourceApplicationSummaries[sourceApplicationId] : null;
+            return new ApplicationWithSubVacancy
             {
-                ApplicationId = applicationId,
-                CandidateId = candidateId,
-                VacancyId = apprenticeshipApplication.Vacancy.Id,
-                ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
-                WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
-                UnsuccessfulReasonId = unsuccessfulReasonId,
-                OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
-                NextActionId = 0,
-                NextActionOther = null,
-                AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
-                CVAttachmentId = null,
-                BeingSupportedBy = null,
-                LockedForSupportUntil = null,
-                WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
-                ApplicationGuid = apprenticeshipApplication.Id,
+                Application = new Application
+                {
+                    ApplicationId = applicationId,
+                    CandidateId = candidateId,
+                    VacancyId = apprenticeshipApplication.Vacancy.Id,
+                    ApplicationStatusTypeId = GetApplicationStatusTypeId(apprenticeshipApplication.Status),
+                    WithdrawnOrDeclinedReasonId = GetWithdrawnOrDeclinedReasonId(apprenticeshipApplication.WithdrawnOrDeclinedReason),
+                    UnsuccessfulReasonId = unsuccessfulReasonId,
+                    OutcomeReasonOther = GetOutcomeReasonOther(unsuccessfulReasonId, sourceApplicationSummary),
+                    NextActionId = 0,
+                    NextActionOther = null,
+                    AllocatedTo = GetAllocatedTo(unsuccessfulReasonId),
+                    CVAttachmentId = null,
+                    BeingSupportedBy = null,
+                    LockedForSupportUntil = null,
+                    WithdrawalAcknowledged = GetWithdrawalAcknowledged(unsuccessfulReasonId),
+                    ApplicationGuid = apprenticeshipApplication.Id,
+                },
+                SubVacancy = GetSubVacancy(subVacancies, applicationId, sourceApplicationId)
             };
         }
 
-        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
+        public ApplicationWithHistory MapApplicationWithHistory(VacancyApplication apprenticeshipApplication, int candidateId, IDictionary<Guid, int> applicationIds, IDictionary<int, ApplicationSummary> sourceApplicationSummaries, IDictionary<int, SubVacancy> subVacancies, IDictionary<int, Dictionary<int, int>> applicationHistoryIds, IDictionary<int, List<ApplicationHistorySummary>> sourceApplicationHistorySummaries)
         {
-            var application = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries);
-            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
-            return new ApplicationWithHistory {Application = application, ApplicationHistory = applicationHistory};
+            var applicationWithSubVacancy = MapApplication(apprenticeshipApplication, candidateId, applicationIds, sourceApplicationSummaries, subVacancies);
+            var applicationHistory = apprenticeshipApplication.MapApplicationHistory(applicationWithSubVacancy.Application.ApplicationId, applicationHistoryIds, sourceApplicationHistorySummaries);
+            return new ApplicationWithHistory {ApplicationWithSubVacancy = applicationWithSubVacancy, ApplicationHistory = applicationHistory};
         }
 
         public IDictionary<string, object> MapApplicationDictionary(Application application)
@@ -106,12 +163,24 @@
             };
         }
 
+        public IDictionary<string, object> MapSubVacancyDictionary(SubVacancy subVacancy)
+        {
+            return new Dictionary<string, object>
+            {
+                {"SubVacancyId", subVacancy.SubVacancyId},
+                {"VacancyId", subVacancy.VacancyId},
+                {"AllocatedApplicationId", subVacancy.AllocatedApplicationId},
+                {"StartDate", subVacancy.StartDate},
+                {"ILRNumber", subVacancy.ILRNumber}
+            };
+        }
+
         private int GetApplicationId(VacancyApplication apprenticeshipApplication, IDictionary<Guid, int> applicationIds)
         {
             if (applicationIds.ContainsKey(apprenticeshipApplication.Id))
             {
                 var applicationId = applicationIds[apprenticeshipApplication.Id];
-                if (apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
+                if (applicationId > 0 && apprenticeshipApplication.LegacyApplicationId != 0 && apprenticeshipApplication.LegacyApplicationId != applicationId)
                 {
                     _logService.Warn($"ApplicationId: {applicationId} does not match the LegacyApplicationId: {apprenticeshipApplication.LegacyApplicationId} for application with Id: {apprenticeshipApplication.Id}. This shouldn't change post submission");
                 }
@@ -119,6 +188,15 @@
             }
 
             return apprenticeshipApplication.LegacyApplicationId;
+        }
+
+        private static int GetSourceApplicationId(int applicationId, int legacyApplicationId)
+        {
+            if (legacyApplicationId != 0 && legacyApplicationId != applicationId)
+            {
+                return legacyApplicationId;
+            }
+            return applicationId;
         }
 
         private static int GetApplicationStatusTypeId(int status)
@@ -187,6 +265,16 @@
         private static bool? GetWithdrawalAcknowledged(int unsuccessfulReasonId)
         {
             return unsuccessfulReasonId != 10 && unsuccessfulReasonId != 11 && unsuccessfulReasonId != 13;
+        }
+
+        private static SubVacancy GetSubVacancy(IDictionary<int, SubVacancy> subVacancies, int applicationId, int sourceApplicationId)
+        {
+            var subVacancy = subVacancies.ContainsKey(sourceApplicationId) ? subVacancies[sourceApplicationId] : null;
+            if (subVacancy != null)
+            {
+                subVacancy.AllocatedApplicationId = applicationId;
+            }
+            return subVacancy;
         }
     }
 }

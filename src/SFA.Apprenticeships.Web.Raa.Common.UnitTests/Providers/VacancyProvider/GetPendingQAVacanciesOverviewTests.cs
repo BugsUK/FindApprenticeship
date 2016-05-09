@@ -27,7 +27,7 @@
 
         private Mock<IVacancyPostingService> _vacancyPostingService;
         private Mock<IProviderService> _providerService;
-        private Mock<IConfigurationService> _configurationService;
+        //private Mock<IConfigurationService> _configurationService;
         private Mock<IDateTimeService> _dateTimeService;
         private IVacancyQAProvider _provider;
 

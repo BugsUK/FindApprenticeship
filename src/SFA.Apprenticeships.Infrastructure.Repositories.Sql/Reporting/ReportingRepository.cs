@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Data;
     using System.Data.SqlClient;
+    using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
@@ -109,9 +110,9 @@
                     MiddleName = reader[2].ToString(),
                     SurName = reader[3].ToString(),
                     Gender = reader[4].ToString(),
-                    DateofBirth = reader[5].ToString(),
+                    DateofBirth = Convert.ToDateTime(reader[5]).ToString("dd/MM/yyy"),
                     Disability = reader[6].ToString(),
-                    AllowMarketingMessages=  reader[7].ToString(),
+                    AllowMarketingMessages = reader[7].ToString() == "TRUE" ? "Yes" : "No",
                     AddressLine1 = reader[8].ToString(),
                     AddressLine2 = reader[9].ToString(),
                     AddressLine3 = reader[10].ToString(),
@@ -127,9 +128,9 @@
                     Unsuccessful = reader[20].ToString(),
                     Ongoing = reader[21].ToString(),
                     Withdrawn = reader[22].ToString(),
-                    DateApplied = reader[23].ToString(),
-                    VacancyClosingDate = reader[24].ToString(),
-                    DateOfUnsuccessfulNotification = reader[25].ToString(),
+                    DateApplied = Convert.ToDateTime(reader[23]).ToString("dd/MM/yyy"),
+                    VacancyClosingDate = Convert.ToDateTime(reader[24]).ToString("dd/MM/yyy"),
+                    DateOfUnsuccessfulNotification = Convert.ToDateTime(reader[25]).ToString("dd/MM/yyy"),
                     LearningProvider = reader[26].ToString(),
                     LearningProviderUKPRN = reader[27].ToString(),
                     VacancyReferenceNumber = reader[28].ToString(),
@@ -146,6 +147,57 @@
             _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
 
             return response;
+        }
+
+        public List<ReportSuccessfulCandidatesResultItem> ReportSuccessfulCandidates(string type, DateTime fromDate, DateTime toDate, string ageRange, string managedBy,
+            string region)
+        {
+            _logger.Debug($"Executing ReportSuccessfulCandidates report with toDate {toDate} and fromdate {fromDate}...");
+
+            var response = new List<ReportSuccessfulCandidatesResultItem>();
+
+            var command = new SqlCommand("dbo.ReportILRStartDateList", (SqlConnection)_getOpenConnection.GetOpenConnection());
+            command.CommandType = CommandType.StoredProcedure;
+            command.Parameters.Add("Type", SqlDbType.Int).Value = type;
+            command.Parameters.Add("ManagedBy", SqlDbType.VarChar).Value = managedBy;
+            command.Parameters.Add("LSCRegion", SqlDbType.Int).Value = region;
+            command.Parameters.Add("LocalAuthority", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Postcode", SqlDbType.VarChar).Value = "n/a";
+            command.Parameters.Add("ProviderSiteID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("LSCInOut", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("StartDatePresent", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("AgeRange", SqlDbType.Int).Value = ageRange;
+            command.Parameters.Add("FromDate", SqlDbType.DateTime).Value = fromDate;
+            command.Parameters.Add("ToDate", SqlDbType.DateTime).Value = toDate;
+            command.Parameters.Add("RecAgentID", SqlDbType.Int).Value = -1;
+            command.Parameters.Add("Rowcount", SqlDbType.Int).Value = 0;
+            
+            command.CommandTimeout = 180;
+            var reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                response.Add(new ReportSuccessfulCandidatesResultItem()
+                {
+                    Name = reader[0].ToString(),
+                    Gender = reader[1].ToString(),
+                    Postcode = reader[2].ToString(),
+                    LearningProvider = reader[3].ToString(),
+                    VacancyReferenceNumber = reader[4].ToString(),
+                    VacancyTitle = reader[5].ToString(),
+                    VacancyType = reader[6].ToString(),
+                    Sector = reader[7].ToString(),
+                    Framework = reader[8].ToString(),
+                    FrameworkStatus = reader[9].ToString(),
+                    Employer = reader[10].ToString(),
+                    SuccessfulAppDate = reader[11].ToString(),
+                    ILRStartDate = reader[12].ToString(),
+                    ILRReference = reader[13].ToString()
+                });
+            }
+
+            _logger.Debug($"Done executing report with toDate {toDate} and fromdate {fromDate}.");
+
+            return response.OrderBy(r => r.SuccessfulAppDate).ToList();
         }
 
         public Dictionary<string, string> LocalAuthorityManagerGroups()
@@ -202,7 +254,7 @@
 
             command.Parameters.Add("startReportDateTime", SqlDbType.DateTime).Value = fromDate;
             command.Parameters.Add("endReportDateTime", SqlDbType.DateTime).Value = toDate;
-            command.Parameters.Add("providerToStudyUkprn", SqlDbType.Int).Value = providerUkprn;
+            command.Parameters.Add("providerToStudyUkprn", SqlDbType.Int).Value = (object)providerUkprn ?? DBNull.Value;
             command.Parameters.Add("vacancyStatusToStudy", SqlDbType.Int).Value = (object)vacancyStatus ?? DBNull.Value;
             command.CommandTimeout = 180;
             var reader = command.ExecuteReader();
@@ -214,11 +266,12 @@
                     VacancyTitle = reader["VacancyTitle"].ToString(),
                     ProviderName = reader["ProviderName"].ToString(),
                     EmployerName = reader["EmployerName"].ToString(),
-                    OriginalPostingDate = reader["OriginalPostingDate"].ToString(),
-                    OriginalClosingDate = reader["OriginalClosingDate"].ToString(),
-                    CurrentClosingDate = reader["CurrentClosingDate"].ToString(),
+                    OriginalPostingDate = Convert.ToDateTime(reader["OriginalPostingDate"]).ToString("dd/MM/yyy"),
+                    OriginalClosingDate = Convert.ToDateTime(reader["OriginalClosingDate"]).ToString("dd/MM/yyy"),
+                    CurrentClosingDate = Convert.ToDateTime(reader["CurrentClosingDate"]).ToString("dd/MM/yyy"),
                     NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
-                    NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString()
+                    NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString(),
+                    VacancyStatus = reader["VacancyStatus"].ToString()
                 }); 
             }
 

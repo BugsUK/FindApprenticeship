@@ -4,7 +4,7 @@
     ViewBag.Title = "Vacancies List Csv";
 }
 
-<h2>Vacancies List Csv</h2>
+<h2>Vacancies List CSV</h2>
 
 @using (Html.BeginForm()) 
 {
@@ -31,7 +31,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Download CSV" class="btn btn-default" />
+                <button id="btnValidate" type="submit" class="button" name="VacanciesListCsv" value="ValidateVacanciesListCsv">Get CSV Link</button>
+                @if (Model.IsValid)
+                {
+                    <button id="btnReject" type="submit" class="button-link" name="VacanciesListCsv" value="DownloadVacanciesListCsv">Download CSV</button>
+                }
             </div>
         </div>
     </div>

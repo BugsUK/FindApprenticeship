@@ -25,12 +25,15 @@
         private readonly CandidateRepository _candidateRepository;
         private readonly ApplicationRepository _sourceApplicationRepository;
         private readonly ApplicationHistoryRepository _sourceApplicationHistoryRepository;
+        private readonly SubVacancyRepository _sourceSubVacancyRepository;
         private readonly ApplicationRepository _destinationApplicationRepository;
         private readonly ApplicationHistoryRepository _destinationApplicationHistoryRepository;
+        private readonly SubVacancyRepository _destinationSubVacancyRepository;
         private readonly VacancyApplicationsRepository _vacancyApplicationsRepository;
 
         private readonly ITableSpec _applicationTable = new ApplicationTable();
         private readonly ITableSpec _applicationHistoryTable = new ApplicationHistoryTable();
+        private readonly ITableSpec _subVacanciesTable = new SubVacancyTable();
 
         public VacancyApplicationsMigrationProcessor(IVacancyApplicationsUpdater vacancyApplicationsUpdater, IApplicationMappers applicationMappers, IGenericSyncRespository genericSyncRespository, IGetOpenConnection sourceDatabase, IGetOpenConnection targetDatabase, IConfigurationService configurationService, ILogService logService)
         {
@@ -44,8 +47,10 @@
             _candidateRepository = new CandidateRepository(targetDatabase);
             _sourceApplicationRepository = new ApplicationRepository(sourceDatabase);
             _sourceApplicationHistoryRepository = new ApplicationHistoryRepository(sourceDatabase);
+            _sourceSubVacancyRepository = new SubVacancyRepository(sourceDatabase);
             _destinationApplicationRepository = new ApplicationRepository(targetDatabase);
             _destinationApplicationHistoryRepository = new ApplicationHistoryRepository(targetDatabase);
+            _destinationSubVacancyRepository = new SubVacancyRepository(targetDatabase);
             _vacancyApplicationsRepository = new VacancyApplicationsRepository(_vacancyApplicationsUpdater.CollectionName, configurationService, logService);
         }
 
@@ -110,12 +115,12 @@
         public void BulkUpsert(IList<ApplicationWithHistory> applicationsWithHistory, IDictionary<Guid, int> applicationIds)
         {
             //Bulk insert any applications with valid ids that are not already in the database
-            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
+            _genericSyncRespository.BulkInsert(_applicationTable, applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId != 0 && !applicationIds.ContainsKey(a.ApplicationWithSubVacancy.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.ApplicationWithSubVacancy.Application)));
 
             //Now insert any remaining applications one at a time
-            foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.Application.ApplicationId == 0))
+            foreach (var applicationWithHistory in applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId == 0))
             {
-                var applicationId = _targetDatabase.Insert(applicationWithHistory.Application);
+                var applicationId = _targetDatabase.Insert(applicationWithHistory.ApplicationWithSubVacancy.Application);
                 foreach (var applicationHistory in applicationWithHistory.ApplicationHistory)
                 {
                     applicationHistory.ApplicationId = (int)applicationId;
@@ -123,7 +128,7 @@
             }
 
             //Finally, update existing applications
-            _genericSyncRespository.BulkUpdate(_applicationTable, applicationsWithHistory.Where(a => a.Application.ApplicationId != 0 && applicationIds.ContainsKey(a.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.Application)));
+            _genericSyncRespository.BulkUpdate(_applicationTable, applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.Application.ApplicationId != 0 && applicationIds.ContainsKey(a.ApplicationWithSubVacancy.Application.ApplicationGuid)).Select(a => _applicationMappers.MapApplicationDictionary(a.ApplicationWithSubVacancy.Application)));
 
             //Insert new application history records
             var newApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId == 0);
@@ -132,6 +137,15 @@
             //Update existing application history records
             var existingApplicationHistories = applicationsWithHistory.SelectMany(a => a.ApplicationHistory).Where(a => a.ApplicationHistoryId != 0);
             _genericSyncRespository.BulkUpdate(_applicationHistoryTable, existingApplicationHistories.Select(ah => ah.MapApplicationHistoryDictionary()));
+
+            var subVacancies = applicationsWithHistory.Where(a => a.ApplicationWithSubVacancy.SubVacancy != null).Select(a => a.ApplicationWithSubVacancy.SubVacancy).ToList();
+            var existingSubVacancies = _destinationSubVacancyRepository.GetApplicationSummariesByIds(subVacancies.Select(sv => sv.AllocatedApplicationId));
+            
+            //Insert new sub vacancies
+            _genericSyncRespository.BulkInsert(_subVacanciesTable, subVacancies.Where(sv => !existingSubVacancies.ContainsKey(sv.AllocatedApplicationId)).Select(sv => _applicationMappers.MapSubVacancyDictionary(sv)));
+
+            //Update existing sub vacancies
+            _genericSyncRespository.BulkUpdate(_subVacanciesTable, subVacancies.Where(sv => existingSubVacancies.ContainsKey(sv.AllocatedApplicationId)).Select(sv => _applicationMappers.MapSubVacancyDictionary(sv)));
         }
 
         private void ProcessApplications(IAsyncCursor<VacancyApplication> cursor, long expectedCount, HashSet<int> vacancyIds, IDictionary<Guid, int> candidateIds, CancellationToken cancellationToken)
@@ -147,13 +161,19 @@
                 var maxDateUpdated = batch.Max(a => a.DateUpdated) ?? DateTime.MinValue;
 
                 LoadCandidates(candidateIds, batch);
+                var destinationCandidateIds = batch.Where(a => candidateIds.ContainsKey(a.CandidateId)).Select(a => candidateIds[a.CandidateId]).ToArray();
+                batch = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).ToList();
 
-                var applicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var destinationApplicationIds = _destinationApplicationRepository.GetApplicationIdsByGuid(batch.Select(a => a.Id));
+                var candidateApplicationIds = _destinationApplicationRepository.GetApplicationIdsByCandidateIds(destinationCandidateIds);
+                var applicationIds = _applicationMappers.GetApplicationIds(destinationApplicationIds, candidateApplicationIds, batch, candidateIds);
+
                 var legacyApplicationIds = batch.Where(a => a.LegacyApplicationId != 0).Select(a => a.LegacyApplicationId).ToArray();
                 var sourceApplicationSummaries = _sourceApplicationRepository.GetApplicationSummariesByIds(legacyApplicationIds);
                 var applicationHistoryIds = _destinationApplicationHistoryRepository.GetApplicationHistoryIdsByApplicationIds(applicationIds.Values);
                 var sourceApplicationHistorySummaries = _sourceApplicationHistoryRepository.GetApplicationHistorySummariesByApplicationIds(legacyApplicationIds);
-                var applicationsWithHistory = batch.Where(a => vacancyIds.Contains(a.Vacancy.Id) && candidateIds.ContainsKey(a.CandidateId)).Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
+                var subVacancies = _sourceSubVacancyRepository.GetApplicationSummariesByIds(legacyApplicationIds);
+                var applicationsWithHistory = batch.Select(a => _applicationMappers.MapApplicationWithHistory(a, candidateIds[a.CandidateId], applicationIds, sourceApplicationSummaries, subVacancies, applicationHistoryIds, sourceApplicationHistorySummaries)).ToList();
 
                 count += applicationsWithHistory.Count;
                 _logService.Info($"Processing {applicationsWithHistory.Count} {_vacancyApplicationsUpdater.CollectionName}");

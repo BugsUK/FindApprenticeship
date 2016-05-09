@@ -31,7 +31,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         public AccountController(IAccountMediator accountMediator, 
             IDismissPlannedOutageMessageCookieProvider dismissPlannedOutageMessageCookieProvider,
             IConfigurationService configurationService,
-            IUserDataProvider userDataProvider) : base(configurationService)
+            IUserDataProvider userDataProvider,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _accountMediator = accountMediator;
             _dismissPlannedOutageMessageCookieProvider = dismissPlannedOutageMessageCookieProvider;

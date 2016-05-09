@@ -15,9 +15,15 @@
             _getOpenConnection = getOpenConnection;
         }
 
-        public IDictionary<Guid, int> GetApplicationIdsByGuid(IEnumerable<Guid> applicationGuids)
+        public IDictionary<Guid, ApplicationIds> GetApplicationIdsByGuid(IEnumerable<Guid> applicationGuids)
         {
-            return _getOpenConnection.Query<KeyValuePair<Guid, int>>("SELECT ApplicationGuid as [Key], ApplicationId as Value FROM Application WHERE ApplicationGuid in @applicationGuids", new { applicationGuids }).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return _getOpenConnection.Query<ApplicationIds>("SELECT ApplicationId, CandidateId, VacancyId, ApplicationGuid FROM Application WHERE ApplicationGuid in @applicationGuids", new { applicationGuids }).ToDictionary(a => a.ApplicationGuid, a => a);
+        }
+
+        public IDictionary<int, Dictionary<int, ApplicationIds>> GetApplicationIdsByCandidateIds(IEnumerable<int> candidateIds)
+        {
+            var applicationIds = _getOpenConnection.Query<ApplicationIds>("SELECT ApplicationId, CandidateId, VacancyId, ApplicationGuid FROM Application WHERE CandidateId in @candidateIds", new { candidateIds });
+            return applicationIds.GroupBy(ah => ah.CandidateId).ToDictionary(g => g.Key, g => g.ToDictionary(ga => ga.VacancyId, ga => ga));
         }
 
         public IDictionary<int, ApplicationSummary> GetApplicationSummariesByIds(IEnumerable<int> applicationIds)

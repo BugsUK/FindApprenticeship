@@ -25,6 +25,11 @@
             return _reportingRepository.ReportUnsuccessfulCandidates(reportType, fromDate, toDate, ageRange, managedBy, region);
         }
 
+        public IList<ReportSuccessfulCandidatesResultItem> ReportSuccessfulCandidates(string reportType, DateTime fromDate, DateTime toDate, string ageRange, string managedBy, string region)
+        {
+            return _reportingRepository.ReportSuccessfulCandidates(reportType, fromDate, toDate, ageRange, managedBy, region);
+        }
+
         public Dictionary<string, string> LocalAuthorityManagerGroups()
         {
             return _reportingRepository.LocalAuthorityManagerGroups();

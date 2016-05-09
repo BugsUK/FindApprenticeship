@@ -4,7 +4,7 @@
     ViewBag.Title = "Successful Candidates Csv";
 }
 
-<h2>Successful Candidates Csv</h2>
+<h2>Successful Candidates CSV</h2>
 
 
 @using (Html.BeginForm())
@@ -64,7 +64,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Download CSV" class="btn btn-default" />
+                <button id="btnValidate" type="submit" class="button" name="SuccessfulCandidatesCsv" value="ValidateSuccessfulCandidatesCsv">Get CSV Link</button>
+                @if (Model.IsValid)
+                {
+                    <button id="btnReject" type="submit" class="button-link" name="SuccessfulCandidatesCsv" value="DownloadSuccessfulCandidatesCsv">Download CSV</button>
+                }
             </div>
         </div>
     </div>

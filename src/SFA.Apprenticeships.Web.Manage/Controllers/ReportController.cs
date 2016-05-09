@@ -25,30 +25,31 @@
             return View(new ReportVacanciesParameters());
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacanciesListCsv")]
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult VacanciesListCsv(ReportVacanciesParameters parameters)
+        public ActionResult ValidateVacanciesListCsv(ReportVacanciesParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
-                    switch (response.Code)
-                    {
-                        case ReportingMediatorCodes.ReportCodes.Ok:
-                            return File(response.ViewModel, "text/csv", "VacanciesList.csv");
-                        case ReportingMediatorCodes.ReportCodes.Error:
-                        default:
-                            ModelState.Clear();
-                            return View(parameters);
-                    }
+                    return View("VacanciesListCsv", validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return View(validationResponse.ViewModel);
+                    return View("VacanciesListCsv", validationResponse.ViewModel);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacanciesListCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacanciesListCsv(ReportVacanciesParameters parameters)
+        {
+            var response = _reportingMediator.GetVacanciesListReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "VacanciesList.csv");
         }
 
         [HttpGet]
@@ -62,9 +63,10 @@
             return View(response.ViewModel);
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "SuccessfulCandidatesCsv")]
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult SuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        public ActionResult ValidateSuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
             var newParameterSet = _reportingMediator.GetUnsuccessfulCandidatesReportParams();
@@ -73,22 +75,22 @@
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    var response = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
-                    switch (response.Code)
-                    {
-                        case ReportingMediatorCodes.ReportCodes.Ok:
-                            return File(response.ViewModel, "text/csv", "SuccessfulCandidates.csv");
-                        case ReportingMediatorCodes.ReportCodes.Error:
-                        default:
-                            ModelState.Clear();
-                            return View(parameters);
-                    }
+                    return View("SuccessfulCandidatesCsv", validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return View(validationResponse.ViewModel);
+                    return View("SuccessfulCandidatesCsv", validationResponse.ViewModel);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "SuccessfulCandidatesCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadSuccessfulCandidatesCsv(ReportSuccessfulCandidatesParameters parameters)
+        {
+            var response = _reportingMediator.GetSuccessfulCandidatesReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "SuccessfulCandidatesCsv.csv");
         }
 
         [HttpGet]
@@ -114,7 +116,7 @@
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    return View(validationResponse.ViewModel);
+                    return View("UnsuccessfulCandidatesCsv", validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
@@ -146,30 +148,32 @@
             return View(new ReportVacancyExtensionsParameters());
         }
 
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
         [HttpPost]
         [AuthorizeUser(Roles = Roles.Raa)]
-        public ActionResult VacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        public ActionResult ValidateVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
         {
             var validationResponse = _reportingMediator.Validate(parameters);
+            
             switch (validationResponse.Code)
             {
                 case ReportingMediatorCodes.ReportCodes.Ok:
-                    var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
-                    switch (response.Code)
-                    {
-                        case ReportingMediatorCodes.ReportCodes.Ok:
-                            return File(response.ViewModel, "text/csv", "VacancyExtensions.csv");
-                        case ReportingMediatorCodes.ReportCodes.Error:
-                        default:
-                            ModelState.Clear();
-                            return View(parameters);
-                    }
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
                 case ReportingMediatorCodes.ReportCodes.ValidationError:
                 default:
                     ModelState.Clear();
                     validationResponse.ValidationResult.AddToModelStateWithSeverity(ModelState, string.Empty);
-                    return View(validationResponse.ViewModel);
+                    return View("VacancyExtensionsCsv", validationResponse.ViewModel);
             }
+        }
+
+        [MultipleFormActionsButton(SubmitButtonActionName = "VacancyExtensionsCsv")]
+        [HttpPost]
+        [AuthorizeUser(Roles = Roles.Raa)]
+        public ActionResult DownloadVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
+        {
+            var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
+            return File(response.ViewModel, "text/csv", "VacancyExtensionsCsv.csv");
         }
     }
 }

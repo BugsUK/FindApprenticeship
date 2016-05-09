@@ -8,21 +8,11 @@ AS
 
 	declare @VacanciesWithExtensions table (VacancyId int,VacancyOwnerRelationshipId int, ApplicationClosingDate datetime null, ContractOwnerId int, VacancyStatus int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @TempResults table (VacancyId int, VacancyStatus nvarchar(255), VacancyOwnerRelationshipId int, EmployerId int, EmployerName nvarchar(255), ProviderSiteId int,
-		ContractOwnerId int, OriginalPostingDate datetime, OriginalClosingDate datetime, CurrentClosingDate datetime, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
-	declare @ProvidersToStudy table (ProviderId int)
+		ContractOwnerId int, OriginalPostingDate date, OriginalClosingDate date, CurrentClosingDate date, NumberOfExtensions int, NumberOfApplications int, VacancyReferenceNumber int, VacancyTitle nvarchar(255))
 	declare @VacancyStatusesToStudy table (VacancyStatusId int)
 
-	IF (@providerToStudyUkprn is null ) BEGIN
-		INSERT INTO @ProvidersToStudy(ProviderId)
-		SELECT ProviderId FROM Provider
-	END
-	ELSE BEGIN
-		INSERT INTO @ProvidersToStudy(ProviderId) SELECT ProviderId FROM Provider WHERE UKPRN = @providerToStudyUkprn
-	END
-
 	IF (@vacancyStatusToStudy is null ) BEGIN
-		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId)
-		SELECT VacancyStatusTypeId FROM VacancyStatusType
+		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId) VALUES (2),(6)
 	END
 	ELSE BEGIN
 		INSERT INTO @VacancyStatusesToStudy(VacancyStatusId) SELECT @vacancyStatusToStudy
@@ -59,7 +49,7 @@ AS
 		FROM Application as app
 		WHERE app.ApplicationStatusTypeId IN (2,3,5,6) -- Sent, In Progress, Successful, UnSuccessful
 		GROUP BY VacancyId
-	), cteOriginalClosingDate (VacancyId, HistoryDate) AS (
+	), cteOriginalClosingDate (VacancyId, ClosingDate) AS (
 		SELECT tmp.VacancyId, tmp.ClosingDate
 		FROM (
 			SELECT VacancyId, CONVERT(datetime, Comment, 20) as ClosingDate, ROW_NUMBER() OVER (PARTITION BY VacancyId ORDER BY CONVERT(datetime, Comment, 20)) as RowNumber
@@ -71,7 +61,7 @@ AS
 	)
 
 	INSERT INTO @TempResults (VacancyId, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, ProviderSiteId, ContractOwnerId, OriginalPostingDate, 
-		CurrentClosingDate, OriginalClosingDate, NumberOfExtensions, NumberOfApplications, VacancyReferenceNumber, VacancyTitle)
+		OriginalClosingDate, CurrentClosingDate, NumberOfExtensions, NumberOfApplications, VacancyReferenceNumber, VacancyTitle)
 		SELECT 
 			vwe.VacancyId,
 			vst.FullName,
@@ -80,8 +70,8 @@ AS
 			e.FullName as EmployerName,
 			ps.ProviderSiteID, 
 			vwe.ContractOwnerId,
-			cteOriginalPostingDate.HistoryDate as OriginalPostingDate,
-			cteOriginalClosingDate.HistoryDate as OriginalClosingDate,
+			cteOriginalPostingDate.HistoryDate as OriginalPostingDate,			
+			cteOriginalClosingDate.ClosingDate as OriginalClosingDate,
 			vwe.ApplicationClosingDate as CurrentClosingDate,
 			cteNumberOfVacancyExtensions.NumberOfExtensions as NumberOfExtensions,
 			cteNumberOfApplications.NumberOfApplications as NumberOfApplications,
@@ -96,8 +86,8 @@ AS
 		LEFT JOIN cteOriginalClosingDate ON cteOriginalClosingDate.VacancyId = vwe.VacancyId
 		INNER JOIN cteNumberOfVacancyExtensions ON cteNumberOfVacancyExtensions.VacancyId = vwe.VacancyId
 		LEFT JOIN cteNumberOfApplications ON cteNumberOfApplications.VacancyId = vwe.VacancyId
-		WHERE cteOriginalPostingDate.HistoryDate >= @startReportDateTime AND 
-			  cteOriginalPostingDate.HistoryDate <= @endReportDateTime 
+		WHERE cteOriginalPostingDate.HistoryDate >= dbo.fngetStartOfDay(@startReportDateTime) AND 
+			  cteOriginalPostingDate.HistoryDate <= dbo.fngetendOfDay(@endReportDateTime) 
 		ORDER BY VacancyId
 
 	;WITH cteProviderId(ProviderSiteID, ProviderId) AS (
@@ -117,13 +107,13 @@ AS
 		INNER JOIN cteProviderId ON cteProviderId.ProviderSiteID = tmp.ProviderSiteID
 		INNER JOIN dbo.Provider as p ON cteProviderId.ProviderID = p.ProviderID
 		WHERE tmp.ContractOwnerId is null AND 
-			  p.ProviderID IN ( SELECT ProviderId FROM @ProvidersToStudy)
+			  (@providerToStudyUkprn IS NULL OR p.UKPRN = @providerToStudyUkprn)
 	UNION 
 		SELECT VacancyId, CONCAT('VAC', FORMAT(VacancyReferenceNumber, '000000000')) as VacancyReferenceNumber, VacancyTitle, VacancyStatus, VacancyOwnerRelationshipId, EmployerId, EmployerName, tmp.ProviderSiteId, ContractOwnerId, 
 		OriginalPostingDate, OriginalClosingDate, CurrentClosingDate, NumberOfExtensions, ISNULL(NumberOfApplications, 0) as NumberOfApplications, p.FullName as ProviderName FROM @TempResults as tmp
 		INNER JOIN dbo.Provider as p ON tmp.ContractOwnerId = p.ProviderID
 		WHERE tmp.ContractOwnerId is not null AND 
-			  p.ProviderID IN ( SELECT ProviderId FROM @ProvidersToStudy)
+			  (@providerToStudyUkprn IS NULL OR p.UKPRN = @providerToStudyUkprn)
 
 	END
 

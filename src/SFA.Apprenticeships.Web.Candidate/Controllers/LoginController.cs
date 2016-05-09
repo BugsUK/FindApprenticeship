@@ -29,19 +29,17 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly IAuthenticationTicketService _authenticationTicketService;
         private readonly ICandidateServiceProvider _candidateServiceProvider;
         private readonly ILoginMediator _loginMediator;
-        private readonly ILogService _logService;
 
         public LoginController(IAuthenticationTicketService authenticationTicketService,
             ICandidateServiceProvider candidateServiceProvider,
             ILoginMediator loginMediator,
             IConfigurationService configurationService,
             ILogService logService)
-            : base(configurationService)
+            : base(configurationService, logService)
         {
             _authenticationTicketService = authenticationTicketService; //todo: shouldn't be in here, move to Provider layer?
             _candidateServiceProvider = candidateServiceProvider; //todo: shouldn't be in here, move to Provider layer?
             _loginMediator = loginMediator;
-            _logService = logService;
         }
 
         [HttpGet]
