@@ -10,6 +10,7 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Domain.Entities.Raa.Locations;
+    using FluentAssertions;
 
     [TestFixture]
     public class CreateVacancyTests : TestsBase
