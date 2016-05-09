@@ -169,7 +169,9 @@
             const int numberOfPositions = 2;
             const bool isEmployerLocationMainApprenticeshipLocation = false;
 
-            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, numberOfPositions, isEmployerLocationMainApprenticeshipLocation, aComment, aComment, string.Empty);
+            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, 
+                vacancyReferenceNumber, numberOfPositions, isEmployerLocationMainApprenticeshipLocation, 
+                aComment, aComment, string.Empty);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
             MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
@@ -179,7 +181,8 @@
 
             MockVacancyPostingService.Verify(
                  s =>
-                     s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
+                     s.UpdateVacancy(It.Is<Vacancy>(
+                         v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
                          v.NumberOfPositions == vacancyWithLocationAddresses.Vacancy.NumberOfPositions &&
                          v.LocationAddressesComment == vacancyWithLocationAddresses.Vacancy.LocationAddressesComment &&
                          v.AdditionalLocationInformation == null &&
