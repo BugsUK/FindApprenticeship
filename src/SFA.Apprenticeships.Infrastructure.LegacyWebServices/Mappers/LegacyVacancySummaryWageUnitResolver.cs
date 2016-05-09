@@ -2,13 +2,12 @@
 {
     using AutoMapper;
     using Domain.Entities.Vacancies;
-    using VacancySummary = GatewayServiceProxy.VacancySummary;
 
-    public class LegacyVacancySummaryWageUnitResolver : ValueResolver<VacancySummary, WageUnit>
+    public class LegacyVacancySummaryWageUnitResolver : ValueResolver<string, WageUnit>
     {
-        protected override WageUnit ResolveCore(VacancySummary source)
+        protected override WageUnit ResolveCore(string wageType)
         {
-            var wageTypeText = string.IsNullOrWhiteSpace(source.WageType) ? "" : source.WageType.ToLower();
+            var wageTypeText = string.IsNullOrWhiteSpace(wageType) ? "" : wageType.ToLower();
             if (wageTypeText == "weekly")
             {
                 return WageUnit.Weekly;
