@@ -5,7 +5,6 @@
     using Common.Mediators;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
@@ -19,7 +18,6 @@
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
         private const int AnInt = 1234;
-        private const long ALong = 1234;
 
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
@@ -148,11 +146,10 @@
         [Test]
         public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
         {
-            var isEmployerLocationMainApprenticeshipLocation = true;
             var numberOfPositions = 5;
             var viewModel = new VacancyPartyViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                IsEmployerLocationMainApprenticeshipLocation = true,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
@@ -174,7 +171,7 @@
 
             var result = mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
-                .Be(isEmployerLocationMainApprenticeshipLocation);
+                .Be(true);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
         }
 
@@ -182,7 +179,7 @@
         public void EmptyVacancyIfPreviousStateEmployerLocationIsDifferentFromCurrentStateEmployerLocation()
         {
             var numberOfPositions = 5;                        
-            const string InitialVacancyTitle = "title";
+            const string initialVacancyTitle = "title";
             var viewModel = new VacancyPartyViewModel
             {
                 IsEmployerLocationMainApprenticeshipLocation = false,
@@ -194,34 +191,10 @@
                 },                
                 EmployerDescription = "Text about Employer Description",
                 VacancyReferenceNumber = AnInt
-            };
-
-        //    ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
-        //        .Returns(new VacancyPartyViewModel
-        //        {
-        //            Employer = new EmployerViewModel
-        //            {
-        //                Address = new AddressViewModel()
-        //            }
-        //        });            
-
-        //    ProviderProvider.Setup(p => p.ConfirmVacancyParty(viewModel))
-        //       .Returns(new VacancyPartyViewModel
-        //       {
-        //           Employer = new EmployerViewModel
-        //           {
-        //               Address = new AddressViewModel()
-        //           },
-        //           VacancyGuid = Guid.NewGuid(),
-        //           IsEmployerLocationMainApprenticeshipLocation = false,
-        //           NumberOfPositions = viewModel.NumberOfPositions,
-        //           VacancyReferenceNumber = AnInt
-        //});
-
-            //VacancyPostingProvider.Setup(s => s.GetVacancy(It.IsAny<int>())).Returns(AVacancyWithSameEmployerLocationForApprenticeship());                                            
+            };        
 
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
-               .Returns(GetLiveVacancyWithComments(AnInt, InitialVacancyTitle));
+               .Returns(GetLiveVacancyWithComments(AnInt, initialVacancyTitle));
 
             var provider = GetVacancyPostingProvider();
 
@@ -289,14 +262,6 @@
             var vacancy = BasicVacancy();
             vacancy.VacancyQuestionsViewModel.FirstQuestion = AString;
 
-            return vacancy;
-        }
-
-        private VacancyViewModel AVacancyWithSameEmployerLocationForApprenticeship()
-        {
-            var vacancy = BasicVacancy();
-            vacancy.VacancyQuestionsViewModel.FirstQuestion = AString;
-            vacancy.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation = true;
             return vacancy;
         }
 

@@ -2,25 +2,21 @@
 {
     using Moq;
     using NUnit.Framework;
-
     using Ploeh.AutoFixture;
-
-    using Recruit.Mediators.VacancyPosting;
     using Raa.Common.Validators.Provider;
     using Raa.Common.Validators.Vacancy;
     using Raa.Common.Providers;
     using Raa.Common.Validators.VacancyPosting;
-
-    using SFA.Apprenticeships.Application.Interfaces.Applications;
-    using SFA.Apprenticeships.Application.Interfaces.Employers;
-    using SFA.Apprenticeships.Application.Interfaces.Providers;
-    using SFA.Apprenticeships.Application.Interfaces.ReferenceData;
-    using SFA.Apprenticeships.Application.Interfaces.Users;
-    using SFA.Apprenticeships.Application.Interfaces.Vacancies;
-    using SFA.Apprenticeships.Application.Interfaces.VacancyPosting;
-    using SFA.Apprenticeships.Domain.Entities.Raa.Parties;
-    using SFA.Apprenticeships.Web.Common.Configuration;
-    using SFA.Apprenticeships.Web.Raa.Common.Configuration;
+    using Application.Interfaces.Applications;
+    using Application.Interfaces.Employers;
+    using Application.Interfaces.Providers;
+    using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Users;
+    using Application.Interfaces.Vacancies;
+    using Application.Interfaces.VacancyPosting;
+    using Domain.Entities.Raa.Parties;
+    using Common.Configuration;
+    using Raa.Common.Configuration;
     using SFA.Infrastructure.Interfaces;
 
     public class TestsBase
