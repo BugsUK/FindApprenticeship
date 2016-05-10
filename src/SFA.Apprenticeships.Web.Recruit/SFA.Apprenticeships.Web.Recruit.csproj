@@ -427,10 +427,15 @@
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
