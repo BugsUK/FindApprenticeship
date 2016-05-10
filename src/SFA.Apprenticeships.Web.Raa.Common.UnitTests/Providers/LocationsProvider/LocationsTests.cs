@@ -161,32 +161,31 @@
         }
 
         [Test]
-        public void RemoveLocationAddressesShouldCallReplaceLocationInformation()
+        public void RemoveLocationAddressesShouldCallRemoveLocationAddresses()
         {
-            var vacancyReferenceNumber = 1;
+            //Arrange
+            int vacancyReferenceNumber = 1;
             var vacancyGuid = Guid.NewGuid();
-            const string aComment = "a comment";
-            const int numberOfPositions = 2;
             const bool isEmployerLocationMainApprenticeshipLocation = false;
 
             var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, 
-                vacancyReferenceNumber, numberOfPositions, isEmployerLocationMainApprenticeshipLocation, 
-                aComment, aComment, string.Empty);
+                vacancyReferenceNumber, 1, isEmployerLocationMainApprenticeshipLocation, 
+                null, null, string.Empty);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
+            //Act
             provider.RemoveLocationAddresses(vacancyGuid);
 
+            //Assert
             MockVacancyPostingService.Verify(
                  s =>
                      s.UpdateVacancy(It.Is<Vacancy>(
                          v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
                          v.NumberOfPositions == vacancyWithLocationAddresses.Vacancy.NumberOfPositions &&
-                         v.LocationAddressesComment == vacancyWithLocationAddresses.Vacancy.LocationAddressesComment &&
                          v.AdditionalLocationInformation == null &&
-                         v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));
+                         v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));                        
 
             MockVacancyPostingService.Verify(
                 s =>
