@@ -41,12 +41,13 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
-    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_About.cshtml")]
-    public partial class About : System.Web.Mvc.WebViewPage<dynamic>
+    [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_AboutFull.cshtml")]
+    public partial class AboutFull : System.Web.Mvc.WebViewPage<dynamic>
     {
-        public About()
+        public AboutFull()
         {
         }
         public override void Execute()
@@ -59,13 +60,13 @@ WriteLiteral(" class=\"about\"");
 WriteLiteral(">\r\n");
 
             
-            #line 11 "..\..\Views\Shared\_About.cshtml"
+            #line 11 "..\..\Views\Shared\_AboutFull.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 11 "..\..\Views\Shared\_About.cshtml"
+            #line 11 "..\..\Views\Shared\_AboutFull.cshtml"
       
         var version = ViewBag.Version;
         var environment = ViewBag.Environment; 
@@ -78,7 +79,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("\r\n    Environment: ");
 
             
-            #line 17 "..\..\Views\Shared\_About.cshtml"
+            #line 17 "..\..\Views\Shared\_AboutFull.cshtml"
             Write(environment);
 
             
@@ -87,7 +88,7 @@ WriteLiteral("\r\n    Environment: ");
 WriteLiteral(" &#x25cf; Version: ");
 
             
-            #line 17 "..\..\Views\Shared\_About.cshtml"
+            #line 17 "..\..\Views\Shared\_AboutFull.cshtml"
                                            Write(version);
 
             
@@ -96,7 +97,7 @@ WriteLiteral(" &#x25cf; Version: ");
 WriteLiteral(" &#x25cf; Session: ");
 
             
-            #line 17 "..\..\Views\Shared\_About.cshtml"
+            #line 17 "..\..\Views\Shared\_AboutFull.cshtml"
                                                                       Write(sessionId);
 
             
@@ -105,7 +106,7 @@ WriteLiteral(" &#x25cf; Session: ");
 WriteLiteral(" &#x25cf; User: ");
 
             
-            #line 17 "..\..\Views\Shared\_About.cshtml"
+            #line 17 "..\..\Views\Shared\_AboutFull.cshtml"
                                                                                                 Write(userId);
 
             
