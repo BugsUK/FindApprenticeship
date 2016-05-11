@@ -156,6 +156,7 @@
   <ItemGroup>
     <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Mappers\RecruitMappersTests.cs" />
+    <Compile Include="Mediators\Home\HomeMediatorTests.cs" />
     <Compile Include="Mediators\Locations\LocationsTests.cs" />
     <Compile Include="Mediators\Locations\TestsBase.cs" />
     <Compile Include="Mediators\ProviderUser\AuthorizeTests.cs" />

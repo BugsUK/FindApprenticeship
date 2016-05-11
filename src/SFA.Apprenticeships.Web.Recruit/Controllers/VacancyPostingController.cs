@@ -158,7 +158,7 @@
         [HttpPost]
         public ActionResult ConfirmEmployer(VacancyPartyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             switch (response.Code)
             {
@@ -168,13 +168,15 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                         response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { vacancyPartyId = response.ViewModel.VacancyPartyId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
@@ -224,7 +226,7 @@
         [HttpPost]
         public ActionResult CreateVacancyAndPreview(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                 new
@@ -239,7 +241,7 @@
         [HttpPost]
         public ActionResult CreateVacancyAndExit(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancyAndExit(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
@@ -250,7 +252,7 @@
         [HttpPost]
         public ActionResult CreateVacancy(NewVacancyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.CreateVacancy(viewModel);
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
 
             Func<ActionResult> okAction = () => RedirectToRoute(RecruitmentRouteNames.TrainingDetails, 
                 new
@@ -259,6 +261,24 @@
                 });
 
             return HandleCreateVacancy(response, okAction);
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveCreateVacancy(NewVacancyViewModel viewModel)
+        {
+            // Call autosave instead of CreateVacancy?
+            var response = _vacancyPostingMediator.CreateVacancy(viewModel, User.GetUkprn());
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                case VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         private ActionResult HandleCreateVacancy(MediatorResponse<NewVacancyViewModel> response, Func<ActionResult> okAction )
@@ -315,6 +335,22 @@
                     {
                         vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber
                     }));
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveTrainingDetails(TrainingDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpGet]
@@ -458,6 +494,22 @@
                     }));
         }
 
+        [HttpPost]
+        public JsonResult AutoSaveVacancySummary(FurtherVacancyDetailsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         [MultipleFormActionsButton(SubmitButtonActionName = "VacancySummary")]
         [HttpPost]
         public ActionResult VacancySummaryAndExit(FurtherVacancyDetailsViewModel viewModel)
@@ -560,6 +612,25 @@
             return HandleVacancyRequirementsProspects(response);
         }
 
+        [HttpPost]
+        public JsonResult AutoSaveRequirementsProspects(VacancyRequirementsProspectsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                case VacancyPostingMediatorCodes.UpdateVacancy.OkAndExit:
+                case VacancyPostingMediatorCodes.UpdateVacancy.OnlineVacancyOk:
+                case VacancyPostingMediatorCodes.UpdateVacancy.OfflineVacancyOk:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
         private ActionResult HandleVacancyRequirementsProspects(
             MediatorResponse<VacancyRequirementsProspectsViewModel> response)
         {
@@ -657,6 +728,22 @@
             var response = _vacancyPostingMediator.UpdateVacancyAndExit(viewModel);
 
             return HandleVacancyQuestions(response, () => RedirectToRoute(RecruitmentRouteNames.RecruitmentHome));
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveVacancyQuestions(VacancyQuestionsViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.UpdateVacancy.FailedValidation:
+                case VacancyPostingMediatorCodes.UpdateVacancy.Ok:
+                    ModelState.Clear();
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         private ActionResult HandleVacancyQuestions(MediatorResponse<VacancyQuestionsViewModel> response,
@@ -804,7 +891,7 @@
         [HttpPost]
         public ActionResult ConfirmNewEmployer(VacancyPartyViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel);
+            var response = _vacancyPostingMediator.ConfirmEmployer(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
@@ -815,13 +902,15 @@
                     return View(response.ViewModel);
                 case VacancyPostingMediatorCodes.ConfirmEmployer.Ok:
                     if (viewModel.ComeFromPreview &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                         response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.PreviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });
                     }
 
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(RecruitmentRouteNames.CreateVacancy, new { providerSiteId = response.ViewModel.ProviderSiteId, employerId = response.ViewModel.Employer.EmployerId, vacancyGuid = response.ViewModel.VacancyGuid, numberOfPositions = response.ViewModel.NumberOfPositions, comeFromPreview = viewModel.ComeFromPreview });
                     }
@@ -865,7 +954,7 @@
         [HttpPost]
         public ActionResult Locations(LocationSearchViewModel viewModel)
         {
-            var response = _vacancyPostingMediator.AddLocations(viewModel);
+            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
 
             ModelState.Clear();
 
@@ -885,6 +974,23 @@
                     throw new InvalidMediatorCodeException(response.Code);
             }
 
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveLocations(LocationSearchViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.AddLocations(viewModel, User.GetUkprn());
+
+            ModelState.Clear();
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.CreateVacancy.Ok:
+                case VacancyPostingMediatorCodes.CreateVacancy.FailedValidation:
+                    return new JsonResult();
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [MultipleFormActionsButtonWithParameter(SubmitButtonActionName = "AddLocations")]
@@ -1013,6 +1119,24 @@
                 case VacancyPostingMediatorCodes.ManageDates.InvalidState:
                     return RedirectToRoute(RecruitmentRouteNames.VacancyApplications,
                         new {vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber});
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult AutoSaveManageDates(VacancyDatesViewModel viewModel)
+        {
+            var response = _vacancyPostingMediator.UpdateVacancy(viewModel, true);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedHasApplications:
+                case VacancyPostingMediatorCodes.ManageDates.UpdatedNoApplications:
+                case VacancyPostingMediatorCodes.ManageDates.FailedValidation:
+                case VacancyPostingMediatorCodes.ManageDates.InvalidState:
+                    ModelState.Clear();
+                    return new JsonResult();
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }

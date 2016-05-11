@@ -12,6 +12,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
+    using Configuration;
     using Domain.Entities.Raa.Parties;
     using Ploeh.AutoFixture;
     using SFA.Infrastructure.Interfaces;
@@ -51,6 +52,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.LocationsProvid
             MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
                 .Returns(new Fixture().Build<Employer>().Create());
             _mockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
+            _mockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
 
             _mockTimeService = new Mock<IDateTimeService>();
             _mockApprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();

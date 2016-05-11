@@ -16,15 +16,15 @@
         {
             var messageTypes = new[]
             {
-                MessageTypes.SendProviderUserEmailVerificationCode
+                MessageTypes.SendProviderUserEmailVerificationCode,
+                MessageTypes.ProviderContactUsMessage
             };
 
             return messageTypes.Contains(communicationRequest.MessageType);
         }
 
         public override void Handle(CommunicationRequest communicationRequest)
-        {
-            // TODO: AG: US824: add SiteDomainName.
+        {            
             QueueEmailMessage(communicationRequest);
         }
     }

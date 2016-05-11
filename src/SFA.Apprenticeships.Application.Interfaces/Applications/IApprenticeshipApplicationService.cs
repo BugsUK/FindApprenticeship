@@ -21,5 +21,7 @@
         void SetSuccessfulDecision(Guid applicationId);
 
         void SetUnsuccessfulDecision(Guid applicationId);
+
+        int GetNewApplicationsCount(List<int> liveVacancyIds);
     }
 }

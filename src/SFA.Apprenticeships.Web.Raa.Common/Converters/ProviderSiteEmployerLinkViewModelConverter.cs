@@ -5,9 +5,10 @@
 
     public static class ProviderSiteEmployerLinkViewModelConverter
     {
-        public static VacancyPartyViewModel Convert(this VacancyParty vacancyParty, Employer employer)
+        public static VacancyPartyViewModel Convert(
+            this VacancyParty vacancyParty, Employer employer, string anonymousEmployerName = null)
         {
-            return new VacancyPartyViewModel
+            var viewModel = new VacancyPartyViewModel
             {
                 VacancyPartyId = vacancyParty.VacancyPartyId,
                 ProviderSiteId = vacancyParty.ProviderSiteId,
@@ -16,6 +17,12 @@
                 Employer = employer.Convert(),
                 IsEmployerAddressValid = true
             };
+            if (!string.IsNullOrWhiteSpace(anonymousEmployerName))
+            {
+                viewModel.Employer.Name = anonymousEmployerName;
+            }
+
+            return viewModel;
         }
     }
 }

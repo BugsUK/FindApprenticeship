@@ -50,6 +50,8 @@
             clonedVacancy.ClosingDate.Should().NotHaveValue();
             clonedVacancy.PossibleStartDate.Should().NotHaveValue();
             clonedVacancy.SubmissionCount.Should().Be(0);
+            clonedVacancy.EmployerAnonymousName.Should().BeNull();
+
             CheckAllCommentsAreNull(clonedVacancy);
 
             return true;
@@ -93,8 +95,9 @@
                 DateQAApproved = DateTime.UtcNow.AddHours(-4),
                 Status = VacancyStatus.Live,
                 ClosingDate = DateTime.UtcNow.AddDays(10),
-                OwnerPartyId = 42
-            };
+                OwnerPartyId = 42,
+                EmployerAnonymousName = "Anon Corp"
+        };
         }
     }
 }

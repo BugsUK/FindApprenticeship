@@ -55,11 +55,9 @@
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
-                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
-                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
@@ -99,7 +97,7 @@
                 .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
-                .IgnoreMember(v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.EmployerDescription)
                 .MapMemberFrom(v => v.EmployersWebsite, av => av.EmployerWebsiteUrl)
                 .IgnoreMember(v => v.MaxNumberofApplications)
@@ -128,6 +126,8 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
+                .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
+                .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -170,6 +170,7 @@
                 .IgnoreMember(av => av.FirstQuestionComment)
                 .IgnoreMember(av => av.SecondQuestionComment)
                 .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
                 .IgnoreMember(av => av.EmployerWebsiteUrlComment)
                 .IgnoreMember(av => av.LocationAddressesComment)
@@ -218,18 +219,25 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .AfterMap((v, av) =>
                 {
-                    av.Address = new DomainPostalAddress
+                    if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine3) || !string.IsNullOrWhiteSpace(v.AddressLine4)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine5) || !string.IsNullOrWhiteSpace(v.PostCode)
+                        || !string.IsNullOrWhiteSpace(v.Town))
                     {
-                        AddressLine1 = v.AddressLine1,
-                        AddressLine2 = v.AddressLine2,
-                        AddressLine3 = v.AddressLine3,
-                        AddressLine4 = v.AddressLine4,
-                        AddressLine5 = v.AddressLine5,
-                        Postcode = v.PostCode,
-                        Town = v.Town
-                    };
+                        av.Address = new DomainPostalAddress
+                                         {
+                                             AddressLine1 = v.AddressLine1,
+                                             AddressLine2 = v.AddressLine2,
+                                             AddressLine3 = v.AddressLine3,
+                                             AddressLine4 = v.AddressLine4,
+                                             AddressLine5 = v.AddressLine5,
+                                             Postcode = v.PostCode,
+                                             Town = v.Town
+                                         };
+                    }
 
                     if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
                         (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
@@ -277,6 +285,7 @@
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
@@ -327,7 +336,6 @@
                         av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
                 })
-
                 .End();
 
             Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()

@@ -29,7 +29,7 @@
 
             var detail = new ApprenticeshipVacancyDetail
             {
-                Id = vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyId,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -56,17 +56,14 @@
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.Name,
-                //TODO: How is this captured in RAA?
-                //AnonymousEmployerName = vacancy.,
+                AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
                 EmployerDescription = vacancyParty.EmployerDescription,
                 EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
-                //TODO: How is this captured in RAA?
-                //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
+                IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                 ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
@@ -78,7 +75,7 @@
                 //TODO: How is this captured in RAA?
                 //RecruitmentAgency = vacancy.,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
                 //ProviderSectorPassRate = vacancy.,
@@ -122,18 +119,11 @@
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
         {
-            var vacancyGeoPoint = new GeoPoint();
-            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            return new GeoPoint
             {
-                vacancyGeoPoint.Latitude = 52.4009991288043;
-                vacancyGeoPoint.Longitude = -1.50812239495425;
-            }
-            else
-            {
-                vacancyGeoPoint.Longitude = geoPoint.Longitude;
-                vacancyGeoPoint.Latitude = geoPoint.Latitude;
-            }
-            return vacancyGeoPoint;
+                Longitude = geoPoint.Longitude,
+                Latitude = geoPoint.Latitude
+            };
         }
 
         private static string GetContactInformation(Vacancy vacancy)

@@ -29,11 +29,14 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
+    using Application.Interfaces.Reporting;
     using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
+    using Application.Reporting;
     using Mappers;
     using Mediators.Candidate;
+    using Mediators.Reporting;
     using Raa.Common.Providers;
 
     public class ManagementWebRegistry : Registry
@@ -72,12 +75,15 @@
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
+            For<IReportingService>().Use<ReportingService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IVacancyLockingService>().Use<VacancyLockingService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
         }
 
         private void RegisterStrategies()
@@ -111,6 +117,7 @@
             For<IAgencyUserMediator>().Use<AgencyUserMediator>();
             For<ICandidateMediator>().Use<CandidateMediator>();
             For<IVacancyMediator>().Use<VacancyMediator>();
+            For<IReportingMediator>().Use<ReportingMediator>();
         }
     }
 }

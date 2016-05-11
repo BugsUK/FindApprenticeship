@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.Locations
 {
-    using Application.Location;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.Providers;

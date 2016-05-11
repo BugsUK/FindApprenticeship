@@ -23,11 +23,14 @@
         {
             var providerUser = _providerUserReadRepository.GetByUsername(username);
 
-            tokens = tokens.Union(new[]
-                {
-                    new CommunicationToken(CommunicationTokens.ProviderUserFullName, providerUser.Fullname), 
-                    new CommunicationToken(CommunicationTokens.RecipientEmailAddress, providerUser.Email),
-                });
+            if (providerUser != null)
+            {
+                tokens = tokens.Union(new[]
+                                          {
+                                              new CommunicationToken(CommunicationTokens.ProviderUserFullName, providerUser.Fullname), 
+                                              new CommunicationToken(CommunicationTokens.RecipientEmailAddress, providerUser.Email),
+                                          });
+            }
 
             var request = new CommunicationRequest
             {

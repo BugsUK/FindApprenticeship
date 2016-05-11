@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
@@ -45,12 +46,22 @@
             const string ukprn = "ukprn";
             const int employerId = 2;
             const int providerSiteId = 43;
-            const string additionalLocationInformation = "additional location information";
             
-            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(additionalLocationInformation);
+            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(_vacancyGuid);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(_vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId))
+                .Returns(vacancyWithLocationAddresses.LocationAddresses);
+            MockMapper.Setup(
+                m =>
+                    m.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
+                        It.Is<List<VacancyLocation>>(
+                            l => l.Count == vacancyWithLocationAddresses.LocationAddresses.Count)))
+                .Returns(
+                    Enumerable.Range(1, vacancyWithLocationAddresses.LocationAddresses.Count)
+                        .Select(i => new VacancyLocationAddressViewModel())
+                        .ToList());
+
             var provider = GetVacancyPostingProvider();
 
             var result = provider.LocationAddressesViewModel(ukprn, providerSiteId, employerId, _vacancyGuid);
@@ -138,7 +149,7 @@
 
             MockVacancyPostingService.Verify(
                  s =>
-                     s.SaveVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
+                     s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == null &&
                          v.NumberOfPositions == null &&
                          v.LocationAddressesComment == null &&
                          v.AdditionalLocationInformation == null &&
@@ -150,29 +161,31 @@
         }
 
         [Test]
-        public void RemoveLocationAddressesShouldCallReplaceLocationInformation()
+        public void RemoveLocationAddressesShouldCallRemoveLocationAddresses()
         {
-            var vacancyReferenceNumber = 1;
+            //Arrange
+            int vacancyReferenceNumber = 1;
             var vacancyGuid = Guid.NewGuid();
-            const string aComment = "a comment";
-            const int numberOfPositions = 2;
             const bool isEmployerLocationMainApprenticeshipLocation = false;
 
-            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, numberOfPositions, isEmployerLocationMainApprenticeshipLocation, aComment, aComment, string.Empty);
+            var vacancyWithLocationAddresses = GetVacancyWithLocationAddresses(vacancyGuid, 
+                vacancyReferenceNumber, 1, isEmployerLocationMainApprenticeshipLocation, 
+                null, null, string.Empty);
 
             MockVacancyPostingService.Setup(s => s.GetVacancy(vacancyGuid)).Returns(vacancyWithLocationAddresses.Vacancy);
-            MockVacancyPostingService.Setup(s => s.GetVacancyLocations(vacancyWithLocationAddresses.Vacancy.VacancyId)).Returns(vacancyWithLocationAddresses.LocationAddresses);
             var provider = GetVacancyPostingProvider();
 
+            //Act
             provider.RemoveLocationAddresses(vacancyGuid);
 
+            //Assert
             MockVacancyPostingService.Verify(
                  s =>
-                     s.UpdateVacancy(It.Is<Vacancy>(v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
+                     s.UpdateVacancy(It.Is<Vacancy>(
+                         v => v.IsEmployerLocationMainApprenticeshipLocation == vacancyWithLocationAddresses.Vacancy.IsEmployerLocationMainApprenticeshipLocation &&
                          v.NumberOfPositions == vacancyWithLocationAddresses.Vacancy.NumberOfPositions &&
-                         v.LocationAddressesComment == vacancyWithLocationAddresses.Vacancy.LocationAddressesComment &&
                          v.AdditionalLocationInformation == null &&
-                         v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));
+                         v.AdditionalLocationInformationComment == vacancyWithLocationAddresses.Vacancy.AdditionalLocationInformationComment)));                        
 
             MockVacancyPostingService.Verify(
                 s =>
@@ -313,6 +326,11 @@
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber)
         {
             return GetVacancyWithLocationAddresses(vacancyGuid, vacancyReferenceNumber, string.Empty);
+        }
+
+        private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid)
+        {
+            return GetVacancyWithLocationAddresses(vacancyGuid, 1, string.Empty);
         }
 
         private static VacancyWithLocationAddresses GetVacancyWithLocationAddresses(Guid vacancyGuid, int vacancyReferenceNumber, string additionalLocationInformation)

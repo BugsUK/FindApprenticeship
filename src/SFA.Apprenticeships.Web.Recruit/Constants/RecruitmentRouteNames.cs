@@ -30,14 +30,19 @@
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";
+        public const string AutoSaveCreateVacancy = "AutoSaveCreateVacancy";
         public const string ReviewCreateVacancy = "ReviewCreateVacancy";
         public const string TrainingDetails = "TrainingDetails";
+        public const string AutoSaveTrainingDetails = "AutoSaveTrainingDetails";
         public const string ReviewTrainingDetails = "ReviewTrainingDetails";
         public const string VacancySummary = "VacancySummary";
+        public const string AutoSaveVacancySummary = "AutoSaveVacancySummary";
         public const string ReviewVacancySummary = "ReviewVacancySummary";
         public const string VacancyRequirementsProspects = "VacancyRequirementsProspects";
+        public const string AutoSaveRequirementsProspects = "AutoSaveRequirementsProspects";
         public const string ReviewVacancyRequirementsProspects = "ReviewVacancyRequirementsProspects";
         public const string VacancyQuestions = "VacancyQuestions";
+        public const string AutoSaveVacancyQuestions = "AutoSaveVacancyQuestions";
         public const string ReviewVacancyQuestions = "ReviewVacancyQuestions";
         public const string PreviewVacancy = "PreviewVacancy";
         public const string SubmitVacancy = "SubmitVacancy";
@@ -47,7 +52,10 @@
         public const string ConfirmNewEmployerSelection = "ConfirmNewEmployerSelection";
         public const string SearchAddresses = "SearchAddresses";
         public const string AddLocations = "AddLocations";
+        public const string AutoSaveLocations = "AutoSaveLocations";
         public const string ShowLocations = "ShowLocations";
+        public const string ManageDates = "ManageDates";
+        public const string AutoSaveManageDates = "AutoSaveManageDates";
 
         // Vacancy posting - existing employer
         public const string SelectExistingEmployer = "SelectExistingEmployer";
@@ -71,7 +79,5 @@
         public const string ConfirmUnsuccessfulApprenticeshipApplication = "ConfirmUnsuccessfulApprenticeshipApplication";
         // Traineeships
         public const string ReviewTraineeshipApplication = "ReviewTraineeshipApplication";
-
-        public const string ManageDates = "ManageDates";
     }
 }

@@ -47,6 +47,10 @@
         string Name { get; }
 
         IEnumerable<string> PrimaryKeys { get; }
+
+        IEnumerable<string> ErrorKeys { get; }
+
+        bool IdentityInsert { get; }
     }
 
     public class FullScanRequiredException : Exception

@@ -6,6 +6,7 @@
 
 @using (Html.BeginRouteForm(RecruitmentRouteNames.VacancyRequirementsProspects, FormMethod.Post))
 {
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
     @Html.DisplayFor(m => m, VacancyRequirementsProspectsViewModel.PartialView)
 
     var saveButtonText = (Model.Status == VacancyStatus.Referred || Model.ComeFromPreview) ? "Save and return to Preview" : "Save and continue";
@@ -18,4 +19,21 @@
             @Html.RouteLink("Cancel", RecruitmentRouteNames.PreviewVacancy, new { vacancyReferenceNumber = Model.VacancyReferenceNumber })
         }
     </div>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/autosave")
+
+    <script>
+        var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
+
+        $(window).on('load', function() {
+            autoSave.initialise({
+                formSelector: "form",
+                timeout: autoSaveTimeout,
+                postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveRequirementsProspects)'
+            });
+        });
+    </script>
 }

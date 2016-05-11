@@ -15,6 +15,7 @@
     [TestFixture]
     public class GeoCodeVacancyTests : TestBase
     {
+        private const string Ukprn = "12345";
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
@@ -74,7 +75,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockGeocodeService.Verify(m => m.GetGeoPointFor(postalAddress), Times.Once);
@@ -118,7 +119,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             // Assert.
             MockGeocodeService.Verify(gs => gs.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(2));
@@ -154,7 +155,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             // Assert.
             MockGeocodeService.Verify(gs => gs.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Once);
@@ -180,7 +181,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(
@@ -203,7 +204,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(
@@ -221,7 +222,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockGeocodeService.Verify(m => m.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Never);

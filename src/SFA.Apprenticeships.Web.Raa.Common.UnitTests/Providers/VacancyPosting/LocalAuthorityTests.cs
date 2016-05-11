@@ -15,6 +15,7 @@
     [TestFixture]
     public class LocalAuthorityTests : TestBase
     {
+        private const string Ukprn = "12345";
         private const string EdsUrn = "112";
         private const int EmployerId = 1;
         private const int ProviderSiteId = 3;
@@ -72,7 +73,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber);
+            provider.CreateVacancy(_validNewVacancyViewModelSansReferenceNumber, Ukprn);
 
             // Assert.
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode), Times.Once);
@@ -110,7 +111,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             // Assert.
             MockLocalAuthorityLookupService.Verify(m => m.GetLocalAuthorityCode(It.IsAny<string>()), Times.Once);
@@ -156,7 +157,7 @@
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            provider.CreateVacancy(locationSearchViewModel);
+            provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(m => m.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);

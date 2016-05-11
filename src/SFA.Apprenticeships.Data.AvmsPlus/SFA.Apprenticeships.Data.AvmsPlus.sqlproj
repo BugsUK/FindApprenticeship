@@ -115,7 +115,6 @@
     <Folder Include="dbo\Functions\" />
     <Folder Include="dbo\Stored Procedures\" />
     <Folder Include="Provider" />
-    <Folder Include="dbo\Schemas" />
     <Folder Include="Scripts" />
     <Folder Include="Scripts\TestData" />
     <Folder Include="Scripts\Data" />
@@ -124,6 +123,8 @@
     <Folder Include="Sync" />
     <Folder Include="UserProfile" />
     <Folder Include="Reference" />
+    <Folder Include="Vacancy" />
+    <Folder Include="dbo\Sequences" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\ExternalSystem.sql" />
@@ -889,6 +890,41 @@
     <None Include="Scripts\Data\dbo.VacancyProvisionRelationshipStatusType.Upsert.sql" />
     <None Include="Scripts\Data\dbo.EmployerContact.Upsert.sql" />
     <None Include="Scripts\Data\dbo.Person.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.SystemParameters.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupMembership.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroup.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupPurpose.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.LocalAuthorityGroupType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationHistoryEvent.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationNextAction.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationStatusType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationUnsuccessfulReasonType.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.ApplicationWithdrawnOrDeclinedReasonType.Upsert.sql" />
+    <Build Include="dbo\Functions\fnGetEndOfDay.function.sql" />
+    <Build Include="dbo\Functions\fnReportSplitListToTable.function.sql" />
+    <Build Include="dbo\Functions\ReportGetChildManagingAreas.function.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetAllProviderSites.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetDisplayNames.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetGeoRegionsIncludingAll.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetManagedBy.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetTrainingProviderByStatusAndManagedBy.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportVacanciesList.proc.sql" />
+    <Build Include="dbo\Stored Procedures\ReportUnsuccessfulCandidateApplications.proc.sql" />
+    <Build Include="dbo\Functions\fnGetStartOfDay.function.sql" />
+    <Build Include="dbo\Stored Procedures\ReportGetVacancyExtensions.sql" />
+    <Build Include="dbo\Sequences\dbo.LegacyApplicationIdSequence.sql" />
+    <Build Include="dbo\Sequences\dbo.VacancyReferenceNumberSequence.sql" />
+    <None Include="Scripts\Data\dbo.CandidateDisability.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateEthnicOrigin.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateGender.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateHistoryEvent.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.CandidateULNStatus.Upsert.sql" />
+    <None Include="Scripts\Data\dbo.PostcodeOutcode.Upsert.sql" />
+    <Build Include="dbo\Stored Procedures\ReportILRStartDateList.proc.sql" />
+    <Build Include="dbo\Functions\fnReportGenerateVacancyRefNo.function.sql" />
+    <Build Include="dbo\Functions\fnReportGetAgeRangeDates.function.sql" />
+    <None Include="Scripts\Data\dbo.ReportAgeRange.Upsert.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
@@ -905,7 +941,5 @@
   <ItemGroup>
     <RefactorLog Include="SFA.Apprenticeships.Data.AvmsPlus.refactorlog" />
   </ItemGroup>
-  <Target 
-    Name="Publish" 
-    Condition="'false'=='true'" />
+  <Target Name="Publish" Condition="'false'=='true'" />
 </Project>

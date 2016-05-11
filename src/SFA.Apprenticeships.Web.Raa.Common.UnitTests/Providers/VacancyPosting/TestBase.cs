@@ -13,6 +13,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
+    using Configuration;
     using SFA.Infrastructure.Interfaces;
     using Web.Common.Configuration;
 
@@ -46,6 +47,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             MockReferenceDataService = new Mock<IReferenceDataService>();
 
             MockConfigurationService.Setup(mcs => mcs.Get<CommonWebConfiguration>()).Returns(new CommonWebConfiguration());
+            MockConfigurationService.Setup(mcs => mcs.Get<RecruitWebConfiguration>())
+                .Returns(new RecruitWebConfiguration {AutoSaveTimeoutInSeconds = 60});
 
             MockTimeService = new Mock<IDateTimeService>();
             _apprenticeshipApplicationService = new Mock<IApprenticeshipApplicationService>();

@@ -23,6 +23,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
         public int VacancyReferenceNumber { get; set; }
 
         public UpdateVacancyDatesState State { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 
     public enum UpdateVacancyDatesState

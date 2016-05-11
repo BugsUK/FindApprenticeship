@@ -17,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
 
     public abstract class SearchMediatorBase : MediatorBase
     {
-        private static readonly Regex VacancyIdRegex = new Regex(@"(^\d+).*");
+        private static readonly Regex VacancyIdRegex = new Regex(@"(^\-?\d+).*");
 
         private readonly int _vacancyResultsPerPage;
 

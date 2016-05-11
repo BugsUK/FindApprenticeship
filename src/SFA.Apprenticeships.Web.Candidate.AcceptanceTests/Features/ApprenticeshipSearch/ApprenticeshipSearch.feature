@@ -213,7 +213,13 @@ Scenario: Return to search results link appears if arriving from search results 
 
 @US528 @SmokeTests
 Scenario: Return to find apprenticeship link appears if not arriving from search results page
-	When I navigate to the details of the apprenticeship vacancy 506663
+	Given I select the "first" apprenticeship vacancy in location "N7 8LS" that can apply by this website
+	Then I am on the ApprenticeshipDetailsPage page
+	When I choose ApplyButton
+	Then I am on the LoginPage page
+	And I navigate to the ApprenticeshipDetailsPage page with parameters
+		| VacancyId   |
+		| {VacancyId} |
 	And I am on the ApprenticeshipDetailsPage page
 	Then I see
 		| Field                  | Rule   | Value |

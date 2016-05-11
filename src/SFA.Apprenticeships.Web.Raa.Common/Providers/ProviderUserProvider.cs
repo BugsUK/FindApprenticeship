@@ -7,13 +7,17 @@ using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
 namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using Application.Interfaces.Providers;
+    using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Users;
+    
+    using SFA.Apprenticeships.Domain.Entities.Communication;
 
     public class ProviderUserProvider : IProviderUserProvider
     {
         private readonly IUserProfileService _userProfileService;
         private readonly IProviderService _providerService;
         private readonly IProviderUserAccountService _providerUserAccountService;
+        
 
         public ProviderUserProvider(
             IUserProfileService userProfileService,
@@ -37,6 +41,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return null;
         }
 
+        public ProviderUser GetProviderUser(string username)
+        {
+            return _userProfileService.GetProviderUser(username);
+        }
+
+        
+
         public IEnumerable<ProviderUserViewModel> GetUserProfileViewModels(string ukprn)
         {
             var providerUsers = _userProfileService.GetProviderUsers(ukprn);
@@ -59,7 +70,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _userProfileService.UpdateProviderUser(providerUser);
 
             return true;
-        }
+        }                
 
         public ProviderUserViewModel SaveProviderUser(
             string username, string ukprn, ProviderUserViewModel providerUserViewModel)
@@ -123,6 +134,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             };
 
             return viewModel;
-        }
+        }        
     }
 }
