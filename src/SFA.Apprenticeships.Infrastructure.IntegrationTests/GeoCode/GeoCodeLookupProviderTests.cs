@@ -43,15 +43,15 @@
         public void ShouldReturnTheGeoCodingForAValidAddress()
         {
             var provider = _container.GetInstance<IGeoCodeLookupProvider>();
-            var postalAddres = new PostalAddress // TODO: check this Address
+            var postalAddres = new PostalAddress
             {
                 AddressLine1 = "Clerkenwell Close",
                 AddressLine3 = "London"
             };
             var geoPoint = provider.GetGeoCodingFor(postalAddres); 
 
-            geoPoint.Latitude.Should().Be(52.401); //TODO: check this values
-            geoPoint.Longitude.Should().Be(-1.5081); //TODO: check this values
+            geoPoint.Latitude.Should().Be(51.523); 
+            geoPoint.Longitude.Should().Be(-0.1076);
         }
 
         [Test, Category("Integration")]
