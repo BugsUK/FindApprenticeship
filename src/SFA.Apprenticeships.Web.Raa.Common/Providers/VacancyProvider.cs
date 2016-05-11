@@ -383,6 +383,11 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
+            if (employer.Address.GeoPoint == null)
+            {
+                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            }
+
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
             vacancy.OfflineVacancy = newVacancyViewModel.OfflineVacancy;
@@ -1457,18 +1462,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var addresses = viewModel.Addresses.Select(a => new VacancyLocation
-            {
-                Address = new PostalAddress
-                {
-                    AddressLine1 = a.Address.AddressLine1,
-                    AddressLine2 = a.Address.AddressLine2,
-                    AddressLine3 = a.Address.AddressLine3,
-                    AddressLine4 = a.Address.AddressLine4,
-                    Postcode = a.Address.Postcode,
-                },
-                NumberOfPositions = a.NumberOfPositions.Value
-            });
+            var addresses = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>);
 
             var vacancyParty =
                 _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
@@ -1493,6 +1487,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 //Set address
                 vacancy.Address = addresses.Single().Address;
                 vacancy.NumberOfPositions = addresses.Single().NumberOfPositions;
+                vacancy.LocalAuthorityCode =
+                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.UpdateVacancy(vacancy);
 

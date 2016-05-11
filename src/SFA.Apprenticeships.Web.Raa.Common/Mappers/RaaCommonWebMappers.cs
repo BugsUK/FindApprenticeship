@@ -27,7 +27,13 @@
         public override void Initialise()
         {
             Mapper.CreateMap<Domain.Entities.Raa.Locations.GeoPoint, GeoPointViewModel>();
-            Mapper.CreateMap<GeoPointViewModel, Domain.Entities.Raa.Locations.GeoPoint>();
+            Mapper.CreateMap<GeoPointViewModel, Domain.Entities.Raa.Locations.GeoPoint>()
+                .ForMember(dest => dest.Easting, opt => opt.Ignore())
+                .ForMember(dest => dest.Northing, opt => opt.Ignore());
+
+            Mapper.CreateMap<Domain.Entities.Locations.GeoPoint, GeoPointViewModel>();
+            Mapper.CreateMap<GeoPointViewModel, Domain.Entities.Locations.GeoPoint>();
+
             Mapper.CreateMap<PostalAddress, AddressViewModel>()
                 .ForMember(dest => dest.Uprn, opt => opt.Ignore());
             Mapper.CreateMap<AddressViewModel, PostalAddress>()
@@ -46,11 +52,13 @@
                 .ForMember(dest => dest.EmployerDescriptionComment, opt => opt.Ignore())
                 .ForMember(dest => dest.EmployerWebsiteUrlComment, opt => opt.Ignore())
                 .ForMember(dest => dest.NumberOfPositionsComment, opt => opt.Ignore())
-                .ForMember(dest => dest.Employer, opt => opt.Ignore());
+                .ForMember(dest => dest.Employer, opt => opt.Ignore())
+                .ForMember(dest => dest.IsEmployerAddressValid, opt => opt.Ignore());
             Mapper.CreateMap<VacancyLocation, VacancyLocationAddressViewModel>();
             Mapper.CreateMap<VacancyLocationAddressViewModel, VacancyLocation>()
                 .ForMember(dest => dest.VacancyId, opt => opt.Ignore())
-                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore());
+                .ForMember(dest => dest.VacancyLocationId, opt => opt.Ignore())
+                .ForMember(dest => dest.LocalAuthorityCode, opt => opt.Ignore());
 
             Mapper.CreateMap<DateTime?, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();
             Mapper.CreateMap<DateTime, DateViewModel>().ConvertUsing<DateTimeToDateViewModelConverter>();

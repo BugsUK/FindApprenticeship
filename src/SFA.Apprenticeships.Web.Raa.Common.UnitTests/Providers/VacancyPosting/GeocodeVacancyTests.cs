@@ -72,6 +72,7 @@
                 .Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithoutGeocode);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -115,6 +116,7 @@
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
             MockVacancyPostingService.Setup(v => v.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -151,6 +153,7 @@
             MockMapper.Setup(m => m.Map<GeoPoint, GeoPointViewModel>(geopoint))
                 .Returns(geoPointViewModel);
             MockMapper.Setup(m => m.Map<GeoPointViewModel, GeoPoint>(geoPointViewModel)).Returns(geopoint);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -178,6 +181,7 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockGeocodeService.Setup(m => m.GetGeoPointFor(postalAddress)).Returns(geopoint);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -201,6 +205,7 @@
                 .Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -219,6 +224,7 @@
             var employerWithGeocode = new Fixture().Create<Employer>();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -244,7 +250,7 @@
                 EmployerEdsUrn = EdsUrn,
                 Addresses = new List<VacancyLocationAddressViewModel>
                 {
-                    new VacancyLocationAddressViewModel {Address = addressViewModel}
+                    new VacancyLocationAddressViewModel {Address = addressViewModel, NumberOfPositions = 3}
                 }
             };
 
@@ -253,6 +259,13 @@
             MockMapper.Setup(m => m.Map<GeoPoint, GeoPointViewModel>(geopoint))
                 .Returns(geoPointViewModel);
             MockMapper.Setup(m => m.Map<GeoPointViewModel, GeoPoint>(geoPointViewModel)).Returns(geopoint);
+            MockMapper.Setup(
+                m =>
+                    m.Map<VacancyLocationAddressViewModel, VacancyLocation>(It.IsAny<VacancyLocationAddressViewModel>()))
+                .Returns(new VacancyLocation
+                {
+                    Address = postalAddress
+                });
 
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))

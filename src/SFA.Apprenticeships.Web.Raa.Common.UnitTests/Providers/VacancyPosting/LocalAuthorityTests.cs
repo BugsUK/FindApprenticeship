@@ -70,6 +70,7 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(employerWithGeocode.Address.Postcode)).Returns(localAuthorityCode);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -107,6 +108,7 @@
             MockMapper.Setup(m => m.Map<GeoPointViewModel, GeoPoint>(geoPointViewModel)).Returns(geopoint);
             MockLocalAuthorityLookupService.Setup(m => m.GetLocalAuthorityCode(It.IsAny<string>()))
                 .Returns(localAuthorityCode);
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -154,6 +156,8 @@
             MockVacancyPostingService.Setup(v => v.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
 
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -185,6 +189,14 @@
                 }
             };
 
+            MockMapper.Setup(
+                m =>
+                    m.Map<VacancyLocationAddressViewModel, VacancyLocation>(It.IsAny<VacancyLocationAddressViewModel>()))
+                .Returns(new VacancyLocation
+                {
+                    Address = postalAddress
+                });
+
             MockMapper.Setup(m => m.Map<AddressViewModel, PostalAddress>(addressViewModel)).Returns(postalAddress);
             var geoPointViewModel = new Fixture().Create<GeoPointViewModel>();
             MockMapper.Setup(m => m.Map<GeoPoint, GeoPointViewModel>(geopoint))
@@ -195,6 +207,8 @@
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
+
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 
@@ -245,6 +259,8 @@
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
                 .Returns(vacancy);
+
+            MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
             var provider = GetVacancyPostingProvider();
 

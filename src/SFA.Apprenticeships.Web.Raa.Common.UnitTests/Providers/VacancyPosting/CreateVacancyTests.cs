@@ -112,7 +112,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>())).Returns(new VacancyParty());
-            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(new Employer());
+            MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Create<Employer>());
+            
             var provider = GetVacancyPostingProvider();
 
             // Act.

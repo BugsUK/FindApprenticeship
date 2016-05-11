@@ -211,6 +211,15 @@
                     m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(new List<VacancyLocation>());
 
+            MockMapper.Setup(
+                m =>
+                    m.Map<VacancyLocationAddressViewModel, VacancyLocation>(It.IsAny<VacancyLocationAddressViewModel>()))
+                .Returns(new VacancyLocation
+                {
+                    Address = new Fixture().Create<PostalAddress>(),
+                    NumberOfPositions = numberOfPositions
+                });
+
             var provider = GetVacancyPostingProvider();
 
             var locationSearchViewModel =

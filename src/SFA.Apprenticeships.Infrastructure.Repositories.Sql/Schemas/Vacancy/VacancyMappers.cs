@@ -128,6 +128,7 @@
                 .IgnoreMember(v => v.InterviewsFromDate)
                 .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
                 .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
+                .IgnoreMember(v => v.LocalAuthorityId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -220,6 +221,7 @@
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
+                .IgnoreMember(av => av.LocalAuthorityCode)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)

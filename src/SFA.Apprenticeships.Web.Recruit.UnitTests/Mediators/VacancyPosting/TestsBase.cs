@@ -52,6 +52,7 @@
             VacancyPostingService=new Mock<IVacancyPostingService>();
             ProviderProvider = new Mock<IProviderProvider>();
             EmployerProvider = new Mock<IEmployerProvider>();
+            GeoCodingProvider = new Mock<IGeoCodingProvider>();
 
             _mockLogService = new Mock<ILogService>();
             MockMapper = new Mock<IMapper>();
@@ -59,6 +60,7 @@
             MockProviderService = new Mock<IProviderService>();
             MockEmployerService = new Mock<IEmployerService>();
             _mockReferenceDataService = new Mock<IReferenceDataService>();
+            _mockConfigurationService = new Mock<IConfigurationService>();
 
             MockProviderService.Setup(s => s.GetProviderSite(It.IsAny<int>()))
                 .Returns(new Fixture().Build<ProviderSite>().Create());
@@ -74,6 +76,8 @@
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
             _mockCurrentUserService = new Mock<ICurrentUserService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
+            _mockGeoCodingService = new Mock<IGeoCodeLookupService>();
+            _mockLocalAuthorityService = new Mock<ILocalAuthorityLookupService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
