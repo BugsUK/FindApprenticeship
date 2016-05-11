@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
+    using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
     using Infrastructure.Raa.IoC;
@@ -69,6 +70,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
