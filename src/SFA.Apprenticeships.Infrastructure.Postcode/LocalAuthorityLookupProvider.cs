@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Postcode
 {
+    using System.Data;
     using Application.Location;
     using Configuration;
     using SFA.Infrastructure.Interfaces;
@@ -19,58 +20,38 @@
         {
             _logService.Debug($"Calling LocalAuthorityLookupProvider to get local authority code for postcode: {postcode}");
 
-            //TODO: OO: Once we obtain keys, implement service
+            var dataSet = GetDataFromService(BuildUrl(postcode));
 
-            return "00CQ";
+            if (IsThereAnyError(dataSet))
+                return null;
 
-            ////Build the url
-            //var url = Config.LocalAuthorityEndpoint;
-            //url += "&Key=" + System.Web.HttpUtility.UrlEncode(Config.Key);
-            //url += "&PostcodeOrPlace=" + System.Web.HttpUtility.UrlEncode(postcode);
-            //url += "&UserName=" + System.Web.HttpUtility.UrlEncode(Config.Username);
+            return NoDataPresent(dataSet) ? null : dataSet.Tables[0].Rows[0].ItemArray[10].ToString();
+        }
 
-            ////Create the dataset
-            //var dataSet = new System.Data.DataSet();
-            //dataSet.ReadXml(url);
+        private static bool NoDataPresent(DataSet dataSet)
+        {
+            return dataSet.Tables.Count == 0;
+        }
 
-            ////Check for an error
-            //if (dataSet.Tables.Count == 1 && dataSet.Tables[0].Columns.Count == 4 &&
-            //    dataSet.Tables[0].Columns[0].ColumnName == "Error")
-            //    return null;
+        private static bool IsThereAnyError(DataSet dataSet)
+        {
+            return dataSet.Tables.Count == 1 && dataSet.Tables[0].Columns.Count == 4 &&
+                   dataSet.Tables[0].Columns[0].ColumnName == "Error";
+        }
 
-            ////Return the dataset
-            //return dataSet.Tables[0].Rows[0].ItemArray[10].ToString();
+        private static DataSet GetDataFromService(string url)
+        {
+            var dataSet = new System.Data.DataSet();
+            dataSet.ReadXml(url);
+            return dataSet;
+        }
 
-            ////FYI: The dataset contains the following columns:
-            ////Location
-            ////Easting
-            ////Northing
-            ////Latitude
-            ////Longitude
-            ////OsGrid
-            ////CountryCode
-            ////CountryName
-            ////CountyCode
-            ////CountyName
-            ////DistrictCode
-            ////DistrictName
-            ////WardCode
-            ////WardName
-            ////NhsShaCode
-            ////NhsShaName
-            ////NhsPctCode
-            ////NhsPctName
-            ////LeaCode
-            ////LeaName
-            ////GovernmentOfficeCode
-            ////GovernmentOfficeName
-            ////WestminsterConstituencyCode
-            ////WestminsterConstituencyName
-            ////WestminsterMP
-            ////WestminsterParty
-            ////WestminsterConstituencyCode2010
-            ////WestminsterConstituencyName2010
-
+        private string BuildUrl(string postcode)
+        {
+            var url = Config.LocalAuthorityEndpoint;
+            url += "&Key=" + System.Web.HttpUtility.UrlEncode(Config.Key);
+            url += "&PostcodeOrPlace=" + System.Web.HttpUtility.UrlEncode(postcode);
+            return url;
         }
     }
 }
