@@ -15,6 +15,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Common.Services;
     using Infrastructure.Azure.ServiceBus.Configuration;
     using Infrastructure.Azure.ServiceBus.IoC;
+    using Infrastructure.Caching.Memory.IoC;
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
@@ -68,6 +69,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
+                x.AddRegistry<MemoryCacheRegistry>();
 
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
