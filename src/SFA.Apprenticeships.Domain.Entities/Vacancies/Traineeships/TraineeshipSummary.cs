@@ -2,5 +2,9 @@
 {
     public class TraineeshipSummary : VacancySummary
     {
+        public TraineeshipSummary()
+        {
+            NumberOfPositions = 0;
+        }
     }
 }
