@@ -98,3 +98,14 @@ footer {
     display: none !important;
   }
 }
+
+.footer__hidden-version {
+    color: $grey-8;
+    position: absolute;
+}
+
+@media print {
+    .footer__hidden-version {
+        display: none;
+    }
+}

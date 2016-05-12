@@ -607,9 +607,9 @@
     <None Include="Startup\startup.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\Shared\_About.cshtml">
+    <Content Include="Views\Shared\_AboutFull.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_About.generated.cs</LastGenOutput>
+      <LastGenOutput>_AboutFull.generated.cs</LastGenOutput>
     </Content>
     <None Include="Startup\startup.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -799,6 +799,10 @@
     <Content Include="Views\ApprenticeshipSearch\_wage.cshtml">
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_wage.generated.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Shared\_AboutDisguised.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>_AboutDisguised.generated.cs</LastGenOutput>
     </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -1428,10 +1432,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_About.generated.cs">
+    <Compile Include="Views\Shared\_AboutDisguised.generated.cs">
+      <DependentUpon>_AboutDisguised.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_About.cshtml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\_AboutFull.generated.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>_AboutFull.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_ErrorLayout.generated.cs">
       <AutoGen>True</AutoGen>

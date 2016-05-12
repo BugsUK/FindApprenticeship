@@ -730,6 +730,10 @@
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
@@ -737,6 +741,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
+      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>
