@@ -160,7 +160,7 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
-        window.locationAddressesViewModel.addLocationAddressByField(address.Line1, address.Line2, address.Line3, address.City, address.PostalCode, null, address.DomesticId);
+        window.locationAddressesViewModel.addLocationAddressByField(address.Line1, address.Line2, address.Line3, address.Line4, address.City, address.PostalCode, null, address.DomesticId);
     }
 
     function populateLatLng(address) {
