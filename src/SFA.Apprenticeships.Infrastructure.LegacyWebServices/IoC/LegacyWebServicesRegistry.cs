@@ -72,31 +72,7 @@
                         .Named("LegacyTraineeshipVacancyDataProvider")
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
-                }                
-
-                #region Vacancy Data Service And Providers
-
-                #endregion
-
-                #region Candidate and Application Providers
-
-                For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
-
-                For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
-
-                For<IMapper>().Use<ApplicationStatusSummaryMapper>()
-                    .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
-
-                if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
-                {
-                    For<ILegacyApplicationStatusesProvider>()
-                        .Use<LegacyCandidateApplicationStatusesProvider>()
-                        .Ctor<IMapper>()
-                        .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                        .Name = "LegacyCandidateApplicationStatusesProvider";
                 }
-
-                #endregion
 
                 #region Reference Data Service and Providers
 
@@ -114,8 +90,25 @@
                         .Named(cacheConfiguration.DefaultCache);
                 }
 
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
+
                 #endregion
             }
+
+            #region Candidate and Application Providers
+
+            For<ILegacyCandidateProvider>().Use<LegacyCandidateProvider>();
+
+            For<ILegacyApplicationProvider>().Use<LegacyApplicationProvider>();
+
+            For<IMapper>().Use<ApplicationStatusSummaryMapper>()
+                .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
+
+            #endregion
         }
     }
 }
