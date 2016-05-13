@@ -10,8 +10,8 @@
       </Site>
     </Sites>
     <Endpoints>
-      <InputEndpoint name="SSLCandidateWebEndpoint" protocol="https" port="443" certificate="SSLWebCandidate" />
-      <InputEndpoint name="CandidateWebEndpoint" protocol="http" port="80" />
+      <InputEndpoint name="SSLCandidateWebEndpoint" protocol="https" port="443" certificate="SSLWebCandidate" loadBalancerDistribution="sourceIPProtocol" />
+      <InputEndpoint name="CandidateWebEndpoint" protocol="http" port="80" loadBalancerDistribution="sourceIPProtocol" />
     </Endpoints>
     <Certificates>
       <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
