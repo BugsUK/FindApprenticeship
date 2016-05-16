@@ -256,7 +256,7 @@
             command.Parameters.Add("endReportDateTime", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("providerToStudyUkprn", SqlDbType.Int).Value = (object)providerUkprn ?? DBNull.Value;
             command.Parameters.Add("vacancyStatusToStudy", SqlDbType.Int).Value = (object)vacancyStatus ?? DBNull.Value;
-            command.CommandTimeout = 180;
+            command.CommandTimeout = 3600;
             var reader = command.ExecuteReader();
             while (reader.Read())
             {

@@ -323,6 +323,7 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
+    <Compile Include="Constants\Messages\ReportingMessages.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Constants\ViewModels\ReportViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />

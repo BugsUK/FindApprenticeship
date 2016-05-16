@@ -5,8 +5,10 @@
     using System.Linq;
     using System.Text;
     using Application.Interfaces.Reporting;
+    using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
+    using Constants.Messages;
     using CsvClassMaps;
     using CsvHelper.Configuration;
     using Domain.Raa.Interfaces.Reporting.Models;
@@ -165,7 +167,7 @@
             catch (Exception ex)
             {
                 _logService.Warn(ex);
-                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0]);
+                return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Error, new byte[0], ReportingMessages.TimeoutMessage, UserMessageLevel.Warning);
             }
         }
 
