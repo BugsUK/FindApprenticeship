@@ -270,7 +270,7 @@
                                 <th>@vacanciesTitle title</th>
                                 <th>Employer</th>
                             	<th>Location</th>
-                                <th>Applications / click-throughs</th>
+                                <th>New applications</th>
                                 <th>@vacanciesTitle status</th>
                                 <th></th>
                             </tr>
@@ -321,16 +321,16 @@
                                     </td>
                                     <td class="vac-no-of-applications" data-label="Number of applications">
                                         @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
-                                        {
-                                            var count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
-                                            var unit = isOfflineVacancy ? "click-through" : "application";
+                                        {                                            
+                                            var count = vacancy.NewApplicationCount;
+                                            var unit = "application";
                                             var units = unit + "s";
 
                                             if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
                                             {
                                                 <span style="color: red; font-weight: bold">0<br/> @units</span>
                                             }
-                                            else if (@vacancy.ApplicationCount == 1)
+                                            else if (@vacancy.NewApplicationCount == 1)
                                             {
                                                 <span>1<br/> @unit</span>
                                             }
