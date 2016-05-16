@@ -3,6 +3,7 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
+    using Common.Mediators;
     using Common.Validators.Extensions;
     using Domain.Entities.Raa;
     using Mediators.Reporting;
@@ -173,7 +174,17 @@
         public ActionResult DownloadVacancyExtensionsCsv(ReportVacancyExtensionsParameters parameters)
         {
             var response = _reportingMediator.GetVacancyExtensionsReportBytes(parameters);
-            return File(response.ViewModel, "text/csv", "VacancyExtensionsCsv.csv");
+
+            switch (response.Code)
+            {
+                case ReportingMediatorCodes.ReportCodes.Ok:
+                    return File(response.ViewModel, "text/csv", "VacancyExtensionsCsv.csv");
+                case ReportingMediatorCodes.ReportCodes.Error:
+                    SetUserMessage(response.Message);
+                    return View("VacancyExtensionsCsv", parameters);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
     }
 }
