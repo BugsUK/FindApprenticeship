@@ -22,3 +22,8 @@ Begin
 	Upin = @UPIN
 	WHERE ProviderId = @ProviderId
 End
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[uspProviderUpdate] TO [db_executor]
+    AS [dbo];
+

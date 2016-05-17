@@ -15,3 +15,8 @@ BEGIN
 	FROM Provider
 	WHERE ProviderStatusTypeID <> 2
 END
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[uspProviderSelectAll] TO [db_executor]
+    AS [dbo];
+
