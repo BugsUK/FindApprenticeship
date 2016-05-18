@@ -191,6 +191,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
             return await Task.Run<ActionResult>(() =>
             {
                 var response = _accountMediator.VerifyMobile(UserContext.CandidateId, model);
+                if (response.ViewModel.TraineeshipFeature == null)
+                    _logService.Error("response.ViewModel.TraineeshipFeature == null. Relates to issue with Logstash _id:QWlNNMzdRM2j8q6681rZTg");
                 ModelState.Clear();
 
                 switch (response.Code)

@@ -335,13 +335,13 @@ a, .fake-link {
 
 
 a[rel="external"]:after {
-  background-image: url(../img/icon-external.svg);
+  background-image: url(../Content/_assets/img/icon-external.svg);
   background-repeat: no-repeat;
   background-position: 3px 0.4em;
   content: '\A0\A0\A0\A0\A0';
   background-size: 0.7em 0.6em;
   .lt-ie9 & {
-    background-image: url('../img/icon-external.png');
+    background-image: url('../Content/_assets/img/icon-external.png');
   }
   .lt-ie9 .phase-notice &, .lt-ie9 .copy-16 &  {
     display: none;

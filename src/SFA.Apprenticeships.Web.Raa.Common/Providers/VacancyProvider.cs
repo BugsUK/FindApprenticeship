@@ -857,10 +857,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 if (vacancyViewModel.VacancyType == VacancyType.Apprenticeship)
                 {
                     vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
+                    vacancyViewModel.NewApplicationCount = _apprenticeshipApplicationService.GetNewApplicationCount(vacancyViewModel.VacancyId);
                 }
                 else if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
                 {
                     vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
+                    vacancyViewModel.NewApplicationCount = _traineeshipApplicationService.GetNewApplicationCount(vacancyViewModel.VacancyId);
                 }
             }
 

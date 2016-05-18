@@ -256,7 +256,7 @@
             command.Parameters.Add("endReportDateTime", SqlDbType.DateTime).Value = toDate;
             command.Parameters.Add("providerToStudyUkprn", SqlDbType.Int).Value = (object)providerUkprn ?? DBNull.Value;
             command.Parameters.Add("vacancyStatusToStudy", SqlDbType.Int).Value = (object)vacancyStatus ?? DBNull.Value;
-            command.CommandTimeout = 180;
+            command.CommandTimeout = 3600;
             var reader = command.ExecuteReader();
             while (reader.Read())
             {
@@ -266,13 +266,13 @@
                     VacancyTitle = reader["VacancyTitle"].ToString(),
                     ProviderName = reader["ProviderName"].ToString(),
                     EmployerName = reader["EmployerName"].ToString(),
-                    OriginalPostingDate = Convert.ToDateTime(reader["OriginalPostingDate"]).ToString("dd/MM/yyy"),
-                    OriginalClosingDate = Convert.ToDateTime(reader["OriginalClosingDate"]).ToString("dd/MM/yyy"),
-                    CurrentClosingDate = Convert.ToDateTime(reader["CurrentClosingDate"]).ToString("dd/MM/yyy"),
+                    OriginalPostingDate = reader["OriginalPostingDate"] == DBNull.Value ? string.Empty : Convert.ToDateTime(reader["OriginalPostingDate"]).ToString("dd/MM/yyy"),
+                    OriginalClosingDate = reader["OriginalClosingDate"] == DBNull.Value ? string.Empty : Convert.ToDateTime(reader["OriginalClosingDate"]).ToString("dd/MM/yyy"),
+                    CurrentClosingDate = reader["CurrentClosingDate"] == DBNull.Value ? string.Empty : Convert.ToDateTime(reader["CurrentClosingDate"]).ToString("dd/MM/yyy"),
                     NumberOfVacancyExtensions = reader["NumberOfExtensions"].ToString(),
                     NumberOfSubmittedApplications = reader["NumberOfApplications"].ToString(),
                     VacancyStatus = reader["VacancyStatus"].ToString()
-                }); 
+                });
             }
 
             _logger.Debug($"Done executing vacancy extensions report with toDate {toDate} and fromdate {fromDate} for provider with ukprn {ukprn} and for vacancies with status {status}.");

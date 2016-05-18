@@ -151,7 +151,8 @@
                 ActivatedEmployerTrainingProviderStatusId
             };
 
-            return _getOpenConnection.Query<int>(sql, sqlParams).First();
+            //TODO: workaround to be able to create the index. Should be done properly.
+            return _getOpenConnection.Query<int>(sql, sqlParams).FirstOrDefault();
         }
     }
 }
