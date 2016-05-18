@@ -311,7 +311,8 @@ declare @localAuthorityId int
 						ContractOwnerID,   
 						SmallEmployerWageIncentive,
 						VacancyManagerAnonymous,
-						LocalAuthorityId
+						LocalAuthorityId,
+						VacancyGuid
 					   )        
 					  VALUES     
 					   (      
@@ -357,7 +358,8 @@ declare @localAuthorityId int
 						@ContractOwnerId,
 						@IsSmallEmployerWageIncentive, 
 						case WHEN @VacancyManagerId = @TrainingProviderId THEN 0 ELSE @IsVacancyManagerAnonymous END, --Its VM=VO then always display
-						@localAuthorityId
+						@localAuthorityId,
+						NEWID()
 					   )    
 				 
 					  --Inserting Image Parameters in Relationship Table
