@@ -516,6 +516,10 @@
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />

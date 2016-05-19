@@ -8,6 +8,7 @@
 }
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
+@using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -15,6 +16,13 @@
     ViewBag.Title = "Recruit an Apprentice";
     var vacanciesLabel = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "opportunities" : "vacancies";
     var vacanciesTitle = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "Opportunity" : "Vacancy";
+}
+@section metatags
+{
+    <meta name="DCS.dcsaut" content="@User.Identity.Name" />
+    <meta name="DCSext.sfaukprn" content="@User.GetUkprn()" />
+    <meta name="DCSext.sfaukprname" content="@Model.ProviderViewModel.ProviderName"/>
+    <meta name="WT.sp" content="@ViewBag.Title" />       
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
