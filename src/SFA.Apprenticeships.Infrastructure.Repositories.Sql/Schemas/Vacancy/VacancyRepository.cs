@@ -694,7 +694,18 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            _getOpenConnection.MutatingQuery<object>(
+                    $@"UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = NoOfOfflineApplicants + 1
+WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is not null
+
+UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = 1
+WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is null
+", new
+                    {
+                        VacancyReferenceNumber = vacancyReferenceNumber
+                    }); 
         }
 
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)

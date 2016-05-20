@@ -361,5 +361,35 @@
 
             entity.RegionalTeam.Should().Be(RegionalTeam.SouthEast);
         }
+
+        [Test, Category("Integration")]
+        public void IncrementNumberOfClickThroughs()
+        {
+            IVacancyWriteRepository writeRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+            IVacancyReadRepository readRepository = new VacancyRepository(_connection, _mapper,
+                _dateTimeService.Object, _logger.Object, _currentUserService.Object);
+
+
+            var vacancy = CreateValidDomainVacancy();
+            vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
+            vacancy.Address.Postcode = null;
+            vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
+            vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
+            vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.OfflineApplicationClickThroughCount = 0;
+            
+            vacancy = writeRepository.Create(vacancy);
+            
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+
+            var entity = readRepository.Get(vacancy.VacancyId);
+
+            entity.OfflineApplicationClickThroughCount.Should().Be(5);
+        }
     }
 }
