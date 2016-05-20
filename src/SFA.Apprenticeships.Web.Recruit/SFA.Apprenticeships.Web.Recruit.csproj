@@ -427,10 +427,15 @@
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -702,6 +707,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>

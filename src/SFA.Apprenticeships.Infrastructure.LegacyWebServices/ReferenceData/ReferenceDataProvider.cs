@@ -81,8 +81,9 @@
         }
 
         public IEnumerable<Sector> GetSectors()
-        {
-            throw new NotImplementedException("Sectors are not exposed via the reference data service");
+        {            
+            _logger.Warn("Sectors are not exposed via the reference data service hence returning an empty list");
+            return new List<Sector>();
         }
 
         private IEnumerable<Category> GetCategories(GetApprenticeshipFrameworksResponse response)

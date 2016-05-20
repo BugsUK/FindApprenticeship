@@ -405,7 +405,7 @@
         public ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to save vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -415,7 +415,7 @@
         public ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to delete saved vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -425,7 +425,7 @@
         public ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to create draft from saved vacancy, vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -503,7 +503,7 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
         {
             Condition.Requires(searchParameters).IsNotNull();
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
             
             var candidateApplications = GetApprenticeshipApplications(candidateId);
             return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);

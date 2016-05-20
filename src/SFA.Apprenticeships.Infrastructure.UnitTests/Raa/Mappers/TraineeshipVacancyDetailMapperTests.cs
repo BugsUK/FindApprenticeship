@@ -51,7 +51,7 @@
                 // Assert.
                 detail.Should().NotBeNull();
 
-                detail.Id.Should().Be(vacancy.VacancyReferenceNumber);
+                detail.Id.Should().Be(vacancy.VacancyId);
                 detail.VacancyReference.Should().Be(vacancy.VacancyReferenceNumber.GetVacancyReference());
                 detail.Title.Should().Be(vacancy.Title);
                 detail.Description.Should().Be(vacancy.ShortDescription);

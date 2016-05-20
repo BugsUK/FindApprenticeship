@@ -323,6 +323,7 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
+    <Compile Include="Constants\Messages\ReportingMessages.cs" />
     <Compile Include="Constants\Url.cs" />
     <Compile Include="Constants\ViewModels\ReportViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
@@ -487,12 +488,16 @@
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
     <Content Include="Content\_assets\js\vendor\jquery.joyride-2.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="Content\_assets\js\vendor\jquery.scrollTableBody-1.0.0.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
@@ -507,6 +512,8 @@
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
     <Content Include="Content\_assets\js\vendor\select2.min.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
@@ -724,6 +731,10 @@
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
@@ -731,6 +742,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
+      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>

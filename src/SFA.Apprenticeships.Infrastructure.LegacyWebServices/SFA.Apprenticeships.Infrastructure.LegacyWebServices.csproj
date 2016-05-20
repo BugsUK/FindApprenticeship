@@ -129,6 +129,7 @@
     <Compile Include="Mappers\Apprenticeships\VacancyStatusResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\DetailApprenticeshipLevelResolver.cs" />
     <Compile Include="Mappers\Apprenticeships\VacancyLocationTypeResolver.cs" />
+    <Compile Include="Mappers\LegacyVacancySummaryWageUnitResolver.cs" />
     <Compile Include="Mappers\Traineeship\TraineeshipTypeCheck.cs" />
     <Compile Include="Mappers\Traineeship\LegacyTraineeshipVacancyDetailMapper.cs" />
     <Compile Include="Mappers\WageTypeResolver.cs" />

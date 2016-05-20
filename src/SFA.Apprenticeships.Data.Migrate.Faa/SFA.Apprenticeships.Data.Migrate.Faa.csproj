@@ -125,6 +125,7 @@
     <Compile Include="Entities\Mongo\RegistrationDetails.cs" />
     <Compile Include="Entities\Sql\ApplicationHistory.cs" />
     <Compile Include="Entities\Sql\ApplicationHistorySummary.cs" />
+    <Compile Include="Entities\Sql\ApplicationIds.cs" />
     <Compile Include="Entities\Sql\ApplicationSummary.cs" />
     <Compile Include="Entities\Sql\Candidate.cs" />
     <Compile Include="Entities\Sql\CandidateSummary.cs" />

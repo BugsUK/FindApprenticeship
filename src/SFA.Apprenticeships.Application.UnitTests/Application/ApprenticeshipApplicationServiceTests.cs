@@ -41,6 +41,29 @@
                 _mockApplicationStatusUpdateStrategy.Object);
         }
 
+        [Test]
+        public void GetNewApplicationCount_ForLiveVacancy()
+        {
+            //Arrange
+            const int expected = 2;        
+           
+            var vacancy = new ApprenticeshipSummary
+            {
+                ClosingDate = DateTime.Today.AddDays(90),
+                Id = 1
+            };
+
+            _mockApprenticeshipApplicationReadRepository.Setup(mock =>
+                mock.GetNewApplicationCount(vacancy.Id)).Returns(expected);
+
+            //Act            
+            var response = _apprenticeshipApplicationService.GetNewApplicationCount(vacancy.Id);            
+
+            //Assert            
+            Assert.AreEqual(response, expected);
+        
+        }
+
         [TestCase(ApplicationStatuses.Successful)]
         [TestCase(ApplicationStatuses.Unsuccessful)]
         public void ShouldSetSuccessfulOutcome(ApplicationStatuses applicationStatus)
@@ -54,7 +77,7 @@
                 VacancyStatus = VacancyStatuses.Live,
                 Vacancy = new ApprenticeshipSummary
                 {
-                    ClosingDate = DateTime.Today.AddDays(90)
+                    ClosingDate = DateTime.Today.AddDays(90)                                   
                 }
             };
 

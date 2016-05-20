@@ -1,13 +1,13 @@
 
 .ogl-logo {
-  background: url(../img/open-government-licence.png) no-repeat;
+  background: url(../Content/_assets/img/open-government-licence.png) no-repeat;
   background-size: 41px 17px;
   display: inline-block;
   margin-right: 8px;
   vertical-align: top;
   width: 41px; height: 17px;
   @include device-pixel-ratio(2) {
-    background-image: url(../img/open-government-licence_2x.png);
+    background-image: url(../Content/_assets/img/open-government-licence_2x.png);
   }
 }
 
@@ -97,4 +97,15 @@ footer {
   @media print {
     display: none !important;
   }
+}
+
+.footer__hidden-version {
+    color: $grey-8;
+    position: absolute;
+}
+
+@media print {
+    .footer__hidden-version {
+        display: none;
+    }
 }

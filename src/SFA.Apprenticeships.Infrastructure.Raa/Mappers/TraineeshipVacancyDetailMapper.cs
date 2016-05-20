@@ -25,7 +25,7 @@
 
             var detail = new TraineeshipVacancyDetail
             {
-                Id = vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyId,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,

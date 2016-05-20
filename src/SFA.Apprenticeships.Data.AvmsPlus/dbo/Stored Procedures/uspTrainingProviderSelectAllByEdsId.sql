@@ -51,3 +51,8 @@ BEGIN
 	WHERE [ProviderSite].[EdsUrn]=@EdsId  
 
 END
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[uspTrainingProviderSelectAllByEdsId] TO [db_executor]
+    AS [dbo];
+

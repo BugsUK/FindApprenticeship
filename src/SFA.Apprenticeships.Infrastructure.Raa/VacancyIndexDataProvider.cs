@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Employers;
@@ -57,20 +58,43 @@
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
             var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories().ToList();
+            //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
                     v =>
-                        ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
-                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
-                            categories, _logService));
+                    {
+                        try
+                        {
+                            return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
+                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                                providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                                categories, _logService);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logService.Error($"Error indexing the apprenticeship vacancy with ID={v.VacancyId}", ex);
+                            return null;
+                        }
+                    });
+
             var traineeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Traineeship).Select(
                     v =>
-                        TraineeshipSummaryMapper.GetTraineeshipSummary(v,
-                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
-                            categories, _logService));
+                    {
+                        try
+                        {
+                            return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
+                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                                providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                                categories, _logService);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logService.Error($"Error indexing the traineeship vacancy with ID={v.VacancyId}", ex);
+                            return null;
+                        }
+                    });
+
             return new VacancySummaries(apprenticeshipSummaries.Where(s => s != null), traineeshipSummaries.Where(s => s != null));
         }
     }

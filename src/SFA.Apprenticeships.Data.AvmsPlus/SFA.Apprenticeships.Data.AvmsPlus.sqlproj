@@ -925,6 +925,16 @@
     <Build Include="dbo\Functions\fnReportGenerateVacancyRefNo.function.sql" />
     <Build Include="dbo\Functions\fnReportGetAgeRangeDates.function.sql" />
     <None Include="Scripts\Data\dbo.ReportAgeRange.Upsert.sql" />
+    <Build Include="dbo\Tables\VacancyExport.sql" />
+    <Build Include="dbo\Tables\ExternalSystemPermission.sql" />
+    <Build Include="Security\db_executor.sql" />
+    <Build Include="Security\apisvcadmin.sql" />
+    <Build Include="Security\apisvc.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="dbo\Stored Procedures\uspReturnProviderSystemPermissions.sql" />
+    <Build Include="dbo\Stored Procedures\uspHashPwd.sql" />
+    <Build Include="Security\Permissions.sql" />
+     
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

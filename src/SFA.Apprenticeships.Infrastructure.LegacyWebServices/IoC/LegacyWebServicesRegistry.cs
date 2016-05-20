@@ -36,7 +36,10 @@
 
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
-                For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>().Ctor<IMapper>().Named("LegacyWebServices.LegacyVacancySummaryMapper");
+                For<IVacancyIndexDataProvider>()
+                    .Use<LegacyVacancyIndexDataProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.LegacyVacancySummaryMapper");
 
                 For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
                     .Use<LegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
@@ -70,11 +73,31 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
+
+                #region Reference Data Service and Providers
+
+                For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
+
+                if (cacheConfiguration.UseCache)
+                {
+                    For<IReferenceDataProvider>()
+                        .Use<CachedReferenceDataProvider>()
+                        .Ctor<IReferenceDataProvider>()
+                        .IsTheDefault()
+                        .Ctor<IReferenceDataProvider>()
+                        .Named("LegacyReferenceDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
+                }
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
+
+                #endregion
             }
-
-            #region Vacancy Data Service And Providers
-
-            #endregion
 
             #region Candidate and Application Providers
 
@@ -85,35 +108,7 @@
             For<IMapper>().Use<ApplicationStatusSummaryMapper>()
                 .Name = "LegacyWebServices.ApplicationStatusSummaryMapper";
 
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
-            {
-                For<ILegacyApplicationStatusesProvider>()
-                    .Use<LegacyCandidateApplicationStatusesProvider>()
-                    .Ctor<IMapper>()
-                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                    .Name = "LegacyCandidateApplicationStatusesProvider";
-            }
-
             #endregion
-
-            #region Reference Data Service and Providers
-
-            For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
-
-            if (cacheConfiguration.UseCache)
-            {
-                For<IReferenceDataProvider>()
-                    .Use<CachedReferenceDataProvider>()
-                    .Ctor<IReferenceDataProvider>()
-                    .IsTheDefault()
-                    .Ctor<IReferenceDataProvider>()
-                    .Named("LegacyReferenceDataProvider")
-                    .Ctor<ICacheService>()
-                    .Named(cacheConfiguration.DefaultCache);
-            }
-
-            #endregion
-
         }
     }
 }
