@@ -404,11 +404,7 @@
                                                     if (newApplicationCount == 1)
                                                     {
                                                         <span>1<br /> application</span>
-                                                    }
-                                                    else if (vacancy.Status == VacancyStatus.Live && newApplicationCount == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
-                                                    {
-                                                        <span style="color: red; font-weight: bold">0<br /> applications</span>
-                                                    }
+                                                    }                                                    
                                                     else
                                                     {
                                                         <span>@newApplicationCount<br /> applications</span>
