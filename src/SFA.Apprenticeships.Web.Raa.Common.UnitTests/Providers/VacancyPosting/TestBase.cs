@@ -1,4 +1,7 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+using SFA.Apprenticeships.Web.Common.Constants;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
@@ -29,6 +32,8 @@
         protected Mock<IDateTimeService> MockTimeService;
         private Mock<ICurrentUserService> _mockCurrentUserService;
         private Mock<IUserProfileService> _mockUserProfileService;
+        protected Mock<IGeoCodeLookupService> MockGeocodeService;
+        protected Mock<ILocalAuthorityLookupService> MockLocalAuthorityLookupService;
 
         [SetUp]
         public void SetUpBase()
@@ -51,6 +56,8 @@
             _mockVacancyLockingService = new Mock<IVacancyLockingService>();
             _mockCurrentUserService = new Mock<ICurrentUserService>();
             _mockUserProfileService = new Mock<IUserProfileService>();
+            MockGeocodeService = new Mock<IGeoCodeLookupService>();
+            MockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
         }
 
         protected IVacancyPostingProvider GetVacancyPostingProvider()
@@ -67,7 +74,9 @@
                 _traineeshipApplicationService.Object,
                 _mockVacancyLockingService.Object,
                 _mockCurrentUserService.Object,
-                _mockUserProfileService.Object);
+                _mockUserProfileService.Object,
+                MockGeocodeService.Object,
+                MockLocalAuthorityLookupService.Object);
         }
     }
 }

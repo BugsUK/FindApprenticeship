@@ -43,5 +43,10 @@
         {
             public const string LabelText = "Number of positions for this vacancy comment";
         }
+
+        public class InvalidEmployerAddress
+        {
+            public const string ErrorText = "We could not map the address. You will need to complete the full address to continue.";
+        }
     }
 }

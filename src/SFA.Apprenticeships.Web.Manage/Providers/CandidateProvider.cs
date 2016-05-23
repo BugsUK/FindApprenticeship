@@ -63,10 +63,21 @@
                 SearchViewModel = searchViewModel,
                 Candidates = new PageableViewModel<CandidateSummaryViewModel>
                 {
-                    Page = candidates.OrderBy(c => c.LastName).ThenBy(c => c.FirstName).ThenBy(c => c.Address.Postcode).ThenBy(c => c.Address.AddressLine1).Skip((searchViewModel.CurrentPage - 1) * searchViewModel.PageSize).Take(searchViewModel.PageSize).Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c)).ToList(),
+                    Page =
+                        candidates.OrderBy(c => c.LastName)
+                            .ThenBy(c => c.FirstName)
+                            .ThenBy(c => c.Address.Postcode)
+                            .ThenBy(c => c.Address.AddressLine1)
+                            .Skip((searchViewModel.CurrentPage - 1)*searchViewModel.PageSize)
+                            .Take(searchViewModel.PageSize)
+                            .Select(c => _mapper.Map<CandidateSummary, CandidateSummaryViewModel>(c))
+                            .ToList(),
                     ResultsCount = candidates.Count,
                     CurrentPage = searchViewModel.CurrentPage,
-                    TotalNumberOfPages = candidates.Count == 0 ? 1 : (int)Math.Ceiling((double)candidates.Count / searchViewModel.PageSize)
+                    TotalNumberOfPages =
+                        candidates.Count == 0
+                            ? 1
+                            : (int) Math.Ceiling((double) candidates.Count/searchViewModel.PageSize)
                 }
             };
 

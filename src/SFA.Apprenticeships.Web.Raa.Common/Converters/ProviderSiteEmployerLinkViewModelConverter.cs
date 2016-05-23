@@ -14,9 +14,9 @@
                 ProviderSiteId = vacancyParty.ProviderSiteId,
                 EmployerDescription = vacancyParty.EmployerDescription,
                 EmployerWebsiteUrl = vacancyParty.EmployerWebsiteUrl,
-                Employer = employer.Convert()
+                Employer = employer.Convert(),
+                IsEmployerAddressValid = true
             };
-
             if (!string.IsNullOrWhiteSpace(anonymousEmployerName))
             {
                 viewModel.Employer.Name = anonymousEmployerName;

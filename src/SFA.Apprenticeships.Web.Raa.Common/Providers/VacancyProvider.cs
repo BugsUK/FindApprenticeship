@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
     using System.Collections.Generic;
@@ -45,13 +47,16 @@
         private readonly IUserProfileService _userProfileService;
         private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
+        private readonly IGeoCodeLookupService _geoCodingService;
+        private readonly ILocalAuthorityLookupService _localAuthorityLookupService;
 
         public VacancyProvider(ILogService logService, IConfigurationService configurationService,
             IVacancyPostingService vacancyPostingService, IReferenceDataService referenceDataService,
             IProviderService providerService, IEmployerService employerService, IDateTimeService dateTimeService,
             IMapper mapper, IApprenticeshipApplicationService apprenticeshipApplicationService,
             ITraineeshipApplicationService traineeshipApplicationService, IVacancyLockingService vacancyLockingService,
-            ICurrentUserService currentUserService, IUserProfileService userProfileService)
+            ICurrentUserService currentUserService, IUserProfileService userProfileService, IGeoCodeLookupService geocodingService,
+            ILocalAuthorityLookupService localAuthLookupService)
         {
             _logService = logService;
             _vacancyPostingService = vacancyPostingService;
@@ -66,6 +71,8 @@
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
+            _geoCodingService = geocodingService;
+            _localAuthorityLookupService = localAuthLookupService;
         }
 
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions)
@@ -153,11 +160,13 @@
                 ProviderId = provider.ProviderId
             };
 
+            GeoCodeVacancyLocations(locationSearchViewModel);
+
             if (locationSearchViewModel.Addresses.Count == 1)
             {
-                //Set address
                 var addressViewModel = locationSearchViewModel.Addresses.Single();
                 vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(addressViewModel.Address);
+                vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 vacancy.NumberOfPositions = addressViewModel.NumberOfPositions;
                 _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
             }
@@ -170,6 +179,9 @@
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
+					
+					vacancyLocation.LocalAuthorityCode =
+                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
             }
@@ -178,6 +190,19 @@
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
 
             return locationSearchViewModel;
+        }
+		
+		private void GeoCodeVacancyLocations(LocationSearchViewModel viewModel)
+        {
+            foreach (var vacancyLocationAddressViewModel in viewModel.Addresses)
+            {
+                var geoPoint =
+                    _geoCodingService.GetGeoPointFor(
+                        _mapper.Map<AddressViewModel, PostalAddress>(vacancyLocationAddressViewModel.Address));
+
+                vacancyLocationAddressViewModel.Address.GeoPoint =
+                    _mapper.Map<GeoPoint, GeoPointViewModel>(geoPoint);
+            }
         }
 
         public LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid)
@@ -249,6 +274,7 @@
         /// Otherwise, it updates the existing one.
         /// </summary>
         /// <param name="newVacancyViewModel"></param>
+        /// <param name="ukprn"></param>
         /// <returns></returns>
         public NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
@@ -292,6 +318,11 @@
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var provider = _providerService.GetProvider(ukprn);
 
+            if (employer.Address.GeoPoint == null)
+            {
+                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            }
+
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
                 VacancyGuid = newVacancyViewModel.VacancyGuid,
@@ -307,8 +338,8 @@
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
                 Address = employer.Address,
-                ProviderId = provider.ProviderId //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
-                // VacancyManagerId = vacancyParty.ProviderSiteId //TODO VGA: is this correct?
+                ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
+                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode)
             });
 
             return vacancy;
@@ -351,6 +382,11 @@
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
+
+            if (employer.Address.GeoPoint == null)
+            {
+                employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
+            }
 
             vacancy.Title = newVacancyViewModel.Title;
             vacancy.ShortDescription = newVacancyViewModel.ShortDescription;
@@ -1428,18 +1464,7 @@
 
         public LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel)
         {
-            var addresses = viewModel.Addresses.Select(a => new VacancyLocation
-            {
-                Address = new PostalAddress
-                {
-                    AddressLine1 = a.Address.AddressLine1,
-                    AddressLine2 = a.Address.AddressLine2,
-                    AddressLine3 = a.Address.AddressLine3,
-                    AddressLine4 = a.Address.AddressLine4,
-                    Postcode = a.Address.Postcode,
-                },
-                NumberOfPositions = a.NumberOfPositions.Value
-            });
+            var addresses = viewModel.Addresses.Select(_mapper.Map<VacancyLocationAddressViewModel, VacancyLocation>);
 
             var vacancyParty =
                 _providerService.GetVacancyParty(viewModel.ProviderSiteId, viewModel.EmployerEdsUrn);
@@ -1457,11 +1482,15 @@
             vacancy.AdditionalLocationInformation = viewModel.AdditionalLocationInformation;
             vacancy.AdditionalLocationInformationComment = viewModel.AdditionalLocationInformationComment;
             
+			GeoCodeVacancyLocations(viewModel);
+			
             if (addresses.Count() == 1)
             {
                 //Set address
                 vacancy.Address = addresses.Single().Address;
                 vacancy.NumberOfPositions = addresses.Single().NumberOfPositions;
+                vacancy.LocalAuthorityCode =
+                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.UpdateVacancy(vacancy);
 
@@ -1475,6 +1504,8 @@
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
+					vacancyLocation.LocalAuthorityCode =
+                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
