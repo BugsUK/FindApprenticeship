@@ -119,18 +119,11 @@
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
         {
-            var vacancyGeoPoint = new GeoPoint();
-            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            return new GeoPoint
             {
-                vacancyGeoPoint.Latitude = 52.4009991288043;
-                vacancyGeoPoint.Longitude = -1.50812239495425;
-            }
-            else
-            {
-                vacancyGeoPoint.Longitude = geoPoint.Longitude;
-                vacancyGeoPoint.Latitude = geoPoint.Latitude;
-            }
-            return vacancyGeoPoint;
+                Longitude = geoPoint.Longitude,
+                Latitude = geoPoint.Latitude
+            };
         }
 
         private static string GetContactInformation(Vacancy vacancy)

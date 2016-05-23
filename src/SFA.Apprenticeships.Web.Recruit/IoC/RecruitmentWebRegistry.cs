@@ -65,16 +65,20 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
+            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
         }
 
         private void RegisterServices()
         {
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
             For<ICommunicationService>().Use<CommunicationService>();
         }
 

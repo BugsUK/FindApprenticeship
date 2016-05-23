@@ -251,6 +251,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapDateQAApproved(dbVacancy, result);
             MapComments(dbVacancy, result);
             MapRegionalTeam(result);
+            MapLocalAuthorityCode(dbVacancy, result);
 
             return result;
         }
@@ -366,6 +367,25 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             else
             {
                 result.SectorCodeName = null;
+            }
+        }
+
+        private void MapLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
+        {
+            if (dbVacancy.LocalAuthorityId.HasValue)
+            {
+                result.LocalAuthorityCode = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT CodeName
+FROM   dbo.LocalAuthority
+WHERE  LocalAuthorityId = @LocalAuthorityId",
+                    new
+                    {
+                        dbVacancy.LocalAuthorityId
+                    }).Single();
+            }
+            else
+            {
+                result.LocalAuthorityCode = null;
             }
         }
 
@@ -694,7 +714,18 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            _getOpenConnection.MutatingQuery<object>(
+                    $@"UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = NoOfOfflineApplicants + 1
+WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is not null
+
+UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = 1
+WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is null
+", new
+                    {
+                        VacancyReferenceNumber = vacancyReferenceNumber
+                    }); 
         }
 
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)
@@ -704,6 +735,26 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             PopulateApprenticeshipTypeId(entity, dbVacancy);
             PopulateFrameworkId(entity, dbVacancy);
             PopulateSectorId(entity, dbVacancy);
+            PopulateLocalAuthorityId(entity, dbVacancy);
+        }
+
+        private void PopulateLocalAuthorityId(DomainVacancy entity, Vacancy dbVacancy)
+        {
+            if (!string.IsNullOrWhiteSpace(entity.LocalAuthorityCode))
+            {
+                dbVacancy.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT LocalAuthorityId
+FROM   dbo.LocalAuthority
+WHERE  CodeName = @LocalAuthorityCode",
+                    new
+                    {
+                        entity.LocalAuthorityCode
+                    }).Single();
+            }
+            else
+            {
+                dbVacancy.LocalAuthorityId = null;
+            }
         }
 
         private void PopulateSectorId(DomainVacancy entity, Vacancy dbVacancy)
