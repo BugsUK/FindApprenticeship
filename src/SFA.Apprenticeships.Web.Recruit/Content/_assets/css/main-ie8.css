@@ -118,8 +118,8 @@ table, caption, tbody, tfoot, thead, tr, th, td {
   left: -1.85714286em; }
 
 .fa-border {
-  padding: 0.2em 0.25em 0.15em;
-  border: solid 0.08em #eee;
+  padding: .2em .25em .15em;
+  border: solid .08em #eee;
   border-radius: .1em; }
 
 .pull-right {
@@ -3232,7 +3232,7 @@ a[rel="external"]:after {
     display: none; }
 
 .not-ie8 a[rel="external"]:hover:after {
-  background-image: url("../img/icon-external-hover.svg"); }
+  background-image: url("../Content/_assets/img/icon-external-hover.svg"); }
 
 @media print {
   a[href^=http]:after {
@@ -3370,9 +3370,9 @@ select:focus {
   border: none;
   border-radius: 0;
   -webkit-appearance: none;
-  -webkit-box-shadow: 0 2px 0 #003518;
-  -moz-box-shadow: 0 2px 0 #003518;
-  box-shadow: 0 2px 0 #003518;
+  -webkit-box-shadow: 0 2px 0 #003618;
+  -moz-box-shadow: 0 2px 0 #003618;
+  box-shadow: 0 2px 0 #003618;
   font-size: 1em;
   line-height: 1.4;
   text-decoration: none;
@@ -3385,36 +3385,26 @@ select:focus {
   width: 100%; }
   .button:visited {
     background-color: #00823b; }
-  .button:hover,
-  .button:focus {
+  .button:hover, .button:focus {
     background-color: #00692f; }
   .button:active {
     top: 2px;
     -webkit-box-shadow: 0 0 0 #00823b;
     -moz-box-shadow: 0 0 0 #00823b;
     box-shadow: 0 0 0 #00823b; }
-  .js-enabled .button.disabled,
-  .js-enabled .button[disabled="disabled"],
-  .js-enabled .button[disabled] {
+  .js-enabled .button.disabled, .js-enabled .button[disabled="disabled"], .js-enabled .button[disabled] {
     zoom: 1;
     filter: alpha(opacity=50);
     opacity: 0.5; }
-    .js-enabled .button.disabled:hover,
-    .js-enabled .button[disabled="disabled"]:hover,
-    .js-enabled .button[disabled]:hover {
+    .js-enabled .button.disabled:hover, .js-enabled .button[disabled="disabled"]:hover, .js-enabled .button[disabled]:hover {
       cursor: default;
       background-color: #00823b; }
-    .js-enabled .button.disabled:active,
-    .js-enabled .button[disabled="disabled"]:active,
-    .js-enabled .button[disabled]:active {
+    .js-enabled .button.disabled:active, .js-enabled .button[disabled="disabled"]:active, .js-enabled .button[disabled]:active {
       top: 0;
-      -webkit-box-shadow: 0 2px 0 #003518;
-      -moz-box-shadow: 0 2px 0 #003518;
-      box-shadow: 0 2px 0 #003518; }
-  .button:link,
-  .button:hover,
-  .button:focus,
-  .button:visited {
+      -webkit-box-shadow: 0 2px 0 #003618;
+      -moz-box-shadow: 0 2px 0 #003618;
+      box-shadow: 0 2px 0 #003618; }
+  .button:link, .button:hover, .button:focus, .button:visited {
     color: #fff; }
   .button:before {
     content: "";
@@ -3483,7 +3473,7 @@ select:focus {
   margin-bottom: 0;
   padding: 14px 41px 10px 16px;
   text-transform: none; }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20/10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
     .get-started .button {
       background-image: url(../Content/_assets/img/icon-pointer-2x.png); } }
   @media (max-width: 640px) {
@@ -3627,7 +3617,7 @@ progress[value] {
       content: '';
       display: block;
       width: 1.8em;
-      margin: 0.5em -3.2em; }
+      margin: .5em -3.2em; }
     .step-by-step-coloured > *:first-child {
       margin-top: 3em;
       padding-top: 1em; }
@@ -4046,18 +4036,18 @@ input::-webkit-inner-spin-button {
   .validation-summary ul,
   .validation-summary-errors ul {
     margin-top: 10px; }
-  .validation-summary li,
-  .validation-summary p,
-  .validation-summary-errors li, .validation-summary-errors p {
+  .validation-summary li, .validation-summary p,
+  .validation-summary-errors li,
+  .validation-summary-errors p {
     font-family: "nta", Arial, sans-serif;
     font-size: 16px;
     line-height: 1.25;
     font-weight: 300;
     text-transform: none; }
     @media (max-width: 640px) {
-      .validation-summary li,
-      .validation-summary p,
-      .validation-summary-errors li, .validation-summary-errors p {
+      .validation-summary li, .validation-summary p,
+      .validation-summary-errors li,
+      .validation-summary-errors p {
         font-size: 14px; } }
   .validation-summary p,
   .validation-summary-errors p {
@@ -4446,9 +4436,9 @@ table {
 .no-wrap {
   white-space: nowrap; }
 
-.table-no-btm-border td,
-.table-no-btm-border th,
-.no-btm-border td, .no-btm-border th {
+.table-no-btm-border td, .table-no-btm-border th,
+.no-btm-border td,
+.no-btm-border th {
   border-bottom: none; }
 
 .tbody-expandrows {
@@ -4849,7 +4839,7 @@ iframe, object, embed {
   background: url(../img/performance-icon.png) no-repeat 0 2px;
   background-size: 25px 15px;
   padding-left: 35px; }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20/10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
     .performance {
       background-image: url(../img/performance-icon-2x.png); } }
 
@@ -5620,7 +5610,7 @@ details summary:focus {
 .ui-menu .ui-menu-item a {
   text-decoration: none;
   display: block;
-  padding: 0.2em 0.4em;
+  padding: .2em .4em;
   line-height: 1.5;
   zoom: 1; }
 
@@ -5899,7 +5889,7 @@ details summary:focus {
   vertical-align: top;
   width: 41px;
   height: 17px; }
-  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20/10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
+  @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
     .ogl-logo {
       background-image: url(../Content/_assets/img/open-government-licence_2x.png); } }
 
@@ -6187,8 +6177,23 @@ html:not(.touch).js .editable-item {
   color: #28a197; }
 
 .raa-icon-comment {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  padding-top: 2px;
+  padding-bottom: 8px;
   font-size: 19px !important;
   color: #28a197; }
+  @media (max-width: 640px) {
+    .raa-icon-comment {
+      font-size: 16px;
+      line-height: 1.25; } }
+  @media (min-width: 641px) {
+    .raa-icon-comment {
+      padding-top: 4px;
+      padding-bottom: 5px; } }
 
 h2 a i.raa-icon-comment {
   vertical-align: middle; }
@@ -6354,9 +6359,7 @@ h2 a i.raa-icon-comment {
             line-height: 1.25; } }
 
 @media screen and (max-width: 768px) {
-        table#vacancies-table tr td.vac-employer:before,
-        table#vacancies-table tr td.vac-ref-number:before,
-        table#vacancies-table tr td.vac-no-of-applications:before {
+        table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
           content: attr(data-label) ": ";
           font-family: "nta", Arial, sans-serif;
           font-size: 16px;
@@ -6365,9 +6368,7 @@ h2 a i.raa-icon-comment {
           text-transform: none;
           font-weight: 700; } }
         @media screen and (max-width: 768px) and (max-width: 640px) {
-          table#vacancies-table tr td.vac-employer:before,
-          table#vacancies-table tr td.vac-ref-number:before,
-          table#vacancies-table tr td.vac-no-of-applications:before {
+          table#vacancies-table tr td.vac-employer:before, table#vacancies-table tr td.vac-ref-number:before, table#vacancies-table tr td.vac-no-of-applications:before {
             font-size: 14px; } }
 
 @media screen and (max-width: 768px) {
