@@ -694,7 +694,10 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
 
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            throw new NotImplementedException();
+            //TODO: This should have an implementation after merging develop in next release.
+            //Hotfix for v2.0.0 release, ommitting this line so as to avoid excessive logs of a known issue.
+            //This will be tested extensively on the PRE environment
+            //throw new NotImplementedException();
         }
 
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)
