@@ -43,6 +43,7 @@
                 County = "CAM"
             };
 
+            result.LocalAuthorityCode= "00CC";
             if (result.FrameworkCodeName != null && result.FrameworkCodeName.GetHashCode() % 2 == 1)
             {
                 result.TrainingType = TrainingType.Frameworks;
