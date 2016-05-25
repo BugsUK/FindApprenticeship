@@ -415,6 +415,7 @@
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\bubble.svg" />
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />

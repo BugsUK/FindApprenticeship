@@ -73,10 +73,14 @@ html:not(.touch) .editable-item {
     color: $turquoise;
 }
 
-.raa-icon-comment {
-    @include copy-19;
-    font-size: 19px !important;    
-    color: $turquoise;
+.raa-icon-comment-img {    
+    height: 1em !important;               
+    padding:1px 0 0 0;
+}
+
+.raa-icon-checkmark-img{
+      height: 1em !important; 
+      margin-right:.3em;
 }
 
 h2{
