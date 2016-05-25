@@ -450,6 +450,7 @@
     <Content Include="Content\_assets\img\apple-touch-icon-72x72.png" />
     <Content Include="Content\_assets\img\av-screenshot.png" />
     <Content Include="Content\_assets\img\bubble.svg" />
+    <Content Include="Content\_assets\img\checkmark.svg" />
     <Content Include="Content\_assets\img\favicon.ico" />
     <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
     <Content Include="Content\_assets\img\gov.uk_logotype_crown_print.png" />

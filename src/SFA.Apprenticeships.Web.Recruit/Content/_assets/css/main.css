@@ -6195,6 +6195,10 @@ html:not(.touch).js .editable-item {
       padding-top: 4px;
       padding-bottom: 5px; } }
 
+.raa-icon-comment-img {
+  height: 1em !important;
+  padding: 1px 0 0 0; }
+
 h2 a i.raa-icon-comment {
   vertical-align: middle; }
 
