@@ -74,6 +74,7 @@
                         //if anyone can find a better way to get this value out, feel free!
                         var array = hitMd.Fields.FieldValues<JArray>("distance");
                         var value = array[0];
+
                         r.Distance = double.Parse(value.ToString());
                     }
                 }
@@ -209,7 +210,7 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        // var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));
+                        // TODO: AG: ensure compatibility between old and new category code formats and existing saved searches / URLs. This code should be refactored / unit tested.
                         var categoryCodes = new List<string>
                         {
                             parameters.CategoryCode
@@ -217,12 +218,19 @@
 
                         if (parameters.CategoryCode.StartsWith("SSAT1."))
                         {
-                            var rawCategoryCode = parameters.CategoryCode.Replace("SSAT1.", "");
+                            var oldCategoryCode = parameters.CategoryCode.Replace("SSAT1.", "");
 
-                            categoryCodes.Add(rawCategoryCode);
+                            categoryCodes.Add(oldCategoryCode);
                         }
 
-                        var queryCategory = q.Terms(f => f.CategoryCode, categoryCodes);
+                        if (!parameters.CategoryCode.StartsWith("SSAT1."))
+                        {
+                            var newCategoryCode = "SSAT1." + parameters.CategoryCode;
+
+                            categoryCodes.Add(newCategoryCode);
+                        }
+
+                        var queryCategory = q.Terms(f => f.CategoryCode, categoryCodes.Distinct());
 
                         query = query && queryCategory;
                     }
@@ -316,7 +324,6 @@
                                     return fp;
                                 })
                                 .Script("doc['location'].arcDistanceInMiles(lat, lon)")));
-                        //.Script("doc[\u0027location\u0027].distanceInMiles(lat,lon)")));
                         break;
                 }
 
@@ -328,14 +335,21 @@
 
                     subCategoryCodes.AddRange(parameters.SubCategoryCodes);
 
-                    var rawSubCategoryCodes = subCategoryCodes
+                    // TODO: AG: ensure compatibility between old and new subcategory code formats and existing saved searches / URLs. This code should be refactored / unit tested.
+                    var oldSubCategoryCodes = subCategoryCodes
                         .Where(subCategoryCode => subCategoryCode.StartsWith("FW."))
                         .Select(subCategoryCode => subCategoryCode.Replace("FW.", ""))
                         .ToList();
 
-                    subCategoryCodes.AddRange(rawSubCategoryCodes);
+                    var newSubCategoryCodes = subCategoryCodes
+                        .Where(subCategoryCode => !subCategoryCode.StartsWith("FW."))
+                        .Select(subCategoryCode => "FW." + subCategoryCode)
+                        .ToList();
 
-                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, subCategoryCodes));
+                    subCategoryCodes.AddRange(oldSubCategoryCodes);
+                    subCategoryCodes.AddRange(newSubCategoryCodes);
+
+                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, subCategoryCodes.Distinct()));
                 }
 
                 return s;
