@@ -712,19 +712,19 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             throw new NotImplementedException();
         }
 
-        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyId)
         {
             _getOpenConnection.MutatingQuery<object>(
                     $@"UPDATE dbo.Vacancy 
 SET NoOfOfflineApplicants = NoOfOfflineApplicants + 1
-WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is not null
+WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is not null
 
 UPDATE dbo.Vacancy 
 SET NoOfOfflineApplicants = 1
-WHERE VacancyReferenceNumber = @VacancyReferenceNumber and NoOfOfflineApplicants is null
+WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
 ", new
                     {
-                        VacancyReferenceNumber = vacancyReferenceNumber
+                        VacancyId = vacancyId
                     }); 
         }
 

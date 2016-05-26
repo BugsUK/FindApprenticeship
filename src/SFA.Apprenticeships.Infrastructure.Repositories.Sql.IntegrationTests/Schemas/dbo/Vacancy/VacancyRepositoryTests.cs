@@ -381,11 +381,11 @@
             
             vacancy = writeRepository.Create(vacancy);
             
-            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
-            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
-            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
-            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
-            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyReferenceNumber);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
+            writeRepository.IncrementOfflineApplicationClickThrough(vacancy.VacancyId);
 
             var entity = readRepository.Get(vacancy.VacancyId);
 
