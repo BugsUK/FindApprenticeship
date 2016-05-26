@@ -44,7 +44,7 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancies(ApprenticeshipSearchParameters parameters, string indexName)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
@@ -105,8 +105,8 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> FindVacancy(string vacancyReference)
         {
             var client = _elasticsearchClientFactory.GetElasticClient();
-            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof (ApprenticeshipSummary));
-            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof (ApprenticeshipSummary));
+            var indexName = _elasticsearchClientFactory.GetIndexNameForType(typeof(ApprenticeshipSummary));
+            var documentTypeName = _elasticsearchClientFactory.GetDocumentNameForType(typeof(ApprenticeshipSummary));
 
             _logger.Debug("Calling legacy vacancy search for DocumentNameForType={0} on IndexName={1}", documentTypeName,
                 indexName);
@@ -119,7 +119,7 @@
                         q.Filtered(sl => sl.Filter(fs => fs.Term(f => f.VacancyReference, vacancyReference)))));
 
             var responses = _vacancySearchMapper.Map<IEnumerable<ApprenticeshipSummary>, IEnumerable<ApprenticeshipSearchResponse>>(searchResults.Documents).ToList();
-            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, responses, null, new ApprenticeshipSearchParameters {PageNumber = 1});
+            var results = new SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters>(searchResults.Total, responses, null, new ApprenticeshipSearchParameters { PageNumber = 1 });
             return results;
         }
 
@@ -149,7 +149,7 @@
             {
                 s.Index(indexName);
                 s.Type(documentTypeName);
-                s.Skip((parameters.PageNumber - 1)*parameters.PageSize);
+                s.Skip((parameters.PageNumber - 1) * parameters.PageSize);
                 s.Take(parameters.PageSize);
 
                 s.TrackScores();
@@ -171,7 +171,7 @@
                         query = BuildContainer(null, queryClause);
                     }
 
-                    if (_searchFactorConfiguration.DescriptionFactors.Enabled 
+                    if (_searchFactorConfiguration.DescriptionFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Description))
                     {
@@ -183,7 +183,7 @@
                         query = BuildContainer(query, queryClause);
                     }
 
-                    if (_searchFactorConfiguration.EmployerFactors.Enabled 
+                    if (_searchFactorConfiguration.EmployerFactors.Enabled
                         && !string.IsNullOrWhiteSpace(parameters.Keywords)
                         && (parameters.SearchField == ApprenticeshipSearchField.All || parameters.SearchField == ApprenticeshipSearchField.Employer))
                     {
@@ -209,8 +209,22 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));
-                        query = query && querySector;
+                        // var querySector = q.Match(m => m.OnField(f => f.CategoryCode).Query(parameters.CategoryCode));
+                        var categoryCodes = new List<string>
+                        {
+                            parameters.CategoryCode
+                        };
+
+                        if (parameters.CategoryCode.StartsWith("SSAT1."))
+                        {
+                            var rawCategoryCode = parameters.CategoryCode.Replace("SSAT1.", "");
+
+                            categoryCodes.Add(rawCategoryCode);
+                        }
+
+                        var queryCategory = q.Terms(f => f.CategoryCode, categoryCodes);
+
+                        query = query && queryCategory;
                     }
 
                     if (parameters.ExcludeVacancyIds != null)
@@ -310,12 +324,23 @@
 
                 if (parameters.SubCategoryCodes != null)
                 {
-                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, parameters.SubCategoryCodes));
+                    var subCategoryCodes = new List<string>();
+
+                    subCategoryCodes.AddRange(parameters.SubCategoryCodes);
+
+                    var rawSubCategoryCodes = subCategoryCodes
+                        .Where(subCategoryCode => subCategoryCode.StartsWith("FW."))
+                        .Select(subCategoryCode => subCategoryCode.Replace("FW.", ""))
+                        .ToList();
+
+                    subCategoryCodes.AddRange(rawSubCategoryCodes);
+
+                    s.Filter(ff => ff.Terms(f => f.SubCategoryCode, subCategoryCodes));
                 }
 
                 return s;
             });
-            
+
             return search;
         }
 
