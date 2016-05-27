@@ -104,7 +104,7 @@
                 // var SubVacancy                     = _tables.AddNew("SubVacancy",                                                                  OwnedByAv, Vacancy);
 
                 var ProviderSiteLocalAuthority        = _tables.AddNew("ProviderSiteLocalAuthority", new string[] { "ProviderSiteLocalAuthorityID" }, Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship);
-                var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      Unchanged, OwnedByAVUnlessNegativeNoDeletes, ProviderSiteRelationship, ApprenticeshipFramework);
+                var ProviderSiteFramework             = _tables.AddNew("ProviderSiteFramework",      new string[] { "ProviderSiteFrameworkID" },      Unchanged, OwnedByAVUnlessNegativeAllowDeletes, ProviderSiteRelationship, ApprenticeshipFramework);
 
                 // This isn't really needed, plus records can be deleted (outside of archiving activity) which we don't support yet (also, records get deleted and re-added by the AVMS GUI when editing)
                 // var ProviderSiteOffer              = _tables.AddNew("ProviderSiteOffer",          new string[] { "ProviderSiteOfferID" },          OwnedByAv, DoDelete,                ProviderSiteLocalAuthority, ProviderSiteFramework);
@@ -334,6 +334,34 @@ select top 10 * from VacancyReferralComments
             }
         }
 
+        /// <summary>
+        /// Tables that are in AV and where records are normally owned by them.
+        /// We know they delete records from here and am pretty sure we don't use these tables so deletion wouldn't cause us any problems.
+        /// </summary>
+        public bool OwnedByAVUnlessNegativeAllowDeletes(ITableSpec table, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
+        {
+            var primaryKeys = Keys.GetPrimaryKeys((IDictionary<string, object>)(oldRecordFromTarget ?? newRecordFromSource), table);
+
+            if (primaryKeys.First() < 0)
+            {
+                if (operation == Operation.Delete)
+                {
+                    // Migrate will identify these for deletion as they are not on the source system
+                    return false;
+                }
+                else
+                {
+                    // If Migrate is trying to insert or update them then are assertion that only we create negative ids is wrong
+                    _log.Error($"AVMS somehow has record in {table.Name} for {primaryKeys}");
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         public bool CanMutateVacancyOwnerRelationship(ITableSpec tableSpec, dynamic oldRecordFromTarget, dynamic newRecordFromSource, Operation operation)
         {
             // Deletes could potentially be a problem, but since using a VacancyOwnerRelationship in a Vacancy results in editing of the EmployerDescription and setting of EditedInRaa, all is good
@@ -385,7 +413,12 @@ select top 10 * from VacancyReferralComments
             {
                 newRecord.VacancyGuid = (object)Guid.NewGuid(); // Need to manually box object (possible Dapper bug)
             }
+            else
+            {
+                newRecord.VacancyGuid = oldRecord.VacancyGuid;
+            }
 
+            // TODO: Well, this is great, but it still won't be set for uploaded vacancies.
             var vacancyTypeId = VacancyTypeUnknown;
             var apprenticeshipType = newRecord.ApprenticeshipType;
             if (apprenticeshipType != ApprenticeshipTypeUnknown)

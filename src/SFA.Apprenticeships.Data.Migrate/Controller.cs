@@ -40,13 +40,9 @@
                 {
                     DoUpdatesForAll();
                 }
-                catch (FatalException)
+                catch (FullScanRequiredException ex)
                 {
-                    throw;
-                }
-                catch (FullScanRequiredException)
-                {
-                    _log.Warn("Change tracking unavailable. Doing full scan");
+                    _log.Warn($"Change tracking unavailable ({ex.Message}). Doing full scan");
 
                     try
                     {
@@ -56,10 +52,14 @@
                     {
                         throw;
                     }
-                    catch (Exception ex)
+                    catch (Exception ex2)
                     {
-                        _log.Error("Error occurred. Sleeping before trying again", ex);
+                        _log.Error("Error occurred. Sleeping before trying again", ex2);
                     }
+                }
+                catch (FatalException)
+                {
+                    throw;
                 }
                 catch (Exception ex)
                 {
@@ -74,7 +74,11 @@
 
         public void Reset(bool threaded = false)
         {
-            ApplyToTablesReverseDependency(table => _syncRepository.DeleteAll(table), threaded);
+            var exceptions = ApplyToTablesReverseDependency(table => _syncRepository.DeleteAll(table), threaded);
+
+            if (exceptions.Any())
+                throw exceptions.First();
+
             _syncRepository.Reset();
         }
 
@@ -90,7 +94,7 @@
                     _log.Info("====== Adds / Updates, collect deletes");
                     var exceptions = ApplyToTables(table => DoChangesForTable(table, context, mutators[table]), false);
                     _log.Info("====== Apply Deletes");
-                    ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false);
+                    exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false));
 
                     if (exceptions.Any())
                         throw exceptions.First();
@@ -108,7 +112,7 @@
             var context = _syncRepository.StartFullTransactionlessSync();
 
             var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table]), threaded);
-            ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded);
+            exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded));
 
             if (exceptions.Any())
                 throw exceptions.First();
@@ -203,10 +207,12 @@
             return exceptions;
         }
 
-        public void ApplyToTablesReverseDependency(Action<ITableSpec> action, bool threaded)
+        public IEnumerable<Exception> ApplyToTablesReverseDependency(Action<ITableSpec> action, bool threaded)
         {
             if (threaded)
                 _log.Info("Threaded reverse dependency not supported");
+
+            var exceptions = new List<Exception>();
 
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, bool>(tableSpec, false) // Table -> completed
@@ -233,7 +239,24 @@
                         else
                         {
                             _log.Info($"Processing {table.Key.Name}");
-                            action(table.Key);
+
+                            try
+                            {
+                                action(table.Key);
+                            }
+                            catch (FatalException)
+                            {
+                                // No point in carrying on for one of these
+                                throw;
+                            }
+                            catch (Exception ex)
+                            {
+                                // Report, but try to progress with the next table
+                                // Re-throw the exception later
+                                _log.Error(ex);
+                                exceptions.Add(ex);
+                            }
+
                             tables[table.Key] = true;
                             break;
                         }
@@ -243,6 +266,8 @@
                 if (!tables.Any(table => !table.Value))
                     break;
             }
+
+            return exceptions;
         }
 
 
