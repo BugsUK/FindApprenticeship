@@ -10,9 +10,12 @@ namespace SFA.Apprenticeships.Web.Manage.Controllers
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
-
+    using SFA.Infrastructure.Interfaces;
     public class AccountController : ManagementControllerBase
     {
+        public AccountController(ILogService logService) : base(logService)
+        {
+        }
 
         public void SignIn(string returnUrl)
         {

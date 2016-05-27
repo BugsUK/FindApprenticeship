@@ -1,9 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Globalization;
-    using System.Linq;
-    using System.Threading;
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
@@ -27,20 +24,19 @@
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
         public readonly IConfigurationService ConfigurationService;
-        public readonly ILogService _logService;
 
-        protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService)
+        protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(loggingService)
         {
             ConfigurationService = configurationService;
-            _logService = loggingService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            SetLoggingIds();
-            SetRequestInfo();
+            SetPersistentLoggingInfo();
+            MappedDiagnosticsLogicalContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
 
-            _logService.Info("OnActionExecuting {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+            LogOnActionExecuting(filterContext);
+
             UserContext = null;
 
             if (!string.IsNullOrWhiteSpace(User.Identity.Name))
@@ -69,7 +65,7 @@
 
         protected override void OnActionExecuted(ActionExecutedContext filterContext)
         {
-            _logService.Info("OnActionExecuted {0} {1} {2}", filterContext.HttpContext.Request.Url, User.Identity.Name, Thread.CurrentThread.ManagedThreadId);
+            _logService.Info("Request completed");
 
             base.OnActionExecuted(filterContext);
         }
@@ -85,29 +81,7 @@
             ViewBag.Environment = webConfiguration.Environment;
         }
 
-        private void SetLoggingIds()
-        {
-            var sessionId = UserData.Get(UserDataItemNames.LoggingSessionId);
-            if (sessionId == null)
-            {
-                sessionId = Guid.NewGuid().ToString("N");
-                UserData.Push(UserDataItemNames.LoggingSessionId, sessionId);
-            }
 
-            MappedDiagnosticsLogicalContext.Set("sessionId", sessionId);
-            MappedDiagnosticsLogicalContext.Set("userId", UserContext != null ? UserContext.CandidateId.ToString() : "<none>");
-        }
-
-        private void SetRequestInfo()
-        {
-            MappedDiagnosticsLogicalContext.Set("UserAgent", Request.UserAgent);
-            MappedDiagnosticsLogicalContext.Set("UrlReferrer", Request.UrlReferrer == null ? "<unknown>" : Request.UrlReferrer.ToString());
-            MappedDiagnosticsLogicalContext.Set("UserLanguages", Request.UserLanguages == null ? "<unknown>" : string.Join(",", Request.UserLanguages));
-            MappedDiagnosticsLogicalContext.Set("CurrentCulture", CultureInfo.CurrentCulture.ToString());
-            MappedDiagnosticsLogicalContext.Set("CurrentUICulture", CultureInfo.CurrentUICulture.ToString());
-            var headers = Request.Headers.AllKeys.Select(key => string.Format("{0}={1}", key, Request.Headers[key]));
-            MappedDiagnosticsLogicalContext.Set("Headers", string.Join(",", headers));
-        }
 
         private void SetCandidate()
         {

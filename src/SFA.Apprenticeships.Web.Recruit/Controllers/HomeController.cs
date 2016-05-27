@@ -7,12 +7,12 @@
     using SFA.Apprenticeships.Web.Common.Mediators;
     using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
     using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
-
+    using SFA.Infrastructure.Interfaces;
     public class HomeController : RecruitmentControllerBase
     {
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IHomeMediator homeMediator)            
+        public HomeController(IHomeMediator homeMediator, ILogService logService) : base(logService)
         {
             _homeMediator = homeMediator;
         }

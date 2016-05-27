@@ -10,12 +10,12 @@
     using FluentValidation.Mvc;
     using Mediators.Candidate;
     using ViewModels;
-
+    using SFA.Infrastructure.Interfaces;
     public class CandidateController : ManagementControllerBase
     {
         private readonly ICandidateMediator _candidateMediator;
 
-        public CandidateController(ICandidateMediator candidateMediator)
+        public CandidateController(ICandidateMediator candidateMediator, ILogService logService) : base(logService)
         {
             _candidateMediator = candidateMediator;
         }

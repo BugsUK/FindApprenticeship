@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Mediators.ProviderUser;
     using ViewModels;
     using ClaimTypes = System.Security.Claims.ClaimTypes;
-
+    using SFA.Infrastructure.Interfaces;
     [OwinSessionTimeout]
     public class ProviderUserController : RecruitmentControllerBase
     {
@@ -27,7 +27,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         public ProviderUserController(
             IProviderUserMediator providerUserMediator,
-            ICookieAuthorizationDataProvider cookieAuthorizationDataProvider)
+            ICookieAuthorizationDataProvider cookieAuthorizationDataProvider,
+            ILogService logService)
+            : base(logService)
         {
             _providerUserMediator = providerUserMediator;
             _cookieAuthorizationDataProvider = cookieAuthorizationDataProvider;

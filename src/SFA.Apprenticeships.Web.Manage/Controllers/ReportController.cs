@@ -8,13 +8,13 @@
     using Domain.Entities.Raa;
     using Mediators.Reporting;
     using ViewModels;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     public class ReportController : ManagementControllerBase
     {
         private readonly IReportingMediator _reportingMediator;
 
-        public ReportController(IReportingMediator reportingMediator)
+        public ReportController(IReportingMediator reportingMediator, ILogService logService) : base(logService)
         {
             _reportingMediator = reportingMediator;
         }

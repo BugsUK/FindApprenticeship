@@ -18,12 +18,12 @@
     using Microsoft.Owin.Security.WsFederation;
     using Raa.Common.ViewModels.Vacancy;
     using ViewModels;
-
+    using SFA.Infrastructure.Interfaces;
     public class AgencyUserController : ManagementControllerBase
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
 
-        public AgencyUserController(IAgencyUserMediator agencyUserMediator)
+        public AgencyUserController(IAgencyUserMediator agencyUserMediator, ILogService logService) : base(logService)
         {
             _agencyUserMediator = agencyUserMediator;
         }
