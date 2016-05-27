@@ -124,7 +124,7 @@
     <Compile Include="Strategies\Apprenticeships\ICreateDraftApprenticeshipFromSavedVacancyStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\IDeleteSavedApprenticeshipVacancyStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\ISaveApprenticeshipVacancyStrategy.cs" />
-    <Compile Include="Strategies\ILegacyGetCandidateVacancyDetailStrategy.cs" />
+    <Compile Include="Strategies\IGetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="Strategies\ISubmitContactMessageStrategy.cs" />
     <Compile Include="Strategies\ISendMobileVerificationCodeStrategy.cs" />
     <Compile Include="Strategies\IVerifyMobileStrategy.cs" />

@@ -7,7 +7,7 @@
     using Vacancy;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
-    public class GetCandidateVacancyDetailStrategy<TVacancyDetail> : ILegacyGetCandidateVacancyDetailStrategy<TVacancyDetail>
+    public class GetCandidateVacancyDetailStrategy<TVacancyDetail> : IGetCandidateVacancyDetailStrategy<TVacancyDetail>
         where TVacancyDetail : VacancyDetail
     {
         private readonly ILogService _logger;
