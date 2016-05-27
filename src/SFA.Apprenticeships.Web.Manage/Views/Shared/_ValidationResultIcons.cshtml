@@ -6,11 +6,13 @@
     <a name="@Model.AnchorName"></a>
     if (Model.HasWarning)
     {
-        <a href="@Model.ViewValidationResultUrl"><i class="fa fa-flag the-icon" title="@Model.Warning"></i></a>
+        <a href="@Model.ViewValidationResultUrl">
+            <i class="fa fa-flag the-icon" title="@Model.Warning"></i>
+        </a>
     }
     else
-    {
-        <i class="fa fa-check the-icon"></i>
+    {        
+        <img src="~/Content/_assets/img/checkmark.svg" class="raa-icon-checkmark-img"/>
     }
 }
 

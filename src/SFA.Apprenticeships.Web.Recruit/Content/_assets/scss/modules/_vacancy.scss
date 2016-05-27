@@ -74,9 +74,14 @@ html:not(.touch).js .editable-item {
 }
 
 .raa-icon-comment {
-    @extend copy-19;
+    @include copy-19;
     font-size: 19px !important;    
     color: $turquoise;
+}
+
+.raa-icon-comment-img {    
+    height: 1em !important;               
+    padding:1px 0 0 0;
 }
 
 h2{
