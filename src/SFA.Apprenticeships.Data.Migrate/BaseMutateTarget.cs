@@ -28,7 +28,7 @@
         {
             get
             {
-                return $"Summary for {_tableDetails.Name}: {NumberOfInserts} inserts, {NumberOfUpdates} updates, {NumberOfDeletes} deferred deletes, {NumberUnchanged} unchanged";
+                return $"Summary for {_tableDetails.Name}: {NumberOfInserts} inserts, {NumberOfUpdates} updates, {NumberOfDeletes} deletes, {NumberUnchanged} unchanged";
             }
         }
 

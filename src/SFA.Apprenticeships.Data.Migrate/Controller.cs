@@ -91,9 +91,9 @@
             {
                 if (context.AreAnyChanges())
                 {
-                    _log.Info("====== Adds / Updates, collect deletes");
+                    _log.Info("====== Adds / Updates, first go at Deletes");
                     var exceptions = ApplyToTables(table => DoChangesForTable(table, context, mutators[table]), false);
-                    _log.Info("====== Apply Deletes");
+                    _log.Info("====== Second go at Deletes");
                     exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), false));
 
                     if (exceptions.Any())
@@ -111,7 +111,13 @@
             var mutators = _tables.ToDictionary(t => t, t => _createMutateTarget(t));
             var context = _syncRepository.StartFullTransactionlessSync();
 
-            var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table]), threaded);
+            // Getting this up from pretty much eliminates problems with new parent+child records being added after the parent has been processed,
+            // but not the case where parents are updated to point to a new child.
+            _log.Info("====== Getting maximum ids");
+            var maxFirstId = new Dictionary<ITableSpec, long>();
+            ApplyToTablesUnthreaded(table => maxFirstId[table] = context.GetMaxFirstId(table));
+
+            var exceptions = ApplyToTables(table => DoInitial(table, context, mutators[table], maxFirstId[table]), threaded);
             exceptions = exceptions.Concat(ApplyToTablesReverseDependency(table => mutators[table].FlushDeletes(), threaded));
 
             if (exceptions.Any())
@@ -308,13 +314,11 @@
         }
 
 
-        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext, IMutateTarget mutateTarget)
+        public void DoInitial(ITableSpec table, ITransactionlessSyncContext syncContext, IMutateTarget mutateTarget, long maxFirstId)
         {
             int batchSize = (int)(_migrateConfig.RecordBatchSize * table.BatchSizeMultiplier);
             try
             {
-                long maxFirstId = (table.Name == "Vacancyxxx") ? 700000 : syncContext.GetMaxFirstId(table);
-
                 long startFirstId = (table.Name == "Personxxxx") ? 4290000 : 0;
 
                 while (startFirstId < maxFirstId)
@@ -332,6 +336,17 @@
             }
             finally
             {
+                try
+                {
+                    // Where records are deleted and then reinserted in is important that they are deleted before attempting inserts...
+                    mutateTarget.FlushDeletes(); // TODO: Ideally pass parameter through to prevent WARNings and ERRORs.
+                }
+                catch (Exception)
+                {
+                    // ...but when they are on a child table then the parent will need to be deleted first.
+                    _log.Info("Some deletes failed. These will be retried once the parent tables have been processed.");
+                }
+
                 mutateTarget.FlushInsertsAndUpdates();
             }
         }
