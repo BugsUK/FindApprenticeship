@@ -130,14 +130,6 @@
 
         public IEnumerable<Exception> ApplyToTablesThreaded(Action<ITableSpec> action)
         {
-            if (_tables.Count() == 1)
-            {
-                // Special case for testing - ignore dependencies
-                action(_tables.Single());
-                return Enumerable.Empty<Exception>();
-            }
-
-
             var tables = _tables.Select(tableSpec =>
                 new KeyValuePair<ITableSpec, Task>(tableSpec, new Task(() => { try { action(tableSpec); } catch (Exception ex) { if (!(ex is FatalException)) _log.Error(ex); throw; } }))
                 ).ToDictionary(i => i.Key, i => i.Value);
@@ -156,7 +148,7 @@
                     {
                         //_log.Debug($"Already started {table.Key.Name} - status is {table.Value.Status}");
                     }
-                    else if (table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Any())
+                    else if (_tables.Count() != 1 && table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Any()) // Special case for --SingleTable option - ignore dependencies
                     {
                         //_log.Debug($"Deferring {table.Key.Name} as dependent on " + string.Join(", ", table.Key.DependsOn.Where(dependency => !tables[dependency].IsCompleted).Select(t => t.Name)));
                     }
@@ -232,7 +224,7 @@
                     {
                         var outstandingDependencies = tables.Where(t => t.Key.DependsOn.Any(t2 => t2 == table.Key) && !t.Value).Select(t => t.Key.Name);
 
-                        if (outstandingDependencies.Any())
+                        if (outstandingDependencies.Any() && _tables.Count() != 1) // Special case for --SingleTable option - ignore dependencies
                         {
                             //_log.Debug($"Deferring {table.Key.Name} as dependent on {string.Join(", ", outstandingDependencies)}");
                         }
