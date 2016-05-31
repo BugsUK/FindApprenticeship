@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.Mappers.Resolvers
 {
     using System.Collections.Generic;
+    using System.Linq;
     using AutoMapper;
     using Application.Interfaces.Search;
     using Application.Interfaces.Vacancies;
@@ -14,7 +15,7 @@
 
             var viewModel = new TraineeshipSearchResponseViewModel
             {
-                Vacancies = context.Engine.Map<IEnumerable<TraineeshipSearchResponse>, IEnumerable<TraineeshipVacancySummaryViewModel>>(source.Results)
+                Vacancies = context.Engine.Map<IEnumerable<TraineeshipSearchResponse>, IEnumerable<TraineeshipVacancySummaryViewModel>>(source.Results.OrderBy(v=>v.Id))
             };
 
             return viewModel;
