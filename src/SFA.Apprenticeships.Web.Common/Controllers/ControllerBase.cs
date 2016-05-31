@@ -118,7 +118,7 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
             // UserLanguages, CurrentCulture, CurrentUICulture and Headers from INFO, DEBUG and TRACE
             // logs when it sees this log value. These items can be still seen by looking at the first
             // INFO message for the requestGuid.
-            SetLoggingInfo("FirstLogDone", () => "1");
+            SetLoggingInfo("headersLogged", () => "1");
 
             // If the above cannot be done then the following should be considered. The only bad effect
             // is that another step is required to see headers (etc) for ERROR or FATAL level logs.
