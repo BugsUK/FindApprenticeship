@@ -45,6 +45,7 @@
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApprenticeshipApplicationStrategy _submitApprenticeshipApplicationStrategy;
+        private readonly ISubmitApprenticeshipApplicationStrategy _submitLegacyApprenticeshipApplicationStrategy;
         private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
@@ -70,6 +71,7 @@
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApprenticeshipApplicationStrategy submitApprenticeshipApplicationStrategy,
+            ISubmitApprenticeshipApplicationStrategy submitLegacyApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
             ISaveApprenticeshipVacancyStrategy saveVacancyStrategy,
             IDeleteSavedApprenticeshipVacancyStrategy deleteSavedApprenticeshipVacancyStrategy,
@@ -107,6 +109,7 @@
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
+            _submitLegacyApprenticeshipApplicationStrategy = submitLegacyApprenticeshipApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
             _saveVacancyStrategy = saveVacancyStrategy;
             _deleteSavedApprenticeshipVacancyStrategy = deleteSavedApprenticeshipVacancyStrategy;
