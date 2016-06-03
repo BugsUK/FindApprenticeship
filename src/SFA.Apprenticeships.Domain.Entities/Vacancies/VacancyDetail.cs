@@ -58,6 +58,8 @@
 
         public TrainingType TrainingType { get; set; }
 
+        public bool EditedInRaa { get; set; }
+
         #endregion
 
         #region Employer

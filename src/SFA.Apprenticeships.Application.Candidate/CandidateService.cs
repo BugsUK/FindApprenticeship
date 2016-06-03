@@ -10,6 +10,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using Infrastructure.Common.Configuration;
     using Interfaces.Candidates;
     using Interfaces.Communications;
     using SFA.Infrastructure.Interfaces;
@@ -64,6 +65,7 @@
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
         private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
         private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
+        private readonly IConfigurationService _configurationService;
 
         public CandidateService(
             IGetCandidateByIdStrategy getCandidateByIdStrategy,
@@ -103,7 +105,8 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
+            IConfigurationService configurationService)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
@@ -143,6 +146,7 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
+            _configurationService = configurationService;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -329,7 +333,23 @@
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
 
-            _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+                if (vacancyDetails.EditedInRaa)
+                {
+                    _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+                }
+                else
+                {
+                    _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+                }
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+            }
         }
 
         public void SubmitTraineeshipApplication(
