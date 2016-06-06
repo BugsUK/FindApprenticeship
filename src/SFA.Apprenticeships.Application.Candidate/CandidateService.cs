@@ -47,7 +47,8 @@
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApprenticeshipApplicationStrategy _submitApprenticeshipApplicationStrategy;
         private readonly ISubmitApprenticeshipApplicationStrategy _submitLegacyApprenticeshipApplicationStrategy;
-        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitLegacyTraineeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitRaaTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
@@ -87,7 +88,8 @@
             IArchiveApplicationStrategy archiveApplicationStrategy,
             IDeleteApplicationStrategy deleteApplicationStrategy,
             ISaveCandidateStrategy saveCandidateStrategy,
-            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy,
+            ISubmitTraineeshipApplicationStrategy submitLegacyTraineeshipApplicationStrategy,
+            ISubmitTraineeshipApplicationStrategy submitRaaTraineeshipApplicationStrategy,
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
@@ -127,7 +129,8 @@
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
             _saveCandidateStrategy = saveCandidateStrategy;
-            _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
+            _submitLegacyTraineeshipApplicationStrategy = submitLegacyTraineeshipApplicationStrategy;
+            _submitRaaTraineeshipApplicationStrategy = submitRaaTraineeshipApplicationStrategy;
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
@@ -363,7 +366,25 @@
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(candidateId, vacancyId, traineeshipApplicationDetail);
 
-            _submitTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
+
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+                if (vacancyDetails.EditedInRaa)
+                {
+                    _submitRaaTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+                }
+                else
+                {
+                    _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+                }
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+            }
+
         }
 
         public IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId)

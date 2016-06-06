@@ -20,6 +20,9 @@
         private Mock<ISubmitApprenticeshipApplicationStrategy> _submitLegacyApplicationStrategy;
         private Mock<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>> _candidateApprenticeshipVacancyDetailsStrategy;
         private Mock<ISubmitApprenticeshipApplicationStrategy> _submitRaaApplicationStrategy;
+        private Mock<ISubmitTraineeshipApplicationStrategy> _submitLegacyTraineeshipApplicationStrategy;
+        private Mock<ISaveTraineeshipApplicationStrategy> _saveTraineeshipApplicationStrategy;
+        private Mock<ISubmitTraineeshipApplicationStrategy> _submitRaaTraineeshipApplicationStrategy;
 
         public CandidateServiceBuilder()
         {
@@ -27,30 +30,51 @@
             _submitLegacyApplicationStrategy = new Mock<ISubmitApprenticeshipApplicationStrategy>();
             _submitRaaApplicationStrategy = new Mock<ISubmitApprenticeshipApplicationStrategy>();
             _candidateApprenticeshipVacancyDetailsStrategy = new Mock<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
+            _submitLegacyTraineeshipApplicationStrategy = new Mock<ISubmitTraineeshipApplicationStrategy>();
+            _saveTraineeshipApplicationStrategy = new Mock<ISaveTraineeshipApplicationStrategy>();
+            _submitLegacyTraineeshipApplicationStrategy = new Mock<ISubmitTraineeshipApplicationStrategy>();
         }
 
         public CandidateServiceBuilder With(Mock<IConfigurationService> configurationService)
         {
-            this._configurationService = configurationService;
+            _configurationService = configurationService;
             return this;
         }
 
 
         public CandidateServiceBuilder WithSubmitLegacy(Mock<ISubmitApprenticeshipApplicationStrategy> submitLegacyApplicationStrategy)
         {
-            this._submitLegacyApplicationStrategy = submitLegacyApplicationStrategy;
+            _submitLegacyApplicationStrategy = submitLegacyApplicationStrategy;
             return this;
         }
 
         public CandidateServiceBuilder WithSubmitRaa(Mock<ISubmitApprenticeshipApplicationStrategy> submitLegacyApplicationStrategy)
         {
-            this._submitRaaApplicationStrategy = submitLegacyApplicationStrategy;
+            _submitRaaApplicationStrategy = submitLegacyApplicationStrategy;
             return this;
         }
 
         public CandidateServiceBuilder With(Mock<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>> candidateApprenticeshipVacancyDetailStrategy)
         {
-            this._candidateApprenticeshipVacancyDetailsStrategy = candidateApprenticeshipVacancyDetailStrategy;
+            _candidateApprenticeshipVacancyDetailsStrategy = candidateApprenticeshipVacancyDetailStrategy;
+            return this;
+        }
+
+        public CandidateServiceBuilder WithSubmitTraineeshipLegacy(Mock<ISubmitTraineeshipApplicationStrategy> submitLegacyTraineeshipApplicationStrategy)
+        {
+            _submitLegacyTraineeshipApplicationStrategy = submitLegacyTraineeshipApplicationStrategy;
+            return this;
+        }
+
+        public CandidateServiceBuilder With(Mock<ISaveTraineeshipApplicationStrategy> saveTraineeshipApplicationStrategy)
+        {
+            _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
+            return this;
+        }
+
+        public CandidateServiceBuilder WithSubmitTraineeshipRaa(Mock<ISubmitTraineeshipApplicationStrategy> submitRaaTraineeshipApplicationStrategy)
+        {
+            _submitRaaTraineeshipApplicationStrategy = submitRaaTraineeshipApplicationStrategy;
             return this;
         }
 
@@ -76,8 +100,9 @@
                 new Mock<IArchiveApplicationStrategy>().Object, 
                 new Mock<IDeleteApplicationStrategy>().Object, 
                 new Mock<ISaveCandidateStrategy>().Object, 
-                new Mock<ISubmitTraineeshipApplicationStrategy>().Object, 
-                new Mock<ISaveTraineeshipApplicationStrategy>().Object, 
+                _submitLegacyTraineeshipApplicationStrategy.Object,
+                _submitRaaTraineeshipApplicationStrategy.Object,
+                _saveTraineeshipApplicationStrategy.Object, 
                 new Mock<ITraineeshipApplicationReadRepository>().Object, 
                 new Mock<IGetCandidateTraineeshipApplicationsStrategy>().Object, 
                 _candidateApprenticeshipVacancyDetailsStrategy.Object, 
