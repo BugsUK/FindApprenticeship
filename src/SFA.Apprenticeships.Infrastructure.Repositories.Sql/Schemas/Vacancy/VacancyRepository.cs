@@ -712,20 +712,12 @@ WHERE  VacancyId = @VacancyId AND Field = @Field
             throw new NotImplementedException();
         }
 
-        public void IncrementOfflineApplicationClickThrough(int vacancyId)
+        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
-            _getOpenConnection.MutatingQuery<object>(
-                    $@"UPDATE dbo.Vacancy 
-SET NoOfOfflineApplicants = NoOfOfflineApplicants + 1
-WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is not null
-
-UPDATE dbo.Vacancy 
-SET NoOfOfflineApplicants = 1
-WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
-", new
-                    {
-                        VacancyId = vacancyId
-                    }); 
+            //TODO: This should have an implementation after merging develop in next release.
+            //Hotfix for v2.0.0 release, ommitting this line so as to avoid excessive logs of a known issue.
+            //This will be tested extensively on the PRE environment
+            //throw new NotImplementedException();
         }
 
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)
