@@ -8,6 +8,7 @@
 }
 @using SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
 @using SFA.Apprenticeships.Infrastructure.Presentation
+@using SFA.Apprenticeships.Web.Common.Extensions
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @using SFA.Apprenticeships.Web.Recruit.Constants
@@ -15,6 +16,13 @@
     ViewBag.Title = "Recruit an Apprentice";
     var vacanciesLabel = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "opportunities" : "vacancies";
     var vacanciesTitle = Model.VacanciesSummary.VacanciesSummarySearch.VacancyType == VacancyType.Traineeship ? "Opportunity" : "Vacancy";
+}
+@section metatags
+{
+    <meta name="DCS.dcsaut" content="@User.Identity.Name" />
+    <meta name="DCSext.sfaukprn" content="@User.GetUkprn()" />
+    <meta name="DCSext.sfaukprname" content="@Model.ProviderViewModel.ProviderName"/>
+    <meta name="WT.sp" content="@ViewBag.Title" />       
 }
 
 @Html.Partial("ValidationSummary", ViewData.ModelState)
@@ -65,12 +73,12 @@
         @Html.AntiForgeryToken()
 
         @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.VacancyType)
-        @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)
-
+        @Html.HiddenFor(m => m.VacanciesSummary.VacanciesSummarySearch.FilterType)        
         <section class="grid-wrapper">
             @{
                 var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
                 var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
+                var newApplicationsCount = Model.VacanciesSummary.NewApplicationsCount;
             }
             <h2 class="heading-medium">
                 Your @vacanciesLabel
@@ -97,18 +105,45 @@
                     </figure>
                 </li>
                 <li>
-                    <figure class="data">
+                    <figure class="data">                        
                         @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
-                    {
-                            <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
-                            <figcaption><h2>New applications</h2></figcaption>
+                        {                          
+                            if (newApplicationsCount == 1)
+                            {
+                                <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                <figcaption>
+                                    <h2>New application</h2>
+                                </figcaption>
+                            }
+                            else
+                            {
+                                <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                <figcaption>
+                                    <h2>New applications</h2>
+                                </figcaption>
+                            }
                         }
                         else
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
-                                <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
-                                <figcaption><h2>New applications</h2></figcaption>
-                            </a>
+                        {                            
+                            if (newApplicationsCount == 1)
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                                    <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                    <figcaption>
+                                        <h2>New application</h2>
+                                    </figcaption>
+                                </a>
+                            }
+                            else
+                            {
+                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                                    <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                    <figcaption>
+                                        <h2>New applications</h2>
+                                    </figcaption>
+                                </a>
+                            }
+
                         }
                     </figure>
                 </li>
@@ -359,33 +394,37 @@
                                         </td>
                                         <td class="vac-no-of-applications" data-label="Number of applications">
                                             @if (vacancy.Status.CanHaveApplicationsOrClickThroughs())
-                                            {                                                
-                                                int count;
-                                                string unit;
+                                            {
+                                                var unit = isOfflineVacancy ? "click-through" : "application";
+                                                var units = unit + "s";
+                                                var applicationCount = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
+                                                var newApplicationCount = vacancy.NewApplicationCount;
                                                 if (filterType == VacanciesSummaryFilterTypes.NewApplications)
                                                 {
-                                                    count = vacancy.NewApplicationCount;
-                                                    unit = "application";
+                                                    if (newApplicationCount == 1)
+                                                    {
+                                                        <span>1<br /> application</span>
+                                                    }                                                    
+                                                    else
+                                                    {
+                                                        <span>@newApplicationCount<br /> applications</span>
+                                                    }
                                                 }
                                                 else
-                                                {
-                                                    count = isOfflineVacancy ? vacancy.OfflineApplicationClickThroughCount : vacancy.ApplicationCount;
-                                                    unit = isOfflineVacancy ? "click-through" : "application";
-                                                }
-                                                var units = unit + "s";
-
-                                                if (vacancy.Status == VacancyStatus.Live && count == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
-                                                {
-                                                    <span style="color: red; font-weight: bold">0<br /> @units</span>
-                                                }
-                                                else if (vacancy.NewApplicationCount == 1)
-                                                {
-                                                    <span>1<br /> @unit</span>
-                                                }
-                                                else
-                                                {
-                                                    <span>@count<br /> @units</span>
-                                                }
+                                                {                                                                                                      
+                                                    if (applicationCount == 1)
+                                                    {
+                                                        <span>1<br /> @unit</span>
+                                                    }
+                                                    else if (vacancy.Status == VacancyStatus.Live && applicationCount == 0 && vacancy.ClosingDate.Date.CloseToClosingDate())
+                                                    {
+                                                        <span style="color: red; font-weight: bold">0<br /> @units</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span>@applicationCount<br /> @units</span>
+                                                    }
+                                                }                                                                               
                                             }
                                             else
                                             {

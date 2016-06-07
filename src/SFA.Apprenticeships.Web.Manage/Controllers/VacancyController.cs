@@ -17,14 +17,14 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
     public class VacancyController : ManagementControllerBase
     {
         private readonly IVacancyMediator _vacancyMediator;
 
-        public VacancyController(IVacancyMediator vacancyMediator)
+        public VacancyController(IVacancyMediator vacancyMediator, ILogService logService) : base(logService)
         {
             _vacancyMediator = vacancyMediator;
         }

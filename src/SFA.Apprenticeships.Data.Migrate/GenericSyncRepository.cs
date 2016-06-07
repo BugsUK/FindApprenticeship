@@ -115,7 +115,7 @@
                     _log.Warn($"Error updating record. Therefore updating what can be before continuing. Error was {ex.Message}");
                     var errors = UpdateFromTempOneAtATime(table, columnTypes, tempTable, connection);
                     if (errors.Any())
-                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                        throw new Exception($"Errors updating {table.Name}:\n{GetErrorText(errors)}");
                 }
             }
 
@@ -125,22 +125,33 @@
         {
             var tempTable = "_DeleteTemp_" + table.Name;
             var primaryKeysWithTypes = table.PrimaryKeys.ToDictionary(k => k, k => typeof(long));
-            var records = keys.Select(k => k.ToDictionary(r => table.PrimaryKeys.First(), r => (object)r)); // TODO: Only works if one primary key
-
+            var allRecords = keys.Select(k => k.ToDictionary(r => table.PrimaryKeys.First(), r => (object)r)).ToList(); // TODO: Only works if one primary key
+            
             using (var connection = (SqlConnection)_targetDatabase.GetOpenConnection())
             {
-                CreateAndInsertIntoTemp(table, primaryKeysWithTypes, tempTable, connection, records);
+                const int batchSize = 1000;
+                int thisBatchSize = batchSize;
 
-                try
+                for (int firstRecord = 0; allRecords.Count != 0 && thisBatchSize == batchSize; firstRecord += batchSize)
                 {
-                    DeleteFromTempInOneGo(table, primaryKeysWithTypes, tempTable, connection);
-                }
-                catch (Exception ex)
-                {
-                    _log.Warn($"Error deleting record. Therefore updating what can be before continuing. Error was {ex.Message}");
-                    var errors = DeleteFromTempOneAtATime(table, primaryKeysWithTypes, tempTable, connection);
-                    if (errors.Any())
-                        throw new Exception($"Errors inserting into {table.Name}:\n{GetErrorText(errors)}");
+                    var records = allRecords.Skip(firstRecord).Take(batchSize).ToList();
+                    thisBatchSize = records.Count();
+
+                    _log.Info($"Deleting {thisBatchSize} records {firstRecord * 100L / allRecords.Count}% done");
+
+                    CreateAndInsertIntoTemp(table, primaryKeysWithTypes, tempTable, connection, records);
+
+                    try
+                    {
+                        DeleteFromTempInOneGo(table, primaryKeysWithTypes, tempTable, connection);
+                    }
+                    catch (Exception ex)
+                    {
+                        _log.Warn($"Error deleting record. Therefore deleting what can be before continuing. Error was {ex.Message}");
+                        var errors = DeleteFromTempOneAtATime(table, primaryKeysWithTypes, tempTable, connection);
+                        if (errors.Any())
+                            throw new Exception($"Errors deleting from {table.Name}:\n{GetErrorText(errors)}");
+                    }
                 }
             }
         }

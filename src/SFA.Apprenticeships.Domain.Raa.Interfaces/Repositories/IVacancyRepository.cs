@@ -32,7 +32,7 @@
 
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
-        void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber);
+        void IncrementOfflineApplicationClickThrough(int vacancyId);
 
         Vacancy Update(Vacancy vacancy);
     }

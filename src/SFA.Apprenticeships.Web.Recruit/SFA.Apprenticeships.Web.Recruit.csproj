@@ -415,6 +415,7 @@
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\bubble.svg" />
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
@@ -436,6 +437,10 @@
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
     <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />

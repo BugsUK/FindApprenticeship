@@ -94,6 +94,9 @@
 
         public void FlushDeletes()
         {
+            if (_toDelete.Count == 0)
+                return;
+
             _log.Info(SummaryTextDeletes);
             _syncRepository.BulkDelete(_tableDetails, _toDelete);
         }

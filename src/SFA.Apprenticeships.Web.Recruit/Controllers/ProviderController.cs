@@ -11,15 +11,14 @@
     using Constants;
     using Domain.Entities;
     using Domain.Entities.Raa;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
     public class ProviderController : RecruitmentControllerBase
     {
         private readonly IProviderMediator _providerMediator;
 
-        public ProviderController(
-            IProviderMediator providerMediator)
+        public ProviderController(IProviderMediator providerMediator, ILogService logService) : base(logService)
         {
             _providerMediator = providerMediator;
         }

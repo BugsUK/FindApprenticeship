@@ -8,12 +8,15 @@
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
-
+    using SFA.Infrastructure.Interfaces;
     public class TraineeshipApplicationController : RecruitmentControllerBase
     {
         private readonly ITraineeshipApplicationMediator _traineeshipApplicationMediator;
 
-        public TraineeshipApplicationController(ITraineeshipApplicationMediator traineeshipApplicationMediator)
+        public TraineeshipApplicationController(
+            ITraineeshipApplicationMediator traineeshipApplicationMediator,
+            ILogService logService)
+            : base(logService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }

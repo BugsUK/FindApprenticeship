@@ -2,5 +2,7 @@
     
 @if (Model.HasComment && Model.Status.IsStateEditable())
 {
-    <a href="@Model.ViewCommentUrl"><i class="fa fa-comment the-icon raa-icon-comment" title="there are comments"><span class="visuallyhidden">there are comments</span></i></a>
+    <a href="@Model.ViewCommentUrl">        
+        <img src="~/Content/_assets/img/bubble.svg" class="raa-icon-comment-img" alt="there are comments"/>
+    </a>
 }

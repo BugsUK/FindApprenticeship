@@ -46,5 +46,7 @@
 
         [Display(Name = VacancyPartyViewModelMessages.NumberOfPositionsComment.LabelText)]
         public string NumberOfPositionsComment { get; set; }
+
+        public bool IsEmployerAddressValid { get; set; }
     }
 }

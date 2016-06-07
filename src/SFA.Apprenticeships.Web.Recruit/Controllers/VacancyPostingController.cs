@@ -18,7 +18,7 @@
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
-
+    using SFA.Infrastructure.Interfaces;
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
     [OwinSessionTimeout]
@@ -26,7 +26,7 @@
     {
         private readonly IVacancyPostingMediator _vacancyPostingMediator;
 
-        public VacancyPostingController(IVacancyPostingMediator vacancyPostingMediator)
+        public VacancyPostingController(IVacancyPostingMediator vacancyPostingMediator, ILogService logService) : base(logService)
         {
             _vacancyPostingMediator = vacancyPostingMediator;
         }
@@ -107,6 +107,9 @@
             switch (response.Code)
             {
                 case VacancyPostingMediatorCodes.GetEmployer.Ok:
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress:
+                    SetUserMessage(response.Message);
                     return View(response.ViewModel);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
@@ -872,7 +875,17 @@
         public ActionResult ConfirmNewEmployer(int providerSiteId, string edsErn, Guid vacancyGuid, bool? comeFromPreview)
         {
             var response = _vacancyPostingMediator.GetEmployer(providerSiteId, edsErn, vacancyGuid, comeFromPreview, null);
-            return View(response.ViewModel);
+
+            switch (response.Code)
+            {
+                case VacancyPostingMediatorCodes.GetEmployer.Ok:
+                    return View(response.ViewModel);
+                case VacancyPostingMediatorCodes.GetEmployer.InvalidEmployerAddress:
+                    SetUserMessage(response.Message);
+                    return View(response.ViewModel);
+                default:
+                    throw new InvalidMediatorCodeException(response.Code);
+            }
         }
 
         [HttpPost]

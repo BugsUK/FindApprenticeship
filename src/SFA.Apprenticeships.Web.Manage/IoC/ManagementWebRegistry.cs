@@ -67,10 +67,12 @@
             For<IProviderQAProvider>().Use<ProviderProvider>();
             For<ILocationsProvider>().Use<LocationsProvider>();
             For<ICandidateProvider>().Use<CandidateProvider>().Ctor<IMapper>().Named("CandidateMappers");
+            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
         }
 
         private void RegisterServices()
         {
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IReportingService>().Use<ReportingService>();
@@ -80,6 +82,8 @@
             For<IAddressSearchService>().Use<AddressSearchService>();
             For<ICandidateSearchService>().Use<CandidateSearchService>();
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
         }
 
         private void RegisterStrategies()
