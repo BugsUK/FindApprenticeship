@@ -32,7 +32,7 @@
             _candidateApprenticeshipVacancyDetailsStrategy = new Mock<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
             _submitLegacyTraineeshipApplicationStrategy = new Mock<ISubmitTraineeshipApplicationStrategy>();
             _saveTraineeshipApplicationStrategy = new Mock<ISaveTraineeshipApplicationStrategy>();
-            _submitLegacyTraineeshipApplicationStrategy = new Mock<ISubmitTraineeshipApplicationStrategy>();
+            _submitRaaTraineeshipApplicationStrategy = new Mock<ISubmitTraineeshipApplicationStrategy>();
         }
 
         public CandidateServiceBuilder With(Mock<IConfigurationService> configurationService)
