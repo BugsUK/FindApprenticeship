@@ -2,8 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading;
+    using Configuration;
     using Infrastructure.Repositories.Sql.Common;
     using Mappers;
     using Repository.Sql;
@@ -20,7 +20,7 @@
 
             _logService.Info("Initialisation");
 
-            var persistentConfig = configurationService.Get<MigrateFromAvmsConfiguration>();
+            var persistentConfig = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
 
             //Ensure date precision is honoured
             Dapper.SqlMapper.AddTypeMap(typeof(DateTime), System.Data.DbType.DateTime2);

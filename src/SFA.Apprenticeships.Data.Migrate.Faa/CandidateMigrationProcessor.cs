@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Configuration;
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
@@ -49,7 +50,7 @@
             _candidateUserRepository = new CandidateUserRepository(configurationService, _logService);
             _userRepository = new UserRepository(configurationService, logService);
 
-            var persistentConfig = configurationService.Get<MigrateFromAvmsConfiguration>();
+            var persistentConfig = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
             _anonymiseData = persistentConfig.AnonymiseData;
         }
 
