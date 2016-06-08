@@ -167,12 +167,12 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                 OFFSET " + offset + @" ROWS
                 FETCH NEXT " + pageSize + @" ROWS ONLY";
             }
-
+            //TODO: adding a timeout of 10 mins. This value needs to change and come from a config file in the future.
             var dbVacancies = _getOpenConnection.Query<Vacancy>(
             sql, new
             {
                 VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
-            });
+            },600);
 
 
             _logger.Debug(

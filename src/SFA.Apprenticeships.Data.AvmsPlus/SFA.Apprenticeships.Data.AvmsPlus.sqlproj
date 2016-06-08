@@ -25,6 +25,7 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <DefaultCollation>Latin1_General_CI_AS</DefaultCollation>
     <DefaultFilegroup>PRIMARY</DefaultFilegroup>
+    <Containment>Partial</Containment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Local|AnyCPU' ">
     <OutputPath>bin\Local\</OutputPath>
@@ -934,7 +935,6 @@
     <Build Include="dbo\Stored Procedures\uspReturnProviderSystemPermissions.sql" />
     <Build Include="dbo\Stored Procedures\uspHashPwd.sql" />
     <Build Include="Security\Permissions.sql" />
-     
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />
