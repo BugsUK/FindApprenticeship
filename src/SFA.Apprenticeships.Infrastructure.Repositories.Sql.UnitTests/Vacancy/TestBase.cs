@@ -4,14 +4,12 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using FluentAssertions.Equivalency;
-    using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Vacancy = Schemas.Vacancy.Entities.Vacancy;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
     using VacancyLocation = Schemas.Vacancy.Entities.VacancyLocation;
 
-    [TestFixture]
-    public class TestBase
+    public abstract class TestBase
     {
         private const string FramworkCodeNameFramework1 = "260";
         private const int StandardIdStandard1 = 1;
