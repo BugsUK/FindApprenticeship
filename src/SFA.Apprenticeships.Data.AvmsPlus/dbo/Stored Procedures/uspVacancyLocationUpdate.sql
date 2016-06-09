@@ -19,7 +19,7 @@ BEGIN
  BEGIN TRY   
 
 	UPDATE
-		VACANCYLOCATION
+		VacancyLocation
 	SET
 		NumberofPositions = @NumberofPositions,
 		AddressLine1 = @AddressLine1,

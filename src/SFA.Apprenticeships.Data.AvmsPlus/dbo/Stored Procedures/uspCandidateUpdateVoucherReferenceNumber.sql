@@ -25,7 +25,7 @@ from Candidate
     CandidateId =  @CandidateId
 
 UPDATE 
-    CANDIDATE
+    Candidate
  SET 
    VoucherReferenceNumber =  @VoucherNo
  WHERE

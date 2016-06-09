@@ -13,4 +13,4 @@ SET NOCOUNT ON;
 		S.[LastAccessedDate]
 	From	StakeHolder S, Person P
 	Where	S.PersonId = P.PersonId 
-	And		S.StakeHolderId = @StakeHolderId
+	And		S.StakeHolderID = @StakeHolderId

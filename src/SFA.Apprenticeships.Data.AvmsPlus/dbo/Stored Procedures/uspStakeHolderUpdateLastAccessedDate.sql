@@ -7,7 +7,7 @@ BEGIN
     UPDATE StakeHolder
         SET LastAccessedDate = getdate()
     WHERE
-        StakeHolderId = @StakeHolderId
+        StakeHolderID = @StakeHolderId
           
 	SET NOCOUNT OFF      
 END

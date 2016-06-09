@@ -27,7 +27,7 @@ BEGIN
 				WHEN @providerSiteId THEN 1
 				ELSE 0 
 			  END as IsVO
-		FROM ProviderSiteRelationShip PSR     
+		FROM ProviderSiteRelationship PSR     
 		  INNER JOIN dbo.ProviderSite PS ON PSR.ProviderSiteID = PS.ProviderSiteID
 		  AND PS.TrainingProviderStatusTypeID != 2    
 		WHERE  PSR.Providerid = @providerID    

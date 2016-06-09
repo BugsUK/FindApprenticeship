@@ -63,7 +63,7 @@ BEGIN
 		LEFT JOIN [dbo].[Person] [person] ON  	[person].[PersonId] = ec.PersonId      
 		LEFT JOIN ContactPreferenceType CP ON   CP.[ContactPreferenceTypeId] = ec.[ContactPreferenceTypeId]     
 		INNER JOIN PersonType on person.personTypeId=personType.PersonTypeId    
-		LEFT OUTER JOIN County on County.CountyId = Employer.countyId
+		LEFT OUTER JOIN County on County.CountyId = Employer.CountyId
 	WHERE [employer].[EmployerId]=@employerId      
 
 	SET NOCOUNT OFF    

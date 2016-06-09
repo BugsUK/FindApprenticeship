@@ -14,7 +14,7 @@ IF (@OrgType = 1 )
 IF (@OrgType = 2 )
 	SELECT @Code = UKPRN from Provider JOIN ProviderSiteRelationship
 	ON Provider.ProviderID = ProviderSiteRelationship.ProviderID
-	JOIN ProviderSiteRelationshipType on ProviderSiteRelationship.ProviderSiteRelationshipTypeID
+	JOIN ProviderSiteRelationshipType on ProviderSiteRelationship.ProviderSiteRelationShipTypeID
 	= ProviderSiteRelationshipType.ProviderSiteRelationshipTypeID
 	AND ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTYpeName = N'Owner'
 	JOIN ProviderSite ON ProviderSiteRelationShip.ProviderSiteID = ProviderSite.ProviderSiteID where ProviderSite.ProviderSiteID = @OrganisationID

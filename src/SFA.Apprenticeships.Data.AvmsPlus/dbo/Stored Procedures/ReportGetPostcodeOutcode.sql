@@ -18,11 +18,11 @@ BEGIN
     BEGIN TRY  
 
 		SELECT DISTINCT 
-				RTRIM(left(postcode,charindex (' ',postcode)))   as 'Postcode Outcode'
+				RTRIM(left(postcode,charindex (' ',PostCode)))   as 'Postcode Outcode'
 		FROM 
 				dbo.Employer emp (nolock)
 		ORDER BY 
-				RTRIM(left(postcode,charindex (' ',postcode)))
+				RTRIM(left(postcode,charindex (' ',PostCode)))
 
 	END TRY  
 	BEGIN CATCH  

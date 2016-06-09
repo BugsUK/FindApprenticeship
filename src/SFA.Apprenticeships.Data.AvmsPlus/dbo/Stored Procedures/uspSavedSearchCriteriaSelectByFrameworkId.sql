@@ -5,7 +5,7 @@ Begin
 	SET NOCOUNT ON;
 
 	Select * from SearchFrameworks sf, SavedSearchCriteria sc
-	Where sf.SavedSearchCriteriaID = sc.SavedSearchCriteriaID
+	Where sf.SavedSearchCriteriaId = sc.SavedSearchCriteriaId
 	And sf.FrameworkId = @frameworkId
 	
 	SET NOCOUNT OFF;

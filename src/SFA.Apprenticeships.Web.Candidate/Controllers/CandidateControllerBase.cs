@@ -74,9 +74,6 @@
         {
             var webConfiguration = ConfigurationService.Get<CommonWebConfiguration>();
             ViewBag.ShowAbout = webConfiguration.ShowAbout;
-
-            if (!webConfiguration.ShowAbout) return;
-
             ViewBag.Version = VersionLogging.GetVersion();
             ViewBag.Environment = webConfiguration.Environment;
         }

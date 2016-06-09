@@ -12,7 +12,7 @@ BEGIN
 
 			Select	@pId = PersonId, @newEmail = UnconfirmedEmailAddress 
 			From	StakeHolder
-			Where	StakeHolderId = @StakeHolderId
+			Where	StakeHolderID = @StakeHolderId
 
 			If @newEmail <> 'NULL'
 			Begin

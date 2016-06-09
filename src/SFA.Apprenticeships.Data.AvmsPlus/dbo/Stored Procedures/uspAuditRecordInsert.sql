@@ -9,7 +9,7 @@ BEGIN
 	
 	SET NOCOUNT ON;
 
-   INSERT INTO [dbo].[AuditRecord] ([Author], [ChangeDate], [attachedtoItem], [AttachedtoItemType])  
+   INSERT INTO [dbo].[AuditRecord] ([Author], [ChangeDate], [AttachedtoItem], [AttachedtoItemType])  
 			VALUES (@Author, @ChangeDate, @AttachedtoItem,@AttachedtoItemType)
 	
 END

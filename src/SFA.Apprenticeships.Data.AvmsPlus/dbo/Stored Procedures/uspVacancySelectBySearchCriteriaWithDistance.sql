@@ -76,7 +76,7 @@ BEGIN
 			BEGIN
 
 				select @TotalRows= count(1) 
-				FROM [dbo].[vacancySearch] with (nolock)
+				FROM [dbo].[VacancySearch] with (nolock)
 					WHERE  ([ApprenticeshipFrameworkId] in (@apprenticeFramework)  or  @apprenticeFramework is null) AND 
 						   --[Vacancy].[PostCode] like isnull(@postCode,'%') + '%'  AND  
 						   --[CountyId] Like isnull(@locationID,'%') AND   

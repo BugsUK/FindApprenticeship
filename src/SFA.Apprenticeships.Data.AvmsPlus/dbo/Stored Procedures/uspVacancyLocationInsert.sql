@@ -27,7 +27,7 @@ SET NOCOUNT ON
 		INSERT INTO [dbo].[VacancyLocation]   
 			(
 				VacancyId,
-				NumberOfPositions,
+				NumberofPositions,
 				AddressLine1,
 				AddressLine2,
 				AddressLine3,

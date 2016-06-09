@@ -44,7 +44,7 @@ BEGIN TRY
  [Town]=ISNULL(@town,[Town]),  
  [CountyId]=ISNULL(@county,[CountyId]),  
 -- [LSCRegionId]=ISNULL(@region,[LSCRegionId]),  
- [Postcode]=ISNULL(@postcode,[Postcode]),  
+ [Postcode]=ISNULL(@postcode,[PostCode]),  
 
  [Longitude]=ISNULL(@longitude,[Longitude]),  
  [Latitude]=ISNULL(@latitude,[Latitude]),  

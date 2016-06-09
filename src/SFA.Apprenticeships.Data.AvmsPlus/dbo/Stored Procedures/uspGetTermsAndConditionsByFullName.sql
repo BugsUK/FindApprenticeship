@@ -7,7 +7,7 @@ BEGIN
 	
 	SELECT
 	[TAC].[TermsAndConditionsId] AS 'TermsAndConditionsId',
-	[TAC].FullName AS 'FullName',
+	[TAC].Fullname AS 'FullName',
 	[TAC].[Content] AS 'Content'
 	FROM [dbo].[TermsAndConditions] [TAC]
 	WHERE TAC.[FullName]= @TermsAndConditionsFullName

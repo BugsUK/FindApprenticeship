@@ -140,11 +140,11 @@ BEGIN
 	SET NOCOUNT ON;
 
 		DELETE 
-		vacancysearch 
+		VacancySearch 
 	FROM 
-		vacancysearch vs 
+		VacancySearch vs 
 		INNER JOIN deleted i on 
-			vs.vacancyid = i.vacancyid
+			vs.VacancyId = i.VacancyId
 	SET NOCOUNT OFF;
 END
 GO
@@ -177,7 +177,7 @@ CREATE TRIGGER [dbo].[uInsertVacancySearch]
 			,ApprenticeShipType
 			,CountyId
 			,WeeklyWage
-			,WageTYpe
+			,WageType
 			,ApplicationClosingDateAsInt
 			,RealityCheck
 			,OtherImportantInformation
@@ -229,8 +229,8 @@ CREATE TRIGGER [dbo].[uInsertVacancySearch]
 					a.FullName as ApprenticeshipFrameworkName,
 					ao.Fullname as ApprenticeshipOccupationName
 				FROM 
-					apprenticeshipframework a 
-					INNER JOIN apprenticeshipoccupation ao ON 
+					ApprenticeshipFramework a 
+					INNER JOIN ApprenticeshipOccupation ao ON 
 						a.ApprenticeshipOccupationId = ao.ApprenticeshipOccupationId) as af
 		ON i.ApprenticeshipFrameworkId = af.ApprenticeshipFrameworkId
 	INNER JOIN (select 
@@ -238,18 +238,18 @@ CREATE TRIGGER [dbo].[uInsertVacancySearch]
 					,Max(HistoryDate) as PostedDate 
 				from vacancyhistory where VacancyHistoryEventSubTypeId = 2 
 		GROUP BY vacancyid) AS vh
-		ON vh.vacancyid = i.vacancyid
+		ON vh.VacancyId = i.VacancyId
     INNER JOIN (SELECT 
                     vtf5.vacancyid,
                     vtf5.[value] as RealityCheck
                 FROM vacancytextfield vtf5 where vtf5.field = 7) as vtfr
-		ON i.vacancyid = vtfr.vacancyid 		
+		ON i.VacancyId = vtfr.VacancyId 		
     INNER JOIN (SELECT 
                     vtf7.vacancyid,
                     vtf7.[value] as OtherImportantInformation
-                FROM vacancytextfield vtf7 where vtf7.field = 5) as vtfo
-		ON i.vacancyid = vtfo.vacancyid 		
-	WHERE i.vacancystatusid = 2 
+                FROM VacancyTextField vtf7 where vtf7.field = 5) as vtfo
+		ON i.VacancyId = vtfo.VacancyId 		
+	WHERE i.VacancyStatusId = 2 
 	AND i.Town IS NOT NULL 
 	AND i.Title IS NOT NULL 
 	AND i.ApprenticeshipType IS NOT NULL
@@ -267,13 +267,13 @@ SET NOCOUNT ON;
 	
 	--If status is set be anything other then 'Live' then the record is to be removed from vacancysearch table.
 	DELETE 
-		vacancysearch 
+		VacancySearch 
 	FROM 
-		vacancysearch vs 
+		VacancySearch vs 
 		INNER JOIN inserted i on 
-			vs.vacancyid = i.vacancyid 
+			vs.VacancyId = i.VacancyId 
 			and 
-			i.vacancystatusid <> 2
+			i.VacancyStatusId <> 2
 	
 	--If status is set to Live then if the record already exists then it is to be updated 
 	UPDATE vacancysearch
@@ -306,7 +306,7 @@ SET NOCOUNT ON;
 			,RealityCheck			= 	dbo.replaceHTMLTags(vtfr.RealityCheck)
 			,OtherImportantInformation = dbo.replaceHTMLTags(vtfo.OtherImportantInformation)
 			,NationalVacancy        =   CASE when vlt.CodeName = 'NAT' then 1 else 0 end
-	from vacancysearch vs
+	from VacancySearch vs
 	INNER JOIN Inserted i --INNER JOIN will get only those rows that have been updated and exist in vacancy search
 		on i.VacancyId = vs.VacancyId
 	INNER JOIN [VacancyOwnerRelationship] vpr 

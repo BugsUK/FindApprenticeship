@@ -41,7 +41,7 @@ BEGIN
 	-- CountyID or an alias LocalAuthorityGroupID.
 	-- I have added @LocationType needs to be passed into the sp in later releases
 	DECLARE @LocationType INT=null 	
-	if @locationId in (SELECT CountyID FROM County WHERE CountyID = @locationId)
+	if @locationId in (SELECT CountyId FROM County WHERE CountyId = @locationId)
 		SET @LocationType = 1 -- LocationId is a county ID (if LocationId is both County ID and 
 							  -- Local Authority ID we use County ID
 	ELSE

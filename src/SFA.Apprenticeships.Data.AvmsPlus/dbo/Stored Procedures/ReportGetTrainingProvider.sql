@@ -34,8 +34,8 @@ BEGIN
 
 		else
 		begin
-			SELECT	ProviderSIteID as TrainingProviderId,
-					TradingName + ' ('+ Town + ', ' + Postcode + ')' TradingName
+			SELECT	ProviderSiteID as TrainingProviderId,
+					TradingName + ' ('+ Town + ', ' + PostCode + ')' TradingName
 					--,FullName
 			FROM	dbo.ProviderSite
 			WHERE

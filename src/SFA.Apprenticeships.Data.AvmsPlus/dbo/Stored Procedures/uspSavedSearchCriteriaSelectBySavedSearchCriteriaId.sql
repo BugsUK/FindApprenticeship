@@ -38,7 +38,7 @@ SET NOCOUNT ON;
 --Frameworks
 	SELECT 
 		ApprenticeshipFrameworkId, 
-		ApprenticeShipOccupationId,
+		ApprenticeshipOccupationId,
 		ApprenticeshipFrameworkStatusTypeId
 	FROM
 		 SearchFrameworks 

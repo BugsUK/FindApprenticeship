@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	SELECT * from Applicationunsuccessfulreasontype
+	SELECT * from ApplicationUnsuccessfulReasonType
 END

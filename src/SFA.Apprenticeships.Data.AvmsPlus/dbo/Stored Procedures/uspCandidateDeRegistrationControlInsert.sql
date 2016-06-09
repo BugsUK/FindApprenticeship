@@ -19,12 +19,12 @@ declare @temp table
 	-- isHardDelete = 1 --Pre-Registered
 	-- Pre-Registered =0 -- All others 
 	
-select @AwaitingActivationPeriod = (select cast(parametervalue as int)
+select @AwaitingActivationPeriod = (select cast(ParameterValue as int)
 									from SystemParameters
 									where ParameterName = 'AwaitingActivationPeriod')
 
 
-select @InactivePeriod = (select cast(parametervalue as int)
+select @InactivePeriod = (select cast(ParameterValue as int)
 									from SystemParameters
 									where ParameterName = 'InactivePeriod')
 

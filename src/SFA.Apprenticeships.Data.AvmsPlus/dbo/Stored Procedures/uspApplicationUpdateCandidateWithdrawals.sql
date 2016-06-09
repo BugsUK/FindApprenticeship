@@ -20,6 +20,6 @@ BEGIN
 
 	-- Audit in History table as well
 	Insert Into ApplicationHistory(ApplicationId, UserName, ApplicationHistoryEventDate, 
-		ApplicationHistoryEventTypeId, applicationHistoryEventSubTypeId, comment)  
+		ApplicationHistoryEventTypeId, ApplicationHistoryEventSubTypeId, Comment)  
 	Values (@applicationId, @userName, getdate(), 1, @appHistoryEventSubTypeId, @comment)
 END

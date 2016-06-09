@@ -12,7 +12,7 @@ BEGIN
 			[Content] = @content
 		WHERE 
 			[UserTypeId]= @userType
-		AND [FaqId] = @faqId
+		AND [FAQId] = @faqId
 
 	END TRY
 

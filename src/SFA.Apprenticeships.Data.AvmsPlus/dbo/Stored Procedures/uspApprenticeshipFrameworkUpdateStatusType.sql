@@ -9,7 +9,7 @@ BEGIN
 	Begin Try
 
 		UPDATE [dbo].[ApprenticeshipFramework]   
-		SET	ApprenticeshipFrameworkStatusTypeID = @newApprFramworkStatusType,
+		SET	ApprenticeshipFrameworkStatusTypeId = @newApprFramworkStatusType,
 			ClosedDate = @closedDate
 		WHERE   [ApprenticeshipFrameworkId] = @ApprenticeshipFrameworkId   
 	End Try
