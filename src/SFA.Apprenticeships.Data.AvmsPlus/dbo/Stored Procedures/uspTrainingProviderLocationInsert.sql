@@ -14,7 +14,7 @@ BEGIN
 	FROM dbo.ProviderSiteRelationship
 	WHERE ProviderID = @ProviderId
 		AND ProviderSiteRelationShipTypeID = @ProviderSiteRelationshipTypeId
-		AND ProviderSiteId = @ProviderSiteId
+		AND ProviderSiteID = @ProviderSiteId
 
 	-- handle national locations
 	IF @LocalAuthorityId IS NULL

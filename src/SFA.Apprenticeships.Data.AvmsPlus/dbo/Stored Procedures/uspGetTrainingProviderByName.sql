@@ -100,7 +100,7 @@ BEGIN
 		,p.TradingName as 'ProviderTradingName'
 		,p.IsContracted
 	FROM [ProviderSite] tp
-		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSIteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 1
+		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSiteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 1
 		INNER JOIN Provider P ON psr.ProviderID = p.ProviderID
 		INNER JOIN EmployerTrainingProviderStatus tps ON tps.EmployerTrainingProviderStatusId = tp.TrainingProviderStatusTypeId
 	WHERE
@@ -133,7 +133,7 @@ BEGIN
 		,p.TradingName as 'ProviderTradingName'
 		,p.IsContracted
 	FROM [ProviderSite] tp
-		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSIteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 2
+		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSiteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 2
 		INNER JOIN Provider P ON psr.ProviderID = p.ProviderID
 		INNER JOIN EmployerTrainingProviderStatus tps ON tps.EmployerTrainingProviderStatusId = tp.TrainingProviderStatusTypeId
 	WHERE

@@ -100,7 +100,7 @@ BEGIN
 		ISNULL(ssr.PassRate, 0) as Passrate,
 		ISNULL(ssr.new, 1)  as 'NewRecord'
    FROM [ProviderSite] tp
-		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSIteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 1
+		INNER JOIN ProviderSiteRelationship psr ON tp.ProviderSiteID = PSR.ProviderSiteID AND psr.ProviderSiteRelationShipTypeID = 1
 		INNER JOIN Provider P ON psr.ProviderID = p.ProviderID
 		INNER JOIN [ProviderSiteFramework] tpf ON psr.ProviderSiteRelationshipID = tpf.ProviderSiteRelationshipID
 		INNER JOIN ApprenticeshipFramework af ON tpf.FrameworkId = af.ApprenticeshipFrameworkId
@@ -163,7 +163,7 @@ BEGIN
 		ISNULL(ssr.PassRate, 0) as Passrate,
 		ISNULL(ssr.new, 1)  as 'NewRecord'
    FROM [ProviderSite] tp
-		INNER JOIN ProviderSiteRelationship psrSc ON tp.ProviderSIteID = psrSc.ProviderSiteID AND psrSc.ProviderSiteRelationShipTypeID = 2
+		INNER JOIN ProviderSiteRelationship psrSc ON tp.ProviderSiteID = psrSc.ProviderSiteID AND psrSc.ProviderSiteRelationShipTypeID = 2
 		INNER JOIN Provider P ON psrSc.ProviderID = p.ProviderID
 		INNER JOIN [ProviderSiteFramework] tpf ON psrSc.ProviderSiteRelationshipID = tpf.ProviderSiteRelationshipID
 		INNER JOIN ApprenticeshipFramework af ON tpf.FrameworkId = af.ApprenticeshipFrameworkId

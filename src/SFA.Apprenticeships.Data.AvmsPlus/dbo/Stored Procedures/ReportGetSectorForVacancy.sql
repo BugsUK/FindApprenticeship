@@ -22,14 +22,14 @@ BEGIN
 			SELECT	ApprenticeshipOccupationId,ShortName + ' ' + FullName
 			FROM	dbo.ApprenticeshipOccupation 
 			where ApprenticeshipOccupationId<>0 and ApprenticeshipOccupationStatusTypeId<>2
-			order by CodeName 
+			order by Codename 
 
 		create table #tmp2(id int, fullname varchar(1000))
 		insert into #tmp2
 			SELECT	ApprenticeshipOccupationId,'CLOSED ' + ShortName + ' ' + FullName
 			FROM	dbo.ApprenticeshipOccupation 
 			where ApprenticeshipOccupationId<>0 and ApprenticeshipOccupationStatusTypeId=2
-			order by CodeName 
+			order by Codename 
 
 		select 
 				-1 as ApprenticeshipOccupationId,

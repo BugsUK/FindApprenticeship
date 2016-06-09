@@ -21,7 +21,7 @@ BEGIN
    
     INSERT INTO [dbo].[ThirdParty]  
     (  
-                  EdsUrn,     
+                  EDSURN,     
                   ThirdPartyName,     
                   AddressLine1,
                   AddressLine2,  

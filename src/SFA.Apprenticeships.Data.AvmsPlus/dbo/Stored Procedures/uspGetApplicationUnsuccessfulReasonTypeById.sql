@@ -11,7 +11,7 @@ BEGIN
 			CandidateDisplayText,
 			CandidateFullName,
 			Withdrawn
-	 FROM	Applicationunsuccessfulreasontype  
+	 FROM	ApplicationUnsuccessfulReasonType  
 	 WHERE  ApplicationUnsuccessfulReasonTypeId = @ApplicationUnsuccessfulReasonTypeId
 	 
     SET NOCOUNT OFF  

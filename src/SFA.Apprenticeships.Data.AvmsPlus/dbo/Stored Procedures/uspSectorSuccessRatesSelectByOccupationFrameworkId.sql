@@ -7,8 +7,8 @@ BEGIN
 	SET NOCOUNT ON;  
   
 	Select	
-			ssr.ProviderId,
-			ssr.SectorId,
+			ssr.ProviderID,
+			ssr.SectorID,
 			ssr.PassRate
 	From	SectorSuccessRates ssr, ApprenticeshipFramework f
 	Where	ssr.SectorId = f.ApprenticeshipOccupationId

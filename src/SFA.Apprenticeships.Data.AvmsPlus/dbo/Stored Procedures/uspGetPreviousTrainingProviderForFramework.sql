@@ -10,5 +10,5 @@ select tps.ProviderID
 	
 	 inner join SectorSuccessRates tps 
 	on P.ProviderID=tps.ProviderID
-	inner join ApprenticeshipFramework f on f.PreviousApprenticeshipOccupationId=tps.SectorId
+	inner join ApprenticeshipFramework f on f.PreviousApprenticeshipOccupationId=tps.SectorID
 	where f.ApprenticeshipFrameworkId = @framework_id

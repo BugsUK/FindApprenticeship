@@ -8,7 +8,7 @@ BEGIN
  BEGIN TRY  
 
 		UPDATE 
-			CANDIDATE
+			Candidate
 		SET
 		   NewVacancyAlertSMS = @NewVacancyAlertSMS
 		WHERE

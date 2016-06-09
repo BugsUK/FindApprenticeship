@@ -9,7 +9,7 @@ BEGIN
      
   
  -- Getting the Candidate Region Information  
- Select @LocalAuthorityId = LocalAuthorityid       
+ Select @LocalAuthorityId = LocalAuthorityId       
  From LocalAuthority  
  Where codename = @region    
     

@@ -28,7 +28,7 @@ set @EndRowNo =(@PageIndex * @PageSize)
 declare @TotalRows int            
 select @TotalRows= count(1)  from [VacancyOwnerRelationship]                        
   inner join [ProviderSite] on [VacancyOwnerRelationship].[ProviderSiteID] = [ProviderSite].ProviderSiteID                         
-  inner join Employer on Employer.Employerid = [VacancyOwnerRelationship].EmployerId            
+  inner join Employer on Employer.EmployerId = [VacancyOwnerRelationship].EmployerId            
   Left outer join VacancyProvisionRelationshipStatusType on [VacancyOwnerRelationship].StatusTypeId = VacancyProvisionRelationshipStatusType.VacancyProvisionRelationshipStatusTypeId
   Left outer join EmployerTrainingProviderStatus ETPS1 on Employer.EmployerStatusTypeId = ETPS1.EmployerTrainingProviderStatusId    
   INNER JOIN ProviderSiteRelationship psrOwner on psrOwner.ProviderSiteID = [ProviderSite].ProviderSiteID AND psrOwner.ProviderSiteRelationShipTypeID =1

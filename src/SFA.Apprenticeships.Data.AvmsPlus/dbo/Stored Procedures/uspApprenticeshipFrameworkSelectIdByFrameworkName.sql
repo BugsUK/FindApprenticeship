@@ -9,5 +9,5 @@ BEGIN
 
     -- Insert statements for procedure here
 	SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework
-	WHERE Fullname=@frameworkName
+	WHERE FullName=@frameworkName
 END

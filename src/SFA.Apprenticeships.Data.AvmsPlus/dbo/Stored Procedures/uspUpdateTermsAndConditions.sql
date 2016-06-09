@@ -9,7 +9,7 @@ BEGIN
 		UPDATE [dbo].[TermsAndConditions] 
 		SET [Content] = @content
 		WHERE 
-			[TermsAndConditionsId]= @TermsAndConditionsID
+			[TermsAndConditionsId]= @TermsAndConditionsId
 
 	END TRY
 

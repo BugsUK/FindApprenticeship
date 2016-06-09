@@ -29,7 +29,7 @@
 		INNER JOIN [Application] a ON v.VacancyId = a.VacancyId
 		INNER JOIN Candidate c ON c.CandidateId = a.CandidateId
 		INNER JOIN Person p ON p.PersonId = c.PersonId
-		INNER JOIN ApplicationStatusType ast ON ast.ApplicationStatusTypeID = a.ApplicationStatusTypeID
+		INNER JOIN ApplicationStatusType ast ON ast.ApplicationStatusTypeId = a.ApplicationStatusTypeId
 		WHERE ast.CodeName  NOT IN ('WTD', 'REJ')
 		
     END TRY        

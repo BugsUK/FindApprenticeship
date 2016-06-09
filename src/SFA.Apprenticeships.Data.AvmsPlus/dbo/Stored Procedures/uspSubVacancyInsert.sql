@@ -14,7 +14,7 @@ SET NOCOUNT ON
 	if exists (select * from Subvacancy where VacancyId=@VacancyId 
 				and AllocatedApplicationId=@ApplicationId)
 		begin
-			Update [dbo].[Subvacancy]  
+			Update [dbo].[SubVacancy]  
 					set          
 						--ILRNumber = @ILRNumber,
 						StartDate = @ILRStartDate        

@@ -256,7 +256,7 @@ BEGIN
                    			dbo.[ProviderSiteRelationShip] PSR ON rel.[ProviderSiteID] = PSR.[ProviderSiteRelationshipID]
 							
 							INNER JOIN dbo.Provider P ON PSR.ProviderID = P.ProviderID
-							INNER JOIN dbo.ProviderSIte tp ON PSR.ProviderSIteID = tp.ProviderSiteID
+							INNER JOIN dbo.ProviderSite tp ON PSR.ProviderSiteID = tp.ProviderSiteID
 							         			
                             INNER JOIN dbo.Employer emp ON rel.EmployerID = emp.EmployerID
 							INNER JOIN dbo.LocalAuthority LA ON emp.LocalAuthorityId = LA.LocalAuthorityId
@@ -366,7 +366,7 @@ BEGIN
                    			dbo.[ProviderSiteRelationShip] PSR ON rel.[ProviderSiteID] = PSR.[ProviderSiteRelationshipID]
 							
 							INNER JOIN dbo.Provider P ON PSR.ProviderID = P.ProviderID
-							INNER JOIN dbo.ProviderSIte tp ON PSR.ProviderSIteID = tp.ProviderSiteID
+							INNER JOIN dbo.ProviderSite tp ON PSR.ProviderSiteID = tp.ProviderSiteID
 							 INNER JOIN dbo.Employer emp ON rel.EmployerID = emp.EmployerID
 							 INNER JOIN dbo.LocalAuthority LA ON emp.LocalAuthorityId = LA.LocalAuthorityId
 							 INNER JOIN dbo.LocalAuthorityGroupMembership LAGM ON LA.LocalAuthorityId = LAGM.LocalAuthorityID

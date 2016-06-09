@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from localauthority
+	SELECT * from LocalAuthority
 END

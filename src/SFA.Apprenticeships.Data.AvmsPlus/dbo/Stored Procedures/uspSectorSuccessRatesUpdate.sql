@@ -21,8 +21,8 @@ BEGIN
 	ELSE
 	BEGIN
 	   INSERT INTO dbo.SectorSuccessRates (  
-		  ProviderId,  
-		  SectorId,  
+		  ProviderID,  
+		  SectorID,  
 		  PassRate,
 		  [NEW]  
 		 ) VALUES (   

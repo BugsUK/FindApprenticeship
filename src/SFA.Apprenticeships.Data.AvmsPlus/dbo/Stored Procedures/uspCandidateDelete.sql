@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON          
 	BEGIN TRY          
 		-- Obtain Person information before deletion
-		Select	@personId = PersonID From Candidate 
+		Select	@personId = PersonId From Candidate 
 		Where	CandidateId = @candidateId
 
 		-- Attempt 'CandidatePreferences' deletion

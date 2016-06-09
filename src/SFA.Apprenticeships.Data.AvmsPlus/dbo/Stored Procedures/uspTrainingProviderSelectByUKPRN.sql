@@ -21,7 +21,7 @@ BEGIN
 -- isnull([trainingProvider].[Status],'') AS 'Status',                 
  --[trainingProvider].[SuccessRate] AS 'SuccessRate',      : No details provided in DataModel Sheet. Success rate will be calculated based on framework hence logically it should not be part of this SP.    
  isnull([ProviderSite].[TradingName],'') AS 'TradingName',                    
- [ProviderSite].ProviderSIteID AS 'TrainingProviderId',                    
+ [ProviderSite].ProviderSiteID AS 'TrainingProviderId',                    
  [Provider].[UPIN] AS 'UPIN',                  
  isnull([AddressLine1],'') AS 'AddressLine1',                      
  isnull([AddressLine2],'') AS 'AddressLine2',                      
