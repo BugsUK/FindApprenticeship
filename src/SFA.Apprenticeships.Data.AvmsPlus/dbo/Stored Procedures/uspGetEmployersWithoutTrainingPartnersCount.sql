@@ -14,7 +14,7 @@ SET NOCOUNT ON
 	set @DelCodeName = 'DEL';
 	
 	WITH EmployersAndManagingAreas AS 
-	(SELECT EmployerID, ISNULL(ManagingAreaID, (SELECT ManagingAreaID FROM dbo.vwManagingAreas 
+	(SELECT EmployerId, ISNULL(ManagingAreaID, (SELECT ManagingAreaID FROM dbo.vwManagingAreas 
 	WHERE ManagingAreaCodeName = 'NAC')) AS ManagingArea
 	FROM employer LEFT JOIN vwManagingAreaAndLocalAuthority MALA
 	ON dbo.Employer.LocalAuthorityId = MALA.LocalAuthorityID)

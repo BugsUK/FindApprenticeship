@@ -44,7 +44,7 @@ if (0 = @errorCode)
 begin			
 	insert into [dbo].[VacancyLocation]	(
 			VacancyId,
-			NumberOfPositions,
+			NumberofPositions,
 			AddressLine1,
 			AddressLine2,
 			AddressLine3,

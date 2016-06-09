@@ -11,9 +11,9 @@ BEGIN
 --		) as d group by shortname order by tt
 --
 
-SELECT shortname
+SELECT ShortName
 FROM CandidateEthnicOrigin 
-GROUP BY shortname 
+GROUP BY ShortName 
 order by Min(CandidateEthnicOriginId)
     
     

@@ -15,6 +15,6 @@ BEGIN
 		ApprenticeshipOccupation.ShortName,
 		ApprenticeshipOccupation.FullName
 	FROM ApprenticeshipOccupation 
-		LEFT JOIN dbo.SectorSuccessRates ON ApprenticeshipOccupation.ApprenticeshipOccupationId = SectorSuccessRates.SectorId  AND SectorSuccessRates.ProviderID = @ProviderId
+		LEFT JOIN dbo.SectorSuccessRates ON ApprenticeshipOccupation.ApprenticeshipOccupationId = SectorSuccessRates.SectorID  AND SectorSuccessRates.ProviderID = @ProviderId
 	ORDER BY ApprenticeshipOccupation.FullName ASC
 END

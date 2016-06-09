@@ -14,7 +14,7 @@ BEGIN
 	DECLARE @SICCodes Varchar(200)
 	select @SICCODes = COALESCE(@SICCodes + ', ', '') + CAST(sic.SICCode as varchar(20)) from EMPLOYER emp 
 	inner join EMPLOYERSICCODES empsic on emp.employerid=empsic.employerid inner 
-	join SICCODE sic on empsic.sicid=sic.siccodeid where emp.employerid = @EmployerId
+	join SICCODE sic on empsic.sicid=sic.siccodeid where emp.EmployerId = @EmployerId
 
 	RETURN @SICCodes
 	

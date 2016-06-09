@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from educationresultlevel
+	SELECT * from EducationResultLevel
 END

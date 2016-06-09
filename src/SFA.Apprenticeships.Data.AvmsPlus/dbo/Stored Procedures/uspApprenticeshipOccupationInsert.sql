@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON
 	
 	BEGIN TRY
-		Insert Into [dbo].[ApprenticeshipOccupation] (Codename, ShortName, FullName, ClosedDate, ApprenticeshipOccupationStatusTypeID)
+		Insert Into [dbo].[ApprenticeshipOccupation] (Codename, ShortName, FullName, ClosedDate, ApprenticeshipOccupationStatusTypeId)
 		Values		(@shortName, @shortName, @fullName, @closedDate, @apprOccuStatusTypeID)
 	END TRY
 

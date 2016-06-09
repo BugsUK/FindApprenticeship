@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	INSERT INTO TESTCONNECTION
+	INSERT INTO TestConnection
 	VALUES (@TestName)
 END
 
