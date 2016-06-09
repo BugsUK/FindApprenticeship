@@ -9,7 +9,7 @@ USING (VALUES
 ('4','Bulk Vacancy Upload','BVU','Uploading of multiple vacancies',1,1,0),
 ('5','Application Tracking','ATS','Tracking of offline successful applications',1,1,0)
 )
-AS SOURCE (ID, ServiceName, ServiceShortName, ServiceDescription, IsEmployerAllowed, 
+AS SOURCE (ID, ServiceName, ServiceShortName, ServiceDescription, IsEmployerAllowed, IsTrainingProviderAllowed, IsThirdPartyAllowed)
 ON TARGET.ID = SOURCE.ID
 WHEN MATCHED THEN
 	UPDATE SET 
