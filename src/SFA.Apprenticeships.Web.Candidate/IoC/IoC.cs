@@ -56,6 +56,7 @@ namespace SFA.Apprenticeships.Web.Candidate.IoC {
                 // service layer
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
+                x.AddRegistry<VacancySourceRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<PostcodeRegistry>();
