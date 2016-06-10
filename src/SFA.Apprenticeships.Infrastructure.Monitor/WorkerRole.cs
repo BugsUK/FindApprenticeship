@@ -137,7 +137,14 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 //CheckNasGateway monitor task always uses legacy services
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
+                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
+                    new ServicesConfiguration
+                    {
+                        ServiceImplementation = ServicesConfiguration.Legacy,
+                        VacanciesSource = ServicesConfiguration.Legacy
+                    }));
+                
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
             });

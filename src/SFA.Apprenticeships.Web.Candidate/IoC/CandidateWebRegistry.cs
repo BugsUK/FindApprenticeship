@@ -147,9 +147,6 @@
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
-                For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
-                For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
                 For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
                 For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>().Name = "UnlockAccountStrategy";
                 For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
@@ -158,9 +155,6 @@
             }
             else if(servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
-                For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
-                For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
                 For<IActivateCandidateStrategy>().Use<ActivateCandidateStrategy>();
                 For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
                 For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>();

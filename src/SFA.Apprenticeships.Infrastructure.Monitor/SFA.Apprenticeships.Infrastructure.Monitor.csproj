@@ -196,6 +196,7 @@
     <Compile Include="Configuration\MonitorConfiguration.cs" />
     <Compile Include="Consumers\DailyMetricsControlQueueConsumer.cs" />
     <Compile Include="Consumers\MonitorControlQueueConsumer.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Provider\IVacancyMetricsProvider.cs" />
     <Compile Include="Provider\VacancyMetricsProvider.cs" />
     <Compile Include="Repositories\ApplicationStatusAlertsMetricsRepository.cs" />
@@ -307,6 +308,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Authentication\SFA.Apprenticeships.Application.Authentication.csproj">
       <Project>{2752E3B6-358D-4C06-A31F-867304CAC53D}</Project>
       <Name>SFA.Apprenticeships.Application.Authentication</Name>
