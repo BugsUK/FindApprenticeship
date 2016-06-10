@@ -36,7 +36,7 @@ BEGIN
 		begin
 				SELECT 
 					EmployerId,
-					TradingName  + ' (' + Town + ', ' + Postcode +')' TradingName
+					TradingName  + ' (' + Town + ', ' + PostCode +')' TradingName
 			FROM 
 					Employer 
 			Where

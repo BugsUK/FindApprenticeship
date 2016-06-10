@@ -31,7 +31,7 @@ IF(@VacancyManagerId != 0)
   UPDATE [dbo].[VacancyOwnerRelationship]    
   SET [ContractHolderisEmployer]=@contractHolderisEmployer,                 
   [EmployerId]=@employerId,                 
-  [ManagerisEmployer]=@managerisEmployer,                 
+  [ManagerIsEmployer]=@managerisEmployer,                 
   [ProviderSiteID]=@trainingProviderId,             
   [EmployerDescription]=@employerDescription,
   [StatusTypeId]=@VacancyStatusTypeId,          

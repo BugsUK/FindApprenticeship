@@ -37,7 +37,7 @@
   Select @personId = PersonId from Candidate where CandidateId = @candidateId    
     
  BEGIN TRY    
- UPDATE [dbo].[candidate]     
+ UPDATE [dbo].[Candidate]     
   SET [DateofBirth] = ISNULL(@dateofBirth,[DateofBirth]),     
   [AddressLine1] = ISNULL(@addressLine1,[AddressLine1]),     
   [AddressLine2] = ISNULL(@addressLine2,[AddressLine2]),    

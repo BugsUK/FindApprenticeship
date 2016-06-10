@@ -13,7 +13,7 @@ BEGIN
 	FROM dbo.ProviderSiteRelationship
 	WHERE ProviderID = @ProviderId
 		AND ProviderSiteRelationShipTypeID = @ProviderSiteRelationshipTypeId
-		AND ProviderSiteId = @ProviderSiteId
+		AND ProviderSiteID = @ProviderSiteId
 
     -- Insert statements for procedure here
 	DELETE dbo.[ProviderSiteLocalAuthority]

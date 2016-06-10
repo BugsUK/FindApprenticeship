@@ -6,5 +6,5 @@ AS
 	BEGIN
 		UPDATE Candidate
 		SET ReminderMessageSent = @ReminderStatus
-		WHERE CandidateID = @CandidateID
+		WHERE CandidateId = @CandidateID
 	END

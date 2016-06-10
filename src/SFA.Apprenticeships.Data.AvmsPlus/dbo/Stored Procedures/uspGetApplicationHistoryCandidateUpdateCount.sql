@@ -26,7 +26,7 @@ SELECT TOP 1 @LastLoginDate = LastAccessedManageApplications from Candidate Wher
                               
 
 SELECT @candidateCount = Count(*) from ApplicationHistory AH
-                           Inner Join Application A on A.ApplicationId = AH.ApplicationID
+                           Inner Join Application A on A.ApplicationId = AH.ApplicationId
                            Where A.CandidateId = @candidateId 
 -- Commented as per design change from ATul as on 21-Aug-08
 -- Uncomment for issue in UAT and AM

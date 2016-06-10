@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from candidatedisability
+	SELECT * from CandidateDisability
 END

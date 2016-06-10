@@ -49,7 +49,7 @@ BEGIN
  [AddressLine4]=ISNULL(@addressLine4,[AddressLine4]),  
  [Town]=ISNULL(@town,[Town]),  
  [CountyId]=ISNULL(@county,[CountyId]),  
- [Postcode]=ISNULL(@postcode,[Postcode]),  
+ [PostCode]=ISNULL(@postcode,[PostCode]),  
 
  [Longitude]=ISNULL(@longitude,[Longitude]),  
  [Latitude]=ISNULL(@latitude,[Latitude]),  

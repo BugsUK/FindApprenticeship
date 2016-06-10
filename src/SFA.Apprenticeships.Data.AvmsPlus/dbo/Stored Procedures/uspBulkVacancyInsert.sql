@@ -116,7 +116,7 @@ declare @localAuthorityId int
 			-- TODO MMA Join will contacin the third priary key to validate the relationship 5.1
 			-- Checking if Training Provider is Authorized to put in this Vacancy
 			IF (@SystemType = 2 AND NOT EXISTS (SELECT 1 FROM dbo.[ProviderSite] PS
-				JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSIteID 
+				JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
 				JOIN dbo.Provider P on PSR.ProviderID = P.ProviderID
 				WHERE UKPRN = @RequestorId 
 					  AND EDSURN = @TrainingProviderEdsUrn
@@ -134,7 +134,7 @@ declare @localAuthorityId int
 					BEGIN
 						SELECT @ContractOwnerId=P.ProviderID,
 							   @ContractOwnerUKPRN = p.UKPRN FROM dbo.[ProviderSite] PS
-						JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSIteID 
+						JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
 						JOIN dbo.Provider P on PSR.ProviderID = P.ProviderID
 						WHERE PS.EDSURN = @TrainingProviderEdsUrn
 						  AND PSR.ProviderSiteRelationShipTypeID = 1
@@ -163,7 +163,7 @@ declare @localAuthorityId int
 				ELSE IF @ContractOwnerId IS NULL
 						SET @errorCode = '-10059' -- ContractOwnerUKPRNMandatory
 				ELSE IF NOT EXISTS (SELECT P.UKPRN  FROM dbo.[ProviderSite] PS
-									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSIteID 
+									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
 									JOIN dbo.Provider P on PSR.ProviderID = P.ProviderID
 									WHERE P.UKPRN = @ContractOwnerUKPRN
 										  AND PS.EDSURN = @TrainingProviderEdsUrn
@@ -175,7 +175,7 @@ declare @localAuthorityId int
 						SET @errorCode = '-10056' -- ContractOwnerUKPRN Not Valid
 						
 				ELSE IF @TrainingProviderEdsUrn <> @VacancyManagerUrn AND NOT EXISTS (SELECT P.UKPRN  FROM dbo.[ProviderSite] PS
-									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSIteID 
+									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
 									JOIN dbo.Provider P on PSR.ProviderID = P.ProviderID
 									WHERE PS.EDSURN = @VacancyManagerUrn
 									  AND P.UKPRN = @ContractOwnerUKPRN
@@ -186,7 +186,7 @@ declare @localAuthorityId int
 						SET @errorCode = '-10057' -- Vacancy Manager Not Valid		
 						
 				ELSE IF /*@TrainingProviderEdsUrn <> @VacancyManagerUrn AND */NOT EXISTS (SELECT P.UKPRN  FROM dbo.[ProviderSite] PS
-									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSIteID 
+									JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
 									JOIN dbo.Provider P on PSR.ProviderID = P.ProviderID
 									WHERE PS.EDSURN = @DeliveryOrganisationUrn
 									  AND P.UKPRN = @ContractOwnerUKPRN

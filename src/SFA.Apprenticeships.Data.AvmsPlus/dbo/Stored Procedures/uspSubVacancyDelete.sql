@@ -12,7 +12,7 @@ SET NOCOUNT ON
 		DELETE FROM 
 			SubVacancy
 		WHERE
-			VacancyID = @VacancyID
+			VacancyId = @VacancyID
 		AND
 			AllocatedApplicationID = @ApplicationID
 	       

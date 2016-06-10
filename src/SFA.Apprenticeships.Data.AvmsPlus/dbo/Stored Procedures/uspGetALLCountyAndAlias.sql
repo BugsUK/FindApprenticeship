@@ -8,10 +8,10 @@ BEGIN
 	DECLARE @CountyTemp TABLE(ID int, CodeName nvarchar(3), ShortName nvarchar(50), FullName nvarchar(150), CountyAlias nvarchar(1))
 
 	INSERT INTO @CountyTemp (ID, CodeName, ShortName, FullName, CountyAlias)
-		SELECT CountyID, CodeName, ShortName, FullName, '' FROM County WHERE CountyID = 0
+		SELECT CountyId, CodeName, ShortName, FullName, '' FROM County WHERE CountyId = 0
 
 	INSERT INTO @CountyTemp (ID, CodeName, ShortName, FullName, CountyAlias)
-		SELECT CountyID, CodeName, ShortName, FullName, 'C' FROM County WHERE CountyID > 0 
+		SELECT CountyId, CodeName, ShortName, FullName, 'C' FROM County WHERE CountyId > 0 
 		UNION
 		SELECT LocalAuthorityGroupID
 			   ,CodeName

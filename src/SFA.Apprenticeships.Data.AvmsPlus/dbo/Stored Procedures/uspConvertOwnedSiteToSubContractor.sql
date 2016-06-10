@@ -109,7 +109,7 @@ IF @ProviderID IS NULL
 	JOIN dbo.ProviderSiteFramework OLDPSF
 	ON OLDPSO.ProviderSiteFrameworkID = OLDPSF.ProviderSiteFrameworkID
 	JOIN @ExistingPSRID E2 ON e2.ExistingPSRID = OLDPSF.ProviderSiteRelationshipID
-	JOIN dbo.ProviderSiteFramework NEWPSF ON OLDPSF.FrameworkID = NEWPSF.FrameworkId
+	JOIN dbo.ProviderSiteFramework NEWPSF ON OLDPSF.FrameworkId = NEWPSF.FrameworkId
 	JOIN @InsertedPSRID I2 ON NEWPSF.ProviderSiteRelationshipID = I2.insertedPSRID
 	
 	commit

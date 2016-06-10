@@ -10,7 +10,7 @@ BEGIN
 	
 	BEGIN TRY
 	DECLARE @SicCodeId int
-	SELECT @SicCodeId=SicCodeId FROM SICCode WHERE SICCode=@SicId
+	SELECT @SicCodeId=SICCodeId FROM SICCode WHERE SICCode=@SicId
 
     INSERT INTO EmployerSICCodes
     Values ( @EmployerId,@SicCodeId)    

@@ -935,6 +935,7 @@
     <Build Include="dbo\Stored Procedures\uspReturnProviderSystemPermissions.sql" />
     <Build Include="dbo\Stored Procedures\uspHashPwd.sql" />
     <Build Include="Security\Permissions.sql" />
+    <None Include="Scripts\EnableSnapshotIsolation.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\TestData\dbo.TestProviders.Upsert.sql" />

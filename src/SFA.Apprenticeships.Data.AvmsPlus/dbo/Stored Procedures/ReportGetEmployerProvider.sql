@@ -41,8 +41,8 @@ BEGIN
 					dbo.Employer emp
 					join dbo.VacancyOwnerRelationship vpr 
 						on vpr.EmployerId = emp.EmployerId
-					join dbo.ProviderSIte tp
-						on tp.ProviderSIteID = vpr.ProviderSIteID
+					join dbo.ProviderSite tp
+						on tp.ProviderSiteID = vpr.ProviderSiteID
 			WHERE
 					emp.TradingName like @employerName+'%'
 					AND ((@TypeId = 99)

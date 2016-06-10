@@ -17,13 +17,13 @@ BEGIN
 			mes.IsDeleted
 	from	[Message] mes
 			inner join MessageEvent me
-				on me.messageeventid = mes.messageeventid
+				on me.MessageEventId = mes.MessageEventId
 	where	me.CodeName = 'SYS' and Recipient=0
 			and mes.Messagedate =	(
 										select	Max(mes.MessageDate)
 										from	[Message] mes
 												inner join MessageEvent me
-													on me.messageeventid = mes.messageeventid
+													on me.MessageEventId = mes.MessageEventId
 										where	me.CodeName = 'SYS' and Recipient=0
 									)				     
 	SET NOCOUNT OFF

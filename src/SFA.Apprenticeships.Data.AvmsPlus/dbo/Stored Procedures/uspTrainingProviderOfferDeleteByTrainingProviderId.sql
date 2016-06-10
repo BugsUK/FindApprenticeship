@@ -11,7 +11,7 @@ BEGIN
 	FROM dbo.ProviderSiteRelationship
 	WHERE ProviderID = @ProviderId
 		AND ProviderSiteRelationShipTypeID = @ProviderSiteRelationshipTypeId
-		AND ProviderSiteId = @ProviderSiteId
+		AND ProviderSiteID = @ProviderSiteId
 
     DELETE FROM [dbo].[ProviderSiteOffer]
     WHERE ProviderSiteOfferID IN (

@@ -17,7 +17,7 @@ set @vacancyStatusTypeId=Isnull(@vacancyStatusTypeId,@RelationshipStatus)
   set              
   StatusTypeId = @vacancyStatusTypeId,               
   ContractHolderisEmployer=@EmployerContractHolder,              
-  ManagerisEmployer=@EmployerVacancyManager,    
+  ManagerIsEmployer=@EmployerVacancyManager,    
   Notes=@Notes,
   EmployerDescription=@EmployerDescription,
   EmployerWebsite=@EmployerWebsite,

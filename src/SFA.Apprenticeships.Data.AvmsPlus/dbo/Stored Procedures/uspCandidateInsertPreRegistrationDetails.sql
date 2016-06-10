@@ -32,7 +32,7 @@ BEGIN
  DECLARE @LocalAuthorityId int,
 		 @RegionId int
 
-select @LocalAuthorityId=LocalAuthorityid 
+select @LocalAuthorityId=LocalAuthorityId 
 		from LocalAuthority where codename=@region
 
 If @LocalAuthorityId Is Null OR @LocalAuthorityId = 0

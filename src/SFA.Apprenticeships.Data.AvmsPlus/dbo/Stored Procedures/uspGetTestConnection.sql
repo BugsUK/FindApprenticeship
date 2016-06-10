@@ -9,6 +9,6 @@ BEGIN
     -- Insert statements for procedure here
 	
 	select *
-	from testconnection
+	from TestConnection
 
 END

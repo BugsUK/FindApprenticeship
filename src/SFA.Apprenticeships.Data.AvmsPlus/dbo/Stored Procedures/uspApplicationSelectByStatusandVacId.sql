@@ -46,11 +46,11 @@ DECLARE @temp TABLE
 			[Person].[SurName]					As 'SurName',  
 			CASE WHEN @status=4 or @status=5  THEN --WITHDRAWN/--UNSUCCESSFUL
 				(CASE WHEN [Application].[OutcomeReasonOther]<>''  THEN 
-					(SELECT ART.FULLNAME FROM ApplicationUnsuccessfulReasonType ART
+					(SELECT ART.FullName FROM ApplicationUnsuccessfulReasonType ART
 						WHERE ART.ApplicationUnsuccessfulReasonTypeId = [Application].[UnsuccessfulReasonId]) 
 							+' - '+ [Application].[OutcomeReasonOther] 
 				  ELSE 
-					(SELECT ART.FULLNAME FROM ApplicationUnsuccessfulReasonType ART
+					(SELECT ART.FullName FROM ApplicationUnsuccessfulReasonType ART
 						WHERE ART.ApplicationUnsuccessfulReasonTypeId = [Application].[UnsuccessfulReasonId])
 				 END)
 

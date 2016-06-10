@@ -14,7 +14,7 @@ BEGIN
   BeingSupportedBy = @BeingSupportedBy,      
   LockedForSupportUntil =@LockedForSupportUntil      
  WHERE      
-  EmployerID = @EmployerID      
+  EmployerId = @EmployerID      
        
 --      
 -- IF @@ROWCOUNT = 0      

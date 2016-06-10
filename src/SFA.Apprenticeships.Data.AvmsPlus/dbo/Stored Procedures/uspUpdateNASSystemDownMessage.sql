@@ -18,7 +18,7 @@ BEGIN
 	set @codeName = 'SYS'
 	set @support = 0
 	set @supportType = 3
-	set @messageEventId = (select MessageEventID from MessageEvent where UPPER(CodeName) = @codeName)
+	set @messageEventId = (select MessageEventId from MessageEvent where UPPER(CodeName) = @codeName)
 
 	select	@count = count(*) 
 	from	[message] mes

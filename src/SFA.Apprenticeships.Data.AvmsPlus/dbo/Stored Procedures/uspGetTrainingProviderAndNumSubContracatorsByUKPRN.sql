@@ -12,7 +12,7 @@ BEGIN
 		DECLARE @SCProviderId INT 
 		DECLARE @SCProviderStatus INT
 
-		SELECT @SCProviderId = ProviderId, @SCProviderStatus = CASE WHEN ProviderStatusTypeID = 3 THEN 1 ELSE 0 END FROM Provider WHERE UKPRN = @SubcontractorUKPRN AND ProviderStatusTypeID <> 2
+		SELECT @SCProviderId = ProviderID, @SCProviderStatus = CASE WHEN ProviderStatusTypeID = 3 THEN 1 ELSE 0 END FROM Provider WHERE UKPRN = @SubcontractorUKPRN AND ProviderStatusTypeID <> 2
 
 	
 		SELECT @SCProviderId as ProviderId, @SCProviderStatus as IsSuspended, ISNULL(COUNT(SC_ProviderSiteID),0) as NumSites
