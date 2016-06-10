@@ -11,9 +11,9 @@ BEGIN
     
     SELECT @candidateCount = COUNT(SavedSearchCriteriaId) 
         FROM 
-    SAVEDSEARCHCRITERIA 
+    SavedSearchCriteria 
         WHERE 
-    CANDIDATEID = @candidateId
+    CandidateId = @candidateId
 
 
 	SET NOCOUNT OFF

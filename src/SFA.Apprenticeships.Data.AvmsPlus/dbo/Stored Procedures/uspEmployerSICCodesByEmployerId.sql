@@ -16,7 +16,7 @@ SELECT
 FROM   
     EmployerSICCodes ESC inner join SICCode SC on SC.SICCodeId = ESC.SICId
 WHERE   
-    ESC.employerId = @EmployerId  
+    ESC.EmployerId = @EmployerId  
    
    
 END

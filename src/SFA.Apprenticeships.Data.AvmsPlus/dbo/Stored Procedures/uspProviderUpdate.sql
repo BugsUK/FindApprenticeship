@@ -19,7 +19,7 @@ Begin
 	IsContracted = @IsContracted, 
 	ContractedFrom = @ContractedFrom,
 	ContractedTo = @ContractedTo,
-	Upin = @UPIN
+	UPIN = @UPIN
 	WHERE ProviderId = @ProviderId
 End
 GO

@@ -9,7 +9,7 @@ BEGIN
               
 SET NOCOUNT ON                
   
-SELECT [APPLICATION].ApplicationId,[APPLICATION].CandidateId,   
+SELECT [Application].ApplicationId,[APPLICATION].CandidateId,   
 Reason = CASE  AURT.FullName when 'Other' THEN [Application].OutcomeReasonOther  
    ELSE  AURT.FullName  
    END,  
@@ -21,7 +21,7 @@ NextAction= CASE  ANA.FullName when 'Other' THEN [Application].NextActionOther
 AURT.ReferralPoints,
 MAX(ApplicationHistoryEventDate) AS 'LastDateOfRejection'  
   
-FROM [APPLICATION]  
+FROM [Application]  
 INNER JOIN ApplicationUnsuccessfulReasonType AURT ON AURT.ApplicationUnsuccessfulReasonTypeId=[dbo].[Application].UnsuccessfulReasonId  
 INNER JOIN ApplicationNextAction ANA ON ANA.ApplicationNextActionId = [Application].NextActionId
 LEFT outer JOIN dbo.ApplicationHistory ON   
@@ -32,7 +32,7 @@ AND ApplicationHistoryEventSubTypeId =  5  -- ApplicationstatusType.Rejected
 WHERE CandidateId = @CandidateId 
 AND AURT.ReferralPoints != 0
 GROUP BY dbo.[Application].ApplicationId,[APPLICATION].CandidateId,
-AURT.FullName,APPLICATION.OutcomeReasonOther,ANA.FullName,APPLICATION.NextActionOther
+AURT.FullName,Application.OutcomeReasonOther,ANA.FullName,Application.NextActionOther
 ,AURT.ReferralPoints
 ORDER BY AURT.ReferralPoints   desc  
 SET NOCOUNT OFF                

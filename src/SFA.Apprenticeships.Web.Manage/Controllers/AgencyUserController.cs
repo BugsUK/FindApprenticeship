@@ -23,7 +23,7 @@
     {
         private readonly IAgencyUserMediator _agencyUserMediator;
 
-        public AgencyUserController(IAgencyUserMediator agencyUserMediator, ILogService logService) : base(logService)
+        public AgencyUserController(IAgencyUserMediator agencyUserMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _agencyUserMediator = agencyUserMediator;
         }

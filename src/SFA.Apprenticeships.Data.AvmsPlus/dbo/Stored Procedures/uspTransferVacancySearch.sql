@@ -200,7 +200,7 @@ SELECT
 		DISTINCT  v.VacancyId, vlt.CodeName, p.ProviderId, ps.ProviderSiteId
 FROM		
 		dbo.[VacancyOwnerRelationship] rel 
-		INNER JOIN	dbo.ProviderSIte ps ON rel.ProviderSIteID = ps.ProviderSiteID  
+		INNER JOIN	dbo.ProviderSite ps ON rel.ProviderSiteID = ps.ProviderSiteID  
 		INNER JOIN	dbo.ProviderSiteRelationship psr ON psr.ProviderSiteId = ps.ProviderSiteId  
         INNER JOIN	dbo.Provider p ON p.ProviderId = psr.ProviderId
         INNER JOIN	dbo.Vacancy v ON v.[VacancyOwnerRelationshipId] = rel.[VacancyOwnerRelationshipId]  
@@ -244,7 +244,7 @@ SELECT
 		DISTINCT  v.VacancyId, vlt.CodeName, p.ProviderId, ps.ProviderSiteId
 FROM		
 		dbo.Vacancy v
-		INNER JOIN	dbo.ProviderSIte ps ON v.DeliveryOrganisationID = ps.ProviderSiteID
+		INNER JOIN	dbo.ProviderSite ps ON v.DeliveryOrganisationID = ps.ProviderSiteID
 		INNER JOIN	dbo.ProviderSiteRelationship psr ON psr.ProviderSiteId = ps.ProviderSiteId  
         INNER JOIN	dbo.Provider p ON p.ProviderId = psr.ProviderId
         INNER JOIN	dbo.VacancyStatusType vst ON vst.VacancyStatusTypeId = v.VacancyStatusId  
@@ -265,7 +265,7 @@ SELECT
 		DISTINCT  v.VacancyId, vlt.CodeName, p.ProviderId, ps.ProviderSiteId
 FROM		
 		dbo.[VacancyOwnerRelationship] rel 
-		INNER JOIN	dbo.ProviderSIte ps ON rel.ProviderSIteID = ps.ProviderSiteID  
+		INNER JOIN	dbo.ProviderSite ps ON rel.ProviderSiteID = ps.ProviderSiteID  
 		INNER JOIN	dbo.ProviderSiteRelationship psr ON psr.ProviderSiteId = ps.ProviderSiteId  
         INNER JOIN	dbo.Provider p ON p.ProviderId = psr.ProviderId
         INNER JOIN	dbo.Vacancy v ON v.[VacancyOwnerRelationshipId] = rel.[VacancyOwnerRelationshipId]  
@@ -287,7 +287,7 @@ SELECT
 		DISTINCT  v.VacancyId, vlt.CodeName, p.ProviderId, ps.ProviderSiteId
 FROM		
 		dbo.Vacancy v
-		INNER JOIN	dbo.ProviderSIte ps ON v.DeliveryOrganisationID = ps.ProviderSiteID  
+		INNER JOIN	dbo.ProviderSite ps ON v.DeliveryOrganisationID = ps.ProviderSiteID  
         INNER JOIN	dbo.ProviderSiteRelationship psr ON psr.ProviderSiteId = ps.ProviderSiteId  
         INNER JOIN	dbo.Provider p ON p.ProviderId = psr.ProviderId
         INNER JOIN	dbo.VacancyStatusType vst ON vst.VacancyStatusTypeId = v.VacancyStatusId  

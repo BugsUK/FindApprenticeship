@@ -8,6 +8,6 @@ BEGIN
 	SET NOCOUNT ON;
 
     -- Insert statements for procedure here
-	delete from TESTCONNECTION
+	delete from TestConnection
 	where testname = @TestName
 END

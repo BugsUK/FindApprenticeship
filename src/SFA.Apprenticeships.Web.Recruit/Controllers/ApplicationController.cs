@@ -13,7 +13,7 @@
     {
         private readonly IApplicationMediator _applicationMediator;
 
-        public ApplicationController(IApplicationMediator applicationMediator, ILogService logService) : base(logService)
+        public ApplicationController(IApplicationMediator applicationMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _applicationMediator = applicationMediator;
         }

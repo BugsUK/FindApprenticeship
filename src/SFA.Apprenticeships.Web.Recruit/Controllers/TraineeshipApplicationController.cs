@@ -15,8 +15,9 @@
 
         public TraineeshipApplicationController(
             ITraineeshipApplicationMediator traineeshipApplicationMediator,
+            IConfigurationService configurationService,
             ILogService logService)
-            : base(logService)
+            : base(configurationService, logService)
         {
             _traineeshipApplicationMediator = traineeshipApplicationMediator;
         }

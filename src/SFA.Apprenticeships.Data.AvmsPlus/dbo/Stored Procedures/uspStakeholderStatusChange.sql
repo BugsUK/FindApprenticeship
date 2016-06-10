@@ -8,7 +8,7 @@ BEGIN
 	BEGIN TRY    
  
 		-- Setting the status of candidate to Provided Value
-		UPDATE Stakeholder
+		UPDATE StakeHolder
 		SET StakeHolderStatusId = @stakeholderStatusId
 		WHERE StakeHolderID = @stakeholderId
 	

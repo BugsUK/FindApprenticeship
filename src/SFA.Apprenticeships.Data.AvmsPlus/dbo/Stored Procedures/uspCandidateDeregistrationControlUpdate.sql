@@ -9,7 +9,7 @@ BEGIN
    set [CandidateId] = @CandidateId,
    [isDeletedFromAdam] = @isDeletedFromAdam,
    [isDeleteFromAOL] = @isDeleteFromAOL,
-   [RoleId] = @RoleId
+   [roleId] = @RoleId
    
    where [CandidateDeRegistrationControlId] = @CandidateDeRegistrationControlId
    END TRY  

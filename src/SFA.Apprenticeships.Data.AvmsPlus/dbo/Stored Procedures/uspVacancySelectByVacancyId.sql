@@ -109,7 +109,7 @@ FROM [dbo].[Vacancy] [vacancy]
  join [VacancyOwnerRelationship] on Vacancy.[VacancyOwnerRelationshipId] = [VacancyOwnerRelationship].[VacancyOwnerRelationshipId]        
  join Employer on Employer.EmployerId = [VacancyOwnerRelationship].EmployerId        
  join [ProviderSiteRelationship] on [ProviderSiteRelationship].[ProviderSiteID] = [VacancyOwnerRelationship].[ProviderSiteID]  AND [ProviderSiteRelationship].ProviderSiteRelationshipTypeId = 1
- JOIN ProviderSIte on ProviderSIteRElationship.ProviderSiteID = ProviderSite.ProviderSiteID  
+ JOIN ProviderSite on ProviderSiteRElationship.ProviderSiteID = ProviderSite.ProviderSiteID  
  JOIN Provider on ProviderSiteRelationShip.ProviderID = Provider.ProviderID  
  
   

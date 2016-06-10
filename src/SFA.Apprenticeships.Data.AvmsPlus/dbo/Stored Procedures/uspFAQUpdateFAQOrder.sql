@@ -11,7 +11,7 @@ BEGIN
 		UPDATE FAQ
 		SET [SortOrder] = -1 * [SortOrder]
 		WHERE
-		FaqId IN (@faqId1, @faqId2)
+		FAQId IN (@faqId1, @faqId2)
 
 		UPDATE F1
 		SET F1.[SortOrder] = -1 * F2.[SortOrder]

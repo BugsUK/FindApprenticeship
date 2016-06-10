@@ -12,7 +12,7 @@ BEGIN
 	BEGIN TRY
     UPDATE [dbo].[application] SET applicationStatusTypeId = @applicationStatusTypeId WHERE ApplicationId = @applicationId
     
-	INSERT INTO [dbo].[applicationHistory] ([applicationId],[UserName],[applicationHistoryEventDate],[applicationHistoryEventTypeId],[applicationHistoryEventSubTypeId],[comment])
+	INSERT INTO [dbo].[ApplicationHistory] ([ApplicationId],[UserName],[ApplicationHistoryEventDate],[ApplicationHistoryEventTypeId],[ApplicationHistoryEventSubTypeId],[Comment])
 		VALUES (@applicationId,@userName,getdate(),1,@applicationStatusTypeId,@comment)
     END TRY
 

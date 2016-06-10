@@ -11,7 +11,7 @@ BEGIN
     
     SELECT @ApplicationCount = COUNT(ApplicationId) 
         FROM 
-    APPLICATION 
+    Application 
         WHERE 
     CANDIDATEID = @candidateId
 

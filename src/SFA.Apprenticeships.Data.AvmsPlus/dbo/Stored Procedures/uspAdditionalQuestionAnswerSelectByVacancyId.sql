@@ -6,17 +6,17 @@ BEGIN
 	SET NOCOUNT ON
 	
 	SELECT
-		[additionalQuestion].[VacancyId] AS 'VacancyId',
+		[AdditionalQuestion].[VacancyId] AS 'VacancyId',
 		[additionalAnswer].[ApplicationId] AS 'ApplicationId',
-		[additionalQuestion].[AdditionalQuestionId] AS 'AdditionalQuestionId',
-		[additionalQuestion].[QuestionId] As 'QuestionId',
-		[additionalQuestion].[Question] As 'Question',
+		[AdditionalQuestion].[AdditionalQuestionId] AS 'AdditionalQuestionId',
+		[AdditionalQuestion].[QuestionId] As 'QuestionId',
+		[AdditionalQuestion].[Question] As 'Question',
 		[additionalAnswer].[AdditionalanswerId] As 'AdditionalAnswerId',
 		[additionalAnswer].[Answer] As 'Answer'
-	FROM [dbo].[additionalQuestion] 
-		INNER JOIN [additionalAnswer] ON [additionalQuestion].[AdditionalQuestionId] = [additionalAnswer].[AdditionalQuestionId] AND 
-			[additionalAnswer].[ApplicationId] = @applicationId
-	WHERE [additionalQuestion].[VacancyId] = @vacancyId
+	FROM [dbo].[AdditionalQuestion] 
+		INNER JOIN [AdditionalAnswer] ON [AdditionalQuestion].[AdditionalQuestionId] = [AdditionalAnswer].[AdditionalQuestionId] AND 
+			[AdditionalAnswer].[ApplicationId] = @applicationId
+	WHERE [AdditionalQuestion].[VacancyId] = @vacancyId
 
 	SET NOCOUNT OFF
 END

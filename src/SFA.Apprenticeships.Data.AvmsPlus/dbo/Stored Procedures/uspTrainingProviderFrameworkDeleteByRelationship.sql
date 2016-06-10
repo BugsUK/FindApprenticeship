@@ -13,7 +13,7 @@ BEGIN
 	FROM dbo.ProviderSiteRelationship
 	WHERE ProviderID = @ProviderId
 		AND ProviderSiteRelationShipTypeID = @ProviderSiteRelationshipTypeId
-		AND ProviderSiteId = @ProviderSiteId
+		AND ProviderSiteID = @ProviderSiteId
 	
     -- delete all frameworks for this location 
 	DELETE FROM ProviderSiteFramework

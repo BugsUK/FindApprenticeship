@@ -13,7 +13,7 @@ BEGIN
  = ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTYpeID and ProviderSiteRelationshipTYpeName = N'Owner'
  JOIN Provider ON ProviderSiteRelationship.ProviderID = Provider.ProviderID  
  WHERE   
- [ProviderSite].ProviderSIteID = @TrainingProviderId  
+ [ProviderSite].ProviderSiteID = @TrainingProviderId  
   
  SET NOCOUNT OFF   
 END
