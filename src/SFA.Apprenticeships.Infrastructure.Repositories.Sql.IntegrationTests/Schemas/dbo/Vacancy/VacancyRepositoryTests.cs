@@ -80,6 +80,10 @@
 
             var entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
 
+            entity.AdditionalLocationInformationComment = "AdditionalLocationInformationComment";
+            writeRepository.Update(entity);
+            entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
+
             entity.ShouldBeEquivalentTo(vacancy, options =>
                 ForShallowSave(options)
                     .Excluding(x => x.SelectedMemberPath.EndsWith("Comment"))
@@ -99,6 +103,8 @@
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
                     .Excluding(x => x.WageUnit)); //remove this after changes in DB
+
+            entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
         }
 
         [Test, Category("Integration")]
