@@ -18,8 +18,8 @@
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
         private const int TraineeshipFrameworkId = 999;
-        private const string FirstQuestionId = "1";
-        private const string SecondQuestionId = "2";
+        private const int FirstQuestionId = 1;
+        private const int SecondQuestionId = 2;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
@@ -410,43 +410,28 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             }
         }
 
-        private class AdditionalComments
-        {
-            public string QuestionId { get; set; }
-            public string  Question { get; set; }
-        }
-
         private void MapAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
         {
             var additionalQuestions = GetAdditionalQuestions(dbVacancy);
-            if (additionalQuestions.Any())
-            {
-                result.FirstQuestion = GetAdditionalQuestion(additionalQuestions, FirstQuestionId);
-                result.SecondQuestion = GetAdditionalQuestion(additionalQuestions, SecondQuestionId);
-            }            
+            result.FirstQuestion = GetAdditionalQuestion(additionalQuestions, FirstQuestionId);
+            result.SecondQuestion = GetAdditionalQuestion(additionalQuestions, SecondQuestionId);
         }
 
-        private string GetAdditionalQuestion(Dictionary<string, AdditionalComments> additionalQuestions, string questionId)
+        private static string GetAdditionalQuestion(IReadOnlyDictionary<int, string> additionalQuestions, int questionId)
         {
-            return additionalQuestions.ContainsKey(questionId) ? additionalQuestions[questionId].Question : null;
+            return additionalQuestions.ContainsKey(questionId) ? additionalQuestions[questionId] : null;
         }
 
-        private Dictionary<string,AdditionalComments> GetAdditionalQuestions(Vacancy dbVacancy)
+        private IReadOnlyDictionary<int,string> GetAdditionalQuestions(Vacancy dbVacancy)
         {
-            var results = _getOpenConnection.Query<AdditionalComments>(@"
+            var results = _getOpenConnection.Query<dynamic>(@"
                             SELECT QuestionId, Question
                             FROM   dbo.AdditionalQuestion
                             WHERE  VacancyId = @VacancyId
                             ORDER BY QuestionId ASC
-                            ", new { dbVacancy.VacancyId }).ToDictionary(q=>q.QuestionId);
+                            ", new { dbVacancy.VacancyId }).ToDictionary(q => (int)q.QuestionId, q => (string)q.Question);
             return results;         
-        }
-
-        private class TextField
-        {
-            public string CodeName { get; set; }
-            public string Value { get; set; }
-        }        
+        }             
 
         private void MapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
@@ -459,14 +444,14 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             result.FutureProspects = GetTextField(textFields, TextFieldCodeName.FutureProspects);
         }
                 
-        private string GetTextField(Dictionary<string, TextField> textFields, string codeName)
+        private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
         {            
-            return textFields.ContainsKey(codeName) ? textFields[codeName].Value : null;
+            return textFields.ContainsKey(codeName) ? textFields[codeName] : null;
         }
 
-        private Dictionary<string, TextField> GetTextFields(int vacancyId)
+        private IReadOnlyDictionary<string, string> GetTextFields(int vacancyId)
         {            
-            Dictionary<string, TextField> textFields = _getOpenConnection.Query<TextField>(@"
+            var textFields = _getOpenConnection.Query<dynamic>(@"
                                             SELECT CodeName, Value
                                             FROM   dbo.VacancyTextField VTF
                                             JOIN   dbo.VacancyTextFieldValue VTFV
@@ -474,7 +459,7 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
                                             WHERE  VacancyId = @VacancyId
                                             ", new{
                                                         VacancyId = vacancyId                                                        
-                                                    }).ToDictionary(tf=>tf.CodeName);
+                                                    }).ToDictionary(tf => (string)tf.CodeName,tf => (string)tf.Value);
             return textFields;
         }
 
