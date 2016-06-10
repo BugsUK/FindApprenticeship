@@ -78,9 +78,6 @@
       <HintPath>..\packages\CuttingEdge.Conditions.1.2.0.0\lib\NET35\CuttingEdge.Conditions.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SFA.Apprenticeships.Application.UserAccount">
-      <HintPath>..\SFA.Apprenticeships.Application.UserAccount\bin\Local\SFA.Apprenticeships.Application.UserAccount.dll</HintPath>
-    </Reference>
     <Reference Include="SFA.Apprenticeships.Domain.Entities, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\SFA.Apprenticeships.Domain.Entities\bin\Local\SFA.Apprenticeships.Domain.Entities.dll</HintPath>
