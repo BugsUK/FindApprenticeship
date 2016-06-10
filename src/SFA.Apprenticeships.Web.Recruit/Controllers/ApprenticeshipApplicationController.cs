@@ -9,11 +9,13 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using SFA.Infrastructure.Interfaces;
+
     public class ApprenticeshipApplicationController : RecruitmentControllerBase
     {
         private readonly IApprenticeshipApplicationMediator _apprenticeshipApplicationMediator;
 
-        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, ILogService logService) : base(logService)
+        public ApprenticeshipApplicationController(IApprenticeshipApplicationMediator apprenticeshipApplicationMediator, IConfigurationService configurationService, ILogService logService)
+            : base(configurationService, logService)
         {
             _apprenticeshipApplicationMediator = apprenticeshipApplicationMediator;
         }

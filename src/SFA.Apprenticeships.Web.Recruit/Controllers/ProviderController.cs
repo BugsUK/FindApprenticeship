@@ -18,7 +18,7 @@
     {
         private readonly IProviderMediator _providerMediator;
 
-        public ProviderController(IProviderMediator providerMediator, ILogService logService) : base(logService)
+        public ProviderController(IProviderMediator providerMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _providerMediator = providerMediator;
         }

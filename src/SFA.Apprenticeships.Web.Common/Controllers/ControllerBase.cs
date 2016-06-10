@@ -7,8 +7,10 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
     using Mediators;
     using Providers;
     using Services;
+    using Configuration;
     using StructureMap.Attributes;
     using SFA.Infrastructure.Interfaces;
+    using SFA.Apprenticeships.Infrastructure.Logging;
     using NLog.Contrib; // TODO: Inject logging context setter implementation rather than using directly (but use separate interface from ILogService)
     using System;
     using System.Collections.Generic;
@@ -20,7 +22,7 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
     {
         public TContextType UserContext { get; protected set; }
 
-        protected ControllerBase(ILogService logService) : base(logService)
+        protected ControllerBase(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
         }
     }
@@ -34,10 +36,20 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
         public IAuthenticationTicketService AuthenticationTicketService { get; set; }
 
         protected readonly ILogService _logService;
+        protected readonly IConfigurationService _configurationService;
 
-        protected ControllerBase(ILogService loggingService)
+        protected ControllerBase(IConfigurationService configurationService, ILogService loggingService)
         {
+            _configurationService = configurationService;
             _logService = loggingService;
+        }
+
+        protected void SetAbout()
+        {
+            var webConfiguration = _configurationService.Get<CommonWebConfiguration>();
+            ViewBag.ShowAbout = webConfiguration.ShowAbout;
+            ViewBag.Version = VersionLogging.GetVersion();
+            ViewBag.Environment = webConfiguration.Environment;
         }
 
         protected void SetUserMessage(MediatorResponseMessage message)

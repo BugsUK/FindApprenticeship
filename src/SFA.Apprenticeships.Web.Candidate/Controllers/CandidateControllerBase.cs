@@ -23,11 +23,10 @@
     RobotsIndexPage]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
-        public readonly IConfigurationService ConfigurationService;
+        public IConfigurationService ConfigurationService { get { return _configurationService; } } // TODO: Change ConfigurationService to _configService
 
-        protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(loggingService)
+        protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(configurationService, loggingService)
         {
-            ConfigurationService = configurationService;
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
@@ -69,16 +68,6 @@
 
             base.OnActionExecuted(filterContext);
         }
-
-        private void SetAbout()
-        {
-            var webConfiguration = ConfigurationService.Get<CommonWebConfiguration>();
-            ViewBag.ShowAbout = webConfiguration.ShowAbout;
-            ViewBag.Version = VersionLogging.GetVersion();
-            ViewBag.Environment = webConfiguration.Environment;
-        }
-
-
 
         private void SetCandidate()
         {

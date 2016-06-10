@@ -12,7 +12,7 @@
     {
         private readonly IHomeMediator _homeMediator;
 
-        public HomeController(IHomeMediator homeMediator, ILogService logService) : base(logService)
+        public HomeController(IHomeMediator homeMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _homeMediator = homeMediator;
         }

@@ -28,8 +28,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
         public ProviderUserController(
             IProviderUserMediator providerUserMediator,
             ICookieAuthorizationDataProvider cookieAuthorizationDataProvider,
+            IConfigurationService configurationService,
             ILogService logService)
-            : base(logService)
+            : base(configurationService, logService)
         {
             _providerUserMediator = providerUserMediator;
             _cookieAuthorizationDataProvider = cookieAuthorizationDataProvider;

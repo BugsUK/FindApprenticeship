@@ -15,7 +15,7 @@
     {
         private readonly ICandidateMediator _candidateMediator;
 
-        public CandidateController(ICandidateMediator candidateMediator, ILogService logService) : base(logService)
+        public CandidateController(ICandidateMediator candidateMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _candidateMediator = candidateMediator;
         }

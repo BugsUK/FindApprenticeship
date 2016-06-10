@@ -13,16 +13,18 @@
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class RecruitmentControllerBase : Common.Controllers.ControllerBase
     {
-        protected RecruitmentControllerBase(ILogService loggingService) : base(loggingService)
+        protected RecruitmentControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(configurationService, loggingService)
         {
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             SetPersistentLoggingInfo();
-            MappedDiagnosticsLogicalContext.Set("userId", User.Identity.Name);
+            SetLoggingInfo("userId", () => User.Identity.Name);
 
             LogOnActionExecuting(filterContext);
+
+            SetAbout();
 
             base.OnActionExecuting(filterContext);
         }

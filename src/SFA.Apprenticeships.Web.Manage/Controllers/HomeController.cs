@@ -5,7 +5,7 @@
 
     public class HomeController : ManagementControllerBase
     {
-        public HomeController(ILogService logService) : base(logService)
+        public HomeController(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
         }
 
