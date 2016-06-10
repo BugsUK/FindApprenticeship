@@ -1,8 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.IoC
 {
     using Application.Applications;
-    using Application.Candidate.Strategies.Apprenticeships;
-    using Application.Candidate.Strategies.Traineeships;
     using Application.ReferenceData;
     using Application.Reporting;
     using Application.Vacancies;
@@ -18,10 +16,7 @@
         {
             // In Web.Manage we only use Raa implementation (no need to read or write anything from AVMS).
             // Therefor we can just inject Raa dependencies
-            // TODO: same contents than the same file in Web.Recruit (unless the first two lines). Consider using a common class? 
-
-            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
-            For<IGetCandidateTraineeshipApplicationsStrategy>().Use<GetCandidateTraineeshipApplicationsStrategy>();
+            // TODO: same contents than the same file in Web.Recruit. Consider using a common class? 
 
             For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
 
