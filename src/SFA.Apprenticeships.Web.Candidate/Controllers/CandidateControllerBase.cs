@@ -23,7 +23,7 @@
     RobotsIndexPage]
     public abstract class CandidateControllerBase : ControllerBase<CandidateUserContext>
     {
-        public IConfigurationService ConfigurationService { get { return _configurationService; } } // TODO: Change ConfigurationService to _configService
+        public IConfigurationService ConfigurationService { get { return _configurationService; } }
 
         protected CandidateControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(configurationService, loggingService)
         {
