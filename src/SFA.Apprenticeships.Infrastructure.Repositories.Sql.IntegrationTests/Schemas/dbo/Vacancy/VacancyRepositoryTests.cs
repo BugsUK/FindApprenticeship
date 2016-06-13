@@ -75,6 +75,9 @@
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
             vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.Duration = 2;
+            vacancy.DurationType = DurationType.Years;
+            vacancy.ExpectedDuration = "2 years";
 
             writeRepository.Create(vacancy);
 
@@ -102,7 +105,7 @@
                     .Excluding(x => x.CreatedDateTime)
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
-                    .Excluding(x => x.WageUnit)); //remove this after changes in DB
+                    .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
         }

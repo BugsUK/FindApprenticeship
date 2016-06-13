@@ -241,6 +241,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 return null;
             
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+
             MapAdditionalQuestions(dbVacancy, result);
             MapTextFields(dbVacancy, result);
             MapApprenticeshipType(dbVacancy, result);
@@ -254,6 +255,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapComments(dbVacancy, result);
             MapRegionalTeam(result);
             MapLocalAuthorityCode(dbVacancy, result);
+            MapDuration(dbVacancy, result);
 
             return result;
         }
@@ -275,6 +277,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
+                MapDuration(dbVacancy, vacancySummary);
             }
 
             return results;
@@ -625,6 +628,12 @@ order by HistoryDate desc
                 }
             }
         }        
+
+        private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
+        {
+            result.DurationType = (DurationType)dbVacancy.DurationTypeId;
+            result.Duration = dbVacancy.DurationValue;
+        }
 
         public DomainVacancy Create(DomainVacancy entity)
         {

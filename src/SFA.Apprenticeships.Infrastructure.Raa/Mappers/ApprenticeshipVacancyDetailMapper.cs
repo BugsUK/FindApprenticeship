@@ -64,7 +64,7 @@
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
                 IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
-                ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
+                ExpectedDuration = vacancy.ExpectedDuration,
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
