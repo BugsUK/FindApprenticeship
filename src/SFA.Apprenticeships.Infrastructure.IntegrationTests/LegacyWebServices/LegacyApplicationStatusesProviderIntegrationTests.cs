@@ -41,7 +41,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry());
-                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(), new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(), new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy }));
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.For<ICandidateReadRepository>().Use(_candidateReadRepositoryMock.Object);
             });

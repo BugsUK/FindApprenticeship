@@ -24,7 +24,7 @@
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry(new LegacyWebServicesRegistry());
-                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),  new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),  new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy}));
             });
 
             _vacancyDataProvider = container.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();
