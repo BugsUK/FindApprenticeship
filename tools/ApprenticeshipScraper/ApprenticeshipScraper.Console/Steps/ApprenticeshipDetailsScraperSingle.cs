@@ -35,7 +35,7 @@
             var detailsFolder = Path.Combine(folder, FolderNames.ApprenticeshipDetails);
             this.directory.CreateDirectoryIfMissing(detailsFolder);
 
-            var filenames = this.LookAtApprenticeshipFiles(folder).Take(100);
+            var filenames = this.LookAtApprenticeshipFiles(folder);
             var models = this.DownloadPages(filenames, arguments.Site);
             var sections = this.ParsePages(models);
             this.SavePages(sections, detailsFolder);
@@ -55,7 +55,6 @@
         private dynamic DownloadItem(SiteEnum site, string filename, CookieAwareWebClient cookieAwareWebClient)
         {
             var id = filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
-            this.Logger.Info($"{Thread.CurrentThread.ManagedThreadId:00} {id}");
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
             CQ dom = cookieAwareWebClient.DownloadString(url);
             return new { Id = id, Dom = dom };

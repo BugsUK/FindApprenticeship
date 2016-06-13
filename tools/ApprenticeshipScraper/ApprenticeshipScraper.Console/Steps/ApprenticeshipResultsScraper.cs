@@ -20,7 +20,7 @@
 
         private const int PageSize = 100;
 
-        private const int WaitBetweenRequestsMs = 100;
+        private const int WaitBetweenRequestsMs = 20;
 
         private const string UrlFormat =
             "/apprenticeships?ApprenticeshipLevel=All&Hash=-2063231487&Latitude=53.68984&Longitude=-1.82732&Location=Elland%20%28West%20Yorkshire%29&LocationType=NonNational&PageNumber={0}&ResultsPerPage={1}&SearchAction=Sort&SearchField=All&SearchMode=Keyword&SortType=ClosingDate&WithinDistance=0";
@@ -71,7 +71,7 @@
         {
             using (var cookieAwareWebClient = new CookieAwareWebClient())
             {
-                for (int i = 1; i < 10; i++) // NOTE: this page count will be a problem if the vacancy count goes above 100,000
+                for (int i = 1; i < 1000; i++) // NOTE: this page count will be a problem if the vacancy count goes above 100,000
                 {
                     Logger.Info($"Downloading page {i}");
                     CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, PageSize));
