@@ -2,12 +2,16 @@
 {
     using Application;
     using Apprenticeships.Application.Candidate;
+    using Apprenticeships.Application.ReferenceData;
     using Candidate;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using LegacyReferenceDataProxy;
     using Mappers;
     using Mappers.Apprenticeships;
     using Mappers.Traineeship;
+    using ReferenceData;
+    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
     using Wcf;
 
@@ -15,7 +19,7 @@
     {
         // public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration) : this(new CacheConfiguration(), servicesConfiguration) { }
 
-        public LegacyWebServicesRegistry()
+        public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration, CacheConfiguration cacheConfiguration)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
@@ -23,9 +27,9 @@
             // For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
-            /*if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
-                For<IVacancyIndexDataProvider>()
+                /*For<IVacancyIndexDataProvider>()
                     .Use<LegacyVacancyIndexDataProvider>()
                     .Ctor<IMapper>()
                     .Named("LegacyWebServices.LegacyVacancySummaryMapper");
@@ -61,10 +65,10 @@
                         .Named("LegacyTraineeshipVacancyDataProvider")
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
-                }
+                }*/
 
                 #region Reference Data Service and Providers
-
+            
                 For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
 
                 if (cacheConfiguration.UseCache)
@@ -78,15 +82,15 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
-
+                /*
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<LegacyCandidateApplicationStatusesProvider>()
                     .Ctor<IMapper>()
                     .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                    .Name = "LegacyCandidateApplicationStatusesProvider";
+                    .Name = "LegacyCandidateApplicationStatusesProvider";*/
 
                 #endregion
-            }*/
+            }
 
             #region Candidate and Application Providers
 

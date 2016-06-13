@@ -1,13 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa.IoC
 {
-    using Application.Applications;
     using Application.ReferenceData;
     using Application.Reporting;
-    using Application.Vacancies;
-    using Application.Vacancy;
     using Common.Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.Traineeships;
     using StructureMap.Configuration.DSL;
 
     public class RaaRegistry : Registry

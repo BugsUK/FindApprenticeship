@@ -116,7 +116,7 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
                 x.AddRegistry<AuditRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry<ProcessesRegistry>();

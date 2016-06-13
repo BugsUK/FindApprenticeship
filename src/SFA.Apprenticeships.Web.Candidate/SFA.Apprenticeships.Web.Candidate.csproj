@@ -1604,6 +1604,10 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{F7B7B49B-0B08-4EDC-AFE2-7E88A6A5A3F6}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>

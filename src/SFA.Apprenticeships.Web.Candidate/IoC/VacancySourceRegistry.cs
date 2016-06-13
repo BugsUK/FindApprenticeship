@@ -89,6 +89,7 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
+                
 
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<LegacyCandidateApplicationStatusesProvider>()
@@ -108,6 +109,12 @@
 
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<NullApplicationStatusesProvider>();
+                /*
+                For<IReferenceDataProvider>()
+                    .Use<ReferenceDataProvider>();
+
+                For<IReportingProvider>()
+                    .Use<ReportingProvider>();*/
             }
 
             //--

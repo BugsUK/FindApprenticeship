@@ -121,6 +121,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             var configurationService = container.GetInstance<IConfigurationService>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var cacheConfig = configurationService.Get<CacheConfiguration>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -137,7 +140,7 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 //CheckNasGateway monitor task always uses legacy services
-                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
                     new ServicesConfiguration
                     {
