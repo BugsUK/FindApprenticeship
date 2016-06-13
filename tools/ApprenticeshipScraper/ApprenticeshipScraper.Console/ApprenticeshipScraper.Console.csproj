@@ -67,6 +67,7 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Steps\ApprenticeshipDetailsScraperSingle.cs" />
     <Compile Include="Steps\TraineeDetailsScraper.cs" />
     <Compile Include="Steps\TraineeDetailsScraperSingle.cs" />
     <Compile Include="Steps\ApprenticeshipDetailsScraper.cs" />

@@ -4,14 +4,13 @@
     using System.IO;
     using System.Linq;
     using System.Threading;
-    using System.Threading.Tasks;
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
 
     using CsQuery;
 
-    public class ApprenticeshipDetailsScraper : IStep
+    public class ApprenticeshipDetailsScraperSingle : IStep
     {
         public const string UrlFormat = "/apprenticeship/{0}";
 
@@ -21,7 +20,7 @@
 
         private readonly IUrlResolver resolver;
 
-        public ApprenticeshipDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
+        public ApprenticeshipDetailsScraperSingle(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
         {
             this.resolver = resolver;
             this.directory = directory;
@@ -37,17 +36,9 @@
             this.directory.CreateDirectoryIfMissing(detailsFolder);
 
             var filenames = this.LookAtApprenticeshipFiles(folder).Take(100);
-            Parallel.ForEach(
-                filenames,
-                filename =>
-                    {
-                        using (var cookieAwareWebClient = new CookieAwareWebClient())
-                        {
-                            var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
-                            var section = this.ParsePage(item);
-                            SavePage(detailsFolder, section);
-                        }
-                    });
+            var models = this.DownloadPages(filenames, arguments.Site);
+            var sections = this.ParsePages(models);
+            this.SavePages(sections, detailsFolder);
         }
 
         private static void SavePage(string folder, dynamic section)
@@ -73,6 +64,40 @@
         private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
         {
             return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults));
+        }
+
+        private IEnumerable<dynamic> DownloadPages(IEnumerable<string> filenames, SiteEnum site)
+        {
+            using (var cookieAwareWebClient = new CookieAwareWebClient())
+            {
+                foreach (var filename in filenames)
+                {
+                    yield return this.DownloadItem(site, filename, cookieAwareWebClient);
+                    Thread.Sleep(WaitBetweenRequestsMs);
+                }
+            }
+        }
+
+        private IEnumerable<dynamic> ParsePages(IEnumerable<dynamic> models)
+        {
+            foreach (var model in models)
+            {
+                yield return ParsePage(model);
+            }
+        }
+
+        private void SavePages(IEnumerable<dynamic> sections, string folder)
+        {
+            var total = 0;
+            foreach (var section in sections)
+            {
+                SavePage(folder, section);
+                total++;
+                if (total % 10 == 0)
+                {
+                    this.Logger.Info($"{total} records saved");
+                }
+            }
         }
     }
 }
