@@ -60,7 +60,7 @@ SELECT
 FROM [dbo].[Employer] [employer]
 JOIN [vwRegionsAndLocalAuthority] vwLA 
 ON [employer].LocalAuthorityId = vwLA.LocalAuthorityId   
-LEFT JOIN dbo.employercontact ec ON ec.EmployerContactId = [employer].[PrimaryContact]  
+LEFT JOIN dbo.EmployerContact ec ON ec.EmployerContactId = [employer].[PrimaryContact]  
 LEFT JOIN [dbo].[Person] [person] ON [person].[PersonId] = ec.PersonId    
 LEFT JOIN [dbo].[County] [County] ON [County].[CountyId] = ec.[CountyId]  
 LEFT JOIN [dbo].[County] [EmployerCounty] ON [EmployerCounty].[CountyId] = [Employer].[CountyId]  

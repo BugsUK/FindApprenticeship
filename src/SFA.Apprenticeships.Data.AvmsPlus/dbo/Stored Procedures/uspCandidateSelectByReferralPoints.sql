@@ -33,9 +33,9 @@ FROM
 				  INNER JOIN dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID
 				  AND LocalAuthorityGroupTypeName = N'Region'
 				  INNER join person ON dbo.Person.PersonId= candidate.PersonId    
-				  INNER JOIN [APPLICATION] ON dbo.[Application].CandidateId = candidate.CandidateId  
+				  INNER JOIN [Application] ON dbo.[Application].CandidateId = candidate.CandidateId  
 				  inner join ApplicationUnsuccessfulReasonType
-					on ApplicationUnsuccessfulReasonType.ApplicationUnsuccessfulReasonTypeId = [APPLICATION].UnsuccessfulReasonId
+					on ApplicationUnsuccessfulReasonType.ApplicationUnsuccessfulReasonTypeId = [Application].UnsuccessfulReasonId
 					and ApplicationUnsuccessfulReasonType.ReferralPoints != 0
 					LEFT outer JOIN dbo.ApplicationHistory ON   
 				  dbo.[Application].ApplicationId = dbo.ApplicationHistory.ApplicationId   
@@ -45,7 +45,7 @@ FROM
 				AND (LAG.LocalAuthorityGroupID = @RegionId OR @RegionId IS NULL)
 				AND Candidate.CandidateId NOT IN (  
 					 SELECT CandidateId  
-					 FROM [APPLICATION]		
+					 FROM [Application]		
 					 INNER JOIN [dbo].[ApplicationStatusType] ON [ApplicationStatusType].ApplicationStatusTypeId = [Application].ApplicationStatusTypeId  
 					 WHERE dbo.ApplicationStatusType.FullName = 'Successful'  
 					 GROUP BY CandidateId)  
@@ -109,9 +109,9 @@ BEGIN
 				 INNER JOIN dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID
 				 AND LocalAuthorityGroupTypeName = N'Region'  
 				  INNER join person ON dbo.Person.PersonId= candidate.PersonId    
-				  INNER JOIN [APPLICATION] ON dbo.[Application].CandidateId = candidate.CandidateId  
+				  INNER JOIN [Application] ON dbo.[Application].CandidateId = candidate.CandidateId  
 				  inner join ApplicationUnsuccessfulReasonType
-					on ApplicationUnsuccessfulReasonType.ApplicationUnsuccessfulReasonTypeId = [APPLICATION].UnsuccessfulReasonId
+					on ApplicationUnsuccessfulReasonType.ApplicationUnsuccessfulReasonTypeId = [Application].UnsuccessfulReasonId
 					and ApplicationUnsuccessfulReasonType.ReferralPoints != 0
 					LEFT outer JOIN dbo.ApplicationHistory ON   
 				  dbo.[Application].ApplicationId = dbo.ApplicationHistory.ApplicationId   
@@ -121,7 +121,7 @@ BEGIN
 				AND (LAG.LocalAuthorityGroupID = @RegionId OR @RegionId IS NULL)
 				AND Candidate.CandidateId NOT IN (  
 					 SELECT CandidateId  
-					 FROM [APPLICATION]		
+					 FROM [Application]		
 					 INNER JOIN [dbo].[ApplicationStatusType] ON [ApplicationStatusType].ApplicationStatusTypeId = [Application].ApplicationStatusTypeId  
 					 WHERE dbo.ApplicationStatusType.FullName = 'Successful'  
 					 GROUP BY CandidateId)  

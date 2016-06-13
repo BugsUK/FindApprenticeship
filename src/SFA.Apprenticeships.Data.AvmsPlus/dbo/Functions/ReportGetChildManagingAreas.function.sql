@@ -3,7 +3,7 @@ RETURNS TABLE AS RETURN
 WITH r AS 
 (SELECT LocalAuthorityGroupID
 FROM dbo.LocalAuthorityGroup
-WHERE codename = @localAuthorityGroupCodeName
+WHERE CodeName = @localAuthorityGroupCodeName
 UNION ALL
 SELECT t.LocalAuthorityGroupID
 FROM dbo.LocalAuthorityGroup t JOIN r 

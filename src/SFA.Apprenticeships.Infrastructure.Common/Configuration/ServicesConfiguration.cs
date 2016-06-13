@@ -6,5 +6,7 @@
         public const string Raa = "Raa";
 
         public string ServiceImplementation { get; set; }
+
+        public string VacanciesSource { get; set; }
     }
 }

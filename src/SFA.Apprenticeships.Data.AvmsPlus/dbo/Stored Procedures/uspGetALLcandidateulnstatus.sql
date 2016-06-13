@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from candidateulnstatus
+	SELECT * from CandidateULNStatus
 END

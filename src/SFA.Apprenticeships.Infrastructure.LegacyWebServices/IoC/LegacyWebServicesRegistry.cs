@@ -1,42 +1,35 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.LegacyWebServices.IoC
 {
     using Application;
-    using Apprenticeships.Application.Applications;
     using Apprenticeships.Application.Candidate;
     using Apprenticeships.Application.ReferenceData;
-    using Apprenticeships.Application.Vacancies;
-    using Apprenticeships.Application.Vacancy;
     using Candidate;
     using Common.Configuration;
-    using Domain.Entities.Vacancies.Apprenticeships;
-    using Domain.Entities.Vacancies.Traineeships;
-    using SFA.Infrastructure.Interfaces.Caching;
     using SFA.Infrastructure.Interfaces;
-    using GatewayServiceProxy;
     using LegacyReferenceDataProxy;
     using Mappers;
     using Mappers.Apprenticeships;
     using Mappers.Traineeship;
     using ReferenceData;
+    using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
-    using Vacancy;
     using Wcf;
 
     public class LegacyWebServicesRegistry : Registry
     {
-        public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration) : this(new CacheConfiguration(), servicesConfiguration) { }
+        // public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration) : this(new CacheConfiguration(), servicesConfiguration) { }
 
-        public LegacyWebServicesRegistry(CacheConfiguration cacheConfiguration, ServicesConfiguration servicesConfiguration)
+        public LegacyWebServicesRegistry(ServicesConfiguration servicesConfiguration, CacheConfiguration cacheConfiguration)
         {
             For<IMapper>().Use<LegacyVacancySummaryMapper>().Name = "LegacyWebServices.LegacyVacancySummaryMapper";
             For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
             For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
-            For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
+            // For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
-                For<IVacancyIndexDataProvider>()
+                /*For<IVacancyIndexDataProvider>()
                     .Use<LegacyVacancyIndexDataProvider>()
                     .Ctor<IMapper>()
                     .Named("LegacyWebServices.LegacyVacancySummaryMapper");
@@ -72,10 +65,10 @@
                         .Named("LegacyTraineeshipVacancyDataProvider")
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
-                }
+                }*/
 
                 #region Reference Data Service and Providers
-
+            
                 For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
 
                 if (cacheConfiguration.UseCache)
@@ -89,12 +82,12 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
-
+                /*
                 For<ILegacyApplicationStatusesProvider>()
                     .Use<LegacyCandidateApplicationStatusesProvider>()
                     .Ctor<IMapper>()
                     .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                    .Name = "LegacyCandidateApplicationStatusesProvider";
+                    .Name = "LegacyCandidateApplicationStatusesProvider";*/
 
                 #endregion
             }

@@ -181,6 +181,7 @@
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\VacancyStatusControlQueueConsumer.cs" />
     <Compile Include="IoC\JobsRegistry.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -245,6 +246,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidates\SFA.Apprenticeships.Application.Candidates.csproj">
       <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
       <Name>SFA.Apprenticeships.Application.Candidates</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
       <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>

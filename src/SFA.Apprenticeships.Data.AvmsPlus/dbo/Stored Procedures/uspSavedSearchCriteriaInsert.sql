@@ -76,7 +76,7 @@ BEGIN
   @searchType,     
   @trainingProvider,     
   @vacancyReferenceNumber,    
-  @VacancyPostedSince,
+  @vacancyPostedSince,
   @apprenticeshipTypeValue    
  )    
    

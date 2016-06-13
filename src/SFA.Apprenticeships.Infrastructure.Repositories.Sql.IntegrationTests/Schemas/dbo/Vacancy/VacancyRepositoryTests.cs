@@ -75,10 +75,17 @@
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
             vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
+            vacancy.Duration = 2;
+            vacancy.DurationType = DurationType.Years;
+            vacancy.ExpectedDuration = "2 years";
 
             writeRepository.Create(vacancy);
 
             var entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
+
+            entity.AdditionalLocationInformationComment = "AdditionalLocationInformationComment";
+            writeRepository.Update(entity);
+            entity = readRepository.GetByReferenceNumber(vacancy.VacancyReferenceNumber);
 
             entity.ShouldBeEquivalentTo(vacancy, options =>
                 ForShallowSave(options)
@@ -98,7 +105,9 @@
                     .Excluding(x => x.CreatedDateTime)
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
-                    .Excluding(x => x.WageUnit)); //remove this after changes in DB
+                    .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
+
+            entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
         }
 
         [Test, Category("Integration")]

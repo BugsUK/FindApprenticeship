@@ -6,7 +6,7 @@ BEGIN
 	  
 	Select     
 		ApprenticeshipOccupationId,    
-		isnull(CodeName,'') as 'CodeName',    
+		isnull(Codename,'') as 'CodeName',    
 		isnull(ShortName,'') as 'ShortName',    
 		isnull(FullName,'') as 'ApprenticeshipOccupation',   
 		ApprenticeshipOccupationStatusTypeId as 'StatusType',  

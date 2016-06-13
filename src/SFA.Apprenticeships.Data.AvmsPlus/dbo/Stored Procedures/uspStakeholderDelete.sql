@@ -13,10 +13,10 @@ set nocount on
 								from stakeholder
 								where stakeholderid = @stakeholderid)
 
-			delete from stakeholder
+			delete from StakeHolder
 			where stakeholderid = @stakeholderid
 
-			delete from person
+			delete from Person
 			where personid = @personid
 					
 			DELETE FROM CandidateDeRegistrationControl 

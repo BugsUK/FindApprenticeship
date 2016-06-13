@@ -10,7 +10,7 @@ BEGIN
  
 		
 		SELECT count(DISTINCT  
-			[Application].Applicationid) as [Count]
+			[Application].ApplicationId) as [Count]
 		FROM [dbo].[Application] 
 			LEFT OUTER JOIN ApplicationHistory ON   
 				[Application].[ApplicationId] = [ApplicationHistory].[ApplicationId] 

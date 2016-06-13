@@ -9,7 +9,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
+namespace SFA.Apprenticeships.Web.Common.Views.Shared
 {
     using System;
     using System.Collections.Generic;
@@ -27,21 +27,10 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.Shared
     using System.Web.Security;
     using System.Web.UI;
     using System.Web.WebPages;
-    using SFA.Apprenticeships.Infrastructure.Presentation;
-    using SFA.Apprenticeships.Web.Candidate;
-    using SFA.Apprenticeships.Web.Candidate.Constants;
-    using SFA.Apprenticeships.Web.Candidate.Constants.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.Helpers;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Candidate;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Login;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.Register;
-    using SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch;
+    using SFA.Apprenticeships.Web.Common;
     using SFA.Apprenticeships.Web.Common.Constants;
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
-    using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
-    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/Shared/_AboutDisguised.cshtml")]
@@ -91,7 +80,7 @@ WriteLiteral(" &#x25cf; Version: ");
             
             #line default
             #line hidden
-WriteLiteral(" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\r\n</div>\r\n\r\n");
+WriteLiteral(" &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;\r\n</div>");
 
         }
     }

@@ -18,6 +18,8 @@
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
         private const int TraineeshipFrameworkId = 999;
+        private const int FirstQuestionId = 1;
+        private const int SecondQuestionId = 2;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
@@ -167,12 +169,12 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                 OFFSET " + offset + @" ROWS
                 FETCH NEXT " + pageSize + @" ROWS ONLY";
             }
-
+            //TODO: adding a timeout of 10 mins. This value needs to change and come from a config file in the future.
             var dbVacancies = _getOpenConnection.Query<Vacancy>(
             sql, new
             {
                 VacancyStatusCodeIds = desiredStatuses.Select(s => (int)s)
-            });
+            },600);
 
 
             _logger.Debug(
@@ -239,6 +241,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 return null;
             
             var result = _mapper.Map<Vacancy, DomainVacancy>(dbVacancy);
+
             MapAdditionalQuestions(dbVacancy, result);
             MapTextFields(dbVacancy, result);
             MapApprenticeshipType(dbVacancy, result);
@@ -252,6 +255,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapComments(dbVacancy, result);
             MapRegionalTeam(result);
             MapLocalAuthorityCode(dbVacancy, result);
+            MapDuration(dbVacancy, result);
 
             return result;
         }
@@ -273,6 +277,7 @@ FETCH NEXT @PageSize ROWS ONLY
                 MapDateSubmitted(dbVacancy, vacancySummary);
                 MapDateQAApproved(dbVacancy, vacancySummary);
                 MapRegionalTeam(vacancySummary);
+                MapDuration(dbVacancy, vacancySummary);
             }
 
             return results;
@@ -410,88 +415,120 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
 
         private void MapAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
         {
-            var results = _getOpenConnection.Query<dynamic>(@"
-SELECT QuestionId, Question
-FROM   dbo.AdditionalQuestion
-WHERE  VacancyId = @VacancyId
-ORDER BY QuestionId ASC
-", new {dbVacancy.VacancyId});
-
-            foreach (var question in results)
-            {
-                if (question.QuestionId == 1)
-                {
-                    result.FirstQuestion = question.Question;
-                }
-                if (question.QuestionId == 2)
-                {
-                    result.SecondQuestion = question.Question;
-                }
-            }
+            var additionalQuestions = GetAdditionalQuestions(dbVacancy);
+            result.FirstQuestion = GetAdditionalQuestion(additionalQuestions, FirstQuestionId);
+            result.SecondQuestion = GetAdditionalQuestion(additionalQuestions, SecondQuestionId);
         }
+
+        private static string GetAdditionalQuestion(IReadOnlyDictionary<int, string> additionalQuestions, int questionId)
+        {
+            return additionalQuestions.ContainsKey(questionId) ? additionalQuestions[questionId] : null;
+        }
+
+        private IReadOnlyDictionary<int,string> GetAdditionalQuestions(Vacancy dbVacancy)
+        {
+            var results = _getOpenConnection.Query<dynamic>(@"
+                            SELECT QuestionId, Question
+                            FROM   dbo.AdditionalQuestion
+                            WHERE  VacancyId = @VacancyId
+                            ORDER BY QuestionId ASC
+                            ", new { dbVacancy.VacancyId }).ToDictionary(q => (int)q.QuestionId, q => (string)q.Question);
+            return results;         
+        }             
 
         private void MapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.TrainingProvided = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.TrainingProvided);
-            result.DesiredQualifications = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredQualifications);
-            result.DesiredSkills = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredSkills);
-            result.PersonalQualities = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.PersonalQualities);
-            result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.ThingsToConsider);
-            result.FutureProspects = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.FutureProspects);
+            var textFields = GetTextFields(dbVacancy.VacancyId);
+            result.TrainingProvided = GetTextField(textFields, TextFieldCodeName.TrainingProvided);
+            result.DesiredQualifications = GetTextField(textFields, TextFieldCodeName.DesiredQualifications);
+            result.DesiredSkills = GetTextField(textFields, TextFieldCodeName.DesiredSkills);
+            result.PersonalQualities = GetTextField(textFields, TextFieldCodeName.PersonalQualities);
+            result.ThingsToConsider = GetTextField(textFields, TextFieldCodeName.ThingsToConsider);
+            result.FutureProspects = GetTextField(textFields, TextFieldCodeName.FutureProspects);
+        }
+                
+        private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
+        {            
+            return textFields.ContainsKey(codeName) ? textFields[codeName] : null;
+        }
+
+        private IReadOnlyDictionary<string, string> GetTextFields(int vacancyId)
+        {            
+            var textFields = _getOpenConnection.Query<dynamic>(@"
+                                            SELECT CodeName, Value
+                                            FROM   dbo.VacancyTextField VTF
+                                            JOIN   dbo.VacancyTextFieldValue VTFV
+                                            ON VTF.Field = VTFV.VacancyTextFieldValueId
+                                            WHERE  VacancyId = @VacancyId
+                                            ", new{
+                                                        VacancyId = vacancyId                                                        
+                                                    }).ToDictionary(tf => (string)tf.CodeName,tf => (string)tf.Value);
+            return textFields;
+        }
+
+        private class Comment
+        {
+            public string CodeName { get; set; }
+            public string Comments { get; set; }
         }
 
         private void MapComments(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.TitleComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.TitleComment);
-            result.ApprenticeshipLevelComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ApprenticeshipLevelComment);
-            result.ClosingDateComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ClosingDateComment);
-            result.ContactDetailsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ContactDetailsComment);
-            result.DesiredQualificationsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DesiredQualificationsComment);
-            result.DesiredSkillsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DesiredSkillsComment);
-            result.DurationComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.DurationComment);
-            result.EmployerDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.EmployerDescriptionComment);
-            result.EmployerWebsiteUrlComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.EmployerWebsiteUrlComment);
-            result.FirstQuestionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FirstQuestionComment);
-            result.SecondQuestionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.SecondQuestionComment);
-            result.FrameworkCodeNameComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FrameworkCodeNameComment);
-            result.FutureProspectsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.FutureProspectsComment);
-            result.LongDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.LongDescriptionComment);
-            result.NumberOfPositionsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.NumberOfPositionsComment);
-            result.OfflineApplicationInstructionsComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.OfflineApplicationInstructionsComment);
-            result.OfflineApplicationUrlComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.OfflineApplicationUrlComment);
-            result.PersonalQualitiesComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.PersonalQualitiesComment);
-            result.PossibleStartDateComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.PossibleStartDateComment);
-            result.SectorCodeNameComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.SectorCodeNameComment);
-            result.ShortDescriptionComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ShortDescriptionComment);
-            result.StandardIdComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.StandardIdComment);
-            result.ThingsToConsiderComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.ThingsToConsiderComment);
-            result.TrainingProvidedComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.TrainingProvidedComment);
-            result.WageComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WageComment);
-            result.WorkingWeekComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.WorkingWeekComment);
-            result.LocationAddressesComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.LocationAddressesComment);
-            result.AdditionalLocationInformationComment = GetComment(dbVacancy.VacancyId, ReferralCommentCodeName.AdditionalLocationInformationComment);
+            var comments = GetComments(dbVacancy.VacancyId);
+
+            if (comments.Any())
+            {
+                result.TitleComment = GetComment(comments, ReferralCommentCodeName.TitleComment);
+                result.ApprenticeshipLevelComment = GetComment(comments, ReferralCommentCodeName.ApprenticeshipLevelComment);
+                result.ClosingDateComment = GetComment(comments, ReferralCommentCodeName.ClosingDateComment);
+                result.ContactDetailsComment = GetComment(comments, ReferralCommentCodeName.ContactDetailsComment);
+                result.DesiredQualificationsComment = GetComment(comments, ReferralCommentCodeName.DesiredQualificationsComment);
+                result.DesiredSkillsComment = GetComment(comments, ReferralCommentCodeName.DesiredSkillsComment);
+                result.DurationComment = GetComment(comments, ReferralCommentCodeName.DurationComment);
+                result.EmployerDescriptionComment = GetComment(comments, ReferralCommentCodeName.EmployerDescriptionComment);
+                result.EmployerWebsiteUrlComment = GetComment(comments, ReferralCommentCodeName.EmployerWebsiteUrlComment);
+                result.FirstQuestionComment = GetComment(comments, ReferralCommentCodeName.FirstQuestionComment);
+                result.SecondQuestionComment = GetComment(comments, ReferralCommentCodeName.SecondQuestionComment);
+                result.FrameworkCodeNameComment = GetComment(comments, ReferralCommentCodeName.FrameworkCodeNameComment);
+                result.FutureProspectsComment = GetComment(comments, ReferralCommentCodeName.FutureProspectsComment);
+                result.LongDescriptionComment = GetComment(comments, ReferralCommentCodeName.LongDescriptionComment);
+                result.NumberOfPositionsComment = GetComment(comments, ReferralCommentCodeName.NumberOfPositionsComment);
+                result.OfflineApplicationInstructionsComment = GetComment(comments, ReferralCommentCodeName.OfflineApplicationInstructionsComment);
+                result.OfflineApplicationUrlComment = GetComment(comments, ReferralCommentCodeName.OfflineApplicationUrlComment);
+                result.PersonalQualitiesComment = GetComment(comments, ReferralCommentCodeName.PersonalQualitiesComment);
+                result.PossibleStartDateComment = GetComment(comments, ReferralCommentCodeName.PossibleStartDateComment);
+                result.SectorCodeNameComment = GetComment(comments, ReferralCommentCodeName.SectorCodeNameComment);
+                result.ShortDescriptionComment = GetComment(comments, ReferralCommentCodeName.ShortDescriptionComment);
+                result.StandardIdComment = GetComment(comments, ReferralCommentCodeName.StandardIdComment);
+                result.ThingsToConsiderComment = GetComment(comments, ReferralCommentCodeName.ThingsToConsiderComment);
+                result.TrainingProvidedComment = GetComment(comments, ReferralCommentCodeName.TrainingProvidedComment);
+                result.WageComment = GetComment(comments, ReferralCommentCodeName.WageComment);
+                result.WorkingWeekComment = GetComment(comments, ReferralCommentCodeName.WorkingWeekComment);
+                result.LocationAddressesComment = GetComment(comments, ReferralCommentCodeName.LocationAddressesComment);
+                result.AdditionalLocationInformationComment = GetComment(comments, ReferralCommentCodeName.AdditionalLocationInformationComment);
+            }
         }
 
-        private string GetComment(int vacancyId, string vacancyReferralCommentTypeCodeName)
+        private Dictionary<string, Comment> GetComments(int vacancyId)
         {
-            var vacancyReferralCommentTypeId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyReferralCommentsFieldTypeId FROM dbo.VacancyReferralCommentsFieldType
-	WHERE CodeName = '{vacancyReferralCommentTypeCodeName}'
-").Single(); // TODO: Hardcode the ID?
-
-            return _getOpenConnection.Query<string>(@"
-SELECT Comments
-FROM   dbo.VacancyReferralComments
-WHERE  VacancyId = @VacancyId AND FieldTypeId = @FieldTypeId
+            return _getOpenConnection.Query<Comment>(@"
+SELECT CodeName, Comments 
+FROM VacancyReferralComments vfr
+JOIN VacancyReferralCommentsFieldType vrcft on vfr.FieldTypeId = vrcft.VacancyReferralCommentsFieldTypeId
+WHERE VacancyId = @VacancyId
 ", new
             {
-                VacancyId = vacancyId,
-                FieldTypeId = vacancyReferralCommentTypeId
-            }).SingleOrDefault();
+                VacancyId = vacancyId
+            }).ToDictionary(t => t.CodeName);
         }
 
+        private string GetComment(Dictionary<string, Comment> results, string vacancyReferralCommentTypeCodeName)
+        {
+            return results.ContainsKey(vacancyReferralCommentTypeCodeName)
+                ? results[vacancyReferralCommentTypeCodeName].Comments
+                : null;
+        }
+        
         private void MapDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
             result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
@@ -590,27 +627,12 @@ order by HistoryDate desc
                     vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
                 }
             }
-        }
+        }        
 
-        private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)
+        private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
         {
-            var vacancyTextFieldValueId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
-	WHERE CodeName = '{
-                        vacancyTextFieldCodeName}'
-").Single(); // TODO: Hardcode the ID?
-
-            return _getOpenConnection.Query<string>(@"
-SELECT Value
-FROM   dbo.VacancyTextField
-WHERE  VacancyId = @VacancyId AND Field = @Field
-", new
-            {
-                VacancyId = vacancyId,
-                Field = vacancyTextFieldValueId
-            }).SingleOrDefault();
+            result.DurationType = (DurationType)dbVacancy.DurationTypeId;
+            result.Duration = dbVacancy.DurationValue;
         }
 
         public DomainVacancy Create(DomainVacancy entity)

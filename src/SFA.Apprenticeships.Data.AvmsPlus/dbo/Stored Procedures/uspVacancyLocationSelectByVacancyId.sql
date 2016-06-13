@@ -19,7 +19,7 @@ SET NOCOUNT ON
 				VL.AddressLine5,
 				VL.Town,
 				VL.CountyId,
-				VL.Postcode,
+				VL.PostCode,
 				VL.LocalAuthorityId,
 				VL.GeocodeEasting,
 				VL.GeocodeNorthing,

@@ -8,7 +8,7 @@ BEGIN
     SELECT E.FullName
 	,E.TradingName
 	,E.EmployerId	
-	,E.NumberOfEmployeesAtSite	
+	,E.NumberofEmployeesAtSite	
 	,Person.Title  
 	,Person.FirstName
 	,Person.Surname	

@@ -10,7 +10,7 @@ BEGIN
 		  AF.CodeName as 'FrameworkCodeName',  
 		  AF.ShortName as 'FrameworkShortName',  
 		  AF.FullName as 'FrameworkFullName',  
-		  AO.CodeName as 'OccupationCodeName',  
+		  AO.Codename as 'OccupationCodeName',  
 		  AO.ShortName as 'OccupationShortName',  
 		  AO.FullName as 'OccupationFullName'  
  FROM ApprenticeshipFramework AF  

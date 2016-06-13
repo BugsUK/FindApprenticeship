@@ -8,5 +8,5 @@ BEGIN
  SET NOCOUNT ON;  
   
     SELECT COUNT(SavedSearchCriteriaId) AS [Count] FROM dbo.SavedSearchCriteria   
- WHERE candidateId=@candidateId  
+ WHERE CandidateId=@candidateId  
 END

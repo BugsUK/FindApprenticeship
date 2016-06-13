@@ -21,6 +21,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 Wage = Wage,
                 WageText = WageText,
                 WageUnit = WageUnit,
+                ExpectedDuration = ExpectedDuration,
                 DurationType = DurationType,
                 Duration = Duration,
                 ClosingDate = ClosingDate,
@@ -90,7 +91,8 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
                 ContactDetailsComment = ContactDetailsComment,
                 VacancyType = VacancyType,
                 Address = Address,
-                ProviderId = ProviderId
+                ProviderId = ProviderId,
+                EditedInRaa = EditedInRaa
             };
         }
 
@@ -144,5 +146,6 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string CreatedByProviderUsername { get; set; }
         public string LocalAuthorityCode { get; set; }
         public int ProviderId { get; set; }
+        public bool EditedInRaa { get; set; }
     }
 }

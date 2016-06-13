@@ -32,7 +32,7 @@ BEGIN
 		else
 		begin
 			SELECT	
-					ProviderSiteId AS RecruitmentAgencyId ,
+					ProviderSiteID AS RecruitmentAgencyId ,
 					TradingName + ' (' + Town + ', ' + Postcode +')' AS RecruitmentAgencyName
 			FROM	
 					ProviderSite

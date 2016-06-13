@@ -1,28 +1,27 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System;
-    using System.Globalization;
-    using System.Linq;
     using System.Web.Mvc;
     using Common.Constants;
     using Constants;
-    using NLog.Contrib;
     using Raa.Common.ViewModels.Vacancy;
     using SFA.Infrastructure.Interfaces;
 
     [OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class ManagementControllerBase : Common.Controllers.ControllerBase
     {
-        protected ManagementControllerBase(ILogService loggingService) : base(loggingService)
+        protected ManagementControllerBase(IConfigurationService configurationService, ILogService loggingService) : base(configurationService, loggingService)
         {
         }
 
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             SetPersistentLoggingInfo();
-            MappedDiagnosticsLogicalContext.Set("userId", User.Identity.Name);
+            SetLoggingInfo("userId", () => User.Identity.Name);
 
             LogOnActionExecuting(filterContext);
+
+            SetAbout();
 
             base.OnActionExecuting(filterContext);
         }

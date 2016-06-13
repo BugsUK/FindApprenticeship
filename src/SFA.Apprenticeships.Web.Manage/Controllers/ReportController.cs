@@ -14,7 +14,7 @@
     {
         private readonly IReportingMediator _reportingMediator;
 
-        public ReportController(IReportingMediator reportingMediator, ILogService logService) : base(logService)
+        public ReportController(IReportingMediator reportingMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _reportingMediator = reportingMediator;
         }

@@ -14,7 +14,7 @@ SELECT
 
   FROM Provider P
 INNER JOIN ProviderSiteRelationship R ON R.ProviderId = P.ProviderId AND R.ProviderSiteRelationShipTypeID = 2
-AND R.ProviderSiteId = @providerSiteId
+AND R.ProviderSiteID = @providerSiteId
 WHERE P.ProviderStatusTypeId = 3
 
   SET NOCOUNT OFF

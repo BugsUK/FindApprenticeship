@@ -27,16 +27,16 @@ BEGIN
         
  UPDATE [dbo].[Person]         
  SET         
-  [Title] = ISNULL(@title,Title),         
-  [OtherTitle] = ISNULL(@otherTitle,OtherTitle),        
-  [FirstName] = ISNULL(@firstName,FirstName),         
-  [MiddleNames] = ISNULL(@middleNames,MiddleNames),         
-  [Surname] = ISNULL(@surname,Surname),        
-  [LandlineNumber] = ISNULL(@landlineNumber,LandlineNumber),         
-  [MobileNumber] = ISNULL(@mobileNumber,MobileNumber),        
-  [Email] = ISNULL(@email,Email),         
+  [Title] = ISNULL(@Title,Title),         
+  [OtherTitle] = ISNULL(@OtherTitle,OtherTitle),        
+  [FirstName] = ISNULL(@FirstName,FirstName),         
+  [MiddleNames] = ISNULL(@MiddleNames,MiddleNames),         
+  [Surname] = ISNULL(@Surname,Surname),        
+  [LandlineNumber] = ISNULL(@LandlineNumber,LandlineNumber),         
+  [MobileNumber] = ISNULL(@MobileNumber,MobileNumber),        
+  [Email] = ISNULL(@Email,Email),         
   [PersonTypeId]= ISNULL(@PersonTypeId, PersonTypeId)
- WHERE [PersonId]=@personId        
+ WHERE [PersonId]=@PersonId        
                 
  IF @@ROWCOUNT = 0        
  BEGIN        

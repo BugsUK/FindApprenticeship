@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON;  
 	DECLARE @count int  
 
-	SELECT @count=count(email)   
+	SELECT @count=count(Email)   
 		FROM Person Where Email=@email  
 
 	SELECT @count = @count + count(UnconfirmedEmailAddress)   

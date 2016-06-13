@@ -16,7 +16,7 @@ AS
             BEGIN    
     -- Insert statements for procedure here    
                 INSERT  INTO dbo.SectorSuccessRates
-                        ( ProviderId ,
+                        ( ProviderID ,
                           SectorId ,
                           PassRate ,
                           [NEW]    

@@ -12,6 +12,6 @@ BEGIN
  FROM [dbo].[SavedSearchCriteria] [savedSearchCriteria]  
   
  WHERE   
-   [CandidateId]=@CandidateId AND   
-   [Name]=@Name  
+   [CandidateId]=@candidateId AND   
+   [Name]=@name  
 END

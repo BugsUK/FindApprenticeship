@@ -196,6 +196,7 @@
     <Compile Include="Communications\SmsRequestSubscriber.cs" />
     <Compile Include="Configuration\ProcessConfiguration.cs" />
     <Compile Include="Extensions\EtlValidationLoggingExtensions.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="SiteMap\CreateVacancySiteMapRequestSubscriber.cs" />
     <Compile Include="Vacancies\ApprenticeshipSummaryUpdateProcessor.cs" />
     <Compile Include="Vacancies\TraineeshipsSummaryUpdateProcessor.cs" />

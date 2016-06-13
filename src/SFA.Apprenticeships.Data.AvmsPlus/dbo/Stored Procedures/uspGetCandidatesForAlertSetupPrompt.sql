@@ -10,5 +10,5 @@ AS
 		AND History.CandidateHistoryEventTypeID = 1 AND History.CandidateHistorySubEventTypeId = 2
 		AND DATEADD(dd, 0, DATEDIFF(dd, 0, GETDATE())) > DATEADD(dd, 0, DATEDIFF(dd, -7, EventDate)) 
 		AND SavedSearch.SavedSearchCriteriaId IS NULL 
-		ORDER BY Candidate.CandidateID DESC
+		ORDER BY Candidate.CandidateId DESC
 	END

@@ -46,7 +46,7 @@ AND LocalAuthorityGroupTypeName = N'Managing Area'
  JOIN ProviderSiteRelationship
  ON ProviderSite.ProviderSiteID = ProviderSiteRelationship.ProviderSiteID
  JOIN ProviderSiteRelationshipType ON ProviderSiteRelationship.ProviderSiteRelationshipTYpeID
- = ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTYpeID and ProviderSiteRelationshipTYpeName = N'Owner'
+ = ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTypeID and ProviderSiteRelationshipTYpeName = N'Owner'
  JOIN Provider ON ProviderSiteRelationship.ProviderID = Provider.ProviderID   
 --left join LSCRegion on [LSCRegion].[LSCRegionId] = [TrainingProvider].ManagingAreaID
 WHERE [ProviderSite].[EdsUrn]=@EdsId  

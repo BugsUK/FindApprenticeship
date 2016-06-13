@@ -9,7 +9,7 @@ BEGIN
 		ApprenticeshipFrameworkId,  
 		ApprenticeshipFramework.ApprenticeshipOccupationId as 'ApprenticeshipOccupationId',  
 		CodeName, ShortName, 
-		isnull(Fullname,'') as 'FrameworkName',
+		isnull(FullName,'') as 'FrameworkName',
 		ApprenticeshipFrameworkStatusTypeId as 'StatusType',
 		ClosedDate as 'ClosedDate',
 		PreviousApprenticeshipOccupationId as 'PreviousApprenticeshipOccupationId'

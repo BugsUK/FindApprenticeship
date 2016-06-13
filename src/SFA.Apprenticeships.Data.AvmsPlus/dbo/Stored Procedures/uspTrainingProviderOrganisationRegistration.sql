@@ -44,7 +44,7 @@ BEGIN
 DECLARE @ProviderID INT;  
 --DECLARE @ProviderSiteId INT;  
 DECLARE @RelationshipTypeID INT = 1; --Owner  
-DECLARE @ProviderSIteRelationShipID INT;  
+DECLARE @ProviderSiteRelationShipID INT;  
   
 BEGIN TRAN  
   

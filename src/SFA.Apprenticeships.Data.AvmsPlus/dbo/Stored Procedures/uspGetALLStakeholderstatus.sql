@@ -7,5 +7,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from StakeholderStatus
+	SELECT * from StakeHolderStatus
 END

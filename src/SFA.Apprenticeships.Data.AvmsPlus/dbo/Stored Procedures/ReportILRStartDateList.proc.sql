@@ -130,7 +130,7 @@ SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
 		INNER JOIN ApprenticeshipOccupation ao ON ao.ApprenticeshipOccupationId = af.ApprenticeshipOccupationId
 		inner join ApprenticeshipFrameworkStatusType AFST on AF.ApprenticeshipFrameworkStatusTypeId = AFST.ApprenticeshipFrameworkStatusTypeId
 		INNER JOIN VacancyOwnerRelationship vpr ON vpr.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
-		INNER JOIN ProviderSIte tp ON tp.ProviderSiteID = vpr.ProviderSIteID
+		INNER JOIN ProviderSite tp ON tp.ProviderSiteID = vpr.ProviderSiteID
 		INNER JOIN Employer e ON e.EmployerId = vpr.EmployerId
 		JOIN dbo.LocalAuthority la
 				on la.LocalAuthorityId = v.LocalAuthorityId

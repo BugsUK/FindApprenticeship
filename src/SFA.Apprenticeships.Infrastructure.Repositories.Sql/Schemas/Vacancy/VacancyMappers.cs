@@ -222,6 +222,7 @@
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .IgnoreMember(av => av.LocalAuthorityCode)
+                .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)

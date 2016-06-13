@@ -34,7 +34,7 @@ INSERT INTO [Provider]
            ,@UKPRN    
            ,@fullName
            ,@tradingName
-           ,@IsContracted
+           ,@isContracted
            ,@startDate
            ,@enddate
            ,@UPIN

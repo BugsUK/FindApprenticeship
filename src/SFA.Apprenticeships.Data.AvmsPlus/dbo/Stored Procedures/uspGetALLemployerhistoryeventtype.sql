@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from employerhistoryeventtype
+	SELECT * from EmployerHistoryEventType
 END

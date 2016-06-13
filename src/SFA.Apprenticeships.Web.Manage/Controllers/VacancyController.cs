@@ -24,7 +24,7 @@
     {
         private readonly IVacancyMediator _vacancyMediator;
 
-        public VacancyController(IVacancyMediator vacancyMediator, ILogService logService) : base(logService)
+        public VacancyController(IVacancyMediator vacancyMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _vacancyMediator = vacancyMediator;
         }

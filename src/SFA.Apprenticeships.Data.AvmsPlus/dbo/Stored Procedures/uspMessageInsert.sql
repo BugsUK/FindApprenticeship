@@ -25,7 +25,7 @@ BEGIN
             [MessageEventId],
             [Text],
             [Title],
-            [MessageCategoryId]
+            [MessageCategoryID]
         )    
         VALUES 
         (  

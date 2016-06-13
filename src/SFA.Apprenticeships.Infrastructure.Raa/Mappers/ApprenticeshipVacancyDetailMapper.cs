@@ -64,7 +64,7 @@
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
                 IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
-                ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
+                ExpectedDuration = vacancy.ExpectedDuration,
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
@@ -90,7 +90,8 @@
                 VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
-                TrainingType = vacancy.TrainingType.GetTrainingType()
+                TrainingType = vacancy.TrainingType.GetTrainingType(),
+                EditedInRaa = vacancy.EditedInRaa
             };
 
             return detail;
