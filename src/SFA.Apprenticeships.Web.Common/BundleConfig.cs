@@ -40,11 +40,11 @@
                 "~/Content/_assets/js/nas/locationAutocomplete.js",
                 "~/Content/_assets/js/nas/refineSearch.js"));
             
-            bundles.Add(new StyleBundle("~/bundles/not-ie8")
+            bundles.Add(new StyleBundle("~/Content/_assets/styles/not-ie8")
                 .Include("~/Content/_assets/css/main.css")
                 .Include("~/Content/_assets/css/fonts.css"));
 
-            bundles.Add(new StyleBundle("~/bundles/ie8")
+            bundles.Add(new StyleBundle("~/Content/_assets/styles/ie8")
                 .Include("~/Content/_assets/css/main-ie8.css")
                 .Include("~/Content/_assets/css/fonts-ie8.css"));
 
