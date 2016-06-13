@@ -18,6 +18,8 @@
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
         private const int TraineeshipFrameworkId = 999;
+        private const int FirstQuestionId = 1;
+        private const int SecondQuestionId = 2;
         private readonly IMapper _mapper;
         private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
@@ -413,34 +415,55 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
 
         private void MapAdditionalQuestions(Vacancy dbVacancy, DomainVacancy result)
         {
-            var results = _getOpenConnection.Query<dynamic>(@"
-SELECT QuestionId, Question
-FROM   dbo.AdditionalQuestion
-WHERE  VacancyId = @VacancyId
-ORDER BY QuestionId ASC
-", new {dbVacancy.VacancyId});
-
-            foreach (var question in results)
-            {
-                if (question.QuestionId == 1)
-                {
-                    result.FirstQuestion = question.Question;
-                }
-                if (question.QuestionId == 2)
-                {
-                    result.SecondQuestion = question.Question;
-                }
-            }
+            var additionalQuestions = GetAdditionalQuestions(dbVacancy);
+            result.FirstQuestion = GetAdditionalQuestion(additionalQuestions, FirstQuestionId);
+            result.SecondQuestion = GetAdditionalQuestion(additionalQuestions, SecondQuestionId);
         }
+
+        private static string GetAdditionalQuestion(IReadOnlyDictionary<int, string> additionalQuestions, int questionId)
+        {
+            return additionalQuestions.ContainsKey(questionId) ? additionalQuestions[questionId] : null;
+        }
+
+        private IReadOnlyDictionary<int,string> GetAdditionalQuestions(Vacancy dbVacancy)
+        {
+            var results = _getOpenConnection.Query<dynamic>(@"
+                            SELECT QuestionId, Question
+                            FROM   dbo.AdditionalQuestion
+                            WHERE  VacancyId = @VacancyId
+                            ORDER BY QuestionId ASC
+                            ", new { dbVacancy.VacancyId }).ToDictionary(q => (int)q.QuestionId, q => (string)q.Question);
+            return results;         
+        }             
 
         private void MapTextFields(Vacancy dbVacancy, DomainVacancy result)
         {
-            result.TrainingProvided = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.TrainingProvided);
-            result.DesiredQualifications = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredQualifications);
-            result.DesiredSkills = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.DesiredSkills);
-            result.PersonalQualities = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.PersonalQualities);
-            result.ThingsToConsider = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.ThingsToConsider);
-            result.FutureProspects = GetTextField(dbVacancy.VacancyId, TextFieldCodeName.FutureProspects);
+            var textFields = GetTextFields(dbVacancy.VacancyId);
+            result.TrainingProvided = GetTextField(textFields, TextFieldCodeName.TrainingProvided);
+            result.DesiredQualifications = GetTextField(textFields, TextFieldCodeName.DesiredQualifications);
+            result.DesiredSkills = GetTextField(textFields, TextFieldCodeName.DesiredSkills);
+            result.PersonalQualities = GetTextField(textFields, TextFieldCodeName.PersonalQualities);
+            result.ThingsToConsider = GetTextField(textFields, TextFieldCodeName.ThingsToConsider);
+            result.FutureProspects = GetTextField(textFields, TextFieldCodeName.FutureProspects);
+        }
+                
+        private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
+        {            
+            return textFields.ContainsKey(codeName) ? textFields[codeName] : null;
+        }
+
+        private IReadOnlyDictionary<string, string> GetTextFields(int vacancyId)
+        {            
+            var textFields = _getOpenConnection.Query<dynamic>(@"
+                                            SELECT CodeName, Value
+                                            FROM   dbo.VacancyTextField VTF
+                                            JOIN   dbo.VacancyTextFieldValue VTFV
+                                            ON VTF.Field = VTFV.VacancyTextFieldValueId
+                                            WHERE  VacancyId = @VacancyId
+                                            ", new{
+                                                        VacancyId = vacancyId                                                        
+                                                    }).ToDictionary(tf => (string)tf.CodeName,tf => (string)tf.Value);
+            return textFields;
         }
 
         private class Comment
@@ -604,28 +627,7 @@ order by HistoryDate desc
                     vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
                 }
             }
-        }
-
-        private string GetTextField(int vacancyId, string vacancyTextFieldCodeName)
-        {
-            var vacancyTextFieldValueId =
-                _getOpenConnection.Query<int>(
-                    $@"
-	SELECT TOP 1 VacancyTextFieldValueId FROM VacancyTextFieldValue
-	WHERE CodeName = '{
-                        vacancyTextFieldCodeName}'
-").Single(); // TODO: Hardcode the ID?
-
-            return _getOpenConnection.Query<string>(@"
-SELECT Value
-FROM   dbo.VacancyTextField
-WHERE  VacancyId = @VacancyId AND Field = @Field
-", new
-            {
-                VacancyId = vacancyId,
-                Field = vacancyTextFieldValueId
-            }).SingleOrDefault();
-        }
+        }        
 
         private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
         {
