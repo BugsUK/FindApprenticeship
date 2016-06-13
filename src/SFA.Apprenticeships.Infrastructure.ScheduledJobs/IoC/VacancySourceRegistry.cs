@@ -8,6 +8,7 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Common.Configuration;
+    using LegacyWebServices.Candidate;
     using LegacyWebServices.GatewayServiceProxy;
     using LegacyWebServices.Mappers.Apprenticeships;
     using LegacyWebServices.Mappers.Traineeship;
@@ -41,6 +42,11 @@
             {
                 For<IMapper>().Use<LegacyApprenticeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyApprenticeshipVacancyDetailMapper";
                 For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
+            }
+
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy
+                || servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
+            {
                 For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
             }
 
@@ -83,6 +89,12 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
             }
             else if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {

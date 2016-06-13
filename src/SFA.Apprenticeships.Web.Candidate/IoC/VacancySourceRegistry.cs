@@ -1,23 +1,17 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using Application.Applications;
-    using Application.Candidate;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
-    using Application.ReferenceData;
     using Application.Vacancies;
     using Application.Vacancy;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Infrastructure.Common.Configuration;
-    using Infrastructure.LegacyWebServices.Application;
     using Infrastructure.LegacyWebServices.Candidate;
     using Infrastructure.LegacyWebServices.GatewayServiceProxy;
-    using Infrastructure.LegacyWebServices.LegacyReferenceDataProxy;
-    using Infrastructure.LegacyWebServices.Mappers;
     using Infrastructure.LegacyWebServices.Mappers.Apprenticeships;
     using Infrastructure.LegacyWebServices.Mappers.Traineeship;
-    using Infrastructure.LegacyWebServices.ReferenceData;
     using Infrastructure.LegacyWebServices.Vacancy;
     using Infrastructure.LegacyWebServices.Wcf;
     using Infrastructure.Raa;
