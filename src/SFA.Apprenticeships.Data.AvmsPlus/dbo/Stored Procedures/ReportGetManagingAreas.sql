@@ -10,7 +10,7 @@ BEGIN
 		begin
 
 			SELECT DISTINCT 
-					ManagingAreaID,
+					ManagingAreaId,
 					ManagingAreaFullName AS ManagingArea
 			FROM 
 					vwManagingAreas

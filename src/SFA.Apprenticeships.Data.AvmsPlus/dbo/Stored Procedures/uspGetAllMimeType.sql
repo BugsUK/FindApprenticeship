@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from MimeType
+	SELECT * from MIMEType
 END

@@ -4,7 +4,7 @@
 AS
 	
 	SELECT UPIN
-	FROM provider
+	FROM Provider
 	WHERE (OriginalUPIN = @Upin
 	OR UPIN = @Upin)
 	AND ProviderStatusTypeID !=2

@@ -14,7 +14,7 @@ BEGIN
         LA.FullName,  
         LAG.LocalAuthorityGroupID AS 'GeographicRegionId',
         LA.CountyId   
-        from localauthority LA
+        from LocalAuthority LA
         INNER JOIN dbo.LocalAuthorityGroupMembership LAGM ON LA.LocalAuthorityId = LAGM.LocalAuthorityID
 		INNER JOIN dbo.LocalAuthorityGroup LAG ON LAGM.LocalAuthorityGroupID = LAG.LocalAuthorityGroupID
 		INNER JOIN dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID

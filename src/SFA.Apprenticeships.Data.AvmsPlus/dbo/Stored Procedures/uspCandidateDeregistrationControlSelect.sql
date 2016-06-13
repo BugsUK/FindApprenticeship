@@ -5,7 +5,7 @@ BEGIN
  SET NOCOUNT ON  
 
  DECLARE @MaxRecords INT
- SELECT @MaxRecords = (select cast(parametervalue as int)
+ SELECT @MaxRecords = (select cast(ParameterValue as int)
 									from SystemParameters
 									where ParameterName = 'DeRegisterBatchMAXRecordsToProcess')
 

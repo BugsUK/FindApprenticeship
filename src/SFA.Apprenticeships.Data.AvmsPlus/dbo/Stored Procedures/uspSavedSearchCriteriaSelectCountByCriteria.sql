@@ -35,7 +35,7 @@ BEGIN
   (GeocodeNorthing=@GeocodeNorthing OR @geocodeNorthing IS NULL) AND    
   (MinWages=@MinWages OR @minwages IS NULL) AND    
   (MaxWages=@MaxWages OR @maxwages IS NULL) AND    
-  (VacancyReferenceNumber=@vacancyReferenceNumber OR @vacancyReferenceNumber IS NULL) AND    
+  (VacancyReferenceNumber=@VacancyReferenceNumber OR @vacancyReferenceNumber IS NULL) AND    
   (Employer=@Employer OR @employer IS NULL) AND    
   (TrainingProvider=@TrainingProvider OR @trainingprovider IS NULL) AND    
   (Keywords=@Keywords OR @keywords IS NULL)    

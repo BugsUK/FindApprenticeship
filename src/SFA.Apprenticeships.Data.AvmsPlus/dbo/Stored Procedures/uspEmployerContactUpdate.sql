@@ -30,7 +30,7 @@ BEGIN TRY
   AddressLine4=ISNULL(@AddressLine4,AddressLine4),  
   Town=ISNULL(@Town,Town),  
   CountyId=ISNULL(@CountyId,CountyId),  
-  Postcode=ISNULL(@Postcode,Postcode),  
+  Postcode=ISNULL(@Postcode,PostCode),  
   ContactPreferenceTypeId=ISNULL(@ContactPreferenceTypeId,ContactPreferenceTypeId),  
   JobTitle=ISNULL(@JobTitle,JobTitle),  
   FaxNumber=ISNULL(@FaxNumber,FaxNumber),  

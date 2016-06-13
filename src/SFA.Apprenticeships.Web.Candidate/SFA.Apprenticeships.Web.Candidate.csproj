@@ -800,10 +800,6 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>_wage.generated.cs</LastGenOutput>
     </Content>
-    <Content Include="Views\Shared\_AboutDisguised.cshtml">
-      <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_AboutDisguised.generated.cs</LastGenOutput>
-    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -1432,11 +1428,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Shared\_AboutDisguised.generated.cs">
-      <DependentUpon>_AboutDisguised.cshtml</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Views\Shared\_AboutFull.generated.cs">
       <AutoGen>True</AutoGen>

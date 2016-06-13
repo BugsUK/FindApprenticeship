@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from candidatehistoryevent
+	SELECT * from CandidateHistoryEvent
 END

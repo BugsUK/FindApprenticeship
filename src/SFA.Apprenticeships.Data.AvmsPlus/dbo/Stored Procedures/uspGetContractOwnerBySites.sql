@@ -33,7 +33,7 @@ BEGIN
 		END  
 
 		SELECT  
-				DISTINCT  p.ProviderId, p.TradingName 
+				DISTINCT  p.ProviderID, p.TradingName 
 		FROM	
 				ProviderSite ps
 				INNER JOIN ProviderSiteRelationship psr on psr.ProviderSiteID = ps.ProviderSiteID

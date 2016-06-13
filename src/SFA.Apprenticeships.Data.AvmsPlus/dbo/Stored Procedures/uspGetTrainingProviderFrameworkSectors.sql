@@ -7,7 +7,7 @@ BEGIN
   
     -- Insert statements for procedure here  
  Select ProviderID, SectorID 
-	FROM sectorsuccessrates
+	FROM SectorSuccessRates
 Where NOT EXISTS 
  (Select * From [ProviderSiteFramework] PSF JOIN ApprenticeShipFramework AF
  ON PSF.FrameworkID = AF.ApprenticeshipFrameworkID AND AF.ApprenticeshipOccupationID = sectorsuccessrates.SectorID)

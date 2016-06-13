@@ -18,7 +18,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
 
         private readonly ICookieAuthorizationDataProvider _authorizationDataProvider;
 
-        public AccountController(ICookieAuthorizationDataProvider authorizationDataProvider, ILogService logService) : base(logService)
+        public AccountController(ICookieAuthorizationDataProvider authorizationDataProvider, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _authorizationDataProvider = authorizationDataProvider;
         }

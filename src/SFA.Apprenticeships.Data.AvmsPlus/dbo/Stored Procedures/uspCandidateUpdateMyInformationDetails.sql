@@ -15,7 +15,7 @@ BEGIN
 	-- Getting the Candidate Region Information
 	Select	@LocalAuthorityId = LocalAuthorityid     
 	From	LocalAuthority
-	Where	codename = @region  
+	Where	CodeName = @region  
   
 	If @LocalAuthorityId Is Null OR @LocalAuthorityId = 0  
 	BEGIN  
@@ -56,7 +56,7 @@ ENd
 	-- Attempting to update candidate information
 	BEGIN TRY          
 	BEGIN TRAN    
-		UPDATE [dbo].[candidate]           
+		UPDATE [dbo].[Candidate]           
 		SET [DateofBirth] = @dateofBirth,           
 			[AddressLine1] = @addressLine1,           
 			[AddressLine2] = @addressLine2,          

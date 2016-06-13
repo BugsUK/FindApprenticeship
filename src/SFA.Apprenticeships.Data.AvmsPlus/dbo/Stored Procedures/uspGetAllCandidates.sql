@@ -6,7 +6,7 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	 SELECT candidate.CandidateId from candidate  
+	 SELECT Candidate.CandidateId from Candidate  
 	 inner join SavedSearchCriteria on Candidate.CandidateId = SavedSearchCriteria.CandidateId
      where SavedSearchCriteria.BackgroundSearch = 1
 END

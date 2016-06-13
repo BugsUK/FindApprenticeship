@@ -3221,18 +3221,18 @@ a, .fake-link, details summary {
       display: none !important; } }
 
 a[rel="external"]:after {
-  background-image: url(../Content/_assets/img/icon-external.svg);
+  background-image: url(../img/icon-external.svg);
   background-repeat: no-repeat;
   background-position: 3px 0.4em;
   content: '\A0\A0\A0\A0\A0';
   background-size: 0.7em 0.6em; }
   .lt-ie9 a[rel="external"]:after {
-    background-image: url("../Content/_assets/img/icon-external.png"); }
+    background-image: url("../img/icon-external.png"); }
   .lt-ie9 .phase-notice a[rel="external"]:after, .lt-ie9 .copy-16 a[rel="external"]:after {
     display: none; }
 
 .not-ie8 a[rel="external"]:hover:after {
-  background-image: url("../Content/_assets/img/icon-external-hover.svg"); }
+  background-image: url("../img/icon-external-hover.svg"); }
 
 @media print {
   a[href^=http]:after {
@@ -3464,7 +3464,7 @@ select:focus {
   outline: 3px solid #ffbf47; }
 
 .get-started .button {
-  background: #00823b url(../Content/_assets/img/icon-pointer.png) 100% 50% no-repeat;
+  background: #00823b url(../img/icon-pointer.png) 100% 50% no-repeat;
   background-size: 30px 19px;
   color: #FFF;
   font-size: 24px;
@@ -3475,7 +3475,7 @@ select:focus {
   text-transform: none; }
   @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
     .get-started .button {
-      background-image: url(../Content/_assets/img/icon-pointer-2x.png); } }
+      background-image: url(../img/icon-pointer-2x.png); } }
   @media (max-width: 640px) {
     .get-started .button {
       font-size: 20px; } }
@@ -6056,7 +6056,7 @@ details summary:focus {
     padding-right: 0; }
 
 .ogl-logo {
-  background: url(../Content/_assets/img/open-government-licence.png) no-repeat;
+  background: url(../img/open-government-licence.png) no-repeat;
   background-size: 41px 17px;
   display: inline-block;
   margin-right: 8px;
@@ -6065,7 +6065,7 @@ details summary:focus {
   height: 17px; }
   @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 20 / 10), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 2dppx) {
     .ogl-logo {
-      background-image: url(../Content/_assets/img/open-government-licence_2x.png); } }
+      background-image: url(../img/open-government-licence_2x.png); } }
 
 footer {
   background: #dee0e2;

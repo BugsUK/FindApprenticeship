@@ -8,7 +8,7 @@ BEGIN
 	SET NOCOUNT ON;
 
 	BEGIN TRY
-		UPDATE candidate 
+		UPDATE Candidate 
 			SET referralPoints = ISNULL(referralPoints,0) + 
 					(SELECT referralPoints FROM dbo.ApplicationUnsuccessfulReasonType 
 						WHERE ApplicationUnsuccessfulReasonTypeId=@rejectedReason) 

@@ -42,8 +42,8 @@ BEGIN
 			e.FullName as EmployerName,
 			af.FullName as FrameworkName,
 			v.Title as VacancyTitle 
-		from [application] app  
-		inner join vacancy v on app.VacancyId=v.VacancyId
+		from [Application] app  
+		inner join Vacancy v on app.VacancyId=v.VacancyId
 		inner join [VacancyOwnerRelationship] vpr on vpr.[VacancyOwnerRelationshipId]=v.[VacancyOwnerRelationshipId]
 		inner join [ProviderSite] prov on prov.ProviderSiteID=vpr.[ProviderSiteID]
 		inner join Candidate c on c.CandidateId=app.CandidateId

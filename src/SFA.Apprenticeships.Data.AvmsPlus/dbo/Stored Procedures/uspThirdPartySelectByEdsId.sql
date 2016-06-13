@@ -22,6 +22,6 @@ SELECT
  
 FROM [dbo].[ThirdParty]
 LEFT JOIN [dbo].[County] [County] ON [County].[CountyId] = [ThirdParty].[CountyId]  
-WHERE [ThirdParty].[EdsUrn]=@EdsId
+WHERE [ThirdParty].[EDSURN]=@EdsId
 
 END

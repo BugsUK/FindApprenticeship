@@ -9,12 +9,12 @@ BEGIN
 		SELECT  
 			[candidate].[CandidateId] AS 'UserId',  
 			[candidate].[PersonId] AS 'PersonId',  
-			[Person].[FirstName] + ' ' + [Person].[SurName] +' ('+ CAST([candidate].[CandidateId] AS varchar(20)) +')' AS 'FirstName'  
+			[Person].[FirstName] + ' ' + [Person].[Surname] +' ('+ CAST([candidate].[CandidateId] AS varchar(20)) +')' AS 'FirstName'  
 		FROM [dbo].[Candidate] [candidate]  
 			INNER JOIN  [dbo].[Person] [Person] ON  
 				[candidate].[PersonId] = [Person].[PersonId]  
 		WHERE [Person].[FirstName] like 'Test%'
-		ORDER BY [Person].[FirstName], [Person].[SurName]
+		ORDER BY [Person].[FirstName], [Person].[Surname]
 	END  
 
 	IF @RoleType = 'RecruitmentAgency'

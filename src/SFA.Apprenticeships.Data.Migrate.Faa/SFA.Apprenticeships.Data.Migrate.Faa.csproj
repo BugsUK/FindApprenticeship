@@ -148,7 +148,7 @@
     <Compile Include="Repository\Sql\SubVacancyRepository.cs" />
     <Compile Include="Repository\Sql\SubVacancyTable.cs" />
     <Compile Include="VacancyApplicationsMigrationProcessor.cs" />
-    <Compile Include="Configuration\MongoConfiguration.cs" />
+    <Compile Include="Configuration\MigrateFromFaaToAvmsPlusConfiguration.cs" />
     <Compile Include="Entities\Mongo\VacancyApplication.cs" />
     <Compile Include="Entities\Mongo\Candidate.cs" />
     <Compile Include="Entities\Mongo\User.cs" />

@@ -19,7 +19,7 @@ BEGIN
 			from
 				(SELECT Candidate.CandidateId,Candidate.ReferralPoints,application.applicationId,ApplicationHistory.ApplicationHistoryEventDate
 				 FROM Candidate           
-							  INNER JOIN [APPLICATION] ON dbo.[Application].CandidateId = candidate.CandidateId  
+							  INNER JOIN [Application] ON dbo.[Application].CandidateId = candidate.CandidateId  
 							  inner join ApplicationUnsuccessfulReasonType
 								on ApplicationUnsuccessfulReasonType.ApplicationUnsuccessfulReasonTypeId = [APPLICATION].UnsuccessfulReasonId
 								and ApplicationUnsuccessfulReasonType.ReferralPoints != 0

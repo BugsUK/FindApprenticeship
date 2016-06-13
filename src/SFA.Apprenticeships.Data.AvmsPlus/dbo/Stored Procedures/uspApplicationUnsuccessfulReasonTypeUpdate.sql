@@ -6,7 +6,7 @@
 @ReferralPoints INT
 AS
 BEGIN	
-	UPDATE Applicationunsuccessfulreasontype
+	UPDATE ApplicationUnsuccessfulReasonType
 	SET		FullName = @FullName,
 			ReferralPoints = @ReferralPoints,
 			CandidateDisplayText = @CandidateDisplayText,

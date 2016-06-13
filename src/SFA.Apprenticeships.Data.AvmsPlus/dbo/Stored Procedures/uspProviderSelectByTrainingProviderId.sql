@@ -13,6 +13,6 @@ BEGIN
 	p.ContractedTo As 'ContractedTo',
 	p.ProviderStatusTypeID AS 'ProviderStatusId'
 	FROM ProviderSiteRelationship psr
-		INNER JOIN Provider p on psr.ProviderId = p.ProviderId AND psr.ProviderSiteRelationShipTypeID = 1
+		INNER JOIN Provider p on psr.ProviderID = p.ProviderID AND psr.ProviderSiteRelationShipTypeID = 1
 	WHERE psr.ProviderSiteID = @providerSiteId
 END

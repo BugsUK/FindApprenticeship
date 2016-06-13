@@ -3,7 +3,7 @@
 AS
 SELECT   
   TermsAndConditionsId,   
-  FullName,   
+  Fullname,   
   [Content] 
  FROM   
   TermsAndConditions   

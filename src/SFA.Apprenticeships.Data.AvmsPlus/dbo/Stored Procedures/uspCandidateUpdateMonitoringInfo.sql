@@ -14,7 +14,7 @@ BEGIN
     
  BEGIN TRY      
      
-UPDATE [dbo].[candidate]       
+UPDATE [dbo].[Candidate]       
 SET     
  [Gender] = @gender,  
  [EthnicOrigin] = @ethnicOrigin,  

@@ -9,7 +9,7 @@ BEGIN
 		   isnull([ProviderSite].[FullName],'') AS 'FullName',   
 		   [ProviderSite].[OutofDate] AS 'OutofDate',            
 		   isnull([ProviderSite].[TradingName],'') AS 'TradingName',            
-		   [ProviderSite].[ProviderSIteID] AS 'TrainingProviderId',            
+		   [ProviderSite].[ProviderSiteID] AS 'TrainingProviderId',            
 		   [Provider].[UPIN] AS 'UPIN',
 		   [ProviderSite].[EdsUrn] AS 'EDSURN',
 		   isnull([AddressLine1],'') AS 'AddressLine1',              

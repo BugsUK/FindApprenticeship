@@ -33,11 +33,11 @@ BEGIN
 		END  
 
 		SELECT  
-				DISTINCT  p.ProviderId, p.TradingName 
+				DISTINCT  p.ProviderID, p.TradingName 
 		FROM	
 				ProviderSite ps
 				INNER JOIN ProviderSiteRelationship psr on psr.ProviderSiteID = ps.ProviderSiteID
-				INNER JOIN Provider p ON p.ProviderId = psr.ProviderId
+				INNER JOIN Provider p ON p.ProviderID = psr.ProviderID
 		WHERE
 				( ps.ProviderSiteID IN ( SELECT TPId FROM @tpIds ) OR @providerSiteIds = '' ) 	
 				

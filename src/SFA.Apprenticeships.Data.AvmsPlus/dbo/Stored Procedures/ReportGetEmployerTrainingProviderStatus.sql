@@ -21,11 +21,11 @@ BEGIN
   
   SELECT  -1 AS EmployerTrainingProviderStatusId ,'All' EmplyerProviderStatus, 0 AS ord  
   Union all  
-  Select EmployerTrainingProviderStatusId, 'Active' EmplyerProviderStatus, 1 from  EmployerTrainingProviderStatus where Codename = 'ATV'  
+  Select EmployerTrainingProviderStatusId, 'Active' EmplyerProviderStatus, 1 from  EmployerTrainingProviderStatus where CodeName = 'ATV'  
   Union all  
-  Select EmployerTrainingProviderStatusId, 'Deleted' EmplyerProviderStatus, 2 from  EmployerTrainingProviderStatus where Codename = 'DEL'  
+  Select EmployerTrainingProviderStatusId, 'Deleted' EmplyerProviderStatus, 2 from  EmployerTrainingProviderStatus where CodeName = 'DEL'  
    Union all  
-  Select EmployerTrainingProviderStatusId, 'Suspended' EmplyerProviderStatus, 3 from  EmployerTrainingProviderStatus where Codename = 'SUS'  
+  Select EmployerTrainingProviderStatusId, 'Suspended' EmplyerProviderStatus, 3 from  EmployerTrainingProviderStatus where CodeName = 'SUS'  
  
  END TRY    
  BEGIN CATCH    

@@ -59,7 +59,7 @@ SELECT MyTable.*  FROM
 			ISNULL(vwRLA.GeographicFullName,'') AS 'RegionName',
 			ISNULL(s.OrganisationOther,'') AS 'OrganisationOther'
 			FROM StakeHolder s 
-			 INNER join person p ON p.PersonId= s.PersonId 
+			 INNER join Person p ON p.PersonId= s.PersonId 
 			 INNER JOIN dbo.LocalAuthority LA ON s.LocalAuthorityId = LA.LocalAuthorityId
 			 JOIN vwRegionsAndLocalAuthority vwRLA on vwRLA.LocalAuthorityId = LA.LocalAuthorityId
 			 --INNER JOIN dbo.LocalAuthority LA ON s.LocalAuthorityId = LA.LocalAuthorityId

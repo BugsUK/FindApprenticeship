@@ -29,7 +29,7 @@ SET NOCOUNT ON
         sut.ShortName AS 'SenderShortName',
         sut.FullName AS 'SenderFullName',
 
-        m.MessageCategoryId,
+        m.MessageCategoryID,
         mc.CodeName AS 'CategoryCodeName',
         mc.ShortName AS 'CategoryShortName',
         mc.FullName AS 'CategoryFullName',

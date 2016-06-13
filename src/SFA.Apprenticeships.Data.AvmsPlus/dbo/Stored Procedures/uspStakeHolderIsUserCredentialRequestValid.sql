@@ -8,7 +8,7 @@ BEGIN
 
 	BEGIN TRY        
 		Set		@StakeHolderId = 0  -- Default Zero if there's an error   
-		Select	@StakeHolderId = S.StakeHolderId    
+		Select	@StakeHolderId = S.StakeHolderID    
 		From	StakeHolder S, Person P   
 		Where	S.PersonId  = P.PersonId    
 		And		Postcode = @Postcode 

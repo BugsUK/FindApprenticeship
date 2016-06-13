@@ -60,7 +60,7 @@
             _jobControlQueue.DeleteMessage(ScheduledJobQueues.VacancyEtl, scheduledQueueMessage.MessageId, scheduledQueueMessage.PopReceipt);
 
             //Process pages
-            Parallel.ForEach(vacancySummaries, new ParallelOptions { MaxDegreeOfParallelism = 2 }, ProcessVacancySummaryPage);
+            Parallel.ForEach(vacancySummaries, new ParallelOptions { MaxDegreeOfParallelism = 1 }, ProcessVacancySummaryPage);
 
             var lastVacancySummaryPage = vacancySummaries.Last();
 

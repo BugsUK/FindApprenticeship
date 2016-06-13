@@ -7,7 +7,7 @@ AS
 BEGIN
 	-- determine the provider site relationship row for the RA - PS 
 	DECLARE @ProviderSiteRelationshipId int
-	SELECT @ProviderSiteRelationshipId=psrRA.ProviderSiteRelationshipID 
+	SELECT @ProviderSiteRelationshipId=psrRA.ProviderSiteRelationshipId 
 	FROM ProviderSiteRelationship psrOwner
 		INNER JOIN ProviderSiteRelationship psrRA on psrOwner.ProviderID = psrRA.ProviderID 
 													AND psrOwner.ProviderSiteRelationShipTypeID = 1
