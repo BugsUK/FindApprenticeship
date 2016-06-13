@@ -6,6 +6,7 @@
     using FluentAssertions;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.LegacyWebServices.Vacancy;
+    using Infrastructure.Monitor.IoC;
     using Logging.IoC;
     using NUnit.Framework;
     using StructureMap;
@@ -20,7 +21,8 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new LegacyWebServicesRegistry());
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(), new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
 
                 // Inject provider under test.
                 x.For<IVacancyIndexDataProvider>().Use<LegacyVacancyIndexDataProvider>();

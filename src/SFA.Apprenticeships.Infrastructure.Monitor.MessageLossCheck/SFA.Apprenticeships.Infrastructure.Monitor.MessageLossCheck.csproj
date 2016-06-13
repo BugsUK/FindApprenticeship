@@ -115,6 +115,7 @@
     <Compile Include="Entities\CandidateTraineeshipApplicationDetail.cs" />
     <Compile Include="Entities\CandidateApprenticeshipApplicationDetail.cs" />
     <Compile Include="IoC\MessageLogCheckRepository.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\TraineeshipApplicationDiagnosticsRepository.cs" />
@@ -152,6 +153,10 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
       <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
       <Name>SFA.Apprenticeships.Application.Vacancy</Name>
@@ -187,6 +192,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Monitor\SFA.Apprenticeships.Infrastructure.Monitor.csproj">
       <Project>{61619F66-5F17-4EF7-A8CF-BA720BEA3AD3}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Monitor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Raa\SFA.Apprenticeships.Infrastructure.Raa.csproj">
+      <Project>{1F4776F3-884B-4B00-BA97-22BFA06C034E}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Raa</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Repositories.Mongo\SFA.Apprenticeships.Infrastructure.Repositories.Mongo.csproj">
       <Project>{A4DE4AF3-F06D-4D0F-AF2E-E72A11BAB49B}</Project>

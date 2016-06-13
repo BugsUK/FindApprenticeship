@@ -19,10 +19,8 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.EmployerDataService.IoC;
-    using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Logging.IoC;
     using Infrastructure.Postcode.IoC;
-    using Infrastructure.Raa.IoC;
     using Infrastructure.Repositories.Mongo.Applications.IoC;
     using Infrastructure.Repositories.Mongo.Candidates.IoC;
     using Infrastructure.Repositories.Mongo.Employers.IoC;
@@ -47,7 +45,6 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
             var cacheConfig = configurationService.Get<CacheConfiguration>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
             var sqlConfiguration = configurationService.Get<SqlConfiguration>();
-            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
 
             return new Container(x =>
             {
@@ -69,10 +66,8 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddRegistry<ApplicationServicesRegistry>();
                 x.AddRegistry(new RepositoriesRegistry(sqlConfiguration));
-                x.AddRegistry(new RaaRegistry(servicesConfiguration));
                 x.AddRegistry<MemoryCacheRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
-
+                x.AddRegistry<VacancySourceRegistry>();
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();

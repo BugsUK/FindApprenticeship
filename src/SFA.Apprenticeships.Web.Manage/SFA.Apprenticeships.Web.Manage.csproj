@@ -339,6 +339,7 @@
     <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
     <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
@@ -665,6 +666,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
@@ -713,9 +718,17 @@
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>

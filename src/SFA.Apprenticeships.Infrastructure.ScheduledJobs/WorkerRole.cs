@@ -154,8 +154,9 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry<LegacyWebServicesRegistry>();
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
+                x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
