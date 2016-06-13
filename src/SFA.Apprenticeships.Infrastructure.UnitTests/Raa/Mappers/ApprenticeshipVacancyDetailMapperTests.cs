@@ -101,7 +101,7 @@
                 detail.IsEmployerAnonymous.Should().Be(!string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName));
                 detail.IsPositiveAboutDisability.Should().Be(employer.IsPositiveAboutDisability);
 
-                detail.ExpectedDuration.Should().EndWith($"{vacancy.Duration ?? 0} weeks");
+                detail.ExpectedDuration.Should().Be(vacancy.ExpectedDuration);
 
                 detail.VacancyAddress.Should().NotBeNull();
 
