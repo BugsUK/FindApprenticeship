@@ -90,7 +90,8 @@
                 VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
-                TrainingType = vacancy.TrainingType.GetTrainingType()
+                TrainingType = vacancy.TrainingType.GetTrainingType(),
+                EditedInRaa = vacancy.EditedInRaa
             };
 
             return detail;

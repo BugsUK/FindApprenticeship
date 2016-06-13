@@ -905,6 +905,7 @@
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Extensions\UserDataProviderExtensions.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancySummaryViewModelResolvers.cs" />
     <Compile Include="Mappers\SavedSearchViewModelMapper.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
@@ -1606,6 +1607,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>

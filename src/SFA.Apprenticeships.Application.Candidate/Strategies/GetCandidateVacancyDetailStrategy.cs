@@ -3,7 +3,7 @@
     using System;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-    using Infrastructure.Interfaces;
+    using SFA.Infrastructure.Interfaces;
     using Vacancy;
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 

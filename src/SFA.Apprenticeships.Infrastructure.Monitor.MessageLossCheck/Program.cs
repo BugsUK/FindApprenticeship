@@ -37,7 +37,13 @@
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
+                x.AddRegistry<LegacyWebServicesRegistry>();
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
+                    new ServicesConfiguration
+                    {
+                        ServiceImplementation = ServicesConfiguration.Legacy,
+                        VacanciesSource = ServicesConfiguration.Legacy
+                    }));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
