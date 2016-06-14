@@ -4,20 +4,20 @@ namespace ApprenticeshipScraper.CmdLine.Services.Logger
 
     public class ThreadSafeStepLogger : IThreadSafeStepLogger
     {
-        private readonly IStepLogger logger;
-
         static object mutex = new object();
+
+        public IStepLogger UnderlyingStepLogger { get; }
 
         public ThreadSafeStepLogger(IStepLogger logger)
         {
-            this.logger = logger;
+            this.UnderlyingStepLogger = logger;
         }
 
         public void Info(string message)
         {
             lock (mutex)
             {
-                this.logger.Info(message);
+                this.UnderlyingStepLogger.Info(message);
             }
         }
 
@@ -25,7 +25,7 @@ namespace ApprenticeshipScraper.CmdLine.Services.Logger
         {
             lock (mutex)
             {
-                this.Error(message,exception);
+                this.UnderlyingStepLogger.Error(message,exception);
             }
         }
     }

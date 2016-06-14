@@ -28,6 +28,8 @@
 
         private readonly IGlobalSettings settings;
 
+        private int total;
+
         public ApprenticeshipDetailsScraper(
             IUrlResolver resolver,
             ICreateDirectory directory,
@@ -87,7 +89,7 @@
                 x => this.Logger.Error($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}",x));
             stopwatch.Stop();
             this.Logger.Info(
-                $"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
+                $"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
             return new { Id = id, Dom = dom };
         }
 

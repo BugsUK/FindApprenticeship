@@ -28,6 +28,8 @@
 
         private readonly IUrlResolver resolver;
 
+        private int total;
+
         public TraineeDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IThreadSafeStepLogger logger, IGlobalSettings settings, IRetryWebRequests retry)
         {
             this.resolver = resolver;
@@ -81,7 +83,7 @@
                 () => cookieAwareWebClient.DownloadString(new Uri(url)),
                 x => this.Logger.Error($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}", x));
             stopwatch.Stop();
-            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
+            this.Logger.Info($"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
             return new { Id = id, Dom = dom };
         }
 
