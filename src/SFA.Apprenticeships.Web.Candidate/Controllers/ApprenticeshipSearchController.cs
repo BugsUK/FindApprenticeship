@@ -3,7 +3,6 @@
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -17,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Search;
     using ViewModels.VacancySearch;
 
