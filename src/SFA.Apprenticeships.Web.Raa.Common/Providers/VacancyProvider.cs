@@ -776,7 +776,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             //TODO: Unit tests
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.Single(e => e.EmployerId == vp.EmployerId));
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
             var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
             var hasVacancies = vacancies.Count > 0;
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
@@ -835,7 +835,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
             foreach (var vacancySummary in vacancySummaries)
             {
-                vacancySummary.EmployerName = vacancyPartyToEmployerMap[vacancySummary.OwnerPartyId].Name;
+                var employer = vacancyPartyToEmployerMap[vacancySummary.OwnerPartyId];
+                if (employer == null)
+                {
+                    throw new Exception($"Current employer could not be found for {vacancySummary.VacancyId}");
+                }
+                vacancySummary.EmployerName = employer.Name;
             }
 
             if (isVacancySearch)
