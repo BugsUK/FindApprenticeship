@@ -1,13 +1,17 @@
 ﻿namespace ApprenticeshipScraper.CmdLine.Steps
 {
+    using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
+    using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
@@ -20,13 +24,16 @@
 
         private readonly IGlobalSettings settings;
 
+        private readonly IRetryWebRequests retry;
+
         private readonly IUrlResolver resolver;
 
-        public TraineeDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
+        public TraineeDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IThreadSafeStepLogger logger, IGlobalSettings settings, IRetryWebRequests retry)
         {
             this.resolver = resolver;
             this.directory = directory;
             this.settings = settings;
+            this.retry = retry;
             this.Logger = logger;
         }
 
@@ -67,9 +74,14 @@
         private dynamic DownloadItem(SiteEnum site, string filename, CookieAwareWebClient cookieAwareWebClient)
         {
             var id = filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
-            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id}");
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
-            CQ dom = cookieAwareWebClient.DownloadString(url);
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            CQ dom = this.retry.RetryWeb(
+                () => cookieAwareWebClient.DownloadString(new Uri(url)),
+                x => this.Logger.Error($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}", x));
+            stopwatch.Stop();
+            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
             return new { Id = id, Dom = dom };
         }
 

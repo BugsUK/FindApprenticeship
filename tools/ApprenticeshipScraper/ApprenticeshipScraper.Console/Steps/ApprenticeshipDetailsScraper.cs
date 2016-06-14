@@ -1,5 +1,6 @@
 ﻿namespace ApprenticeshipScraper.CmdLine.Steps
 {
+    using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.IO;
@@ -10,6 +11,7 @@
     using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
@@ -20,15 +22,23 @@
 
         private readonly ICreateDirectory directory;
 
-        private readonly IGlobalSettings settings;
-
         private readonly IUrlResolver resolver;
 
-        public ApprenticeshipDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
+        private readonly IRetryWebRequests retry;
+
+        private readonly IGlobalSettings settings;
+
+        public ApprenticeshipDetailsScraper(
+            IUrlResolver resolver,
+            ICreateDirectory directory,
+            IThreadSafeStepLogger logger,
+            IGlobalSettings settings,
+            IRetryWebRequests retry)
         {
             this.resolver = resolver;
             this.directory = directory;
             this.settings = settings;
+            this.retry = retry;
             this.Logger = logger;
         }
 
@@ -46,7 +56,6 @@
                 new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
                 filename =>
                     {
-
                         using (var cookieAwareWebClient = new CookieAwareWebClient())
                         {
                             var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
@@ -73,9 +82,12 @@
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
-            CQ dom = cookieAwareWebClient.DownloadString(url);
+            CQ dom = this.retry.RetryWeb(
+                () => cookieAwareWebClient.DownloadString(new Uri(url)),
+                x => this.Logger.Error($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}",x));
             stopwatch.Stop();
-            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
+            this.Logger.Info(
+                $"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
             return new { Id = id, Dom = dom };
         }
 
@@ -84,5 +96,4 @@
             return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults)).Take(418);
         }
     }
-
 }

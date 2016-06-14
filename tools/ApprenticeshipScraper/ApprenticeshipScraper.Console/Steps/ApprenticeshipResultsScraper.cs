@@ -6,6 +6,7 @@
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;

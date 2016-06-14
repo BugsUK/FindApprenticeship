@@ -1,6 +1,7 @@
 ﻿namespace ApprenticeshipScraper.CmdLine
 {
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Settings;
     using ApprenticeshipScraper.CmdLine.Steps;
 
@@ -15,6 +16,7 @@
             container.Register<IUrlResolver, UrlResolver>();
             container.Register<IStepLogger, TimedStepLogger>();
             container.Register<IGlobalSettings, GlobalSettings>();
+            container.Register<IThreadSafeStepLogger, ThreadSafeStepLogger>();
             container.RegisterMultiple<IStep>(
                 new[]
                     {

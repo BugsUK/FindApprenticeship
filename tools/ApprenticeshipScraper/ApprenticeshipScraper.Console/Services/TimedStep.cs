@@ -5,6 +5,7 @@
 
     using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Steps;
 
     internal class TimedStep
