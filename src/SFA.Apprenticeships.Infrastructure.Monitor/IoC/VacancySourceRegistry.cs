@@ -26,8 +26,6 @@
             // Strategies
             if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>()
-                    .Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>()
                     .Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>()
@@ -35,12 +33,31 @@
             }
             else if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>()
-                    .Use<GetCandidateApprenticeshipApplicationsStrategy>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>()
                     .Use<GetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>()
                     .Use<GetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
+            }
+
+            // Application status provider -> it's not exactly related with vacancy sources...
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                For<IGetCandidateApprenticeshipApplicationsStrategy>()
+                    .Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                For<IGetCandidateApprenticeshipApplicationsStrategy>()
+                    .Use<GetCandidateApprenticeshipApplicationsStrategy>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<NullApplicationStatusesProvider>();
             }
 
             // Services --
@@ -95,12 +112,6 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
-
-                For<ILegacyApplicationStatusesProvider>()
-                    .Use<LegacyCandidateApplicationStatusesProvider>()
-                    .Ctor<IMapper>()
-                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                    .Name = "LegacyCandidateApplicationStatusesProvider";
             }
             else if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {
@@ -111,9 +122,6 @@
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
                     .Use<TraineeshipVacancyDataProvider>();
-
-                For<ILegacyApplicationStatusesProvider>()
-                    .Use<NullApplicationStatusesProvider>();
             }
 
             //--

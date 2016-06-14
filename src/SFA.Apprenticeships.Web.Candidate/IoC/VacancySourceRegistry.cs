@@ -26,15 +26,32 @@
             // Strategies
             if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
             }
             else if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {
-                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
                 For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<GetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
+            }
+
+            // Application status provider -> it's not exactly related with vacancy sources...
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<LegacyCandidateApplicationStatusesProvider>()
+                    .Ctor<IMapper>()
+                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
+                    .Name = "LegacyCandidateApplicationStatusesProvider";
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<GetCandidateApprenticeshipApplicationsStrategy>();
+
+                For<ILegacyApplicationStatusesProvider>()
+                    .Use<NullApplicationStatusesProvider>();
             }
 
             // Services --
@@ -89,32 +106,40 @@
                         .Ctor<ICacheService>()
                         .Named(cacheConfiguration.DefaultCache);
                 }
-                
-
-                For<ILegacyApplicationStatusesProvider>()
-                    .Use<LegacyCandidateApplicationStatusesProvider>()
-                    .Ctor<IMapper>()
-                    .Named("LegacyWebServices.ApplicationStatusSummaryMapper")
-                    .Name = "LegacyCandidateApplicationStatusesProvider";
             }
             else if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {
                 For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
 
                 For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Use<ApprenticeshipVacancyDataProvider>();
+                    .Use<ApprenticeshipVacancyDataProvider>()
+                    .Name = "ApprenticeshipVacancyDataProvider";
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Use<TraineeshipVacancyDataProvider>();
+                    .Use<TraineeshipVacancyDataProvider>()
+                    .Name = "TraineeshipVacancyDataProvider";
 
-                For<ILegacyApplicationStatusesProvider>()
-                    .Use<NullApplicationStatusesProvider>();
-                /*
-                For<IReferenceDataProvider>()
-                    .Use<ReferenceDataProvider>();
+                if (cacheConfiguration.UseCache)
+                {
+                    For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Named("ApprenticeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
 
-                For<IReportingProvider>()
-                    .Use<ReportingProvider>();*/
+                    For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Named("TraineeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
+                }
+
             }
 
             //--
