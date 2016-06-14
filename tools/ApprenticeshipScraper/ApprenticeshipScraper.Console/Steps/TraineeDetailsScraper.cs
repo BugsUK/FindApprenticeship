@@ -53,11 +53,18 @@
                 new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
                 filename =>
                     {
-                        using (var cookieAwareWebClient = new CookieAwareWebClient())
+                        try
                         {
-                            var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
-                            var section = this.ParsePage(item);
-                            SavePage(detailsFolder, section);
+                            using (var cookieAwareWebClient = new CookieAwareWebClient())
+                            {
+                                var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
+                                var section = this.ParsePage(item);
+                                SavePage(detailsFolder, section);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error("Unexpected error", ex);
                         }
                     });
         }

@@ -24,8 +24,8 @@
                 new[]
                     {
                         typeof(ApprenticeshipResultsScraper),
-                        typeof(ApprenticeshipDetailsScraper),
                         typeof(TraineeResultsScraper),
+                        typeof(ApprenticeshipDetailsScraper),
                         typeof(TraineeDetailsScraper)
                     });
             return container;

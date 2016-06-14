@@ -1,6 +1,7 @@
 ﻿namespace ApprenticeshipScraper.CmdLine.Services
 {
     using System;
+    using System.Net;
 
     using Polly;
 
@@ -8,7 +9,7 @@
     {
         public T RetryWeb<T>(Func<T> action, Action<Exception> onError)
         {
-            var policy = Policy.Handle<Exception>()
+            var policy = Policy.Handle<WebException>()
                 .WaitAndRetry(
                     3,
                     retrytime => TimeSpan.FromSeconds(Math.Pow(2, retrytime)),

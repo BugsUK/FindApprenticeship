@@ -5,6 +5,7 @@
     using System.Diagnostics;
     using System.IO;
     using System.Linq;
+    using System.Net;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -58,11 +59,18 @@
                 new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
                 filename =>
                     {
-                        using (var cookieAwareWebClient = new CookieAwareWebClient())
+                        try
                         {
-                            var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
-                            var section = this.ParsePage(item);
-                            SavePage(detailsFolder, section);
+                            using (var cookieAwareWebClient = new CookieAwareWebClient())
+                            {
+                                var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
+                                var section = this.ParsePage(item);
+                                SavePage(detailsFolder, section);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error("Unexpected error", ex);
                         }
                     });
         }

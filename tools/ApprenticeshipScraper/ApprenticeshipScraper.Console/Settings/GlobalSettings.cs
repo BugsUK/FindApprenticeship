@@ -5,7 +5,7 @@
 
     public class GlobalSettings : IGlobalSettings
     {
-        public int MaxDegreeOfParallelism => Convert.ToInt32(ConfigurationManager.AppSettings["MaxDegreeOfParallelism"] ?? "4");
+        public int MaxDegreeOfParallelism => Convert.ToInt32(ConfigurationManager.AppSettings["MaxDegreeOfParallelism"] ?? "6");
 
         public int WaitBetweenRequestsMs
             => Convert.ToInt32(ConfigurationManager.AppSettings["WaitBetweenRequestsMs"] ?? "20");
