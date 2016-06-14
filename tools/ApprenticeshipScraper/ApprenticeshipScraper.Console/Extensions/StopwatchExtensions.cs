@@ -8,5 +8,9 @@ namespace ApprenticeshipScraper.CmdLine.Extensions
         {
             return string.Format("{0:hh\\:mm\\:ss}", stopwatch?.Elapsed);
         }
+        public static string ShortElapsed(this Stopwatch stopwatch)
+        {
+            return string.Format("{0:mm\\:ss\\.fff}", stopwatch?.Elapsed);
+        }
     }
 }

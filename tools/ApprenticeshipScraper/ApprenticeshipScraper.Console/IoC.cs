@@ -1,6 +1,7 @@
 ﻿namespace ApprenticeshipScraper.CmdLine
 {
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Settings;
     using ApprenticeshipScraper.CmdLine.Steps;
 
     using TinyIoC;
@@ -13,6 +14,7 @@
             container.Register<ICreateDirectory, DirectoryService>();
             container.Register<IUrlResolver, UrlResolver>();
             container.Register<IStepLogger, TimedStepLogger>();
+            container.Register<IGlobalSettings, GlobalSettings>();
             container.RegisterMultiple<IStep>(
                 new[]
                     {

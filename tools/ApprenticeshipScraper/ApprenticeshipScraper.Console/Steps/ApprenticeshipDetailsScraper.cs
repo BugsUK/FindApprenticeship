@@ -1,13 +1,16 @@
 ﻿namespace ApprenticeshipScraper.CmdLine.Steps
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
 
+    using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
 
@@ -15,16 +18,17 @@
     {
         public const string UrlFormat = "/apprenticeship/{0}";
 
-        private const int WaitBetweenRequestsMs = 20;
-
         private readonly ICreateDirectory directory;
+
+        private readonly IGlobalSettings settings;
 
         private readonly IUrlResolver resolver;
 
-        public ApprenticeshipDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
+        public ApprenticeshipDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
         {
             this.resolver = resolver;
             this.directory = directory;
+            this.settings = settings;
             this.Logger = logger;
         }
 
@@ -39,8 +43,10 @@
             var filenames = this.LookAtApprenticeshipFiles(folder);
             Parallel.ForEach(
                 filenames,
+                new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
                 filename =>
                     {
+
                         using (var cookieAwareWebClient = new CookieAwareWebClient())
                         {
                             var item = this.DownloadItem(arguments.Site, filename, cookieAwareWebClient);
@@ -64,15 +70,19 @@
         private dynamic DownloadItem(SiteEnum site, string filename, CookieAwareWebClient cookieAwareWebClient)
         {
             var id = filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
-            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id}");
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
             CQ dom = cookieAwareWebClient.DownloadString(url);
+            stopwatch.Stop();
+            this.Logger.Info($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
             return new { Id = id, Dom = dom };
         }
 
         private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
         {
-            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults));
+            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults)).Take(418);
         }
     }
+
 }

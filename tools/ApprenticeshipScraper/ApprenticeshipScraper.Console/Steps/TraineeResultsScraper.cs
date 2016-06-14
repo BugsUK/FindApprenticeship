@@ -6,6 +6,7 @@ namespace ApprenticeshipScraper.CmdLine.Steps
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
 
@@ -15,17 +16,16 @@ namespace ApprenticeshipScraper.CmdLine.Steps
 
         private ICreateDirectory directory;
 
-        private const int WaitBetweenRequestsMs = 20;
-
-        private const int PageSize = 100;
+        private readonly IGlobalSettings settings;
 
         public const string UrlFormat =
             "/traineeships/search?Location=Elland%20%28West%20Yorkshire%29&LocationSearches=SFA.Apprenticeships.Web.Candidate.ViewModels.VacancySearch.TraineeshipSearchViewModel%5B%5D&Longitude=-1.82732&Latitude=53.68984&Hash=-2063231487&WithinDistance=2000&SortType=Distance&PageNumber={0}&SearchAction=Sort&ResultsPerPage={1}";
 
-        public TraineeResultsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
+        public TraineeResultsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
         {
             this.resolver = resolver;
             this.directory = directory;
+            this.settings = settings;
             this.Logger = logger;
         }
 
@@ -49,8 +49,8 @@ namespace ApprenticeshipScraper.CmdLine.Steps
                 for (int i = 1; i < 1000; i++) // NOTE: this page count will be a problem if the vacancy count goes above 100,000
                 {
                     Logger.Info($"Downloading page {i}");
-                    CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, PageSize));
-                    Thread.Sleep(WaitBetweenRequestsMs);
+                    CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, this.settings.PageSize));
+                    Thread.Sleep(this.settings.WaitBetweenRequestsMs);
                     var domObjects = dom[".search-results__item"];
                     if (domObjects.Length == 0)
                     {

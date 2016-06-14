@@ -8,6 +8,7 @@
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
 
@@ -15,16 +16,17 @@
     {
         public const string UrlFormat = "/traineeship/{0}";
 
-        private const int WaitBetweenRequestsMs = 20;
-
         private readonly ICreateDirectory directory;
+
+        private readonly IGlobalSettings settings;
 
         private readonly IUrlResolver resolver;
 
-        public TraineeDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
+        public TraineeDetailsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
         {
             this.resolver = resolver;
             this.directory = directory;
+            this.settings = settings;
             this.Logger = logger;
         }
 
@@ -39,6 +41,7 @@
             var filenames = this.LookAtApprenticeshipFiles(folder);
             Parallel.ForEach(
                 filenames,
+                new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
                 filename =>
                     {
                         using (var cookieAwareWebClient = new CookieAwareWebClient())

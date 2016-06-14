@@ -6,26 +6,26 @@
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Settings;
 
     using CsQuery;
 
     public sealed class ApprenticeshipResultsScraper : IStep
     {
-        private const int PageSize = 100;
-
-        private const int WaitBetweenRequestsMs = 20;
-
         private const string UrlFormat =
             "/apprenticeships?ApprenticeshipLevel=All&Hash=-2063231487&Latitude=53.68984&Longitude=-1.82732&Location=Elland%20%28West%20Yorkshire%29&LocationType=NonNational&PageNumber={0}&ResultsPerPage={1}&SearchAction=Sort&SearchField=All&SearchMode=Keyword&SortType=ClosingDate&WithinDistance=0";
 
         private readonly ICreateDirectory directory;
 
+        private readonly IGlobalSettings settings;
+
         private readonly IUrlResolver resolver;
 
-        public ApprenticeshipResultsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger)
+        public ApprenticeshipResultsScraper(IUrlResolver resolver, ICreateDirectory directory, IStepLogger logger, IGlobalSettings settings)
         {
             this.resolver = resolver;
             this.directory = directory;
+            this.settings = settings;
             this.Logger = logger;
         }
 
@@ -59,8 +59,8 @@
                     // NOTE: this page count will be a problem if the vacancy count goes above 100,000
                 {
                     this.Logger.Info($"Downloading page {i}");
-                    CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, PageSize));
-                    Thread.Sleep(WaitBetweenRequestsMs);
+                    CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, this.settings.PageSize));
+                    Thread.Sleep(this.settings.WaitBetweenRequestsMs);
                     var domObjects = dom[".search-results__item"];
                     if (domObjects.Length == 0)
                     {
