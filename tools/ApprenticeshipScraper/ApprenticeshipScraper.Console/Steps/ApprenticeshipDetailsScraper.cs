@@ -93,7 +93,7 @@
 
         private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
         {
-            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults)).Take(418);
+            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults));
         }
     }
 }
