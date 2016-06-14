@@ -3,6 +3,7 @@ using SFA.Apprenticeships.Application.Interfaces.Generic;
 
 namespace SFA.Apprenticeships.Application.Provider
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
@@ -82,6 +83,10 @@ namespace SFA.Apprenticeships.Application.Provider
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
+            if (provider == null)
+            {
+                throw  new Exception($"Provider cannot be found with ukprn={ukprn}");
+            }
 
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }
