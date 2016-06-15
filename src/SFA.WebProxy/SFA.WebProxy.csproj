@@ -127,7 +127,6 @@
     <Compile Include="Configuration\ConfigurationManagerConfiguration.cs" />
     <Compile Include="Configuration\IConfiguration.cs" />
     <Compile Include="Diagnostics\Debug.cs" />
-    <Compile Include="IO\EchoStream.cs" />
     <Compile Include="Logging\AzureBlobStorageLogging.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Models\Routing.cs" />
@@ -142,7 +141,6 @@
     <Compile Include="Models\RouteIdentifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="App_Start\ProxyHandler.cs" />
-    <Compile Include="Routing\IRoutingConfiguration.cs" />
     <Compile Include="Service\MemoryCacheService.cs" />
   </ItemGroup>
   <ItemGroup>

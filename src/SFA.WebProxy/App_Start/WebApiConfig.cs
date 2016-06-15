@@ -23,14 +23,18 @@
 
             var webProxyUserRepository = new CachedWebProxyUserRepository(new SqlServerWebProxyUserRepository(configuration), cacheService);
 
-            //var proxyLogging = new FileProxyLogging(configuration);
-            var proxyLogging = new AzureBlobStorageLogging(configuration);
+            var proxyLogging = new FileProxyLogging(configuration);
+            //var proxyLogging = new AzureBlobStorageLogging(configuration);
             //var proxyLogging = new NullProxyLogging();
+
+            //var proxyRouting = new LogicRouting();
+            var proxyRouting = new NasAvWebServicesRouting(configuration, webProxyUserRepository);
+
 
             config.Routes.MapHttpRoute(name: "Proxy", routeTemplate: "{*path}", handler:
             HttpClientFactory.CreatePipeline(
                 innerHandler: new HttpClientHandler(), // will never get here if proxy is doing its job
-                handlers: new DelegatingHandler[] { new ProxyHandler(new NasAvWebServicesRouting(configuration, webProxyUserRepository), proxyLogging, configuration) }),
+                handlers: new DelegatingHandler[] { new ProxyHandler(proxyRouting, proxyLogging, configuration) }),
                 defaults: new { path = RouteParameter.Optional },
                 constraints: null
             );

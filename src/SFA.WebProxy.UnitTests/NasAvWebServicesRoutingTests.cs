@@ -63,16 +63,18 @@
         [Test]
         public void LandingPage()
         {
+            string suffix = "/navms/Forms/Candidate/VisitorLanding.aspx";
+
             //Arrange
-            var uri = new Uri("http://localhost:23791/navms/Forms/Candidate/VisitorLanding.aspx");
+            var uri = new Uri($"http://localhost:23791{suffix}");
 
             //Act
             var routing = _proxyRouting.GetRouting(uri, HttpMethod.Get, null, null, new RouteIdentifier());
 
             //Assert
             routing.Routes.Count.Should().Be(2);
-            routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + "/navms/Forms/Candidate/VisitorLanding.aspx");
-            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + "/navms/Forms/Candidate/VisitorLanding.aspx");
+            routing.Routes[0].Uri.AbsoluteUri.Should().Be(NasAvWebServiceRootUriString + suffix);
+            routing.Routes[1].Uri.AbsoluteUri.Should().Be(CompatabilityWebServiceRootUriString + suffix);
         }
 
         [Test]

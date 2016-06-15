@@ -23,21 +23,19 @@
     {
         public Routing GetRouting(Uri requestUri, HttpMethod method, string ipAddress, string requestContent, RouteIdentifier routeIdentifier)
         {
-            var routes = new List<Route>();
+            var routing = new Routing();
+            routing.Routes = new List<Route>();
 
             if ((requestUri.PathAndQuery + "/").StartsWith("/news/"))
             {
-                routes.Add(new Route("http://bbc.co.uk" + requestUri.PathAndQuery, new RouteIdentifier("bbc"), true));
+                routing.Routes.Add(new Route("http://bbc.co.uk" + requestUri.PathAndQuery, new RouteIdentifier("bbc"), true));
             }
             else
             {
-                routes.Add(new Route("https://webapp.services.coventry.ac.uk/" + requestUri.PathAndQuery.Substring(1), new RouteIdentifier("coventryuniversitywebappservices"), true));
+                routing.Routes.Add(new Route("https://webapp.services.coventry.ac.uk/" + requestUri.PathAndQuery.Substring(1), new RouteIdentifier("coventryuniversitywebappservices"), true));
+                routing.RewriteFrom = "https://webapp.services.coventry.ac.uk/";
+                routing.RewriteTo   = "://" + requestUri.Host;
             }
-
-            var routing = new Routing
-            {
-                Routes = routes,
-            };
 
             return routing;
         }
@@ -67,6 +65,8 @@
                     new Route(new Uri(_configuration.NasAvWebServiceRootUri.OriginalString + requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), !isCompatabilityWebServicePrimary),
                     new Route(GetCompatabilityWebServiceUrl(requestUri), new RouteIdentifier(routeIdentifier, "compatabilitywebservice"), isCompatabilityWebServicePrimary)
                 },
+                RewriteFrom = Regex.Replace(_configuration.NasAvWebServiceRootUri.OriginalString, "https?", ""),
+                RewriteTo   = Uri.SchemeDelimiter + requestUri.Authority
             };
         }
 
