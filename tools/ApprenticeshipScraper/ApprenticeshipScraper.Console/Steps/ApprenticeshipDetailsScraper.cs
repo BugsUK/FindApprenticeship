@@ -49,11 +49,12 @@
 
         public void Run(ApplicationArguments arguments)
         {
-            var folder = Path.Combine(arguments.Directory, arguments.Site.ToString());
-            var detailsFolder = Path.Combine(folder, FolderNames.ApprenticeshipDetails);
+            var detailsFolder = this.directory.FindStepFolder(arguments, FolderNames.ApprenticeshipDetails);
+            var resultsFolder = this.directory.FindStepFolder(arguments, FolderNames.ApprenticeshipResults);
+
             this.directory.CreateDirectoryIfMissing(detailsFolder);
 
-            var filenames = this.LookAtApprenticeshipFiles(folder);
+            var filenames = this.LookAtApprenticeshipFiles(resultsFolder);
             Parallel.ForEach(
                 filenames,
                 new ParallelOptions { MaxDegreeOfParallelism = this.settings.MaxDegreeOfParallelism },
@@ -96,14 +97,21 @@
                 () => cookieAwareWebClient.DownloadString(new Uri(url)),
                 x => this.Logger.Error($"Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}",x));
             stopwatch.Stop();
-            this.Logger.Info(
-                $"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}");
+            var message = $"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{id} Elapsed:{stopwatch.ShortElapsed()}";
+            if (stopwatch.Elapsed.Seconds <= 5)
+            {
+                this.Logger.Info(message);
+            }
+            else
+            {
+                this.Logger.Warn(message);
+            }
             return new { Id = id, Dom = dom };
         }
 
-        private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
+        private IEnumerable<string> LookAtApprenticeshipFiles(string resultsFolder)
         {
-            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults));
+            return Directory.EnumerateFiles(resultsFolder);
         }
     }
 }

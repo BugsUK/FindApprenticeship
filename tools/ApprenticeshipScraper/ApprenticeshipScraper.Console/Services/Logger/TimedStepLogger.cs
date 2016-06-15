@@ -16,9 +16,18 @@ namespace ApprenticeshipScraper.CmdLine.Services.Logger
 
         public void Error(string message, Exception exception)
         {
+            var current = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"[{this.Timer.ElapsedWithoutMs()}] -> {message} {exception.ToNiceString()}");
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = current;
+        }
+
+        public void Warn(string message)
+        {
+            var current = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine($"[{this.Timer.ElapsedWithoutMs()}] -> {message}");
+            Console.ForegroundColor = current;
         }
     }
 }

@@ -32,11 +32,12 @@
 
         public void Run(ApplicationArguments arguments)
         {
-            var folder = Path.Combine(arguments.Directory, arguments.Site.ToString());
-            var detailsFolder = Path.Combine(folder, FolderNames.ApprenticeshipDetails);
+            var detailsFolder = this.directory.FindStepFolder(arguments, FolderNames.ApprenticeshipDetails);
+            var resultsFolder = this.directory.FindStepFolder(arguments, FolderNames.ApprenticeshipResults);
+
             this.directory.CreateDirectoryIfMissing(detailsFolder);
 
-            var filenames = this.LookAtApprenticeshipFiles(folder);
+            var filenames = this.LookAtApprenticeshipFiles(resultsFolder);
             var models = this.DownloadPages(filenames, arguments.Site);
             var sections = this.ParsePages(models);
             this.SavePages(sections, detailsFolder);
@@ -63,7 +64,7 @@
 
         private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
         {
-            return Directory.EnumerateFiles(Path.Combine(folder, FolderNames.ApprenticeshipResults));
+            return Directory.EnumerateFiles(folder);
         }
 
         private IEnumerable<dynamic> DownloadPages(IEnumerable<string> filenames, SiteEnum site)

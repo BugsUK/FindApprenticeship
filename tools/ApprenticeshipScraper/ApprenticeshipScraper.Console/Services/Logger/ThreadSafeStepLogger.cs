@@ -28,5 +28,13 @@ namespace ApprenticeshipScraper.CmdLine.Services.Logger
                 this.UnderlyingStepLogger.Error(message,exception);
             }
         }
+
+        public void Warn(string message)
+        {
+            lock (mutex)
+            {
+                this.UnderlyingStepLogger.Warn(message);
+            }
+        }
     }
 }
