@@ -71,7 +71,7 @@
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error("Unexpected error", ex);
+                            Logger.Error($"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{FilenameToId(filename)} Unexpected Error", ex);
                         }
                     });
         }
@@ -89,7 +89,7 @@
 
         private dynamic DownloadItem(SiteEnum site, string filename, CookieAwareWebClient cookieAwareWebClient)
         {
-            var id = filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
+            var id = FilenameToId(filename);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
@@ -113,5 +113,11 @@
         {
             return Directory.EnumerateFiles(resultsFolder);
         }
+
+        private static string FilenameToId(string filename)
+        {
+            return filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
+        }
+
     }
 }

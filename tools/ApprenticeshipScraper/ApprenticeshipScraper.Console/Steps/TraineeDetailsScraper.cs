@@ -65,7 +65,7 @@
                         }
                         catch (Exception ex)
                         {
-                            Logger.Error("Unexpected error", ex);
+                            Logger.Error($"Record:{(this.total++).ToString("00000")} Thread:{Thread.CurrentThread.ManagedThreadId:00} Id:{FilenameToId(filename)} Unexpected Error", ex);
                         }
                     });
         }
@@ -83,7 +83,7 @@
 
         private dynamic DownloadItem(SiteEnum site, string filename, CookieAwareWebClient cookieAwareWebClient)
         {
-            var id = filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
+            var id = FilenameToId(filename);
             var url = this.resolver.Resolve(site) + string.Format(UrlFormat, id);
             var stopwatch = new Stopwatch();
             stopwatch.Start();
@@ -102,6 +102,11 @@
                 this.Logger.Warn(message);
             }
             return new { Id = id, Dom = dom };
+        }
+
+        private static string FilenameToId(string filename)
+        {
+            return filename.Substring(filename.LastIndexOf("\\") + 1).Split('.').First();
         }
 
         private IEnumerable<string> LookAtApprenticeshipFiles(string folder)
