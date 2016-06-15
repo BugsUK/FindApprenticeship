@@ -94,7 +94,7 @@
                 detail.EmployerName.Should().Be(employer.Name);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
                 detail.EmployerDescription.Should().Be(vacancyParty.EmployerDescription);
-                detail.EmployerWebsite.Should().Be(vacancyParty.EmployerWebsiteUrl);
+                detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);
                 detail.ApplyViaEmployerWebsite.Should().Be(vacancy.OfflineVacancy ?? false);
                 detail.VacancyUrl.Should().Be(vacancy.OfflineApplicationUrl);
                 detail.ApplicationInstructions.Should().Be(vacancy.OfflineApplicationInstructions);
