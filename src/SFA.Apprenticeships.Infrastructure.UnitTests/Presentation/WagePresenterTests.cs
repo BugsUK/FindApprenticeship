@@ -95,5 +95,32 @@
             // Assert.
             actual.Should().Be(expected);
         }
+
+        [TestCase(WageType.LegacyWeekly, Domain.Entities.Vacancies.WageUnit.Weekly)]
+        [TestCase(WageType.LegacyText, Domain.Entities.Vacancies.WageUnit.NotApplicable)]
+        [TestCase(WageType.ApprenticeshipMinimum, Domain.Entities.Vacancies.WageUnit.Weekly)]
+        [TestCase(WageType.NationalMinimum, Domain.Entities.Vacancies.WageUnit.Weekly)]
+        public void ShouldGetTheCorrectWageUnitForNonCustomWages(WageType wageType, Domain.Entities.Vacancies.WageUnit expected)
+        {
+            var wage = new Wage(wageType, null, string.Empty, WageUnit.NotApplicable);
+            // Act.
+            var actual = wage.GetWageUnit();
+
+            // Assert.
+            actual.Should().Be(expected);
+        }
+
+        [TestCase(WageUnit.Weekly, Domain.Entities.Vacancies.WageUnit.Weekly)]
+        [TestCase(WageUnit.Monthly, Domain.Entities.Vacancies.WageUnit.Monthly)]
+        [TestCase(WageUnit.Annually, Domain.Entities.Vacancies.WageUnit.Annually)]
+        [TestCase(WageUnit.NotApplicable, Domain.Entities.Vacancies.WageUnit.NotApplicable)]
+        public void ShouldGetTheCorrectWageUnitForCustomWages(WageUnit wageUnit, Domain.Entities.Vacancies.WageUnit expected)
+        {
+            var wage = new Wage(WageType.Custom, null, string.Empty, wageUnit);
+
+            var actual = wage.GetWageUnit();
+
+            actual.Should().Be(expected);
+        }
     }
 }
