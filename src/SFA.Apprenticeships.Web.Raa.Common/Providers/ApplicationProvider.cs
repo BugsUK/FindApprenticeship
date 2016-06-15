@@ -44,7 +44,7 @@
         public VacancyApplicationsViewModel GetVacancyApplicationsViewModel(VacancyApplicationsSearchViewModel vacancyApplicationsSearch)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyApplicationsSearch.VacancyReferenceNumber);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<Vacancy, VacancyApplicationsViewModel>(vacancy);
             viewModel.EmployerName = employer.Name;
@@ -160,7 +160,7 @@
         private ApprenticeshipApplicationViewModel ConvertToApprenticeshipApplicationViewModel(ApprenticeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<ApprenticeshipApplicationDetail, ApprenticeshipApplicationViewModel>(application);
 
@@ -174,7 +174,7 @@
         private TraineeshipApplicationViewModel ConvertToTraineeshipApplicationViewModel(TraineeshipApplicationDetail application, ApplicationSelectionViewModel applicationSelectionViewModel)
         {
             var vacancy = _vacancyPostingService.GetVacancy(application.Vacancy.Id);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Closed vacancies can certainly have non-current vacancy parties
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var viewModel = _mapper.Map<TraineeshipApplicationDetail, TraineeshipApplicationViewModel>(application);
 

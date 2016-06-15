@@ -95,7 +95,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 });
             MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
-            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
+            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId, true))
                 .Returns(_vacancyParty);
             MockProviderService.Setup(s => s.GetProvider(Ukprn))
                 .Returns(new Provider());
@@ -111,7 +111,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>())).Returns(new VacancyParty());
+            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(new Fixture().Create<Employer>());
             
             var provider = GetVacancyPostingProvider();
@@ -136,7 +136,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             var employerPostalAddress = new Fixture().Create<PostalAddress>();
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
-            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>())).Returns(new VacancyParty());
+            MockProviderService.Setup(m => m.GetVacancyParty(It.IsAny<int>(), true)).Returns(new VacancyParty());
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>()))
                 .Returns(new Fixture().Build<Employer>().With(e => e.Address, employerPostalAddress).Create());
             var provider = GetVacancyPostingProvider();
@@ -287,7 +287,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 
             // Assert
             MockVacancyPostingService.Verify(s => s.GetVacancy(vacancyGuid), Times.Once);
-            MockProviderService.Verify(s => s.GetVacancyParty(VacancyPartyId), Times.Once);
+            MockProviderService.Verify(s => s.GetVacancyParty(VacancyPartyId, true), Times.Once);
             MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
             result.Should()
                 .Match<NewVacancyViewModel>(

@@ -26,15 +26,6 @@
             _logger = logger;
         }
 
-        public VacancyParty GetById(int vacancyPartyId)
-        {
-            _logger.Debug("Called Mongodb to get provider site employer link with Id={0}", vacancyPartyId);
-
-            var mongoEntity = Collection.FindOne(Query<MongoVacancyParty>.EQ(e => e.VacancyPartyId, vacancyPartyId));
-
-            return mongoEntity == null ? null : _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
-        }
-
         public VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
         {
             _logger.Debug("Called Mongodb to get provider site employer link with providerSiteErn={0}, edsUrn={1}", providerSiteId, employerId);
@@ -44,11 +35,11 @@
             return mongoEntity == null ? null : _mapper.Map<MongoVacancyParty, VacancyParty>(mongoEntity);
         }
 
-        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds)
+        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
         {
             var mongoEntities = Collection.Find(Query.In("VacancyPartyId", new BsonArray(vacancyPartyIds)));
 
-            return mongoEntities.Select(e => _mapper.Map<MongoVacancyParty, VacancyParty>(e)).ToList();
+            return mongoEntities.Select(e => _mapper.Map<MongoVacancyParty, VacancyParty>(e)).ToList(); // TODO: Should be filtering by status
         }
 
         public IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId)

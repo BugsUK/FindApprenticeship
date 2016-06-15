@@ -53,7 +53,7 @@
 
         public VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId)
         {
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             return vacancyParty.Convert(employer);
         }

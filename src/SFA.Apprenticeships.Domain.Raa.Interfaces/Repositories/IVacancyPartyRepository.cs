@@ -5,11 +5,9 @@
 
     public interface IVacancyPartyReadRepository
     {
-        VacancyParty GetById(int vacancyPartyId);
-
         VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId);
 
-        IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds);
+        IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds, bool currentOnly = true); // TODO: Return IDictionary<int, VacancyParty>
 
         IEnumerable<VacancyParty> GetByProviderSiteId(int providerSiteId);
     }

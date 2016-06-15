@@ -26,24 +26,6 @@
             _logger = logger;
         }
 
-        public VacancyParty GetById(int vacancyPartyId)
-        {
-            const string sql = @"
-                SELECT * FROM dbo.VacancyOwnerRelationship
-                WHERE VacancyOwnerRelationshipId = @VacancyOwnerRelationshipId
-                AND StatusTypeId = @StatusTypeId";
-
-            var sqlParams = new
-            {
-                VacancyOwnerRelationshipId = vacancyPartyId,
-                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
-            };
-
-            var vacancyParty = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams).SingleOrDefault();
-
-            return _mapper.Map<VacancyOwnerRelationship, VacancyParty>(vacancyParty);
-        }
-
         public VacancyParty GetByProviderSiteAndEmployerId(int providerSiteId, int employerId)
         {
             const string sql = @"
@@ -64,16 +46,18 @@
             return _mapper.Map<VacancyOwnerRelationship, VacancyParty>(vacancyParty);
         }
 
-        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds)
+        public IEnumerable<VacancyParty> GetByIds(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
         {
+            // Guard against an enumerable that can only be enumerated once.
             var vacancyPartyIdsArray = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
 
             _logger.Debug("Calling database to get vacancy parties with Ids={0}", string.Join(", ", vacancyPartyIdsArray));
 
-            const string sql = @"
-                SELECT * FROM dbo.VacancyOwnerRelationship
-                WHERE VacancyOwnerRelationshipId IN @VacancyPartyIds
-                AND StatusTypeId = @StatusTypeId";
+            string sql = @"
+                SELECT *
+                FROM   dbo.VacancyOwnerRelationship
+                WHERE  VacancyOwnerRelationshipId IN @VacancyPartyIds
+" + (currentOnly ? "AND StatusTypeId = @StatusTypeId" : "");
 
             var sqlParams = new
             {
@@ -139,7 +123,7 @@
                 _getOpenConnection.UpdateSingle(dbVacancyOwnerRelationship);
             }
 
-            return GetById(dbVacancyOwnerRelationship.VacancyOwnerRelationshipId);
+            return GetByIds(new int[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
         }
     }
 }

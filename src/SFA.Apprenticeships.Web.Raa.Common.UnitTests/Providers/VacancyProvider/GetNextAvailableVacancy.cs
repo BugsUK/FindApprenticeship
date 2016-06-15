@@ -29,7 +29,7 @@
                 vls => vls.GetNextAvailableVacancy(It.IsAny<string>(), It.IsAny<List<VacancySummary>>()))
                 .Returns(vacancySummary);
 
-            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
@@ -61,7 +61,7 @@
                 vls => vls.GetNextAvailableVacancy(It.IsAny<string>(), It.IsAny<List<VacancySummary>>()))
                 .Returns(vacancySummary);
 
-            providerService.Setup(ps => ps.GetProviderViaOwnerParty(It.IsAny<int>())).Returns(new Provider());
+            providerService.Setup(ps => ps.GetProviderViaCurrentOwnerParty(It.IsAny<int>())).Returns(new Provider());
 
             var vacancyProvider =
                 new VacancyProviderBuilder()
