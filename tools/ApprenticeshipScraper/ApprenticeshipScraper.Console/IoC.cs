@@ -25,8 +25,8 @@
                     {
                         typeof(ApprenticeshipResultsScraper),
                         typeof(TraineeResultsScraper),
-                        typeof(ApprenticeshipDetailsScraper),
-                        typeof(TraineeDetailsScraper)
+                        typeof(TraineeDetailsScraper),
+                        typeof(ApprenticeshipDetailsScraper)
                     });
             return container;
         }

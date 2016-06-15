@@ -23,6 +23,7 @@
 
             p.Setup(arg => arg.Site).As('s', "site").Required();
             p.Setup(arg => arg.Directory).As('d', "directory").Required();
+            p.Setup(arg => arg.Force).As("force");
 
             var result = p.Parse(args);
 

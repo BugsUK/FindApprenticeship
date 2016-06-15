@@ -1,9 +1,11 @@
 namespace ApprenticeshipScraper.CmdLine.Steps
 {
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.IO;
     using System.Threading;
 
+    using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
     using ApprenticeshipScraper.CmdLine.Services.Logger;
@@ -34,13 +36,13 @@ namespace ApprenticeshipScraper.CmdLine.Steps
 
         public void Run(ApplicationArguments arguments)
         {
-            var folder = Path.Combine(arguments.Directory, arguments.Site.ToString(), FolderNames.TraineeResults);
-            var url = this.resolver.Resolve(arguments.Site);
+            var resultsFolder = this.directory.FindStepFolder(arguments, FolderNames.TraineeResults);
+            this.directory.CreateDirectoryIfMissing(resultsFolder);
 
+            var url = this.resolver.Resolve(arguments.Site);
             var rows = this.GetResultItems(url);
             var items = CovertToDynamic(rows);
-            this.directory.CreateDirectoryIfMissing(folder);
-            this.SaveToDisk(items, folder);
+            this.SaveToDisk(items, resultsFolder);
         }
 
         private IEnumerable<CQ> GetResultItems(string baseUrl)
@@ -49,8 +51,20 @@ namespace ApprenticeshipScraper.CmdLine.Steps
             {
                 for (int i = 1; i < 1000; i++) // NOTE: this page count will be a problem if the vacancy count goes above 100,000
                 {
-                    Logger.Info($"Downloading page {i}");
+                    var stopwatch = new Stopwatch();
+                    stopwatch.Start();
                     CQ dom = cookieAwareWebClient.DownloadString(baseUrl + string.Format(UrlFormat, i, this.settings.PageSize));
+                    stopwatch.Stop();
+                    var message = $"Page:{i} Elapsed: {stopwatch.ShortElapsed()}";
+                    if (stopwatch.Elapsed.TotalSeconds <= 5)
+                    {
+                        this.Logger.Info(message);
+                    }
+                    else
+                    {
+                        this.Logger.Warn(message);
+                    }
+
                     Thread.Sleep(this.settings.WaitBetweenRequestsMs);
                     var domObjects = dom[".search-results__item"];
                     if (domObjects.Length == 0)
