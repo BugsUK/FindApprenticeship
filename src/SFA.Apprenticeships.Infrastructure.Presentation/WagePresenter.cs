@@ -122,6 +122,15 @@
 
         public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
         {
+            if (wage.Type == WageType.LegacyWeekly)
+            {
+                return Domain.Entities.Vacancies.WageUnit.Weekly;
+            }
+            if (wage.Type == WageType.LegacyText)
+            {
+                return Domain.Entities.Vacancies.WageUnit.NotApplicable;
+            }
+
             if (wage.Type != WageType.Custom)
             {
                 return Domain.Entities.Vacancies.WageUnit.Weekly;
