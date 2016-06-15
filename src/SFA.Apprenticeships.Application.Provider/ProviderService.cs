@@ -36,9 +36,9 @@ namespace SFA.Apprenticeships.Application.Provider
             _employerService = employerService;            
         }
 
-        public Provider GetProviderViaOwnerParty(int vacancyPartyId)
+        public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId)
         {
-            var vacancyParty = _vacancyPartyReadRepository.GetById(vacancyPartyId);
+            var vacancyParty = _vacancyPartyReadRepository.GetByIds(new int[] { vacancyPartyId }, true).FirstOrDefault();
             var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
             return _providerReadRepository.GetById(providerSite.ProviderId);
         }
@@ -96,9 +96,14 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
         }
 
-        public VacancyParty GetVacancyParty(int vacancyPartyId)
+        public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
-            return _vacancyPartyReadRepository.GetById(vacancyPartyId);
+            return _vacancyPartyReadRepository.GetByIds(new int[] { vacancyPartyId }, currentOnly).FirstOrDefault();
+        }
+
+        public IDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
+        {
+            return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly).ToDictionary(vp => vp.VacancyPartyId);
         }
 
         public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
@@ -121,11 +126,6 @@ namespace SFA.Apprenticeships.Application.Provider
         public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
         {
             return _vacancyPartyWriteRepository.Save(vacancyParty);
-        }
-
-        public IEnumerable<VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds)
-        {
-            return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds);
         }
 
         public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)

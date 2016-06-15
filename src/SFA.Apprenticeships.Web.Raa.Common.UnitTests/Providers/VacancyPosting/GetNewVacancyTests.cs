@@ -25,7 +25,7 @@
         public void SetUp()
         {
             MockProviderService
-                .Setup(mock => mock.GetVacancyParty(VacancyPartyId))
+                .Setup(mock => mock.GetVacancyParty(VacancyPartyId, true))
                 .Returns(VacancyParty);
             MockEmployerService.Setup(s => s.GetEmployer(VacancyParty.EmployerId))
                 .Returns(new Fixture().Build<Employer>().Create());
@@ -42,7 +42,7 @@
 
             // Assert.
             MockProviderService.Verify(mock =>
-                mock.GetVacancyParty(VacancyPartyId), Times.Once);
+                mock.GetVacancyParty(VacancyPartyId, true), Times.Once);
             MockEmployerService.Verify(s => s.GetEmployer(EmployerId), Times.Once);
 
             viewModel.Should().NotBeNull();
