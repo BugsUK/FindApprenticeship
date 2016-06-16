@@ -123,7 +123,7 @@
                 _getOpenConnection.UpdateSingle(dbVacancyOwnerRelationship);
             }
 
-            return GetByIds(new int[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
+            return GetByIds(new[] { dbVacancyOwnerRelationship.VacancyOwnerRelationshipId }).Single();
         }
     }
 }

@@ -37,8 +37,13 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId)
         {
-            var vacancyParty = _vacancyPartyReadRepository.GetByIds(new int[] { vacancyPartyId }, true).FirstOrDefault();
-            var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
+            int providerSiteId = 0;
+            var vacancyParty = _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }).FirstOrDefault();
+            if (vacancyParty != null)
+            {
+                providerSiteId = vacancyParty.ProviderSiteId;
+            }
+            var providerSite = _providerSiteReadRepository.GetById(providerSiteId);
             return _providerReadRepository.GetById(providerSite.ProviderId);
         }
 
@@ -93,10 +98,10 @@ namespace SFA.Apprenticeships.Application.Provider
 
         public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
-            return _vacancyPartyReadRepository.GetByIds(new int[] { vacancyPartyId }, currentOnly).FirstOrDefault();
+            return _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }, currentOnly).FirstOrDefault();
         }
 
-        public IDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
+        public IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
         {
             return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly).ToDictionary(vp => vp.VacancyPartyId);
         }
