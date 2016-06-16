@@ -413,51 +413,6 @@
         }
 
         [Test]
-        public void ShowProviderSectorPassRate()
-        {
-            var details = new Details();
-
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyAddress = new AddressViewModel(),
-                IsNasProvider = false,
-                ProviderSectorPassRate = SomeInteger
-            };
-
-            var view = details.RenderAsHtml(vacancyDetailViewModel);
-
-            view.GetElementbyId("vacancy-framework")
-                .Should()
-                .NotBeNull("The vacancy framework should be shown if the vacancy has a provider");
-
-            view.GetElementbyId("vacancy-provider-sector-pass-rate").InnerText
-                .Should().Contain(Convert.ToString(SomeInteger),
-                "The vacancy provider sector pass rate should be shown if the value is set.");
-        }
-
-        [Test]
-        public void ProviderSectorPassRateNotProvided()
-        {
-            var details = new Details();
-
-            var vacancyDetailViewModel = new ApprenticeshipVacancyDetailViewModel
-            {
-                VacancyAddress = new AddressViewModel(),
-                IsNasProvider = false
-            };
-
-            var view = details.RenderAsHtml(vacancyDetailViewModel);
-
-            view.GetElementbyId("vacancy-framework")
-                .Should()
-                .NotBeNull("The vacancy framework should be shown if the vacancy has a provider");
-
-            view.GetElementbyId("vacancy-provider-sector-pass-rate").InnerText
-                .Should()
-                .Be("The training provider does not yet have a sector success rate for this type of apprenticeship training.");
-        }
-
-        [Test]
         public void HideRecruitmentAgencyIfItsAnonymous()
         {
             var details = new Details();
