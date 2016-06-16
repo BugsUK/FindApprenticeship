@@ -14,7 +14,6 @@
     using Extensions;
     using Presentation;
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
-    using WageUnit = Domain.Entities.Vacancies.WageUnit;
 
     public class TraineeshipVacancyDetailMapper
     {
@@ -41,7 +40,7 @@
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
-                OtherInformation = vacancy.ThingsToConsider,
+                OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
                 //VacancyOwner = vacancy.,

@@ -80,7 +80,7 @@
 
                 detail.WorkingWeek.Should().Be(vacancy.WorkingWeek);
 
-                detail.OtherInformation.Should().Be(vacancy.ThingsToConsider);
+                detail.OtherInformation.Should().Be(vacancy.OtherInformation);
                 detail.FutureProspects.Should().Be(vacancy.FutureProspects);
                 detail.VacancyOwner.Should().BeNull();
                 detail.VacancyManager.Should().BeNull();
