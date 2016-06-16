@@ -123,7 +123,7 @@
                 detail.SupplementaryQuestion1.Should().Be(vacancy.FirstQuestion);
                 detail.SupplementaryQuestion2.Should().Be(vacancy.SecondQuestion);
 
-                detail.RecruitmentAgency.Should().BeNull();
+                detail.RecruitmentAgency.Should().Be(providerSite.TradingName);
                 detail.ProviderName.Should().Be(provider.Name);
                 detail.TradingName.Should().Be(employer.TradingName);
                 detail.ProviderDescription.Should().BeNull();
