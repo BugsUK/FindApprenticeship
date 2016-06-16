@@ -108,6 +108,7 @@
 
         public string Contact { get; set; }
 
+        // ProviderSectorPassRate is no longer used.
         public int? ProviderSectorPassRate { get; set; }
 
         public string TrainingToBeProvided { get; set; }
