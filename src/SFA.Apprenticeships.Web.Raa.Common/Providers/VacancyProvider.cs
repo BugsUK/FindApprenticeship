@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -638,10 +639,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
             var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
-            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
-            viewModel.ProviderSite = providerSite.Convert();
+            if (vacancyParty != null)
+            {
+                var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+                viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
+                var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+                viewModel.ProviderSite = providerSite.Convert();
+            }            
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
