@@ -445,8 +445,9 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             result.PersonalQualities = GetTextField(textFields, TextFieldCodeName.PersonalQualities);
             result.ThingsToConsider = GetTextField(textFields, TextFieldCodeName.ThingsToConsider);
             result.FutureProspects = GetTextField(textFields, TextFieldCodeName.FutureProspects);
+            result.OtherInformation = GetTextField(textFields, TextFieldCodeName.OtherInformation);
         }
-                
+
         private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
         {            
             return textFields.ContainsKey(codeName) ? textFields[codeName] : null;

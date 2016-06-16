@@ -107,6 +107,7 @@ namespace SFA.Apprenticeships.Domain.Entities.Raa.Vacancies
         public string PersonalQualitiesComment { get; set; }
         public string ThingsToConsider { get; set; }
         public string ThingsToConsiderComment { get; set; }
+        public string OtherInformation { get; set; }
         public string DesiredQualifications { get; set; }
         public string DesiredQualificationsComment { get; set; }
         public string FirstQuestion { get; set; }
