@@ -19,7 +19,7 @@
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, ProviderSite providerSite, IList<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
@@ -73,7 +73,7 @@
                 SupplementaryQuestion1 = vacancy.FirstQuestion,
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
-                //RecruitmentAgency = vacancy.,
+                RecruitmentAgency = providerSite.TradingName,
                 ProviderName = provider.Name,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
