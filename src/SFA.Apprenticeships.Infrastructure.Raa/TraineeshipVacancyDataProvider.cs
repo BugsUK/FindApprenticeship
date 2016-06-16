@@ -46,7 +46,7 @@
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
             var provider = _providerService.GetProvider(providerSite.ProviderId);
             var categories = _referenceDataProvider.GetCategories();
-            return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
+            return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, vacancyParty, employer, provider, providerSite, categories, _logService);
         }
     }
 }
