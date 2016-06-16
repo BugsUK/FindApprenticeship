@@ -113,6 +113,8 @@
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
+                Town = address.Town,
+                County = address.County,
                 Postcode = address.Postcode,
                 GeoPoint = GetGeoPoint(address.GeoPoint)
             };
