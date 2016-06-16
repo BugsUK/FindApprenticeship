@@ -19,8 +19,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
-
-    using SFA.Apprenticeships.Web.Common.Configuration;
+    using Common.Configuration;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 

@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         /// <param name="currentOnly">Set to "true" when creating / editing records. Set to "false" when displaying records which may be historic.
         /// Also set to false when displaying current vacancies migrated from AVMS as it allows vacancies party entities to be removed even when in use for current vacancies.</param>
         /// <returns></returns>
-        IDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
+        IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
 

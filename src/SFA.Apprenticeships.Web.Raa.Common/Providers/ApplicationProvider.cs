@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Applications;

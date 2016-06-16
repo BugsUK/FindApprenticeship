@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -10,7 +9,6 @@
     using Application.Vacancies;
     using Application.Vacancies.Entities;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
