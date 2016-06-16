@@ -43,9 +43,9 @@ namespace SFA.Apprenticeships.Application.Provider
             if (vacancyParty != null)
             {
                 providerSiteId = vacancyParty.ProviderSiteId;
-            }
-            var providerSite = _providerSiteReadRepository.GetById(providerSiteId);
-            return _providerReadRepository.GetById(providerSite.ProviderId);
+            }                        
+            var providerSite = providerSiteId != 0?_providerSiteReadRepository.GetById(providerSiteId):null;            
+            return providerSite != null?_providerReadRepository.GetById(providerSite.ProviderId):null;
         }
 
         public Provider GetProvider(int providerId)
