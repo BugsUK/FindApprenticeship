@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -10,7 +9,6 @@
     using Application.Vacancies;
     using Application.Vacancies.Entities;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
@@ -53,7 +51,7 @@
         {
             //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
             var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, _desiredStatuses);
-            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct()).ToDictionary(vp => vp.VacancyPartyId, vp => vp);
+            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
             var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);

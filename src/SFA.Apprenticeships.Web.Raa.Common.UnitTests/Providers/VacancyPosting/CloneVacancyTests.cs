@@ -22,7 +22,7 @@
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(initialVacancyReferenceNumber))
                 .Returns(GetLiveVacancyWithComments(initialVacancyReferenceNumber, initialVacancyTitle));
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(newVacancyReferenceNumber);
-            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>()))
+            MockProviderService.Setup(s => s.GetVacancyParty(It.IsAny<int>(), true))
                 .Returns(new Fixture().Build<VacancyParty>().Create());
             MockEmployerService.Setup(s => s.GetEmployer(It.IsAny<int>()))
                 .Returns(new Fixture().Build<Employer>().Create());
