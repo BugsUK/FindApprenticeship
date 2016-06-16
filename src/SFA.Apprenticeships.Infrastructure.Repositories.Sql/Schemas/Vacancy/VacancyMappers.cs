@@ -197,6 +197,7 @@
                 .IgnoreMember(av => av.PersonalQualitiesComment)
                 .IgnoreMember(av => av.ThingsToConsider)
                 .IgnoreMember(av => av.ThingsToConsiderComment)
+                .IgnoreMember(av => av.OtherInformation)
                 .IgnoreMember(av => av.DesiredQualifications)
                 .IgnoreMember(av => av.DesiredQualificationsComment)
                 .IgnoreMember(av => av.FirstQuestion)
