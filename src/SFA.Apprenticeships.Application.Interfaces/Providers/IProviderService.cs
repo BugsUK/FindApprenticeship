@@ -13,7 +13,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
     /// </summary>
     public interface IProviderService
     {
-        Provider GetProviderViaOwnerParty(int vacancyPartyId);
+        Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId);
 
         Provider GetProvider(int providerId);
 
@@ -29,13 +29,28 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
 
-        VacancyParty GetVacancyParty(int vacancyPartyId);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyId"></param>
+        /// <param name="currentOnly">Set to "true" when creating / editing records. Set to "false" when displaying records which may be historic.
+        /// Also set to false when displaying current vacancies migrated from AVMS as it allows vacancies party entities to be removed even when in use for current vacancies.</param>
+        /// <returns></returns>
+        VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyIds"></param>
+        /// <param name="currentOnly">Set to "true" when creating / editing records. Set to "false" when displaying records which may be historic.
+        /// Also set to false when displaying current vacancies migrated from AVMS as it allows vacancies party entities to be removed even when in use for current vacancies.</param>
+        /// <returns></returns>
+        IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly);
 
         VacancyParty GetVacancyParty(int providerSiteId, string edsUrn);
 
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
 
-        IEnumerable<VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds);
 
         IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
 
