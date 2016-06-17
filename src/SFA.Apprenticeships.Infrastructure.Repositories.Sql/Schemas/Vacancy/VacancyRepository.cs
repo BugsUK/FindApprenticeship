@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
@@ -12,6 +13,7 @@
     using Entities;
     using SFA.Infrastructure.Interfaces;
     using Vacancy = Entities.Vacancy;
+    using VacancyLocation = Entities.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
 
@@ -256,6 +258,7 @@ FETCH NEXT @PageSize ROWS ONLY
             MapRegionalTeam(result);
             MapLocalAuthorityCode(dbVacancy, result);
             MapDuration(dbVacancy, result);
+            MapCountyId(dbVacancy, result);
 
             return result;
         }
@@ -373,6 +376,18 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
             {
                 result.SectorCodeName = null;
             }
+        }
+
+        private void MapCountyId(Vacancy dbVacancy, VacancySummary result)
+        {
+            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                new
+                {
+                    CountyId = dbVacancy.CountyId
+                }).Single();
         }
 
         private void MapLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
