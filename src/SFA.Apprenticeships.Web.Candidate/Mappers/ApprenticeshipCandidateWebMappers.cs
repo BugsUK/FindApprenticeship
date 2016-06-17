@@ -93,6 +93,7 @@
                 .ForMember(a => a.AddressLine2, opt => opt.Ignore())
                 .ForMember(a => a.AddressLine3, opt => opt.Ignore())
                 .ForMember(a => a.AddressLine4, opt => opt.Ignore())
+                .ForMember(a => a.AddressLine5, opt => opt.Ignore())
                 .AfterMap((source, dest) =>
                 {
                     var addressLine2 =
