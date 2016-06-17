@@ -20,6 +20,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
@@ -79,7 +80,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             var existingVacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancyPartyId, true);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var vacancyPartyViewModel = vacancyParty.Convert(employer);
 
@@ -129,7 +130,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public NewVacancyViewModel GetNewVacancyViewModel(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);            
             viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);            
@@ -314,7 +315,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
             var vacancyReferenceNumber = _vacancyPostingService.GetNextVacancyReferenceNumber();
             var vacancyParty =
-                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
+                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId, true);
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var provider = _providerService.GetProvider(ukprn);
 
@@ -376,7 +377,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
 
             var vacancyParty =
-                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId);
+                _providerService.GetVacancyParty(newVacancyViewModel.OwnerParty.VacancyPartyId, true);
+            if (vacancyParty == null)
+                throw new Exception($"Vacancy Party {newVacancyViewModel.OwnerParty.VacancyPartyId} not found / no longer current");
+
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
 
             var vacancy = newVacancyViewModel.VacancyReferenceNumber.HasValue
@@ -633,12 +637,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private VacancyViewModel GetVacancyViewModelFrom(Vacancy vacancy)
         {
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
-            var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
-            viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
-            var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
-            viewModel.ProviderSite = providerSite.Convert();
+            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false);  // Some current vacancies have non-current vacancy parties
+            if (vacancyParty != null)
+            {
+                var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+                viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
+                var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+                viewModel.ProviderSite = providerSite.Convert();
+            }            
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
@@ -942,7 +949,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
+            if (vacancyParty == null)
+                throw new Exception($"Vacancy Party {vacancy.OwnerPartyId} not found / no longer current");
+
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var result = vacancyParty.Convert(employer);
             result.VacancyGuid = vacancy.VacancyGuid;
@@ -1076,7 +1086,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
         private DashboardVacancySummaryViewModel ConvertToDashboardVacancySummaryViewModel(VacancySummary vacancy)
         {
-            var provider = _providerService.GetProviderViaOwnerParty(vacancy.OwnerPartyId);
+            var provider = _providerService.GetProviderViaCurrentOwnerParty(vacancy.OwnerPartyId);
             var userName = _currentUserService.CurrentUserName;
 
             return new DashboardVacancySummaryViewModel
@@ -1372,8 +1382,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber.Value);
 
-            var vacancyParty =
-                _providerService.GetVacancyParty(viewModel.OwnerParty.VacancyPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(viewModel.OwnerParty.VacancyPartyId, false);
+            if (vacancyParty == null)
+                throw new Exception($"Vacancy Party {viewModel.OwnerParty.VacancyPartyId} not found / no longer current");
+
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
 
             //update properties

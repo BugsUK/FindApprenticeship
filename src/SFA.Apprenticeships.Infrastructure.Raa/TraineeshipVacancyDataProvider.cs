@@ -41,12 +41,17 @@
                 return null;
             }
 
-            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId);
+            var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, false); // Some current vacancies have non-current vacancy parties
+
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+
             var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
+            if (providerSite == null)
+                throw new System.Exception($"Could not find VacancyParty for ProviderSiteId={vacancyParty.ProviderSiteId}");
+
             var provider = _providerService.GetProvider(providerSite.ProviderId);
             var categories = _referenceDataProvider.GetCategories();
-            return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, vacancyParty, employer, provider, categories, _logService);
+            return TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(vacancy, vacancyParty, employer, provider, providerSite, categories, _logService);
         }
     }
 }

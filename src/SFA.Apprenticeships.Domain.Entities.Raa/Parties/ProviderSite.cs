@@ -12,6 +12,8 @@
 
         public string Name { get; set; }
 
+        public string TradingName { get; set; }
+
         public string EmployerDescription { get; set; }
 
         public string CandidateDescription { get; set; }

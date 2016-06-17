@@ -55,7 +55,7 @@
             MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
                 
-            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId))
+            MockProviderService.Setup(s => s.GetVacancyParty(VacancyPartyId, true))
                 .Returns(_vacancyParty);
             MockEmployerService.Setup(s => s.GetEmployer(EmployerId)).Returns(new Fixture().Build<Employer>().Create());
         }

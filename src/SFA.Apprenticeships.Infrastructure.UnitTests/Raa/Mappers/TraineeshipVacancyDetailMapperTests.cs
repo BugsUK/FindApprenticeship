@@ -38,6 +38,7 @@
                 var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
                 var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+                var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
 
                 var categories = fixture
                     .Build<Domain.Entities.ReferenceData.Category>()
@@ -46,7 +47,7 @@
 
                 // Act.
                 var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
-                    vacancy, vacancyParty, employer, provider, categories, _mockLogService.Object);
+                    vacancy, vacancyParty, employer, provider, providerSite, categories, _mockLogService.Object);
 
                 // Assert.
                 detail.Should().NotBeNull();
@@ -114,7 +115,7 @@
                 detail.SupplementaryQuestion1.Should().Be(vacancy.FirstQuestion);
                 detail.SupplementaryQuestion2.Should().Be(vacancy.SecondQuestion);
 
-                detail.RecruitmentAgency.Should().BeNull();
+                detail.RecruitmentAgency.Should().Be(providerSite.TradingName);
                 detail.ProviderName.Should().Be(provider.Name);
                 detail.TradingName.Should().Be(employer.TradingName);
                 detail.ProviderDescription.Should().BeNull();
@@ -150,6 +151,7 @@
             var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
             var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
             var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
+            var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
 
             var categories = fixture
                 .Build<Domain.Entities.ReferenceData.Category>()
@@ -158,7 +160,7 @@
 
             // Act.
             var detail = TraineeshipVacancyDetailMapper.GetTraineeshipVacancyDetail(
-                vacancy, vacancyParty, employer, provider, categories, _mockLogService.Object);
+                vacancy, vacancyParty, employer, provider, providerSite, categories, _mockLogService.Object);
 
             // Assert.
             detail.Should().NotBeNull();

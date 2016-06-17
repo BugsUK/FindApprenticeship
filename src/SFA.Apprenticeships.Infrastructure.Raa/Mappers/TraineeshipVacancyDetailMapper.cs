@@ -17,7 +17,7 @@
 
     public class TraineeshipVacancyDetailMapper
     {
-        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
@@ -68,12 +68,11 @@
                 SupplementaryQuestion1 = vacancy.FirstQuestion,
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
-                //RecruitmentAgency = vacancy.,
+                RecruitmentAgency = providerSite.TradingName,
                 ProviderName = provider.Name,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
-                //ProviderSectorPassRate = vacancy.,
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
