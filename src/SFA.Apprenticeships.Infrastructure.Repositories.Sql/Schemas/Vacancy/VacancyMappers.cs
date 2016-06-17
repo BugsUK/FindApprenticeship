@@ -232,15 +232,15 @@
                         || !string.IsNullOrWhiteSpace(v.Town))
                     {
                         av.Address = new DomainPostalAddress
-                                         {
-                                             AddressLine1 = v.AddressLine1,
-                                             AddressLine2 = v.AddressLine2,
-                                             AddressLine3 = v.AddressLine3,
-                                             AddressLine4 = v.AddressLine4,
-                                             AddressLine5 = v.AddressLine5,
-                                             Postcode = v.PostCode,
-                                             Town = v.Town
-                                         };
+                        {
+                            AddressLine1 = v.AddressLine1,
+                            AddressLine2 = v.AddressLine2,
+                            AddressLine3 = v.AddressLine3,
+                            AddressLine4 = v.AddressLine4,
+                            AddressLine5 = v.AddressLine5,
+                            Postcode = v.PostCode,
+                            Town = v.Town
+                        };
                     }
 
                     if ((v.Latitude.HasValue && v.Longitude.HasValue) ||

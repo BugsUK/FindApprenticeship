@@ -85,11 +85,27 @@
                     opt => opt.Ignore())
                 .ForMember(d => d.Wage, 
                     opt => opt.ResolveUsing<ApprenticeshipVacancySummaryViewModelResolvers.WageResolver>());
-            
+
+
+
             Mapper.CreateMap<Address, AddressViewModel>()
-                .ForMember(dest => dest.AddressLine5, opt => opt.Ignore())
-                .ForMember(dest => dest.Town, opt => opt.Ignore())
-                .ForMember(dest => dest.County, opt => opt.Ignore());
+                .ForMember(a => a.AddressLine1, opt => opt.Ignore())
+                .ForMember(a => a.AddressLine2, opt => opt.Ignore())
+                .ForMember(a => a.AddressLine3, opt => opt.Ignore())
+                .ForMember(a => a.AddressLine4, opt => opt.Ignore())
+                .ForMember(a => a.AddressLine5, opt => opt.Ignore())
+                .AfterMap((source, dest) =>
+                {
+                    var addressLine2 =
+                        AddAddressLine(
+                            AddAddressLine(
+                                AddAddressLine(null, source.AddressLine2), source.AddressLine3), source.AddressLine4);
+
+                    dest.AddressLine1 = source.AddressLine1;
+                    dest.AddressLine2 = addressLine2;
+                    dest.AddressLine3 = source.Town;
+                    dest.AddressLine4 = source.County;
+                });
             Mapper.CreateMap<AddressViewModel, Address>();
 
             Mapper.CreateMap<GeoPoint, GeoPointViewModel>();
@@ -126,6 +142,23 @@
                 .ForMember(c => c.Enquiry, opt => opt.Ignore())
                 .ForMember(c => c.DateCreated, opt => opt.Ignore())
                 .ForMember(c => c.DateUpdated, opt => opt.Ignore());
+        }
+
+        private static string AddAddressLine(string addressLine, string addressLineToAdd)
+        {
+            if (!string.IsNullOrWhiteSpace(addressLineToAdd))
+            {
+                if (!string.IsNullOrWhiteSpace(addressLine))
+                {
+                    addressLine += ", " + addressLineToAdd;
+                }
+                else
+                {
+                    addressLine += addressLineToAdd;
+                }
+            }
+
+            return addressLine;
         }
     }
 }
