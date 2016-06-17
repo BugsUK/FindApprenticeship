@@ -35,7 +35,6 @@
                     .With(each => each.WageType, Domain.Entities.Raa.Vacancies.WageType.NationalMinimum)
                     .Create();
 
-                var vacancyParty = fixture.Create<Domain.Entities.Raa.Parties.VacancyParty>();
                 var employer = fixture.Create<Domain.Entities.Raa.Parties.Employer>();
                 var provider = fixture.Create<Domain.Entities.Raa.Parties.Provider>();
                 var providerSite = fixture.Create<Domain.Entities.Raa.Parties.ProviderSite>();
@@ -47,7 +46,7 @@
 
                 // Act.
                 var detail = ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(
-                    vacancy, vacancyParty, employer, provider, providerSite, categories, _mockLogService.Object);
+                    vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
 
                 // Assert.
                 detail.Should().NotBeNull();
@@ -94,7 +93,7 @@
                 detail.TrainingType.Should().Be(vacancy.TrainingType.GetTrainingType());
                 detail.EmployerName.Should().Be(employer.Name);
                 detail.AnonymousEmployerName.Should().Be(vacancy.EmployerAnonymousName);
-                detail.EmployerDescription.Should().Be(vacancyParty.EmployerDescription);
+                detail.EmployerDescription.Should().Be(vacancy.EmployerDescription);
                 detail.EmployerWebsite.Should().Be(vacancy.EmployerWebsiteUrl);
                 detail.ApplyViaEmployerWebsite.Should().Be(vacancy.OfflineVacancy ?? false);
                 detail.VacancyUrl.Should().Be(vacancy.OfflineApplicationUrl);
@@ -168,7 +167,7 @@
 
             // Act.
             var detail = ApprenticeshipVacancyDetailMapper.GetApprenticeshipVacancyDetail(
-                vacancy, vacancyParty, employer, provider, providerSite, categories, _mockLogService.Object);
+                vacancy, employer, provider, providerSite, categories, _mockLogService.Object);
 
             // Assert.
             detail.Should().NotBeNull();

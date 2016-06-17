@@ -17,7 +17,7 @@
 
     public class TraineeshipVacancyDetailMapper
     {
-        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
@@ -53,8 +53,8 @@
                 EmployerName = employer.Name,
                 AnonymousEmployerName = vacancy.EmployerAnonymousName,
                 IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
-                EmployerDescription = vacancyParty.EmployerDescription,
-                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
+                EmployerDescription = vacancy.EmployerDescription,
+                EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
