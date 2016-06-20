@@ -38,6 +38,7 @@
 
         public DateTime DateValidated { get; set; }
         public string County { get; set; }
+
         public GeoPoint GeoPoint { get; set; }
 
         public override string ToString()

@@ -836,10 +836,10 @@ WHERE  CodeName = @FrameworkCodeName",
                 dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
 FROM   dbo.County
-WHERE  CodeName = @CountyCodeName",
+WHERE  FullName = @CountyFullName",
                     new
                     {
-                        CountyCodeName = entity.Address.County
+                        CountyFullName = entity.Address.County
                     }).Single(); 
             }
         }
