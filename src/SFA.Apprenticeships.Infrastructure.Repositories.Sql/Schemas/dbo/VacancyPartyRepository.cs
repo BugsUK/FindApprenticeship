@@ -74,13 +74,11 @@
         {
             const string sql = @"
                 SELECT * FROM dbo.VacancyOwnerRelationship
-                WHERE ProviderSiteID = @ProviderSiteId
-                AND StatusTypeId = @StatusTypeId";
+                WHERE ProviderSiteID = @ProviderSiteId";                
 
             var sqlParams = new
             {
-                ProviderSiteID = providerSiteId,
-                StatusTypeId = VacancyOwnerRelationshipStatusTypes.Live
+                ProviderSiteID = providerSiteId                
             };
 
             var vacancyParties = _getOpenConnection.Query<VacancyOwnerRelationship>(sql, sqlParams);
