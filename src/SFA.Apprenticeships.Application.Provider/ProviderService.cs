@@ -133,7 +133,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return _vacancyPartyWriteRepository.Save(vacancyParty);
         }
 
-        public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
+        public IEnumerable<VacancyParty> GetAllVacancyPartiesByProviderSite(int providerSiteId)
         {
             return _vacancyPartyReadRepository.GetByProviderSiteId(providerSiteId);
         }

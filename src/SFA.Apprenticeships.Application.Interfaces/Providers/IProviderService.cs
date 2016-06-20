@@ -52,7 +52,7 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
         VacancyParty SaveVacancyParty(VacancyParty vacancyParty);
 
 
-        IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId);
+        IEnumerable<VacancyParty> GetAllVacancyPartiesByProviderSite(int providerSiteId);
 
         Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize);        
     }

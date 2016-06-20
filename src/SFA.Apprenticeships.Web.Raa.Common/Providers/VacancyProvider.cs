@@ -781,7 +781,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
 
             //TODO: Unit tests
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
+            var vacancyParties = _providerService.GetAllVacancyPartiesByProviderSite(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
             var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
