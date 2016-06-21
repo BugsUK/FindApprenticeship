@@ -9,12 +9,37 @@ The code follows a [clean code architecture](https://www.google.co.uk/#q=clean%2
 
 The live service runs on the [Azure](http://azure.microsoft.com) platform and integrates with:
 
-- [Postcodes.io](http://postcodes.io/) for resolving postcodes to geolocations
+## Web sites ##
+
+- Find An Apprenticeship
+	- https://www.findapprenticeship.service.gov.uk/
+- Recruit An Apprenticeship
+	- https://recruit.findapprenticeship.service.gov.uk
+- Manage An Apprenticeship
+	- https://manage.findapprenticeship.service.gov.uk
+
+## Azure worker roles ##
+
+- Migrate
+- Migrate FAA
+- Log Event Indexer
+- Processes
+- Scheduled Jobs
+	- Application Status Pages
+	- Send Daily Digests
+	- Send Saved Search Alerts
+	- Queue Candidates
+	- Application House Keeper
+	- Communication House Keeper
+	- Candidate Saved Searches
+	- Apprenticeship Vacancy Indexer
+	- Traneeship Vacancy Indexer
+
+## Dependencies ##
+
 - [PCA Predict](http://www.pcapredict.com/en-gb/index/) for address lookups
 - [SendGrid](https://sendgrid.com/) for authoring and dispatching emails
 - [Reach](https://www.reach-interactive.com/) for dispatching SMS messages
-
-## Components ##
 
 The web layer is built predominantly in C# and [ASP.NET MVC 5.x](http://www.asp.net/mvc)
 
@@ -26,22 +51,6 @@ Infrastructure components include:
 - [Logstash](https://www.elastic.co/products/logstash)
 - [Kibana](https://www.elastic.co/products/kibana)
 
-## Automation ##
-
-Automated build and deployment uses:
-
-- [TeamCity](https://www.jetbrains.com/teamcity/)
-- [VisualStudio](https://www.visualstudio.com/en-us/products/vs-2015-product-editions.aspx)
-- [MSBuild](https://github.com/Microsoft/msbuild)
-- [PowerShell](https://technet.microsoft.com/library/bb978526)
-
-Automated unit, integration and acceptance tests use:
-
-- [NUnit](http://nunit.org/)
-- [Moq](https://github.com/Moq)
-- [WebDriver](http://www.seleniumhq.org/projects/webdriver/) 
-- [SpecFlow](http://www.specflow.org/)
-- [SpecBind](https://github.com/dpiessens/specbind)
 
 ## Running the application ##
 
