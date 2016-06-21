@@ -1086,6 +1086,13 @@ WriteLiteral(" type=\"hidden\"");
 WriteLiteral(" data-bind=\"value: itemUprn, attr:{\'name\':\'Addresses[\' + $index() +\'].Address.Upr" +
 "n\', \'id\':\'addresses_\'+ $index() + \'address__Uprn\' }\"");
 
+WriteLiteral(">\r\n                        <input");
+
+WriteLiteral(" type=\"hidden\"");
+
+WriteLiteral(" data-bind=\"value: itemProvinceName, attr:{\'name\':\'Addresses[\' + $index() +\'].Add" +
+"ress.County\', \'id\':\'addresses_\'+ $index() + \'address__County\' }\"");
+
 WriteLiteral(">\r\n                    </td>\r\n                    <td");
 
 WriteLiteral(" class=\"ta-center\"");
@@ -1102,7 +1109,7 @@ WriteLiteral(">remove location</a>\r\n                    </td>\r\n             
 WriteLiteral("            ");
 
             
-            #line 228 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 229 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.LocationAddressesComment, "Comment", Html.GetLabelFor(m => m.LocationAddressesComment)));
 
             
@@ -1119,7 +1126,7 @@ WriteLiteral(">\r\n");
 WriteLiteral("            ");
 
             
-            #line 232 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 233 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.FormTextAreaFor(m => m.AdditionalLocationInformation, controlHtmlAttributes: new { @class = "width-all-1-1", type = "text", size = 12, style = "height: 200px;" }, labelHtmlAttributes: new { @class = "bold-small" }));
 
             
@@ -1130,7 +1137,7 @@ WriteLiteral("\r\n");
 WriteLiteral("            ");
 
             
-            #line 233 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
+            #line 234 "..\..\Views\Shared\DisplayTemplates\Vacancy\LocationSearch.cshtml"
        Write(Html.EditorFor(m => m.AdditionalLocationInformationComment, "Comment", Html.GetLabelFor(m => m.AdditionalLocationInformationComment)));
 
             

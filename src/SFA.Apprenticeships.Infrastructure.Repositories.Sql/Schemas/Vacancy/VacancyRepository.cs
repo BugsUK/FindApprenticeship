@@ -379,14 +379,19 @@ WHERE  ApprenticeshipOccupationId = @ApprenticeshipOccupationId",
 
         private void MapCountyId(Vacancy dbVacancy, VacancySummary result)
         {
-            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+            // Not all the vacancies have CountyId (before being accepted by QA).
+            // A multilocation vacancy (more than one location) doesn't have anything in the address fields.
+            if (dbVacancy.CountyId > 0)
+            {
+                result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT FullName
 FROM   dbo.County
 WHERE  CountyId = @CountyId",
-                new
-                {
-                    CountyId = dbVacancy.CountyId
-                }).Single();
+                    new
+                    {
+                        CountyId = dbVacancy.CountyId
+                    }).Single();
+            }
         }
 
         private void MapLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
@@ -836,10 +841,10 @@ WHERE  CodeName = @FrameworkCodeName",
                 dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId
 FROM   dbo.County
-WHERE  CodeName = @CountyCodeName",
+WHERE  FullName = @CountyFullName",
                     new
                     {
-                        CountyCodeName = entity.Address.County
+                        CountyFullName = entity.Address.County
                     }).Single(); 
             }
         }
@@ -918,6 +923,7 @@ WHERE  el.CodeName = @EducationLevel",
 
         private void UpsertAdditionalQuestion(int vacancyId, short questionId, string question)
         {
+            
             var sql = @"
 merge dbo.AdditionalQuestion as target
 using (values (@Question))
