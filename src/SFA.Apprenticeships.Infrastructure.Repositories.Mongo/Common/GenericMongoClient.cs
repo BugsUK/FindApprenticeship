@@ -13,6 +13,11 @@
         protected string ConnectionString { get; set; }
         protected string CollectionName { get; set; }
 
+        static GenericMongoClient()
+        {
+            GlobalBsonClassMaps.Register();
+        } 
+        
         protected MongoCollection<T> Collection
         {
             get
