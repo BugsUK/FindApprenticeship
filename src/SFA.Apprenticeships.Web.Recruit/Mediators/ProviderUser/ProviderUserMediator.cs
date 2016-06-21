@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
+    using System.Security.Principal;
     using System.Web.Mvc;
     using Common.Constants;
     using Common.Mediators;
@@ -16,6 +17,7 @@
     using Domain.Entities.Communication;
     using Raa.Common.Constants.ViewModels;
     using Raa.Common.Providers;
+    using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.ProviderUser;
     using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
@@ -95,7 +97,7 @@
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
             }
 
-            ((ClaimsIdentity) principal.Identity).AddClaim(new Claim(ClaimTypes.ProviderId, Convert.ToString(provider.ProviderId)));
+            AddProviderIdClaim(principal, provider);
 
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)
             {
@@ -259,6 +261,12 @@
             };
 
             return GetMediatorResponse(ProviderUserMediatorCodes.ChangeProviderSite.Ok, homeViewModel);
+        }
+
+        private static void AddProviderIdClaim(IPrincipal principal, ProviderViewModel provider)
+        {
+            ((ClaimsIdentity)principal.Identity).AddClaim(new Claim(ClaimTypes.ProviderId,
+                Convert.ToString(provider.ProviderId)));
         }
 
         private List<SelectListItem> GetProviderSites(string ukprn)

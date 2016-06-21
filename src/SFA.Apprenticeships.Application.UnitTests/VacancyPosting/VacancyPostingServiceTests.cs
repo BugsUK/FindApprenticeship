@@ -1,11 +1,13 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
+    using Apprenticeships.Application.Provider;
     using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
+    using Interfaces.Providers;
     using Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
@@ -21,6 +23,7 @@
         private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
         private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
         private readonly Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
+        private readonly Mock<IProviderVacancyAuthorisationService> _providerVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
 
         private IVacancyPostingService _vacancyPostingService;
 
@@ -40,14 +43,19 @@
         [SetUp]
         public void SetUp()
         {
-            _vacancyPostingService = new VacancyPostingService(_apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object, _referenceNumberRepository.Object,
-                _providerUserReadRepository.Object, _vacancyLocationAddressReadRepository.Object, 
-                _vacancyLocationAddressWriteRepository.Object, _currentUserService.Object);
+            _vacancyPostingService = new VacancyPostingService(
+                _apprenticeshipVacancyReadRepository.Object,
+                _apprenticeshipVacancyWriteRepository.Object,
+                _referenceNumberRepository.Object,
+                _providerUserReadRepository.Object,
+                _vacancyLocationAddressReadRepository.Object,
+                _vacancyLocationAddressWriteRepository.Object,
+                _currentUserService.Object,
+                _providerVacancyAuthorisationService.Object);
 
             _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
             _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
-            }
+        }
 
         [Test]
         public void CreateVacancyShouldCallRepository()

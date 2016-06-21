@@ -12,6 +12,7 @@
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
     using Infrastructure.Interfaces;
+    using Interfaces.Providers;
     using Interfaces.VacancyPosting;
 
     public class VacancyPostingService : IVacancyPostingService
@@ -23,15 +24,17 @@
         private readonly IVacancyLocationReadRepository _vacancyLocationReadRepository;
         private readonly IVacancyLocationWriteRepository _vacancyLocationWriteRepository;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IProviderVacancyAuthorisationService _providerVacancyAuthorisationService;
 
         public VacancyPostingService(
             IVacancyReadRepository vacancyReadRepository,
             IVacancyWriteRepository vacancyWriteRepository,
             IReferenceNumberRepository referenceNumberRepository,
-            IProviderUserReadRepository providerUserReadRepository, 
-            IVacancyLocationReadRepository vacancyLocationReadRepository, 
+            IProviderUserReadRepository providerUserReadRepository,
+            IVacancyLocationReadRepository vacancyLocationReadRepository,
             IVacancyLocationWriteRepository vacancyLocationWriteRepository,
-            ICurrentUserService currentUserService)
+            ICurrentUserService currentUserService,
+            IProviderVacancyAuthorisationService providerVacancyAuthorisationService)
         {
             _vacancyReadRepository = vacancyReadRepository;
             _vacancyWriteRepository = vacancyWriteRepository;
@@ -40,13 +43,14 @@
             _vacancyLocationReadRepository = vacancyLocationReadRepository;
             _vacancyLocationWriteRepository = vacancyLocationWriteRepository;
             _currentUserService = currentUserService;
+            _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
         }
 
         public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
 
-            if(_currentUserService.IsInRole(Roles.Faa))
+            if (_currentUserService.IsInRole(Roles.Faa))
             {
                 var username = _currentUserService.CurrentUserName;
                 var vacancyManager = _providerUserReadRepository.GetByUsername(username);
@@ -67,32 +71,6 @@
         public Vacancy UpdateVacancy(Vacancy vacancy)
         {
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Update(v));
-        }
-
-        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation )
-        {
-            Condition.Requires(vacancy);
-
-            // currentApplication.AssertState("Save apprenticeship application", ApplicationStatuses.Draft);
-            if (vacancy.Status == VacancyStatus.Completed)
-            {
-                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
-                throw new CustomException(message, ErrorCodes.EntityStateError);
-            }
-
-            if (_currentUserService.IsInRole(Roles.Faa))
-            {
-                var username = _currentUserService.CurrentUserName;
-                var lastEditedBy = _providerUserReadRepository.GetByUsername(username);
-                if (lastEditedBy != null)
-                {
-                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
-                }
-            }
-
-            vacancy = operation(vacancy);
-
-            return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
 
         public int GetNextVacancyReferenceNumber()
@@ -148,6 +126,31 @@
         public void DeleteVacancyLocationsFor(int vacancyId)
         {
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+        }
+
+        private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation)
+        {
+            Condition.Requires(vacancy);
+
+            if (vacancy.Status == VacancyStatus.Completed)
+            {
+                var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
+                throw new CustomException(message, ErrorCodes.EntityStateError);
+            }
+
+            if (_currentUserService.IsInRole(Roles.Faa))
+            {
+                var username = _currentUserService.CurrentUserName;
+                var lastEditedBy = _providerUserReadRepository.GetByUsername(username);
+                if (lastEditedBy != null)
+                {
+                    vacancy.LastEditedById = lastEditedBy.ProviderUserId;
+                }
+            }
+
+            vacancy = operation(vacancy);
+
+            return _vacancyReadRepository.Get(vacancy.VacancyId);
         }
     }
 }
