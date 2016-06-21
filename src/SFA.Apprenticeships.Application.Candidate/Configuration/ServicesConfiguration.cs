@@ -1,5 +1,6 @@
-﻿namespace SFA.Apprenticeships.Infrastructure.Common.Configuration
+﻿namespace SFA.Apprenticeships.Application.Candidate.Configuration
 {
+
     public class ServicesConfiguration
     {
         public const string Legacy = "Legacy";

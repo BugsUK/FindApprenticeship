@@ -5,6 +5,7 @@
     using Application.Applications.Strategies;
     using Application.Authentication;
     using Application.Candidate;
+    using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.SavedSearches;
@@ -35,7 +36,6 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;

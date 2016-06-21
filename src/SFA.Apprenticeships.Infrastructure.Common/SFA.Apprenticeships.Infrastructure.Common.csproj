@@ -155,7 +155,6 @@
     <Compile Include="Configuration\ConfigurationCacheKey.cs" />
     <Compile Include="Configuration\ConfigurationExpressionExtension.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />
-    <Compile Include="Configuration\ServicesConfiguration.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
     <Compile Include="CurrentUser\ICurrentUserService.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />

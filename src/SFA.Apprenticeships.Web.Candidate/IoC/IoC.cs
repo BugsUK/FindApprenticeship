@@ -1,6 +1,7 @@
 namespace SFA.Apprenticeships.Web.Candidate.IoC {
 
     using SFA.Infrastructure.Interfaces;
+    using Application.Candidate.Configuration;
     using Common.IoC;
     using Common.Providers;
     using Common.Services;

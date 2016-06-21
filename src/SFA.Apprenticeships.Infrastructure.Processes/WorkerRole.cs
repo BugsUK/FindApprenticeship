@@ -33,6 +33,10 @@ namespace SFA.Apprenticeships.Infrastructure.Processes
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
+
+    using SFA.Apprenticeships.Application.Candidate;
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
+
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;

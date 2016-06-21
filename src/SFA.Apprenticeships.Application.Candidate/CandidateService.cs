@@ -10,12 +10,14 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
-    using Infrastructure.Common.Configuration;
     using Interfaces.Candidates;
     using Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
+
+    using Configuration;
+
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.SavedSearches;
@@ -335,7 +337,6 @@
             _logger.Debug(
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
-
             var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {

@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using Application.Applications;
+    using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Vacancies;
@@ -15,6 +16,7 @@
     using Infrastructure.LegacyWebServices.Vacancy;
     using Infrastructure.LegacyWebServices.Wcf;
     using Infrastructure.Raa;
+
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;

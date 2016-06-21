@@ -2,7 +2,9 @@
 {
     using Application.ReferenceData;
     using Application.Reporting;
-    using Common.Configuration;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap.Configuration.DSL;
 
     public class RaaRegistry : Registry

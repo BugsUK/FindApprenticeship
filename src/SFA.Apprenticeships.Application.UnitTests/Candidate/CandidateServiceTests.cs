@@ -5,10 +5,11 @@
     using Apprenticeships.Application.Candidate.Strategies.Traineeships;
     using Domain.Entities.Applications;
     using Domain.Entities.Vacancies.Apprenticeships;
-    using Infrastructure.Common.Configuration;
     using Moq;
     using NUnit.Framework;
     using Ploeh.AutoFixture;
+
+    using Apprenticeships.Application.Candidate.Configuration;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]

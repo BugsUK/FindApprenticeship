@@ -3,10 +3,12 @@
     using System;
     using Application.Candidate;
     using SFA.Infrastructure.Interfaces;
-    using Common.Configuration;
+
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+
+    using Application.Candidate.Configuration;
 
     public class CreateCandidateRequestSubscriber : IServiceBusSubscriber<CreateCandidateRequest>
     {

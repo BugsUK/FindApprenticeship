@@ -11,6 +11,8 @@
     using Mappers.Apprenticeships;
     using Mappers.Traineeship;
     using ReferenceData;
+
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
     using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
     using Wcf;

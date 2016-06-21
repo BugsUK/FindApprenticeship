@@ -25,6 +25,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
