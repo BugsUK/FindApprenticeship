@@ -135,6 +135,7 @@
     <Compile Include="Common\Configuration\MongoConfiguration.cs" />
     <Compile Include="Common\GenericMongoClient.cs" />
     <Compile Include="Common\GenericMongoClient2.cs" />
+    <Compile Include="Common\GlobalBsonClassMaps.cs" />
     <Compile Include="Common\IMongoAdminClient.cs" />
     <Compile Include="Common\MongoAdminClient.cs" />
     <Compile Include="Communication\ApplicationStatusAlertRepository.cs" />
