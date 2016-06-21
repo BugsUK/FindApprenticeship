@@ -70,7 +70,7 @@
                 // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
@@ -105,6 +105,7 @@
                     .Excluding(x => x.CreatedDateTime)
                     .Excluding(x => x.CreatedByProviderUsername)
                     .Excluding(x => x.VacancyLocationType)
+                    .Excluding(x => x.OtherInformation)
                     .Excluding(x => x.WageUnit)); // TODO: remove this after changes in DB
 
             entity.AdditionalLocationInformationComment.Should().Be("AdditionalLocationInformationComment");
@@ -136,7 +137,7 @@
             // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
@@ -179,7 +180,7 @@
             // Changed from PendingQA to Draft because PendingQA is not still in the db
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = "CV1 2WT";
-            vacancy.Address.County = "CAM";
+            vacancy.Address.County = "West Midlands";
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.FrameworkCodeName = null;
             vacancy.SectorCodeName = "ALB";
@@ -338,6 +339,7 @@
             var vacancy = CreateValidDomainVacancy();
             vacancy.VacancyManagerId = SeedData.ProviderSites.HopwoodCampus.ProviderSiteId;
             vacancy.Address.Postcode = null;
+            vacancy.Address.County = null;
             vacancy.OwnerPartyId = SeedData.VacancyOwnerRelationships.TestOne.VacancyOwnerRelationshipId;
             vacancy.IsEmployerLocationMainApprenticeshipLocation = false;
             vacancy.ProviderId = SeedData.Providers.HopwoodHallCollege.ProviderId;
@@ -351,7 +353,8 @@
                     VacancyId = vacancy.VacancyId,
                     Address = new PostalAddress
                     {
-                        Postcode = "SW2 4NT"
+                        Postcode = "SW2 4NT",
+                        County = "West Midlands"
                     }
                 },
                 new VacancyLocation
@@ -359,7 +362,8 @@
                     VacancyId = vacancy.VacancyId,
                     Address = new PostalAddress
                     {
-                        Postcode = "B26 2LW"
+                        Postcode = "B26 2LW",
+                        County = "West Midlands"
                     }
                 }
             };
