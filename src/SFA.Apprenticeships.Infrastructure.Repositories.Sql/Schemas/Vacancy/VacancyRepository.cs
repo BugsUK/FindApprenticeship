@@ -151,9 +151,10 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
         /// </summary>
         /// <param name="pageSize"></param>
         /// <param name="page">Expects page starting from 0 rather than 1</param>
+        /// <param name="filterNonRaaVacancies"></param>
         /// <param name="desiredStatuses"></param>
         /// <returns></returns>
-        public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterNonRaaVacancies, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
 
@@ -161,6 +162,11 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             var sql = VacancySummarySelect + @"
             FROM   dbo.Vacancy
             WHERE  VacancyStatusId IN @VacancyStatusCodeIds";
+
+            if (filterNonRaaVacancies)
+            {
+                sql += " AND EditedInRaa = true";
+            }
 
             if (pageSize > 0)
             {
