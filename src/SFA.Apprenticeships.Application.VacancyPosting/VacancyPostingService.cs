@@ -3,7 +3,6 @@
     //TODO: rename project to SFA.Management.Application.VacancyPosting?
     using System;
     using System.Collections.Generic;
-    using System.Threading;
     using CuttingEdge.Conditions;
     using Domain.Entities;
     using Domain.Entities.Exceptions;
