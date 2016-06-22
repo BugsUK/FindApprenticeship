@@ -113,6 +113,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Common\IGetOpenConnection.cs" />
     <Compile Include="Common\SqlMapperExtensionsCustom.cs" />
     <Compile Include="Common\TypeExtensions.cs" />
