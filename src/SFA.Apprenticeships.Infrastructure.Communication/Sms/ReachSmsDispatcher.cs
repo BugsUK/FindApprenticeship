@@ -7,10 +7,11 @@
     using System.Net;
     using System.Xml.Linq;
     using Application.Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Exceptions;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ReachSmsDispatcher : ISmsDispatcher
     {

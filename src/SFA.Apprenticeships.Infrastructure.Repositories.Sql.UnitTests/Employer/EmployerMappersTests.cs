@@ -5,6 +5,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using Schemas.dbo;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Domain = Domain.Entities.Raa.Parties;
     using Database = Schemas.dbo.Entities;

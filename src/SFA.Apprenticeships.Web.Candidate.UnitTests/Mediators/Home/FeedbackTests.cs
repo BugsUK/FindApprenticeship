@@ -19,6 +19,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Home
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class FeedbackTests : MediatorBase
     {

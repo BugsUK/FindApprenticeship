@@ -10,6 +10,8 @@
     using Services;
     using System.Diagnostics;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     // TODO: LOGGING: fallback logging
     // TODO: LOGGING: Info as Debug.
 

@@ -6,9 +6,10 @@
     using System.Web.Mvc.Filters;
     using System.Web.Routing;
     using System.Web.Security;
-    using SFA.Infrastructure.Interfaces;
     using Constants;
     using Services;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class AuthenticateUserAttribute : ActionFilterAttribute, IAuthenticationFilter
     {

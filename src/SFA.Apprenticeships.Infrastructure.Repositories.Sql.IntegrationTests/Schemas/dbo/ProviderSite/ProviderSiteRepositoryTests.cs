@@ -6,6 +6,8 @@
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Sql.Common;
     using Sql.Schemas.Provider;

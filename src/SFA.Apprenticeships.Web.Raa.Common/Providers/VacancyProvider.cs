@@ -26,6 +26,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Domain.Entities.ReferenceData;
     using Factories;
     using Infrastructure.Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
     using ViewModels.VacancyPosting;

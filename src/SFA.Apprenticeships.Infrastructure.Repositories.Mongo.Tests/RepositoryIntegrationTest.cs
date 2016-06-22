@@ -9,6 +9,8 @@
     using Mongo.Communication.IoC;
     using Mongo.Users.IoC;
     using Mongo.Vacancies.IoC;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Sql.Schemas.Vacancy.IoC;
     using StructureMap;

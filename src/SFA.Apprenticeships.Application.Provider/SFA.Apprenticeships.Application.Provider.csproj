@@ -109,10 +109,6 @@
       <Project>{cf497dd1-550d-4203-8fbf-c0a3b0109d2b}</Project>
       <Name>SFA.Apprenticeships.Domain.Raa.Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SFA.Infrastructure\SFA.Infrastructure.csproj">
-      <Project>{1f500137-c8e9-49aa-886e-1922d9d870eb}</Project>
-      <Name>SFA.Infrastructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

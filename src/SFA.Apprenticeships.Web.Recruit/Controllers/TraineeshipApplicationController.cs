@@ -8,6 +8,8 @@
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     public class TraineeshipApplicationController : RecruitmentControllerBase
     {

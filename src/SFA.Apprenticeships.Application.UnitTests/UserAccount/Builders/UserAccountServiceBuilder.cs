@@ -7,6 +7,8 @@
     using Interfaces.Users;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class UserAccountServiceBuilder
     {
         private readonly Mock<IActivateUserStrategy> _activateUserStrategy = new Mock<IActivateUserStrategy>();

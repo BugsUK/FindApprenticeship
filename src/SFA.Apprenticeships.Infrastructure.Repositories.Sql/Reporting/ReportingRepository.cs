@@ -8,7 +8,8 @@
     using Common;
     using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ReportingRepository : IReportingRepository
     {

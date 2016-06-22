@@ -13,6 +13,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Application;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Applications;
 
     [UserJourneyContext(UserJourney.Traineeship, Order = 2)]

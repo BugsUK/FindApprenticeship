@@ -91,15 +91,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationManager.cs" />
-    <Compile Include="Interfaces\Caching\BaseCacheKey.cs" />
-    <Compile Include="Interfaces\Caching\CacheDuration.cs" />
-    <Compile Include="Interfaces\Caching\ICacheService.cs" />
     <Compile Include="Interfaces\IConfigurationManager.cs" />
-    <Compile Include="Interfaces\IConfigurationService.cs" />
-    <Compile Include="Interfaces\ICurrentUserService.cs" />
-    <Compile Include="Interfaces\IDateTimeService.cs" />
-    <Compile Include="Interfaces\ILogService.cs" />
-    <Compile Include="Interfaces\IMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

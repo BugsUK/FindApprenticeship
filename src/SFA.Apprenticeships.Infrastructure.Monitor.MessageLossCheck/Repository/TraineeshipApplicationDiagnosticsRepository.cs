@@ -15,6 +15,8 @@
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class TraineeshipApplicationDiagnosticsRepository : GenericMongoClient<MongoTraineeshipApplicationDetail>, ITraineeshipApplicationDiagnosticsRepository
     {
         private readonly ILogService _logger;

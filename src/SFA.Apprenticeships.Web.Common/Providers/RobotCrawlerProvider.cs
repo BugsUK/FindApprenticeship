@@ -4,8 +4,9 @@
     using System.Net;
     using System.Text.RegularExpressions;
     using System.Web;
-    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class RobotCrawlerProvider : IRobotCrawlerProvider
     {

@@ -3,7 +3,8 @@ namespace SFA.Apprenticeships.Application.Employer.Strategies
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
     using Interfaces.Organisations;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class GetByEdsUrnStrategy : IGetByEdsUrnStrategy
     {

@@ -12,8 +12,9 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Interfaces.Repositories;
     using Domain.Raa.Interfaces.Repositories;
-    using Infrastructure.Interfaces;
     using Interfaces.VacancyPosting;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class VacancyPostingService : IVacancyPostingService
     {

@@ -11,6 +11,9 @@
     using Infrastructure.Processes.Vacancies;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using VacancyIndexer;
 
     [TestFixture]

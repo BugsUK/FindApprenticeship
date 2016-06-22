@@ -5,8 +5,9 @@
     using System.ServiceModel;
     using System.ServiceModel.Configuration;
     using SFA.Infrastructure.Interfaces;
-    using Common.Configuration;
     using Domain.Entities.Exceptions;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class WcfService<T> : IWcfService<T>
     {

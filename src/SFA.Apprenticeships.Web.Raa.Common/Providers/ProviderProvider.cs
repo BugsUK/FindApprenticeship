@@ -10,6 +10,8 @@
     using Converters;
     using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels.Provider;
     using ViewModels.VacancyPosting;

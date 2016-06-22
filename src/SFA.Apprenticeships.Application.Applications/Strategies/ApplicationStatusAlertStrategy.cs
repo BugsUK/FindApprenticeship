@@ -5,7 +5,8 @@
     using Domain.Interfaces.Messaging;
     using Entities;
     using Extensions;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ApplicationStatusAlertStrategy : IApplicationStatusAlertStrategy
     {

@@ -16,6 +16,9 @@
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.MyApplications;
     using ViewModels.VacancySearch;
     using ErrorCodes = Domain.Entities.ErrorCodes;

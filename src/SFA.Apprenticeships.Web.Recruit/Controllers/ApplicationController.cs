@@ -7,6 +7,8 @@
     using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Faa)]
     public class ApplicationController : RecruitmentControllerBase

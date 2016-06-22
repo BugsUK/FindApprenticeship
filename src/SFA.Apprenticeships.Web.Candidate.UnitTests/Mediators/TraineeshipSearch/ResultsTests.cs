@@ -18,6 +18,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.TraineeshipSearc
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class ResultsTests : TestsBase
     {

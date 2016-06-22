@@ -14,6 +14,9 @@
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
 
     //TODO: Create and delete test data directly in index

@@ -6,6 +6,8 @@
     using Moq;
     using NUnit.Framework;
     using Common.Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class TestBase

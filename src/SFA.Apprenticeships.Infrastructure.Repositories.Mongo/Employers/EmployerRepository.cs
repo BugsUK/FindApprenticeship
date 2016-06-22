@@ -11,6 +11,8 @@
     using MongoDB.Bson;
     using MongoDB.Driver.Builders;
     using MongoDB.Driver.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class EmployerRepository : GenericMongoClient2<MongoEmployer>, IEmployerReadRepository, IEmployerWriteRepository

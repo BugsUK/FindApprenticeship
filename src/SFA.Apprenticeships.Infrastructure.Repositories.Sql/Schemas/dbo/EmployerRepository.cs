@@ -5,7 +5,8 @@
     using System.Linq;
     using Common;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using DomainEmployer = Domain.Entities.Raa.Parties.Employer;
     using Employer = Entities.Employer;
 

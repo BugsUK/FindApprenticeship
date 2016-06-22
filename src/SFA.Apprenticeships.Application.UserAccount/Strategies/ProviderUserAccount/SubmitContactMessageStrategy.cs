@@ -2,11 +2,11 @@
 {
     using System.Linq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Communications;
     using SFA.Apprenticeships.Application.UserAccount.Configuration;
     using SFA.Apprenticeships.Domain.Entities.Communication;
     using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
     {

@@ -10,6 +10,9 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using GatewayServiceProxy;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
 
     public class LegacyVacancyIndexDataProvider : IVacancyIndexDataProvider

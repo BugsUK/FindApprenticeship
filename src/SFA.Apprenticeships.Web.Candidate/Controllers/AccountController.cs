@@ -19,6 +19,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using FluentValidation.Mvc;
     using Mediators;
     using Mediators.Account;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Account;
     using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 

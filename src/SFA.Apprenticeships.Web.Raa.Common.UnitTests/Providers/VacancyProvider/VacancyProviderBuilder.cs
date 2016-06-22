@@ -13,6 +13,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
     using Domain.Entities.Raa.Users;
     using Common.Providers;
     using Moq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyProviderBuilder

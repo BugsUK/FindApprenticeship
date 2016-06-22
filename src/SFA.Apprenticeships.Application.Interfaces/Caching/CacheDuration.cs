@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SFA.Infrastructure.Interfaces.Caching
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Caching
 
 {
     public enum CacheDuration

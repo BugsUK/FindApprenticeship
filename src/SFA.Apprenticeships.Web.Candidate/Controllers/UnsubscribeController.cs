@@ -9,6 +9,8 @@
     using SFA.Infrastructure.Interfaces;
     using Mediators.Unsubscribe;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class UnsubscribeController : CandidateControllerBase
     {
         private readonly IUnsubscribeMediator _unsubscribeMediator;

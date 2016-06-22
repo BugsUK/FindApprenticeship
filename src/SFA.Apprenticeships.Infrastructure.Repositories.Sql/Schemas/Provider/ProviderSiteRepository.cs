@@ -8,6 +8,8 @@
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class ProviderSiteRepository : IProviderSiteReadRepository, IProviderSiteWriteRepository
     {
         private const int ActivatedEmployerTrainingProviderStatusId = 1;

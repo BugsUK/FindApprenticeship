@@ -6,6 +6,8 @@
     using Microsoft.ServiceBus;
     using Microsoft.ServiceBus.Messaging;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckAzureServiceBus : IMonitorTask
     {
         private readonly ILogService _logger;

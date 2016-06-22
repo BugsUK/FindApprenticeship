@@ -3,9 +3,11 @@
     using System;
     using Domain.Entities.Candidates;
     using Domain.Entities.Users;
-    using SFA.Infrastructure.Interfaces;
     using Domain.Interfaces.Repositories;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using UserAccount.Configuration;
     using UserAccount.Strategies;
 

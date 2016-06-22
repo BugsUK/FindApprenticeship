@@ -47,6 +47,9 @@
     using Mediators.Search;
     using Mediators.Unsubscribe;
     using Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using StructureMap;
     using StructureMap.Configuration.DSL;
 

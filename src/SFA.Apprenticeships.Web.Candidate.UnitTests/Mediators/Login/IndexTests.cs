@@ -23,6 +23,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.Login
     using NUnit.Framework;
     using Ploeh.AutoFixture;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class IndexTests
     {

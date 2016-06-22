@@ -6,6 +6,9 @@
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class SubmitTraineeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitTraineeshipApplicationRequest>

@@ -6,6 +6,8 @@
     using Microsoft.WindowsAzure.Storage.Queue;
     using Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AzureCloudClient : IAzureCloudClient
     {
         private readonly CloudQueueClient _cloudQueueClient;

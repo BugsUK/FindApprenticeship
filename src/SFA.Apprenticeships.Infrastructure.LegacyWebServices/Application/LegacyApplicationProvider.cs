@@ -12,6 +12,9 @@
     using Domain.Interfaces.Repositories;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
 
     public class LegacyApplicationProvider : ILegacyApplicationProvider

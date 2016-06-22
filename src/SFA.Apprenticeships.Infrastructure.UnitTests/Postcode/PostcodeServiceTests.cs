@@ -8,6 +8,8 @@
     using NUnit.Framework;
     using RestSharp;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class PostcodeServiceTests
     {

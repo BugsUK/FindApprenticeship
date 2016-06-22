@@ -10,6 +10,8 @@
     using Monitor.Tasks;
     using Repository;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckUnsentApprenticeshipApplicationMessages : IMonitorTask
     {
         private readonly ILogService _logger;

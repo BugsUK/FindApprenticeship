@@ -15,6 +15,7 @@
     using Logging.IoC;
 
     using SFA.Apprenticeships.Application.Candidate.Configuration;
+    using SFA.Apprenticeships.Application.Interfaces;
 
     using StructureMap;
     using Tasks;

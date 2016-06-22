@@ -13,6 +13,8 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository

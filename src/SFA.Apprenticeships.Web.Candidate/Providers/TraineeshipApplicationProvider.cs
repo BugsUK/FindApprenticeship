@@ -9,6 +9,9 @@
     using Constants.Pages;
     using ViewModels.Applications;
     using Common.Models.Application;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     //TODO: DFSW/AG This whole class needs refactoring or possibly reimplementing plus unit tests.

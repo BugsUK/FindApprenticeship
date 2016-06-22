@@ -6,6 +6,8 @@
     using Raa.Common.Providers;
     using Raa.Common.Validators.ProviderUser;
     using Recruit.Mediators.ProviderUser;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Application.Interfaces.Users;
     using SFA.Infrastructure.Interfaces;
 

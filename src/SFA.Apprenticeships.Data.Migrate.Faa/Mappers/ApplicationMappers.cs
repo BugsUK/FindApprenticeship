@@ -5,6 +5,8 @@
     using Entities;
     using Entities.Mongo;
     using Entities.Sql;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class ApplicationMappers : IApplicationMappers

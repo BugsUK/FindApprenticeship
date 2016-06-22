@@ -9,6 +9,8 @@
     using Domain.Interfaces.Messaging;
     using Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CheckUnsentCandidateMessages : IMonitorTask
     {
         private readonly ILogService _logger;

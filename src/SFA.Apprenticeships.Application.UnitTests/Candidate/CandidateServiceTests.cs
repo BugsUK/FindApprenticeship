@@ -10,6 +10,8 @@
     using Ploeh.AutoFixture;
 
     using Apprenticeships.Application.Candidate.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]

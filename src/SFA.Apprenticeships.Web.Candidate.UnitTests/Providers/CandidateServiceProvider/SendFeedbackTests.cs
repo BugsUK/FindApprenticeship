@@ -10,6 +10,8 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class SendFeedbackTests
     {

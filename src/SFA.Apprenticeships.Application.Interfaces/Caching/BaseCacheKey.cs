@@ -1,4 +1,4 @@
-﻿namespace SFA.Infrastructure.Interfaces.Caching
+﻿namespace SFA.Apprenticeships.Application.Interfaces.Caching
 {
     public abstract class BaseCacheKey
     {
@@ -10,37 +10,37 @@
 
         public virtual string Key()
         {
-            return MakeSafeKey(KeyPrefix);
+            return MakeSafeKey(this.KeyPrefix);
         }
 
         public virtual string Key<TFuncParam1>(TFuncParam1 funcParam1)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1);
+            return MakeSafeKey(this.KeyPrefix + funcParam1);
         }
 
         public virtual string Key<TFuncParam1, TFuncParam2>(TFuncParam1 funcParam1, TFuncParam2 funcParam2)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2);
+            return MakeSafeKey(this.KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2);
         }
 
         public virtual string Key<TFuncParam1, TFuncParam2, TFuncParam3>(TFuncParam1 funcParam1, TFuncParam2 funcParam2, TFuncParam3 funcParam3)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3);
+            return MakeSafeKey(this.KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3);
         }
 
         public virtual string Key<TFuncParam1, TFuncParam2, TFuncParam3, TFuncParam4>(TFuncParam1 funcParam1, TFuncParam2 funcParam2, TFuncParam3 funcParam3, TFuncParam4 funcParam4)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4);
+            return MakeSafeKey(this.KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4);
         }
 
         public virtual string Key<TFuncParam1, TFuncParam2, TFuncParam3, TFuncParam4, TFuncParam5>(TFuncParam1 funcParam1, TFuncParam2 funcParam2, TFuncParam3 funcParam3, TFuncParam4 funcParam4, TFuncParam5 funcParam5)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4 + CacheKeySeparator + funcParam5);
+            return MakeSafeKey(this.KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4 + CacheKeySeparator + funcParam5);
         }
 
         public virtual string Key<TFuncParam1, TFuncParam2, TFuncParam3, TFuncParam4, TFuncParam5, TFuncParam6>(TFuncParam1 funcParam1, TFuncParam2 funcParam2, TFuncParam3 funcParam3, TFuncParam4 funcParam4, TFuncParam5 funcParam5, TFuncParam6 funcParam6)
         {
-            return MakeSafeKey(KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4 + CacheKeySeparator + funcParam5 + CacheKeySeparator + funcParam6);
+            return MakeSafeKey(this.KeyPrefix + funcParam1 + CacheKeySeparator + funcParam2 + CacheKeySeparator + funcParam3 + CacheKeySeparator + funcParam4 + CacheKeySeparator + funcParam5 + CacheKeySeparator + funcParam6);
         }
 
         protected static string MakeSafeKey(string unsafeKey)

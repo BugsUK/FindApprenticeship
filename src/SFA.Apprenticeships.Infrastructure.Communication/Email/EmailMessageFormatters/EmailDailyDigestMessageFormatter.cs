@@ -7,9 +7,10 @@
     using Configuration;
     using Domain.Entities.Applications;
     using Domain.Entities.Communication;
-    using SFA.Infrastructure.Interfaces;
     using Newtonsoft.Json;
     using SendGrid;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class EmailDailyDigestMessageFormatter : EmailMessageFormatter
     {

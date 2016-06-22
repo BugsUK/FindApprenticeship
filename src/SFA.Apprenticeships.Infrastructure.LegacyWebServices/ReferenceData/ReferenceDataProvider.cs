@@ -10,6 +10,9 @@
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using LegacyReferenceDataProxy;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
 
     public class ReferenceDataProvider : IReferenceDataProvider

@@ -12,11 +12,12 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Interfaces.Communications;
-    using Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
 
     using Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     using Strategies;
     using Strategies.Apprenticeships;

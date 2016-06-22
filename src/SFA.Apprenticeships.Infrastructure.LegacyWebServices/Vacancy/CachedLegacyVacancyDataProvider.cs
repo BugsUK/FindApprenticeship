@@ -3,7 +3,9 @@
     using SFA.Infrastructure.Interfaces;
     using Apprenticeships.Application.Vacancy;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces.Caching;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+    using SFA.Apprenticeships.Application.Interfaces.Caching;
 
     public class CachedLegacyVacancyDataProvider<TVacancyDetail> : IVacancyDataProvider<TVacancyDetail> where TVacancyDetail : VacancyDetail
     {

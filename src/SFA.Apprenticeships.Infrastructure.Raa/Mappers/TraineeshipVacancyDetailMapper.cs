@@ -13,6 +13,9 @@
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using GeoPoint = Domain.Entities.Locations.GeoPoint;
 
     public class TraineeshipVacancyDetailMapper

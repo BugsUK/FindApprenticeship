@@ -12,6 +12,8 @@
     using Domain.Interfaces.Repositories;
     using Newtonsoft.Json;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CandidateCommunicationCommand : CommunicationCommand
     {
         private readonly ILogService _logService;

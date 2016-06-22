@@ -5,6 +5,8 @@
     using NUnit.Framework;
     using Apprenticeships.Application.Location;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [TestFixture]
     public class LocationSearchServiceTests
     {

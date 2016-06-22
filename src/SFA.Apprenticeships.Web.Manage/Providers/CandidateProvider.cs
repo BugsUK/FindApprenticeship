@@ -20,6 +20,8 @@
     using Raa.Common.ViewModels.Application.Apprenticeship;
     using Raa.Common.ViewModels.Application.Traineeship;
     using Common.Configuration;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using ViewModels;
 

@@ -9,6 +9,9 @@
     using Domain.Entities.Exceptions;
     using GatewayServiceProxy;
     using Newtonsoft.Json;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Wcf;
     using Candidate = GatewayServiceProxy.Candidate;
     using CreateCandidateRequest = GatewayServiceProxy.CreateCandidateRequest;

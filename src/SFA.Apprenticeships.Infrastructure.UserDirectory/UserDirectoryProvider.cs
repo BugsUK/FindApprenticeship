@@ -8,6 +8,9 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Repositories;
     using Hash;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using UsersErrorCodes = Application.Interfaces.Users.ErrorCodes;
 
     public class UserDirectoryProvider : IUserDirectoryProvider

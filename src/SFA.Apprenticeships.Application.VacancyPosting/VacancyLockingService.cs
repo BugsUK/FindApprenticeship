@@ -4,8 +4,9 @@
     using System.Linq;
     using Configuration;
     using Domain.Entities.Raa.Vacancies;
-    using Infrastructure.Interfaces;
     using Interfaces.Vacancies;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class VacancyLockingService : IVacancyLockingService
     {

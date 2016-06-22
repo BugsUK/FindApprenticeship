@@ -12,6 +12,8 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 

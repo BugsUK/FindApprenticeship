@@ -12,6 +12,8 @@
     using NLog.Contrib;
     using Providers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     [ApplyWebTrends,
     DefaultSessionTimeout,
     CookiesEnabled,

@@ -6,6 +6,8 @@
     using Common;
     using Domain.Entities.Raa.Locations;
     using Domain.Raa.Interfaces.Repositories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyLocationRepository : IVacancyLocationReadRepository, IVacancyLocationWriteRepository

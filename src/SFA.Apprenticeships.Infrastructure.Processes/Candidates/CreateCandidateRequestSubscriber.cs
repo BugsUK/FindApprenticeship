@@ -10,6 +10,8 @@
 
     using Application.Candidate.Configuration;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class CreateCandidateRequestSubscriber : IServiceBusSubscriber<CreateCandidateRequest>
     {
         private readonly ILogService _logger;

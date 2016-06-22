@@ -13,6 +13,8 @@
     using NUnit.Framework;
     using Ploeh.AutoFixture;
     using RestSharp;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [TestFixture]

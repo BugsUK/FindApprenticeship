@@ -3,6 +3,8 @@
     using SFA.Infrastructure.Interfaces;
     using System.Web.Mvc;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class HomeController : ManagementControllerBase
     {
         public HomeController(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)

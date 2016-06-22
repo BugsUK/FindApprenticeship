@@ -11,6 +11,9 @@
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Vacancies;
     using Factories;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Application;
     using ViewModels.Application.Apprenticeship;
     using ViewModels.Application.Traineeship;

@@ -17,8 +17,10 @@
     using Extensions;
     using Factories;
     using Interfaces.Locations;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Vacancies;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Vacancy;
 
     public class SavedSearchProcessor : ISavedSearchProcessor

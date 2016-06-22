@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Common.DateTime
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class DateTimeService : IDateTimeService
     {

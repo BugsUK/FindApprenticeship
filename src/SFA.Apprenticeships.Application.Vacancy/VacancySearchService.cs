@@ -4,9 +4,11 @@
     using CuttingEdge.Conditions;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Vacancies;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ErrorCodes = Interfaces.Vacancies.ErrorCodes;
 
     public class VacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters> : IVacancySearchService<TVacancySummaryResponse, TVacancyDetail, TSearchParameters>

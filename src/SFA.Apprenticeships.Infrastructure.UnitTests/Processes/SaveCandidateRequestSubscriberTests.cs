@@ -15,6 +15,8 @@
     using Moq;
     using NUnit.Framework;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SaveCandidateRequestSubscriberTests
     {
         private Mock<ILogService> _logger;

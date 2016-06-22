@@ -3,11 +3,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using Domain.Entities.Raa.Reference;
-    using SFA.Infrastructure.Interfaces;
     using Common;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Raa.Interfaces.Repositories;
     using Entities;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Standard = Domain.Entities.Raa.Vacancies.Standard;
 
     public class ReferenceRepository : IReferenceRepository

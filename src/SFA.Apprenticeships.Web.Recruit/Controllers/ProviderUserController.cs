@@ -16,6 +16,9 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels;
     using ClaimTypes = System.Security.Claims.ClaimTypes;
     using SFA.Infrastructure.Interfaces;

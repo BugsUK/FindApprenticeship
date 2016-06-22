@@ -9,7 +9,8 @@
     using Migrate.Faa.Mappers;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [TestFixture]
     public class ApplicationMappersTests

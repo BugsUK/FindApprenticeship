@@ -8,6 +8,8 @@
     using SFA.Infrastructure.Interfaces;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SaveCandidateStrategyBuilder
     {
         private readonly Mock<ICandidateWriteRepository> _candidateWriteRepository = new Mock<ICandidateWriteRepository>();

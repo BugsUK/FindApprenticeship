@@ -4,7 +4,8 @@
     using Domain.Interfaces.Repositories;
     using Entities;
     using Extensions;
-    using SFA.Infrastructure.Interfaces;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     public class ApplicationStatusUpdateStrategy : IApplicationStatusUpdateStrategy
     {

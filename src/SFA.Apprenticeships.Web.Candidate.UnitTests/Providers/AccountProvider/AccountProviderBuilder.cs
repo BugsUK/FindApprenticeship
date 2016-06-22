@@ -10,6 +10,8 @@
     using Domain.Entities.Users;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AccountProviderBuilder
     {
         private Mock<ICandidateService> _candidateService;

@@ -11,6 +11,8 @@
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class TraineeshipVacancyDataProvider : IVacancyDataProvider<TraineeshipVacancyDetail>
     {
         private readonly IVacancyReadRepository _vacancyReadRepository;

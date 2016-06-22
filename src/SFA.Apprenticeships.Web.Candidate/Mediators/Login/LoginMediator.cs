@@ -18,6 +18,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Login
     using Domain.Entities.Vacancies;
     using Extensions;
     using Providers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using Validators;
     using ViewModels.Login;
     using ViewModels.Register;

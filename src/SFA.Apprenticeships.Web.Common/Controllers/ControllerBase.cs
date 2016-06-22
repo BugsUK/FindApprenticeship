@@ -9,13 +9,14 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
     using Services;
     using Configuration;
     using StructureMap.Attributes;
-    using SFA.Infrastructure.Interfaces;
     using SFA.Apprenticeships.Infrastructure.Logging;
     using NLog.Contrib; // TODO: Inject logging context setter implementation rather than using directly (but use separate interface from ILogService)
     using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
+
+    using SFA.Apprenticeships.Application.Interfaces;
 
     [AuthenticateUser]
     public abstract class ControllerBase<TContextType> : ControllerBase, IUserController<TContextType> where TContextType : UserContext

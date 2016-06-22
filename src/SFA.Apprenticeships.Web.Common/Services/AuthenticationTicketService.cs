@@ -9,6 +9,8 @@ namespace SFA.Apprenticeships.Web.Common.Services
     using System.Web;
     using System.Web.Security;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class AuthenticationTicketService : IAuthenticationTicketService
     {
         private readonly HttpContextBase _httpContext;

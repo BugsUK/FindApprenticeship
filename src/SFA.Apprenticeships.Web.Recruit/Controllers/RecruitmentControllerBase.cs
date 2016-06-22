@@ -7,6 +7,8 @@
     using Common.Attributes;
     using Common.Constants;
     using NLog.Contrib;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizationData,

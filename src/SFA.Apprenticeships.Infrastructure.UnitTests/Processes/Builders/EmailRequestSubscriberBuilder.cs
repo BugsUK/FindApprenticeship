@@ -5,6 +5,8 @@
     using Infrastructure.Processes.Communications;
     using Moq;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class EmailRequestSubscriberBuilder
     {
         private Mock<IEmailDispatcher> _dispatcher = new Mock<IEmailDispatcher>();

@@ -10,6 +10,8 @@
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class SubmitApprenticeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>
     {
         private readonly ILogService _logger;

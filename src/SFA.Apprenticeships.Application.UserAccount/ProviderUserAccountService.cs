@@ -1,8 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount
 {
     using CuttingEdge.Conditions;
-    using SFA.Infrastructure.Interfaces;
     using Interfaces.Users;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Apprenticeships.Domain.Entities.Communication;
     using Strategies.ProviderUserAccount;
 

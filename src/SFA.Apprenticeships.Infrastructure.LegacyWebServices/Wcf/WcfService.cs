@@ -8,6 +8,8 @@
     using Common.Configuration;
     using Domain.Entities.Exceptions;
 
+    using SFA.Apprenticeships.Application.Interfaces;
+
     public class WcfService<T> : IWcfService<T>
     {
         private readonly ILogService _logger;

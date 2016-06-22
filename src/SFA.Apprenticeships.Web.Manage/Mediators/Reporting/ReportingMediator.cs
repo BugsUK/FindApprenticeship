@@ -13,6 +13,8 @@
     using CsvHelper.Configuration;
     using Domain.Raa.Interfaces.Reporting.Models;
     using Infrastructure.Presentation;
+
+    using SFA.Apprenticeships.Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
     using Validators;
     using ViewModels;

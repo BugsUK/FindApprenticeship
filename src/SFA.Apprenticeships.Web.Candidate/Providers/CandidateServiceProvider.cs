@@ -26,6 +26,9 @@
     using Helpers;
     using Infrastructure.Presentation;
     using Mappers;
+
+    using SFA.Apprenticeships.Application.Interfaces;
+
     using ViewModels.Account;
     using ViewModels.VacancySearch;
     using CandidateErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
