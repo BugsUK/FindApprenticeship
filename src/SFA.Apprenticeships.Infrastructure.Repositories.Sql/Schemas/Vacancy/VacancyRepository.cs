@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using Common;
+    using dbo;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
@@ -113,17 +114,21 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
         }
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
-        {
+        {           
+           var vacancies = new List<Vacancy>();
             var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
 
-            var vacancies =
-                _getOpenConnection.Query<Vacancy>(
-VacancySummarySelect + @"
-FROM dbo.Vacancy 
-WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
-                    new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
-
+            var splitOwnerPartyIds = DbHelpers.SplitParametersIntoChunks(ownerPartyIdsArray);
+            foreach (var ownerIds in splitOwnerPartyIds)
+            {
+                var splitVacancies = _getOpenConnection.Query<Vacancy>(
+                                     VacancySummarySelect + @"
+                                     FROM dbo.Vacancy 
+                                     WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
+                                     new { VacancyOwnerRelationshipIds = ownerIds }).ToList();
+                vacancies.AddRange(splitVacancies);
+            }
             return MapVacancySummaries(vacancies.ToList());
         }
 
@@ -392,7 +397,7 @@ WHERE  CountyId = @CountyId",
                         CountyId = dbVacancy.CountyId
                     }).Single();
             }
-        }
+        }        
 
         private void MapLocalAuthorityCode(Vacancy dbVacancy, DomainVacancy result)
         {
