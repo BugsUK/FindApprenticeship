@@ -85,7 +85,7 @@
             return count;
         }
 
-        public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterNonRaaVacancies, params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
             
