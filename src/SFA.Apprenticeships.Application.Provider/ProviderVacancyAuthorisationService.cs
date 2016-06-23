@@ -2,6 +2,7 @@
 {
     using System;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Raa;
     using Infrastructure.Interfaces;
     using Interfaces.Providers;
 
@@ -16,6 +17,11 @@
 
         public void Authorise(int providerId)
         {
+            if (!_currentUserService.IsInRole(Roles.Faa))
+            {
+                // return;
+            }
+
             var signedInProviderId = _currentUserService.GetClaimValue("providerId");
 
             if (Convert.ToString(providerId) != signedInProviderId)

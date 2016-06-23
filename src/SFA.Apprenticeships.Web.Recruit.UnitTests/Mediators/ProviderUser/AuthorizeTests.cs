@@ -167,8 +167,8 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
             response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
         }
 
-        [Test(Description = "User has all claims, a complete provider profile and has verified their email address, should add ProviderId claim")]
-        public void Authorize_Ok_ShouldAddProviderIdClaim()
+        [Test(Description = "User has all claims, a complete provider profile and has verified their email address, should set ProviderId")]
+        public void Authorize_Ok_ShouldSetProviderId()
         {
             // Arrange.
             var providerViewModel = new ProviderViewModel
@@ -204,13 +204,7 @@ namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.ProviderUser
 
             // Assert.
             response.AssertCode(ProviderUserMediatorCodes.Authorize.Ok);
-
-            var expectedClaim = principal.Claims.FirstOrDefault(
-                claim => claim.Type == ClaimTypes.ProviderId);
-
-            expectedClaim.Should().NotBeNull();
-            // ReSharper disable once PossibleNullReferenceException
-            expectedClaim.Value.Should().Be(Convert.ToString(providerViewModel.ProviderId));
+            response.ViewModel.ProviderId.Should().Be(providerViewModel.ProviderId);
         }
     }
 }

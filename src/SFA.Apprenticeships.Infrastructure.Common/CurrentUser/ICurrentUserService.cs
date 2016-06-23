@@ -8,5 +8,10 @@
         public string CurrentUserName => Thread.CurrentPrincipal.Identity.Name;
 
         public bool IsInRole(string role) => Thread.CurrentPrincipal.IsInRole(role);
+
+        public string GetClaimValue(string name)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
