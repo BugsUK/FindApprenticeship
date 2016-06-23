@@ -19,7 +19,7 @@
 
         int CountWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses);
+        List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
     }

@@ -123,6 +123,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>  
     <Compile Include="Common\DatabaseConfigurationProvider.cs" />
     <Compile Include="Reporting\ReportingRepositoryTests.cs" />
     <Compile Include="Schemas\dbo\Employer\EmployerRepositoryTests.cs" />

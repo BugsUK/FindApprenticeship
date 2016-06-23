@@ -38,7 +38,7 @@
                 Console.Write($" Usage: {AssemblyInfo.GetExeName()}");
                 foreach (var option in p.Options.Where(x => x.IsRequired))
                 {
-                    Console.Write($" /{option.ShortName} = <{option.LongName}>");
+                    Console.Write($" /{option.ShortName} <{option.LongName}>");
                 }
 
                 Console.WriteLine();

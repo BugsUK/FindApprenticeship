@@ -239,6 +239,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{98B00E
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{F22CB844-596C-45AB-A303-093462472C67}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Demo|Any CPU = Demo|Any CPU
@@ -1711,7 +1713,7 @@ Global
 		{B633EE4E-7A58-4ACF-BBD9-0B19730B22FD} = {A34B1856-1875-4220-A1CC-AF67CB5A521F}
 		{36E83135-5C14-4179-B4AD-3C120B05B73B} = {FE64F0B2-36A4-4F41-8912-81E864E1AF6C}
 		{CF497DD1-550D-4203-8FBF-C0A3B0109D2B} = {9EB317AB-3B6E-4CEB-864B-B1D60B06A536}
-		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
+		{6C7EBDB8-70E9-49A2-8EFF-C664D8AE7E56} = {F22CB844-596C-45AB-A303-093462472C67}
 		{73C8A0C0-3B18-4ED6-8D14-15F3E009C26C} = {405A13A6-70AA-49DF-AED0-46ADEA4F2B5E}
 		{F1446ECB-60F3-401E-A8EF-5F8227519842} = {18D67FE8-091F-4873-871A-8B81E455DA79}
 		{4E423F21-5A4F-444D-AD72-2E2566AFF713} = {386A0F54-B4E6-4A2F-9A79-6E565A54F904}
@@ -1733,7 +1735,7 @@ Global
 		{CCED2B84-BCDF-4E9B-AE7C-0597B7E7CCB8} = {BCDF5FEE-AD2B-40E3-93C3-3DFA7D38B684}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.Interception.2.1.505.0\lib\NET35;packages\EnterpriseLibrary.Common.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.5.0.505.0\lib\NET35;packages\EnterpriseLibrary.ExceptionHandling.WCF.5.0.505.0\lib\NET35
+		EnterpriseLibraryConfigurationToolBinariesPathV6 = packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.ExceptionHandling.WCF.6.0.1304.0\lib\NET45;packages\EnterpriseLibrary.TransientFaultHandling.6.0.1304.0\lib\portable-net45+win+wp8;packages\EnterpriseLibrary.TransientFaultHandling.Data.6.0.1304.1\lib\NET45
 	EndGlobalSection
 EndGlobal

@@ -6,6 +6,7 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
     using SFA.Infrastructure.Interfaces;
     using Application.Interfaces.Providers;
     using Application.Interfaces.Users;
+    using Application.Interfaces.VacancyPosting;
     using Application.Provider;
     using Application.UserAccount;
     using Application.UserProfile;
