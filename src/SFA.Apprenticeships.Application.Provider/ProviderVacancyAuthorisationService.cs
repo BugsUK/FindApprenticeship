@@ -17,19 +17,22 @@
 
         public void Authorise(int providerId)
         {
-            if (!_currentUserService.IsInRole(Roles.Faa))
+            if (_currentUserService.IsInRole(Roles.Raa))
             {
-                // return;
+                // QA user can work with any vacancy.
+                return;
             }
 
             var signedInProviderId = _currentUserService.GetClaimValue("providerId");
 
-            if (Convert.ToString(providerId) != signedInProviderId)
+            if (Convert.ToString(providerId) == signedInProviderId)
             {
-                var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as Provider Id {signedInProviderId}) attempted to view vacancy for Provider Id {providerId}";
-
-                throw new CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+                return;
             }
+
+            var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as Provider Id {signedInProviderId}) attempted to view vacancy for Provider Id {providerId}";
+
+            throw new CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
         }
     }
 }

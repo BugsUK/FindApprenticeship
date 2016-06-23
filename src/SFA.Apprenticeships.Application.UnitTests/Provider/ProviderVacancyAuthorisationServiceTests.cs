@@ -3,6 +3,7 @@
     using System;
     using Apprenticeships.Application.Provider;
     using Domain.Entities.Exceptions;
+    using Domain.Entities.Raa;
     using FluentAssertions;
     using Moq;
     using NUnit.Framework;
@@ -12,7 +13,7 @@
     public class ProviderVacancyAuthorisationServiceTests
     {
         [Test]
-        public void ShouldAuthoriseVacancyForSignedInProviderUser()
+        public void ShouldAuthoriseProviderUserForVacancyForOwnProvider()
         {
             // Arrange.
             var providerId = new Random().Next(1, 100);
@@ -34,11 +35,11 @@
         }
 
         [Test]
-        public void ShouldNotAuthoriseVacancyForAnotherProvider()
+        public void ShouldNotAuthoriseProviderUserForVacancyForOtherProvider()
         {
             // Arrange.
             var providerId = new Random().Next(1, 100);
-            const string userName = "john.doe@example.com";
+            const string userName = "john.provider@example.com";
             var signedInProviderId = Convert.ToString(providerId + 1);
 
             var mockCurrentUserService = new Mock<ICurrentUserService>();
@@ -60,6 +61,27 @@
             action
                 .ShouldThrow<CustomException>()
                 .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+        }
+
+        [Test]
+        public void ShouldAuthoriseQaUserForAnyVacancy()
+        {
+            // Arrange.
+            var providerId = new Random().Next(1, 100);
+
+            var mockCurrentUserService = new Mock<ICurrentUserService>();
+
+            mockCurrentUserService.Setup(mock =>
+                mock.IsInRole(Roles.Raa))
+                .Returns(true);
+
+            var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object);
+
+            // Act.
+            Action action = () => service.Authorise(providerId);
+
+            // Assert.
+            action.ShouldNotThrow();
         }
     }
 }
