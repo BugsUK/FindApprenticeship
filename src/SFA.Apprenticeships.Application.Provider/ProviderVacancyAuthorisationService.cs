@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
     using System;
-    using Domain.Entities.Exceptions;
     using Domain.Entities.Raa;
     using Infrastructure.Interfaces;
     using Interfaces.Providers;
@@ -32,7 +31,7 @@
 
             var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as Provider Id {signedInProviderId}) attempted to view vacancy for Provider Id {providerId}";
 
-            throw new CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+            throw new Domain.Entities.Exceptions.CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
         }
     }
 }
