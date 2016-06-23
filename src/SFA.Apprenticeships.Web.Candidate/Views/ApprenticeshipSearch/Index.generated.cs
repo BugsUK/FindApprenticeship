@@ -843,15 +843,13 @@ WriteLiteral(">Choose how far from your location you want to search.</p>\r\n    
 
 WriteLiteral(" data-id=\"apprenticeship-level\"");
 
-WriteLiteral(">\r\n        ");
-
-WriteLiteral("\r\n        <p");
+WriteLiteral(">\r\n        <p");
 
 WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
-"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
-"/li>\r\n    <li");
+"ced is 2 A-level passes, a Higher can lead to a foundation degree and Degree is " +
+"equivalent to bachelor\'s or master\'s degree.</p>\r\n    </li>\r\n    <li");
 
 WriteLiteral(" data-id=\"reset-search-options-link\"");
 
@@ -929,15 +927,13 @@ WriteLiteral(">Choose how far from your location you want to search.</p>\r\n    
 
 WriteLiteral(" data-id=\"apprenticeship-level\"");
 
-WriteLiteral(">\r\n        ");
-
-WriteLiteral("\r\n        <p");
+WriteLiteral(">\r\n        <p");
 
 WriteLiteral(" aria-live=\"polite\"");
 
 WriteLiteral(">You can also search by level. Intermediate is equivalent to 5 GCSE passes, Advan" +
-"ced is 2 A-level passes and a Higher can lead to a foundation degree.</p>\r\n    <" +
-"/li>\r\n    <li");
+"ced is 2 A-level passes, a Higher can lead to a foundation degree and Degree is " +
+"equivalent to bachelor\'s or master\'s degree.</p>\r\n    </li>\r\n    <li");
 
 WriteLiteral(" data-id=\"reset-search-options-link\"");
 
@@ -985,7 +981,7 @@ WriteLiteral("   \r\n");
 WriteLiteral("    ");
 
             
-            #line 225 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 223 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/locationsearch"));
 
             
@@ -994,7 +990,7 @@ Write(Scripts.Render("~/bundles/nas/locationsearch"));
 WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r\n            url: \'");
 
             
-            #line 229 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 227 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
              Write(Url.RouteUrl(CandidateRouteNames.LocationSearch));
 
             
@@ -1003,7 +999,7 @@ WriteLiteral("\r\n\r\n    <script>\r\n        $(\"#Location\").locationMatch({\r
 WriteLiteral("\',\r\n            longitude: \'#");
 
             
-            #line 230 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 228 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                      Write(Html.IdFor(m => m.Longitude));
 
             
@@ -1012,7 +1008,7 @@ WriteLiteral("\',\r\n            longitude: \'#");
 WriteLiteral("\',\r\n            latitude: \'#");
 
             
-            #line 231 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 229 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                     Write(Html.IdFor(m => m.Latitude));
 
             
@@ -1021,7 +1017,7 @@ WriteLiteral("\',\r\n            latitude: \'#");
 WriteLiteral("\',\r\n            latlonhash: \'#");
 
             
-            #line 232 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 230 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
                       Write(Html.IdFor(m => m.Hash));
 
             
@@ -1050,7 +1046,7 @@ WriteLiteral(@"'
 WriteLiteral("    ");
 
             
-            #line 250 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 248 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/geoLocater"));
 
             
@@ -1061,7 +1057,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 251 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 249 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/joyride"));
 
             
@@ -1072,7 +1068,7 @@ WriteLiteral("\r\n");
 WriteLiteral("    ");
 
             
-            #line 252 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 250 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
 Write(Scripts.Render("~/bundles/nas/search"));
 
             
@@ -1081,13 +1077,13 @@ Write(Scripts.Render("~/bundles/nas/search"));
 WriteLiteral("\r\n\r\n");
 
             
-            #line 254 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 252 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     
             
             #line default
             #line hidden
             
-            #line 254 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 252 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
      if (ViewBag.ShowSearchTour != null && ViewBag.ShowSearchTour)
     {
 
@@ -1112,7 +1108,7 @@ WriteLiteral(@"        <script>
 ");
 
             
-            #line 271 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
+            #line 269 "..\..\Views\ApprenticeshipSearch\Index.cshtml"
     }
 
             
