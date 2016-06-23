@@ -8,6 +8,6 @@ SELECT
   UserTypeId,
   SortOrder 
  FROM   
-  Faq   
+  FAQ   
  WHERE   
-  FaqId = @faqId
+  FAQId = @faqId

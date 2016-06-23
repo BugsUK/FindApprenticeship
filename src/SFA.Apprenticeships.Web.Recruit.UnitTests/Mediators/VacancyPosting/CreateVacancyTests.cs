@@ -1,22 +1,24 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Mediators.VacancyPosting
 {
+    using System;
     using Common.Constants;
     using Common.Mediators;
     using Common.ViewModels.Locations;
     using Domain.Entities.Raa.Vacancies;
-    using FluentAssertions;
     using Moq;
     using NUnit.Framework;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.Vacancy;
+    using Domain.Entities.Raa.Locations;
+    using FluentAssertions;
 
     [TestFixture]
     public class CreateVacancyTests : TestsBase
     {
+        private const string Ukprn = "12345";
         private const string AWebPage = "http://www.google.com";
         private const string AString = "A string";
         private const int AnInt = 1234;
-        private const long ALong = 1234;
 
         [Test]
         public void ShouldWarnUserIfSwitchingFromOnlineToOfflineVacancyHavingTextInQuestionOne()
@@ -37,7 +39,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -63,7 +65,7 @@
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt,
                 VacancyType = VacancyType.Apprenticeship
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message.Level == UserMessageLevel.Info
@@ -88,7 +90,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -112,7 +114,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -136,7 +138,7 @@
                 Title = AString,
                 ShortDescription = AString,
                 VacancyReferenceNumber = AnInt
-            });
+            }, Ukprn);
 
             result.Should()
                 .Match((MediatorResponse<NewVacancyViewModel> p) => p.Message == null);
@@ -145,17 +147,16 @@
         [Test]
         public void ShouldIncludeLocationTypeAndNumberOfPositionsInTheViewModelReturnedWhenThereIsAValidationError()
         {
-            var isEmployerLocationMainApprenticeshipLocation = true;
             var numberOfPositions = 5;
             var viewModel = new VacancyPartyViewModel
             {
-                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                IsEmployerLocationMainApprenticeshipLocation = true,
                 NumberOfPositions = numberOfPositions,
                 ProviderSiteId = 42,
                 Employer = new EmployerViewModel
                 {
-                    EmployerId = 7
-                }
+                    EmployerId = 7,
+                }                
             };
 
             ProviderProvider.Setup(p => p.GetVacancyPartyViewModel(It.IsAny<int>(), It.IsAny<string>()))
@@ -169,17 +170,82 @@
 
             var mediator = GetMediator();
 
-            var result = mediator.ConfirmEmployer(viewModel);
+            var result = mediator.ConfirmEmployer(viewModel, Ukprn);
             result.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Should()
-                .Be(isEmployerLocationMainApprenticeshipLocation);
+                .Be(true);
             result.ViewModel.NumberOfPositions.Should().Be(numberOfPositions);
+        }
+
+        [Test]
+        public void EmptyVacancyIfPreviousStateEmployerLocationIsDifferentFromCurrentStateEmployerLocation()
+        {
+            var numberOfPositions = 5;                        
+            const string initialVacancyTitle = "title";
+            var viewModel = new VacancyPartyViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation = false,
+                NumberOfPositions = numberOfPositions,
+                ProviderSiteId = 42,
+                Employer = new EmployerViewModel
+                {
+                    EmployerId = 7
+                },                
+                EmployerDescription = "Text about Employer Description",
+                VacancyReferenceNumber = AnInt
+            };        
+
+            MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(AnInt))
+               .Returns(GetLiveVacancyWithComments(AnInt, initialVacancyTitle));
+
+            var provider = GetVacancyPostingProvider();
+
+            provider.EmptyVacancyLocation(viewModel.VacancyReferenceNumber);
+
+            MockVacancyPostingService.Verify(
+                 s =>
+                     s.UpdateVacancy(It.Is<Vacancy>(v => v.Address == null &&
+                         v.NumberOfPositions == null &&
+                         v.NumberOfPositionsComment == null)));            
+        }
+
+        private Vacancy GetLiveVacancyWithComments(int initialVacancyReferenceNumber, string initialVacancyTitle)
+        {
+            return new Vacancy
+            {
+                VacancyReferenceNumber = initialVacancyReferenceNumber,
+                Title = initialVacancyTitle,
+                WorkingWeekComment = "some comment",
+                ApprenticeshipLevelComment = "some comment",
+                ClosingDateComment = "some comment",
+                DesiredQualificationsComment = "some comment",
+                DesiredSkillsComment = "some comment",
+                DurationComment = "some comment",
+                FirstQuestionComment = "some comment",
+                FrameworkCodeNameComment = "some comment",
+                FutureProspectsComment = "some comment",
+                LongDescriptionComment = "some comment",
+                CreatedDateTime = DateTime.UtcNow.AddDays(-4),
+                UpdatedDateTime = DateTime.UtcNow.AddDays(-1),
+                DateSubmitted = DateTime.UtcNow.AddHours(-12),
+                DateStartedToQA = DateTime.UtcNow.AddHours(-8),
+                QAUserName = "some user name",
+                DateQAApproved = DateTime.UtcNow.AddHours(-4),
+                Status = VacancyStatus.Live,
+                ClosingDate = DateTime.UtcNow.AddDays(10),
+                OwnerPartyId = 42,
+                EmployerAnonymousName = "Anon Corp",
+                Address = new PostalAddress(),
+                NumberOfPositions = 2,
+                NumberOfPositionsComment = string.Empty
+            };
         }
 
         private VacancyViewModel BasicVacancy()
         {
             return new VacancyViewModel
             {
-                NewVacancyViewModel = new NewVacancyViewModel { 
+                NewVacancyViewModel = new NewVacancyViewModel
+                {
                     OfflineVacancy = false,
                     OwnerParty = new VacancyPartyViewModel
                     {

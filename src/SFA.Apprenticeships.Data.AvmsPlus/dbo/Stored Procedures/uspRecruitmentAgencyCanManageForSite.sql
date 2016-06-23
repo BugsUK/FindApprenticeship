@@ -9,8 +9,8 @@ BEGIN
 	JOIN ProviderSiteRelationship R ON R.ProviderId = P.ProviderID
 	JOIN ProviderSiteRelationship R2 ON R2.ProviderId = P.ProviderID
 	WHERE R.ProviderId = R2.ProviderId
-	AND R.ProviderSiteId = @ProviderSiteId
-	AND R2.ProviderSiteId = @RecruitmentAgencyId
+	AND R.ProviderSiteID = @ProviderSiteId
+	AND R2.ProviderSiteID = @RecruitmentAgencyId
 	AND R.ProviderSiteRelationshipTypeID = 1
 	AND R2.ProviderSiteRelationshipTypeID = 3
      

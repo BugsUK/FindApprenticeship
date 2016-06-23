@@ -73,7 +73,7 @@ BEGIN
    if @SearchType = 'Occupation'        
    BEGIN      
     select @TotalRows= count(1)       
-    FROM [dbo].[vacancySearch] with (nolock)      
+    FROM [dbo].[VacancySearch] with (nolock)      
        WHERE        
          ([ApprenticeshipFrameworkId] in (@apprenticeFramework)  or  @apprenticeFramework is null) AND      
          ([CountyId] = @locationId OR @locationID IS NULL OR @locationID=-1) AND  

@@ -1,6 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Raa
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Providers;
@@ -9,7 +9,6 @@
     using Application.Vacancies;
     using Application.Vacancies.Entities;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Entities.Vacancies.Traineeships;
     using Domain.Raa.Interfaces.Repositories;
     using Mappers;
 
@@ -51,26 +50,49 @@
         public VacancySummaries GetVacancySummaries(int pageNumber)
         {
             //Page number coming in increments from 1 rather than 0, the repo expects pages to start at 0 so take one from the passed in value
-            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, _desiredStatuses);
-            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct()).ToDictionary(vp => vp.VacancyPartyId, vp => vp);
+            var vacancies = _vacancyReadRepository.GetWithStatus(PageSize, pageNumber - 1, false, _desiredStatuses);
+            var vacancyParties = _providerService.GetVacancyParties(vacancies.Select(v => v.OwnerPartyId).Distinct(), false);
             var employers = _employerService.GetEmployers(vacancyParties.Values.Select(v => v.EmployerId).Distinct()).ToDictionary(e => e.EmployerId, e => e);
             var providerSites = _providerService.GetProviderSites(vacancyParties.Values.Select(v => v.ProviderSiteId).Distinct()).ToDictionary(ps => ps.ProviderSiteId, ps => ps);
             var providers = _providerService.GetProviders(providerSites.Values.Select(v => v.ProviderId).Distinct()).ToDictionary(p => p.ProviderId, p => p);
             var categories = _referenceDataProvider.GetCategories().ToList();
+            //TODO: workaround to have the indexing partially working. Should be done properly
             var apprenticeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Apprenticeship).Select(
                     v =>
-                        ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
-                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
-                            categories, _logService));
+                    {
+                        try
+                        {
+                            return ApprenticeshipSummaryMapper.GetApprenticeshipSummary(v,
+                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                                providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                                categories, _logService);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logService.Error($"Error indexing the apprenticeship vacancy with ID={v.VacancyId}", ex);
+                            return null;
+                        }
+                    });
+
             var traineeshipSummaries =
                 vacancies.Where(v => v.VacancyType == VacancyType.Traineeship).Select(
                     v =>
-                        TraineeshipSummaryMapper.GetTraineeshipSummary(v,
-                            employers[vacancyParties[v.OwnerPartyId].EmployerId],
-                            providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
-                            categories, _logService));
+                    {
+                        try
+                        {
+                            return TraineeshipSummaryMapper.GetTraineeshipSummary(v,
+                                employers[vacancyParties[v.OwnerPartyId].EmployerId],
+                                providers[providerSites[vacancyParties[v.OwnerPartyId].ProviderSiteId].ProviderId],
+                                categories, _logService);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logService.Error($"Error indexing the traineeship vacancy with ID={v.VacancyId}", ex);
+                            return null;
+                        }
+                    });
+
             return new VacancySummaries(apprenticeshipSummaries.Where(s => s != null), traineeshipSummaries.Where(s => s != null));
         }
     }

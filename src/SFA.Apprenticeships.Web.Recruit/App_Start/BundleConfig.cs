@@ -12,6 +12,9 @@ namespace SFA.Apprenticeships.Web.Recruit
             bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
                 "~/Content/_assets/js/nas/dashboard.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/autosave").Include(
+                "~/Content/_assets/js/nas/autosave.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/vacancyApplications").Include(
                 "~/Content/_assets/js/nas/vacancyApplications.js"));
 
@@ -30,6 +33,9 @@ namespace SFA.Apprenticeships.Web.Recruit
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                 "~/Content/_assets/js/vendor/knockout-3.1.0.js",
                 "~/Content/_assets/js/vendor/knockout.validation.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/webtrends").Include(                
+                "~/Content/_assets/js/webtrends/webtrends.load.js"));
         }
     }
 }

@@ -52,7 +52,7 @@
                 Enum.GetValues(typeof(WageUnit))
                     .Cast<WageUnit>()
                     .Where(al => al != WageUnit.NotApplicable)
-                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString() })
+                    .Select(al => new SelectListItem { Value = al.ToString(), Text = al.ToString().ToLower() })
                     .ToList();
 
             return wageUnits;

@@ -48,6 +48,7 @@
             //destination.NewVacancyViewModel.LocationAddresses =
             //    context.Engine.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(
             //        source.LocationAddresses);
+                
             destination.NewVacancyViewModel.AdditionalLocationInformation = source.AdditionalLocationInformation;
             destination.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation =
                 source.IsEmployerLocationMainApprenticeshipLocation;

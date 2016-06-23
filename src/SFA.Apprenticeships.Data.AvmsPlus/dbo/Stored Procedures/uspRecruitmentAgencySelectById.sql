@@ -8,7 +8,7 @@ BEGIN
   
 SELECT  
  
- [ProviderSite].[EdsUrn]  AS 'EdsUrn',  
+ [ProviderSite].[EDSURN]  AS 'EdsUrn',  
  [ProviderSite].[ProviderSiteID] AS 'TrainingProviderId',  
  isnull([ProviderSite].[FullName],'') AS 'FullName',  
  isnull([ProviderSite].[TradingName],'') AS 'TradingName',  

@@ -1,9 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
+    using SFA.Infrastructure.Interfaces;
     using System.Web.Mvc;
 
     public class HomeController : ManagementControllerBase
     {
+        public HomeController(IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
+        {
+        }
+
         public ActionResult Index()
         {
             return View();

@@ -73,10 +73,14 @@ html:not(.touch) .editable-item {
     color: $turquoise;
 }
 
-.raa-icon-comment {
-    @extend copy-19;
-    font-size: 19px !important;    
-    color: $turquoise;
+.raa-icon-comment-img {    
+    height: 1em !important;               
+    padding:1px 0 0 0;
+}
+
+.raa-icon-checkmark-img{
+      height: 1em !important; 
+      margin-right:.3em;
 }
 
 h2{
@@ -191,6 +195,11 @@ h2{
 }
 
 table.reactive {
+    .reactive-sub-title {
+        font-weight: 700;
+        display: block;
+        margin-top: 20px;
+    }
     @media screen and ( max-width: 768px ) {
         border-top: 1px solid $grey-2;
         display: block;
@@ -208,6 +217,9 @@ table.reactive {
                 padding: 0.25em 0;
                 .reactive-title {
                     @include bold-19;
+                }
+                .reactive-sub-title {
+                    display: none;
                 }
                 &.reactive-header {
                     &:before {

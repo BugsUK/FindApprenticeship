@@ -30,10 +30,12 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
     using Repositories.Mongo.Employers.IoC;
     using Repositories.Mongo.Providers.IoC;
     using Repositories.Mongo.Users.IoC;
-    using Repositories.Mongo.Vacancies.IoC;
     using Repositories.Sql.Configuration;
     using Repositories.Sql.IoC;
     using Repositories.Sql.Schemas.Vacancy.IoC;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
     using VacancyIndexer.IoC;
     using VacancySearch.IoC;
@@ -155,8 +157,9 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<VacancyIndexerRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 x.AddCachingRegistry(cacheConfig);
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, servicesConfiguration));
+                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
                 x.AddRegistry(new RaaRegistry(servicesConfiguration));
+                x.AddRegistry(new VacancySourceRegistry(cacheConfig, servicesConfiguration));
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<CommunicationRepositoryRegistry>();
@@ -164,7 +167,6 @@ namespace SFA.Apprenticeships.Infrastructure.ScheduledJobs
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();
                 x.AddRegistry<VacancyRepositoryRegistry>();
-                x.AddRegistry<VacancyReferenceNumberRegistry>();
                 x.AddRegistry<JobsRegistry>();
                 x.AddRegistry<VacancySearchRegistry>();
                 x.AddRegistry<LocationLookupRegistry>();

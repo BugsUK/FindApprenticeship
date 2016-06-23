@@ -80,11 +80,17 @@
                 case Domain.Entities.Vacancies.WageUnit.Weekly:
                     return PerWeekText;
 
-                case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                // TODO: HOTFIX: should revert this change.
+                default:
                     return string.Empty;
 
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
+                    /*
+                    case Domain.Entities.Vacancies.WageUnit.NotApplicable:
+                        return string.Empty;
+
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(wageUnit), $"Invalid Wage Unit: {wageUnit}");
+                    */
             }
         }
 
@@ -116,6 +122,15 @@
 
         public static Domain.Entities.Vacancies.WageUnit GetWageUnit(this Wage wage)
         {
+            if (wage.Type == WageType.LegacyWeekly)
+            {
+                return Domain.Entities.Vacancies.WageUnit.Weekly;
+            }
+            if (wage.Type == WageType.LegacyText)
+            {
+                return Domain.Entities.Vacancies.WageUnit.NotApplicable;
+            }
+
             if (wage.Type != WageType.Custom)
             {
                 return Domain.Entities.Vacancies.WageUnit.Weekly;
@@ -142,15 +157,15 @@
 
         private static string GetWeeklyNationalMinimumWage(decimal hoursPerWeek)
         {
-            var lowerRange = (Wages.Under18NationalMinimumWage*hoursPerWeek).ToString(WageAmountFormat);
-            var higherRange = (Wages.Over21NationalMinimumWage*hoursPerWeek).ToString(WageAmountFormat);
+            var lowerRange = (Wages.Under18NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
+            var higherRange = (Wages.Over21NationalMinimumWage * hoursPerWeek).ToString(WageAmountFormat);
 
             return $"£{lowerRange} - £{higherRange}";
         }
 
         private static string GetWeeklyApprenticeshipMinimumWage(decimal hoursPerWeek)
         {
-            return $"£{(Wages.ApprenticeMinimumWage*hoursPerWeek).ToString(WageAmountFormat)}";
+            return $"£{(Wages.ApprenticeMinimumWage * hoursPerWeek).ToString(WageAmountFormat)}";
         }
     }
 }

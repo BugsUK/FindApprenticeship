@@ -28,7 +28,7 @@
 
                 var summary = new TraineeshipSummary
                 {
-                    Id = vacancy.VacancyReferenceNumber,
+                    Id = vacancy.VacancyId,
                     //Goes into elastic unformatted for searching
                     VacancyReference = vacancy.VacancyReferenceNumber.ToString(),
                     Title = vacancy.Title,
@@ -39,10 +39,9 @@
                     // ReSharper restore PossibleInvalidOperationException
                     Description = vacancy.ShortDescription,
                     NumberOfPositions = vacancy.NumberOfPositions,
-                    EmployerName = employer.Name,
+                    EmployerName = string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName) ? employer.Name : string.Empty,
                     ProviderName = provider.Name,
-                    //TODO: Are we going to add this to RAA?
-                    //IsPositiveAboutDisability = vacancy.,
+                    IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
                     Location = location,
                     CategoryCode = category.CodeName,
                     Category = category.FullName,
@@ -54,28 +53,18 @@
             }
             catch (Exception ex)
             {
-                logService.Error($"Failed to map traineeship with Id: {vacancy.VacancyId}", ex);
+                logService.Error($"Failed to map traineeship with Id: {vacancy?.VacancyId ?? 0}", ex);
                 return null;
             }
         }
 
         private static GeoPoint GetGeoPoint(VacancySummary vacancy)
         {
-            //TODO: Geocode new vacancies
-            var location = new GeoPoint();
-            if (vacancy.Address.GeoPoint != null && vacancy.Address.GeoPoint.Latitude != 0 &&
-                vacancy.Address.GeoPoint.Longitude != 0)
+            return new GeoPoint
             {
-                location.Latitude = vacancy.Address.GeoPoint.Latitude;
-                location.Longitude = vacancy.Address.GeoPoint.Longitude;
-            }
-            else
-            {
-                //Coventry
-                location.Latitude = 52.4009991288043;
-                location.Longitude = -1.50812239495425;
-            }
-            return location;
+                Latitude = vacancy.Address.GeoPoint.Latitude,
+                Longitude = vacancy.Address.GeoPoint.Longitude
+            };
         }
 
         private static void LogCategory(VacancySummary vacancy, ILogService logService, Category category)

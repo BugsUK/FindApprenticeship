@@ -1,4 +1,5 @@
-﻿@using SFA.Apprenticeships.Web.Manage.Constants
+﻿@using SFA.Apprenticeships.Web.Common.Extensions
+@using SFA.Apprenticeships.Web.Manage.Constants
 @using SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy
 @model SFA.Apprenticeships.Web.Manage.ViewModels.HomeViewModel
 
@@ -6,8 +7,11 @@
     ViewBag.Title = "Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
+@section metatags
+{
+    <meta name="DCS.dcsaut" content="@User.Identity.Name" />   
+    <meta name="WT.sp" content="Manage Apprenticeships" />
+}
 @using (Html.BeginForm(null, "AgencyUser", FormMethod.Post))
 {
     <div class="grid-wrapper">

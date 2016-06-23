@@ -3,7 +3,6 @@
 namespace SFA.Apprenticeships.Web.Candidate.Controllers
 {
     using System;
-    using System.Globalization;
     using System.Threading.Tasks;
     using System.Web.Mvc;
     using ActionResults;
@@ -17,7 +16,6 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
     using SFA.Infrastructure.Interfaces;
     using Extensions;
     using FluentValidation.Mvc;
-    using Mediators;
     using Mediators.Search;
     using ViewModels.VacancySearch;
 
@@ -28,8 +26,9 @@ namespace SFA.Apprenticeships.Web.Candidate.Controllers
         private readonly IHelpCookieProvider _helpCookieProvider;
 
         public ApprenticeshipSearchController(IApprenticeshipSearchMediator apprenticeshipSearchMediator, IHelpCookieProvider helpCookieProvider,
-            IConfigurationService configurationService)
-            : base(configurationService)
+            IConfigurationService configurationService,
+            ILogService logService)
+            : base(configurationService, logService)
         {
             _apprenticeshipSearchMediator = apprenticeshipSearchMediator;
             _helpCookieProvider = helpCookieProvider;

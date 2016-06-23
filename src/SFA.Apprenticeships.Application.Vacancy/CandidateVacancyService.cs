@@ -12,9 +12,9 @@
             _vacancyWriteRepository = vacancyWriteRepository;
         }
 
-        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyId)
         {
-            _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyReferenceNumber);
+            _vacancyWriteRepository.IncrementOfflineApplicationClickThrough(vacancyId);
         }
     }
 }

@@ -17,14 +17,14 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.Provider;
     using Raa.Common.ViewModels.VacancyPosting;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Raa)]
     [OwinSessionTimeout]
     public class VacancyController : ManagementControllerBase
     {
         private readonly IVacancyMediator _vacancyMediator;
 
-        public VacancyController(IVacancyMediator vacancyMediator)
+        public VacancyController(IVacancyMediator vacancyMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _vacancyMediator = vacancyMediator;
         }
@@ -466,7 +466,8 @@
                     response.ValidationResult.AddToModelState(ModelState, string.Empty);
                     return View(response.ViewModel);
                 case VacancyMediatorCodes.UpdateEmployerInformation.Ok:
-                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
+                    if (response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                        response.ViewModel.IsEmployerLocationMainApprenticeshipLocation.Value)
                     {
                         return RedirectToRoute(ManagementRouteNames.ReviewVacancy,
                             new { vacancyReferenceNumber = response.ViewModel.VacancyReferenceNumber });

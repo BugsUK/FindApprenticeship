@@ -77,6 +77,7 @@
                 case VacancyStatus.Referred:
                     return VacancyStatuses.Unavailable;
                 case VacancyStatus.Closed:
+                case VacancyStatus.Completed:
                     return VacancyStatuses.Expired;
                 default:
                     throw new ArgumentException("Provider Vacancy Status: " + vacancyStatuses + " was not recognized");

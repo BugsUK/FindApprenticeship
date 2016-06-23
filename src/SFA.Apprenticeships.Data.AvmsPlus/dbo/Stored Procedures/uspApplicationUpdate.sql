@@ -38,7 +38,7 @@ BEGIN
       DECLARE @Comment VARCHAR(200)  
       
       /** Insert status change history record **/  
-      INSERT INTO APPLICATIONHISTORY(ApplicationId, UserName,  
+      INSERT INTO ApplicationHistory(ApplicationId, UserName,  
         ApplicationHistoryEventDate, ApplicationHistoryEventTypeId,  
         ApplicationHistoryEventSubTypeId ,Comment)  
       VALUES (@ApplicationId,NULL,getdate(),1,@ApplicationStatusTypeId,@ReasonComment)  

@@ -35,7 +35,7 @@ BEGIN
 		begin
 			SELECT	
 					EmployerId,
-					TradingName + ' (' + Town + ', ' + Postcode +')' TradingName
+					TradingName + ' (' + Town + ', ' + PostCode +')' TradingName
 			FROM	
 					dbo.Employer
 			WHERE

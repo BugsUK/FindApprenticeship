@@ -19,7 +19,7 @@
 
     public class ApprenticeshipVacancyDetailMapper
     {
-        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IList<Category> categories, ILogService logService)
+        public static ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IList<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
@@ -29,7 +29,7 @@
 
             var detail = new ApprenticeshipVacancyDetail
             {
-                Id = vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyId,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -45,7 +45,7 @@
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
                 WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
-                OtherInformation = vacancy.ThingsToConsider,
+                OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
                 //VacancyOwner = vacancy.,
@@ -56,18 +56,15 @@
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.Name,
-                //TODO: How is this captured in RAA?
-                //AnonymousEmployerName = vacancy.,
-                EmployerDescription = vacancyParty.EmployerDescription,
-                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
+                AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
+                EmployerDescription = vacancy.EmployerDescription,
+                EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
-                //TODO: How is this captured in RAA?
-                //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
-                ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
+                IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                ExpectedDuration = vacancy.ExpectedDuration,
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
@@ -76,12 +73,11 @@
                 SupplementaryQuestion1 = vacancy.FirstQuestion,
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
-                //RecruitmentAgency = vacancy.,
+                RecruitmentAgency = providerSite.TradingName,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
-                //ProviderSectorPassRate = vacancy.,
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
@@ -93,7 +89,8 @@
                 VacancyLocationType = vacancy.VacancyLocationType == VacancyLocationType.Nationwide ? ApprenticeshipLocationType.National : ApprenticeshipLocationType.NonNational,
                 ApprenticeshipLevel = vacancy.ApprenticeshipLevel.GetApprenticeshipLevel(),
                 SubCategory = subcategory.FullName,
-                TrainingType = vacancy.TrainingType.GetTrainingType()
+                TrainingType = vacancy.TrainingType.GetTrainingType(),
+                EditedInRaa = vacancy.EditedInRaa
             };
 
             return detail;
@@ -115,6 +112,8 @@
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
+                Town = address.Town,
+                County = address.County,
                 Postcode = address.Postcode,
                 GeoPoint = GetGeoPoint(address.GeoPoint)
             };
@@ -122,18 +121,11 @@
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
         {
-            var vacancyGeoPoint = new GeoPoint();
-            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            return new GeoPoint
             {
-                vacancyGeoPoint.Latitude = 52.4009991288043;
-                vacancyGeoPoint.Longitude = -1.50812239495425;
-            }
-            else
-            {
-                vacancyGeoPoint.Longitude = geoPoint.Longitude;
-                vacancyGeoPoint.Latitude = geoPoint.Latitude;
-            }
-            return vacancyGeoPoint;
+                Longitude = geoPoint.Longitude,
+                Latitude = geoPoint.Latitude
+            };
         }
 
         private static string GetContactInformation(Vacancy vacancy)

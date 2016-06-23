@@ -417,7 +417,7 @@ DECLARE @results TABLE
 		INNER JOIN dbo.ProviderSite VO ON VOR.ProviderSiteID = VO.ProviderSiteID
 		INNER JOIN dbo.ProviderSiteRelationship VOPSR ON VOPSR.ProviderSiteID = VO.ProviderSiteID AND VOPSR.ProviderSiteRelationshipTypeId = 1
 		LEFT JOIN ProviderSite VM ON V.VacancyManagerID = VM.ProviderSiteID
-		LEFT JOIN ProviderSIte DO ON V.DeliveryOrganisationID = DO.ProviderSiteID
+		LEFT JOIN ProviderSite DO ON V.DeliveryOrganisationID = DO.ProviderSiteID
 		LEFT JOIN ProviderSiteRelationship DOR ON DOR.ProviderSiteId = V.DeliveryOrganisationId AND DOR.ProviderSiteRelationshipTypeId = 1
 		LEFT JOIN Provider DOP ON DOP.ProviderId = DOR.ProviderID
 	WHERE 

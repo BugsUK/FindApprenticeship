@@ -44,7 +44,11 @@
         public string DesiredQualificationsComment { get; set; }
 
         public VacancyStatus Status { get; set; }
+
         public bool ComeFromPreview { get; set; }
+
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

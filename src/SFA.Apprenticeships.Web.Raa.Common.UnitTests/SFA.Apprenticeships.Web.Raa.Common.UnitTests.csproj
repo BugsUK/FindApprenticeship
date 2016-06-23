@@ -153,12 +153,14 @@
     </Compile>
     <Compile Include="Builders\VacancyViewModelBuilder.cs" />
     <Compile Include="Converters\ApprenticeshipVacancyConverterTests.cs" />
+    <Compile Include="Converters\ProviderSiteEmployerLinkViewModelConverterTests.cs" />
     <Compile Include="Mappers\AddressToAddressViewModelTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyDatesViewModelMapperTests.cs" />
     <Compile Include="Mappers\ApprenticeshipVacancyToVacancyViewModelMapperTests.cs" />
     <Compile Include="Mappers\DateTimeToDateViewModelMapperTests.cs" />
     <Compile Include="Mappers\GeoPointToGeoPointViewModelTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\GeoCodingProvider\GeoCodingProviderTests.cs" />
     <Compile Include="Providers\LocationsProvider\LocationsTests.cs" />
     <Compile Include="Providers\LocationsProvider\TestBase.cs" />
     <Compile Include="Providers\ProviderProvider\CreateVacancyTests.cs" />
@@ -166,6 +168,8 @@
     <Compile Include="Providers\ProviderUser\ProviderUserProviderBuilder.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
     <Compile Include="Providers\VacancyPosting\CloneVacancyTests.cs" />
+    <Compile Include="Providers\VacancyPosting\LocalAuthorityTests.cs" />
+    <Compile Include="Providers\VacancyPosting\GeocodeVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\CreateVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\GetNewVacancyTests.cs" />
     <Compile Include="Providers\VacancyPosting\ManageDatesTests.cs" />
@@ -211,6 +215,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Interfaces\SFA.Apprenticeships.Application.Interfaces.csproj">
       <Project>{2C577447-2405-46B3-8065-613A19A58541}</Project>
       <Name>SFA.Apprenticeships.Application.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Location\SFA.Apprenticeships.Application.Location.csproj">
+      <Project>{A64FC67F-C873-4422-93DD-FBD8A6370EC3}</Project>
+      <Name>SFA.Apprenticeships.Application.Location</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>

@@ -38,10 +38,12 @@
 
         public DateTime DateValidated { get; set; }
         public string County { get; set; }
+
         public GeoPoint GeoPoint { get; set; }
 
-        //TODO: Implementing the following two derived fields:
-        //public int Easting { get; set; }
-        //public int Northing { get; set; }
+        public override string ToString()
+        {
+            return AddressLine4 ?? AddressLine3 ?? AddressLine2 ?? AddressLine1 ?? Postcode;
+        }
     }
 }

@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Validators
 {
     using FluentValidation;
-
     using Constants.ViewModels;
     using ViewModels.Home;
 
@@ -13,6 +12,13 @@
         }
     }
 
+    public class ContactMessageServerViewModelValidator : AbstractValidator<ContactMessageViewModel>
+    {
+        public ContactMessageServerViewModelValidator()
+        {
+            this.AddCommonRules();
+        }
+    }
     internal static class ContactMessageValidationRules
     {
         internal static void AddCommonRules(this AbstractValidator<ContactMessageViewModel> validator)
@@ -40,8 +46,7 @@
                 .NotEmpty()
                 .WithMessage(ContactMessageViewModelMessages.EnquiryMessages.RequiredErrorText)
                 .Matches(ContactMessageViewModelMessages.EnquiryMessages.WhiteListRegularExpression)
-                .WithMessage(ContactMessageViewModelMessages.EnquiryMessages.WhiteListErrorText);
-            ;
+                .WithMessage(ContactMessageViewModelMessages.EnquiryMessages.WhiteListErrorText); ;
 
             validator.RuleFor(x => x.Details)
                 .Length(0, 4000)

@@ -9,9 +9,9 @@ BEGIN
 	DECLARE @applicationStatus int
 	
 	-- get the application status.
-	select @applicationStatus = applicationStatusTypeId
-	from application 
-	where applicationId = @applicationId
+	select @applicationStatus = ApplicationStatusTypeId
+	from Application 
+	where ApplicationId = @applicationId
 
 	-- Return the rows held against the candidate
 If @applicationId = 0

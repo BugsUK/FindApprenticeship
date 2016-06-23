@@ -5,6 +5,7 @@
     using Application.Applications.Strategies;
     using Application.Authentication;
     using Application.Candidate;
+    using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Candidate.Strategies.SavedSearches;
@@ -35,7 +36,6 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Common.Configuration;
     using Infrastructure.Common.IoC;
     using Infrastructure.Logging.IoC;
     using Mappers;
@@ -106,9 +106,14 @@
         private void RegisterServices()
         {
             For<ILocationSearchService>().Use<LocationSearchService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IVacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>().Use<VacancySearchService<ApprenticeshipSearchResponse, ApprenticeshipVacancyDetail, ApprenticeshipSearchParameters>>();
             For<IVacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>().Use<VacancySearchService<TraineeshipSearchResponse, TraineeshipVacancyDetail, TraineeshipSearchParameters>>();
-            For<ICandidateService>().Use<CandidateService>();
+            For<ICandidateService>().Use<CandidateService>()
+                .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitLegacyApprenticeshipApplicationStrategy").Named("SubmitLegacyApprenticeshipApplicationStrategy")
+                .Ctor<ISubmitApprenticeshipApplicationStrategy>("submitApprenticeshipApplicationStrategy").Named("SubmitApprenticeshipApplicationStrategy")
+                .Ctor<ISubmitTraineeshipApplicationStrategy>("submitLegacyTraineeshipApplicationStrategy").Named("SubmitLegacyTraineeshipApplicationStrategy")
+                .Ctor<ISubmitTraineeshipApplicationStrategy>("submitTraineeshipApplicationStrategy").Named("SubmitTraineeshipApplicationStrategy");
             For<ICandidateApplicationService>().Use<CandidateApplicationService>();
             For<IUserAccountService>().Use<UserAccountService>();
             For<IAuthenticationService>().Use<AuthenticationService>();
@@ -130,33 +135,35 @@
             var configurationService = settingsContainer.GetInstance<IConfigurationService>();
             var codeGenerator = configurationService.Get<CommonWebConfiguration>().CodeGenerator;
 
-            For<IGetCandidateApprenticeshipApplicationsStrategy>().Use<LegacyGetCandidateApprenticeshipApplicationsStrategy>();
-            For<ILegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<ApprenticeshipVacancyDetail>>();
-            For<ILegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>().Use<LegacyGetCandidateVacancyDetailStrategy<TraineeshipVacancyDetail>>();
             For<ISendCandidateCommunicationStrategy>().Use<QueueCandidateCommunicationStrategy>();
             For<ISendUsernameUpdateCommunicationStrategy>().Use<QueueUsernameUpdateCommunicationStrategy>();
-            For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
             For<IRegisterCandidateStrategy>().Use<RegisterCandidateStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<IRegisterUserStrategy>().Use<RegisterUserStrategy>();
             For<IActivateUserStrategy>().Use<ActivateUserStrategy>();
-            For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>().Name = "ResetForgottenPasswordStrategy";
-            For<IResetForgottenPasswordStrategy>().Use<LegacyResetForgottenPasswordStrategy>().Ctor<IResetForgottenPasswordStrategy>().Named("ResetForgottenPasswordStrategy").Name = "LegacyResetForgottenPasswordStrategy";
-            For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>().Name = "UnlockAccountStrategy";
-            For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
+            
             For<ISendPasswordResetCodeStrategy>().Use<SendPasswordResetCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
             For<ISendPendingUsernameCodeStrategy>().Use<SendPendingUsernameCodeStrategy>().Ctor<ICodeGenerator>().Named(codeGenerator);
 
             var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
             {
-                For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>();
-                For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>();
+                For<IActivateCandidateStrategy>().Use<QueuedLegacyActivateCandidateStrategy>();
+                For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>().Name = "UnlockAccountStrategy";
+                For<IUnlockAccountStrategy>().Use<LegacyUnlockAccountStrategy>().Ctor<IUnlockAccountStrategy>().Named("UnlockAccountStrategy").Name = "LegacyUnlockAccountStrategy";
+                For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>().Name = "ResetForgottenPasswordStrategy";
+                For<IResetForgottenPasswordStrategy>().Use<LegacyResetForgottenPasswordStrategy>().Ctor<IResetForgottenPasswordStrategy>().Named("ResetForgottenPasswordStrategy").Name = "LegacyResetForgottenPasswordStrategy";
             }
             else if(servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
-                For<ISubmitApprenticeshipApplicationStrategy>().Use<SubmitApprenticeshipApplicationStrategy>();
-                For<ISubmitTraineeshipApplicationStrategy>().Use<SubmitTraineeshipApplicationStrategy>();
+                For<IActivateCandidateStrategy>().Use<ActivateCandidateStrategy>();
+                For<IUnlockAccountStrategy>().Use<UnlockAccountStrategy>();
+                For<IResetForgottenPasswordStrategy>().Use<ResetForgottenPasswordStrategy>();
             }
+
+            For<ISubmitApprenticeshipApplicationStrategy>().Use<LegacySubmitApprenticeshipApplicationStrategy>().Name = "SubmitLegacyApprenticeshipApplicationStrategy";
+            For<ISubmitApprenticeshipApplicationStrategy>().Use<SubmitApprenticeshipApplicationStrategy>().Name = "SubmitApprenticeshipApplicationStrategy";
+            For<ISubmitTraineeshipApplicationStrategy>().Use<LegacySubmitTraineeshipApplicationStrategy>().Name = "SubmitLegacyTraineeshipApplicationStrategy";
+            For<ISubmitTraineeshipApplicationStrategy>().Use<SubmitTraineeshipApplicationStrategy>().Name = "SubmitTraineeshipApplicationStrategy";
 
             For<ISendApplicationSubmittedStrategy>().Use<LegacyQueueApprenticeshipApplicationSubmittedStrategy>();
             For<ISendTraineeshipApplicationSubmittedStrategy>().Use<LegacyQueueTraineeshipApplicationSubmittedStrategy>();

@@ -46,8 +46,13 @@ BEGIN
 	 JOIN ProviderSiteRelationship
 	 ON ProviderSite.ProviderSiteID = ProviderSiteRelationship.ProviderSiteID
 	 JOIN ProviderSiteRelationshipType ON ProviderSiteRelationship.ProviderSiteRelationshipTYpeID
-	 = ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTYpeID
+	 = ProviderSiteRelationshipTYpe.ProviderSiteRelationshipTypeID
 	 JOIN Provider ON ProviderSiteRelationship.ProviderID = Provider.ProviderID   
 	WHERE [ProviderSite].[EdsUrn]=@EdsId  
 
 END
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[uspTrainingProviderSelectAllByEdsId] TO [db_executor]
+    AS [dbo];
+

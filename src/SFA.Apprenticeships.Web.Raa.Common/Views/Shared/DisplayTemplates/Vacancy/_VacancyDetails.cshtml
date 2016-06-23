@@ -103,6 +103,17 @@
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
                 </div>
             }
+            else
+            {
+                if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+                {
+                    <div class="@editableItemClass">
+                        <h3 class="bold-small">Positions</h3>
+                        <p id="vacancy-reference-id">@Model.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions available</p>
+                        @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.LocationAddresses.First().NumberOfPositions, Model.EmployerLink, Model.NewVacancyViewModel.NumberOfPositionsComment))
+                    </div>
+                }
+            }
 
             @if (Model.VacancyType == VacancyType.Traineeship)
             {

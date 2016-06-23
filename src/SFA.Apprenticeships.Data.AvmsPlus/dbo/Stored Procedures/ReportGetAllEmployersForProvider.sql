@@ -31,7 +31,7 @@ select
 	,emp.TradingName 
 from dbo.Employer emp
 join dbo.VacancyOwnerRelationship vpr on vpr.EmployerId = emp.EmployerId
-join dbo.ProviderSite tp on tp.PRoviderSIteID = vpr.PRoviderSIteID
+join dbo.ProviderSite tp on tp.ProviderSiteID = vpr.ProviderSiteID
 where
 	tp.ProviderSiteID = @trainingProviderID
 order by TradingName

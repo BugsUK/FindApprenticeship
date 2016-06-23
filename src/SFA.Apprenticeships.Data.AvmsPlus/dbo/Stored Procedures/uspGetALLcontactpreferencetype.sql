@@ -6,5 +6,5 @@ BEGIN
 	SET NOCOUNT ON;
 
     
-	SELECT * from contactpreferencetype
+	SELECT * from ContactPreferenceType
 END

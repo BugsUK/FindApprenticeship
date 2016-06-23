@@ -20,3 +20,8 @@ BEGIN
               
 	SET NOCOUNT OFF      
 END
+GO
+GRANT EXECUTE
+    ON OBJECT::[dbo].[uspSavedSearchCriteriaUpdateGeocode] TO [db_executor]
+    AS [dbo];
+

@@ -41,13 +41,23 @@
                 {
                     var settingsObject = (JObject)JToken.ReadFrom(new JsonTextReader(sr));
                     var settingsElement = settingsObject.GetValue(settingName);
+                    if (settingsElement == null)
+                    {
+                        var message = $"Could not find configuration for {settingName} in Azure Blob Storage. Have you loaded the correct configuration?";
+                        _loggerService.Error(message);
+                        throw new MissingConfigurationException(message);
+                    }
                     elementJson = settingsElement.ToString();
                 }
             }
+            catch (MissingConfigurationException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
-                _loggerService.Error("Error deserialising", ex);
-                throw;
+                _loggerService.Error($"Error getting {settingName}", ex);
+                throw new Exception($"Error getting {settingName}", ex);
             }
 
             var tsetting = JsonConvert.DeserializeObject<TSettings>(elementJson);
@@ -93,6 +103,11 @@
                 _cache.Add(CacheKey, json, policy);
                 return json;
             }
+        }
+
+        private class MissingConfigurationException : Exception
+        {
+            public MissingConfigurationException(string message) : base(message) { }
         }
     }
 }

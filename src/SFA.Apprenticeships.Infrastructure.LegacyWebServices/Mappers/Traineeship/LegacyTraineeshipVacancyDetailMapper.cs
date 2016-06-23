@@ -174,6 +174,9 @@
 
                 .ForMember(dest => dest.TrainingType,
                     opt => opt.Ignore())
+
+                .ForMember(dest => dest.EditedInRaa,
+                    opt => opt.UseValue(false))
             ;
         }
     }

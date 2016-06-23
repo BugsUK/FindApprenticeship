@@ -25,6 +25,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
     using Logging.IoC;
     using Microsoft.WindowsAzure.ServiceRuntime;
     using Postcode.IoC;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
     using UserDirectory.IoC;
     using VacancySearch.IoC;
@@ -121,6 +124,9 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
             var configurationService = container.GetInstance<IConfigurationService>();
             var azureServiceBusConfiguration = configurationService.Get<AzureServiceBusConfiguration>();
 
+            var servicesConfiguration = configurationService.Get<ServicesConfiguration>();
+            var cacheConfig = configurationService.Get<CacheConfiguration>();
+
             _container = new Container(x =>
             {
                 x.AddRegistry<CommonRegistry>();
@@ -137,7 +143,14 @@ namespace SFA.Apprenticeships.Infrastructure.Monitor
                 x.AddRegistry<UserDirectoryRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
                 //CheckNasGateway monitor task always uses legacy services
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
+                x.AddRegistry(new LegacyWebServicesRegistry(servicesConfiguration, cacheConfig));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
+                    new ServicesConfiguration
+                    {
+                        ServiceImplementation = ServicesConfiguration.Legacy,
+                        VacanciesSource = ServicesConfiguration.Legacy
+                    }));
+                
                 x.AddRegistry<MonitorRegistry>();
                 x.AddRegistry<AuditRepositoryRegistry>();
             });

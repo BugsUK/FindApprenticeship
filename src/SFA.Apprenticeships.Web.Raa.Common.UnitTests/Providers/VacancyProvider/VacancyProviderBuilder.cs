@@ -1,4 +1,6 @@
-﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
+﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
+
+namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyProvider
 {
     using System;
     using Application.Interfaces.Applications;
@@ -33,6 +35,9 @@
         private Mock<IVacancyPostingService> _vacancyPostingService = new Mock<IVacancyPostingService>();
         private Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
         private readonly Mock<IUserProfileService> _userProfileService = new Mock<IUserProfileService>();
+        private Mock<IGeoCodeLookupService> _mockGeoCodeLookupService = new Mock<IGeoCodeLookupService>();
+        private Mock<ILocalAuthorityLookupService> _mockLocalAuthorityLookupService = new Mock<ILocalAuthorityLookupService>();
+
 
         public VacancyProviderBuilder()
         {
@@ -54,7 +59,9 @@
                 _traineeshipApplicationService.Object,
                 _vacancyLockingService.Object,
                 _currentUserService.Object,
-                _userProfileService.Object);
+                _userProfileService.Object,
+                _mockGeoCodeLookupService.Object,
+                _mockLocalAuthorityLookupService.Object);
         }
 
         public Mock<IVacancyPostingService> VacancyPostingService => _vacancyPostingService;
@@ -111,6 +118,12 @@
         public VacancyProviderBuilder With(Mock<ICurrentUserService> currentUserService)
         {
             _currentUserService = currentUserService;
+            return this;
+        }
+
+        public VacancyProviderBuilder With(Mock<IGeoCodeLookupService> geocodeService)
+        {
+            _mockGeoCodeLookupService = geocodeService;
             return this;
         }
     }

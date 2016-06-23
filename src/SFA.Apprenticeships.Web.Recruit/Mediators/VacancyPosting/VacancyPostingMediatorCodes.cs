@@ -22,6 +22,7 @@
         public static class GetEmployer
         {
             public const string Ok = "VacancyPosting.GetEmployer.Ok";
+            public const string InvalidEmployerAddress = "VacancyPosting.GetEmployer.InvalidEmployerAddress";
         }
 
         public static class ConfirmEmployer

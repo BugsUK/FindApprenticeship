@@ -13,6 +13,7 @@
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
         public EmployerRepository(IGetOpenConnection getOpenConnection, IMapper mapper)
         {
@@ -26,7 +27,7 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId = @EmployerId AND EmployerStatusTypeId != 2",
                     new { EmployerId = employerId }).SingleOrDefault();
 
-            return _mapper.Map<Employer, DomainEmployer>(employer);
+            return MapEmployer(employer);
         }
 
         public DomainEmployer GetByEdsUrn(string edsUrn)
@@ -35,7 +36,7 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn AND EmployerStatusTypeId != 2",
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
-            return _mapper.Map<Employer, DomainEmployer>(employer);
+            return MapEmployer(employer);
         }
 
         public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds)
@@ -44,7 +45,7 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
                     new { EmployerIds = employerIds }).ToList();
 
-            return _mapper.Map<List<Employer>, List<DomainEmployer>>(employers);
+            return employers.Select(MapEmployer).ToList();
         }
 
         public DomainEmployer Save(DomainEmployer employer)
@@ -88,6 +89,26 @@
             }
 
             return GetById(dbEmployer.EmployerId);
+        }
+
+        private DomainEmployer MapEmployer(Employer employer)
+        {
+            var result = _mapper.Map<Employer, DomainEmployer>(employer);
+            return MapCountyId(employer, result);
+        }
+
+        private DomainEmployer MapCountyId(Employer dbEmployer, DomainEmployer result)
+        {
+            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                new
+                {
+                    CountyId = dbEmployer.CountyId
+                }).Single();
+
+            return result;
         }
     }
 }

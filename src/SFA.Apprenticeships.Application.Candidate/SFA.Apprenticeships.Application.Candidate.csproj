@@ -98,6 +98,8 @@
     <Compile Include="CandidateSearchService.cs" />
     <Compile Include="CandidateService.cs" />
     <Compile Include="CreateCandidateRequest.cs" />
+    <Compile Include="Configuration\ServicesConfiguration.cs" />
+    <Compile Include="Strategies\GetCandidateVacancyDetailStrategy.cs" />
     <Compile Include="SaveCandidateRequest.cs" />
     <Compile Include="Strategies\Apprenticeships\GetCandidateApprenticeshipApplicationsStrategy.cs" />
     <Compile Include="Strategies\Apprenticeships\SubmitApprenticeshipApplicationStrategy.cs" />
@@ -108,6 +110,7 @@
     <Compile Include="Strategies\IRequestEmailReminderStrategy.cs" />
     <Compile Include="Strategies\IUnsubscribeStrategy.cs" />
     <Compile Include="Strategies\IUpdateUsernameStrategy.cs" />
+    <Compile Include="Strategies\ActivateCandidateStrategy.cs" />
     <Compile Include="Strategies\QueuedLegacySaveCandidateStrategy.cs" />
     <Compile Include="Strategies\RequestEmailReminderStrategy.cs" />
     <Compile Include="Strategies\SavedSearches\CreateSavedSearchStrategy.cs" />

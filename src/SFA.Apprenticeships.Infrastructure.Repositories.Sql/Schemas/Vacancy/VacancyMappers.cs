@@ -55,11 +55,9 @@
         {
             //TODO: Review the validity of using automapper in this situation and check if every field needs explicitly mapping. It shouldn't be required
             Mapper.CreateMap<DomainVacancy, DbVacancy>()
-                .IgnoreMember(v => v.ContractOwnerID) // -> null for new entries
                 .IgnoreMember(v => v.CountyId) // -> DB Lookup
                 .IgnoreMember(v => v.DeliveryOrganisationID) // -> null for new entries
                 .ForMember(v => v.LocalAuthorityId, opt => opt.UseValue(8))  // -> GeoMapping story will fill this one
-                .IgnoreMember(v => v.OriginalContractOwnerId) // -> null for new entries
                 .IgnoreMember(v => v.VacancyLocationTypeId) // DB Lookup
                 .MapMemberFrom(v => v.VacancyManagerID, av => av.VacancyManagerId)
                 .MapMemberFrom(v => v.VacancyOwnerRelationshipId, av => av.OwnerPartyId)
@@ -75,16 +73,16 @@
                 .MapMemberFrom(v => v.AddressLine5, av => av.Address.AddressLine5)
                 .MapMemberFrom(v => v.PostCode, av => av.Address.Postcode)
                 .MapMemberFrom(v => v.Town, av => av.Address.Town)
-                .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude)  // use a converter?
-                .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude) // use a converter?
+                .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude) 
+                .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude)
+                .MapMemberFrom(v => v.GeocodeEasting, av => (int)av.Address.GeoPoint.Easting) 
+                .MapMemberFrom(v => v.GeocodeNorthing, av => (int)av.Address.GeoPoint.Northing) 
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
                 .MapMemberFrom(v => v.ContactName, av => av.ContactName)
                 .MapMemberFrom(v => v.ContactEmail, av => av.ContactEmail)
                 .MapMemberFrom(v => v.ContactNumber, av => av.ContactNumber)
 
-                .IgnoreMember(v => v.GeocodeEasting) // Encoding user story
-                .IgnoreMember(v => v.GeocodeNorthing) // Encoding user story
                 .MapMemberFrom(v => v.Title, av => av.Title)
                 .IgnoreMember(v => v.ApprenticeshipType) 
                 .MapMemberFrom(v => v.ShortDescription, av => av.ShortDescription)
@@ -99,7 +97,7 @@
                 .ForMember(v => v.ExpectedDuration, opt => opt.MapFrom(av => new Duration(av.DurationType, av.Duration).GetDisplayText()))
                 .MapMemberFrom(v => v.WorkingWeek, av => av.WorkingWeek)
                 .ForMember(v => v.NumberOfViews, opt => opt.UseValue(0))
-                .IgnoreMember(v => v.EmployerAnonymousName)
+                .MapMemberFrom(v => v.EmployerAnonymousName, av => av.EmployerAnonymousName)
                 .MapMemberFrom(v => v.EmployerDescription, av => av.EmployerDescription)
                 .MapMemberFrom(v => v.EmployersWebsite, av => av.EmployerWebsiteUrl)
                 .IgnoreMember(v => v.MaxNumberofApplications)
@@ -128,6 +126,9 @@
                 .MapMemberFrom(v => v.UpdatedDateTime, av => av.UpdatedDateTime)
                 .IgnoreMember(v => v.SectorId)
                 .IgnoreMember(v => v.InterviewsFromDate)
+                .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
+                .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
+                .IgnoreMember(v => v.LocalAuthorityId)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -170,6 +171,7 @@
                 .IgnoreMember(av => av.FirstQuestionComment)
                 .IgnoreMember(av => av.SecondQuestionComment)
                 .MapMemberFrom(av => av.AdditionalLocationInformation, v => v.AdditionalLocationInformation)
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .IgnoreMember(av => av.EmployerDescriptionComment)
                 .IgnoreMember(av => av.EmployerWebsiteUrlComment)
                 .IgnoreMember(av => av.LocationAddressesComment)
@@ -195,6 +197,7 @@
                 .IgnoreMember(av => av.PersonalQualitiesComment)
                 .IgnoreMember(av => av.ThingsToConsider)
                 .IgnoreMember(av => av.ThingsToConsiderComment)
+                .IgnoreMember(av => av.OtherInformation)
                 .IgnoreMember(av => av.DesiredQualifications)
                 .IgnoreMember(av => av.DesiredQualificationsComment)
                 .IgnoreMember(av => av.FirstQuestion)
@@ -218,26 +221,44 @@
                 .IgnoreMember(av => av.RegionalTeam)
                 .IgnoreMember(av => av.CreatedByProviderUsername)
                 .MapMemberFrom(av => av.VacancyLocationType, v => v.VacancyLocationTypeId.HasValue ? (VacancyLocationType)v.VacancyLocationTypeId.Value : VacancyLocationType.Unknown)
+                .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
+                .IgnoreMember(av => av.LocalAuthorityCode)
+                .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
                 .AfterMap((v, av) =>
                 {
-                    av.Address = new DomainPostalAddress
+                    if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine3) || !string.IsNullOrWhiteSpace(v.AddressLine4)
+                        || !string.IsNullOrWhiteSpace(v.AddressLine5) || !string.IsNullOrWhiteSpace(v.PostCode)
+                        || !string.IsNullOrWhiteSpace(v.Town))
                     {
-                        AddressLine1 = v.AddressLine1,
-                        AddressLine2 = v.AddressLine2,
-                        AddressLine3 = v.AddressLine3,
-                        AddressLine4 = v.AddressLine4,
-                        AddressLine5 = v.AddressLine5,
-                        Postcode = v.PostCode,
-                        Town = v.Town
-                    };
+                        av.Address = new DomainPostalAddress
+                        {
+                            AddressLine1 = v.AddressLine1,
+                            AddressLine2 = v.AddressLine2,
+                            AddressLine3 = v.AddressLine3,
+                            AddressLine4 = v.AddressLine4,
+                            AddressLine5 = v.AddressLine5,
+                            Postcode = v.PostCode,
+                            Town = v.Town
+                        };
+                    }
+
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
 
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double) v.Latitude.Value,
-                            Longitude = (double) v.Longitude.Value
-                        };
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
                 })
 
@@ -268,6 +289,7 @@
                 .MapMemberFrom(av => av.StandardId, v => v.StandardId)
                 .MapMemberFrom(av => av.Status, v => v.VacancyStatusId)
                 .ForMember(av => av.IsEmployerLocationMainApprenticeshipLocation, opt => opt.ResolveUsing<IsEmployerLocationMainApprenticeshipLocationResolver>().FromMember(v => v.VacancyLocationTypeId))
+                .MapMemberFrom(av => av.EmployerAnonymousName, v => v.EmployerAnonymousName)
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
@@ -300,27 +322,33 @@
                         Town = v.Town
                     };
 
+                    if ((v.Latitude.HasValue && v.Longitude.HasValue) ||
+                        (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue))
+                    {
+                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (v.Latitude.HasValue && v.Longitude.HasValue)
                     {
-                        av.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)v.Latitude.Value,
-                            Longitude = (double)v.Longitude.Value
-                        };
+                        av.Address.GeoPoint.Latitude = (double)v.Latitude.Value;
+                        av.Address.GeoPoint.Longitude = (double)v.Longitude.Value;
+                    }
+
+                    if (v.GeocodeEasting.HasValue && v.GeocodeNorthing.HasValue)
+                    {
+                        av.Address.GeoPoint.Easting = v.GeocodeEasting.Value;
+                        av.Address.GeoPoint.Northing = v.GeocodeNorthing.Value;
                     }
                 })
-
                 .End();
 
             Mapper.CreateMap<DomainPostalAddress, DbPostalAddress>()
                 .MapMemberFrom(a => a.Latitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Latitude)
                 .MapMemberFrom(a => a.Longitude, a => a.GeoPoint == null ? null : (decimal?)a.GeoPoint.Longitude)
+                .MapMemberFrom(a => a.Easting, a => a.GeoPoint == null ? null : (int?)a.GeoPoint.Easting)
+                .MapMemberFrom(a => a.Northing, a => a.GeoPoint == null ? null : (int?)a.GeoPoint.Northing)
 
                 .MapMemberFrom(a => a.PostTown, a => a.Town)
-
-                // TODO: Remove from Vacancy.Vacancy?
-                .IgnoreMember(a => a.Easting)
-                .IgnoreMember(a => a.Northing)
 
                 // TODO: Not in model and may not need to be
                 .IgnoreMember(a => a.PostalAddressId) // TODO: Need to add to round-trip...?
@@ -341,13 +369,21 @@
                 .IgnoreMember(dpa => dpa.GeoPoint)
                 .AfterMap((dbpa, dpa) =>
                 {
+                    if ((dbpa.Latitude.HasValue && dbpa.Longitude.HasValue) || (dbpa.Easting.HasValue && dbpa.Northing.HasValue))
+                    {
+                        dpa.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (dbpa.Latitude.HasValue && dbpa.Longitude.HasValue)
                     {
-                        dpa.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)dbpa.Latitude.Value,
-                            Longitude = (double)dbpa.Longitude.Value
-                        };
+                        dpa.GeoPoint.Latitude = (double) dbpa.Latitude.Value;
+                        dpa.GeoPoint.Longitude = (double) dbpa.Longitude.Value;
+                    }
+
+                    if (dbpa.Easting.HasValue && dbpa.Northing.HasValue)
+                    {
+                        dpa.GeoPoint.Easting = dbpa.Easting.Value;
+                        dpa.GeoPoint.Northing = dbpa.Northing.Value;
                     }
                 })
                 ;
@@ -364,14 +400,15 @@
                 .MapMemberFrom(dbvl => dbvl.Latitude, dvl => (decimal) dvl.Address.GeoPoint.Latitude)
                 // use a converter?
                 .MapMemberFrom(dbvl => dbvl.Longitude, dvl => (decimal) dvl.Address.GeoPoint.Longitude)
+                .MapMemberFrom(dbvl => dbvl.GeocodeEasting, dvl => dvl.Address.GeoPoint.Easting)
+                .MapMemberFrom(dbvl => dbvl.GeocodeNorthing, dvl => dvl.Address.GeoPoint.Northing)
                 // use a converter?
                 .IgnoreMember(dbvl => dbvl.CountyId)
-                .IgnoreMember(dbvl => dbvl.LocalAuthorityId)
-                .IgnoreMember(dbvl => dbvl.GeocodeNorthing)
-                .IgnoreMember(dbvl => dbvl.GeocodeEasting);
+                .IgnoreMember(dbvl => dbvl.LocalAuthorityId);
 
             Mapper.CreateMap<DbVacancyLocation, DomainVacancyLocation>()
                 .IgnoreMember(dvl => dvl.Address)
+                .IgnoreMember(dvl => dvl.LocalAuthorityCode)
                 .AfterMap((dbvl, dvl) =>
                 {
                     dvl.Address = new DomainPostalAddress
@@ -385,13 +422,22 @@
                         Town = dbvl.Town
                     };
 
+                    if ((dbvl.Latitude.HasValue && dbvl.Longitude.HasValue) || 
+                        (dbvl.GeocodeEasting.HasValue && dbvl.GeocodeNorthing.HasValue))
+                    {
+                        dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint();
+                    }
+
                     if (dbvl.Latitude.HasValue && dbvl.Longitude.HasValue)
                     {
-                        dvl.Address.GeoPoint = new Domain.Entities.Raa.Locations.GeoPoint
-                        {
-                            Latitude = (double)dbvl.Latitude.Value,
-                            Longitude = (double)dbvl.Longitude.Value
-                        };
+                        dvl.Address.GeoPoint.Latitude = (double)dbvl.Latitude.Value;
+                        dvl.Address.GeoPoint.Longitude = (double)dbvl.Longitude.Value;
+                    }
+
+                    if (dbvl.GeocodeEasting.HasValue && dbvl.GeocodeNorthing.HasValue)
+                    {
+                        dvl.Address.GeoPoint.Easting = dbvl.GeocodeEasting.Value;
+                        dvl.Address.GeoPoint.Northing = dbvl.GeocodeNorthing.Value;
                     }
                 });
         }

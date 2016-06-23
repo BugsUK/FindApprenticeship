@@ -113,17 +113,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Common\IGetOpenConnection.cs" />
     <Compile Include="Common\SqlMapperExtensionsCustom.cs" />
     <Compile Include="Common\TypeExtensions.cs" />
     <Compile Include="Configuration\SqlConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IoC\RepositoriesRegistry.cs" />
+    <Compile Include="Reporting\ReportingRepository.cs" />
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
+    <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
     <Compile Include="Schemas\dbo\VacancyPartyMappers.cs" />
     <Compile Include="Schemas\dbo\VacancyPartyRepository.cs" />
     <Compile Include="Schemas\Provider\Entities\Provider.cs" />
@@ -193,6 +198,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
     <Compile Include="Schemas\UserProfile\AgencyUserRepository.cs" />
   </ItemGroup>

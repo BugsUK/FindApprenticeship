@@ -19,6 +19,19 @@
 
         public WebProxyConsumer Get(Guid externalSystemId)
         {
+            /*
+                CREATE SCHEMA WebProxy
+
+                CREATE TABLE WebProxy.WebProxyConsumer
+                (
+                    ExternalSystemId                    UNIQUEIDENTIFIER PRIMARY KEY,
+                    WebProxyConsumerId                  INT,
+                    ShortDescription                    VARCHAR(MAX),
+                    FullDescription                     VARCHAR(MAX),
+                    RouteToCompatabilityWebServiceRegex VARCHAR(MAX)
+                )
+            */
+
             const string sql = @"SELECT * FROM WebProxy.WebProxyConsumer WHERE ExternalSystemId = @ExternalSystemId";
 
             WebProxyConsumer webProxyUser;

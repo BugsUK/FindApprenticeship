@@ -8,7 +8,7 @@ AS
 BEGIN	 
 DECLARE @NewId INT
 	
-	INSERT INTO Applicationunsuccessfulreasontype
+	INSERT INTO ApplicationUnsuccessfulReasonType
 		(FullName,ReferralPoints,CandidateDisplayText,CandidateFullName,CodeName,ShortName,Withdrawn)
 	VALUES
 		(@FullName,@ReferralPoints,@CandidateDisplayText, CASE WHEN @CandidateFullName=''THEN NULL ELSE @CandidateFullName END,'','',@Withdrawn)

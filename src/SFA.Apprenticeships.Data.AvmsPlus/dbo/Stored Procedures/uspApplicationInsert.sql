@@ -37,7 +37,7 @@ BEGIN
 	    
 			SET @applicationId = SCOPE_IDENTITY()
 	    
-			insert into applicationhistory(ApplicationId, UserName, ApplicationHistoryEventDate, ApplicationHistoryEventTypeId, ApplicationHistoryEventSubTypeId ,Comment)
+			insert into ApplicationHistory(ApplicationId, UserName, ApplicationHistoryEventDate, ApplicationHistoryEventTypeId, ApplicationHistoryEventSubTypeId ,Comment)
 			values (@applicationId, NULL, getdate(),1, @ApplicationStatusTypeId, '')
 		END
 

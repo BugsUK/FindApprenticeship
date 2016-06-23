@@ -102,6 +102,10 @@
       <HintPath>..\packages\AutoMapper.3.3.1\lib\net40\AutoMapper.Net4.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.14.2\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FluentValidation, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\FluentValidation.5.6.2.0\lib\Net45\FluentValidation.dll</HintPath>
       <Private>True</Private>
@@ -143,6 +147,18 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.ReportViewer.Common, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.ProcessingObjectModel, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.ProcessingObjectModel.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.ReportViewer.2012.Runtime.11.0.3452.0\lib\Microsoft.ReportViewer.WebForms.DLL</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.WindowsAzure.Configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.2.0.3\lib\net40\Microsoft.WindowsAzure.Configuration.dll</HintPath>
       <Private>True</Private>
@@ -166,6 +182,10 @@
     </Reference>
     <Reference Include="RazorGenerator.Mvc, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <HintPath>..\packages\RazorGenerator.Mvc.2.3.12\lib\net40\RazorGenerator.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ReportViewerForMvc, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReportViewerForMvc.1.0.1\lib\net45\ReportViewerForMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, processorArchitecture=MSIL">
@@ -294,6 +314,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+        <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>    
     <Compile Include="App_Start\AuthenticationConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
@@ -303,7 +326,9 @@
     <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
+    <Compile Include="Constants\Messages\ReportingMessages.cs" />
     <Compile Include="Constants\Url.cs" />
+    <Compile Include="Constants\ViewModels\ReportViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\VacancyViewModelMessages.cs" />
     <Compile Include="Constants\ViewModels\CandidateSearchViewModelMessages.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -311,7 +336,13 @@
     <Compile Include="Controllers\CandidateController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\ManagementControllerBase.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
     <Compile Include="Controllers\VacancyController.cs" />
+    <Compile Include="CsvClassMaps\ReportSuccessfulCandidatesResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ReportUnsuccessfulCandidatesResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ReportVacanciesResultItemClassMap.cs" />
+    <Compile Include="CsvClassMaps\ReportVacancyExtensionsResultItemClassMap.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\CandidateMappers.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediator.cs" />
     <Compile Include="Mediators\AgencyUser\AgencyUserMediatorCodes.cs" />
@@ -326,6 +357,9 @@
     <Compile Include="Mediators\Candidate\CandidateMediator.cs" />
     <Compile Include="Mediators\Candidate\CandidateMediatorCodes.cs" />
     <Compile Include="Mediators\Candidate\ICandidateMediator.cs" />
+    <Compile Include="Mediators\Reporting\IReportingMediator.cs" />
+    <Compile Include="Mediators\Reporting\ReportingMediator.cs" />
+    <Compile Include="Mediators\Reporting\ReportingMediatorCodes.cs" />
     <Compile Include="Mediators\Vacancy\IVacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediator.cs" />
     <Compile Include="Mediators\Vacancy\VacancyMediatorCodes.cs" />
@@ -334,6 +368,7 @@
     <Compile Include="Providers\ICandidateProvider.cs" />
     <Compile Include="Validators\CandidateSearchResultsViewModelValidator.cs" />
     <Compile Include="Validators\CandidateSearchViewModelValidator.cs" />
+    <Compile Include="Validators\ReportParametersDateRangeValidator.cs" />
     <Compile Include="ViewModels\AgencyUserViewModel.cs" />
     <Compile Include="Providers\IAgencyUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -346,6 +381,12 @@
     <Compile Include="ViewModels\HomeViewModel.cs" />
     <Compile Include="ViewModels\CandidateApprenticeshipApplicationViewModel.cs" />
     <Compile Include="ViewModels\CandidateTraineeshipApplicationViewModel.cs" />
+    <Compile Include="ViewModels\ReportMenu.cs" />
+    <Compile Include="ViewModels\ReportParameterBase.cs" />
+    <Compile Include="ViewModels\ReportUnsuccessfulCandidatesParameters.cs" />
+    <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
+    <Compile Include="ViewModels\ReportVacanciesParameters.cs" />
+    <Compile Include="ViewModels\ReportVacancyExtensionsParameters.cs" />
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -412,6 +453,8 @@
     <Content Include="Content\_assets\img\apple-touch-icon-57x57.png" />
     <Content Include="Content\_assets\img\apple-touch-icon-72x72.png" />
     <Content Include="Content\_assets\img\av-screenshot.png" />
+    <Content Include="Content\_assets\img\bubble.svg" />
+    <Content Include="Content\_assets\img\checkmark.svg" />
     <Content Include="Content\_assets\img\favicon.ico" />
     <Content Include="Content\_assets\img\gov.uk_logotype_crown.png" />
     <Content Include="Content\_assets\img\gov.uk_logotype_crown_print.png" />
@@ -451,12 +494,16 @@
     <Content Include="Content\_assets\js\nas\validationscripts.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
     <Content Include="Content\_assets\js\vendor\fastclick.js" />
     <Content Include="Content\_assets\js\vendor\goog\webfont-debug.js" />
     <Content Include="Content\_assets\js\vendor\jquery-1.11.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery-ui-1.10.4.custom.min.js" />
     <Content Include="Content\_assets\js\vendor\jquery.cookie.js" />
     <Content Include="Content\_assets\js\vendor\jquery.joyride-2.1.js" />
+    <Content Include="Content\_assets\js\vendor\jquery.joyride.js" />
     <Content Include="Content\_assets\js\vendor\jquery.lazy-load-google-maps.js" />
     <Content Include="Content\_assets\js\vendor\jquery.scrollTableBody-1.0.0.js" />
     <Content Include="Content\_assets\js\vendor\jquery.validate.js" />
@@ -471,8 +518,14 @@
     <Content Include="Content\_assets\js\vendor\modernizr-custom.js" />
     <Content Include="Content\_assets\js\vendor\select2.js" />
     <Content Include="Content\_assets\js\vendor\select2.min.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn-async.js" />
     <Content Include="Content\_assets\js\vendor\zxcvbn.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="Content\_assets\js\webtrends\webtrends.stub.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -730,6 +783,7 @@
     <Content Include="scripts\tinymce\utils\form_utils.js" />
     <Content Include="scripts\tinymce\utils\mctabs.js" />
     <Content Include="scripts\tinymce\utils\validate.js" />
+    <Content Include="ReportViewerWebForm.aspx" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Web.config" />
     <Content Include="Views\AgencyUser\Dashboard.cshtml" />
@@ -797,7 +851,10 @@
     <Content Include="Views\Candidate\_Apply.cshtml" />
     <Content Include="Views\AgencyUser\_DashboardTeamMetrics.cshtml" />
     <Content Include="Views\AgencyUser\_DashboardVacancyCounts.cshtml" />
-    <Content Include="Views\Shared\EditorTemplates\tinymce_jquery_full.cshtml" />
+    <Content Include="Views\Report\Index.cshtml" />
+    <Content Include="Views\Report\VacanciesListCsv.cshtml" />
+    <Content Include="Views\Report\UnsuccessfulCandidatesCsv.cshtml" />
+    <Content Include="Views\Report\VacancyExtensionsCsv.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
@@ -866,6 +923,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
@@ -902,6 +963,10 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{f7b7b49b-0b08-4edc-afe2-7e88a6a5a3f6}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
@@ -910,9 +975,17 @@
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{e3f2f285-16eb-49c5-9668-8d8e1db6c610}</Project>
@@ -934,6 +1007,10 @@
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Common</Name>
@@ -941,6 +1018,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.EmployerDataService\SFA.Apprenticeships.Infrastructure.EmployerDataService.csproj">
       <Project>{C7CB47E8-C024-4DC0-9BDC-E325D3BFEADC}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.EmployerDataService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.LegacyWebServices\SFA.Apprenticeships.Infrastructure.LegacyWebServices.csproj">
+      <Project>{6E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.LegacyWebServices</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Logging\SFA.Apprenticeships.Infrastructure.Logging.csproj">
       <Project>{A2D82061-BCBD-4030-9EB4-5148AEE79241}</Project>

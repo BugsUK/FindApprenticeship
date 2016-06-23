@@ -12,9 +12,12 @@
     using Domain.Interfaces.Repositories;
     using Interfaces.Candidates;
     using Interfaces.Communications;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Search;
     using Interfaces.Vacancies;
+
+    using Configuration;
+
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.SavedSearches;
@@ -45,7 +48,9 @@
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApprenticeshipApplicationStrategy _submitApprenticeshipApplicationStrategy;
-        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
+        private readonly ISubmitApprenticeshipApplicationStrategy _submitLegacyApprenticeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitLegacyTraineeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitRaaTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
@@ -63,6 +68,7 @@
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
         private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
         private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
+        private readonly IConfigurationService _configurationService;
 
         public CandidateService(
             IGetCandidateByIdStrategy getCandidateByIdStrategy,
@@ -70,6 +76,7 @@
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApprenticeshipApplicationStrategy submitApprenticeshipApplicationStrategy,
+            ISubmitApprenticeshipApplicationStrategy submitLegacyApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
             ISaveApprenticeshipVacancyStrategy saveVacancyStrategy,
             IDeleteSavedApprenticeshipVacancyStrategy deleteSavedApprenticeshipVacancyStrategy,
@@ -83,7 +90,8 @@
             IArchiveApplicationStrategy archiveApplicationStrategy,
             IDeleteApplicationStrategy deleteApplicationStrategy,
             ISaveCandidateStrategy saveCandidateStrategy,
-            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy,
+            ISubmitTraineeshipApplicationStrategy submitLegacyTraineeshipApplicationStrategy,
+            ISubmitTraineeshipApplicationStrategy submitRaaTraineeshipApplicationStrategy,
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
@@ -101,12 +109,14 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
+            IConfigurationService configurationService)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
+            _submitLegacyApprenticeshipApplicationStrategy = submitLegacyApprenticeshipApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
             _saveVacancyStrategy = saveVacancyStrategy;
             _deleteSavedApprenticeshipVacancyStrategy = deleteSavedApprenticeshipVacancyStrategy;
@@ -121,7 +131,8 @@
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
             _saveCandidateStrategy = saveCandidateStrategy;
-            _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
+            _submitLegacyTraineeshipApplicationStrategy = submitLegacyTraineeshipApplicationStrategy;
+            _submitRaaTraineeshipApplicationStrategy = submitRaaTraineeshipApplicationStrategy;
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
@@ -140,6 +151,7 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
+            _configurationService = configurationService;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -325,8 +337,23 @@
             _logger.Debug(
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
-
-            _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+                if (vacancyDetails.EditedInRaa)
+                {
+                    _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+                }
+                else
+                {
+                    _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+                }
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
+            }
         }
 
         public void SubmitTraineeshipApplication(
@@ -340,7 +367,25 @@
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(candidateId, vacancyId, traineeshipApplicationDetail);
 
-            _submitTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
+
+            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            {
+                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
+                if (vacancyDetails.EditedInRaa)
+                {
+                    _submitRaaTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+                }
+                else
+                {
+                    _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+                }
+            }
+            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            {
+                _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
+            }
+
         }
 
         public IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId)
@@ -357,7 +402,7 @@
         public ApprenticeshipVacancyDetail GetApprenticeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+            Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the apprenticeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
@@ -367,7 +412,7 @@
         public TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterOrEqual(0);
+            Condition.Requires(vacancyId);
 
             _logger.Debug("Calling CandidateService to get the traineeship vacancy ID {0} for candidate ID {1}.", vacancyId, candidateId);
 
@@ -405,7 +450,7 @@
         public ApplicationDetail SaveVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to save vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -415,7 +460,7 @@
         public ApplicationDetail DeleteSavedVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to delete saved vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -425,7 +470,7 @@
         public ApprenticeshipApplicationDetail CreateDraftFromSavedVacancy(Guid candidateId, int vacancyId)
         {
             Condition.Requires(candidateId);
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
 
             _logger.Info("Calling CandidateService to create draft from saved vacancy, vacancy id='{0}' for candidate='{1}.", vacancyId, candidateId);
 
@@ -503,7 +548,7 @@
         public SearchResults<ApprenticeshipSearchResponse, ApprenticeshipSearchParameters> GetSuggestedApprenticeshipVacancies(ApprenticeshipSearchParameters searchParameters, Guid candidateId, int vacancyId)
         {
             Condition.Requires(searchParameters).IsNotNull();
-            Condition.Requires(vacancyId).IsGreaterThan(0);
+            Condition.Requires(vacancyId);
             
             var candidateApplications = GetApprenticeshipApplications(candidateId);
             return _apprenticeshipVacancySuggestionsStrategy.GetSuggestedApprenticeshipVacancies(searchParameters, candidateApplications, vacancyId);

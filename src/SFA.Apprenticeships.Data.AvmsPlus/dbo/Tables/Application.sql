@@ -13,6 +13,8 @@
     [BeingSupportedBy]            NVARCHAR (50)  NULL,
     [LockedForSupportUntil]       DATETIME       NULL,
     [WithdrawalAcknowledged]      BIT            CONSTRAINT [DF_Application_WithdrawalAcknowledged] DEFAULT ((1)) NULL,
+	-- NEW FIELDS
+	[ApplicationGuid]             UNIQUEIDENTIFIER NOT NULL,
     CONSTRAINT [PK_Application_1] PRIMARY KEY CLUSTERED ([ApplicationId] ASC),
     CONSTRAINT [FK_Application_ApplicationNextAction] FOREIGN KEY ([NextActionId]) REFERENCES [dbo].[ApplicationNextAction] ([ApplicationNextActionId]),
     CONSTRAINT [FK_Application_ApplicationStatusType] FOREIGN KEY ([ApplicationStatusTypeId]) REFERENCES [dbo].[ApplicationStatusType] ([ApplicationStatusTypeId]),
@@ -36,3 +38,6 @@ CREATE NONCLUSTERED INDEX [idx_Application_VacancyID]
     ON [dbo].[Application]([VacancyId] ASC)
     INCLUDE([ApplicationStatusTypeId], [CandidateId], [WithdrawalAcknowledged], [ApplicationId]);
 
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [idx_Application_ApplicationGuid]
+	ON [dbo].[Application]([ApplicationGuid])

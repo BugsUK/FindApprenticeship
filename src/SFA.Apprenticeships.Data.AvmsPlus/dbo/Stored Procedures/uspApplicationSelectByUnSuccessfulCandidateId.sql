@@ -9,17 +9,17 @@ BEGIN
             
 SET NOCOUNT ON              
 
-SELECT [APPLICATION].CandidateId, 
+SELECT [Application].CandidateId, 
 Reason = CASE  AURT.FullName when 'Other' THEN [Application].OutcomeReasonOther
 		 ELSE  AURT.FullName
 		 END,
 NextAction= CASE  ANA.FullName when 'Other' THEN [Application].NextActionOther
 		 ELSE  ANA.FullName
 		 END,
-[APPLICATION].UnsuccessfulReasonId,
+[Application].UnsuccessfulReasonId,
 [Application].NextActionId,ANA.FullName
 
-FROM [APPLICATION]
+FROM [Application]
 INNER JOIN ApplicationUnsuccessfulReasonType AURT ON AURT.ApplicationUnsuccessfulReasonTypeId=[dbo].[Application].UnsuccessfulReasonId
 INNER JOIN ApplicationNextAction ANA ON ANA.ApplicationNextActionId = [Application].NextActionId
 WHERE CandidateId = @CandidateId

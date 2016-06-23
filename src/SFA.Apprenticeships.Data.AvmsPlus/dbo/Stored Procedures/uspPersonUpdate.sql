@@ -29,20 +29,20 @@ BEGIN
  UPDATE [dbo].[Person]         
  SET         
   --[ADUsername] = ISNULL(@aDUsername, ADUsername),         
-  [Title] = ISNULL(@title,Title),         
-  [OtherTitle] = ISNULL(@otherTitle,OtherTitle),        
-  [FirstName] = ISNULL(@firstName,FirstName),         
-  [MiddleNames] = ISNULL(@middleNames,MiddleNames),         
-  [Surname] = ISNULL(@surname,Surname),        
-  [LandlineNumber] = ISNULL(@landlineNumber,LandlineNumber),         
-  [MobileNumber] = ISNULL(@mobileNumber,MobileNumber),        
+  [Title] = ISNULL(@Title,Title),         
+  [OtherTitle] = ISNULL(@OtherTitle,OtherTitle),        
+  [FirstName] = ISNULL(@FirstName,FirstName),         
+  [MiddleNames] = ISNULL(@MiddleNames,MiddleNames),         
+  [Surname] = ISNULL(@Surname,Surname),        
+  [LandlineNumber] = ISNULL(@LandlineNumber,LandlineNumber),         
+  [MobileNumber] = ISNULL(@MobileNumber,MobileNumber),        
  -- [TextFailureCount] = ISNULL(@textFailureCount,TextFailureCount),        
-  [Email] = ISNULL(@email,Email),         
+  [Email] = ISNULL(@Email,Email),         
   [PersonTypeId]= 2 --ISNULL(@PersonTypeId, PersonTypeId),        
   --[EmailFailureCount] = ISNULL(@emailFailureCount,EmailFailureCount),         
   --[EmailAlertSent] = ISNULL(@emailAlertSent,EmailAlertSent),        
   --[LastAccessed] = GETDATE()        
- WHERE [PersonId]=@personId        
+ WHERE [PersonId]=@PersonId        
                 
  IF @@ROWCOUNT = 0        
  BEGIN        

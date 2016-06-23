@@ -13,6 +13,9 @@
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
+
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
+
     using StructureMap;
     using Tasks;
     using VacancySearch.IoC;
@@ -37,7 +40,19 @@
                 x.AddRegistry<LoggingRegistry>();
                 x.AddRegistry<ElasticsearchCommonRegistry>();
                 x.AddRegistry(new AzureServiceBusRegistry(azureServiceBusConfiguration));
-                x.AddRegistry(new LegacyWebServicesRegistry(cacheConfig, new ServicesConfiguration {ServiceImplementation = ServicesConfiguration.Legacy}));
+                x.AddRegistry(
+                    new LegacyWebServicesRegistry(
+                        new ServicesConfiguration
+                        {
+                            ServiceImplementation = ServicesConfiguration.Legacy,
+                            VacanciesSource = ServicesConfiguration.Legacy
+                        }, new CacheConfiguration()));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),
+                    new ServicesConfiguration
+                    {
+                        ServiceImplementation = ServicesConfiguration.Legacy,
+                        VacanciesSource = ServicesConfiguration.Legacy
+                    }));
                 x.AddRegistry<CandidateRepositoryRegistry>();
                 x.AddRegistry<ApplicationRepositoryRegistry>();
                 x.AddRegistry<UserRepositoryRegistry>();

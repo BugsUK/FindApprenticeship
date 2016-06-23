@@ -185,7 +185,7 @@ WriteLiteral(">\r\n");
             #line 31 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
           
             var gridClass = "grid";
-            if (Model.IsSingleLocation)
+            if (Model.IsSingleLocation || ( Model.LocationAddresses != null && Model.LocationAddresses.Count == 1))
             {
                 gridClass += " grid-1-2";
             }
@@ -195,14 +195,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("\r\n        <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1829), Tuple.Create("\"", 1847)
+WriteAttribute("class", Tuple.Create(" class=\"", 1905), Tuple.Create("\"", 1923)
             
             #line 38 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 1837), Tuple.Create<System.Object, System.Int32>(gridClass
+, Tuple.Create(Tuple.Create("", 1913), Tuple.Create<System.Object, System.Int32>(gridClass
             
             #line default
             #line hidden
-, 1837), false)
+, 1913), false)
 );
 
 WriteLiteral(">\r\n            <div");
@@ -248,29 +248,29 @@ WriteLiteral("\r\n                        </h3>\r\n                        <a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 2464), Tuple.Create("\"", 2527)
+WriteAttribute("href", Tuple.Create(" href=\"", 2540), Tuple.Create("\"", 2603)
             
             #line 47 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2471), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl
+, Tuple.Create(Tuple.Create("", 2547), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.EmployerWebsiteUrl
             
             #line default
             #line hidden
-, 2471), false)
+, 2547), false)
 );
 
 WriteLiteral("\r\n                           id=\"vacancy-employer-website\"");
 
 WriteLiteral("\r\n                           target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 2630), Tuple.Create("\"", 2725)
+WriteAttribute("title", Tuple.Create("\r\n                           title=\"", 2706), Tuple.Create("\"", 2801)
             
             #line 50 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-, Tuple.Create(Tuple.Create("", 2666), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.Employer.Name
+, Tuple.Create(Tuple.Create("", 2742), Tuple.Create<System.Object, System.Int32>(Model.NewVacancyViewModel.OwnerParty.Employer.Name
             
             #line default
             #line hidden
-, 2666), false)
-, Tuple.Create(Tuple.Create(" ", 2717), Tuple.Create("Website", 2718), true)
+, 2742), false)
+, Tuple.Create(Tuple.Create(" ", 2793), Tuple.Create("Website", 2794), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -865,16 +865,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 12628), Tuple.Create("\"", 12776)
-, Tuple.Create(Tuple.Create("", 12634), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 12634), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 12704), Tuple.Create("\"", 12852)
+, Tuple.Create(Tuple.Create("", 12710), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 12710), true)
             
             #line 181 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
-                                                                , Tuple.Create(Tuple.Create("", 12679), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
+                                                                , Tuple.Create(Tuple.Create("", 12755), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.Address.Postcode)
             
             #line default
             #line hidden
-, 12679), false)
-, Tuple.Create(Tuple.Create("", 12712), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 12712), true)
+, 12755), false)
+, Tuple.Create(Tuple.Create("", 12788), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 12788), true)
 );
 
 WriteLiteral("></iframe>\r\n                    <p");
@@ -886,6 +886,56 @@ WriteLiteral(">You must have JavaScript enabled to view a map of the location</p
 
             
             #line 184 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+            }
+            else if (Model.NewVacancyViewModel.LocationAddresses != null && Model.NewVacancyViewModel.LocationAddresses.Count() == 1)
+            {
+
+            
+            #line default
+            #line hidden
+WriteLiteral("                <div");
+
+WriteLiteral(" id=\"vacancy-map\"");
+
+WriteLiteral(" class=\"ad-details__map\"");
+
+WriteLiteral(">\r\n                    <div");
+
+WriteLiteral(" class=\"map-overlay\"");
+
+WriteLiteral(" onclick=\" style.pointerEvents=\'none\' \"");
+
+WriteLiteral("></div>\r\n                    <iframe");
+
+WriteLiteral(" width=\"700\"");
+
+WriteLiteral(" height=\"250\"");
+
+WriteLiteral(" title=\"Map of location\"");
+
+WriteLiteral(" style=\"border: 0\"");
+
+WriteAttribute("src", Tuple.Create(" src=\"", 13415), Tuple.Create("\"", 13589)
+, Tuple.Create(Tuple.Create("", 13421), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 13421), true)
+            
+            #line 189 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
+                                                                , Tuple.Create(Tuple.Create("", 13466), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.LocationAddresses.First().Address.Postcode)
+            
+            #line default
+            #line hidden
+, 13466), false)
+, Tuple.Create(Tuple.Create("", 13525), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 13525), true)
+);
+
+WriteLiteral("></iframe>\r\n                    <p");
+
+WriteLiteral(" class=\"nojs-notice\"");
+
+WriteLiteral(">You must have JavaScript enabled to view a map of the location</p>\r\n            " +
+"    </div>\r\n");
+
+            
+            #line 192 "..\..\Views\Shared\DisplayTemplates\Vacancy\_AboutTheEmployer.cshtml"
             }
 
             

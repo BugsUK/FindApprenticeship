@@ -110,6 +110,14 @@
       <HintPath>..\packages\FluentValidation.MVC5.5.6.2.0\lib\Net45\FluentValidation.Mvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Glimpse.AspNet, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.AspNet.1.8.0\lib\net45\Glimpse.AspNet.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Glimpse.Core, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Glimpse.1.8.2\lib\net45\Glimpse.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.4.9.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.4.9\lib\Net45\HtmlAgilityPack.dll</HintPath>
       <Private>True</Private>
@@ -294,12 +302,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+        <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>   
     <Compile Include="App_Start\AuthenticationConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
+    <Compile Include="Constants\Messages\ApplicationPageMessages.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\Pages\ProviderUser\VerifyEmailPageMessages.cs" />
     <Compile Include="Constants\Pages\Provider\AddSitePageMessages.cs" />
@@ -310,6 +322,8 @@
     <Compile Include="Controllers\TraineeshipApplicationController.cs" />
     <Compile Include="Controllers\ApprenticeshipApplicationController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="GlimpseSecurityPolicy.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mediators\Application\ITraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\TraineeshipApplicationMediator.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediator.cs" />
@@ -321,6 +335,9 @@
     <Compile Include="Mediators\Application\ApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\ApprenticeshipApplicationMediatorCodes.cs" />
     <Compile Include="Mediators\Application\IApplicationMediator.cs" />
+    <Compile Include="Mediators\Home\HomeMediator.cs" />
+    <Compile Include="Mediators\Home\HomeMediatorCodes.cs" />
+    <Compile Include="Mediators\Home\IHomeMediator.cs" />
     <Compile Include="Mediators\ProviderUser\IProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediator.cs" />
     <Compile Include="Mediators\ProviderUser\ProviderUserMediatorCodes.cs" />
@@ -402,21 +419,32 @@
     <Content Include="500.html" />
     <Content Include="Content\_assets\css\main-ie8.css" />
     <Content Include="Content\_assets\css\main.css" />
+    <Content Include="Content\_assets\img\bubble.svg" />
     <Content Include="Content\_assets\js\inplaceediting.js" />
     <Content Include="Content\_assets\js\interactions.js" />
     <Content Include="Content\_assets\js\jquery.pwstrength.js" />
     <Content Include="Content\_assets\js\locationAutocomplete.js" />
     <Content Include="Content\_assets\js\lookupService.js" />
     <Content Include="Content\_assets\js\maps.js" />
+    <Content Include="Content\_assets\js\nas\autosave.js" />
     <Content Include="Content\_assets\js\nas\vacancyApplications.js" />
     <Content Include="Content\_assets\js\nas\dashboard.js" />
     <Content Include="Content\_assets\js\nas\multilocation.js" />
     <Content Include="Content\_assets\js\old-browsers.js" />
     <Content Include="Content\_assets\js\sticky.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.js" />
+    <Content Include="Content\_assets\js\vendor\fastclick-1.0.6.min.js" />
+    <Content Include="Content\_assets\js\vendor\jquery-1.11.1.min.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout-3.1.0.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.debug.js" />
     <Content Include="Content\_assets\js\vendor\knockout.validation.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.js" />
+    <Content Include="Content\_assets\js\vendor\underscore-1.7.0.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.min.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.load.js" />
+    <Content Include="Content\_assets\js\webtrends\webtrends.min.js" />
     <Content Include="VacancyNotFound.html" />
     <Content Include="Content\_assets\css\font-awesome\css\font-awesome.min.css" />
     <Content Include="Content\_assets\css\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -629,6 +657,10 @@
     <Content Include="Views\Home\ContactUs.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Applications\SFA.Apprenticeships.Application.Applications.csproj">
+      <Project>{F5F29922-2FBC-4BF4-9CBB-424A71FD98C1}</Project>
+      <Name>SFA.Apprenticeships.Application.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Application\SFA.Apprenticeships.Application.Application.csproj">
       <Project>{7D29ED20-FF3D-4FBB-B253-A44DE1E42BCC}</Project>
       <Name>SFA.Apprenticeships.Application.Application</Name>
@@ -661,6 +693,10 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{F7B7B49B-0B08-4EDC-AFE2-7E88A6A5A3F6}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
@@ -669,9 +705,17 @@
       <Project>{5853DBD3-4999-4710-8CAA-7BC0603C5827}</Project>
       <Name>SFA.Apprenticeships.Application.UserProfile</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{ce04b708-ff21-41d4-b796-a36edce2960d}</Project>
       <Name>SFA.Apprenticeships.Application.VacancyPosting</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancy\SFA.Apprenticeships.Application.Vacancy.csproj">
+      <Project>{67CDACCD-5217-4110-8432-C6EF164BAA0D}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancy</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Domain.Entities.Raa\SFA.Apprenticeships.Domain.Entities.Raa.csproj">
       <Project>{E3F2F285-16EB-49C5-9668-8D8E1DB6C610}</Project>
@@ -688,6 +732,10 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
+      <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>
+      <Name>SFA.Apprenticeships.Infrastructure.Caching.Memory</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Common\SFA.Apprenticeships.Infrastructure.Common.csproj">
       <Project>{78B1F2A1-DCC3-4ED3-8CE0-16E0781B59FA}</Project>

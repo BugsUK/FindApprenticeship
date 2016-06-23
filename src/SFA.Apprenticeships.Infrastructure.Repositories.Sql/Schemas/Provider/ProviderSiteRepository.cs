@@ -136,14 +136,14 @@
 
             return providerSite;
         }
-
+        // Contracted
         private int GetProviderIdByProviderSiteId(int providerSiteId)
         {
             const string sql = @"
                 SELECT psr.ProviderID
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId = @providerSiteId AND ps.TrainingProviderStatusTypeId = @ActivatedEmployerTrainingProviderStatusId";
+                WHERE ps.ProviderSiteId = @providerSiteId";
 
             var sqlParams = new
             {
@@ -151,6 +151,7 @@
                 ActivatedEmployerTrainingProviderStatusId
             };
 
+            //TODO: workaround to be able to create the index. Should be done properly.
             return _getOpenConnection.Query<int>(sql, sqlParams).First();
         }
     }

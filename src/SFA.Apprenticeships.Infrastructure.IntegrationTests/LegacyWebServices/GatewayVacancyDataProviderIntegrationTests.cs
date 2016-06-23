@@ -8,8 +8,12 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using FluentAssertions;
     using Infrastructure.LegacyWebServices.IoC;
+    using Infrastructure.Monitor.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     [TestFixture]
@@ -22,7 +26,8 @@
             {
                 x.AddRegistry<CommonRegistry>();
                 x.AddRegistry<LoggingRegistry>();
-                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy }));
+                x.AddRegistry(new LegacyWebServicesRegistry(new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy }, new CacheConfiguration()));
+                x.AddRegistry(new VacancySourceRegistry(new CacheConfiguration(),  new ServicesConfiguration { ServiceImplementation = ServicesConfiguration.Legacy, VacanciesSource = ServicesConfiguration.Legacy}));
             });
 
             _vacancyDataProvider = container.GetInstance<IVacancyDataProvider<ApprenticeshipVacancyDetail>>();

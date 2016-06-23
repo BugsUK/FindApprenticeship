@@ -6,7 +6,7 @@ BEGIN
  SET NOCOUNT ON  
    
  SELECT  
-type AS 'Key',  
+Type AS 'Key',  
  StandardText AS 'Value'  
    
 FROM [dbo].[DisplayText]   

@@ -73,7 +73,7 @@
 
             // Assert.
             organisations.Should().NotBeNull();
-            organisations.ToArray().Count().Should().BePositive();
+            organisations.Any().Should().BeTrue();
         }
     }
 }

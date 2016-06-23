@@ -12,7 +12,7 @@ SET NOCOUNT ON
 		DELETE FROM 
 			ApplicationHistory
 		WHERE
-			ApplicationID = @ApplicationID
+			ApplicationId = @ApplicationID
 		AND
 			ApplicationHistoryEventSubTypeID = @ApplicationStatus
 	       

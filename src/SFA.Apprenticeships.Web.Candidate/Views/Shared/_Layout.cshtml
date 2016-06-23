@@ -28,8 +28,8 @@
         <meta name="ROBOTS" content="NOFOLLOW,NOINDEX">
     }
     @RenderSection("metatags", false)
-    <!--[if gt IE 8]><!-->@Styles.Render("~/bundles/not-ie8")<!--<![endif]-->
-    <!--[if lte IE 8]>@Styles.Render("~/bundles/ie8")<![endif]-->
+    <!--[if gt IE 8]><!-->@Styles.Render("~/Content/_assets/styles/not-ie8")<!--<![endif]-->
+    <!--[if lte IE 8]>@Styles.Render("~/Content/_assets/styles/ie8")<![endif]-->
     <link rel="shortcut icon" href="@Url.CdnImage("favicon.ico")" type="image/x-icon">
     <link rel="apple-touch-icon-precomposed" sizes="152x152" href="@Url.CdnImage("apple-touch-icon-152x152.png")">
     <link rel="apple-touch-icon-precomposed" sizes="120x120" href="@Url.CdnImage("apple-touch-icon-120x120.png")">
@@ -167,6 +167,7 @@
                     <img src="@Url.CdnImage("govuk-crest-2x.png")" width="125" height="102" alt="Crown copyright logo">
                     <p>&copy; Crown copyright</p>
                 </a>
+                @Html.Partial("_AboutDisguised")
             </div>
             <div class="toggle-content hide-nojs show-print nobreak-print">
                 <h3 class="heading-small">Contact the Skills Funding Agency helpdesk</h3>
@@ -177,7 +178,7 @@
 
     @if (ViewBag.ShowAbout != null && ViewBag.ShowAbout == true)
     {
-        Html.RenderPartial("_about");
+        @Html.Partial("_AboutFull")
     }
 
     <!-- Placed at the end of the document so the pages load faster -->

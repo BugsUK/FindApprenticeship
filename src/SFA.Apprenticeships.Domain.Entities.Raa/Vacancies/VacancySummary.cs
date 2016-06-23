@@ -17,6 +17,7 @@
         public decimal? Wage { get; set; }
         public string WageText { get; set; }
         public WageUnit WageUnit { get; set; }
+        public string ExpectedDuration { get; set; }
         public DurationType DurationType { get; set; }
         public int? Duration { get; set; }
         public DateTime? ClosingDate { get; set; }
@@ -40,6 +41,7 @@
         public string SectorCodeName { get; set; }
         public VacancyStatus Status { get; set; }
         public bool? IsEmployerLocationMainApprenticeshipLocation { get; set; }
+        public string EmployerAnonymousName { get; set; }
         public int? NumberOfPositions { get; set; }
         public VacancyType VacancyType { get; set; }
         public DateTime? UpdatedDateTime { get; set; }

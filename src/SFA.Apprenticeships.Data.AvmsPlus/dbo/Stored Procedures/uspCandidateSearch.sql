@@ -48,8 +48,8 @@ SELECT MyTable.*  FROM
 			  Case when @SortByField='Region desc'  then vwRLA.GeographicFullName End DESC,
 			  Case when @SortByField='AppsMade Asc'  then COUNT(a.ApplicationId)   End ASC,            
 			  Case when @SortByField='AppsMade desc'  then COUNT(a.ApplicationId) End DESC,
-			  Case when @SortByField='UnsucceApps Asc'  then ISNULL((SELECT COUNT(ApplicationId) FROM APPLICATION app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0)   End ASC,            
-			  Case when @SortByField='UnsucceApps desc'  then ISNULL((SELECT COUNT(ApplicationId) FROM APPLICATION app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0) End DESC,
+			  Case when @SortByField='UnsucceApps Asc'  then ISNULL((SELECT COUNT(ApplicationId) FROM Application app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0)   End ASC,            
+			  Case when @SortByField='UnsucceApps desc'  then ISNULL((SELECT COUNT(ApplicationId) FROM Application app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0) End DESC,
 	 		  c.CandidateID
 			  ) as RowNum,                 
 			c.CandidateId,
@@ -62,7 +62,7 @@ SELECT MyTable.*  FROM
 			vwRLA.GeographicShortName,
 			vwRLA.GeographicFullName,
 			COUNT(a.ApplicationId) AS 'NoOfAppsMade',	
-			ISNULL((SELECT COUNT(ApplicationId) FROM APPLICATION app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0)
+			ISNULL((SELECT COUNT(ApplicationId) FROM Application app LEFT OUTER JOIN ApplicationStatusType ast ON app.ApplicationStatusTypeId= ast.ApplicationStatusTypeId WHERE  app.CandidateId = c.candidateId AND 	ast.CodeName = 'Rej' GROUP BY app.candidateId),0)
 			AS UnSuccessAPP 
 			FROM Candidate c
 			INNER JOIN dbo.LocalAuthority LA ON c.LocalAuthorityId = LA.LocalAuthorityId
@@ -74,7 +74,7 @@ SELECT MyTable.*  FROM
 			 --AND LocalAuthorityGroupTypeName = N'Region' 
 			INNER join person p ON p.PersonId= c.PersonId    
 			--INNER JOIN LSCRegion R ON c.LSCRegionId = r.LSCRegionId
-			LEFT OUTER JOIN [APPLICATION] a ON c.CandidateId  = a.CandidateId 
+			LEFT OUTER JOIN [Application] a ON c.CandidateId  = a.CandidateId 
 			WHERE 
 				(p.FirstName LIKE  @FirstName + '%' OR @FirstName IS NULL)
 			AND (p.SurName LIKE  @SurName + '%' OR @SurName IS NULL)

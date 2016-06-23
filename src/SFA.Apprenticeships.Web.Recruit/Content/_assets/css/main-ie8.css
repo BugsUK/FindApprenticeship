@@ -5969,6 +5969,14 @@ footer {
     .footer__copyright {
       display: none !important; } }
 
+.footer__hidden-version {
+  color: #dee0e2;
+  position: absolute; }
+
+@media print {
+  .footer__hidden-version {
+    display: none; } }
+
 #main {
   background: #fff;
   display: block;
@@ -6169,8 +6177,27 @@ html:not(.touch).js .editable-item {
   color: #28a197; }
 
 .raa-icon-comment {
+  font-family: "nta", Arial, sans-serif;
+  font-size: 19px;
+  line-height: 1.31579;
+  font-weight: 400;
+  text-transform: none;
+  padding-top: 2px;
+  padding-bottom: 8px;
   font-size: 19px !important;
   color: #28a197; }
+  @media (max-width: 640px) {
+    .raa-icon-comment {
+      font-size: 16px;
+      line-height: 1.25; } }
+  @media (min-width: 641px) {
+    .raa-icon-comment {
+      padding-top: 4px;
+      padding-bottom: 5px; } }
+
+.raa-icon-comment-img {
+  height: 1em !important;
+  padding: 1px 0 0 0; }
 
 h2 a i.raa-icon-comment {
   vertical-align: middle; }

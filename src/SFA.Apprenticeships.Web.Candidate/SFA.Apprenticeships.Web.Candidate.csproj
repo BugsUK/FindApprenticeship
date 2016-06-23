@@ -607,9 +607,9 @@
     <None Include="Startup\startup.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <Content Include="Views\Shared\_About.cshtml">
+    <Content Include="Views\Shared\_AboutFull.cshtml">
       <Generator>RazorGenerator</Generator>
-      <LastGenOutput>_About.generated.cs</LastGenOutput>
+      <LastGenOutput>_AboutFull.generated.cs</LastGenOutput>
     </Content>
     <None Include="Startup\startup.ps1">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -905,6 +905,7 @@
     <Compile Include="Extensions\HttpExtensions.cs" />
     <Compile Include="Extensions\UrlHelperExtensions.cs" />
     <Compile Include="Extensions\UserDataProviderExtensions.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\Resolvers\ApprenticeshipVacancySummaryViewModelResolvers.cs" />
     <Compile Include="Mappers\SavedSearchViewModelMapper.cs" />
     <Compile Include="Mediators\Home\HomeMediator.cs" />
@@ -1428,10 +1429,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ValidationSummary.cshtml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shared\_About.generated.cs">
+    <Compile Include="Views\Shared\_AboutFull.generated.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>_About.cshtml</DependentUpon>
+      <DependentUpon>_AboutFull.cshtml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shared\_ErrorLayout.generated.cs">
       <AutoGen>True</AutoGen>
@@ -1603,9 +1604,17 @@
       <Project>{5E8E77CA-BB23-45DE-AADD-236CAFBC66E3}</Project>
       <Name>SFA.Apprenticeships.Application.ReferenceData</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Reporting\SFA.Apprenticeships.Application.Reporting.csproj">
+      <Project>{F7B7B49B-0B08-4EDC-AFE2-7E88A6A5A3F6}</Project>
+      <Name>SFA.Apprenticeships.Application.Reporting</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.UserAccount\SFA.Apprenticeships.Application.UserAccount.csproj">
       <Project>{F01914FA-A911-4345-ACD4-FD80ADE21A8C}</Project>
       <Name>SFA.Apprenticeships.Application.UserAccount</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Vacancies\SFA.Apprenticeships.Application.Vacancies.csproj">
+      <Project>{04796403-0EDF-4A8D-B725-180A9F83D958}</Project>
+      <Name>SFA.Apprenticeships.Application.Vacancies</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.VacancyPosting\SFA.Apprenticeships.Application.VacancyPosting.csproj">
       <Project>{CE04B708-FF21-41D4-B796-A36EDCE2960D}</Project>
@@ -1630,10 +1639,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj">
-      <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Caching.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
       <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>

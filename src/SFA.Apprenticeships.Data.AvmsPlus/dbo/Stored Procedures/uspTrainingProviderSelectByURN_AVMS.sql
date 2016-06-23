@@ -11,7 +11,7 @@ SELECT
  isnull([ProviderSite].[FullName],'') AS 'FullName',                    
  [ProviderSite].[OutofDate] AS 'OutofDate',                    
  isnull([ProviderSite].[TradingName],'') AS 'TradingName',                    
- [ProviderSite].ProviderSIteID AS 'TrainingProviderId',                    
+ [ProviderSite].ProviderSiteID AS 'TrainingProviderId',                    
  [Provider].[UPIN] AS 'UPIN',                  
  isnull([AddressLine1],'') AS 'AddressLine1',                      
  isnull([AddressLine2],'') AS 'AddressLine2',                      

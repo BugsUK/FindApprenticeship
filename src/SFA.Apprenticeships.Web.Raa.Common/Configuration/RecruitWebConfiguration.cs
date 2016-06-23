@@ -3,5 +3,6 @@
     public class RecruitWebConfiguration
     {
         public int PageSize { get; set; }
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

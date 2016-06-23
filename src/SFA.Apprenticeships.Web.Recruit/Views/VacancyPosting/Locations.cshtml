@@ -8,6 +8,8 @@
 {
     @Html.HiddenFor(m => m.LocationAddressesComment)
     @Html.HiddenFor(m => m.AdditionalLocationInformationComment)
+    @Html.HiddenFor(m => m.AutoSaveTimeoutInSeconds)
+
 
     @Html.DisplayFor(m => m, LocationSearchViewModel.PartialView)
 
@@ -49,4 +51,18 @@
     </script>
 
     @Scripts.Render("~/bundles/location")
+
+    @Scripts.Render("~/bundles/autosave")
+
+    @*<script>
+            var autoSaveTimeout = @Html.Raw(Json.Encode(Model.AutoSaveTimeoutInSeconds)) * 1000;
+
+            $(window).on('load', function() {
+                autoSave.initialise({
+                    formSelector: "form",
+                    timeout: autoSaveTimeout,
+                    postUrl: '@Url.RouteUrl(RecruitmentRouteNames.AutoSaveLocations)'
+                });
+            });
+    </script>*@
 }

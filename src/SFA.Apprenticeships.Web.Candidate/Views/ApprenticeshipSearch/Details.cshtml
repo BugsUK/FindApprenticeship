@@ -239,14 +239,6 @@
                             <h3 class="heading-small">Apprenticeship framework</h3>
                         }
                         <p id="vacancy-framework">@Html.Raw(Model.SubCategory)</p>
-                        @if (Model.ProviderSectorPassRate > 0)
-                        {
-                            <p id="vacancy-provider-sector-pass-rate">The training provider has achieved a sector success rate of @Model.ProviderSectorPassRate% for this type of apprenticeship training.</p>
-                        }
-                        else
-                        {
-                            <p id="vacancy-provider-sector-pass-rate">The training provider does not yet have a sector success rate for this type of apprenticeship training.</p>
-                        }
                     </div>
                 </div>
             </div>

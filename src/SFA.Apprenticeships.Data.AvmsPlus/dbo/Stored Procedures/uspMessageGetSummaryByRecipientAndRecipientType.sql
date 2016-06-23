@@ -30,7 +30,7 @@ BEGIN
                             END AS MessageCategoryId
                             , COUNT(m.MessageId) AS 'TotalCount'
                         FROM
-                            [Message] m LEFT OUTER JOIN MessageCategory mc ON m.MessageCategoryId = mc.MessageCategoryId
+                            [Message] m LEFT OUTER JOIN MessageCategory mc ON m.MessageCategoryID = mc.MessageCategoryId
                         WHERE
                             m.Recipient = @recipient AND
                             m.RecipientType = @recipientType AND

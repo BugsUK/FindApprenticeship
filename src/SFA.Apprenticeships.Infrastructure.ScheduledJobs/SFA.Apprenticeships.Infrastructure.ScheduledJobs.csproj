@@ -181,6 +181,7 @@
     <Compile Include="Consumers\VacancyEtlControlQueueConsumer.cs" />
     <Compile Include="Consumers\VacancyStatusControlQueueConsumer.cs" />
     <Compile Include="IoC\JobsRegistry.cs" />
+    <Compile Include="IoC\VacancySourceRegistry.cs" />
     <Compile Include="Mappers\VacancyEtlMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorkerRole.cs" />
@@ -246,6 +247,10 @@
       <Project>{297A98C9-78DE-4E2E-BD6A-3998C3C9238B}</Project>
       <Name>SFA.Apprenticeships.Application.Candidates</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SFA.Apprenticeships.Application.Candidate\SFA.Apprenticeships.Application.Candidate.csproj">
+      <Project>{984F8CD2-61B3-48A4-B0CC-5D05E235983D}</Project>
+      <Name>SFA.Apprenticeships.Application.Candidate</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Application.Communications\SFA.Apprenticeships.Application.Communications.csproj">
       <Project>{D91E4093-3348-43ED-B386-CF70000FFCB3}</Project>
       <Name>SFA.Apprenticeships.Application.Communications</Name>
@@ -297,10 +302,6 @@
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus\SFA.Apprenticeships.Infrastructure.Azure.ServiceBus.csproj">
       <Project>{BB161A54-EF1A-4611-8296-9A0BE69B4587}</Project>
       <Name>SFA.Apprenticeships.Infrastructure.Azure.ServiceBus</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Azure\SFA.Apprenticeships.Infrastructure.Caching.Azure.csproj">
-      <Project>{B3285E4A-29DD-4CB6-B8C9-51AA06DB4F83}</Project>
-      <Name>SFA.Apprenticeships.Infrastructure.Caching.Azure</Name>
     </ProjectReference>
     <ProjectReference Include="..\SFA.Apprenticeships.Infrastructure.Caching.Memory\SFA.Apprenticeships.Infrastructure.Caching.Memory.csproj">
       <Project>{B1628369-3014-4A8B-BFFD-49CB8ADF3BD2}</Project>

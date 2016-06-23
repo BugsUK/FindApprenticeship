@@ -66,5 +66,7 @@
 
         [Display(Name = VacancyViewModelMessages.ContactDetailsComment.LabelText)]
         public string ContactDetailsComment { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

@@ -74,5 +74,7 @@
         public VacancyDatesViewModel VacancyDatesViewModel { get; set; }
 
         public VacancyType VacancyType { get; set; }
+
+        public int AutoSaveTimeoutInSeconds { get; set; }
     }
 }

@@ -3,12 +3,13 @@ using SFA.Apprenticeships.Application.Interfaces.Generic;
 
 namespace SFA.Apprenticeships.Application.Provider
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using CuttingEdge.Conditions;
     using Domain.Entities.Raa.Parties;
     using Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Interfaces.Providers;
 
     public class ProviderService : IProviderService
@@ -19,22 +20,32 @@ namespace SFA.Apprenticeships.Application.Provider
         private readonly IVacancyPartyReadRepository _vacancyPartyReadRepository;
         private readonly IVacancyPartyWriteRepository _vacancyPartyWriteRepository;
         private readonly ILogService _logService;
+        
 
-        public ProviderService(IProviderReadRepository providerReadRepository, IProviderSiteReadRepository providerSiteReadRepository, IVacancyPartyReadRepository vacancyPartyReadRepository, IVacancyPartyWriteRepository vacancyPartyWriteRepository, ILogService logService, IEmployerService employerService)
+        public ProviderService(IProviderReadRepository providerReadRepository, 
+            IProviderSiteReadRepository providerSiteReadRepository, 
+            IVacancyPartyReadRepository vacancyPartyReadRepository, 
+            IVacancyPartyWriteRepository vacancyPartyWriteRepository, 
+            ILogService logService, IEmployerService employerService)
         {
             _providerReadRepository = providerReadRepository;
             _providerSiteReadRepository = providerSiteReadRepository;
             _vacancyPartyReadRepository = vacancyPartyReadRepository;
             _vacancyPartyWriteRepository = vacancyPartyWriteRepository;
             _logService = logService;
-            _employerService = employerService;
+            _employerService = employerService;            
         }
 
-        public Provider GetProviderViaOwnerParty(int vacancyPartyId)
+        public Provider GetProviderViaCurrentOwnerParty(int vacancyPartyId)
         {
-            var vacancyParty = _vacancyPartyReadRepository.GetById(vacancyPartyId);
-            var providerSite = _providerSiteReadRepository.GetById(vacancyParty.ProviderSiteId);
-            return _providerReadRepository.GetById(providerSite.ProviderId);
+            int providerSiteId = 0;
+            var vacancyParty = _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }).FirstOrDefault();
+            if (vacancyParty != null)
+            {
+                providerSiteId = vacancyParty.ProviderSiteId;
+            }                        
+            var providerSite = providerSiteId != 0?_providerSiteReadRepository.GetById(providerSiteId):null;            
+            return providerSite != null?_providerReadRepository.GetById(providerSite.ProviderId):null;
         }
 
         public Provider GetProvider(int providerId)
@@ -77,6 +88,10 @@ namespace SFA.Apprenticeships.Application.Provider
             _logService.Debug("Calling ProviderSiteReadRepository to get provider sites for provider with UKPRN='{0}'.", ukprn);
 
             var provider = _providerReadRepository.GetByUkprn(ukprn);
+            if (provider == null)
+            {
+                throw  new Exception($"Provider cannot be found with ukprn={ukprn}");
+            }
 
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }
@@ -86,9 +101,14 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
         }
 
-        public VacancyParty GetVacancyParty(int vacancyPartyId)
+        public VacancyParty GetVacancyParty(int vacancyPartyId, bool currentOnly = true)
         {
-            return _vacancyPartyReadRepository.GetById(vacancyPartyId);
+            return _vacancyPartyReadRepository.GetByIds(new[] { vacancyPartyId }, currentOnly).FirstOrDefault();
+        }
+
+        public IReadOnlyDictionary<int, VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds, bool currentOnly = true)
+        {
+            return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds, currentOnly).ToDictionary(vp => vp.VacancyPartyId);
         }
 
         public VacancyParty GetVacancyParty(int providerSiteId, string edsUrn)
@@ -111,11 +131,6 @@ namespace SFA.Apprenticeships.Application.Provider
         public VacancyParty SaveVacancyParty(VacancyParty vacancyParty)
         {
             return _vacancyPartyWriteRepository.Save(vacancyParty);
-        }
-
-        public IEnumerable<VacancyParty> GetVacancyParties(IEnumerable<int> vacancyPartyIds)
-        {
-            return _vacancyPartyReadRepository.GetByIds(vacancyPartyIds);
         }
 
         public IEnumerable<VacancyParty> GetVacancyParties(int providerSiteId)
@@ -182,6 +197,6 @@ namespace SFA.Apprenticeships.Application.Provider
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;
 
             return pageable;
-        }
+        }       
     }
 }

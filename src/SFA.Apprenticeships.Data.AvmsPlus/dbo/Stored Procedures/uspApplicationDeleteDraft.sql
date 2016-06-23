@@ -8,21 +8,21 @@ AS
 		BEGIN TRY
 	   
 				
-				DELETE FROM APPLICATIONHISTORY
+				DELETE FROM ApplicationHistory
 					WHERE 
-						APPLICATIONID = @ApplicationId
+						ApplicationId = @ApplicationId
 				
 				DELETE FROM CAFFIELDS
 					WHERE 
-						APPLICATIONID = @ApplicationId
+						ApplicationId = @ApplicationId
 						
 				DELETE FROM ADDITIONALANSWER
 					WHERE 
-						APPLICATIONID = @ApplicationId
+						ApplicationId = @ApplicationId
 
-				DELETE FROM APPLICATION 
+				DELETE FROM Application 
 					WHERE 
-						APPLICATIONID = @ApplicationId
+						ApplicationId = @ApplicationId
 				
 	   
 		END TRY

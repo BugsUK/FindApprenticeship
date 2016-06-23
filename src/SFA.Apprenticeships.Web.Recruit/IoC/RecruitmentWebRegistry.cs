@@ -29,6 +29,9 @@
     using Mediators.VacancyPosting;
     using Raa.Common.Mappers;
     using Raa.Common.Providers;
+
+    using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+
     using StructureMap;
     using StructureMap.Configuration.DSL;
 
@@ -62,16 +65,21 @@
             For<IProviderMediator>().Use<ProviderMediator>();
             For<IApplicationProvider>().Use<ApplicationProvider>().Ctor<IMapper>().Named("RecruitMappers");
             For<ILocationsProvider>().Use<LocationsProvider>();
+            For<IGeoCodingProvider>().Use<GeoCodingProvider>();
         }
 
         private void RegisterServices()
         {
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
             For<IProviderService>().Use<ProviderService>();
             For<IEmployerService>().Use<EmployerService>();
             For<IAddressSearchService>().Use<AddressSearchService>();
+            For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
+            For<ILocalAuthorityLookupService>().Use<LocalAuthorityLookupService>();
+            For<ICommunicationService>().Use<CommunicationService>();
         }
 
         private void RegisterStrategies()
@@ -95,6 +103,7 @@
             For<IGetByEdsUrnStrategy>().Use<GetByEdsUrnStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<IGetPagedEmployerSearchResultsStrategy>().Use<GetPagedEmployerSearchResultsStrategy>().Ctor<IMapper>().Named("EmployerMappers");
             For<ISaveEmployerStrategy>().Use<SaveEmployerStrategy>();
+            For<ISubmitContactMessageStrategy>().Use<SubmitContactMessageStrategy>();                      
         }
 
         private void RegisterMediators()
@@ -105,6 +114,7 @@
             For<IApplicationMediator>().Use<ApplicationMediator>();
             For<IApprenticeshipApplicationMediator>().Use<ApprenticeshipApplicationMediator>();
             For<ITraineeshipApplicationMediator>().Use<TraineeshipApplicationMediator>();
+            For<IHomeMediator>().Use<HomeMediator>();            
         }
     }
 }

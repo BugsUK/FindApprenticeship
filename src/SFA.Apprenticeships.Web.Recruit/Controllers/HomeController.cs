@@ -1,15 +1,22 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System.Threading.Tasks;
     using System.Web.Mvc;
 
-    using SFA.Apprenticeships.Web.Common.Attributes;
-    using SFA.Apprenticeships.Web.Common.Constants;
-    using SFA.Apprenticeships.Web.Common.Mediators;
-    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
+    using FluentValidation.Mvc;
 
+    using SFA.Apprenticeships.Web.Common.Mediators;
+    using SFA.Apprenticeships.Web.Recruit.Mediators.Home;
+    using SFA.Apprenticeships.Web.Recruit.ViewModels.Home;
+    using SFA.Infrastructure.Interfaces;
     public class HomeController : RecruitmentControllerBase
     {
+        private readonly IHomeMediator _homeMediator;
+
+        public HomeController(IHomeMediator homeMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
+        {
+            _homeMediator = homeMediator;
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -24,20 +31,36 @@
         {
             return View();
         }
-
-        [HttpGet]        
-        public async Task<ActionResult> ContactUs()
+                
+        public ActionResult ContactUs()
         {
-            return await Task.Run<ActionResult>(() => this.View());
+            var userName = GetProviderUserName();
+            var response = _homeMediator.GetContactMessageViewModel(userName);
+            return View(response.ViewModel);            
         }
 
-        [HttpPost]       
-        public async Task<ActionResult> ContactUs(ContactMessageViewModel model)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ContactUs(ContactMessageViewModel viewModel)
         {
-            return await Task.Run<ActionResult>(() => this.View());
+            var userName = GetProviderUserName();
+            var response = _homeMediator.SendContactMessage(userName,viewModel);
+            switch (response.Code)
+            {
+                case HomeMediatorCodes.SendContactMessage.ValidationError:
+                    ModelState.Clear();
+                    response.ValidationResult.AddToModelState(ModelState, string.Empty);
+                    return View(viewModel);
+                case HomeMediatorCodes.SendContactMessage.SuccessfullySent:
+                    ModelState.Clear();
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+                case HomeMediatorCodes.SendContactMessage.Error:
+                    SetUserMessage(response.Message.Text, response.Message.Level);
+                    return View(response.ViewModel);
+            }
+
+            throw new InvalidMediatorCodeException(response.Code);
         }
-
-    
-
     }
 }

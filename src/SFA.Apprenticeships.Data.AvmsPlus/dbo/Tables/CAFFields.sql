@@ -14,5 +14,5 @@
 
 GO
 CREATE NONCLUSTERED INDEX [idx_CAFFields_ApplicationId]
-    ON [dbo].[CAFFields]([ApplicationId] ASC) WHERE ([ApplicationID] IS NOT NULL);
+    ON [dbo].[CAFFields]([ApplicationId] ASC) WHERE ([ApplicationId] IS NOT NULL);
 

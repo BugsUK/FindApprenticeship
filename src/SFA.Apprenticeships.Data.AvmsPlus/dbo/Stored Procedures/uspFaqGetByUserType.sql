@@ -7,7 +7,7 @@ SELECT
   [Content],
   SortOrder 
  FROM   
-  Faq   
+  FAQ   
  WHERE   
   UserTypeId = @userTypeId   
  ORDER BY   

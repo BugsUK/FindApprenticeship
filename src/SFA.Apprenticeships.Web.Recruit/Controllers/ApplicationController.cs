@@ -7,13 +7,13 @@
     using Domain.Entities.Raa;
     using Mediators.Application;
     using Raa.Common.ViewModels.Application;
-
+    using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Faa)]
     public class ApplicationController : RecruitmentControllerBase
     {
         private readonly IApplicationMediator _applicationMediator;
 
-        public ApplicationController(IApplicationMediator applicationMediator)
+        public ApplicationController(IApplicationMediator applicationMediator, IConfigurationService configurationService, ILogService logService) : base(configurationService, logService)
         {
             _applicationMediator = applicationMediator;
         }

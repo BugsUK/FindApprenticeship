@@ -9,6 +9,7 @@
     using Domain.Entities.Raa.Vacancies;
     using SFA.Infrastructure.Interfaces;
     using Domain.Entities.ReferenceData;
+    using Domain.Entities.Vacancies;
     using Domain.Entities.Vacancies.Traineeships;
     using Extensions;
     using Presentation;
@@ -16,14 +17,14 @@
 
     public class TraineeshipVacancyDetailMapper
     {
-        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, VacancyParty vacancyParty, Employer employer, Provider provider, IEnumerable<Category> categories, ILogService logService)
+        public static TraineeshipVacancyDetail GetTraineeshipVacancyDetail(Vacancy vacancy, Employer employer, Provider provider, ProviderSite providerSite, IEnumerable<Category> categories, ILogService logService)
         {
             //Manually mapping rather than using automapper as the two enties are significantly different
             var wage = new Wage(vacancy.WageType, vacancy.Wage, vacancy.WageText, vacancy.WageUnit);
 
             var detail = new TraineeshipVacancyDetail
             {
-                Id = vacancy.VacancyReferenceNumber,
+                Id = vacancy.VacancyId,
                 VacancyReference = vacancy.VacancyReferenceNumber.GetVacancyReference(),
                 Title = vacancy.Title,
                 Description = vacancy.ShortDescription,
@@ -37,9 +38,9 @@
                 Wage = vacancy.Wage ?? 0,
                 WageUnit = wage.GetWageUnit(),
                 WageDescription = wage.GetDisplayText(vacancy.HoursPerWeek),
-                WageType = vacancy.WageType.GetLegacyWageType(),
+                WageType = (LegacyWageType)vacancy.WageType,
                 WorkingWeek = vacancy.WorkingWeek,
-                OtherInformation = vacancy.ThingsToConsider,
+                OtherInformation = vacancy.OtherInformation,
                 FutureProspects = vacancy.FutureProspects,
                 //TODO: Where from?
                 //VacancyOwner = vacancy.,
@@ -50,18 +51,15 @@
                 Created = vacancy.CreatedDateTime,
                 VacancyStatus = vacancy.Status.GetVacancyStatuses(),
                 EmployerName = employer.Name,
-                //TODO: How is this captured in RAA?
-                //AnonymousEmployerName = vacancy.,
-                EmployerDescription = vacancyParty.EmployerDescription,
-                EmployerWebsite = vacancyParty.EmployerWebsiteUrl,
+                AnonymousEmployerName = vacancy.EmployerAnonymousName,
+                IsEmployerAnonymous = !string.IsNullOrWhiteSpace(vacancy.EmployerAnonymousName),
+                EmployerDescription = vacancy.EmployerDescription,
+                EmployerWebsite = vacancy.EmployerWebsiteUrl,
                 ApplyViaEmployerWebsite = vacancy.OfflineVacancy ?? false,
                 VacancyUrl = vacancy.OfflineApplicationUrl,
                 ApplicationInstructions = vacancy.OfflineApplicationInstructions,
-                //TODO: How is this captured in RAA?
-                //IsEmployerAnonymous = vacancy.,
-                //TODO: Are we going to add this to RAA?
-                //IsPositiveAboutDisability = vacancy.,
-                ExpectedDuration = new Duration(vacancy.DurationType, vacancy.Duration).GetDisplayText(),
+                IsPositiveAboutDisability = employer.IsPositiveAboutDisability,
+                ExpectedDuration = vacancy.ExpectedDuration,
                 VacancyAddress = GetVacancyAddress(vacancy.Address),
                 //TODO: How is this captured in RAA?
                 //IsRecruitmentAgencyAnonymous = vacancy.,
@@ -70,12 +68,11 @@
                 SupplementaryQuestion1 = vacancy.FirstQuestion,
                 SupplementaryQuestion2 = vacancy.SecondQuestion,
                 //TODO: How is this captured in RAA?
-                //RecruitmentAgency = vacancy.,
+                RecruitmentAgency = providerSite.TradingName,
                 ProviderName = provider.Name,
-                //TradingName = vacancy.,
+                TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
                 Contact = GetContactInformation(vacancy),
-                //ProviderSectorPassRate = vacancy.,
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
@@ -98,6 +95,8 @@
                 AddressLine2 = address.AddressLine2,
                 AddressLine3 = address.AddressLine3,
                 AddressLine4 = address.AddressLine4,
+                Town = address.Town,
+                County = address.County,
                 Postcode = address.Postcode,
                 GeoPoint = GetGeoPoint(address.GeoPoint)
             };
@@ -105,18 +104,11 @@
 
         private static GeoPoint GetGeoPoint(Domain.Entities.Raa.Locations.GeoPoint geoPoint)
         {
-            var vacancyGeoPoint = new GeoPoint();
-            if (geoPoint == null || geoPoint.Latitude == 0 || geoPoint.Longitude == 0)
+            return new GeoPoint
             {
-                vacancyGeoPoint.Latitude = 52.4009991288043;
-                vacancyGeoPoint.Longitude = -1.50812239495425;
-            }
-            else
-            {
-                vacancyGeoPoint.Longitude = geoPoint.Longitude;
-                vacancyGeoPoint.Latitude = geoPoint.Latitude;
-            }
-            return vacancyGeoPoint;
+                Longitude = geoPoint.Longitude,
+                Latitude = geoPoint.Latitude
+            };
         }
 
         private static string GetContactInformation(Vacancy vacancy)

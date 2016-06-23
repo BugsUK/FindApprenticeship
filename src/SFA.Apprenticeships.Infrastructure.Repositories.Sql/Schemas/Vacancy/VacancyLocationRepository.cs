@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Common;
@@ -11,14 +12,13 @@
     {
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly IMapper _mapper;
-        private readonly IDateTimeService _dateTimeService;
         private readonly ILogService _logger;
+        private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
-        public VacancyLocationRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService, ILogService logger)
+        public VacancyLocationRepository(IGetOpenConnection getOpenConnection, IMapper mapper, ILogService logger)
         {
             _getOpenConnection = getOpenConnection;
             _mapper = mapper;
-            _dateTimeService = dateTimeService;
             _logger = logger;
         }
 
@@ -30,17 +30,24 @@
                 _getOpenConnection.Query<Entities.VacancyLocation>("SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC",
                     new { VacancyId = vacancyId });
 
-            return
-                _mapper.Map<IList<Entities.VacancyLocation>, IList<VacancyLocation>>(vacancyLocations)
-                    .ToList();
+            return vacancyLocations.Select(vl =>
+            {
+                var vacancyLocation = _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl);
+                MapLocalAuthorityCode(vl, vacancyLocation);
+                MapCountyId(vl, vacancyLocation);
+
+                return vacancyLocation;
+            }).ToList();
         }
 
         public List<VacancyLocation> Save(List<VacancyLocation> locationAddresses)
         {
-            var vacanyLocations = _mapper.Map<IList<VacancyLocation>, IList<Entities.VacancyLocation>>(locationAddresses);
-
-            foreach (var vacancyLocation in vacanyLocations)
+            foreach (var vacancyLocationAddress in locationAddresses)
             {
+                var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
+                PopulateLocalAuthorityId(vacancyLocationAddress, vacancyLocation);
+                PopulateCountyId(vacancyLocationAddress, vacancyLocation);
+
                 _getOpenConnection.Insert(vacancyLocation);
             }
 
@@ -57,6 +64,71 @@
             {
                 _getOpenConnection.DeleteSingle(vacancyLocation);
             }
+        }
+
+        private void PopulateLocalAuthorityId(VacancyLocation entity, Entities.VacancyLocation dbVacancyLocation)
+        {
+            if (!string.IsNullOrWhiteSpace(entity.LocalAuthorityCode))
+            {
+                dbVacancyLocation.LocalAuthorityId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT LocalAuthorityId
+FROM   dbo.LocalAuthority
+WHERE  CodeName = @LocalAuthorityCode",
+                    new
+                    {
+                        entity.LocalAuthorityCode
+                    }).Single();
+            }
+            else
+            {
+                dbVacancyLocation.LocalAuthorityId = null;
+            }
+        }
+
+        private void MapLocalAuthorityCode(Entities.VacancyLocation dbVacancyLocation, VacancyLocation result)
+        {
+            if (dbVacancyLocation.LocalAuthorityId.HasValue)
+            {
+                result.LocalAuthorityCode = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT CodeName
+FROM   dbo.LocalAuthority
+WHERE  LocalAuthorityId = @LocalAuthorityId",
+                    new
+                    {
+                        dbVacancyLocation.LocalAuthorityId
+                    }).Single();
+            }
+            else
+            {
+                result.LocalAuthorityCode = null;
+            }
+        }
+
+        private void PopulateCountyId(VacancyLocation entity, Entities.VacancyLocation dbVacancyLocation)
+        {
+            if (entity.Address?.County != null)
+            {
+                dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT CountyId
+FROM   dbo.County
+WHERE  FullName = @CountyFullName",
+                    new
+                    {
+                        CountyFullName = entity.Address.County
+                    }).Single();
+            }
+        }
+
+        private void MapCountyId(Entities.VacancyLocation dbVacancyLocation, VacancyLocation result)
+        {
+            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                new
+                {
+                    CountyId = dbVacancyLocation.CountyId
+                }).Single();
         }
     }
 }

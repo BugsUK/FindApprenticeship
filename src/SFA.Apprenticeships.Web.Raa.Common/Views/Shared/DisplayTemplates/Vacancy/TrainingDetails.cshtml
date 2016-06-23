@@ -54,11 +54,11 @@
             {
                 <div class="form-group @(SFA.Apprenticeships.Web.Common.Framework.HtmlExtensions.GetValidationCssClass(Html.GetValidationType(m => m.TrainingType))) inline clearfix blocklabel-single hide-nojs">
                     <a name="@Html.NameFor(m => m.TrainingType).ToString().ToLower()"></a>
-                    <label class="form-label">Apprenticeship type</label>
+                    <h3 class="heading-small">Apprenticeship type</h3>
 
                     <p id="frameworks-standards-explained">
-                        <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
-                        <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+                        Select a framework if you only offer this type of apprenticeship training.<br/>
+                        Alternatively, if you also deliver the new <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">apprenticeship standards</a>, you can choose a standard job role instead.
                     </p>
 
                     @* ReSharper disable once Html.IdNotResolved *@
@@ -79,8 +79,8 @@
                         <h3 class="bold-small">Apprenticeship type</h3>
 
                         <p id="frameworks-standards-explained">
-                            <a href="https://www.gov.uk/government/publications/apprenticeship-frameworks-live-list" rel="external" target="_blank">Frameworks explained</a><br/>
-                            <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">Standards explained</a>
+                            Select a framework if you only offer this type of apprenticeship training.<br />
+                            Alternatively, if you also deliver the new <a href="https://www.gov.uk/government/collections/apprenticeship-standards" rel="external" target="_blank">apprenticeship standards</a>, you can choose a standard job role instead.
                         </p>
 
                         @if (isFramework)

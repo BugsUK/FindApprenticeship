@@ -116,7 +116,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ErrorCodes.GetByReferenceNumberFailed, e, context);
+                throw new DomainException(ErrorCodes.FindFailed, e, context);
             }
             catch (Exception e)
             {

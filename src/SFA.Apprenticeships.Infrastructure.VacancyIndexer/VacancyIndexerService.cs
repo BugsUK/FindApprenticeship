@@ -5,10 +5,11 @@
     using System.Linq;
     using SFA.Infrastructure.Interfaces;
     using Application.Vacancies.Entities;
-    using Common.Configuration;
     using Elastic.Common.Configuration;
     using Elastic.Common.Entities;
     using Nest;
+
+    using Application.Candidate.Configuration;
 
     public class VacancyIndexerService<TSourceSummary, TDestinationSummary> : IVacancyIndexerService<TSourceSummary, TDestinationSummary>
         where TSourceSummary : Domain.Entities.Vacancies.VacancySummary, IVacancyUpdate
