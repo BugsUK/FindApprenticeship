@@ -219,6 +219,9 @@ WHERE  VacancyStatusId IN @VacancyStatusCodeIds
                             (string.IsNullOrWhiteSpace(query.FrameworkCodeName)
                                 ? ""
                                 : "AND FrameworkId = (SELECT ApprenticeshipFrameworkId FROM dbo.ApprenticeshipFramework where CodeName = @FrameworkCodeName) ") +
+                            (query.EditedInRaa
+                                ? "AND vac.EditedInRaa = 1"
+                                : "") +
                             @"
 " + (query.LiveDate.HasValue ? @"AND (select top 1 HistoryDate
 from dbo.VacancyHistory as vh
