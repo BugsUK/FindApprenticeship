@@ -4,28 +4,12 @@
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
     using Domain.Entities.Raa.Vacancies;
-    using Domain.Interfaces.Repositories;
-    using Domain.Raa.Interfaces.Repositories;
-    using Interfaces.Providers;
-    using Interfaces.VacancyPosting;
     using Moq;
     using NUnit.Framework;
-    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
-    public class VacancyPostingServiceTests
+    public class VacancyPostingServiceTests : TestBase
     {
-        private readonly Mock<IVacancyReadRepository> _apprenticeshipVacancyReadRepository = new Mock<IVacancyReadRepository>();
-        private readonly Mock<IVacancyWriteRepository> _apprenticeshipVacancyWriteRepository = new Mock<IVacancyWriteRepository>();
-        private readonly Mock<IReferenceNumberRepository> _referenceNumberRepository = new Mock<IReferenceNumberRepository>();
-        private readonly Mock<IProviderUserReadRepository> _providerUserReadRepository = new Mock<IProviderUserReadRepository>();
-        private readonly Mock<IVacancyLocationReadRepository> _vacancyLocationAddressReadRepository = new Mock<IVacancyLocationReadRepository>();
-        private readonly Mock<IVacancyLocationWriteRepository> _vacancyLocationAddressWriteRepository = new Mock<IVacancyLocationWriteRepository>();
-        private readonly Mock<ICurrentUserService> _currentUserService = new Mock<ICurrentUserService>();
-        private readonly Mock<IProviderVacancyAuthorisationService> _providerVacancyAuthorisationService = new Mock<IProviderVacancyAuthorisationService>();
-
-        private IVacancyPostingService _vacancyPostingService;
-
         private readonly ProviderUser _vacancyManager = new ProviderUser
         {
             ProviderUserId = 1,
@@ -42,26 +26,26 @@
         [SetUp]
         public void SetUp()
         {
-            _vacancyPostingService = new VacancyPostingService(
-                _apprenticeshipVacancyReadRepository.Object,
-                _apprenticeshipVacancyWriteRepository.Object,
-                _referenceNumberRepository.Object,
-                _providerUserReadRepository.Object,
-                _vacancyLocationAddressReadRepository.Object,
-                _vacancyLocationAddressWriteRepository.Object,
-                _currentUserService.Object,
-                _providerVacancyAuthorisationService.Object);
+            VacancyPostingService = new VacancyPostingService(
+                MockApprenticeshipVacancyReadRepository.Object,
+                MockApprenticeshipVacancyWriteRepository.Object,
+                MockReferenceNumberRepository.Object,
+                MockProviderUserReadRepository.Object,
+                MockVacancyLocationAddressReadRepository.Object,
+                MockVacancyLocationAddressWriteRepository.Object,
+                MockCurrentUserService.Object,
+                MockProviderVacancyAuthorisationService.Object);
 
-            _providerUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
-            _providerUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
+            MockProviderUserReadRepository.Setup(r => r.GetByUsername(_vacancyManager.Username)).Returns(_vacancyManager);
+            MockProviderUserReadRepository.Setup(r => r.GetByUsername(_lastEditedBy.Username)).Returns(_lastEditedBy);
         }
 
         [Test]
         public void CreateVacancyShouldCallRepository()
         {
             // Arrange.
-            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
-            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
+            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
 
             var vacancy = new Vacancy
             {
@@ -69,19 +53,21 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
+            MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            // Act.
+            VacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
+            // Assert.
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
         public void CreateVacancyShouldUpdateVacancyManagerUsername()
         {
             // Arrange.
-            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
-            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
+            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
 
             var vacancy = new Vacancy
             {
@@ -89,19 +75,21 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
+            MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            // Act.
+            VacancyPostingService.CreateApprenticeshipVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.PreferredProviderSiteId.Value)));
+            // Assert.
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.VacancyManagerId == _vacancyManager.PreferredProviderSiteId.Value)));
         }
 
         [Test]
         public void SaveVacancyShouldCallRepository()
         {
             // Arrange.
-            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
-            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
+            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
 
             var vacancy = new Vacancy
             {
@@ -109,39 +97,43 @@
                 VacancyId = 1
             };
 
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
+            MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _vacancyPostingService.SaveVacancy(vacancy);
+            // Act.
+            VacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
+            // Assert.
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(vacancy));
         }
 
         [Test]
         public void SaveVacancyShouldUpdateLastEditedByUsername()
         {
             // Arrange.
-            _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
-            _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
+            MockCurrentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
+            MockCurrentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
 
             var vacancy = new Vacancy
             {
                 VacancyReferenceNumber = 1,
                 VacancyId = 1
             };
-            _apprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
+            MockApprenticeshipVacancyWriteRepository.Setup(r => r.Create(vacancy)).Returns(vacancy);
 
-            _vacancyPostingService.SaveVacancy(vacancy);
+            // Act.
+            VacancyPostingService.SaveVacancy(vacancy);
 
-            _apprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
+            // Assert.
+            MockApprenticeshipVacancyWriteRepository.Verify(r => r.Create(It.Is<Vacancy>(v => v.LastEditedById == _lastEditedBy.ProviderUserId)));
         }
 
         [Test]
         public void GetNextVacancyReferenceNumberShouldCallRepository()
         {
             // Arrange.
-            _vacancyPostingService.GetNextVacancyReferenceNumber();
+            VacancyPostingService.GetNextVacancyReferenceNumber();
 
-            _referenceNumberRepository.Verify(r => r.GetNextVacancyReferenceNumber());
+            MockReferenceNumberRepository.Verify(r => r.GetNextVacancyReferenceNumber());
         }
 
         [Test]
@@ -150,20 +142,24 @@
             // Arrange.
             const int vacancyReferenceNumber = 1;
 
-            _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+            // Act.
+            VacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
 
-            _apprenticeshipVacancyReadRepository.Verify(r => r.GetByReferenceNumber(vacancyReferenceNumber));
+            // Assert.
+            MockApprenticeshipVacancyReadRepository.Verify(r => r.GetByReferenceNumber(vacancyReferenceNumber));
         }
 
         [Test]
         public void GetVacancyByGuidShouldCallRepository()
         {
             // Arrange.
-            var vacancyId = 42;
+            const int vacancyId = 42;
 
-            _vacancyPostingService.GetVacancy(vacancyId);
+            // Act.
+            VacancyPostingService.GetVacancy(vacancyId);
 
-            _apprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyId));
+            // Assert.
+            MockApprenticeshipVacancyReadRepository.Verify(r => r.Get(vacancyId));
         }
     }
 }
