@@ -6,6 +6,6 @@
 
         bool IsInRole(string role);
 
-        string GetClaimValue(string name);
+        string GetClaimValue(string type);
     }
 }

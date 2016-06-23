@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.UnitTests.VacancyPosting
 {
-    using Apprenticeships.Application.Provider;
     using Apprenticeships.Application.VacancyPosting;
     using Domain.Entities.Raa;
     using Domain.Entities.Raa.Users;
@@ -60,6 +59,7 @@
         [Test]
         public void CreateVacancyShouldCallRepository()
         {
+            // Arrange.
             _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
             _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
 
@@ -79,6 +79,7 @@
         [Test]
         public void CreateVacancyShouldUpdateVacancyManagerUsername()
         {
+            // Arrange.
             _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
             _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_vacancyManager.Username);
 
@@ -98,6 +99,7 @@
         [Test]
         public void SaveVacancyShouldCallRepository()
         {
+            // Arrange.
             _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
             _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
 
@@ -117,6 +119,7 @@
         [Test]
         public void SaveVacancyShouldUpdateLastEditedByUsername()
         {
+            // Arrange.
             _currentUserService.Setup(cus => cus.IsInRole(Roles.Faa)).Returns(true);
             _currentUserService.Setup(cus => cus.CurrentUserName).Returns(_lastEditedBy.Username);
 
@@ -135,6 +138,7 @@
         [Test]
         public void GetNextVacancyReferenceNumberShouldCallRepository()
         {
+            // Arrange.
             _vacancyPostingService.GetNextVacancyReferenceNumber();
 
             _referenceNumberRepository.Verify(r => r.GetNextVacancyReferenceNumber());
@@ -143,6 +147,7 @@
         [Test]
         public void GetVacancyByReferenceNumberShouldCallRepository()
         {
+            // Arrange.
             const int vacancyReferenceNumber = 1;
 
             _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
@@ -153,6 +158,7 @@
         [Test]
         public void GetVacancyByGuidShouldCallRepository()
         {
+            // Arrange.
             var vacancyId = 42;
 
             _vacancyPostingService.GetVacancy(vacancyId);

@@ -213,6 +213,8 @@
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
+    <Compile Include="VacancyPosting\TestBase.cs" />
+    <Compile Include="VacancyPosting\VacancyPostingServiceAuthorisationTests.cs" />
     <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

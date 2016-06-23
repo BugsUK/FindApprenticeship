@@ -46,6 +46,7 @@
             _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
         }
 
+        // TODO: AG: REFACTOR: should be CreateVacancy (could be Traineeship or Apprenticeship).
         public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
@@ -54,6 +55,7 @@
             {
                 var username = _currentUserService.CurrentUserName;
                 var vacancyManager = _providerUserReadRepository.GetByUsername(username);
+
                 if (vacancyManager?.PreferredProviderSiteId != null)
                 {
                     vacancy.VacancyManagerId = vacancyManager.PreferredProviderSiteId.Value;
@@ -80,17 +82,17 @@
 
         public Vacancy GetVacancyByReferenceNumber(int vacancyReferenceNumber)
         {
-            return _vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber);
+            return AuthoriseCurrentUser(_vacancyReadRepository.GetByReferenceNumber(vacancyReferenceNumber));
         }
 
         public Vacancy GetVacancy(Guid vacancyGuid)
         {
-            return _vacancyReadRepository.GetByVacancyGuid(vacancyGuid);
+            return AuthoriseCurrentUser(_vacancyReadRepository.GetByVacancyGuid(vacancyGuid));
         }
 
         public Vacancy GetVacancy(int vacancyId)
         {
-            return _vacancyReadRepository.Get(vacancyId);
+            return AuthoriseCurrentUser(_vacancyReadRepository.Get(vacancyId));
         }
 
         public List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses)
@@ -132,6 +134,8 @@
         {
             Condition.Requires(vacancy);
 
+            AuthoriseCurrentUser(vacancy);
+
             if (vacancy.Status == VacancyStatus.Completed)
             {
                 var message = $"Vacancy {vacancy.VacancyReferenceNumber} can not be in Completed status on saving.";
@@ -151,6 +155,16 @@
             vacancy = operation(vacancy);
 
             return _vacancyReadRepository.Get(vacancy.VacancyId);
+        }
+
+        private Vacancy AuthoriseCurrentUser(Vacancy vacancy)
+        {
+            if (vacancy != null)
+            {
+                _providerVacancyAuthorisationService.Authorise(vacancy.ProviderId);
+            }
+
+            return vacancy;
         }
     }
 }

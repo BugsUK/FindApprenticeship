@@ -17,9 +17,9 @@
 
         public void Authorise(int providerId)
         {
-            if (_currentUserService.IsInRole(Roles.Raa))
+            if (!_currentUserService.IsInRole(Roles.Faa))
             {
-                // QA user can work with any vacancy.
+                // Only Provider Users require authorisation.
                 return;
             }
 

@@ -22,6 +22,10 @@
             var mockCurrentUserService = new Mock<ICurrentUserService>();
 
             mockCurrentUserService.Setup(mock =>
+                mock.IsInRole(Roles.Faa))
+                .Returns(true);
+
+            mockCurrentUserService.Setup(mock =>
                 mock.GetClaimValue("providerId"))
                 .Returns(claimValue);
 
@@ -47,6 +51,10 @@
             mockCurrentUserService.Setup(mock =>
                 mock.CurrentUserName)
                 .Returns(userName);
+
+            mockCurrentUserService.Setup(mock =>
+                mock.IsInRole(Roles.Faa))
+                .Returns(true);
 
             mockCurrentUserService.Setup(mock =>
                 mock.GetClaimValue("providerId"))
