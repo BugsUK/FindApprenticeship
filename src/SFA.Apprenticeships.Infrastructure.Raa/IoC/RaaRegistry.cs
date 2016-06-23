@@ -13,17 +13,6 @@
         {
             if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
             {
-                //For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
-
-                //For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                //    .Use<ApprenticeshipVacancyDataProvider>();
-
-                //For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                //    .Use<TraineeshipVacancyDataProvider>();
-
-                //For<ILegacyApplicationStatusesProvider>()
-                //    .Use<NullApplicationStatusesProvider>();
-
                 For<IReferenceDataProvider>()
                     .Use<ReferenceDataProvider>();
 
