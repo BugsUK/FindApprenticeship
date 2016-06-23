@@ -65,8 +65,9 @@
                     new Route(new Uri(_configuration.NasAvWebServiceRootUri.OriginalString + requestUri.PathAndQuery), new RouteIdentifier(routeIdentifier, "nasavwebservice"), !isCompatabilityWebServicePrimary),
                     new Route(GetCompatabilityWebServiceUrl(requestUri), new RouteIdentifier(routeIdentifier, "compatabilitywebservice"), isCompatabilityWebServicePrimary)
                 },
-                RewriteFrom = Regex.Replace(_configuration.NasAvWebServiceRootUri.OriginalString, "https?", ""),
-                RewriteTo   = Uri.SchemeDelimiter + requestUri.Authority
+                // The service is https-only and our configuration set accordingly, but the service thinks it is running under http, thus rewriting WSDL needs to be from http
+                RewriteFrom = Regex.Replace(_configuration.NasAvWebServiceRootUri.OriginalString, "^https:", "http:"),
+                RewriteTo   = requestUri.Scheme + Uri.SchemeDelimiter + requestUri.Authority
             };
         }
 
