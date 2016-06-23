@@ -314,16 +314,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-        <Compile Include="..\SharedAssemblyInfo.cs">
+    <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>    
+    </Compile>
     <Compile Include="App_Start\AuthenticationConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\RazorGeneratorMvcStart.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructuremapMvc.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
-    <Compile Include="Constants\ClaimTypes.cs" />
     <Compile Include="Constants\Messages\AuthorizeMessages.cs" />
     <Compile Include="Constants\ManagementRouteNames.cs" />
     <Compile Include="Constants\Messages\ReportingMessages.cs" />
