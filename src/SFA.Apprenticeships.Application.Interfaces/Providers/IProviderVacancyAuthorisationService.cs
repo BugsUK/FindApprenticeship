@@ -2,6 +2,6 @@
 {
     public interface IProviderVacancyAuthorisationService
     {
-        void Authorise(int providerId);
+        void Authorise(int providerId, int? providerSiteId);
     }
 }

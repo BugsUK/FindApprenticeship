@@ -31,7 +31,7 @@
                 .Returns(true);
 
             MockProviderVacancyAuthorisationService.Setup(mock => mock
-                .Authorise(_testVacancy.ProviderId))
+                .Authorise(_testVacancy.ProviderId, _testVacancy.VacancyManagerId))
                 .Throws<UnauthorizedAccessException>();
         }
 

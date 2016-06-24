@@ -161,7 +161,7 @@
         {
             if (vacancy != null)
             {
-                _providerVacancyAuthorisationService.Authorise(vacancy.ProviderId);
+                _providerVacancyAuthorisationService.Authorise(vacancy.ProviderId, vacancy.VacancyManagerId);
             }
 
             return vacancy;
