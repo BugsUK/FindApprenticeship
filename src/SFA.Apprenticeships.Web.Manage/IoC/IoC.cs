@@ -73,6 +73,8 @@ namespace SFA.Apprenticeships.Web.Manage.IoC
                 x.For<IEmployerService>().Use<EmployerService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
 
                 // web layer
                 x.AddRegistry<WebCommonRegistry>();
