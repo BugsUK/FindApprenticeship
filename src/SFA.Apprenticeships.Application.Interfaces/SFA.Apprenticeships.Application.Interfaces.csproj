@@ -93,6 +93,7 @@
     <Compile Include="Communications\IProviderCommunicationService.cs" />
     <Compile Include="Communications\SubscriptionTypes.cs" />
     <Compile Include="Employers\IEmployerService.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="Generic\Pageable.cs" />
     <Compile Include="Locations\ErrorCodes.cs" />
     <Compile Include="Locations\IAddressSearchService.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Communications\SmsRequest.cs" />
     <Compile Include="Organisations\IOrganisationService.cs" />
     <Compile Include="Providers\IProviderService.cs" />
+    <Compile Include="Providers\IProviderVacancyAuthorisationService.cs" />
     <Compile Include="ReferenceData\IReferenceDataService.cs" />
     <Compile Include="Reporting\IReportingService.cs" />
     <Compile Include="Search\AggregationResult.cs" />

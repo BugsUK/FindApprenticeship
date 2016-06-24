@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderUserAccount\ResendEmailVerificationCodeStrategyTests.cs" />
     <Compile Include="ProviderUserAccount\SendEmailVerificationCodeStrategyTests.cs" />
+    <Compile Include="Provider\ProviderVacancyAuthorisationServiceTests.cs" />
     <Compile Include="Provider\SubmitContactMessageStrategyTest.cs" />
     <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\AuthenticateCandidateStrategyTests.cs" />
     <Compile Include="Services\Candidate\Strategies\Builders\QueuedLegacySaveCandidateStrategyBuilder.cs" />
@@ -212,6 +213,8 @@
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
+    <Compile Include="VacancyPosting\TestBase.cs" />
+    <Compile Include="VacancyPosting\VacancyPostingServiceAuthorisationTests.cs" />
     <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -148,6 +148,7 @@
         {
             var viewModel = new ProviderViewModel
             {
+                ProviderId = provider.ProviderId,
                 ProviderName = provider.Name,
                 ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
             };

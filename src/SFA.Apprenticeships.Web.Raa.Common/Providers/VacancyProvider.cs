@@ -20,7 +20,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     using Converters;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
