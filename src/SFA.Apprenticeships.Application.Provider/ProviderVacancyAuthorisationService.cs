@@ -47,12 +47,4 @@
             throw new Domain.Entities.Exceptions.CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
         }
     }
-
-    public class NullProviderVacancyAuthorisationService : IProviderVacancyAuthorisationService
-    {
-        public void Authorise(int providerId, int? providerSiteId)
-        {
-            
-        }
-    }
 }
