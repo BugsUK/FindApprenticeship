@@ -71,7 +71,9 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                //TODO: Resinstate once we have developed a better understanding of the Ids in migrated data
                 x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
+                x.For<IProviderVacancyAuthorisationService>().Use<NullProviderVacancyAuthorisationService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
                 x.For<IVacancyLockingService>().Use<VacancyLockingService>();
 
