@@ -61,8 +61,9 @@
                                 <div itemprop="address">
                                     <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine1</p>
                                     <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine2</p>
-                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.AddressLine3</p>
-                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.AddressLine4</p>
+                                    <p class="small-btm-margin" itemprop="streetAddress">@Model.Address.AddressLine3</p>
+                                    <p class="small-btm-margin" itemprop="addressLocality">@Model.Address.Town</p>
+                                    <p class="small-btm-margin" itemprop="addressRegion">@Model.Address.County</p>
                                     <p class="small-btm-margin" itemprop="postalCode">@Model.Address.Postcode</p>
                                 </div>
                             </div>
@@ -79,8 +80,9 @@
                                     <div itemprop="address">
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine1</p>
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.NewVacancyViewModel.LocationAddresses.First().Address.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.NewVacancyViewModel.LocationAddresses.First().Address.County</p>
                                         <p class="small-btm-margin" itemprop="postalCode">@Model.NewVacancyViewModel.LocationAddresses.First().Address.Postcode</p>
                                     </div>
 

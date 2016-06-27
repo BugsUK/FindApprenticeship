@@ -1180,7 +1180,7 @@ WriteLiteral(">");
 
             
             #line 197 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                          Write(Model.VacancyAddress.AddressLine3);
+                                                                                          Write(Model.VacancyAddress.Town);
 
             
             #line default
@@ -1195,7 +1195,7 @@ WriteLiteral(">");
 
             
             #line 198 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                                        Write(Model.VacancyAddress.AddressLine4);
+                                                                                        Write(Model.VacancyAddress.County);
 
             
             #line default
@@ -1268,16 +1268,16 @@ WriteLiteral(" title=\"Map of location\"");
 
 WriteLiteral(" style=\"border: 0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 11097), Tuple.Create("\"", 11252)
-, Tuple.Create(Tuple.Create("", 11103), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 11103), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 11083), Tuple.Create("\"", 11238)
+, Tuple.Create(Tuple.Create("", 11089), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 11089), true)
             
             #line 211 "..\..\Views\ApprenticeshipSearch\Details.cshtml"
-                                                                        , Tuple.Create(Tuple.Create("", 11148), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+                                                                        , Tuple.Create(Tuple.Create("", 11134), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
             
             #line default
             #line hidden
-, 11148), false)
-, Tuple.Create(Tuple.Create("", 11188), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 11188), true)
+, 11134), false)
+, Tuple.Create(Tuple.Create("", 11174), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 11174), true)
 );
 
 WriteLiteral("></iframe>\r\n                            <p");
