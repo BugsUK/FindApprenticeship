@@ -43,6 +43,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
+        private readonly IDictionary<VacancyType, ICommonApplicationService> _commonApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserProfileService _userProfileService;
@@ -69,6 +70,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
+            _commonApplicationService = new Dictionary<VacancyType, ICommonApplicationService>() {
+                { VacancyType.Apprenticeship, apprenticeshipApplicationService },
+                { VacancyType.Traineeship,    traineeshipApplicationService }
+            };
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
@@ -773,6 +778,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            bool t = true;
+            if (t)
+                return GetVacanciesSummaryForProviderOptimised(providerId, providerSiteId, vacanciesSummarySearch);
+
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
@@ -892,7 +901,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,
                 DraftCount = draft.Count,
-                NewApplicationsCount = newApplicationsCount,
+                NewApplicationsAcrossAllVacanciesCount = newApplicationsCount,
                 WithdrawnCount = withdrawn.Count,
                 CompletedCount = completed.Count,
                 HasVacancies = hasVacancies,
@@ -900,6 +909,155 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             };
 
             return vacanciesSummary; 
+        }
+
+        public VacanciesSummaryViewModel GetVacanciesSummaryForProviderOptimised(int providerId, int providerSiteId,
+             VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        {
+            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
+            if (isVacancySearch)
+            {
+                //When searching the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
+                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
+            }
+
+            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
+
+            // Logic needs to be:
+            // A) Get counts split by status - COULD get ids at the same time, but not required.
+            // B) Query data for ids that are required
+
+            // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
+            // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
+            var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
+
+            // VacancyPartyId => IVacancyIdStatusAndClosingDate
+            var vacancyIdsByVacancyPartyId = _vacancyPostingService.GetVacancyIdsWithStatusByVacancyPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId)).Values.SelectMany(a => a);
+
+            var hasVacancies = vacancyIdsByVacancyPartyId.Any();
+
+            // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
+            // TODO: This will be slow - write  _apprenticeshipApplicationService.GetNewApplicationCountByIds etc. methods to dramatically improve
+
+            //var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.Value.VacancyStatus.CanHaveApplicationsOrClickThroughs()).Select(a => a.Value.VacancyId);
+            var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.CanHaveApplicationsOrClickThroughs() && v.VacancyStatus != VacancyStatus.Completed).Select(a => a.VacancyId);
+
+            var applicationService = _commonApplicationService[vacanciesSummarySearch.VacancyType];
+
+            var newAllApplicationsByVacancyId = new Dictionary<int, Tuple<int, int>>();
+            foreach (var vacancyId in vacanciesToCountNewApplicationsFor)
+            {
+                newAllApplicationsByVacancyId.Add(vacancyId, Tuple.Create(
+                    applicationService.GetNewApplicationCount(vacancyId),
+                    applicationService.GetApplicationCount(vacancyId)));
+            }
+
+            // Apply each of the filters to the vacancies
+
+            var vacanciesByFilterType = new Dictionary<VacanciesSummaryFilterTypes, IEnumerable<IVacancyIdStatusAndClosingDate>>();
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.All]       = vacancyIdsByVacancyPartyId;
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Live]      = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Live);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Submitted] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.EqualsAnyOf(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Rejected]  = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Referred);
+
+            //TODO: Agree on closing soon range and make configurable
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.ClosingSoon] = vacancyIdsByVacancyPartyId.Where(v =>
+                v.VacancyStatus == VacancyStatus.Live &&
+                v.ClosingDate             >= _dateTimeService.UtcNow.Date &&
+                v.ClosingDate.AddDays(-5) <  _dateTimeService.UtcNow);
+
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Closed] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Closed);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Draft]  = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Draft);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.NewApplications] = vacancyIdsByVacancyPartyId.Where(v => newAllApplicationsByVacancyId.GetValueOrDefault(v.VacancyId, _ => new Tuple<int, int>(0, 0)).Item1 > 0);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Withdrawn] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Withdrawn);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.Completed] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Completed);
+
+            // Get vacancies for selected filter
+            var filteredVacancies = vacanciesByFilterType.GetValue(vacanciesSummarySearch.FilterType);
+
+            if (vacanciesSummarySearch.FilterType.EqualsAnyOf(VacanciesSummaryFilterTypes.ClosingSoon, VacanciesSummaryFilterTypes.Closed, VacanciesSummaryFilterTypes.NewApplications))
+            {
+                filteredVacancies = filteredVacancies.OrderBy(v => v.ClosingDate);
+                // TODO: OrderBy UpdatedDateTime for Completed  and descending for closed
+            }
+            filteredVacancies = filteredVacancies.ToList();
+
+            // If not doing a vacancy search then only the first page of the vacancies need to be fetched
+            var vacanciesToFetch = isVacancySearch ? filteredVacancies : filteredVacancies.GetCurrentPage(vacanciesSummarySearch).ToList();
+
+            var vacancyPartyIds = new HashSet<int>(vacanciesToFetch.Select(v => v.VacancyPartyId));
+            var employers = _employerService.GetEmployers(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
+
+            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+            var vacancies = _vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId));
+
+            // TODO: This is bashing the history table badly
+            // Plus it is questionable whether a mapper should be going to the database
+            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList(); 
+
+            foreach (var vacancySummary in vacancySummaries)
+            {
+                var employer = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId);
+                if (employer == null)
+                {
+                    throw new Exception($"Current employer could not be found for {vacancySummary.VacancyId}");
+                }
+                vacancySummary.EmployerName = employer.Name;
+            }
+
+            if (isVacancySearch)
+            {
+                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
+                vacancySummaries = vacancySummaries.Where(v =>
+                    (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
+                )
+                .GetCurrentPage(vacanciesSummarySearch)
+                .ToList();
+            }
+
+            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
+            {
+                Page = vacancySummaries,
+                ResultsCount = vacancySummaries.Count,
+                CurrentPage = vacanciesSummarySearch.CurrentPage,
+                TotalNumberOfPages = filteredVacancies.TotalPages(vacanciesSummarySearch)
+            };
+
+
+            //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
+            foreach (var vacancyViewModel in vacancyPage.Page)
+            {
+                if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
+                {
+                    var newAllApplications = newAllApplicationsByVacancyId.GetValueOrDefault(vacancyViewModel.VacancyId, _ => new Tuple<int, int>(0, 0));
+                    vacancyViewModel.NewApplicationCount = newAllApplications.Item1;
+                    vacancyViewModel.ApplicationCount = newAllApplications.Item2;
+                }
+
+                vacancyViewModel.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancyViewModel.VacancyId)).ToList();
+            }
+
+
+            var vacanciesSummary = new VacanciesSummaryViewModel
+            {
+                VacanciesSummarySearch = vacanciesSummarySearch,
+                LiveCount            = vacanciesByFilterType[VacanciesSummaryFilterTypes.Live].Count(),
+                SubmittedCount       = vacanciesByFilterType[VacanciesSummaryFilterTypes.Submitted].Count(),
+                RejectedCount        = vacanciesByFilterType[VacanciesSummaryFilterTypes.Rejected].Count(),
+                ClosingSoonCount     = vacanciesByFilterType[VacanciesSummaryFilterTypes.ClosingSoon].Count(),
+                ClosedCount          = vacanciesByFilterType[VacanciesSummaryFilterTypes.Closed].Count(),
+                DraftCount           = vacanciesByFilterType[VacanciesSummaryFilterTypes.Draft].Count(),
+                NewApplicationsAcrossAllVacanciesCount = vacancyIdsByVacancyPartyId.Sum(v => newAllApplicationsByVacancyId.GetValueOrDefault(v.VacancyId, _ => new Tuple<int, int>(0,0)).Item1),
+                WithdrawnCount       = vacanciesByFilterType[VacanciesSummaryFilterTypes.Withdrawn].Count(),
+                CompletedCount       = vacanciesByFilterType[VacanciesSummaryFilterTypes.Completed].Count(),
+                HasVacancies         = hasVacancies,
+                Vacancies = vacancyPage
+            };
+
+            return vacanciesSummary;
         }
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
@@ -1573,5 +1731,65 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             return viewModel;
         }
+
+        
+    }
+
+    public static class Extensions
+    {
+        public static V GetValueOrDefault<K,V>(this IReadOnlyDictionary<K,V> dict, K key)
+        {
+            return GetValueOrDefault(dict, key, _ => default(V));
+        }
+
+        public static V GetValueOrDefault<K, V>(this IReadOnlyDictionary<K, V> dict, K key, Func<K, V> getDefault)
+        {
+            V result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                return getDefault(key);
+        }
+
+        public static IEnumerable<V> GetValueOrEmpty<K, V>(this IReadOnlyDictionary<K, IEnumerable<V>> dict, K key)
+        {
+            IEnumerable<V> result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                return Enumerable.Empty<V>();
+        }
+
+        public static V GetValue<K, V>(this IReadOnlyDictionary<K, V> dict, K key)
+        {
+            V result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                throw new KeyNotFoundException($"{key} in ({string.Join(",", dict.Keys.Take(10))})");
+        }
+
+        public static bool EqualsAnyOf<T>(this T value, params T[] values)
+        {
+            foreach (var v in values)
+            {
+                if ((v == null && value == null) || value.Equals(v))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static IEnumerable<T> GetCurrentPage<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        {
+            return enumerable.Skip((pagedSearchCriteria.CurrentPage - 1) * pagedSearchCriteria.PageSize).Take(pagedSearchCriteria.PageSize);
+        }
+
+        public static int TotalPages<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        {
+            // TODO: This looks overly complicated
+            return enumerable.Any() ? (int)Math.Ceiling((double)enumerable.Count() / pagedSearchCriteria.PageSize) : 1;
+        }
+
     }
 }

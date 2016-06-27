@@ -121,7 +121,7 @@
             return _vacancyReadRepository.GetWithStatus(0, 0, true, desiredStatuses);
         }
 
-        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
+        public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
         {
             return _vacancyReadRepository.GetByIds(vacancyIds);
         }
@@ -149,6 +149,16 @@
         public void DeleteVacancyLocationsFor(int vacancyId)
         {
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetVacancyIdsWithStatusByVacancyPartyIds(vacancyPartyIds);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
         }
     }
 }

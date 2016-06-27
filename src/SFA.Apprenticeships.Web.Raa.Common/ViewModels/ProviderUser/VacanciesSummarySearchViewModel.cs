@@ -4,7 +4,7 @@
     using System.Web.Mvc;
     using Domain.Entities.Raa.Vacancies;
 
-    public class VacanciesSummarySearchViewModel
+    public class VacanciesSummarySearchViewModel : IPagedSearchCriteria
     {
         public VacanciesSummarySearchViewModel()
         {
@@ -52,5 +52,12 @@
         public int PageSize { get; set; }
         public List<SelectListItem> PageSizes { get; set; }
         public int CurrentPage { get; set; }
+    }
+
+    public interface IPagedSearchCriteria
+    {
+        int PageSize { get; }
+        int CurrentPage { get; }
+
     }
 }

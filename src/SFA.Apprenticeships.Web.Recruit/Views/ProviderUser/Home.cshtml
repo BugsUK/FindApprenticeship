@@ -78,7 +78,7 @@
             @{
                 var filterType = Model.VacanciesSummary.VacanciesSummarySearch.FilterType;
                 var showAllLotteryNumbers = Model.VacanciesSummary.VacanciesSummarySearch.ShowAllLotteryNumbers;
-                var newApplicationsCount = Model.VacanciesSummary.NewApplicationsCount;
+                var newApplicationsCount = Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount;
             }
             <h2 class="heading-medium">
                 Your @vacanciesLabel
@@ -110,14 +110,14 @@
                         {                          
                             if (newApplicationsCount == 1)
                             {
-                                <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                 <figcaption>
                                     <h2>New application</h2>
                                 </figcaption>
                             }
                             else
                             {
-                                <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                 <figcaption>
                                     <h2>New applications</h2>
                                 </figcaption>
@@ -128,7 +128,7 @@
                             if (newApplicationsCount == 1)
                             {
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
-                                    <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                    <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New application</h2>
                                     </figcaption>
@@ -137,7 +137,7 @@
                             else
                             {
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
-                                    <p class="count">@Model.VacanciesSummary.NewApplicationsCount</p>
+                                    <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New applications</h2>
                                     </figcaption>

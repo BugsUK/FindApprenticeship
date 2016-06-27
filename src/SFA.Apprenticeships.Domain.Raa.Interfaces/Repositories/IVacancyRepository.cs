@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using Entities.Raa.Vacancies;
     using Queries;
+    using Entities.Raa.Locations;
 
     public interface IVacancyReadRepository
     {
@@ -22,6 +23,10 @@
         List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses);
 
         List<VacancySummary> Find(ApprenticeshipVacancyQuery query, out int totalResultsCount);
+
+        IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds);
+
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds);
     }
 
     public interface IVacancyWriteRepository

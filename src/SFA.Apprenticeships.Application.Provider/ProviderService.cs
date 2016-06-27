@@ -96,7 +96,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }
 
-        public IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
         {
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
         }

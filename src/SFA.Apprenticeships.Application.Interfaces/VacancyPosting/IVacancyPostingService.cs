@@ -21,7 +21,7 @@
         
         List<VacancySummary> GetWithStatus(params VacancyStatus[] desiredStatuses);
 
-        List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds);
+        IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds);
 
         List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds);
 
@@ -34,5 +34,19 @@
         void DeleteVacancyLocationsFor(int vacancyId);
 
         Vacancy UpdateVacancy(Vacancy vacancy);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyIds"></param>
+        /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
+        IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vacancyPartyIds"></param>
+        /// <returns>VacancyPartId => VacancyLocation</returns>
+        IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds);
     }
 }
