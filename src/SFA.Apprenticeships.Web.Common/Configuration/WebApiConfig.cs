@@ -11,9 +11,9 @@
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
-                name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                name: "VersionApi",
+                routeTemplate: "api/version/{id}",
+                defaults: new { Controller = "Version", id = RouteParameter.Optional }
                 );
         }
     }
