@@ -2,11 +2,13 @@
 {
     using System;
     using System.Web;
+    using System.Web.Http;
     using System.Web.Mvc;
     using System.Web.Optimization;
     using System.Web.Routing;
     using Common.IoC;
     using Common.Binders;
+    using Common.Configuration;
     using Common.Framework;
     using Common.Validations;
     using FluentValidation.Mvc;
@@ -45,6 +47,7 @@
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
 
             ViewEngines.Engines.Clear();
             ViewEngines.Engines.Add(new RazorViewEngine());
