@@ -107,8 +107,10 @@ html:not(.no-js) [data-editable] {
 	}
 }
 
-
-
 #employer-data-display {
 	display: none;
+}
+
+.preserve-formatting{
+    white-space: pre-line;
 }
