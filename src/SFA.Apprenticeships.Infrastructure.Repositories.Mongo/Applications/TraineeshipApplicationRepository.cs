@@ -56,7 +56,12 @@
         {
             _logger.Debug("Calling repository to update traineeship application notes for application with Id={0}", applicationId);
 
-            var result = Collection.Update(Query<TraineeshipApplicationDetail>.EQ(e => e.EntityId, applicationId), Update<TraineeshipApplicationDetail>.Set(e => e.Notes, notes).Set(e => e.DateUpdated, DateTime.UtcNow));
+            var result = Collection.Update(
+                Query<MongoTraineeshipApplicationDetail>
+                    .EQ(e => e.Id, applicationId),
+                Update<MongoTraineeshipApplicationDetail>
+                    .Set(e => e.Notes, notes)
+                    .Set(e => e.DateUpdated, DateTime.UtcNow));
 
             if (result.Ok)
             {
