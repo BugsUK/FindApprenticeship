@@ -47,4 +47,13 @@
             throw new Domain.Entities.Exceptions.CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
         }
     }
+
+    public class NullVacancyAuthorisationService : IProviderVacancyAuthorisationService
+    {
+        //TODO: Remove once claims issue is resolved
+        public void Authorise(int providerId, int? providerSiteId)
+        {
+            //Always authorise
+        }
+    }
 }
