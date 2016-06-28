@@ -25,7 +25,7 @@
             For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
             For<IWcfService<IReferenceData>>().Use<WcfService<IReferenceData>>();
 
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
+            if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {
                 For<IReferenceDataProvider>().Use<ReferenceDataProvider>().Name = "LegacyReferenceDataProvider";
 

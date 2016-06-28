@@ -11,7 +11,7 @@
     {
         public RaaRegistry(ServicesConfiguration servicesConfiguration)
         {
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
+            if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Raa)
             {
                 For<IReferenceDataProvider>()
                     .Use<ReferenceDataProvider>();
