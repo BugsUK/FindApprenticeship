@@ -96,15 +96,12 @@
                 .ForMember(a => a.AddressLine5, opt => opt.Ignore())
                 .AfterMap((source, dest) =>
                 {
-                    var addressLine2 =
-                        AddAddressLine(
-                            AddAddressLine(
-                                AddAddressLine(null, source.AddressLine2), source.AddressLine3), source.AddressLine4);
-
                     dest.AddressLine1 = source.AddressLine1;
-                    dest.AddressLine2 = addressLine2;
-                    dest.AddressLine3 = source.Town;
-                    dest.AddressLine4 = source.County;
+                    dest.AddressLine2 = source.AddressLine2;
+                    dest.AddressLine3 = source.AddressLine3;
+                    dest.AddressLine4 = source.AddressLine4;
+                    dest.Town = source.Town;
+                    dest.County = source.County;
                 });
             Mapper.CreateMap<AddressViewModel, Address>();
 
