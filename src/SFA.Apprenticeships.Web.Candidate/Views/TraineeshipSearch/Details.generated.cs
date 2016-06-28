@@ -281,11 +281,17 @@ WriteLiteral(">\r\n                <div");
 
 WriteLiteral(" class=\"inner-block-padr\"");
 
-WriteLiteral(">\r\n                    <p>");
+WriteLiteral(">\r\n                    <p");
+
+WriteLiteral(" id=\"vacancy-full-descrpition\"");
+
+WriteLiteral(" class=\"preserve-formatting\"");
+
+WriteLiteral(">");
 
             
             #line 51 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                  Write(Html.Raw(Model.FullDescription));
+                                                                            Write(Html.Raw(Model.FullDescription));
 
             
             #line default
@@ -543,14 +549,14 @@ WriteLiteral(">\r\n                        <p");
 
 WriteLiteral(" id=\"vacancy-employer-name\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4301), Tuple.Create("\"", 4371)
+WriteAttribute("class", Tuple.Create(" class=\"", 4359), Tuple.Create("\"", 4429)
             
             #line 96 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 4309), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
+, Tuple.Create(Tuple.Create("", 4367), Tuple.Create<System.Object, System.Int32>(Model.IsWellFormedEmployerWebsiteUrl ? "no-btm-margin" : ""
             
             #line default
             #line hidden
-, 4309), false)
+, 4367), false)
 );
 
 WriteLiteral(">");
@@ -582,29 +588,29 @@ WriteLiteral("                            <p><a");
 
 WriteLiteral(" itemprop=\"url\"");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 4541), Tuple.Create("\"", 4570)
+WriteAttribute("href", Tuple.Create(" href=\"", 4599), Tuple.Create("\"", 4628)
             
             #line 99 "..\..\Views\TraineeshipSearch\Details.cshtml"
-, Tuple.Create(Tuple.Create("", 4548), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
+, Tuple.Create(Tuple.Create("", 4606), Tuple.Create<System.Object, System.Int32>(Model.EmployerWebsite
             
             #line default
             #line hidden
-, 4548), false)
+, 4606), false)
 );
 
 WriteLiteral(" id=\"vacancy-employer-website\"");
 
 WriteLiteral(" target=\"_blank\"");
 
-WriteAttribute("title", Tuple.Create(" title=\"", 4617), Tuple.Create("\"", 4652)
+WriteAttribute("title", Tuple.Create(" title=\"", 4675), Tuple.Create("\"", 4710)
             
             #line 99 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                    , Tuple.Create(Tuple.Create("", 4625), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
+                                                    , Tuple.Create(Tuple.Create("", 4683), Tuple.Create<System.Object, System.Int32>(Model.EmployerName
             
             #line default
             #line hidden
-, 4625), false)
-, Tuple.Create(Tuple.Create(" ", 4644), Tuple.Create("Website", 4645), true)
+, 4683), false)
+, Tuple.Create(Tuple.Create(" ", 4702), Tuple.Create("Website", 4703), true)
 );
 
 WriteLiteral(" rel=\"external\"");
@@ -774,16 +780,16 @@ WriteLiteral(" frameborder=\"0\"");
 
 WriteLiteral(" style=\"border:0\"");
 
-WriteAttribute("src", Tuple.Create(" src=\"", 6199), Tuple.Create("\"", 6354)
-, Tuple.Create(Tuple.Create("", 6205), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 6205), true)
+WriteAttribute("src", Tuple.Create(" src=\"", 6257), Tuple.Create("\"", 6412)
+, Tuple.Create(Tuple.Create("", 6263), Tuple.Create("https://www.google.com/maps/embed/v1/place?q=", 6263), true)
             
             #line 121 "..\..\Views\TraineeshipSearch\Details.cshtml"
-                                                            , Tuple.Create(Tuple.Create("", 6250), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
+                                                            , Tuple.Create(Tuple.Create("", 6308), Tuple.Create<System.Object, System.Int32>(Html.Raw(Model.VacancyAddress.Postcode)
             
             #line default
             #line hidden
-, 6250), false)
-, Tuple.Create(Tuple.Create("", 6290), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 6290), true)
+, 6308), false)
+, Tuple.Create(Tuple.Create("", 6348), Tuple.Create(",+United+Kingdom&amp;key=AIzaSyCusA_0x4bJEjU-_gLOFiXMSBXKZYtvHz8", 6348), true)
 );
 
 WriteLiteral("></iframe>\r\n                        <p");
