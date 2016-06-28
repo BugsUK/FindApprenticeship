@@ -59,8 +59,7 @@
             try
             {
                 var vacancy = _vacancyReadRepository.Get(applicationDetail.Vacancy.Id);
-
-                if (vacancy.EditedInRaa)
+                if (vacancy != null && vacancy.EditedInRaa)
                 {
                     SetApplicationStateSubmitted(applicationDetail);
                     return ServiceBusMessageStates.Complete;
