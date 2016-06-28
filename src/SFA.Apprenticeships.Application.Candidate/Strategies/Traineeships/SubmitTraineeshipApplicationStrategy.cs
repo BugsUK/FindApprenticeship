@@ -12,21 +12,16 @@
     public class SubmitTraineeshipApplicationStrategy : ISubmitTraineeshipApplicationStrategy
     {
         private readonly ILogService _logger;
-        private readonly IServiceBus _serviceBus;
         private readonly ITraineeshipApplicationReadRepository _traineeshipApplicationReadRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly ICommunicationService _communicationService;
 
-        public SubmitTraineeshipApplicationStrategy(
-            ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
-            ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
-            ICommunicationService communicationService, ILogService logger, IServiceBus serviceBus)
+        public SubmitTraineeshipApplicationStrategy(ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository, ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository, ICommunicationService communicationService, ILogService logger)
         {
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _communicationService = communicationService;
             _logger = logger;
-            _serviceBus = serviceBus;
         }
 
         public void SubmitApplication(Guid applicationId)
@@ -40,7 +35,6 @@
 
                 _traineeshipApplicationWriteRepository.Save(traineeshipApplicationDetail);
                 
-                PublishMessage(traineeshipApplicationDetail);
                 NotifyCandidate(traineeshipApplicationDetail);
             }
             catch (Exception ex)
@@ -49,27 +43,6 @@
 
                 throw new CustomException("SubmitTraineeshipApplicationRequest could not be queued", ex,
                     MessagingErrorCodes.ApplicationQueuingError);
-            }
-        }
-
-        private void PublishMessage(TraineeshipApplicationDetail traineeshipApplicationDetail)
-        {
-            try
-            {
-                var message = new SubmitTraineeshipApplicationRequest
-                {
-                    ApplicationId = traineeshipApplicationDetail.EntityId
-                };
-
-                _serviceBus.PublishMessage(message);
-            }
-            catch
-            {
-                // No need to delete the application if failed enqueing the applicatino submission?
-                // Should we swallow the exception?
-                // Compensate for failure to enqueue application submission by deleting the application.
-                //_traineeshipApplicationWriteRepository.Delete(traineeshipApplicationDetail.EntityId);
-                throw;
             }
         }
 
