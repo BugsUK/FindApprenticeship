@@ -82,6 +82,7 @@
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Applications\ApprenticeshipApplicationDetailHelper.cs" />
+    <Compile Include="Applications\IApplicationCounts.cs" />
     <Compile Include="Applications\TraineeshipApplicationDetailHelper.cs" />
     <Compile Include="Applications\TraineeshipApplicationSummary.cs" />
     <Compile Include="Applications\ApplicationSummary.cs" />

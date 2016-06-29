@@ -20,12 +20,15 @@
 
         private readonly IMapper _mapper;
 
+        private readonly CommonApplicationRepository _commonApplicationRepository;
+
         public TraineeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
             var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.ApplicationsDb, "traineeships");
             _mapper = mapper;
             _logger = logger;
+            _commonApplicationRepository = new CommonApplicationRepository(logger, Collection);
         }
 
         public void Delete(Guid id)
@@ -157,39 +160,10 @@
             return applicationIds;
         }
 
-        public int GetApplicationCount(int vacancyId)
+        public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            _logger.Debug("Calling repository to get traineeship applications count for vacancy with id: {0}", vacancyId);
-
-            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
-
-            _logger.Debug("Called repository to get traineeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
-
-            return count;
+            return _commonApplicationRepository.GetCountsForVacancyIds(vacancyIds);
         }
-
-        public int GetNewApplicationCount(int vacancyId)
-        {
-            _logger.Debug("Calling repository to get new traineeship applications count for vacancy with id: {0}", vacancyId);
-
-            var count = Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
-
-            _logger.Debug("Called repository to get new traineeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
-
-            return count;
-        }
-
-        public int GetNewApplicationsCount(List<int> liveVacancyIds)
-        {            
-            var newApplicationsCount = 0;
-            _logger.Debug("Calling repository to get new apprenticeship applications for the specified live vacancies");
-            foreach (int id in liveVacancyIds)
-            {
-                newApplicationsCount += Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == id);
-            }
-            _logger.Debug($"Got new apprenticeship applications for the specified live vacancies:{newApplicationsCount}");
-            return newApplicationsCount;
-        }      
 
         public TraineeshipApplicationDetail GetForCandidate(Guid candidateId, int vacancyId, bool errorIfNotFound = false)
         {
