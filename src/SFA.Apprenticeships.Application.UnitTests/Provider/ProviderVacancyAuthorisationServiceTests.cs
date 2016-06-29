@@ -87,7 +87,7 @@
             // Assert.
             action
                 .ShouldThrow<CustomException>()
-                .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+                .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisation.Failed);
         }
 
         [Test]
@@ -180,7 +180,39 @@
             // Assert.
             action
                 .ShouldThrow<CustomException>()
-                .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+                .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisation.Failed);
+        }
+
+        [Test]
+        public void ShouldNotAuthoriseProviderWithInvalidUkprn()
+        {
+            // Arrange.
+            var ukprn = Convert.ToString(new Random().Next(1, 50));
+
+            var mockCurrentUserService = new Mock<ICurrentUserService>();
+            var mockProviderService = new Mock<IProviderService>();
+
+            mockCurrentUserService.Setup(mock =>
+                mock.IsInRole(Roles.Faa))
+                .Returns(true);
+
+            mockCurrentUserService.Setup(mock =>
+                mock.GetClaimValue("ukprn"))
+                .Returns(ukprn);
+
+            mockProviderService.Setup(mock => mock
+                .GetProvider(ukprn))
+                .Returns(default(Provider));
+
+            var service = new ProviderVacancyAuthorisationService(mockCurrentUserService.Object, mockProviderService.Object);
+
+            // Act.
+            Action action = () => service.Authorise(1, 2);
+
+            // Assert.
+            action
+                .ShouldThrow<CustomException>()
+                .Which.Code.Should().Be(Interfaces.ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
         }
 
         [Test]

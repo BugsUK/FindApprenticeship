@@ -27,20 +27,23 @@
             var ukprn = _currentUserService.GetClaimValue("ukprn");
             var provider = _providerService.GetProvider(ukprn);
 
+            if (provider == null)
+            {
+                var message = $"Provider user '{_currentUserService.CurrentUserName}' signed in with invalid UKPRN '{ukprn}' attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+
+                throw new Domain.Entities.Exceptions.CustomException(
+                    message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.InvalidUkprn);
+            }
+
             if (provider.ProviderId == providerId)
             {
                 return;
             }
 
-            /*
-            // If simple Provider Id check fails, determine whether Provider is authorised to manage the vacancy using
-            // Vacancy Owner Relationship.
-            if (_providerService.IsProviderAuthorisedForVacancy(ukprn, vacancy.vacancyId))
-            {
-            }
-            */
-
             // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor
+
+            // TODO: US1464: if fallback to Provider Site Id is problematic, consider extending this check to include Vacancy Owner Relationship.
+
             if (providerSiteId.HasValue)
             {
                 var providerSites = _providerService.GetProviderSites(ukprn);
@@ -51,9 +54,12 @@
                 }
             }
 
-            var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
+            {
+                var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
-            throw new Domain.Entities.Exceptions.CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
+                throw new Domain.Entities.Exceptions.CustomException(
+                    message, Interfaces.ErrorCodes.ProviderVacancyAuthorisation.Failed);
+            }
         }
     }
 }
