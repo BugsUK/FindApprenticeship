@@ -1,6 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Application.Provider
 {
-    using System;
     using System.Linq;
     using Domain.Entities.Raa;
     using Infrastructure.Interfaces;
@@ -25,24 +24,34 @@
                 return;
             }
 
-            var signedInProviderId = Convert.ToInt32(_currentUserService.GetClaimValue("providerId"));
+            var ukprn = _currentUserService.GetClaimValue("ukprn");
+            var provider = _providerService.GetProvider(ukprn);
 
-            if (providerId == signedInProviderId)
+            if (provider.ProviderId == providerId)
             {
                 return;
             }
 
-            //Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub contractor
+            /*
+            // If simple Provider Id check fails, determine whether Provider is authorised to manage the vacancy using
+            // Vacancy Owner Relationship.
+            if (_providerService.IsProviderAuthorisedForVacancy(ukprn, vacancy.vacancyId))
+            {
+            }
+            */
+
+            // Fall back to Provider Site Id as the assigned provider for a vacancy could be a sub-contractor
             if (providerSiteId.HasValue)
             {
-                var providerSites = _providerService.GetProviderSites(signedInProviderId);
-                if (providerSites.Any(ps => ps.ProviderSiteId == providerSiteId))
+                var providerSites = _providerService.GetProviderSites(ukprn);
+
+                if (providerSites.Any(each => each.ProviderSiteId == providerSiteId))
                 {
                     return;
                 }
             }
 
-            var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as Provider Id {signedInProviderId}) attempted to view vacancy for Provider Id {providerId} and Provider Site Id {providerSiteId}";
+            var message = $"Provider user '{_currentUserService.CurrentUserName}' (signed in as UKPRN '{ukprn}') attempted to view vacancy for Provider Id '{providerId}' and Provider Site Id '{providerSiteId}'";
 
             throw new Domain.Entities.Exceptions.CustomException(message, Interfaces.ErrorCodes.ProviderVacancyAuthorisationFailed);
         }
