@@ -38,13 +38,8 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetApplicationCount(vacancyId);
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
         }
-
-        public int GetNewApplicationCount(int vacancyId)
-        {
-            return _apprenticeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
-        }        
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
         {
@@ -71,9 +66,9 @@
             SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
         }
 
-        public int GetNewApplicationsCount(List<int> liveVacancyIds)
+        public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            return _apprenticeshipApplicationReadRepository.GetNewApplicationsCount(liveVacancyIds);
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
         }
 
         #region Helpers
