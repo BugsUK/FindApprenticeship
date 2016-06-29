@@ -27,24 +27,24 @@
         internal static void AddCommonRules(this AbstractValidator<VacancyQuestionsViewModel> validator)
         {
             validator.RuleFor(x => x.FirstQuestion)
-                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.SecondQuestion)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.FirstQuestionComment)
-                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidCharacterErrorText);
 
             validator.RuleFor(x => x.SecondQuestionComment)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText);
         }
     }
 }

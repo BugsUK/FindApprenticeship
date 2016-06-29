@@ -31,28 +31,28 @@
         internal static void AddCommonRules(this AbstractValidator<VacancyRequirementsProspectsViewModel> validator)
         {
             validator.RuleFor(x => x.DesiredSkills)
-                .Matches(VacancyViewModelMessages.DesiredSkills.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.DesiredSkills.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.DesiredSkills.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.FutureProspects)
-                .Matches(VacancyViewModelMessages.FutureProspects.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.FutureProspects.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.PersonalQualities)
-                .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.PersonalQualities.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidCharacterErrorText + "pp")
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.PersonalQualities.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.ThingsToConsider)
-                .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.DesiredQualifications)
                 .Matches(VacancyViewModelMessages.DesiredQualifications.WhiteListRegularExpression)
