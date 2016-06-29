@@ -943,13 +943,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var applicationService = _commonApplicationService[vacanciesSummarySearch.VacancyType];
 
-            var newAllApplicationsByVacancyId = new Dictionary<int, Tuple<int, int>>();
-            foreach (var vacancyId in vacanciesToCountNewApplicationsFor)
-            {
-                newAllApplicationsByVacancyId.Add(vacancyId, Tuple.Create(
-                    applicationService.GetNewApplicationCount(vacancyId),
-                    applicationService.GetApplicationCount(vacancyId)));
-            }
+            var applicationCountsByVacancyId = applicationService.GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
 
             // Apply each of the filters to the vacancies
 
@@ -967,7 +961,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             vacanciesByFilterType[VacanciesSummaryFilterTypes.Closed] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Closed);
             vacanciesByFilterType[VacanciesSummaryFilterTypes.Draft]  = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Draft);
-            vacanciesByFilterType[VacanciesSummaryFilterTypes.NewApplications] = vacancyIdsByVacancyPartyId.Where(v => newAllApplicationsByVacancyId.GetValueOrDefault(v.VacancyId, _ => new Tuple<int, int>(0, 0)).Item1 > 0);
+            vacanciesByFilterType[VacanciesSummaryFilterTypes.NewApplications] = vacancyIdsByVacancyPartyId.Where(v => applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
             vacanciesByFilterType[VacanciesSummaryFilterTypes.Withdrawn] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Withdrawn);
             vacanciesByFilterType[VacanciesSummaryFilterTypes.Completed] = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus == VacancyStatus.Completed);
 
@@ -1029,12 +1023,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
             foreach (var vacancyViewModel in vacancyPage.Page)
             {
-                if (vacancyViewModel.Status.CanHaveApplicationsOrClickThroughs())
-                {
-                    var newAllApplications = newAllApplicationsByVacancyId.GetValueOrDefault(vacancyViewModel.VacancyId, _ => new Tuple<int, int>(0, 0));
-                    vacancyViewModel.NewApplicationCount = newAllApplications.Item1;
-                    vacancyViewModel.ApplicationCount = newAllApplications.Item2;
-                }
+                vacancyViewModel.ApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications;
+                vacancyViewModel.NewApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications; // TODO: This is correct as AllApplicationCount is used when displaying the application counts
 
                 vacancyViewModel.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancyViewModel.VacancyId)).ToList();
             }
@@ -1049,7 +1039,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ClosingSoonCount     = vacanciesByFilterType[VacanciesSummaryFilterTypes.ClosingSoon].Count(),
                 ClosedCount          = vacanciesByFilterType[VacanciesSummaryFilterTypes.Closed].Count(),
                 DraftCount           = vacanciesByFilterType[VacanciesSummaryFilterTypes.Draft].Count(),
-                NewApplicationsAcrossAllVacanciesCount = vacancyIdsByVacancyPartyId.Sum(v => newAllApplicationsByVacancyId.GetValueOrDefault(v.VacancyId, _ => new Tuple<int, int>(0,0)).Item1),
+                NewApplicationsAcrossAllVacanciesCount = vacancyIdsByVacancyPartyId.Sum(v => applicationCountsByVacancyId[v.VacancyId].NewApplications),
                 WithdrawnCount       = vacanciesByFilterType[VacanciesSummaryFilterTypes.Withdrawn].Count(),
                 CompletedCount       = vacanciesByFilterType[VacanciesSummaryFilterTypes.Completed].Count(),
                 HasVacancies         = hasVacancies,

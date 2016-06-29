@@ -13,4 +13,3 @@
         IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
 }
-}
