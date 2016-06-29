@@ -1543,6 +1543,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 vacancy.LocationAddressesComment = null;
                 vacancy.AdditionalLocationInformation = null;
                 vacancy.AdditionalLocationInformationComment = null;
+                vacancy.VacancyLocationType = VacancyLocationType.Unknown;
                 _vacancyPostingService.UpdateVacancy(vacancy);
 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);

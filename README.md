@@ -35,7 +35,7 @@ The live service runs on the [Azure](http://azure.microsoft.com) platform and in
 	- Communication House Keeper
 	- Candidate Saved Searches
 	- Apprenticeship Vacancy Indexer
-	- Traneeship Vacancy Indexer
+	- Traineeship Vacancy Indexer
 
 ## Dependencies ##
 

@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipApplication.Disp
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipApplication/DisplayTemplates/EmployerQuestionAnswersViewMod" +
@@ -86,13 +87,13 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text\"");
+WriteLiteral(" class=\"form-label text preserve-formatting\"");
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                      Write(Html.Raw(Model.SupplementaryQuestion1));
+                                                          Write(Html.Raw(Model.SupplementaryQuestion1));
 
             
             #line default
@@ -135,13 +136,13 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text\"");
+WriteLiteral(" class=\"form-label text preserve-formatting\"");
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                      Write(Html.Raw(Model.SupplementaryQuestion2));
+                                                          Write(Html.Raw(Model.SupplementaryQuestion2));
 
             
             #line default

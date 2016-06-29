@@ -76,13 +76,13 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text\"");
+WriteLiteral(" class=\"form-label text preserve-formatting\"");
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                      Write(Html.Raw(Model.Vacancy.FirstQuestion));
+                                                          Write(Html.Raw(Model.Vacancy.FirstQuestion));
 
             
             #line default
@@ -125,13 +125,13 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text\"");
+WriteLiteral(" class=\"form-label text preserve-formatting\"");
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                      Write(Html.Raw(Model.Vacancy.SecondQuestion));
+                                                          Write(Html.Raw(Model.Vacancy.SecondQuestion));
 
             
             #line default

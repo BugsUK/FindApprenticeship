@@ -14,7 +14,7 @@
         public string Name { get; set; }
 
         [Display(Name = ProviderSiteViewModelMessages.NameMessages.LabelText)]
-        public string DisplayName => $"{Name}, {Address.AddressLine4}";
+        public string DisplayName => $"{Name}, {Address.Town}";
 
         public string EmailAddress { get; set; }
 
