@@ -234,8 +234,9 @@
             public const string LabelText = "Desired qualifications";
             public const string RequiredErrorText = "Enter the desired qualifications";
             public const string TooLongErrorText = "Desired qualifications must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Desired qualifications " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class DesiredQualificationsComment
