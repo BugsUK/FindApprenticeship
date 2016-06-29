@@ -27,7 +27,11 @@
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         [TestCase("First Question", true)]
-        public void FirstQuestionNotRequired(string firstQuestion, bool expectValid)
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
+        public void FirstQuestionValidation(string firstQuestion, bool expectValid)
         {
             var viewModel = new VacancyQuestionsViewModel
             {
@@ -64,7 +68,11 @@
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         [TestCase("Second Question", true)]
-        public void SecondQuestionNotRequired(string secondQuestion, bool expectValid)
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
+        public void SecondQuestionValidation(string secondQuestion, bool expectValid)
         {
             var viewModel = new VacancyQuestionsViewModel
             {
