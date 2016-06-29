@@ -17,6 +17,8 @@
                 .NotEmpty()
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.RequiredErrorText)
                 .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListRegularExpression)
+                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListErrorText)
+                .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListErrorText);
 
             RuleFor(x => x.EmployerWebsiteUrl)

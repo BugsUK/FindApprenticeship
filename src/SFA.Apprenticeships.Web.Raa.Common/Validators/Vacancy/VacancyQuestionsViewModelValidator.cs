@@ -28,10 +28,14 @@
         {
             validator.RuleFor(x => x.FirstQuestion)
                 .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText)
+                .Must(Validators.Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListErrorText);
 
             validator.RuleFor(x => x.SecondQuestion)
                 .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText)
+                .Must(Validators.Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListErrorText);
 
             validator.RuleFor(x => x.FirstQuestionComment)

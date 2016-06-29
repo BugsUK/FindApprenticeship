@@ -287,7 +287,7 @@ WriteLiteral("                            <span>Summary</span>\r\n");
             
             #line default
             #line hidden
-WriteLiteral("                            <span>Brief overview of the role</span>\r\n");
+WriteLiteral("                            <span>Brief overview of the rolepp</span>\r\n");
 
             
             #line 56 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
@@ -354,14 +354,14 @@ WriteLiteral(" class=\"grid grid-1-3\"");
 
 WriteLiteral(">\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3641), Tuple.Create("\"", 3667)
+WriteAttribute("class", Tuple.Create(" class=\"", 3643), Tuple.Create("\"", 3669)
             
             #line 68 "..\..\Views\Shared\DisplayTemplates\Vacancy\VacancyPreviewHeader.cshtml"
-, Tuple.Create(Tuple.Create("", 3649), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 3651), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3649), false)
+, 3651), false)
 );
 
 WriteLiteral(">\r\n                <h3");

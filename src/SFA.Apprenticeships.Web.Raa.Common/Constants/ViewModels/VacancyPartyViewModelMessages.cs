@@ -8,8 +8,8 @@
         {
             public const string LabelText = "About the employer";
             public const string RequiredErrorText = "Enter text about the employer";
-            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "About the employer " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListErrorText = "About the employer " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
         }
         public static class EmployerWebsiteUrl
         {

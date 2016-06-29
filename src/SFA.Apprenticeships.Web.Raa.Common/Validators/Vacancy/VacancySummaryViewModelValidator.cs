@@ -1,12 +1,14 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
+    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
     using Infrastructure.Presentation.Constants;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Common = Validators.Common;
 
     public class VacancySummaryViewModelClientValidator : AbstractValidator<FurtherVacancyDetailsViewModel>
     {
@@ -46,8 +48,8 @@
         {
             RuleSet(RuleSets.Warnings, () => this.AddVacancySummaryViewModelServerWarningRules(parentPropertyName));
         }
-    }
-
+    }    
+    
     internal static class VacancySummaryViewModelValidatorRules
     {
         internal static void AddVacancySummaryViewModelCommonRules(this AbstractValidator<FurtherVacancyDetailsViewModel> validator)
@@ -56,12 +58,14 @@
                 .Length(0, 250)
                 .WithMessage(VacancyViewModelMessages.WorkingWeek.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.WorkingWeek.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.WorkingWeek.WhiteListErrorText);                
 
             validator.RuleFor(viewModel => viewModel.LongDescription)
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
                 .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText)
+                .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.DurationComment)
@@ -76,7 +80,7 @@
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
-            validator.RuleFor(viewModel => viewModel.WorkingWeekComment)
+            validator.RuleFor(viewModel => viewModel.WorkingWeekComment)                
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 

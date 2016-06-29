@@ -30,9 +30,20 @@
         }
 
         public static class FreetextWhitelist
-        {
+        {           
             public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$@#()""'!,+\-=_:;.&€£*%\s\/]+$";
             public const string ErrorText = @"contains some invalid characters";
+        }
+
+        public static class FreeHtmlTextWhiteList
+        {
+            public const string RegularExpression = @"^[a-zA-Z0-9\u0080-\uFFA7?$@#()""'!,+\-=_:;.&€£*%\s\/<>]+$";
+
+            public const string RegularExpressionScripts = @"<script[^>]*\s*[^>]*\s*[^>]*>";
+            public const string RegularExpressionInputs = @"<input[^>]*\s*[^>]*\s*[^>]*>";
+            public const string RegularExpressionObjects = @"<object[^>]*\s*[^>]*\s*[^>]*>";
+            public const string ErrorText = @"cannot contain <scripts>,<inputs> or <object> tags characters";
+            //public const string Regex = RegularExpressionScripts + RegularExpressionInputs + RegularExpressionObjects;
         }
 
         public static class IntegerWhitelist
