@@ -423,6 +423,10 @@
         [TestCase(" ", false)]
         [TestCase("<script>", false)]
         [TestCase("Description", true)]
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
         public void LongDescriptionRequired(string longDescription, bool expectValid)
         {
             var viewModel = new FurtherVacancyDetailsViewModel

@@ -139,6 +139,10 @@
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         [TestCase("Things To Consider", true)]
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
         public void ThingsToConsiderNotRequired(string thingsToConsider, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
@@ -176,6 +180,10 @@
         [TestCase(" ", false)]
         [TestCase("<script>", false)]
         [TestCase("Desired Qualifications", true)]
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
         public void ApprenticeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel
@@ -214,6 +222,10 @@
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         [TestCase("Desired Qualifications", true)]
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
         public void TraineeshipDesiredQualificationsRequired(string desiredQualifications, bool expectValid)
         {
             var viewModel = new VacancyRequirementsProspectsViewModel

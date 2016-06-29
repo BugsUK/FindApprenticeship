@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
 {
     using System;
+    using Common.UnitTests.Validators;
     using FluentAssertions;
     using NUnit.Framework;
     using FluentValidation.TestHelper;

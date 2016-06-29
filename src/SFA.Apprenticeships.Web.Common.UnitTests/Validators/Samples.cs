@@ -1,4 +1,4 @@
-﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators
+﻿namespace SFA.Apprenticeships.Web.Common.UnitTests.Validators
 {
     public static class Samples
     {
