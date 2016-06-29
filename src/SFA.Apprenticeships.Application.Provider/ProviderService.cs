@@ -81,6 +81,11 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
         }
 
+        public IEnumerable<ProviderSite> GetProviderSites(int providerId)
+        {
+            return _providerSiteReadRepository.GetByProviderId(providerId);
+        }
+
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();

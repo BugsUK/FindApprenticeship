@@ -53,7 +53,7 @@
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
                     <div class="text" itemprop="description">
-                        <p id="vacancy-description">@Model.Description</p>
+                        <p id="vacancy-description" class="preserve-formatting">@Model.Description</p>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@
             </div>
             <div class="grid grid-2-3">
                 <div class="text" itemprop="responsibilities">
-                    <p id="vacancy-full-descrpition">@Html.Raw(Model.FullDescription)</p>
+                    <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FullDescription)</p>
                 </div>
             </div>
 
@@ -113,17 +113,17 @@
                         @if (!string.IsNullOrWhiteSpace(Model.SkillsRequired))
                         {
                             <h3 class="heading-small">Desired skills</h3>
-                            <p id="vacancy-skills-required" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
+                            <p id="vacancy-skills-required" class="preserve-formatting" itemprop="skills">@Html.Raw(Model.SkillsRequired)</p>
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.PersonalQualities))
                         {
                             <h3 class="heading-small">Personal qualities</h3>
-                            <p id="vacancy-qualities-required" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
+                            <p id="vacancy-qualities-required" class="preserve-formatting" itemprop="qualities">@Html.Raw(Model.PersonalQualities)</p>
                         }
                         @if (!string.IsNullOrWhiteSpace(Model.QualificationRequired))
                         {
                             <h3 class="heading-small">Qualifications required</h3>
-                            <p id="vacancy-qualifications-required" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
+                            <p id="vacancy-qualifications-required" class="preserve-formatting" itemprop="qualifications">@Html.Raw(Model.QualificationRequired)</p>
                         }
 
                     </div>
@@ -134,12 +134,12 @@
                     @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
                     {
                         <h3 class="heading-small">Future prospects</h3>
-                        <p id="vacancy-future-prospects" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
+                        <p id="vacancy-future-prospects" class="preserve-formatting" itemprop="incentives">@Html.Raw(Model.FutureProspects)</p>
                     }
                     @if (!string.IsNullOrWhiteSpace(Model.RealityCheck))
                     {
                         <h3 class="heading-small">Things to consider</h3>
-                        <p id="vacancy-reality-check" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
+                        <p id="vacancy-reality-check" class="preserve-formatting" itemprop="incentives">@Html.Raw(Model.RealityCheck)</p>
                     }
                 </div>
             </div>
@@ -152,7 +152,7 @@
                         @if (!Model.IsEmployerAnonymous)
                         {
                             <div class="text">
-                                <p id="vacancy-employer-description">@Html.Raw(Model.EmployerDescription)</p>
+                                <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.EmployerDescription)</p>
                             </div>
                         }
                     </div>
@@ -194,8 +194,9 @@
                                     <div itemprop="address">
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine1</p>
                                         <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine2</p>
-                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.AddressLine3</p>
-                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.AddressLine4</p>
+                                        <p class="small-btm-margin" itemprop="streetAddress">@Model.VacancyAddress.AddressLine3</p>
+                                        <p class="small-btm-margin" itemprop="addressLocality">@Model.VacancyAddress.Town</p>
+                                        <p class="small-btm-margin" itemprop="addressRegion">@Model.VacancyAddress.County</p>
                                         <p class="small-btm-margin" itemprop="postalCode">@Model.VacancyAddress.Postcode</p>
                                     </div>
                                 </div>
@@ -228,7 +229,7 @@
                     <div class="text">
                         @if (!string.IsNullOrWhiteSpace(Model.TrainingToBeProvided))
                         {
-                            <p id="vacancy-training-to-be-provided">@Html.Raw(Model.TrainingToBeProvided)</p>
+                            <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Html.Raw(Model.TrainingToBeProvided)</p>
                         }
                         @if (Model.TrainingType == TrainingType.Standards)
                         {
@@ -257,7 +258,7 @@
                 {
                     <div class="text">
                         <h3 class="bold-small">Contact</h3>
-                        <p id="vacancy-provider-contact">@Model.Contact</p>
+                        <p id="vacancy-provider-contact" class="preserve-formatting">@Model.Contact</p>
                     </div>
                 }
             </div>
@@ -270,7 +271,7 @@
                 <div class="text">
                     <h2 class="heading-large collpanel-trigger">Other information</h2>
                     <div class="collpanel toggle-content">
-                        <p>@Html.Raw(Model.OtherInformation)</p>
+                        <p class="preserve-formatting">@Html.Raw(Model.OtherInformation)</p>
                     </div>
                 </div>
             </section>
@@ -281,7 +282,7 @@
             <section id="application-instructions-container" class="section-border">
                 <h2 class="heading-large">Employer's Application Instructions</h2>
                 <div class="text">
-                    <p id="application-instructions">@Model.ApplicationInstructions</p>
+                    <p id="application-instructions" class="preserve-formatting">@Model.ApplicationInstructions</p>
                 </div>
             </section>
         }

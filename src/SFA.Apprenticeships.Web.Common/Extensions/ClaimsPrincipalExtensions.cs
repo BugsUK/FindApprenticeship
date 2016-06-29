@@ -11,6 +11,7 @@
         {
             var claimsPrincipal = principal as ClaimsPrincipal;
             var ukprnClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.Ukprn);
+
             return ukprnClaim?.Value;
         }
 
@@ -18,6 +19,7 @@
         {
             var claimsPrincipal = principal as ClaimsPrincipal;
             var roleListClaim = claimsPrincipal?.Claims.SingleOrDefault(c => c.Type == ClaimTypes.RoleList);
+
             return roleListClaim?.Value;
         }
 

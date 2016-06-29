@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Application.Interfaces.Applications
 {
+    using Domain.Entities.Applications;
     using System;
     using System.Collections.Generic;
 
@@ -7,10 +8,9 @@
     {
         int GetApplicationCount(int vacancyId);
 
-        int GetNewApplicationCount(int vacancyId);
-
         void UpdateApplicationNotes(Guid applicationId, string notes);
         
-        int GetNewApplicationsCount(List<int> liveVacancyIds);
+        IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
+}
 }

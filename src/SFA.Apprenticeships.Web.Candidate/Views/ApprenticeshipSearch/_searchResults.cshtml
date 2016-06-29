@@ -163,9 +163,7 @@ else
                             <p id="applied-label-@vacancy.Id" class="hidden applied-label"><i class="fa fa-check"></i>Applied</p>
                         </div>
                     }
-                    <p data-show="DisplayDescription" @{if (!Model.VacancySearch.DisplayDescription) { <text> class="toggle-content" </text>      }}>
-                        @vacancy.Description
-                    </p>
+                    <p data-show="DisplayDescription" class="@{if (!Model.VacancySearch.DisplayDescription) {<text>toggle-content</text>} else {<text>preserve-formatting</text>}}">@vacancy.Description</p>
                     <div class="grid-wrapper">
                         <div class="@(vacancy.VacancyLocationType == ApprenticeshipLocationType.NonNational ? "grid grid-2-3" : "")">
                             <ul class="list-text no-btm-margin inner-block-padr">
