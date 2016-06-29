@@ -26,8 +26,8 @@
             public const string LabelText = "Short description of the role";
             public const string RequiredErrorText = "Enter the short description of the role";
             public const string TooLongErrorText = "The short description of the role must not be more than 350 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "The short description of the role " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListErrorText = "The short description of the role " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ShortDescriptionComment
@@ -149,12 +149,15 @@
             public const string LabelText = "Vacancy description";
             public const string RequiredErrorText = "Enter the long description";
             public const string TooLongErrorText = "The long description must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.ErrorText;            
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;            
+            public const string WhiteListInvalidTagErrorText = "The long description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;            
             public const string TraineeshipLabelText = "Work placement description";
             public const string TraineeshipRequiredErrorText = "Enter the work placement description";
             public const string TraineeshipTooLongErrorText = "The work placement description must not be more than 4000 characters";
-            public const string TraineeshipWhiteListErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string TraineeshipWhiteListInvalidCharacterErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string TraineeshipWhiteListInvalidTagErrorText = "The work placement description " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class LongDescriptionComment
@@ -168,8 +171,10 @@
             public const string LabelText = "Desired skills";
             public const string RequiredErrorText = "Enter the desired skills";
             public const string TooLongErrorText = "Desired skills must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Desired skills " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Desired skills " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Desired skills " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class DesiredSkillsComment
@@ -182,8 +187,10 @@
             public const string LabelText = "Future prospects";
             public const string RequiredErrorText = "Enter the future prospects";
             public const string TooLongErrorText = "Future prospects must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Future prospects " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Future prospects " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Future prospects " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class FutureProspectsComment
@@ -196,8 +203,10 @@
             public const string LabelText = "Desired personal qualities";
             public const string RequiredErrorText = "Enter the personal qualities required";
             public const string TooLongErrorText = "Personal qualities must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Personal qualities " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Personal qualities " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Personal qualities " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class PersonalQualitiesComment
@@ -209,8 +218,10 @@
         {
             public const string LabelText = "Things to consider (optional)";
             public const string TooLongErrorText = "Things to consider must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Things to consider " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Things to consider " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Things to consider " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class ThingsToConsiderComment
@@ -223,8 +234,9 @@
             public const string LabelText = "Desired qualifications";
             public const string RequiredErrorText = "Enter the desired qualifications";
             public const string TooLongErrorText = "Desired qualifications must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Desired qualifications " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Desired qualifications " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class DesiredQualificationsComment
@@ -236,16 +248,20 @@
         {
             public const string LabelText = "First question (optional)";
             public const string TooLongErrorText = "The first question must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "The first question " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The first question " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The first question " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class SecondQuestion
         {
             public const string LabelText = "Second question (optional)";
             public const string TooLongErrorText = "The second question must not be more than 4000 characters";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "The second question " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "The second question " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "The second question " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
         }
 
         public static class FirstQuestionComment
@@ -338,8 +354,10 @@
         public static class TrainingProvidedMessages
         {
             public const string LabelText = "Training to be provided";
-            public const string WhiteListRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
-            public const string WhiteListErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.ErrorText;
+            public const string WhiteListHtmlRegularExpression = Whitelists.FreeHtmlTextWhiteList.RegularExpression;
+            public const string WhiteListTextRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
+            public const string WhiteListInvalidCharacterErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidCharacterErrorText;
+            public const string WhiteListInvalidTagErrorText = "Training to be provided " + Whitelists.FreeHtmlTextWhiteList.InvalidTagErrorText;
             public const string RequiredErrorText = "Enter the training to be provided";
         }
 

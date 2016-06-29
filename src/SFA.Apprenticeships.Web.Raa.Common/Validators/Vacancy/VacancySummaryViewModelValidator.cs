@@ -1,7 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Validators.Vacancy
 {
     using System;
-    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation;
@@ -63,10 +62,10 @@
             validator.RuleFor(viewModel => viewModel.LongDescription)
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.LongDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText)
+                .Matches(VacancyViewModelMessages.LongDescription.WhiteListTextRegularExpression)
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
-                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListErrorText);
+                .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(viewModel => viewModel.DurationComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)

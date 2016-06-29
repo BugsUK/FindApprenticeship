@@ -30,7 +30,10 @@
         [TestCase(null, true)]
         [TestCase("", false)]
         [TestCase(" ", true)]
-        [TestCase("<script>", false)]
+        [TestCase(Samples.ValidFreeText, true)]
+        [TestCase(Samples.InvalidFreeTextWithInput, false)]
+        [TestCase(Samples.InvalidFreeTextWithObject, false)]
+        [TestCase(Samples.InvalidFreeTextWithScript, false)]
         public void TrainingProvidedInvalidCharacters(string trainingProvided, bool expectValid)
         {
             var viewModel = new TrainingDetailsViewModel
