@@ -37,7 +37,7 @@
         <section class=" grid-wrapper">
             <div class="grid grid-2-3">
                 <div class="inner-block-padr">
-                    <p>@Html.Raw(Model.Description)</p>
+                    <p class="preserve-formatting">@Html.Raw(Model.Description)</p>
                 </div>
             </div>
             <div class="grid grid-1-3">
@@ -50,7 +50,7 @@
                 <div class="inner-block-padr">
                     <p id="vacancy-full-descrpition" class="preserve-formatting">@Html.Raw(Model.FullDescription)</p>
                     <h3 class="heading-medium">Training to be provided</h3>
-                    <p>@Html.Raw(Model.TrainingToBeProvided)</p>
+                    <p class="preserve-formatting">@Html.Raw(Model.TrainingToBeProvided)</p>
                 </div>
             </div>
             <div class="grid grid-1-3">
@@ -128,13 +128,13 @@
             <div class="text">
                 <h2 class="heading-large">Desired skills and what this will lead to</h2>
                 <h3 class="heading-small">Desired skills and qualities</h3>
-                <p>@Html.Raw(Model.SkillsRequired)</p>
-                <p>@Html.Raw(Model.PersonalQualities)</p>
+                <p class="preserve-formatting">@Html.Raw(Model.SkillsRequired)</p>
+                <p class="preserve-formatting">@Html.Raw(Model.PersonalQualities)</p>
 
                 @if (!string.IsNullOrWhiteSpace(Model.FutureProspects))
         {
                     <h3 class="heading-small">What this will lead to</h3>
-                    <p id="vacancy-future-prospects">@Html.Raw(Model.FutureProspects)</p>
+                    <p id="vacancy-future-prospects" class="preserve-formatting">@Html.Raw(Model.FutureProspects)</p>
                 }
             </div>
         </section>
@@ -144,7 +144,7 @@
             <section class="grid-wrapper">
                 <div class="text">
                     <h2 class="heading-large">Other information</h2>
-                    <p id="vacany-other-information">@Html.Raw(Model.OtherInformation)</p>
+                    <p id="vacany-other-information" class="preserve-formatting">@Html.Raw(Model.OtherInformation)</p>
                 </div>
             </section>
         }
