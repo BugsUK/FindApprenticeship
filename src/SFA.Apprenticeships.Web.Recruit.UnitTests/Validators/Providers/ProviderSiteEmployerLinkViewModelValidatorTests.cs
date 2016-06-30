@@ -57,10 +57,10 @@
         [TestCase("", false)]
         [TestCase("something", true)]
         [TestCase(MassivleyLong, true)]
-        [TestCase(Samples.ValidFreeText, true)]
-        [TestCase(Samples.InvalidFreeTextWithInput, false)]
-        [TestCase(Samples.InvalidFreeTextWithObject, false)]
-        [TestCase(Samples.InvalidFreeTextWithScript, false)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void ShouldValidateDescription(
             string description,
             bool expectValid)

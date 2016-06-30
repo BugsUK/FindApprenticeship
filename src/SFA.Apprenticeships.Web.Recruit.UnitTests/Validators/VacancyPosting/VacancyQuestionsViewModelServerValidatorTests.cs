@@ -26,9 +26,10 @@
         [TestCase("", false)]
         [TestCase(" ", true)]
         [TestCase(Samples.ValidFreeText, true)]
-        [TestCase(Samples.InvalidFreeTextWithInput, false)]
-        [TestCase(Samples.InvalidFreeTextWithObject, false)]
-        [TestCase(Samples.InvalidFreeTextWithScript, false)]
+        [TestCase(Samples.ValidFreeHtmlText, false)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void FirstQuestionValidation(string firstQuestion, bool expectValid)
         {
             var viewModel = new VacancyQuestionsViewModel
@@ -61,13 +62,11 @@
             }
         }
 
-        [TestCase(null, true)]
-        [TestCase("", false)]
-        [TestCase(" ", true)]
         [TestCase(Samples.ValidFreeText, true)]
-        [TestCase(Samples.InvalidFreeTextWithInput, false)]
-        [TestCase(Samples.InvalidFreeTextWithObject, false)]
-        [TestCase(Samples.InvalidFreeTextWithScript, false)]
+        [TestCase(Samples.ValidFreeHtmlText, false)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void SecondQuestionValidation(string secondQuestion, bool expectValid)
         {
             var viewModel = new VacancyQuestionsViewModel

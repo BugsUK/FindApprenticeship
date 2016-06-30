@@ -27,13 +27,13 @@
         internal static void AddCommonRules(this AbstractValidator<VacancyQuestionsViewModel> validator)
         {
             validator.RuleFor(x => x.FirstQuestion)
-                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListHtmlRegularExpression)
+                .Matches(VacancyViewModelMessages.FirstQuestion.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(x => x.SecondQuestion)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListHtmlRegularExpression)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
                 .Must(Validators.Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidTagErrorText);
