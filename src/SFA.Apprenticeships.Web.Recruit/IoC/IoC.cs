@@ -71,9 +71,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
-                //TODO: Reinstate once claims issue is resolved
-                //x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
-                x.For<IProviderVacancyAuthorisationService>().Use<NullVacancyAuthorisationService>();
+                x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
                 x.For<IVacancyLockingService>().Use<VacancyLockingService>();
 
