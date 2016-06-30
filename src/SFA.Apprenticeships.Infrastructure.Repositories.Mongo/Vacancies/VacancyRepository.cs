@@ -13,6 +13,7 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using Domain.Entities.Raa.Locations;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
@@ -255,6 +256,16 @@
 
             _logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");
             return null;
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -15,6 +15,7 @@
     using VacancyLocation = Entities.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
+    using Domain.Entities.Raa.Locations;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
@@ -29,14 +30,16 @@
         private readonly IGetOpenConnection _getOpenConnection;
         private readonly TimeSpan _cacheDuration = TimeSpan.FromHours(1);
 
-        private const string VacancySummarySelect = @"
-SELECT VacancyId, VacancyOwnerRelationshipId, VacancyReferenceNumber, VacancyStatusId, 
-AddressLine1, AddressLine2, AddressLine3, AddressLine4, AddressLine5, Town, CountyId, PostCode, LocalAuthorityId, Longitude, Latitude, 
-ApprenticeshipFrameworkId, Title, ApprenticeshipType, ShortDescription, WeeklyWage, WageType, WageText, NumberofPositions, 
-ApplicationClosingDate, InterviewsFromDate, ExpectedStartDate, ExpectedDuration, WorkingWeek, EmployerAnonymousName, 
-ApplyOutsideNAVMS, LockedForSupportUntil, NoOfOfflineApplicants, MasterVacancyId, VacancyLocationTypeId, VacancyManagerID, 
-VacancyGuid, SubmissionCount, StartedToQADateTime, StandardId, HoursPerWeek, WageUnitId, DurationTypeId, DurationValue, QAUserName, 
-TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
+        private readonly string[] VacancySummaryColumns = new string[] {
+            "VacancyId", "VacancyOwnerRelationshipId", "VacancyReferenceNumber", "VacancyStatusId",
+            "AddressLine1", "AddressLine2", "AddressLine3", "AddressLine4", "AddressLine5", "Town", "CountyId", "PostCode", "LocalAuthorityId", "Longitude", "Latitude",
+            "ApprenticeshipFrameworkId", "Title", "ApprenticeshipType", "ShortDescription", "WeeklyWage", "WageType", "WageText", "NumberofPositions",
+            "ApplicationClosingDate", "InterviewsFromDate", "ExpectedStartDate", "ExpectedDuration", "WorkingWeek", "EmployerAnonymousName",
+            "ApplyOutsideNAVMS", "LockedForSupportUntil", "NoOfOfflineApplicants", "MasterVacancyId", "VacancyLocationTypeId", "VacancyManagerID",
+            "VacancyGuid", "SubmissionCount", "StartedToQADateTime", "StandardId", "HoursPerWeek", "WageUnitId", "DurationTypeId", "DurationValue", "QAUserName",
+            "TrainingTypeId", "VacancyTypeId", "SectorId", "UpdatedDateTime"
+        };
+
         private const string StatusChangeText = "Status Change";
 
         public VacancyRepository(IGetOpenConnection getOpenConnection, IMapper mapper, IDateTimeService dateTimeService,
@@ -106,10 +109,28 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
             _logger.Debug("Calling database to get apprenticeship vacancy with Ids={0}", string.Join(", ", vacancyIdsArray));
 
             var vacancies =
-                _getOpenConnection.Query<Vacancy>(VacancySummarySelect + " FROM dbo.Vacancy WHERE VacancyId IN @VacancyIds",
-                    new { VacancyIds = vacancyIdsArray });
+                _getOpenConnection.Query<VacancyPlus>($@"
+SELECT {string.Join(", ", VacancySummaryColumns)},
+       (SELECT TOP 1 HistoryDate
+        FROM   dbo.VacancyHistory h
+        WHERE  h.VacancyId                    = v.VacancyId
+        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Submitted
+        ORDER BY HistoryDate ASC) AS DateFirstSubmitted,
+       (SELECT TOP 1 HistoryDate
+        FROM   dbo.VacancyHistory h
+        WHERE  h.VacancyId                    = v.VacancyId
+        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Submitted
+        ORDER BY HistoryDate DESC) AS DateSubmitted,
+       (SELECT TOP 1 HistoryDate
+        FROM   dbo.VacancyHistory h
+        WHERE  h.VacancyId                    = v.VacancyId
+        AND    h.VacancyHistoryEventSubTypeId = @VacancyStatusId_Live
+        ORDER BY HistoryDate DESC) AS DateQAApproved
+FROM   dbo.Vacancy v
+WHERE  v.VacancyId IN @VacancyIds",
+                    new { VacancyIds = vacancyIdsArray, VacancyStatusId_Live = VacancyStatus.Live, VacancyStatusId_Submitted = VacancyStatus.Submitted });
 
-            return MapVacancySummaries(vacancies.ToList());
+            return MapVacancySummaries((IReadOnlyList<VacancyPlus>)vacancies);
         }
 
         public List<VacancySummary> GetByOwnerPartyIds(IEnumerable<int> ownerPartyIds)
@@ -118,10 +139,10 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
 
             var vacancies =
-                _getOpenConnection.Query<Vacancy>(
-VacancySummarySelect + @"
-FROM dbo.Vacancy 
-WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
+                _getOpenConnection.Query<Vacancy>($@"
+SELECT {string.Join(", ", VacancySummaryColumns)}
+FROM   dbo.Vacancy 
+WHERE  VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
                     new { VacancyOwnerRelationshipIds = ownerPartyIdsArray });
 
             return MapVacancySummaries(vacancies.ToList());
@@ -159,7 +180,8 @@ WHERE VacancyOwnerRelationshipId IN @VacancyOwnerRelationshipIds",
             _logger.Debug("Called database to get page {1} of apprenticeship vacancies in status {0}. Page size {2}", string.Join(",", desiredStatuses), page, pageSize);
 
 
-            var sql = VacancySummarySelect + @"
+            var sql = $@"
+            SELECT {string.Join(", ", VacancySummaryColumns)}
             FROM dbo.Vacancy";
 
             if (filterByProviderBeenMigrated)
@@ -235,7 +257,7 @@ order by HistoryDate desc) >= @LiveDate" : "") + @"
 SELECT COUNT(*)
 " + coreQuery + @"
 
-" + VacancySummarySelect + @"
+SELECT " + string.Join(", ", VacancySummaryColumns) + @"
 " + coreQuery + @"
 ORDER BY VacancyReferenceNumber
 OFFSET ((@CurrentPage - 1) * @PageSize) ROWS
@@ -267,7 +289,9 @@ FETCH NEXT @PageSize ROWS ONLY
             MapCreatedDateTime(dbVacancy, result);
             MapCreatedByProviderUsername(dbVacancy, result);
             MapDateSubmitted(dbVacancy, result);
+
             MapDateQAApproved(dbVacancy, result);
+
             MapComments(dbVacancy, result);
             MapRegionalTeam(result);
             MapLocalAuthorityCode(dbVacancy, result);
@@ -277,9 +301,9 @@ FETCH NEXT @PageSize ROWS ONLY
             return result;
         }
 
-        private List<VacancySummary> MapVacancySummaries(List<Vacancy> dbVacancies)
+        private List<VacancySummary> MapVacancySummaries(IReadOnlyList<Vacancy> dbVacancies)
         {
-            var results = _mapper.Map<List<Vacancy>, List<VacancySummary>>(dbVacancies);
+            var results = _mapper.Map<IReadOnlyList<Vacancy>, List<VacancySummary>>(dbVacancies);
 
             MapApprenticeshipTypes(dbVacancies, results);
             MapFrameworkIds(dbVacancies, results);
@@ -566,7 +590,14 @@ WHERE VacancyId = @VacancyId
         
         private void MapDateFirstSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
-            result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
+            var vacancyPlus = dbVacancy as VacancyPlus;
+            if (vacancyPlus != null)
+            {
+                result.DateFirstSubmitted = vacancyPlus.DateFirstSubmitted;
+            }
+            else
+            {
+                result.DateFirstSubmitted = _getOpenConnection.Query<DateTime>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
@@ -578,11 +609,19 @@ order by HistoryDate
                     VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
+            }
         }
 
         private void MapDateSubmitted(Vacancy dbVacancy, VacancySummary result)
         {
-            result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
+            var vacancyPlus = dbVacancy as VacancyPlus;
+            if (vacancyPlus != null)
+            {
+                result.DateSubmitted = vacancyPlus.DateSubmitted;
+            }
+            else
+            {
+                result.DateSubmitted = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
 where VacancyId = @VacancyId and VacancyHistoryEventSubTypeId = @VacancyStatus
@@ -594,6 +633,7 @@ order by HistoryDate desc
                     VacancyStatus = VacancyStatus.Submitted
                 }
                 ).SingleOrDefault();
+            }
         }
 
         private void MapCreatedDateTime(Vacancy dbVacancy, DomainVacancy result)
@@ -630,6 +670,14 @@ order by HistoryDate
 
         private void MapDateQAApproved(Vacancy dbVacancy, VacancySummary result)
         {
+            var vacancyPlus = dbVacancy as VacancyPlus;
+
+            if (vacancyPlus != null)
+            {
+                result.DateQAApproved = vacancyPlus.DateQAApproved;
+            }
+            else
+            {
             result.DateQAApproved = _getOpenConnection.Query<DateTime?>(@"
 select top 1 HistoryDate
 from dbo.VacancyHistory
@@ -642,6 +690,7 @@ order by HistoryDate desc
                     VacancyStatus = VacancyStatus.Live
                 }
                 ).SingleOrDefault();
+            }
         }
 
         private void MapRegionalTeam(VacancySummary vacancySummary)
@@ -1171,6 +1220,77 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             {
                 entity.UpdatedDateTime = _dateTimeService.UtcNow;
             }
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        {
+            // TODO: Handle >2000 records - Shoma
+            return _getOpenConnection.Query<dynamic>(@"
+SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
+FROM   dbo.Vacancy
+WHERE  VacancyOwnerRelationshipId IN @Ids",
+new { Ids = vacancyPartyIds })
+            .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
+            .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
+        {
+            // TODO: Handle >2000 records - Shoma
+            return _getOpenConnection.Query<Domain.Entities.Raa.Locations.VacancyLocation> (@"
+SELECT *
+FROM   dbo.VacancyLocation
+WHERE  VacancyId IN @Ids",
+new { Ids = vacancyIds })
+            .GroupBy(x => x.VacancyId)
+            .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
+        }
+
+        private class MinimalVacancyDetails : IMinimalVacancyDetails
+        {
+            public MinimalVacancyDetails(dynamic record)
+            {
+                VacancyId = record.VacancyId;
+                OwnerPartyId = record.VacancyOwnerRelationshipId;
+                Status = (VacancyStatus)record.VacancyStatusId;
+                _closingDate = record.ApplicationClosingDate;
+
+                // TODO: Should get from history because won't be set for old records, but this is an issue throughout
+                SyntheticUpdatedDateTime = record.UpdatedDateTime ?? new DateTime(2016, 6, 1, 0, 0, 0, DateTimeKind.Utc);
+
+                // TODO: Won't be set for uploaded vacancies, but this is an issue throughout
+                VacancyType = (VacancyType)record.VacancyTypeId;
+            }
+
+            public int VacancyId { get; private set; }
+
+            public int OwnerPartyId { get; private set; }
+
+            private DateTime? _closingDate;
+            public DateTime LiveClosingDate
+            {
+                get
+                {
+                    if (Status != VacancyStatus.Live && Status != VacancyStatus.Closed && Status != VacancyStatus.Completed)
+                        throw new InvalidOperationException(Status.ToString());
+                    if (_closingDate == null)
+                        throw new InvalidOperationException($"Null closing date found for live vacancy {VacancyId}");
+                    return _closingDate.Value;
+                }
+            }
+
+            public VacancyStatus Status { get; private set; }
+
+            public DateTime SyntheticUpdatedDateTime { get; private set; }
+
+            public VacancyType VacancyType { get; private set; }
+        }
+
+        private class VacancyPlus : Vacancy
+        {
+            public DateTime? DateFirstSubmitted { get; set; }
+            public DateTime? DateSubmitted { get; set; }
+            public DateTime? DateQAApproved { get; set; }
         }
     }
 }

@@ -100,7 +100,7 @@
             return _vacancyReadRepository.GetWithStatus(0, 0, true, desiredStatuses);
         }
 
-        public List<VacancySummary> GetByIds(IEnumerable<int> vacancyIds)
+        public IReadOnlyList<VacancySummary> GetVacancySummariesByIds(IEnumerable<int> vacancyIds)
         {
             return _vacancyReadRepository.GetByIds(vacancyIds);
         }
@@ -128,6 +128,16 @@
         public void DeleteVacancyLocationsFor(int vacancyId)
         {
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyPartyIds);
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)
+        {
+            return _vacancyReadRepository.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
         }
 
         private Vacancy UpsertVacancy(Vacancy vacancy, Func<Vacancy, Vacancy> operation)
