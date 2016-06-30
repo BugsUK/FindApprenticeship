@@ -1,4 +1,4 @@
-﻿CREATE Procedure [dbo].[uspRetrieveFullVacancyXMLDetails]
+﻿CREATE Procedure [dbo].[uspRetrieveFullVacancyXMLDetails2]
     @vacancyReferenceNumber int = -1,
     @frameworkCode varchar(3) = null,
     @occupationCode varchar(3) = null,
@@ -49,16 +49,62 @@ Begin
 	else
 		select @countyId = -1
 
-    -- calculate row numbers
-    declare @startRowNo int = ((@PageIndex-1)* @PageSize)+1
-    declare @endRowNo int = (@PageIndex * @PageSize);
+
 
     BEGIN
+          select
+                vac.VacancyId, VacancyReferenceNumber
+				INTO #AllRecords
+            from 
+                
+                Vacancy vac
+                join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
+                join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+                join VacancyHistory vh on vh.VacancyId = vac.VacancyId 
+                    and vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
+                    and vh.VacancyHistoryId =	(
+                                                select	max(vh1.VacancyHistoryId)  
+                                                from	VacancyHistory vh1
+                                                where	vh1.VacancyId = vac.VacancyId 
+                                                        and	vh1.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
+                                            )
+				left outer join dbo.LocalAuthority la ON vac.LocalAuthorityId = la.LocalAuthorityId		
+				left outer join dbo.LocalAuthorityGroupMembership LAGM ON LA.LocalAuthorityId = LAGM.LocalAuthorityID
+				left outer join dbo.LocalAuthorityGroup LAG ON LAGM.LocalAuthorityGroupID = LAG.LocalAuthorityGroupID
+				left outer join dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID
+				left outer join dbo.ProviderSite DO on DO.ProviderSiteId = vac.DeliveryOrganisationId
+				left outer join ProviderSiteRelationship DOR on DOR.ProviderSiteId = vac.DeliveryOrganisationID
+				left outer join ProviderSiteRelationshipType DORT on DORT.ProviderSiteRelationshipTypeID = DOR.ProviderSiteRelationshipTypeID
+            where              
+                  (vac.VacancyStatusId = @liveVacancyStatusID)
+                and
+                (vac.VacancyReferenceNumber = @vacancyReferenceNumber or @vacancyReferenceNumber = -1) 
+				and 
+				(lagt.LocalAuthorityGroupTypeName = N'Region')
+				and
+				DORT.ProviderSiteRelationshipTypeName = 'Owner'
+                and
+                (vac.ApprenticeshipFrameworkId = @frameworkId or @frameworkId = -1)
+                and
+                (occ.ApprenticeshipOccupationId = @occupationId or @occupationId = -1)
+                and
+                (vh.HistoryDate > @vacancyPublishedDate or @vacancyPublishedDate is null)
+                and
+                (
+					(@locationType = 1 and vac.VacancyLocationTypeId = 3) 
+					or
+					((@locationType = 0 and vac.VacancyLocationTypeId in (1,2)
+					and
+					(vac.CountyId = @countyId or @countyId = -1)
+					and
+					(vac.Town = @town or @town is null or @town = '')
+					and
+					(LAG.CodeName = @regionCode or @regionCode IS NULL or @regionCode = '')))
+				)
 
-        WITH tempVacancyDetails as
-        (
-    
-            select 
+
+
+             select 
 
                 vac.VacancyId as 'VacancyId',
                 case when vac.EmployerAnonymousName is null then emp.TradingName else vac.EmployerAnonymousName end as 'Employer',
@@ -123,7 +169,6 @@ Begin
 				vac.WageType as 'WageType',
 				vac.WageText as 'WageText',
 				vac.SmallEmployerWageIncentive as 'SmallEmployerWageIncentive',
-                ROW_NUMBER() OVER (ORDER BY vac.VacancyReferenceNumber) AS 'RowNumber',
 				DOR.ProviderID as 'VacancyOwnerOwnerOrgID',			-- These lines added
 				VO.ProviderID as 'DeliveryOrganisationOwnerOrgID',	-- as a fix for ITSM5547830.
 				tp.TradingName as 'LearningDeliverySiteName'		-- Lynden Davies. 20120704.
@@ -188,183 +233,12 @@ Begin
 				(lagt.LocalAuthorityGroupTypeName = N'Region')
 				and
 				DORT.ProviderSiteRelationshipTypeName = 'Owner'
-                and
-                (vac.ApprenticeshipFrameworkId = @frameworkId or @frameworkId = -1)
-                and
-                (occ.ApprenticeshipOccupationId = @occupationId or @occupationId = -1)
-                and
-                (vh.HistoryDate > @vacancyPublishedDate or @vacancyPublishedDate is null)
-                and
-                (
-					(@locationType = 1 and vac.VacancyLocationTypeId = 3) 
-					or
-					((@locationType = 0 and vac.VacancyLocationTypeId in (1,2)
-					and
-					(vac.CountyId = @countyId or @countyId = -1)
-					and
-					(vac.Town = @town or @town is null or @town = '')
-					and
-					(LAG.CodeName = @regionCode or @regionCode IS NULL or @regionCode = '')))
-				)
-        )
+				and vac.Vacancyid IN (Select VacancyId From #AllRecords ORDER BY VacancyReferenceNumber OFFSET (@pageIndex-1) * @pageSize  ROWS FETCH NEXT @pageSize ROWS ONLY)
 
-            select 
-                VacancyId,
-                Employer,
-                LearningProvider,
-                ShortDescription,
-                Description,
-                Title,
-                EmployerDescription,
-                AddressLine1, 
-                AddressLine2, 
-                AddressLine3, 
-                AddressLine4, 
-                Town,
-                County,
-                Postcode,
-                WorkingWeek,
-                WeeklyWage,
-                NumberOfVacancies,
-                VacancyReferenceNumber,
-                ClosingDateForApplicationsDate,
-                ClosingDateForApplications, 
-                InterviewBeginFromDate,
-                InterviewBeginFrom, 
-                PossibleStartDateDate, 
-                PossibleStartDate, 
-                TrainingToBeProvided,
-                OtherImportantInformation,
-                LearningProviderDescription,
-                ContactDetails,
-                ApprenticeshipTypeId,
-                VacancyType,
-                ApprenticeshipFramework,
-                LearningProviderSectorPassRate,
-                ExpectedDuration,
-                SkillsRequired,        
-                QualificationsRequired,  
-                PersonalQualities,    
-                FutureProspects,
-                AdditionalApplicationFormQuestion1,
-                AdditionalApplicationFormQuestion2,
-                VacancyPublishedDateDate,
-                VacancyPublishedDate,
-                GeocodeEasting,
-                GeocodeNorthing,
-                Latitude,
-                Longitude,
-                VacancyURL,
-                EmployersWebsite,
-                VacancyLocationTypeId,
-				VacancyOwner,
-				ContractOwner,
-				DeliveryOrganisation,
-				VacancyManager,
-				LocalAuthority,
-				DeliveryOrganisationId,
-				TrainingProviderId,
-				IsNasProvider,
-				DeliveryOrganisationStatusId,
-				VacancyManagerId,
-				VacancyManagerAnonymous,
-				WageType,
-				WageText,
-				SmallEmployerWageIncentive,
-				VacancyOwnerOwnerOrgID,			-- These lines added
-				DeliveryOrganisationOwnerOrgID,	-- as a fix for ITSM5547830.
-				LearningDeliverySiteName		-- Lynden Davies. 20120704.
+			ORDER BY VacancyReferenceNumber
 
-        from 
-
-            tempVacancyDetails
-
-        where RowNumber between @startRowNo and @endRowNo
-
-        order by RowNumber
-
-        select @totalRecords = COUNT(1)
-        from      
-                
-                Vacancy vac
-                join [VacancyOwnerRelationship] vpr on vac.[VacancyOwnerRelationshipId] = vpr.[VacancyOwnerRelationshipId]
-                join [ProviderSite] tp on vpr.[ProviderSiteID] = tp.ProviderSiteID
-                join Employer emp on vpr.EmployerId = emp.EmployerId
-                join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
-                join ApprenticeshipType apt on vac.ApprenticeshipType = apt.ApprenticeshipTypeId 
-                join VacancyHistory vh on vh.VacancyId = vac.VacancyId 
-                    and vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
-                    and vh.VacancyHistoryId =	(
-                                                select	max(vh1.VacancyHistoryId)  
-                                                from	VacancyHistory vh1
-                                                where	vh1.VacancyId = vac.VacancyId 
-                                                        and	vh1.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
-                                            )
-				join Provider VO ON Vac.ContractOwnerID = VO.ProviderID
-				left outer join SectorSuccessRates ssr on VO.ProviderID = ssr.ProviderID 
-					and occ.ApprenticeshipOccupationId = ssr.SectorID
-                left outer join County cty on vac.CountyId = cty.CountyId 
-                left outer join AdditionalQuestion as aq1 on vac.vacancyId = aq1.vacancyId 
-                    and aq1.QuestionId = 1           
-                left outer join AdditionalQuestion as aq2 on vac.vacancyId = aq2.vacancyId 
-                    and aq2.QuestionId = 2           
-                left outer join [ProviderSiteFramework] tpf on tpf.ProviderSiteRelationshipID = vpr.[ProviderSiteID] 
-                    and vac.apprenticeshipframeworkid = tpf.frameworkid           		
-                left outer join 
-                    (	
-                        select	vacancyid , 
-                                Max(case when FullName = 'Future prospects' then vtf.[Value] end) as FutureProspects,
-                                Max(case when FullName = 'Training to be provided' then vtf.[Value] end) as TrainingToBeProvided,
-                                Max(case when FullName = 'Skills required' then vtf.[Value] end) as SkillsRequired,
-                                Max(case when FullName = 'Qualifications Required' then vtf.[Value] end) as QualificationRequired,
-                                Max(case when FullName = 'Personal qualities' then vtf.[Value] end) as PersonalQualities,
-                                Max(case when FullName = 'Reality check' then vtf.[Value] end) as RealityCheck,
-                                Max(case when FullName = 'Other important information' then vtf.[Value] end) as OtherImportantInformation
-                        from	
-                            vacancytextfieldValue vtfv 
-                            inner join vacancytextfield vtf 
-                                on vtf.Field = vtfv.vacancytextfieldValueId 
-                        group by vacancyid
-                    ) as vt on vt.VacancyId = vac.VacancyId 
-				left outer join dbo.LocalAuthority la ON vac.LocalAuthorityId = la.LocalAuthorityId		
-				left outer join dbo.LocalAuthorityGroupMembership LAGM ON LA.LocalAuthorityId = LAGM.LocalAuthorityID
-				left outer join dbo.LocalAuthorityGroup LAG ON LAGM.LocalAuthorityGroupID = LAG.LocalAuthorityGroupID
-				left outer join dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID
-				--inner join dbo.LSCRegion reg ON la.LSCRegionId = reg.LSCRegionId		
-				left outer join dbo.ProviderSite DO on DO.ProviderSiteId = vac.DeliveryOrganisationId
-				left outer join ProviderSiteRelationship DOR on DOR.ProviderSiteId = vac.DeliveryOrganisationID
-				left outer join ProviderSiteRelationshipType DORT on DORT.ProviderSiteRelationshipTypeID = DOR.ProviderSiteRelationshipTypeID
-				left outer join Provider DOP on DOP.ProviderId = DOR.ProviderId
- 				left outer join dbo.ProviderSite MO on MO.ProviderSiteId = vac.VacancyManagerId
-            where              
-                  (vac.VacancyStatusId = @liveVacancyStatusID)
-                and
-                (vac.VacancyReferenceNumber = @vacancyReferenceNumber or @vacancyReferenceNumber = -1) 
-				and 
-				(lagt.LocalAuthorityGroupTypeName = N'Region')
-				and
-				DORT.ProviderSiteRelationshipTypeName = 'Owner'
-                and
-                (vac.ApprenticeshipFrameworkId = @frameworkId or @frameworkId = -1)
-                and
-                (occ.ApprenticeshipOccupationId = @occupationId or @occupationId = -1)
-                and
-                (vh.HistoryDate > @vacancyPublishedDate or @vacancyPublishedDate is null)
-                and
-                (
-					(@locationType = 1 and vac.VacancyLocationTypeId = 3) 
-					or
-					((@locationType = 0 and vac.VacancyLocationTypeId in (1,2)
-					and
-					(vac.CountyId = @countyId or @countyId = -1)
-					and
-					(vac.Town = @town or @town is null or @town = '')
-					and
-					(LAG.CodeName = @regionCode or @regionCode IS NULL or @regionCode = '')))
-				)		
-
-    END
+        select @totalRecords = COUNT(1) FROM #AllRecords
+	END
 
     SET NOCOUNT OFF
 
