@@ -15,7 +15,6 @@
     using VacancyLocation = Entities.VacancyLocation;
     using VacancyStatus = Domain.Entities.Raa.Vacancies.VacancyStatus;
     using VacancyType = Domain.Entities.Raa.Vacancies.VacancyType;
-    using Domain.Entities.Raa.Locations;
 
     public class VacancyRepository : IVacancyReadRepository, IVacancyWriteRepository
     {
