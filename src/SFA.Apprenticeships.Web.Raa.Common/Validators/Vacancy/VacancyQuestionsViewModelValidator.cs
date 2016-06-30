@@ -43,7 +43,7 @@
                 .WithMessage(VacancyViewModelMessages.FirstQuestion.WhiteListInvalidCharacterErrorText);
 
             validator.RuleFor(x => x.SecondQuestionComment)
-                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText)
+                .Matches(VacancyViewModelMessages.SecondQuestion.WhiteListTextRegularExpression)
                 .WithMessage(VacancyViewModelMessages.SecondQuestion.WhiteListInvalidCharacterErrorText);
         }
     }
