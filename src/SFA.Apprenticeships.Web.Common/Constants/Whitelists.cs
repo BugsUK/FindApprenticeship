@@ -42,7 +42,7 @@
             public const string RegularExpressionInputs = @"<input[^>]*\s*[^>]*\s*[^>]*>";
             public const string RegularExpressionObjects = @"<object[^>]*\s*[^>]*\s*[^>]*>";
             public const string InvalidCharacterErrorText = @"contains some invalid characters";
-            public const string InvalidTagErrorText = @"cannot contain <scripts>,<inputs> or <object> tags characters";
+            public const string InvalidTagErrorText = @"contains some invalid tags";
         }
 
         public static class IntegerWhitelist
