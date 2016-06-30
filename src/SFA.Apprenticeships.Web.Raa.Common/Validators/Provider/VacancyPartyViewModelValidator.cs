@@ -16,7 +16,7 @@
             RuleFor(x => x.EmployerDescription)
                 .NotEmpty()
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.RequiredErrorText)
-                .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
+                .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListInvalidTagErrorText);
