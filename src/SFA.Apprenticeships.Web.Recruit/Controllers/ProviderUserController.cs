@@ -65,8 +65,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 AddClaim(SystemClaimTypes.Role, Roles.VerifiedEmail, viewModel);
             }
 
-            AddClaim(ClaimTypes.ProviderId, Convert.ToString(viewModel.ProviderId), viewModel);
-
             if (message != null)
             {
                 SetUserMessage(message.Text, message.Level);
