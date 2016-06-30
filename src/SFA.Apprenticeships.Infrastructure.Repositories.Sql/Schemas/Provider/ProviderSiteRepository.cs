@@ -101,7 +101,12 @@
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
 
-            return providerSites.Select(MapProviderSite);
+            return providerSites.Select(dbProviderSite =>
+            {
+                var providerSite = _mapper.Map<Entities.ProviderSite, ProviderSite>(dbProviderSite);
+                providerSite.ProviderId = providerId;
+                return providerSite;
+            });
         }
 
         public ProviderSite Update(ProviderSite providerSite)
