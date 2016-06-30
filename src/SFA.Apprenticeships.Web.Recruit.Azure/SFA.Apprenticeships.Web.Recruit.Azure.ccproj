@@ -103,4 +103,14 @@
     <CloudExtensionsDir Condition=" '$(CloudExtensionsDir)' == '' ">$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Windows Azure Tools\2.7\</CloudExtensionsDir>
   </PropertyGroup>
   <Import Project="$(CloudExtensionsDir)Microsoft.WindowsAzure.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(ProjectDir)..\..\config\$(ProjectName)\ServiceDefinition.$(Configuration).csdef $(ProjectDir)ServiceDefinition.csdef /Y
+IF "%COPY_CONFIG_FROM_SECURE_REPO%" == "true" (
+SET COPY_PATH=$(ProjectDir)..\..\..\Apprenticeships\Configuration\Applications\$(ProjectName)\ 
+) else (
+SET COPY_PATH=$(ProjectDir)..\..\config\$(ProjectName)\
+)
+robocopy /E /IS %COPY_PATH% $(ProjectDir) /XF *.csdef
+if %errorlevel% leq 3 exit 0 else exit %errorlevel%</PreBuildEvent>
+  </PropertyGroup>
 </Project>
