@@ -11,24 +11,27 @@
 
     public class MigrationProcessor
     {
+        private readonly IConfigurationService _configurationService;
         private readonly ILogService _logService;
-        private readonly IList<IMigrationProcessor> _migrationProcessors;
-        private readonly bool _isEnabled;
 
         public MigrationProcessor(IConfigurationService configurationService, ILogService logService)
         {
+            _configurationService = configurationService;
             _logService = logService;
 
             _logService.Info("Initialisation");
+        }
 
-            var configuration = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
-
-            if (!(_isEnabled = configuration.IsEnabled))
+        public void Execute(CancellationToken cancellationToken)
+        {
+            var configuration = _configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>();
+            
+            if (!configuration.IsEnabled)
             {
+                _logService.Warn("Migrate.Faa process is disabled.");
+                cancellationToken.WaitHandle.WaitOne();
                 return;
             }
-
-            // TODO: AG: refactor set-up out of constructor (should be done first time in Execute() method).
 
             //Ensure date precision is honoured
             Dapper.SqlMapper.AddTypeMap(typeof(DateTime), System.Data.DbType.DateTime2);
@@ -41,22 +44,12 @@
 
             var applicationMappers = new ApplicationMappers(_logService);
 
-            _migrationProcessors = new List<IMigrationProcessor>
+            var migrationProcessors = new List<IMigrationProcessor>
             {
-                new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService),
-                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, configurationService, logService)
+                new CandidateMigrationProcessor(new CandidateMappers(_logService), syncRepository, genericSyncRespository, targetDatabase, _configurationService, _logService),
+                new VacancyApplicationsMigrationProcessor(new TraineeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService),
+                new VacancyApplicationsMigrationProcessor(new ApprenticeshipApplicationsUpdater(syncRepository), applicationMappers, genericSyncRespository, sourceDatabase, targetDatabase, _configurationService, _logService)
             };
-        }
-
-        public void Execute(CancellationToken cancellationToken)
-        {
-            if (!_isEnabled)
-            {
-                _logService.Warn("Migrate.Faa process is disabled.");
-                cancellationToken.WaitHandle.WaitOne();
-                return;
-            }
 
             _logService.Info("Execute Started");
 
@@ -64,11 +57,15 @@
             {
                 try
                 {
-                    foreach (var migrationProcessor in _migrationProcessors)
+                    var lastSyncVersion = syncRepository.GetSyncParams().LastSyncVersion;
+                    if (lastSyncVersion.HasValue && lastSyncVersion > 0)
                     {
-                        if (!cancellationToken.IsCancellationRequested)
+                        foreach (var migrationProcessor in migrationProcessors)
                         {
-                            migrationProcessor.Process(cancellationToken);
+                            if (!cancellationToken.IsCancellationRequested)
+                            {
+                                migrationProcessor.Process(cancellationToken);
+                            }
                         }
                     }
                 }
@@ -81,8 +78,7 @@
                     _logService.Error("Error occurred. Sleeping before trying again", ex);
                 }
 
-                // TODO: AG: configure.
-                Thread.Sleep(10000);
+                Thread.Sleep(configuration.SleepTimeBetweenCyclesInSeconds * 1000);
             }
 
             _logService.Info("DoAll Cancelled");

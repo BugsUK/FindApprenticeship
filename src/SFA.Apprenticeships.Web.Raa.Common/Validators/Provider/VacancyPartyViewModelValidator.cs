@@ -16,8 +16,10 @@
             RuleFor(x => x.EmployerDescription)
                 .NotEmpty()
                 .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.RequiredErrorText)
-                .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListRegularExpression)
-                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListErrorText);
+                .Matches(VacancyPartyViewModelMessages.EmployerDescription.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyPartyViewModelMessages.EmployerDescription.WhiteListInvalidTagErrorText);
 
             RuleFor(x => x.EmployerWebsiteUrl)
                 .Must(Common.IsValidUrl)

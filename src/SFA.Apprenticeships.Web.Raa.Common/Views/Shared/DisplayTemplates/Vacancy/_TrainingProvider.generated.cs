@@ -162,7 +162,7 @@ WriteLiteral(">");
 
             
             #line 25 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-                                                                                       Write(Model.TrainingDetailsViewModel.TrainingProvided);
+                                                                                       Write(Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided));
 
             
             #line default
@@ -180,14 +180,14 @@ WriteLiteral("                        ");
             #line hidden
 WriteLiteral("\r\n                    </div>\r\n                    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1565), Tuple.Create("\"", 1591)
+WriteAttribute("class", Tuple.Create(" class=\"", 1575), Tuple.Create("\"", 1601)
             
             #line 28 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create("", 1573), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1583), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1573), false)
+, 1583), false)
 );
 
 WriteLiteral(">\r\n");
@@ -350,15 +350,15 @@ WriteLiteral(">");
             #line hidden
 WriteLiteral("</p>\r\n            </div>\r\n\r\n            <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 3671), Tuple.Create("\"", 3702)
-, Tuple.Create(Tuple.Create("", 3679), Tuple.Create("text", 3679), true)
+WriteAttribute("class", Tuple.Create(" class=\"", 3681), Tuple.Create("\"", 3712)
+, Tuple.Create(Tuple.Create("", 3689), Tuple.Create("text", 3689), true)
             
             #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_TrainingProvider.cshtml"
-, Tuple.Create(Tuple.Create(" ", 3683), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create(" ", 3693), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 3684), false)
+, 3694), false)
 );
 
 WriteLiteral(">\r\n                <h3");

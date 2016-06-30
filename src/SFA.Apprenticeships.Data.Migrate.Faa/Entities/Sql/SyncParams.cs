@@ -4,6 +4,7 @@ namespace SFA.Apprenticeships.Data.Migrate.Faa.Entities.Sql
 
     public class SyncParams
     {
+        public int? LastSyncVersion { get; set; }
         public DateTime ApprenticeshipLastCreatedDate { get; set; }
         public DateTime ApprenticeshipLastUpdatedDate { get; set; }
         public DateTime TraineeshipLastCreatedDate { get; set; }

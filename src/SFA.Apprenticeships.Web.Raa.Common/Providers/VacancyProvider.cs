@@ -626,6 +626,17 @@
             return viewModel;
         }
 
+        public VacancyViewModel GetVacancyById(int vacancyId)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
+
+            if (vacancy == null)
+                return null;
+
+            var viewModel = GetVacancyViewModelFrom(vacancy);
+            return viewModel;
+        }
+
         public VacancyViewModel GetVacancy(Guid vacancyGuid)
         {
             var vacancy = _vacancyPostingService.GetVacancy(vacancyGuid);
