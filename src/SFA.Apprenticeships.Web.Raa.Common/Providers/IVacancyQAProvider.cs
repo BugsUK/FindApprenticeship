@@ -54,6 +54,8 @@
 
         LocationSearchViewModel AddLocations(LocationSearchViewModel viewModel);
 
+        VacancyViewModel GetVacancyById(int vacancyId);
+
         VacancyViewModel GetVacancy(Guid vacancyGuid);
 
         VacancyViewModel GetVacancy(int vacancyReferenceNumber);
