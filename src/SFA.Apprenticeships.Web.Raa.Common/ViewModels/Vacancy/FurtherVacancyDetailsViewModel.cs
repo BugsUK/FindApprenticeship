@@ -50,6 +50,7 @@
         [Display(Name = VacancyViewModelMessages.DurationComment.LabelText)]
         public string DurationComment { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.LongDescription.LabelText)]
         public string LongDescription { get; set; }
 

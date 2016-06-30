@@ -5,6 +5,7 @@
     using Domain.Entities.Raa.Vacancies;
     using ViewModels.Vacancy;
     using Web.Common.Validators;
+    using Common = Validators.Common;
 
     public class TrainingDetailsViewModelClientValidator : AbstractValidator<TrainingDetailsViewModel>
     {
@@ -47,8 +48,10 @@
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(m => m.TrainingProvided)
-                .Matches(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListErrorText);
+                .Matches(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListHtmlRegularExpression)
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidCharacterErrorText)
+                .Must(Common.BeAValidFreeText)
+                .WithMessage(VacancyViewModelMessages.TrainingProvidedMessages.WhiteListInvalidTagErrorText);
 
             validator.RuleFor(m => m.TrainingProvidedComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)

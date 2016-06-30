@@ -2,6 +2,7 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
     using Constants.ViewModels;
     using Domain.Entities.Raa.Vacancies;
     using FluentValidation.Attributes;
@@ -17,6 +18,7 @@
 
         public int ProviderSiteId { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyPartyViewModelMessages.EmployerDescription.LabelText)]
         public string EmployerDescription { get; set; }
 
