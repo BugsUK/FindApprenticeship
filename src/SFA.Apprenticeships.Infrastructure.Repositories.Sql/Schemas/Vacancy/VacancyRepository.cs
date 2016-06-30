@@ -818,12 +818,20 @@ order by HistoryDate desc
             throw new NotImplementedException();
         }
 
-        public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
+        public void IncrementOfflineApplicationClickThrough(int vacancyId)
         {
-            //TODO: This should have an implementation after merging develop in next release.
-            //Hotfix for v2.0.0 release, ommitting this line so as to avoid excessive logs of a known issue.
-            //This will be tested extensively on the PRE environment
-            //throw new NotImplementedException();
+            _getOpenConnection.MutatingQuery<object>(
+                    $@"UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = NoOfOfflineApplicants + 1
+WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is not null
+
+UPDATE dbo.Vacancy 
+SET NoOfOfflineApplicants = 1
+WHERE VacancyId = @vacancyId and NoOfOfflineApplicants is null
+", new
+                    {
+                        VacancyId = vacancyId
+                    });
         }
 
         private void PopulateIds(DomainVacancy entity, Vacancy dbVacancy)
