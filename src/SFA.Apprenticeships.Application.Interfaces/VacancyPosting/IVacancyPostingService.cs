@@ -40,7 +40,7 @@
         /// </summary>
         /// <param name="vacancyPartyIds"></param>
         /// <returns>VacancyPartyId => IVacancyIdStatusAndClosingDate</returns>
-        IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds);
+        IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds);
 
         /// <summary>
         /// 

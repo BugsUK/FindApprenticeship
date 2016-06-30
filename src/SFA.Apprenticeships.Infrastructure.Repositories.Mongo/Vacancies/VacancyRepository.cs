@@ -258,7 +258,7 @@
             return null;
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
         {
             throw new NotImplementedException();
         }

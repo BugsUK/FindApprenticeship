@@ -2,16 +2,20 @@
 {
     using System;
 
-    public interface IVacancyIdStatusAndClosingDate
+    public interface IMinimalVacancyDetails
     {
         int VacancyId { get; }
 
-        int VacancyPartyId { get; }
+        int OwnerPartyId { get; }
 
-        VacancyStatus VacancyStatus { get; }
+        VacancyStatus Status { get; }
 
         /// <summary></summary>
-        /// <exception cref="InvalidOperationException">If VacancyStatus != Live</exception>
-        DateTime ClosingDate { get; }
+        /// <exception cref="InvalidOperationException">If VacancyStatus isn't Live, Closed or Completed</exception>
+        DateTime LiveClosingDate { get; }
+
+        DateTime SyntheticUpdatedDateTime { get; }
+
+        VacancyType VacancyType { get; }
     }
 }

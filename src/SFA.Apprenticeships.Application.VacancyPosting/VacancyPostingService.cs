@@ -130,9 +130,9 @@
             _vacancyLocationWriteRepository.DeleteFor(vacancyId);
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
         {
-            return _vacancyReadRepository.GetVacancyIdsWithStatusByVacancyPartyIds(vacancyPartyIds);
+            return _vacancyReadRepository.GetMinimalVacancyDetails(vacancyPartyIds);
         }
 
         public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyPartyIds)

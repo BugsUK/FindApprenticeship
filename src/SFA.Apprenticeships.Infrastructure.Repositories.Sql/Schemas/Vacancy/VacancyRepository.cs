@@ -1222,16 +1222,16 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             }
         }
 
-        public IReadOnlyDictionary<int, IEnumerable<IVacancyIdStatusAndClosingDate>> GetVacancyIdsWithStatusByVacancyPartyIds(IEnumerable<int> vacancyPartyIds)
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
         {
             // TODO: Handle >2000 records - Shoma
             return _getOpenConnection.Query<dynamic>(@"
-SELECT VacancyOwnerRelationshipId, VacancyId, VacancyStatusId, ApplicationClosingDate
+SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
 FROM   dbo.Vacancy
 WHERE  VacancyOwnerRelationshipId IN @Ids",
 new { Ids = vacancyPartyIds })
             .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
-            .ToDictionary(x => x.Key, x => x.Select(y => (IVacancyIdStatusAndClosingDate)new VacancyIdStatusAndClosingDate(y)));
+            .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
         }
 
         public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
@@ -1246,34 +1246,44 @@ new { Ids = vacancyIds })
             .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
         }
 
-        private class VacancyIdStatusAndClosingDate : IVacancyIdStatusAndClosingDate
+        private class MinimalVacancyDetails : IMinimalVacancyDetails
         {
-            public VacancyIdStatusAndClosingDate(dynamic record)
+            public MinimalVacancyDetails(dynamic record)
             {
                 VacancyId = record.VacancyId;
-                VacancyPartyId = record.VacancyOwnerRelationshipId;
+                OwnerPartyId = record.VacancyOwnerRelationshipId;
+                Status = (VacancyStatus)record.VacancyStatusId;
                 _closingDate = record.ApplicationClosingDate;
-                VacancyStatus = (VacancyStatus)record.VacancyStatusId;
+
+                // TODO: Should get from history because won't be set for old records, but this is an issue throughout
+                SyntheticUpdatedDateTime = record.UpdatedDateTime ?? new DateTime(2016, 6, 1, 0, 0, 0, DateTimeKind.Utc);
+
+                // TODO: Won't be set for uploaded vacancies, but this is an issue throughout
+                VacancyType = (VacancyType)record.VacancyTypeId;
             }
 
             public int VacancyId { get; private set; }
 
-            public int VacancyPartyId { get; private set; }
+            public int OwnerPartyId { get; private set; }
 
             private DateTime? _closingDate;
-            public DateTime ClosingDate
+            public DateTime LiveClosingDate
             {
                 get
                 {
-                    if (VacancyStatus != VacancyStatus.Live)
-                        throw new InvalidOperationException(VacancyStatus.ToString());
+                    if (Status != VacancyStatus.Live && Status != VacancyStatus.Closed && Status != VacancyStatus.Completed)
+                        throw new InvalidOperationException(Status.ToString());
                     if (_closingDate == null)
                         throw new InvalidOperationException($"Null closing date found for live vacancy {VacancyId}");
                     return _closingDate.Value;
                 }
             }
 
-            public VacancyStatus VacancyStatus { get; private set; }
+            public VacancyStatus Status { get; private set; }
+
+            public DateTime SyntheticUpdatedDateTime { get; private set; }
+
+            public VacancyType VacancyType { get; private set; }
         }
 
         private class VacancyPlus : Vacancy
