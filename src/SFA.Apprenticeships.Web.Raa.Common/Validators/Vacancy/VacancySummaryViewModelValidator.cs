@@ -62,7 +62,7 @@
             validator.RuleFor(viewModel => viewModel.LongDescription)
                 .Length(0, 4000)
                 .WithMessage(VacancyViewModelMessages.LongDescription.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.LongDescription.WhiteListTextRegularExpression)
+                .Matches(VacancyViewModelMessages.LongDescription.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidCharacterErrorText)
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.LongDescription.WhiteListInvalidTagErrorText);
