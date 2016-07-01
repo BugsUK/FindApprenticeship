@@ -52,37 +52,22 @@
             mapper.Map<Vacancy, DomainVacancy>(vacancy);
         }
 
-        [Test]
-        [Ignore("Too many fields to exclude")]
-        public void DoesDatabaseVacancyObjectMappingRoundTripViaDomainObjectExcludingHardOnes()
+        [TestCase(1, WageType.Custom)]
+        [TestCase(0, WageType.LegacyText)]
+        [TestCase(2, WageType.ApprenticeshipMinimum)]
+        [TestCase(3, WageType.NationalMinimum)]
+        [TestCase(4, WageType.Custom)]
+        public void DatabaseToDomainWageTypeTests(int databaseWageType, WageType expectedWageType)
         {
-            // Arrange
             var mapper = new VacancyMappers();
-            var domainVacancy1 = new Fixture().Create<DomainVacancy>();
+            var databaseVacancy = new Fixture().Build<Vacancy>().With(v => v.WageType, databaseWageType).Create();
 
-            // Act
-            var databaseVacancy = mapper.Map<DomainVacancy, Vacancy>(domainVacancy1);
-            var domainVacancy2 = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
+            var domainVacancy = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
 
-            // Assert
-            domainVacancy2.ShouldBeEquivalentTo(domainVacancy1, ExcludeHardOnes);
+            domainVacancy.WageType.Should().Be(expectedWageType);
         }
 
-        [Test]
-        [Ignore("Not implemented yet")]
-        public void DoesDatabaseVacancyObjectMappingRoundTripViaDomainObjectIncludingHardOnes()
-        {
-            // Arrange
-            var mapper = new VacancyMappers();
-            var domainVacancy1 = new Fixture().Create<DomainVacancy>();
-
-            // Act
-            var databaseVacancy = mapper.Map<DomainVacancy, Vacancy>(domainVacancy1);
-            var domainVacancy2 = mapper.Map<Vacancy, DomainVacancy>(databaseVacancy);
-
-            // Assert
-            domainVacancy2.ShouldBeEquivalentTo(domainVacancy1);
-        }
+        
 
         [TestCase("123.4567", "123.46")]
         [TestCase("123.4545", "123.45")]
