@@ -190,27 +190,35 @@ WriteLiteral("\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-summary\"");
 
-WriteLiteral(" class=\"preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 1135), Tuple.Create("\"", 1207)
+            
+            #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+, Tuple.Create(Tuple.Create("", 1143), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 1143), false)
+);
 
 WriteLiteral(">");
 
             
             #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-                                                           Write(Model.VacancyDetail.Description);
+                                                                                                        Write(Model.VacancyDetail.Description);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1237), Tuple.Create("\"", 1327)
+WriteAttribute("href", Tuple.Create(" href=\"", 1282), Tuple.Create("\"", 1372)
             
             #line 24 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1244), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1289), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1244), false)
+, 1289), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

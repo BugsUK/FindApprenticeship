@@ -76,13 +76,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 396), Tuple.Create("\"", 480)
+, Tuple.Create(Tuple.Create("", 404), Tuple.Create("form-label", 404), true)
+, Tuple.Create(Tuple.Create(" ", 414), Tuple.Create("text", 415), true)
+            
+            #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
+, Tuple.Create(Tuple.Create(" ", 419), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.FirstQuestion.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 420), false)
+);
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                          Write(Html.Raw(Model.Vacancy.FirstQuestion));
+                                                                                                   Write(Html.Raw(Model.Vacancy.FirstQuestion));
 
             
             #line default
@@ -125,13 +135,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 824), Tuple.Create("\"", 909)
+, Tuple.Create(Tuple.Create("", 832), Tuple.Create("form-label", 832), true)
+, Tuple.Create(Tuple.Create(" ", 842), Tuple.Create("text", 843), true)
+            
+            #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
+, Tuple.Create(Tuple.Create(" ", 847), Tuple.Create<System.Object, System.Int32>(Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 848), false)
+);
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\Shared\DisplayTemplates\Application\EmployerQuestionAnswers.cshtml"
-                                                          Write(Html.Raw(Model.Vacancy.SecondQuestion));
+                                                                                                    Write(Html.Raw(Model.Vacancy.SecondQuestion));
 
             
             #line default

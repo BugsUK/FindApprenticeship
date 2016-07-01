@@ -87,13 +87,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 352), Tuple.Create("\"", 437)
+, Tuple.Create(Tuple.Create("", 360), Tuple.Create("form-label", 360), true)
+, Tuple.Create(Tuple.Create(" ", 370), Tuple.Create("text", 371), true)
+            
+            #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+, Tuple.Create(Tuple.Create(" ", 375), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion1.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 376), false)
+);
 
 WriteLiteral(">");
 
             
             #line 9 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                          Write(Html.Raw(Model.SupplementaryQuestion1));
+                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion1));
 
             
             #line default
@@ -136,13 +146,23 @@ WriteLiteral(" class=\"form-group\"");
 
 WriteLiteral(">\r\n                <p");
 
-WriteLiteral(" class=\"form-label text preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 749), Tuple.Create("\"", 834)
+, Tuple.Create(Tuple.Create("", 757), Tuple.Create("form-label", 757), true)
+, Tuple.Create(Tuple.Create(" ", 767), Tuple.Create("text", 768), true)
+            
+            #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
+, Tuple.Create(Tuple.Create(" ", 772), Tuple.Create<System.Object, System.Int32>(Model.SupplementaryQuestion2.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 773), false)
+);
 
 WriteLiteral(">");
 
             
             #line 16 "..\..\Views\ApprenticeshipApplication\DisplayTemplates\EmployerQuestionAnswersViewModel.cshtml"
-                                                          Write(Html.Raw(Model.SupplementaryQuestion2));
+                                                                                                    Write(Html.Raw(Model.SupplementaryQuestion2));
 
             
             #line default

@@ -6,14 +6,14 @@
         @if (!string.IsNullOrWhiteSpace(Model.Vacancy.FirstQuestion))
         {
             <div class="form-group">
-                <p class="form-label text preserve-formatting">@Html.Raw(Model.Vacancy.FirstQuestion)</p>
+                <p class="form-label text @Model.Vacancy.FirstQuestion.GetPreserveFormattingCssClass()">@Html.Raw(Model.Vacancy.FirstQuestion)</p>
                 <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.FirstQuestionAnswer ?? "-")</span>
             </div>
         }
         @if (!string.IsNullOrWhiteSpace(Model.Vacancy.SecondQuestion))
         {
             <div class="form-group">
-                <p class="form-label text preserve-formatting">@Html.Raw(Model.Vacancy.SecondQuestion)</p>
+                <p class="form-label text @Model.Vacancy.SecondQuestion.GetPreserveFormattingCssClass()">@Html.Raw(Model.Vacancy.SecondQuestion)</p>
                 <span class="form-prepopped prewrap">@Html.Raw(Model.VacancyQuestionAnswers.SecondQuestionAnswer ?? "-")</span>
             </div>
         }
