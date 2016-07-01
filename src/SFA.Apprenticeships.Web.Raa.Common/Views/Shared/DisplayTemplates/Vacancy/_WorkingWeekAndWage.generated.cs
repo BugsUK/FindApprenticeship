@@ -146,13 +146,21 @@ WriteLiteral(" id=\"vacancy-working-week\"");
 
 WriteLiteral(" itemprop=\"workHours\"");
 
-WriteLiteral(" class=\"preserve-formatting\"");
+WriteAttribute("class", Tuple.Create(" class=\"", 915), Tuple.Create("\"", 1004)
+            
+            #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
+, Tuple.Create(Tuple.Create("", 923), Tuple.Create<System.Object, System.Int32>(Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 923), false)
+);
 
 WriteLiteral(">");
 
             
             #line 23 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-                                                                             Write(Model.FurtherVacancyDetailsViewModel.WorkingWeek);
+                                                                                                                                           Write(Model.FurtherVacancyDetailsViewModel.WorkingWeek);
 
             
             #line default
@@ -223,14 +231,14 @@ WriteLiteral("\r\n</div>\r\n\r\n");
             #line hidden
 WriteLiteral("    <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 1612), Tuple.Create("\"", 1638)
+WriteAttribute("class", Tuple.Create(" class=\"", 1674), Tuple.Create("\"", 1700)
             
             #line 37 "..\..\Views\Shared\DisplayTemplates\Vacancy\_WorkingWeekAndWage.cshtml"
-, Tuple.Create(Tuple.Create("", 1620), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 1682), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 1620), false)
+, 1682), false)
 );
 
 WriteLiteral(">\r\n        <h3");

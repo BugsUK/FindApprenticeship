@@ -57,7 +57,7 @@
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.NewVacancyViewModel.ShortDescriptionComment, Model.BasicDetailsLink))
                     </h3>
                     <div class="text" itemprop="description">
-                        <p id="vacancy-description" class="preserve-formatting">@Model.NewVacancyViewModel.ShortDescription</p>
+                        <p id="vacancy-description" class="@Model.NewVacancyViewModel.ShortDescription.GetPreserveFormattingCssClass()">@Model.NewVacancyViewModel.ShortDescription</p>
                         @Html.Partial(ApplicationsLinkViewModel.PartialView, new ApplicationsLinkViewModel(Model.VacancyType, Model.VacancyReferenceNumber, Model.ApplicationCount))
                     </div>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.ShortDescription, Model.BasicDetailsLink, Model.NewVacancyViewModel.ShortDescriptionComment))
