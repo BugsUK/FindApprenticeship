@@ -63,7 +63,6 @@ BEGIN
 		DO.TrainingProviderStatusTypeId AS 'DeliveryOrganisationStatusId',
 		vac.VacancyManagerId            AS 'VacancyManagerId',
         vac.VacancyManagerAnonymous     AS 'VacancyManagerAnonymous',
-		ROW_NUMBER() OVER (ORDER BY vac.VacancyReferenceNumber) AS 'RowNumber', -- TODO: Remove
 		DOR.ProviderID                  AS 'VacancyOwnerOwnerOrgID',			-- These lines added
 		VO.ProviderID                   AS 'DeliveryOrganisationOwnerOrgID',	-- as a fix for ITSM5547830.
 		tp.TradingName                  AS 'LearningDeliverySiteName'		-- Lynden Davies. 20120704.

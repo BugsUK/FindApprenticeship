@@ -26,6 +26,7 @@ BEGIN
 	INTO   #AllRecords
 	FROM   fnGetIdsForApi(@vacancyReferenceNumber, @frameworkCode, @occupationCode, @countyCode, @town, @regionCode, @vacancyPublishedDate, @locationType);
 
+
     SELECT 
         vac.VacancyId                   AS 'VacancyId',
         CASE WHEN vac.EmployerAnonymousName IS NULL THEN emp.TradingName ELSE vac.EmployerAnonymousName END AS 'Employer',
@@ -53,6 +54,7 @@ BEGIN
         convert(VARCHAR, vac.ExpectedStartDate, 111)      AS 'PossibleStartDate', 
         -- check re stripping out of inline style information...... check uat db
         isnull(vt.TrainingToBeProvided,'') AS 'TrainingToBeProvided',
+        isnull(vt.OtherImportantInformation,'') AS 'OtherImportantInformation',
         tp.CandidateDescription         AS 'LearningProviderDescription',
         tp.ContactDetailsForCandidate   AS 'ContactDetails',
         apt.ApprenticeshipTypeId        AS 'ApprenticeshipTypeId',
@@ -64,7 +66,6 @@ BEGIN
         isnull(vt.QualificationRequired,'') AS 'QualificationsRequired',  
         isnull(vt.PersonalQualities,'') AS 'PersonalQualities',    
         isnull(vt.FutureProspects,'')   AS 'FutureProspects',
-        isnull(vt.OtherImportantInformation,'') AS 'OtherImportantInformation',
         isnull(aq1.Question,'')         AS 'AdditionalApplicationFormQuestion1',
         isnull(aq2.Question,'')         AS 'AdditionalApplicationFormQuestion2',
         vh.HistoryDate                  AS 'VacancyPublishedDateDate',

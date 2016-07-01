@@ -1,14 +1,14 @@
 ﻿/* DROP FUNCTION [dbo].[fnGetIdsForApi] */
 CREATE FUNCTION [dbo].[fnGetIdsForApi]
 (
-    @vacancyReferenceNumber INT          = -1,
-    @frameworkCode          VARCHAR(3)   = NULL,
-    @occupationCode         VARCHAR(3)   = NULL,
-    @countyCode             VARCHAR(3)   = NULL,
-    @town                   VARCHAR(255) = NULL,
-    @regionCode             VARCHAR(6)   = NULL,
-    @vacancyPublishedDate   DATETIME     = NULL,
-    @locationType           INT          = -1
+    @vacancyReferenceNumber INT,
+    @frameworkCode          VARCHAR(3),
+    @occupationCode         VARCHAR(3),
+    @countyCode             VARCHAR(3),
+    @town                   VARCHAR(255),
+    @regionCode             VARCHAR(6),
+    @vacancyPublishedDate   DATETIME,
+    @locationType           INT
 )
 RETURNS @Result TABLE
 (
