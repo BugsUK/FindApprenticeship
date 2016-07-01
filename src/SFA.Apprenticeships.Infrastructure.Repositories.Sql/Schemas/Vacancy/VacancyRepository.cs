@@ -374,13 +374,10 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
                         }).Single();
 
                 //Changed to try parse as traineeship apprenticeship type is not a recognised apprenticeship level but should be preserved
-                if (Enum.IsDefined(typeof(ApprenticeshipLevel), educationLevelCodeName))
+                ApprenticeshipLevel apprenticeshipLevel;
+                if (Enum.TryParse(educationLevelCodeName, out apprenticeshipLevel) && Enum.IsDefined(typeof(ApprenticeshipLevel), apprenticeshipLevel))
                 {
-                    ApprenticeshipLevel apprenticeshipLevel;
-                    if (Enum.TryParse(educationLevelCodeName, out apprenticeshipLevel))
-                    {
-                        result.ApprenticeshipLevel = apprenticeshipLevel;
-                    }
+                    result.ApprenticeshipLevel = apprenticeshipLevel;
                 }
             }
         }
