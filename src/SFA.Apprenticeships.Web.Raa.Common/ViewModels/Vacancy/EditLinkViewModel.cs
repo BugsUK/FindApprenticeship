@@ -6,14 +6,17 @@
     {
         public const string PartialView = "_EditLink";
 
-        public EditLinkViewModel(VacancyStatus status, string editUrl, string comment)
+        public EditLinkViewModel(VacancyStatus status, string anchorName, string editUrl, string comment)
         {
             Status = status;
+            AnchorName = anchorName;
             EditUrl = editUrl;
-            CommentViewModel = new CommentViewModel(status, comment, editUrl, string.Empty);
+            CommentViewModel = new CommentViewModel(status, anchorName, comment, editUrl, string.Empty);
         }
 
         public VacancyStatus Status { get; private set; }
+
+        public string AnchorName { get; set; }
 
         public string EditUrl { get; private set; }
 

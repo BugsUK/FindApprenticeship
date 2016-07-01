@@ -22,7 +22,7 @@
                                 @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsViewModel.TrainingProvidedComment, Model.TrainingDetailsLink))
                             </h3>
                         }
-                        <p id="vacancy-training-to-be-provided" class="preserve-formatting">@Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided)</p>
+                        <p id="vacancy-training-to-be-provided" class="@Model.TrainingDetailsViewModel.TrainingProvided.GetPreserveFormattingCssClass()">@Html.Raw(Model.TrainingDetailsViewModel.TrainingProvided)</p>
                         @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.TrainingDetailsViewModel.TrainingProvided, Model.TrainingDetailsLink, Model.TrainingDetailsViewModel.TrainingProvidedComment))
                     </div>
                     <div class="@editableItemClass">

@@ -20,7 +20,7 @@
                         Description
                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.NewVacancyViewModel.EmployerDescriptionComment, Model.EmployerLink))
                     </h3>
-                    <p id="vacancy-employer-description" class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)</p>
+                    <p id="vacancy-employer-description" class="@Model.NewVacancyViewModel.OwnerParty.EmployerDescription.GetPreserveFormattingCssClass()">@Html.Raw(Model.NewVacancyViewModel.OwnerParty.EmployerDescription)</p>
                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.OwnerParty.EmployerDescription, Model.EmployerLink, Model.NewVacancyViewModel.EmployerDescriptionComment))
                 </div>
             </div>
@@ -166,7 +166,7 @@
                                         Additional location information
                                         @Html.Partial(CommentViewModel.PartialIconView, Html.GetCommentViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.NewVacancyViewModel.AdditionalLocationInformationComment, Model.LocationsLink))
                                     </h3>
-                                    <p class="preserve-formatting">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
+                                    <p class="@Model.NewVacancyViewModel.AdditionalLocationInformation.GetPreserveFormattingCssClass()">@Html.Raw(Model.NewVacancyViewModel.AdditionalLocationInformation)</p>
                                     @Html.Partial(EditLinkViewModel.PartialView, Html.GetEditLinkViewModel(Model, m => m.NewVacancyViewModel.AdditionalLocationInformation, Model.LocationsLink, Model.NewVacancyViewModel.EmployerWebsiteUrlComment))
                                 </div>
                             }
