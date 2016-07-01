@@ -141,7 +141,6 @@
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.LongDescription, v => v.Description)
                 .MapMemberFrom(av => av.Wage, v => RoundMoney(v.WeeklyWage))
-                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
@@ -187,6 +186,10 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
+                // .MapMemberFrom(av => av.WageType, v => v.WageType)
+                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : (int)WageType.LegacyWeekly
+                ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.DesiredSkills)
@@ -275,7 +278,6 @@
                 .MapMemberFrom(av => av.Title, v => v.Title)
                 .MapMemberFrom(av => av.ShortDescription, av => av.ShortDescription)
                 .MapMemberFrom(av => av.Wage, v => v.WeeklyWage)
-                .MapMemberFrom(av => av.WageType, v => v.WageType)  //db lookup
                 .ForMember(av => av.NumberOfPositions, opt => opt.ResolveUsing<ShortToIntConverter>().FromMember(v => v.NumberOfPositions))
                 .MapMemberFrom(av => av.ClosingDate, v => v.ApplicationClosingDate)
                 .MapMemberFrom(av => av.PossibleStartDate, v => v.ExpectedStartDate)
@@ -293,6 +295,10 @@
                 .MapMemberFrom(av => av.HoursPerWeek, v => v.HoursPerWeek)
                 .ForMember(av => av.WageUnit, opt => opt.MapFrom(v =>
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
+                // .MapMemberFrom(av => av.WageType, v => v.WageType)
+                .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : (int)WageType.LegacyWeekly
+                ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
                 .IgnoreMember(av => av.QAUserName)
