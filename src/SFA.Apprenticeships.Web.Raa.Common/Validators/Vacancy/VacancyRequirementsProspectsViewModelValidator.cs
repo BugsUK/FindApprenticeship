@@ -39,6 +39,7 @@
             validator.RuleFor(x => x.FutureProspects)
                 .Matches(VacancyViewModelMessages.FutureProspects.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidCharacterErrorText)
+                .When(x => !string.IsNullOrEmpty(x.FutureProspects)) //Migrated vacancies can contain just the empty string
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.FutureProspects.WhiteListInvalidTagErrorText);
 
@@ -51,6 +52,7 @@
             validator.RuleFor(x => x.ThingsToConsider)
                 .Matches(VacancyViewModelMessages.ThingsToConsider.WhiteListHtmlRegularExpression)
                 .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListInvalidCharacterErrorText)
+                .When(x => !string.IsNullOrEmpty(x.ThingsToConsider)) //Migrated vacancies can contain just the empty string
                 .Must(Common.BeAValidFreeText)
                 .WithMessage(VacancyViewModelMessages.ThingsToConsider.WhiteListInvalidTagErrorText);
 

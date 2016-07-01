@@ -51,7 +51,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void FutureProspectsInvalidCharacters(string futureProspects, bool expectValid)
@@ -97,7 +97,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
         [TestCase("<script>", false)]
         public void ThingsToConsiderInvalidCharacters(string thingsToConsider, bool expectValid)
