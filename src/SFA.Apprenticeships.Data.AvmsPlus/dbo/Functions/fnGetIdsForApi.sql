@@ -1,106 +1,97 @@
-﻿/* DROP FUNCTION [dbo].[[fnGetIdsForApi]] */
+﻿/* DROP FUNCTION [dbo].[fnGetIdsForApi] */
 CREATE FUNCTION [dbo].[fnGetIdsForApi]
 (
-    @vacancyReferenceNumber int = -1,
-    @frameworkCode varchar(3) = null,
-    @occupationCode varchar(3) = null,
-    @countyCode varchar(3) = null,
-    @town varchar(255) = null,
-    @regionCode varchar(6) = null,
-    @vacancyPublishedDate datetime = null,
-    @locationType int = -1
+    @vacancyReferenceNumber INT          = -1,
+    @frameworkCode          VARCHAR(3)   = NULL,
+    @occupationCode         VARCHAR(3)   = NULL,
+    @countyCode             VARCHAR(3)   = NULL,
+    @town                   VARCHAR(255) = NULL,
+    @regionCode             VARCHAR(6)   = NULL,
+    @vacancyPublishedDate   DATETIME     = NULL,
+    @locationType           INT          = -1
 )
 RETURNS @Result TABLE
 (
-	VacancyId INT,
+	VacancyId              INT,
 	VacancyReferenceNumber VARCHAR(100)
 )
-As
-Begin
-    -- obtain the vacancy live status ID for use in the main query
-    declare @liveVacancyStatusID int =	(
-                                            select	VacancyStatusTypeId 
-                                            from	VacancyStatusType 
-                                            where	CodeName = 'Lve' 
-                                        )
+AS
+BEGIN
+    -- Obtain the vacancy live status ID for use in the main query
+    DECLARE @liveVacancyStatusID INT = (
+                                            SELECT	VacancyStatusTypeId 
+                                            FROM	VacancyStatusType 
+                                            WHERE	CodeName = 'Lve' 
+                                        );
 
-    -- obtain Apprenticeship Framework Id from parameter supplied			
-    declare @frameworkId int = null
-    IF @frameworkCode IS NOT NULL and @frameworkCode <> ''
-        select	@frameworkId = ApprenticeshipFrameworkId
-        from	ApprenticeshipFramework
-        where	CodeName = @frameworkCode
-	else
-		select @frameworkId = -1
+    -- Obtain Apprenticeship Framework Id from parameter supplied			
+    DECLARE @frameworkId int = null
+    IF @frameworkCode IS NOT NULL AND @frameworkCode <> ''
+        SELECT	@frameworkId = ApprenticeshipFrameworkId
+        FROM	ApprenticeshipFramework
+        WHERE	CodeName = @frameworkCode;
+	ELSE
+		SELECT @frameworkId = -1;
 
-    -- obtain Occupation Id from parameter supplied			
-    declare @occupationId int =	null
-    IF @occupationCode IS NOT NULL and @occupationCode <> ''
-        select	@occupationId = ApprenticeshipOccupationId
-        from	ApprenticeshipOccupation
-        where	Codename = @occupationCode
-	else
-		select @occupationId = -1
+    -- Obtain Occupation Id from parameter supplied			
+    DECLARE @occupationId int =	null
+    IF @occupationCode IS NOT NULL AND @occupationCode <> ''
+        SELECT	@occupationId = ApprenticeshipOccupationId
+        FROM	ApprenticeshipOccupation
+        WHERE	Codename = @occupationCode;
+	ELSE
+		SELECT @occupationId = -1;
 
-    -- obtain County Id from parameter supplied			
-    declare @countyId int = null
-    IF @countyCode IS NOT NULL and @countyCode <> ''
-        select  @countyId = CountyId
-        from    County
-        where   CodeName = @countyCode
-	else
-		select @countyId = -1
+    -- Obtain County Id from parameter supplied			
+    DECLARE @countyId int = null
+    IF @countyCode IS NOT NULL AND @countyCode <> ''
+        SELECT  @countyId = CountyId
+        FROM    County
+        WHERE   CodeName = @countyCode;
+	ELSE
+		SELECT @countyId = -1;
 
 
-			INSERT @Result
-          select
-                vac.VacancyId, VacancyReferenceNumber
-            from 
-                
-                Vacancy vac
-                join ApprenticeshipFramework fwk on vac.ApprenticeshipFrameworkId = fwk.ApprenticeshipFrameworkId
-                join ApprenticeshipOccupation occ on fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
-                join VacancyHistory vh on vh.VacancyId = vac.VacancyId 
-                    and vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
-                    and vh.VacancyHistoryId =	(
-                                                select	max(vh1.VacancyHistoryId)  
-                                                from	VacancyHistory vh1
-                                                where	vh1.VacancyId = vac.VacancyId 
-                                                        and	vh1.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
-                                            )
-				left outer join dbo.LocalAuthority la ON vac.LocalAuthorityId = la.LocalAuthorityId		
-				left outer join dbo.LocalAuthorityGroupMembership LAGM ON LA.LocalAuthorityId = LAGM.LocalAuthorityID
-				left outer join dbo.LocalAuthorityGroup LAG ON LAGM.LocalAuthorityGroupID = LAG.LocalAuthorityGroupID
-				left outer join dbo.LocalAuthorityGroupType LAGT ON LAG.LocalAuthorityGroupTypeID = LAGT.LocalAuthorityGroupTypeID
-				left outer join dbo.ProviderSite DO on DO.ProviderSiteId = vac.DeliveryOrganisationId
-				left outer join ProviderSiteRelationship DOR on DOR.ProviderSiteId = vac.DeliveryOrganisationID
-				left outer join ProviderSiteRelationshipType DORT on DORT.ProviderSiteRelationshipTypeID = DOR.ProviderSiteRelationshipTypeID
-            where              
-                  (vac.VacancyStatusId = @liveVacancyStatusID)
-                and
-                (vac.VacancyReferenceNumber = @vacancyReferenceNumber or @vacancyReferenceNumber = -1) 
-				and 
-				(lagt.LocalAuthorityGroupTypeName = N'Region')
-				and
-				DORT.ProviderSiteRelationshipTypeName = 'Owner'
-                and
-                (vac.ApprenticeshipFrameworkId = @frameworkId or @frameworkId = -1)
-                and
-                (occ.ApprenticeshipOccupationId = @occupationId or @occupationId = -1)
-                and
-                (vh.HistoryDate > @vacancyPublishedDate or @vacancyPublishedDate is null)
-                and
-                (
-					(@locationType = 1 and vac.VacancyLocationTypeId = 3) 
-					or
-					((@locationType = 0 and vac.VacancyLocationTypeId in (1,2)
-					and
-					(vac.CountyId = @countyId or @countyId = -1)
-					and
-					(vac.Town = @town or @town is null or @town = '')
-					and
-					(LAG.CodeName = @regionCode or @regionCode IS NULL or @regionCode = '')))
+	INSERT @Result
+    SELECT
+        vac.VacancyId, VacancyReferenceNumber
+    FROM 
+        Vacancy vac
+        JOIN    ApprenticeshipFramework  fwk ON  vac.ApprenticeshipFrameworkId  = fwk.ApprenticeshipFrameworkId
+        JOIN    ApprenticeshipOccupation occ ON  fwk.ApprenticeshipOccupationId = occ.ApprenticeshipOccupationId
+        JOIN    VacancyHistory vh            ON  vh.VacancyId = vac.VacancyId 
+                                             AND vh.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
+                                             AND vh.VacancyHistoryId = (
+												SELECT	max(vh1.VacancyHistoryId)  
+												FROM	VacancyHistory vh1
+												WHERE	vh1.VacancyId = vac.VacancyId 
+												AND		vh1.VacancyHistoryEventSubTypeId = @liveVacancyStatusID
+											 )
+		LEFT OUTER JOIN dbo.LocalAuthority                la   ON  vac.LocalAuthorityId                  = la.LocalAuthorityId		
+		LEFT OUTER JOIN dbo.LocalAuthorityGroupMembership LAGM ON  LA.LocalAuthorityId                   = LAGM.LocalAuthorityID
+		LEFT OUTER JOIN dbo.LocalAuthorityGroup           LAG  ON  LAGM.LocalAuthorityGroupID            = LAG.LocalAuthorityGroupID
+		LEFT OUTER JOIN dbo.LocalAuthorityGroupType       LAGT ON  LAG.LocalAuthorityGroupTypeID         = LAGT.LocalAuthorityGroupTypeID
+		LEFT OUTER JOIN dbo.ProviderSite                  DO   ON  DO.ProviderSiteId                     = vac.DeliveryOrganisationId
+		LEFT OUTER JOIN ProviderSiteRelationship          DOR  ON  DOR.ProviderSiteId                    = vac.DeliveryOrganisationID
+		LEFT OUTER JOIN ProviderSiteRelationshipType      DORT ON  DORT.ProviderSiteRelationshipTypeID   = DOR.ProviderSiteRelationshipTypeID
+		                                                       
+    WHERE   vac.VacancyStatusId = @liveVacancyStatusID
+	AND     lagt.LocalAuthorityGroupTypeName      = 'Region'
+	AND     DORT.ProviderSiteRelationshipTypeName = 'Owner'
+    AND     (vac.VacancyReferenceNumber     = @vacancyReferenceNumber OR @vacancyReferenceNumber = -1) 
+    AND     (vac.ApprenticeshipFrameworkId  = @frameworkId            OR @frameworkId            = -1)
+    AND     (occ.ApprenticeshipOccupationId = @occupationId           OR @occupationId           = -1)
+    AND     (vh.HistoryDate                 > @vacancyPublishedDate   OR @vacancyPublishedDate   IS NULL)
+    AND     (
+				(@locationType = 1 AND vac.VacancyLocationTypeId = 3) 
+				OR
+				(     @locationType = 0
+				  AND vac.VacancyLocationTypeId IN (1,2)
+				  AND (vac.CountyId = @countyId   OR @countyId = -1)
+				  AND (vac.Town     = @town       OR @town       IS NULL OR @town = '')
+				  AND (LAG.CodeName = @regionCode OR @regionCode IS NULL OR @regionCode = '')
 				)
+			);
 
 	RETURN
-End
+END;
