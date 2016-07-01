@@ -298,6 +298,8 @@ FETCH NEXT @PageSize ROWS ONLY
             MapDuration(dbVacancy, result);
             MapCountyId(dbVacancy, result);
 
+            PatchTrainingType(result);
+
             return result;
         }
 
@@ -508,6 +510,24 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
             result.ThingsToConsider = GetTextField(textFields, TextFieldCodeName.ThingsToConsider);
             result.FutureProspects = GetTextField(textFields, TextFieldCodeName.FutureProspects);
             result.OtherInformation = GetTextField(textFields, TextFieldCodeName.OtherInformation);
+        }
+
+        private void PatchTrainingType(DomainVacancy result)
+        {
+            if (result.TrainingType != TrainingType.Unknown) return;
+
+            if (!string.IsNullOrWhiteSpace(result.SectorCodeName))
+            {
+                result.TrainingType = TrainingType.Sectors;
+            }
+            else if (result.StandardId != null)
+            {
+                result.TrainingType = TrainingType.Standards;
+            }
+            else if (!string.IsNullOrWhiteSpace(result.FrameworkCodeName))
+            {
+                result.TrainingType = TrainingType.Frameworks;
+            }
         }
 
         private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
