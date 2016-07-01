@@ -6,20 +6,23 @@
     {
         public const string PartialIconView = "_CommentIcon";
 
-        public CommentViewModel(string comment, string viewCommentUrl, string commentLabel)
+        public CommentViewModel(string anchorName, string comment, string viewCommentUrl, string commentLabel)
         {
+            AnchorName = anchorName;
             Comment = comment;
             ViewCommentUrl = viewCommentUrl;
             CommentLabel = commentLabel;
         }
 
-        public CommentViewModel(VacancyStatus status, string comment, string viewCommentUrl, string commentLabel)
-            :this(comment, viewCommentUrl, commentLabel)
+        public CommentViewModel(VacancyStatus status, string anchorName, string comment, string viewCommentUrl, string commentLabel)
+            :this(anchorName, comment, viewCommentUrl, commentLabel)
         {
             Status = status;
         }
 
         public VacancyStatus Status { get; private set; }
+
+        public string AnchorName { get; private set; }
 
         public string Comment { get; private set; }
 

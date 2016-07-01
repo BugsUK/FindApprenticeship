@@ -1,5 +1,6 @@
 ﻿@model SFA.Apprenticeships.Web.Raa.Common.ViewModels.Vacancy.CommentViewModel
-    
+
+<a name="@Model.AnchorName"></a>
 @if (Model.HasComment && Model.Status.IsStateReviewable())
 {
     <a href="@Model.ViewCommentUrl">        

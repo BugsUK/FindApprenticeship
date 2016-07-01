@@ -23,6 +23,7 @@
     <p id="vacancy-working-week" itemprop="workHours" class="@Model.FurtherVacancyDetailsViewModel.WorkingWeek.GetPreserveFormattingCssClass()">@Model.FurtherVacancyDetailsViewModel.WorkingWeek</p>
     @if (Model.VacancyType == VacancyType.Apprenticeship)
     {
+        <a name="furthervacancydetailsviewmodel_hoursperweek"></a>
         <p>Total hours per week: @Model.FurtherVacancyDetailsViewModel.HoursPerWeek</p>
         if (Model.FurtherVacancyDetailsViewModel.HoursPerWeek > 40)
         {
