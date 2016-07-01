@@ -373,8 +373,15 @@ WHERE  at.ApprenticeshipTypeId = @ApprenticeshipTypeId",
                             ApprenticeshipTypeId = dbVacancy.ApprenticeshipType.Value
                         }).Single();
 
-                result.ApprenticeshipLevel =
-                    (ApprenticeshipLevel) Enum.Parse(typeof (ApprenticeshipLevel), educationLevelCodeName);
+                //Changed to try parse as traineeship apprenticeship type is not a recognised apprenticeship level but should be preserved
+                if (Enum.IsDefined(typeof(ApprenticeshipLevel), educationLevelCodeName))
+                {
+                    ApprenticeshipLevel apprenticeshipLevel;
+                    if (Enum.TryParse(educationLevelCodeName, out apprenticeshipLevel))
+                    {
+                        result.ApprenticeshipLevel = apprenticeshipLevel;
+                    }
+                }
             }
         }
 
@@ -940,6 +947,15 @@ WHERE  CodeName = @VacancyLocationTypeCodeName",
 
         private void PopulateApprenticeshipTypeId(DomainVacancy entity, Vacancy dbVacancy)
         {
+            if (entity.VacancyType == VacancyType.Traineeship)
+            {
+                dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT ApprenticeshipTypeId
+FROM   dbo.ApprenticeshipType
+WHERE  CodeName = 'TRA'").Single();
+                return;
+            }
+
             dbVacancy.ApprenticeshipType = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT ApprenticeshipTypeId
 FROM   dbo.ApprenticeshipType at JOIN Reference.EducationLevel el ON at.EducationLevelId = el.EducationLevelId
