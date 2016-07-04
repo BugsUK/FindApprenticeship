@@ -42,7 +42,7 @@
         public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds)
         {
             List<Employer> employers = new List<Employer>();
-            var splitEmployerIds = DbHelpers.SplitParametersIntoChunks(employerIds);           
+            var splitEmployerIds = DbHelpers.SplitInputIntoChunks(employerIds);           
             foreach (int[] employersIds in splitEmployerIds)
             {
                 var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",

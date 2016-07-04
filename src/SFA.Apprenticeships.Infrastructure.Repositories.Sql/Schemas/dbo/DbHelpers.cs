@@ -2,25 +2,28 @@
 using System.Linq;
 
 namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo
-{    
+{
     public static class DbHelpers
     {
-        private const int ChunkSize = 2000;
+        private const int ChunkSize = 200;
 
         //TODO: Write unit tests
-        public static int[][] SplitParametersIntoChunks(IEnumerable<int> id , int chunkSize = ChunkSize)
-        {
-            var enumerable = id as int[] ?? id.ToArray();
-            if (enumerable.Length > chunkSize)
+        public static int[][] SplitInputIntoChunks(IEnumerable<int> id , int chunkSize = ChunkSize)
+        {           
+            var idEnumerable = id as int[] ?? id.ToArray();
+            if (idEnumerable.Length > chunkSize)
             {
-                var chunks = enumerable
-                    .Select((s, i) => new { Value = s, Index = i })
-                    .GroupBy(x => x.Index / chunkSize)
-                    .Select(grp => grp.Select(x => x.Value).ToArray())
-                    .ToArray();
-                return chunks;
+                var i = 0;
+                var chunks=new List<int[]>();
+                while (i < idEnumerable.Length)
+                {
+                    var chunk = idEnumerable.Skip(i).Take(chunkSize).ToArray();                                        
+                    i += chunk.Length;
+                    chunks.Add(chunk);
+                }
+                return chunks.ToArray();
             }
-            return new[] { enumerable.ToArray()};
+            return new[] {idEnumerable.ToArray()};
         }
     }
 }

@@ -119,7 +119,7 @@ TrainingTypeId, VacancyTypeId, SectorId, UpdatedDateTime";
             var ownerPartyIdsArray = ownerPartyIds as int[] ?? ownerPartyIds.ToArray();
             _logger.Debug("Calling database to get apprenticeship vacancy with VacancyOwnerRelationshipId={0}", string.Join(", ", ownerPartyIdsArray));
 
-            var splitOwnerPartyIds = DbHelpers.SplitParametersIntoChunks(ownerPartyIdsArray);
+            var splitOwnerPartyIds = DbHelpers.SplitInputIntoChunks(ownerPartyIdsArray);
             foreach (var ownerIds in splitOwnerPartyIds)
             {
                 var splitVacancies = _getOpenConnection.Query<Vacancy>(
