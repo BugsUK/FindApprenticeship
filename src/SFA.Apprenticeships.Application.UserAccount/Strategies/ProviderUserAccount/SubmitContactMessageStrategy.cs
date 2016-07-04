@@ -1,12 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.UserAccount.Strategies.ProviderUserAccount
 {
-    using System.Linq;
-
-    using SFA.Apprenticeships.Application.Interfaces.Communications;
-    using SFA.Apprenticeships.Application.UserAccount.Configuration;
-    using SFA.Apprenticeships.Domain.Entities.Communication;
-    using SFA.Apprenticeships.Domain.Raa.Interfaces.Repositories;
-    using SFA.Infrastructure.Interfaces;
+    using Interfaces.Communications;
+    using Configuration;
+    using Domain.Entities.Communication;
+    using Domain.Raa.Interfaces.Repositories;
+    using Infrastructure.Interfaces;
 
     public class SubmitContactMessageStrategy : ISubmitContactMessageStrategy
     {
@@ -48,7 +46,7 @@
 
         private void SubmitContactUsMessage(ProviderContactMessage contactMessage)
         {
-            var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().HelpdeskEmailAddress;
+            var helpdeskEmailAddress = _configurationService.Get<UserAccountConfiguration>().RecruitHelpdeskEmailAddress;
             var userEnquiryDetails = DefaultCommunicationToken(contactMessage.Details, DefaultUserEnquiryDetails);
 
             var userName = _providerReadRepository.GetByEmail(contactMessage.Email);
