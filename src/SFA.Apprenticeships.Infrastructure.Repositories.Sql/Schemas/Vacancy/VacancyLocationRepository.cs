@@ -34,6 +34,7 @@
             {
                 var vacancyLocation = _mapper.Map<Entities.VacancyLocation, VacancyLocation>(vl);
                 MapLocalAuthorityCode(vl, vacancyLocation);
+                MapCountyId(vl, vacancyLocation);
 
                 return vacancyLocation;
             }).ToList();
@@ -45,6 +46,7 @@
             {
                 var vacancyLocation = _mapper.Map<VacancyLocation, Entities.VacancyLocation>(vacancyLocationAddress);
                 PopulateLocalAuthorityId(vacancyLocationAddress, vacancyLocation);
+                PopulateCountyId(vacancyLocationAddress, vacancyLocation);
 
                 _getOpenConnection.Insert(vacancyLocation);
             }
@@ -100,6 +102,33 @@ WHERE  LocalAuthorityId = @LocalAuthorityId",
             {
                 result.LocalAuthorityCode = null;
             }
+        }
+
+        private void PopulateCountyId(VacancyLocation entity, Entities.VacancyLocation dbVacancyLocation)
+        {
+            if (entity.Address?.County != null)
+            {
+                dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT CountyId
+FROM   dbo.County
+WHERE  FullName = @CountyFullName",
+                    new
+                    {
+                        CountyFullName = entity.Address.County
+                    }).Single();
+            }
+        }
+
+        private void MapCountyId(Entities.VacancyLocation dbVacancyLocation, VacancyLocation result)
+        {
+            result.Address.County = _getOpenConnection.QueryCached<string>(_cacheDuration, @"
+SELECT FullName
+FROM   dbo.County
+WHERE  CountyId = @CountyId",
+                new
+                {
+                    CountyId = dbVacancyLocation.CountyId
+                }).Single();
         }
     }
 }

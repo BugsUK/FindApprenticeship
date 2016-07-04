@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Candidate.IoC
 {
     using Application.Applications;
+    using Application.Candidate.Configuration;
     using Application.Candidate.Strategies;
     using Application.Candidate.Strategies.Apprenticeships;
     using Application.Vacancies;
@@ -15,6 +16,7 @@
     using Infrastructure.LegacyWebServices.Vacancy;
     using Infrastructure.LegacyWebServices.Wcf;
     using Infrastructure.Raa;
+
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
@@ -112,17 +114,34 @@
                 For<IVacancyIndexDataProvider>().Use<VacancyIndexDataProvider>();
 
                 For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
-                    .Use<ApprenticeshipVacancyDataProvider>();
+                    .Use<ApprenticeshipVacancyDataProvider>()
+                    .Name = "ApprenticeshipVacancyDataProvider";
 
                 For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
-                    .Use<TraineeshipVacancyDataProvider>();
+                    .Use<TraineeshipVacancyDataProvider>()
+                    .Name = "TraineeshipVacancyDataProvider";
 
-                /*
-                For<IReferenceDataProvider>()
-                    .Use<ReferenceDataProvider>();
+                if (cacheConfiguration.UseCache)
+                {
+                    For<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<ApprenticeshipVacancyDetail>>()
+                        .Named("ApprenticeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
 
-                For<IReportingProvider>()
-                    .Use<ReportingProvider>();*/
+                    For<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Use<CachedLegacyVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .IsTheDefault()
+                        .Ctor<IVacancyDataProvider<TraineeshipVacancyDetail>>()
+                        .Named("TraineeshipVacancyDataProvider")
+                        .Ctor<ICacheService>()
+                        .Named(cacheConfiguration.DefaultCache);
+                }
+
             }
 
             //--

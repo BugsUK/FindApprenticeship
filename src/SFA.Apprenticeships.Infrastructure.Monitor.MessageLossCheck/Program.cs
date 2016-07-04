@@ -13,6 +13,9 @@
     using IoC;
     using LegacyWebServices.IoC;
     using Logging.IoC;
+
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
+
     using StructureMap;
     using Tasks;
     using VacancySearch.IoC;

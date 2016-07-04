@@ -181,6 +181,7 @@
     <Compile Include="Validators\Providers\ProviderSiteSearchViewModelValidatorTests.cs" />
     <Compile Include="Validators\ProviderUser\ProviderUserViewModelValidatorTests.cs" />
     <Compile Include="Validators\VacancyPosting\VacancyDatesViewModelServerValidatorTests.cs" />
+    <Compile Include="Validators\ValidFreeTextTest.cs" />
     <Compile Include="Views\Shared\ChildViewModel.cs" />
     <Compile Include="Views\Shared\ChildViewModelValidator.cs" />
     <Compile Include="Views\Shared\ParentViewModel.cs" />

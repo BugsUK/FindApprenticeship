@@ -40,7 +40,7 @@
             MockEmployerService.Setup(s => s.GetEmployer(employerId))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
-            var provider = GetProvider();
+            var provider = GetProviderProvider();
 
             // Act
             provider.ConfirmVacancyParty(new VacancyPartyViewModel
@@ -95,7 +95,7 @@
             MockEmployerService.Setup(s => s.GetEmployer(employerId))
                 .Returns(new Fixture().Build<Employer>().With(e => e.EmployerId, employerId).Create());
 
-            var provider = GetProvider();
+            var provider = GetProviderProvider();
 
             // Act
             provider.ConfirmVacancyParty(new VacancyPartyViewModel

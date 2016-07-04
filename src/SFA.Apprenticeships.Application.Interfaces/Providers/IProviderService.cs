@@ -25,9 +25,11 @@ namespace SFA.Apprenticeships.Application.Interfaces.Providers
 
         ProviderSite GetProviderSite(string edsUrn);
 
+        IEnumerable<ProviderSite> GetProviderSites(int providerId);
+
         IEnumerable<ProviderSite> GetProviderSites(string ukprn);
 
-        IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
+        IReadOnlyDictionary<int, ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds);
 
         /// <summary>
         /// 

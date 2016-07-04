@@ -15,6 +15,8 @@
     using LegacyWebServices.Vacancy;
     using LegacyWebServices.Wcf;
     using Raa;
+
+    using Application.Candidate.Configuration;
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
@@ -69,11 +71,7 @@
                     "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
             }
             
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy
-                || servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
-            {
-                For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
-            }
+            For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {

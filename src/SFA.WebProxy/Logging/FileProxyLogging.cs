@@ -30,14 +30,13 @@
             }
         }
 
-        public void LogResponseContent(HttpResponseMessage httpResponseMessage, RouteIdentifier routeIdentifier)
+        public void LogResponseContent(Stream content, RouteIdentifier routeIdentifier)
         {
             if (_configuration.IsLoggingEnabled)
             {
-                var httpContent = httpResponseMessage.Content.ReadAsStreamAsync().Result;
                 using (var logStream = File.OpenWrite(GetFilePath(routeIdentifier, "response_")))
                 {
-                    httpContent.CopyTo(logStream);
+                    content.CopyTo(logStream);
                 }
             }
         }

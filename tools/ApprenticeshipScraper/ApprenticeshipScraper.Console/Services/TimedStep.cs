@@ -5,6 +5,7 @@
 
     using ApprenticeshipScraper.CmdLine.Extensions;
     using ApprenticeshipScraper.CmdLine.Models;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
     using ApprenticeshipScraper.CmdLine.Steps;
 
     internal class TimedStep
@@ -17,10 +18,21 @@
         {
             this.underlying = underlying;
             this.timer = new Stopwatch();
-            var logger = underlying.Logger as TimedStepLogger;
+            this.SetTimedStepLogger(underlying.Logger);
+
+            var logger = underlying.Logger as ThreadSafeStepLogger;
             if (logger != null)
             {
-                logger.Timer = this.timer;
+                this.SetTimedStepLogger(logger.UnderlyingStepLogger);
+            }
+        }
+
+        private void SetTimedStepLogger(IStepLogger underlying)
+        {
+            var timedStepLogger = underlying as TimedStepLogger;
+            if (timedStepLogger != null)
+            {
+                timedStepLogger.Timer = this.timer;
             }
         }
 

@@ -16,9 +16,12 @@
 
         public SyncParams GetSyncParams()
         {
-            var databaseSyncParams = _getOpenConnection.Query<DatabaseSyncParams>("SELECT ApprenticeshipLastCreatedDate, ApprenticeshipLastUpdatedDate, TraineeshipLastCreatedDate, TraineeshipLastUpdatedDate, CandidateLastCreatedDate, CandidateLastUpdatedDate FROM Sync.SyncParams").SingleOrDefault() ?? new DatabaseSyncParams();
+            var databaseSyncParams = _getOpenConnection.Query<DatabaseSyncParams>("SELECT LastSyncVersion, ApprenticeshipLastCreatedDate, ApprenticeshipLastUpdatedDate, TraineeshipLastCreatedDate, TraineeshipLastUpdatedDate, CandidateLastCreatedDate, CandidateLastUpdatedDate FROM Sync.SyncParams").SingleOrDefault() ?? new DatabaseSyncParams();
 
-            var syncParams = new SyncParams();
+            var syncParams = new SyncParams
+            {
+                LastSyncVersion = databaseSyncParams.LastSyncVersion
+            };
             
             //SQL doesn't store the "kind" property for DateTime and this is required for correct comparison to MongoDB DateTimes
             if (databaseSyncParams.ApprenticeshipLastCreatedDate.HasValue)
@@ -84,6 +87,7 @@
 
         public class DatabaseSyncParams
         {
+            public int? LastSyncVersion { get; set; }
             public DateTime? ApprenticeshipLastCreatedDate { get; set; }
             public DateTime? ApprenticeshipLastUpdatedDate { get; set; }
             public DateTime? TraineeshipLastCreatedDate { get; set; }

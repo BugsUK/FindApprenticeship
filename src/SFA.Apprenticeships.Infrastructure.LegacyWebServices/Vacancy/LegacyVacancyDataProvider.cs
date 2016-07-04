@@ -106,7 +106,7 @@
             if (HasClosingDatePassed(vacancyDetail) && vacancyDetail.VacancyStatus != VacancyStatuses.Expired)
             {
                 _logger.Info("Vacancy ({0}) closing date {1} has passed. Setting status to {2} (was \"{3}\").",
-                    vacancyId, vacancyDetail.ClosingDate, VacancyStatuses.Expired, vacancyDetail.VacancyStatus);
+                    vacancyId, vacancyDetail.ClosingDate.ToString("yyyy-MM-dd"), VacancyStatuses.Expired, vacancyDetail.VacancyStatus); // TODO: Fix locale on Azure Web Role so dates work by default
 
                 vacancyDetail.VacancyStatus = VacancyStatuses.Expired;
             }

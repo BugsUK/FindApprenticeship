@@ -45,7 +45,7 @@ namespace SFA.Apprenticeships.Application.UnitTests.Provider
                cm => cm.Get<UserAccountConfiguration>())
                .Returns(new UserAccountConfiguration
                {
-                   HelpdeskEmailAddress = ValidHelpdeskEmailAddress
+                   RecruitHelpdeskEmailAddress = ValidHelpdeskEmailAddress
                });
         }
 

@@ -12,6 +12,9 @@
     using Infrastructure.Monitor.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     public class LegacyCandidateProviderIntegrationTests

@@ -5,5 +5,7 @@
         string CurrentUserName { get; }
 
         bool IsInRole(string role);
+
+        string GetClaimValue(string type);
     }
 }

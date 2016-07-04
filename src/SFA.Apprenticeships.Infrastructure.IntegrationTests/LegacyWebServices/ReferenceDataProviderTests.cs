@@ -12,6 +12,10 @@
     using Infrastructure.Monitor.IoC;
     using Logging.IoC;
     using NUnit.Framework;
+
+    using SFA.Apprenticeships.Application.Candidate;
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
+
     using StructureMap;
 
     [TestFixture]

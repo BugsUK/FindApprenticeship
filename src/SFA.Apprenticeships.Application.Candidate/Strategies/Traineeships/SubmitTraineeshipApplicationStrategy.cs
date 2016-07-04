@@ -1,9 +1,10 @@
 ﻿namespace SFA.Apprenticeships.Application.Candidate.Strategies.Traineeships
 {
     using System;
-    using SFA.Infrastructure.Interfaces;
+    using Infrastructure.Interfaces;
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
+    using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
     using Interfaces.Communications;
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
@@ -31,7 +32,9 @@
             {
                 traineeshipApplicationDetail.SetStateSubmitting();
                 traineeshipApplicationDetail.SetStateSubmitted();
+
                 _traineeshipApplicationWriteRepository.Save(traineeshipApplicationDetail);
+                
                 NotifyCandidate(traineeshipApplicationDetail);
             }
             catch (Exception ex)

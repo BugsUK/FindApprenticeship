@@ -16,10 +16,13 @@
     using Helpers;
     using Infrastructure.LegacyWebServices.IoC;
     using Infrastructure.Monitor.IoC;
-    using Infrastructure.Repositories.Mongo.Applications.IoC;
+    using Repositories.Mongo.Applications.IoC;
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     [TestFixture]

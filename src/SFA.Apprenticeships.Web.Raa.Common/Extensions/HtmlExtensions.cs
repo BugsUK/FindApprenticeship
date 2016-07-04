@@ -29,29 +29,36 @@
         {
             var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
+            var anchorName = propertyName.Replace(".", "_").ToLower();
             viewCommentUrl = $"{viewCommentUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, comment, viewCommentUrl, string.Empty);
+            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, anchorName, comment, viewCommentUrl, string.Empty);
 
             return commentViewModel;
         }
 
         public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, VacancyViewModel vacancyViewModel, Expression<Func<TModel, TProperty>> propertyExpression)
         {
-            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
-            var commentText = html.ValueFor(propertyExpression).ToString();
+            var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
-            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, commentText, string.Empty, commentLabelText);
+            var anchorName = propertyName.Replace(".", "_").ToLower();
+            var commentText = html.ValueFor(propertyExpression).ToString();
+            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
+
+            var commentViewModel = new CommentViewModel(vacancyViewModel.Status, anchorName, commentText, string.Empty, commentLabelText);
 
             return commentViewModel;
         }
 
         public static CommentViewModel GetCommentViewModel<TModel, TProperty>(this HtmlHelper<TModel> html, Expression<Func<TModel, TProperty>> propertyExpression)
         {
-            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
-            var commentText = html.ValueFor(propertyExpression).ToString();
+            var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
-            var commentViewModel = new CommentViewModel(commentText, string.Empty, commentLabelText);
+            var anchorName = propertyName.Replace(".", "_").ToLower();
+            var commentText = html.ValueFor(propertyExpression).ToString();
+            var commentLabelText = html.DisplayNameFor(propertyExpression).ToString();
+
+            var commentViewModel = new CommentViewModel(anchorName, commentText, string.Empty, commentLabelText);
 
             return commentViewModel;
         }
@@ -60,9 +67,10 @@
         {
             var propertyName = ExpressionHelper.GetExpressionText(propertyExpression);
 
+            var anchorName = propertyName.Replace(".", "_").ToLower();
             editUrl = $"{editUrl}#{propertyName.Substring(propertyName.LastIndexOf(".", StringComparison.Ordinal) + 1).ToLower()}";
 
-            var editLinkViewModel = new EditLinkViewModel(vacancyViewModel.Status, editUrl, comment);
+            var editLinkViewModel = new EditLinkViewModel(vacancyViewModel.Status, anchorName, editUrl, comment);
 
             return editLinkViewModel;
         }

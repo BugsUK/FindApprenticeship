@@ -41,6 +41,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.TraineeshipApplication
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/TraineeshipApplication/Apply.cshtml")]
@@ -189,25 +190,35 @@ WriteLiteral("\r\n            <p");
 
 WriteLiteral(" id=\"vacancy-summary\"");
 
+WriteAttribute("class", Tuple.Create(" class=\"", 1135), Tuple.Create("\"", 1207)
+            
+            #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
+, Tuple.Create(Tuple.Create("", 1143), Tuple.Create<System.Object, System.Int32>(Model.VacancyDetail.Description.GetPreserveFormattingCssClass()
+            
+            #line default
+            #line hidden
+, 1143), false)
+);
+
 WriteLiteral(">");
 
             
             #line 22 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-                               Write(Model.VacancyDetail.Description);
+                                                                                                        Write(Model.VacancyDetail.Description);
 
             
             #line default
             #line hidden
 WriteLiteral("</p>\r\n            <p>\r\n                <a");
 
-WriteAttribute("href", Tuple.Create(" href=\"", 1209), Tuple.Create("\"", 1299)
+WriteAttribute("href", Tuple.Create(" href=\"", 1282), Tuple.Create("\"", 1372)
             
             #line 24 "..\..\Views\TraineeshipApplication\Apply.cshtml"
-, Tuple.Create(Tuple.Create("", 1216), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
+, Tuple.Create(Tuple.Create("", 1289), Tuple.Create<System.Object, System.Int32>(Url.RouteUrl(CandidateRouteNames.TraineeshipDetails, new { id = Model.VacancyId })
             
             #line default
             #line hidden
-, 1216), false)
+, 1289), false)
 );
 
 WriteLiteral(">View traineeship</a>\r\n            </p>\r\n        </div>\r\n    </section>\r\n");

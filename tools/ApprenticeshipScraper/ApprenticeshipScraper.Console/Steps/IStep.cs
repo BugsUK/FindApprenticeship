@@ -4,6 +4,7 @@ namespace ApprenticeshipScraper.CmdLine.Steps
 
     using ApprenticeshipScraper.CmdLine.Models;
     using ApprenticeshipScraper.CmdLine.Services;
+    using ApprenticeshipScraper.CmdLine.Services.Logger;
 
     internal interface IStep
     {

@@ -41,7 +41,12 @@
       <HintPath>..\packages\FluentCommandLineParser.1.4.3\lib\net35\FluentCommandLineParser.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Polly, Version=4.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Polly.4.2.3\lib\net45\Polly.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -51,6 +56,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\ExceptionExtensions.cs" />
     <Compile Include="IoC.cs" />
     <Compile Include="Services\AssemblyInfo.cs" />
     <Compile Include="Services\Application.cs" />
@@ -63,6 +69,12 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\StopwatchExtensions.cs" />
     <Compile Include="Extensions\ObjectExtensions.cs" />
+    <Compile Include="Services\IRetryWebRequests.cs" />
+    <Compile Include="Services\Logger\IThreadSafeStepLogger.cs" />
+    <Compile Include="Services\Logger\ThreadSafeStepLogger.cs" />
+    <Compile Include="Services\WebRequestRetryService.cs" />
+    <Compile Include="Settings\GlobalSettings.cs" />
+    <Compile Include="Settings\IGlobalSettings.cs" />
     <Compile Include="Steps\ApprenticeshipDetailsScraperSingle.cs" />
     <Compile Include="Steps\TraineeDetailsScraper.cs" />
     <Compile Include="Steps\TraineeDetailsScraperSingle.cs" />
@@ -76,8 +88,8 @@
     <Compile Include="Models\SiteEnum.cs" />
     <Compile Include="Services\TimedStep.cs" />
     <Compile Include="Services\UrlResolver.cs" />
-    <Compile Include="Services\IStepLogger.cs" />
-    <Compile Include="Services\TimedStepLogger.cs" />
+    <Compile Include="Services\Logger\IStepLogger.cs" />
+    <Compile Include="Services\Logger\TimedStepLogger.cs" />
     <Compile Include="TinyIoC.cs" />
     <Compile Include="Steps\TraineeResultsScraper.cs" />
   </ItemGroup>

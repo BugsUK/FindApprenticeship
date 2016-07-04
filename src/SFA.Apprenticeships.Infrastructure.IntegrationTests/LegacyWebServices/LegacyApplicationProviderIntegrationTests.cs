@@ -15,6 +15,9 @@
     using Logging.IoC;
     using Moq;
     using NUnit.Framework;
+
+    using Application.Candidate.Configuration;
+
     using StructureMap;
 
     public class LegacyApplicationProviderIntegrationTests

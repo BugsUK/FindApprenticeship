@@ -22,17 +22,29 @@
         {
             foreach (var step in this.container.ResolveAll<IStep>())
             {
-                Console.Write($"Run {step.NiceName()}? [Y] ");
-                var input = Console.ReadLine()?.ToUpper();
-                if (string.IsNullOrEmpty(input) || input == "Y")
+                if (arguments.Force)
                 {
-                    new TimedStep(step).Run(arguments);
+                    Start(step, arguments);
                 }
                 else
                 {
-                    Console.WriteLine();
+                    Console.Write($"Run {step.NiceName()}? [Y] ");
+                    var input = Console.ReadLine()?.ToUpper();
+                    if (string.IsNullOrEmpty(input) || input == "Y")
+                    {
+                        Start(step, arguments);
+                    }
+                    else
+                    {
+                        Console.WriteLine();
+                    }
                 }
             }
+        }
+
+        private static void Start(IStep step, ApplicationArguments arguments)
+        {
+            new TimedStep(step).Run(arguments);
         }
     }
 }

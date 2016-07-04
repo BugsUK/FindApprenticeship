@@ -13,7 +13,7 @@
     using MongoDB.Driver.Linq;
     using SFA.Infrastructure.Interfaces;
     using ApplicationErrorCodes = Application.Interfaces.Applications.ErrorCodes;
-
+    using MongoDB.Bson;
     public class ApprenticeshipApplicationRepository : GenericMongoClient<MongoApprenticeshipApplicationDetail>, IApprenticeshipApplicationReadRepository,
         IApprenticeshipApplicationWriteRepository
     {
@@ -21,12 +21,15 @@
 
         private readonly IMapper _mapper;
 
+        private readonly CommonApplicationRepository _commonApplicationRepository;
+
         public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
         {
             var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.ApplicationsDb, "apprenticeships");
             _mapper = mapper;
             _logger = logger;
+            _commonApplicationRepository = new CommonApplicationRepository(logger, Collection);
         }
 
         public void Delete(Guid id)
@@ -186,38 +189,9 @@
             return applicationIds;
         }
 
-        public int GetApplicationCount(int vacancyId)
+        public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            _logger.Debug("Calling repository to get apprenticeship applications count for vacancy with id: {0}", vacancyId);
-
-            var count = Collection.AsQueryable().Count(a => a.Status >= ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
-
-            _logger.Debug("Called repository to get apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
-
-            return count;
-        }
-
-        public int GetNewApplicationCount(int vacancyId)
-        {
-            _logger.Debug("Calling repository to get new apprenticeship applications count for vacancy with id: {0}", vacancyId);
-
-            var count = Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == vacancyId);
-
-            _logger.Debug("Called repository to get new apprenticeship applications count for vacancy with id: {0}. Count: {1}", vacancyId, count);
-
-            return count;
-        }      
-
-        public int GetNewApplicationsCount(List<int> liveVacancyIds)
-        {
-            var newApplicationsCount = 0;
-            _logger.Debug("Calling repository to get new apprenticeship applications for the specified live vacancies");
-            foreach (var id in liveVacancyIds)
-            {
-                newApplicationsCount += Collection.AsQueryable().Count(a => a.Status == ApplicationStatuses.Submitted && a.Vacancy.Id == id);                
-            }
-            _logger.Debug($"Got new apprenticeship applications for the specified live vacancies:{newApplicationsCount}");
-            return newApplicationsCount;
+            return _commonApplicationRepository.GetCountsForVacancyIds(vacancyIds);
         }
 
         public ApprenticeshipApplicationDetail Get(Guid id)
@@ -258,7 +232,12 @@
         {
             _logger.Debug("Calling repository to update apprenticeship application notes for application with Id={0}", applicationId);
 
-            var result = Collection.Update(Query<ApprenticeshipApplicationDetail>.EQ(e => e.EntityId, applicationId), Update<ApprenticeshipApplicationDetail>.Set(e => e.Notes, notes).Set(e => e.DateUpdated, DateTime.UtcNow));
+            var result = Collection.Update(
+                Query<MongoApprenticeshipApplicationDetail>
+                    .EQ(e => e.Id, applicationId),
+                Update<MongoApprenticeshipApplicationDetail>
+                    .Set(e => e.Notes, notes)
+                    .Set(e => e.DateUpdated, DateTime.UtcNow));
 
             if (result.Ok)
             {

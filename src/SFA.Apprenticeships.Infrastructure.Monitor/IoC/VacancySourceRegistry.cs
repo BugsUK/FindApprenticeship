@@ -15,6 +15,9 @@
     using LegacyWebServices.Vacancy;
     using LegacyWebServices.Wcf;
     using Raa;
+
+    using SFA.Apprenticeships.Application.Candidate;
+    using SFA.Apprenticeships.Application.Candidate.Configuration;
     using SFA.Infrastructure.Interfaces;
     using SFA.Infrastructure.Interfaces.Caching;
     using StructureMap.Configuration.DSL;
