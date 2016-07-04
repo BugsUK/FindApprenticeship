@@ -65,11 +65,7 @@
                 For<IMapper>().Use<LegacyTraineeshipVacancyDetailMapper>().Name = "LegacyWebServices.LegacyTraineeshipVacancyDetailMapper";
             }
 
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy
-                || servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
-            {
-                For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
-            }
+            For<IWcfService<GatewayServiceContract>>().Use<WcfService<GatewayServiceContract>>();
 
             if (servicesConfiguration.VacanciesSource == ServicesConfiguration.Legacy)
             {

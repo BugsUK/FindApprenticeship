@@ -81,6 +81,11 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByEdsUrn(edsUrn);
         }
 
+        public IEnumerable<ProviderSite> GetProviderSites(int providerId)
+        {
+            return _providerSiteReadRepository.GetByProviderId(providerId);
+        }
+
         public IEnumerable<ProviderSite> GetProviderSites(string ukprn)
         {
             Condition.Requires(ukprn).IsNotNullOrEmpty();
@@ -96,7 +101,7 @@ namespace SFA.Apprenticeships.Application.Provider
             return _providerSiteReadRepository.GetByProviderId(provider.ProviderId);
         }
 
-        public IEnumerable<ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, ProviderSite> GetProviderSites(IEnumerable<int> providerSiteIds)
         {
             return _providerSiteReadRepository.GetByIds(providerSiteIds);
         }

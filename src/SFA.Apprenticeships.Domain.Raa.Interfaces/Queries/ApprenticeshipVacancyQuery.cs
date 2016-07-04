@@ -17,5 +17,7 @@
         public int CurrentPage { get; set; }
 
         public int PageSize { get; set; }
+
+        public bool EditedInRaa { get; set; }
     }
 }

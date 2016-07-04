@@ -24,9 +24,13 @@
             MockVacancyPostingService = new Mock<IVacancyPostingService>();
         }
 
-        public IProviderProvider GetProvider()
+        public IProviderProvider GetProviderProvider()
         {
-            return new ProviderProvider(MockProviderService.Object, MockConfigurationService.Object, MockVacancyPostingService.Object, MockEmployerService.Object);
+            return new ProviderProvider(
+                MockProviderService.Object,
+                MockConfigurationService.Object,
+                MockVacancyPostingService.Object,
+                MockEmployerService.Object);
         }
     }
 }

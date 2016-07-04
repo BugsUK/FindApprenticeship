@@ -115,6 +115,7 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\CommonApplicationRepository.cs" />
     <Compile Include="Applications\ApprenticeshipApplicationRepository.cs" />
     <Compile Include="Applications\Entities\MongoApprenticeshipApplicationDetail.cs" />
     <Compile Include="Applications\Entities\MongoTraineeshipApplicationDetail.cs" />

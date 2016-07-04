@@ -14,6 +14,8 @@
 
         public string HelpdeskEmailAddress { get; set; }
 
+        public string RecruitHelpdeskEmailAddress { get; set; }
+
         public string FeedbackEmailAddress { get; set; }
 
         public string NoReplyEmailAddress { get; set; }

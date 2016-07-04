@@ -48,7 +48,7 @@
             catch (Exception ex)
             {
                 _logService.Error(
-                    string.Format("Save candidate with Id = {0} request async process failed.", request.CandidateId), ex);
+                    $"Save candidate with Id = {request.CandidateId} request async process failed.", ex);
 
                 return ServiceBusMessageStates.Requeue;
             }
@@ -66,7 +66,8 @@
                     _logService.Error("Legacy candidate is in an invalid state. Update candidate cannot be processed: Candidate Id: \"{0}\"", request.CandidateId);
                     break;
                 default:
-                    _logService.Warn(string.Format("Save/Update candidate with Id = {0} request async process failed. Queuing for retry.", request.CandidateId), ex);
+                    _logService.Warn(
+                        $"Save/Update candidate with Id = {request.CandidateId} request async process failed. Queuing for retry.", ex);
                     return ServiceBusMessageStates.Requeue;
             }
 

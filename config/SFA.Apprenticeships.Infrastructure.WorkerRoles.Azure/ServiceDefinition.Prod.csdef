@@ -24,12 +24,4 @@
       <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
     </Certificates>
   </WorkerRole>
-  <WorkerRole name="SFA.Apprenticeships.Infrastructure.LogEventIndexer" vmsize="Small">
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" />
-    </ConfigurationSettings>
-    <Certificates>
-      <Certificate name="NasClientCertificate" storeLocation="LocalMachine" storeName="My" />
-    </Certificates>
-  </WorkerRole>
 </ServiceDefinition>

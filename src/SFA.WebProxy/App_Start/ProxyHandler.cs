@@ -151,7 +151,7 @@
 
                         // May be useful for debugging
                         //result.Headers.Add("X-MemoryStream-Length", $"{memoryStream.Length}");
-                        //result.Headers.Add("X-Replacement", $"{routing.RewriteFrom} to {routing.RewriteTo}: {replacements}");
+                        result.Headers.Add("X-Replacement", $"{routing.RewriteFrom} to {routing.RewriteTo}: {replacements}");
 
                         result.Content = new ByteArrayContent(memoryStream.GetBuffer(), 0, (int)memoryStream.Length);
                         result.Content.Headers.Add("Content-Length", $"{memoryStream.Length}");

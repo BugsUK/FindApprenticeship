@@ -5,7 +5,10 @@
         All = 0,
         Live = 1,
         Submitted,
+
+        /// <summary>AKA Referred</summary>
         Rejected,
+
         ClosingSoon,
         Closed,
         Draft,

@@ -28,7 +28,23 @@ USING (VALUES
   (26, N'Surveying', 7),
   (27, N'Housing', 20),
   (28, N'Non-destructive Testing', 17),
-  (29, N'Energy Management', 13)
+  (29, N'Energy Management', 13),
+  (30, N'Visual Effects', 15),
+  (31, N'Aviation', 17),
+  (32, N'Bespoke Tailoring', 13),
+  (33, N'Boatbuilding', 17),
+  (34, N'Hospitality', 13),
+  (35, N'Engineering, Design and Draughting', 17),
+  (36, N'Healthcare', 20),
+  (37, N'Management Consultancy', 1),
+  (38, N'Land-Based Engineering', 17),
+  (39, N'Live Events', 17),
+  (40, N'Advanced Manufacturing', 17),
+  (41, N'Welding', 17),
+  (42, N'TV Production & Broadcasting', 13),
+  (43, N'Rail Engineering', 17),
+  (44, N'Retail', 13),
+  (45, N'Transport', 17)
 ) 
 AS Source (StandardSectorId, FullName, ApprenticeshipOccupationId) 
 ON Target.StandardSectorId = Source.StandardSectorId 

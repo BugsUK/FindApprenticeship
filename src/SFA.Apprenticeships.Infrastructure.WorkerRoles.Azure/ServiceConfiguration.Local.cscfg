@@ -27,13 +27,4 @@
       <Certificate name="NasClientCertificate" thumbprint="1016B535C17DF3F7AE66C7F6D2E339AADB734D7B" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
-  <Role name="SFA.Apprenticeships.Infrastructure.LogEventIndexer">
-    <Instances count="1" />
-    <ConfigurationSettings>
-      <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
-    </ConfigurationSettings>
-    <Certificates>
-      <Certificate name="NasClientCertificate" thumbprint="1016B535C17DF3F7AE66C7F6D2E339AADB734D7B" thumbprintAlgorithm="sha1" />
-    </Certificates>
-  </Role>
 </ServiceConfiguration>

@@ -23,8 +23,8 @@
 
             var webProxyUserRepository = new CachedWebProxyUserRepository(new SqlServerWebProxyUserRepository(configuration), cacheService);
 
-            var proxyLogging = new FileProxyLogging(configuration);
-            //var proxyLogging = new AzureBlobStorageLogging(configuration);
+            //var proxyLogging = new FileProxyLogging(configuration);
+            var proxyLogging = new AzureBlobStorageLogging(configuration);
             //var proxyLogging = new NullProxyLogging();
 
             //var proxyRouting = new LogicRouting();

@@ -19,7 +19,7 @@
         public CandidateUserRepository(IConfigurationService configurationService, ILogService logService)
         {
             _logService = logService;
-            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().CandidatesDb;
+            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().SourceCandidatesDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }
