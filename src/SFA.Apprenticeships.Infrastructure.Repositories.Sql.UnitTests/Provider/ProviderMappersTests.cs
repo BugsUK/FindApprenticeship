@@ -57,5 +57,20 @@
             dbProvider.Ukprn.ToString().Should().Be(domainProvider.Ukprn);
             dbProvider.FullName.Should().Be(domainProvider.Name);
         }
+
+        [TestCase(null, false)]
+        [TestCase(0, false)]
+        [TestCase(1, true)]
+        public void ShouldMapProviderToUseFaaToIsMigrated(int? providerToUseFaa, bool isMigrated)
+        {
+            var dbProvider = new Fixture()
+                .Build<DatabaseProvider>()
+                .With(p => p.ProviderToUseFAA, providerToUseFaa)
+                .Create();
+
+            var domainProvider = _mapper.Map<DatabaseProvider, DomainProvider>(dbProvider);
+
+            domainProvider.IsMigrated.Should().Be(isMigrated);
+        }
     }
 }
