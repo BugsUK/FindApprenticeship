@@ -188,7 +188,7 @@
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
                 // .MapMemberFrom(av => av.WageType, v => v.WageType)
                 .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
-                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : (int)WageType.LegacyWeekly
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
                 ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
@@ -297,7 +297,7 @@
                     v.WageUnitId.HasValue ? (WageUnit)v.WageUnitId.Value : v.WageType == (int)WageType.LegacyWeekly ? WageUnit.Weekly : WageUnit.NotApplicable))
                 // .MapMemberFrom(av => av.WageType, v => v.WageType)
                 .ForMember(av => av.WageType, opt => opt.MapFrom(v =>
-                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : (int)WageType.LegacyWeekly
+                    v.WageType == (int)WageType.LegacyWeekly ? (int)WageType.Custom : v.WageType
                 ))
                 .MapMemberFrom(av => av.DurationType, v => v.DurationTypeId)
                 .MapMemberFrom(av => av.Duration, v => v.DurationValue)
