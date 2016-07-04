@@ -150,6 +150,7 @@
             {
                 ProviderId = provider.ProviderId,
                 ProviderName = provider.Name,
+                IsMigrated = provider.IsMigrated,
                 ProviderSiteViewModels = providerSites.Select(ps => ps.Convert()).ToList()
             };
 
