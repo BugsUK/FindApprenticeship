@@ -139,7 +139,7 @@
         }
 
         [TestCase(null, true)]
-        [TestCase("", false)]
+        [TestCase("", true)]
         [TestCase(" ", true)]
 		[TestCase(Samples.ValidFreeHtmlText, true)]
         [TestCase(Samples.InvalidHtmlTextWithInput, false)]

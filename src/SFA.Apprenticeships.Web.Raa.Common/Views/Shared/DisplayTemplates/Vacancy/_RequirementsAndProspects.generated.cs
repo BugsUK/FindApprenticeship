@@ -368,7 +368,7 @@ WriteLiteral(">\r\n");
             #line hidden
             
             #line 57 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-             if (Model.VacancyType == VacancyType.Apprenticeship && !string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects))
+             if (Model.VacancyType == VacancyType.Apprenticeship && (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.FutureProspects) || Model.Status.IsStateReviewable()))
             {
 
             
@@ -376,14 +376,14 @@ WriteLiteral(">\r\n");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 4587), Tuple.Create("\"", 4613)
+WriteAttribute("class", Tuple.Create(" class=\"", 4625), Tuple.Create("\"", 4651)
             
             #line 59 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 4595), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 4633), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 4595), false)
+, 4633), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -411,14 +411,14 @@ WriteLiteral(" id=\"vacancy-future-prospects\"");
 
 WriteLiteral(" itemprop=\"incentives\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5137), Tuple.Create("\"", 5237)
+WriteAttribute("class", Tuple.Create(" class=\"", 5175), Tuple.Create("\"", 5275)
             
             #line 65 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-      , Tuple.Create(Tuple.Create("", 5145), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
+      , Tuple.Create(Tuple.Create("", 5183), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.FutureProspects.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 5145), false)
+, 5183), false)
 );
 
 WriteLiteral(">");
@@ -454,7 +454,7 @@ WriteLiteral("            ");
 
             
             #line 70 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-             if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider))
+             if (!string.IsNullOrWhiteSpace(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider) || Model.Status.IsStateReviewable())
             {
 
             
@@ -462,14 +462,14 @@ WriteLiteral("            ");
             #line hidden
 WriteLiteral("                <div");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 5792), Tuple.Create("\"", 5818)
+WriteAttribute("class", Tuple.Create(" class=\"", 5866), Tuple.Create("\"", 5892)
             
             #line 72 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-, Tuple.Create(Tuple.Create("", 5800), Tuple.Create<System.Object, System.Int32>(editableItemClass
+, Tuple.Create(Tuple.Create("", 5874), Tuple.Create<System.Object, System.Int32>(editableItemClass
             
             #line default
             #line hidden
-, 5800), false)
+, 5874), false)
 );
 
 WriteLiteral(">\r\n                    <div");
@@ -497,14 +497,14 @@ WriteLiteral(" id=\"vacancy-reality-check\"");
 
 WriteLiteral(" itemprop=\"incentives\"");
 
-WriteAttribute("class", Tuple.Create(" class=\"", 6343), Tuple.Create("\"", 6444)
+WriteAttribute("class", Tuple.Create(" class=\"", 6417), Tuple.Create("\"", 6518)
             
             #line 78 "..\..\Views\Shared\DisplayTemplates\Vacancy\_RequirementsAndProspects.cshtml"
-   , Tuple.Create(Tuple.Create("", 6351), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()
+   , Tuple.Create(Tuple.Create("", 6425), Tuple.Create<System.Object, System.Int32>(Model.VacancyRequirementsProspectsViewModel.ThingsToConsider.GetPreserveFormattingCssClass()
             
             #line default
             #line hidden
-, 6351), false)
+, 6425), false)
 );
 
 WriteLiteral(">");
