@@ -124,6 +124,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\Extensions\ApplicationStatusSummaryExtensionsTests.cs" />
+    <Compile Include="Applications\Extensions\ApprenticeshipApplicationDetailExtensionTests.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />

@@ -6,7 +6,7 @@
       <Setting name="Microsoft.WindowsAzure.Plugins.Diagnostics.ConnectionString" value="UseDevelopmentStorage=true" />
     </ConfigurationSettings>
     <Certificates>
-      <Certificate name="SSLWebRecruit" thumbprint="86B23A467637C7365590E719E70FEA46781A82D1" thumbprintAlgorithm="sha1" />
+      <Certificate name="SSLWebRecruit" thumbprint="B8A7107EAECE42B270088BD5050C5290C9408E90" thumbprintAlgorithm="sha1" />
     </Certificates>
   </Role>
   <NetworkConfiguration>

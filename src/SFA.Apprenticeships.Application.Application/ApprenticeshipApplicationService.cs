@@ -38,7 +38,7 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
         }
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
@@ -87,7 +87,8 @@
                 LegacyCandidateId = 0, // not required
                 LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
-                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
+                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate,
+                UpdateSource = ApplicationStatusSummary.Source.Raa //Ensure this update is from RAA so ownership of the application is verified
             };
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
