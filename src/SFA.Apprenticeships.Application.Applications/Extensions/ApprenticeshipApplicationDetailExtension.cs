@@ -9,6 +9,7 @@
         public static bool UpdateApprenticeshipApplicationDetail(
             this ApprenticeshipApplicationDetail apprenticeshipApplication,
             ApplicationStatusSummary applicationStatusSummary,
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
         {
             var updated = false;
@@ -18,18 +19,19 @@
                 // Only update application status etc. if update originated from Legacy system.
                 if (apprenticeshipApplication.Status != applicationStatusSummary.ApplicationStatus)
                 {
-                    var originalApplicationStatus = apprenticeshipApplication.Status;
-
-                    apprenticeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
-
                     var ignoreOwnershipCheck = applicationStatusSummary.UpdateSource == ApplicationStatusSummary.Source.Raa;
-                    apprenticeshipApplication = apprenticeshipApplicationWriteRepository.UpdateApplicationStatus(apprenticeshipApplication, ignoreOwnershipCheck);
+                    updated = apprenticeshipApplicationWriteRepository.UpdateApplicationStatus(apprenticeshipApplication, applicationStatusSummary.ApplicationStatus, ignoreOwnershipCheck);
 
-                    if (originalApplicationStatus != apprenticeshipApplication.Status)
+                    if (updated)
                     {
-                        // Application status has changed, ensure it appears on the candidate's dashboard.
-                        apprenticeshipApplication.IsArchived = false;
-                        updated = true;
+
+                        //Ensure passed in entity is up to date with any changes
+                        var updatedApplication = apprenticeshipApplicationReadRepository.Get(apprenticeshipApplication.EntityId);
+                        apprenticeshipApplication.Status = updatedApplication.Status;
+                        apprenticeshipApplication.IsArchived = updatedApplication.IsArchived;
+                        apprenticeshipApplication.DateUpdated = updatedApplication.DateUpdated;
+                        apprenticeshipApplication.SuccessfulDateTime = updatedApplication.SuccessfulDateTime;
+                        apprenticeshipApplication.UnsuccessfulDateTime = updatedApplication.UnsuccessfulDateTime;
                     }
                 }
 
@@ -40,7 +42,7 @@
                     updated = true;
                 }
 
-                if (apprenticeshipApplication.UnsuccessfulReason != applicationStatusSummary.UnsuccessfulReason)
+                if (apprenticeshipApplication.UnsuccessfulReason != applicationStatusSummary.UnsuccessfulReason && apprenticeshipApplication.Status == ApplicationStatuses.Unsuccessful)
                 {
                     apprenticeshipApplication.UnsuccessfulReason = applicationStatusSummary.UnsuccessfulReason;
                     updated = true;
