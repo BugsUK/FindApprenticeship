@@ -1,9 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.Vacancy
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Cryptography.X509Certificates;
     using Common;
+    using dbo;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using DomainVacancy = Domain.Entities.Raa.Vacancies.Vacancy;
@@ -1264,26 +1267,33 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
         }
 
         public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
-        {
-            // TODO: Handle >2000 records - Shoma
-            return _getOpenConnection.Query<dynamic>(@"
-SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
-FROM   dbo.Vacancy
-WHERE  VacancyOwnerRelationshipId IN @Ids",
-new { Ids = vacancyPartyIds })
-            .GroupBy(x => (int)x.VacancyOwnerRelationshipId)
-            .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));
+        {            
+            var vacancyCollections = new List<dynamic>();                               
+            var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
+            var splitVacancyPartyIds = DbHelpers.SplitInputIntoChunks(partyIds);            
+            foreach (var splitVacancyPartyId in splitVacancyPartyIds)
+            {
+                IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
+                                SELECT VacancyId, VacancyOwnerRelationshipId, VacancyStatusId, ApplicationClosingDate, UpdatedDateTime, VacancyTypeId
+                                FROM   dbo.Vacancy
+                                WHERE  VacancyOwnerRelationshipId IN @Ids",
+                    new {Ids = splitVacancyPartyId});                                                                                                      
+                vacancyCollections.AddRange(singleCollection);                
+            }
+            return vacancyCollections
+                .GroupBy(x => (int) x.VacancyOwnerRelationshipId)
+                .ToDictionary(x => x.Key, x => x.Select(y => (IMinimalVacancyDetails)new MinimalVacancyDetails(y)));               
         }
 
         public IReadOnlyDictionary<int, IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
         {
             // TODO: Handle >2000 records - Shoma
             return _getOpenConnection.Query<Domain.Entities.Raa.Locations.VacancyLocation> (@"
-SELECT *
-FROM   dbo.VacancyLocation
-WHERE  VacancyId IN @Ids",
-new { Ids = vacancyIds })
-            .GroupBy(x => x.VacancyId)
+                        SELECT *
+                        FROM   dbo.VacancyLocation
+                        WHERE  VacancyId IN @Ids",
+                        new { Ids = vacancyIds })
+                                    .GroupBy(x => x.VacancyId)
             .ToDictionary(x => x.Key, x => (IEnumerable<Domain.Entities.Raa.Locations.VacancyLocation>)x);
         }
 
