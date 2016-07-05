@@ -16,12 +16,12 @@
     {
         public class WhenLegacySystemUpdate
         {
-            private Mock<IApprenticeshipApplicationWriteRepository> _repository;
+            private Mock<IApprenticeshipApplicationWriteRepository> _mockRepository;
 
             [SetUp]
             public void SetUp()
             {
-                _repository = new Mock<IApprenticeshipApplicationWriteRepository>();
+                _mockRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             }
 
             [TestCase(1, 2, true)]
@@ -41,7 +41,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _repository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
@@ -68,22 +68,64 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _repository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
                 detail.UnsuccessfulReason.Should().Be(summary.UnsuccessfulReason);
             }
+
+            [TestCase(ApplicationStatuses.Submitted, ApplicationStatuses.Successful, ApplicationStatusSummary.Source.Raa, true)]
+            [TestCase(ApplicationStatuses.Submitted, ApplicationStatuses.Submitted, ApplicationStatusSummary.Source.Raa, false)]
+            [TestCase(ApplicationStatuses.Submitted, ApplicationStatuses.Successful, ApplicationStatusSummary.Source.Avms, true)]
+            [TestCase(ApplicationStatuses.Submitted, ApplicationStatuses.Submitted, ApplicationStatusSummary.Source.Avms, false)]
+            public void ShouldUpdateApplicationStatus(
+                ApplicationStatuses oldStatus,
+                ApplicationStatuses newStatus,
+                ApplicationStatusSummary.Source source,
+                bool expected)
+            {
+                // Arrange.
+                var detail = new ApprenticeshipApplicationDetail
+                {
+                    Status = oldStatus,
+                    IsArchived = true
+                };
+
+                var summary = new ApplicationStatusSummary
+                {
+                    ApplicationId = Guid.Empty,
+                    ApplicationStatus = newStatus
+                };
+
+                var ignoreOwnershipCheck = summary.UpdateSource == ApplicationStatusSummary.Source.Raa;
+
+                _mockRepository.Setup(mock => mock
+                    .UpdateApplicationStatus(detail, ignoreOwnershipCheck))
+                    .Returns(detail);
+
+                // Act.
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+
+                // Assert.
+                actual.Should().Be(expected);
+                detail.IsArchived.Should().Be(!expected);
+                detail.Status.Should().Be(summary.ApplicationStatus);
+
+                _mockRepository.Verify(mock => mock
+                    .UpdateApplicationStatus(detail, ignoreOwnershipCheck),
+                    Times.Exactly(expected ? 1 : 0));
+            }
         }
 
         public class WhenAnyUpdate
         {
-            private Mock<IApprenticeshipApplicationWriteRepository> _repository;
+            private Mock<IApprenticeshipApplicationWriteRepository> _mockRepository;
 
             [SetUp]
             public void SetUp()
             {
-                _repository = new Mock<IApprenticeshipApplicationWriteRepository>();
+                _mockRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             }
 
             [TestCase(VacancyStatuses.Live, VacancyStatuses.Expired, true)]
@@ -105,7 +147,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _repository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
@@ -136,7 +178,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _repository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
