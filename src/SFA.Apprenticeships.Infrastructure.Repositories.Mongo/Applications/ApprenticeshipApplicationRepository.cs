@@ -18,17 +18,19 @@
         IApprenticeshipApplicationWriteRepository
     {
         private readonly ILogService _logger;
+        private readonly IDateTimeService _dataTimeService;
 
         private readonly IMapper _mapper;
 
         private readonly CommonApplicationRepository _commonApplicationRepository;
 
-        public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+        public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger, IDateTimeService dataTimeService)
         {
             var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.ApplicationsDb, "apprenticeships");
             _mapper = mapper;
             _logger = logger;
+            _dataTimeService = dataTimeService;
             _commonApplicationRepository = new CommonApplicationRepository(logger, Collection);
         }
 
@@ -269,15 +271,15 @@
 
             var update = Update<MongoApprenticeshipApplicationDetail>
                 .Set(e => e.Status, updatedStatus)
-                .Set(e => e.DateUpdated, DateTime.UtcNow);
+                .Set(e => e.DateUpdated, _dataTimeService.UtcNow);
 
             switch (updatedStatus)
             {
                 case ApplicationStatuses.Successful:
-                    update = update.Set(e => e.SuccessfulDateTime, DateTime.UtcNow);
+                    update = update.Set(e => e.SuccessfulDateTime, _dataTimeService.UtcNow);
                     break;
                 case ApplicationStatuses.Unsuccessful:
-                    update = update.Set(e => e.UnsuccessfulDateTime, DateTime.UtcNow);
+                    update = update.Set(e => e.UnsuccessfulDateTime, _dataTimeService.UtcNow);
                     break;
             }
 
