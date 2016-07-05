@@ -60,12 +60,14 @@
                 // Arrange.
                 var detail = new ApprenticeshipApplicationDetail
                 {
+                    Status = ApplicationStatuses.Unsuccessful,
                     UnsuccessfulReason = oldReason
                 };
 
                 var summary = new ApplicationStatusSummary
                 {
                     ApplicationId = Guid.Empty,
+                    ApplicationStatus = ApplicationStatuses.Unsuccessful,
                     UnsuccessfulReason = newReason
                 };
 
