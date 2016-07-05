@@ -95,6 +95,11 @@
                 return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.NoProviderProfile, viewModel, AuthorizeMessages.NoProviderProfile, UserMessageLevel.Info);
             }
 
+            if (!provider.IsMigrated)
+            {
+                return GetMediatorResponse(ProviderUserMediatorCodes.Authorize.ProviderNotMigrated, viewModel, AuthorizeMessages.ProviderNotMigrated, UserMessageLevel.Warning);
+            }
+
             viewModel.ProviderId = provider.ProviderId;
 
             if (provider.ProviderSiteViewModels.Count() < MinProviderSites)

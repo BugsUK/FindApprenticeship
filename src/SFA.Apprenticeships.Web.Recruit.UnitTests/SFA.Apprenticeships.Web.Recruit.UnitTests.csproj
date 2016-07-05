@@ -160,6 +160,7 @@
     <Compile Include="Mediators\Locations\LocationsTests.cs" />
     <Compile Include="Mediators\Locations\TestsBase.cs" />
     <Compile Include="Mediators\ProviderUser\AuthorizeTests.cs" />
+    <Compile Include="Mediators\ProviderUser\ProviderViewModelBuilder.cs" />
     <Compile Include="Mediators\ProviderUser\TestBase.cs" />
     <Compile Include="Mediators\ProviderUser\VerifyEmailAddressTests.cs" />
     <Compile Include="Mediators\ProviderUser\UpdateUserTests.cs" />
