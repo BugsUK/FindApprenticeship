@@ -5,9 +5,8 @@ namespace SFA.Apprenticeships.Infrastructure.Repositories.Sql.Schemas.dbo
 {
     public static class DbHelpers
     {
-        private const int ChunkSize = 200;
-
-        //TODO: Write unit tests
+        private const int ChunkSize = 2000;
+        
         public static int[][] SplitInputIntoChunks(IEnumerable<int> id , int chunkSize = ChunkSize)
         {           
             var idEnumerable = id as int[] ?? id.ToArray();
