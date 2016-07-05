@@ -239,7 +239,7 @@
                     .EQ(e => e.Id, applicationId),
                 Update<MongoApprenticeshipApplicationDetail>
                     .Set(e => e.Notes, notes)
-                    .Set(e => e.DateUpdated, DateTime.UtcNow));
+                    .Set(e => e.DateUpdated, _dataTimeService.UtcNow));
 
             if (result.Ok)
             {
@@ -253,10 +253,10 @@
             }
         }
 
-        public ApprenticeshipApplicationDetail UpdateApplicationStatus(ApprenticeshipApplicationDetail entity, bool ignoreOwnershipCheck)
+        public bool UpdateApplicationStatus(ApprenticeshipApplicationDetail entity, ApplicationStatuses updatedStatus, bool ignoreOwnershipCheck)
         {
             var applicationId = entity.EntityId;
-            var updatedStatus = entity.Status;
+            var now = _dataTimeService.UtcNow;
 
             _logger.Info("Calling repository to try to update apprenticeship application status={1} for application with Id={0}", applicationId, updatedStatus);
 
@@ -271,15 +271,16 @@
 
             var update = Update<MongoApprenticeshipApplicationDetail>
                 .Set(e => e.Status, updatedStatus)
-                .Set(e => e.DateUpdated, _dataTimeService.UtcNow);
+                .Set(e => e.IsArchived, false) // Application status has changed, ensure it appears on the candidate's dashboard.
+                .Set(e => e.DateUpdated, now);
 
             switch (updatedStatus)
             {
                 case ApplicationStatuses.Successful:
-                    update = update.Set(e => e.SuccessfulDateTime, _dataTimeService.UtcNow);
+                    update = update.Set(e => e.SuccessfulDateTime, now);
                     break;
                 case ApplicationStatuses.Unsuccessful:
-                    update = update.Set(e => e.UnsuccessfulDateTime, _dataTimeService.UtcNow);
+                    update = update.Set(e => e.UnsuccessfulDateTime, now);
                     break;
             }
 
@@ -287,16 +288,13 @@
 
             if (result.Ok)
             {
-                _logger.Info("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}", applicationId, updatedStatus, result.Code);
-            }
-            else
-            {
-                var message = $"Call to repository to update apprenticeship application status={updatedStatus} for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
-                _logger.Warn(message);
+                _logger.Info("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}. Documents affected={3}", applicationId, updatedStatus, result.Code, result.DocumentsAffected);
+                return result.DocumentsAffected == 1;
             }
 
-            //TODO: Probably return a bool and rename to TryUpdateStatus with the entity as an out parameter
-            return Get(applicationId);
+            var message = $"Call to repository to update apprenticeship application status={updatedStatus} for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+            _logger.Error(message);
+            throw new Exception(message);
         }
     }
 }

@@ -85,7 +85,7 @@
             updatedApplication.Status = newApplicationStatus;
 
            // act
-            writer.UpdateApplicationStatus(updatedApplication, ignoreOwnership);
+            writer.UpdateApplicationStatus(updatedApplication, newApplicationStatus, ignoreOwnership);
 
             //assert
             var savedApplication = reader.Get(originalApplication.LegacyApplicationId, true);
