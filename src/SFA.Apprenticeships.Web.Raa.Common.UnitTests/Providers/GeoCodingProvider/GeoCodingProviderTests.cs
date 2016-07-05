@@ -41,7 +41,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             const int employerId = 2;
             var employerService = new Mock<IEmployerService>();
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
-            var postalAddress = new PostalAddress();
+            var postalAddress = new PostalAddress {County = "something"};
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(GeoPoint.NotSet);
 
             employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
@@ -49,7 +49,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             var geoCodingProvider =
                 new GeoCodingProviderBuilder().With(employerService).With(geoCodeLookupService).Build();
 
-            var result = geoCodingProvider.EmployerHasAValidAddress(employerId);
+            geoCodingProvider.EmployerHasAValidAddress(employerId);
 
             employerService.Verify(es => es.GetEmployer(employerId));
             geoCodeLookupService.Verify(gs => gs.GetGeoPointFor(postalAddress), Times.Once());
@@ -61,7 +61,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.GeoCodingProvid
             const int employerId = 2;
             var employerService = new Mock<IEmployerService>();
             var geoCodeLookupService = new Mock<IGeoCodeLookupService>();
-            var postalAddress = new PostalAddress();
+            var postalAddress = new PostalAddress {County = "something"};
 
             employerService.Setup(es => es.GetEmployer(employerId)).Returns(new Employer { Address = postalAddress });
             geoCodeLookupService.Setup(gs => gs.GetGeoPointFor(postalAddress)).Returns(new Fixture().Create<GeoPoint>());

@@ -22,7 +22,7 @@
         {
             _collectionName = collectionName;
             _logService = logService;
-            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().ApplicationsDb;
+            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().SourceApplicationsDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }

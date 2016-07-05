@@ -110,6 +110,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>  
     <Compile Include="Faa\Builders\CandidateSummaryBuilder.cs" />
     <Compile Include="Faa\Builders\CandidateUserBuilder.cs" />
     <Compile Include="Faa\Builders\VacancyApplicationBuilder.cs" />

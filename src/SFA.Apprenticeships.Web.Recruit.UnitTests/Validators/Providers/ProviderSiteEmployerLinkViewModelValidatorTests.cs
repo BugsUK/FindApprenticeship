@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.UnitTests.Validators.Providers
 {
     using System;
+    using Common.UnitTests.Validators;
     using FluentAssertions;
     using NUnit.Framework;
     using FluentValidation.TestHelper;
@@ -56,6 +57,10 @@
         [TestCase("", false)]
         [TestCase("something", true)]
         [TestCase(MassivleyLong, true)]
+        [TestCase(Samples.ValidFreeHtmlText, true)]
+        [TestCase(Samples.InvalidHtmlTextWithInput, false)]
+        [TestCase(Samples.InvalidHtmlTextWithObject, false)]
+        [TestCase(Samples.InvalidHtmlTextWithScript, false)]
         public void ShouldValidateDescription(
             string description,
             bool expectValid)
@@ -81,6 +86,66 @@
             }
         }
 
-        private const string MassivleyLong = "never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator never too long for the validator";
+        private const string MassivleyLong = "never too long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for" +
+                                             " the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long" +
+                                             " for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for" +
+                                             " the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for " +
+                                             "the validator never too long for the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator never too long " +
+                                             "for the validator never too long for the validator never too long for " +
+                                             "the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never" +
+                                             " too long for the validator never too long for the validator never too long for" +
+                                             " the validator never too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never too long " +
+                                             "for the validator never too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never too long fo" +
+                                             "r the validator never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for the validator never too" +
+                                             " long for the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for the validator never" +
+                                             " too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never " +
+                                             "too long for the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never too" +
+                                             " long for the validator never too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator never too long for the validator never too" +
+                                             " long for the validator never too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never too" +
+                                             " long for the validator never too long for the validator never too long for the validator" +
+                                             " never too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the validator never too long for the" +
+                                             " validator never too long for the validator never too long for the validator never too " +
+                                             "long for the validator never too long for the validator never too long for the validator " +
+                                             "never too long for the validator never too long for the validator never too long for the " +
+                                             "validator never too long for the validator";
     }
 }

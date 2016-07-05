@@ -4,10 +4,8 @@
     using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Communications;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using MessagingErrorCodes = Interfaces.Messaging.ErrorCodes;
 
     public class SubmitApprenticeshipApplicationStrategy : ISubmitApprenticeshipApplicationStrategy
@@ -35,7 +33,9 @@
             {
                 applicationDetail.SetStateSubmitting();
                 applicationDetail.SetStateSubmitted();
+
                 _apprenticeshipApplicationWriteRepository.Save(applicationDetail);
+
                 NotifyCandidate(applicationDetail.CandidateId, applicationDetail.EntityId.ToString());
             }
             catch (Exception ex)

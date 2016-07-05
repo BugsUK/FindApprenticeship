@@ -17,6 +17,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     using SmsMessageFormatters;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     [TestFixture]
     public class ReachSmsDispatcherTests

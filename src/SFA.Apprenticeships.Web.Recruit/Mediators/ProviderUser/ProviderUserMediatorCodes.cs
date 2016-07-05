@@ -13,6 +13,7 @@
             public const string NoUserProfile = "ProviderUser.Authorize.NoUserProfile";
             public const string EmailAddressNotVerified = "ProviderUser.Authorize.EmailAddressNotVerified";
             public const string Ok = "ProviderUser.Authorize.Ok";
+            public const string ProviderNotMigrated = "ProviderUser.Authorize.ProviderNotMigrated";
         }
 
         public static class GetVerifyEmailViewModel

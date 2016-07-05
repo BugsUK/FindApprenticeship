@@ -10,15 +10,11 @@
     using Domain.Entities.Vacancies.Apprenticeships;
     using Domain.Entities.Vacancies.Traineeships;
     using Domain.Interfaces.Repositories;
+    using Interfaces;
     using Interfaces.Candidates;
     using Interfaces.Communications;
     using Interfaces.Search;
     using Interfaces.Vacancies;
-
-    using Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
     using Strategies;
     using Strategies.Apprenticeships;
     using Strategies.SavedSearches;
@@ -49,9 +45,7 @@
         private readonly ISaveTraineeshipApplicationStrategy _saveTraineeshipApplicationStrategy;
         private readonly IArchiveApplicationStrategy _archiveApplicationStrategy;
         private readonly ISubmitApprenticeshipApplicationStrategy _submitApprenticeshipApplicationStrategy;
-        private readonly ISubmitApprenticeshipApplicationStrategy _submitLegacyApprenticeshipApplicationStrategy;
-        private readonly ISubmitTraineeshipApplicationStrategy _submitLegacyTraineeshipApplicationStrategy;
-        private readonly ISubmitTraineeshipApplicationStrategy _submitRaaTraineeshipApplicationStrategy;
+        private readonly ISubmitTraineeshipApplicationStrategy _submitTraineeshipApplicationStrategy;
         private readonly IUnlockAccountStrategy _unlockAccountStrategy;
         private readonly IDeleteApplicationStrategy _deleteApplicationStrategy;
         private readonly ISaveCandidateStrategy _saveCandidateStrategy;
@@ -69,7 +63,6 @@
         private readonly IUnsubscribeStrategy _unsubscribeStrategy;
         private readonly IApprenticeshipVacancySuggestionsStrategy _apprenticeshipVacancySuggestionsStrategy;
         private readonly IGetCandidateByUsernameStrategy _getCandidateByUsernameStrategy;
-        private readonly IConfigurationService _configurationService;
 
         public CandidateService(
             IGetCandidateByIdStrategy getCandidateByIdStrategy,
@@ -77,7 +70,6 @@
             IActivateCandidateStrategy activateCandidateStrategy,
             IAuthenticateCandidateStrategy authenticateCandidateStrategy,
             ISubmitApprenticeshipApplicationStrategy submitApprenticeshipApplicationStrategy,
-            ISubmitApprenticeshipApplicationStrategy submitLegacyApprenticeshipApplicationStrategy,
             IRegisterCandidateStrategy registerCandidateStrategy,
             ISaveApprenticeshipVacancyStrategy saveVacancyStrategy,
             IDeleteSavedApprenticeshipVacancyStrategy deleteSavedApprenticeshipVacancyStrategy,
@@ -91,8 +83,7 @@
             IArchiveApplicationStrategy archiveApplicationStrategy,
             IDeleteApplicationStrategy deleteApplicationStrategy,
             ISaveCandidateStrategy saveCandidateStrategy,
-            ISubmitTraineeshipApplicationStrategy submitLegacyTraineeshipApplicationStrategy,
-            ISubmitTraineeshipApplicationStrategy submitRaaTraineeshipApplicationStrategy,
+            ISubmitTraineeshipApplicationStrategy submitTraineeshipApplicationStrategy,
             ISaveTraineeshipApplicationStrategy saveTraineeshipApplicationStrategy,
             ITraineeshipApplicationReadRepository traineeshipApplicationReadRepository,
             IGetCandidateTraineeshipApplicationsStrategy getCandidateTraineeshipApplicationsStrategy,
@@ -110,14 +101,12 @@
             IRequestEmailReminderStrategy requestEmailReminderStrategy,
             IUnsubscribeStrategy unsubscribeStrategy,
             IApprenticeshipVacancySuggestionsStrategy apprenticeshipVacancySuggestionsStrategy,
-            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy,
-            IConfigurationService configurationService)
+            IGetCandidateByUsernameStrategy getCandidateByUsernameStrategy)
         {
             _getCandidateByIdStrategy = getCandidateByIdStrategy;
             _activateCandidateStrategy = activateCandidateStrategy;
             _authenticateCandidateStrategy = authenticateCandidateStrategy;
             _submitApprenticeshipApplicationStrategy = submitApprenticeshipApplicationStrategy;
-            _submitLegacyApprenticeshipApplicationStrategy = submitLegacyApprenticeshipApplicationStrategy;
             _registerCandidateStrategy = registerCandidateStrategy;
             _saveVacancyStrategy = saveVacancyStrategy;
             _deleteSavedApprenticeshipVacancyStrategy = deleteSavedApprenticeshipVacancyStrategy;
@@ -132,8 +121,7 @@
             _archiveApplicationStrategy = archiveApplicationStrategy;
             _deleteApplicationStrategy = deleteApplicationStrategy;
             _saveCandidateStrategy = saveCandidateStrategy;
-            _submitLegacyTraineeshipApplicationStrategy = submitLegacyTraineeshipApplicationStrategy;
-            _submitRaaTraineeshipApplicationStrategy = submitRaaTraineeshipApplicationStrategy;
+            _submitTraineeshipApplicationStrategy = submitTraineeshipApplicationStrategy;
             _saveTraineeshipApplicationStrategy = saveTraineeshipApplicationStrategy;
             _traineeshipApplicationReadRepository = traineeshipApplicationReadRepository;
             _getCandidateTraineeshipApplicationsStrategy = getCandidateTraineeshipApplicationsStrategy;
@@ -152,7 +140,6 @@
             _unsubscribeStrategy = unsubscribeStrategy;
             _apprenticeshipVacancySuggestionsStrategy = apprenticeshipVacancySuggestionsStrategy;
             _getCandidateByUsernameStrategy = getCandidateByUsernameStrategy;
-            _configurationService = configurationService;
         }
 
         public Candidate Register(Candidate newCandidate, string password)
@@ -338,23 +325,8 @@
             _logger.Debug(
                 "Calling CandidateService to submit the apprenticeship application of the user with Id={0} to the vacancy with Id={1}.",
                 candidateId, vacancyId);
-            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
-            {
-                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
-                if (vacancyDetails.EditedInRaa)
-                {
-                    _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
-                }
-                else
-                {
-                    _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
-                }
-            }
-            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
-            {
-                _submitLegacyApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
-            }
+
+            _submitApprenticeshipApplicationStrategy.SubmitApplication(candidateId, vacancyId);
         }
 
         public void SubmitTraineeshipApplication(
@@ -368,25 +340,7 @@
 
             var traineeshipDetails = _saveTraineeshipApplicationStrategy.SaveApplication(candidateId, vacancyId, traineeshipApplicationDetail);
 
-            var servicesConfiguration = _configurationService.Get<ServicesConfiguration>();
-
-            if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Raa)
-            {
-                var vacancyDetails = _candidateApprenticeshipVacancyDetailStrategy.GetVacancyDetails(candidateId, vacancyId);
-                if (vacancyDetails.EditedInRaa)
-                {
-                    _submitRaaTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
-                }
-                else
-                {
-                    _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
-                }
-            }
-            else if (servicesConfiguration.ServiceImplementation == ServicesConfiguration.Legacy)
-            {
-                _submitLegacyTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
-            }
-
+            _submitTraineeshipApplicationStrategy.SubmitApplication(traineeshipDetails.EntityId);
         }
 
         public IList<TraineeshipApplicationSummary> GetTraineeshipApplications(Guid candidateId)

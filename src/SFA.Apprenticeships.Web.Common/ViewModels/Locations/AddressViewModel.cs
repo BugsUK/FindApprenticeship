@@ -11,7 +11,7 @@
     public class AddressViewModel
     {
         private string _postcode;
-        private string _addressLine4;
+        //private string _addressLine4;
 
         [Display(Name = AddressViewModelMessages.AddressLine1.LabelText)]
         public string AddressLine1 { get; set; }
@@ -36,11 +36,7 @@
         public string AddressLine3 { get; set; }
 
         [Display(Name = AddressViewModelMessages.AddressLine4.LabelText)]
-        public string AddressLine4
-        {
-            get { return string.IsNullOrEmpty(_addressLine4) ? Town : _addressLine4; }
-            set { _addressLine4 = value; }
-        }
+        public string AddressLine4{ get;set; }
 
         [Display(Name = AddressViewModelMessages.AddressLine5.LabelText)]
         public string AddressLine5 { get; set; }

@@ -53,27 +53,31 @@
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 256)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText)
-                .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText);
-
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.TooLongErrorText);
+            
             validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.ShouldBeEmpty);
+            
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationUrl)
+                .Matches(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationUrl.WhiteListErrorText)
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
 
             validator.RuleFor(m => m.OfflineApplicationUrlComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)
                 .WithMessage(VacancyViewModelMessages.Comment.WhiteListErrorText);
 
             validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
-                .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
-                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText);
-
-            validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
                 .Length(0, 0)
                 .When(viewModel => !viewModel.OfflineVacancy.HasValue || viewModel.OfflineVacancy.Value == false)
                 .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.ShouldBeEmptyText);
+
+            validator.RuleFor(viewModel => viewModel.OfflineApplicationInstructions)
+                .Matches(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListRegularExpression)
+                .WithMessage(VacancyViewModelMessages.OfflineApplicationInstructions.WhiteListErrorText)
+                .When(viewModel => viewModel.OfflineVacancy.HasValue && viewModel.OfflineVacancy.Value);
 
             validator.RuleFor(m => m.OfflineApplicationInstructionsComment)
                 .Matches(VacancyViewModelMessages.Comment.WhiteListRegularExpression)

@@ -1,7 +1,9 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
+    using System;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Locations;
+    using Domain.Entities.Raa.Locations;
 
     public class GeoCodingProvider : IGeoCodingProvider
     {
@@ -18,9 +20,12 @@
         {
             var employer = _employerService.GetEmployer(employerId);
 
-            const bool testing = false;
+            if (InvalidCounty(employer.Address))
+            {
+                return GeoCodeAddressResult.InvalidAddress;
+            }
 
-            if (employer.Address.GeoPoint == null || testing)
+            if (NoGeoPoint(employer.Address) || InvalidGeopoint(employer.Address))
             {
                 var geoPoint = _geoCodeLookupService.GetGeoPointFor(employer.Address);
 
@@ -28,6 +33,23 @@
             }
 
             return GeoCodeAddressResult.Ok;
+        }
+
+        private bool NoGeoPoint(PostalAddress address)
+        {
+            return address.GeoPoint == null;
+        }
+
+        private bool InvalidGeopoint(PostalAddress address)
+        {
+            const double tolerance = 0.001;
+
+            return Math.Abs(address.GeoPoint.Latitude) < 0.0001 && Math.Abs(address.GeoPoint.Longitude) < tolerance;
+        }
+
+        private bool InvalidCounty(PostalAddress address)
+        {
+            return string.IsNullOrWhiteSpace(address.County);
         }
     }
 }

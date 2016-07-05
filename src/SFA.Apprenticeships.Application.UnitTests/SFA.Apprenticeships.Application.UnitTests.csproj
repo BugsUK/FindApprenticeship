@@ -124,6 +124,8 @@
     <Compile Include="..\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Applications\Extensions\ApplicationStatusSummaryExtensionsTests.cs" />
+    <Compile Include="Applications\Extensions\ApprenticeshipApplicationDetailExtensionTests.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyBuilder.cs" />
     <Compile Include="Applications\Processes\ApplicationStatusAlertStrategyTests.cs" />
     <Compile Include="Applications\ApplicationStatusProcessorTests.cs" />
@@ -143,8 +145,6 @@
     <Compile Include="Candidates\Strategies\ActivationReminder\SendAccountRemindersStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\SendMobileVerificationCodeReminderStrategyTests.cs" />
     <Compile Include="Candidates\Strategies\ActivationReminder\SetPendingDeletionStrategyBuilder.cs" />
-    <Compile Include="Candidate\CandidateServiceBuilder.cs" />
-    <Compile Include="Candidate\CandidateServiceTests.cs" />
     <Compile Include="Candidate\Strategies\CreateApplicationStrategy\GivenAFaultedServer.cs" />
     <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyBuilder.cs" />
     <Compile Include="Candidate\Strategies\RegisterCandidateStrategy\RegisterCandidateStrategyTests.cs" />
@@ -178,6 +178,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ProviderUserAccount\ResendEmailVerificationCodeStrategyTests.cs" />
     <Compile Include="ProviderUserAccount\SendEmailVerificationCodeStrategyTests.cs" />
+    <Compile Include="Provider\ProviderVacancyAuthorisationServiceTests.cs" />
     <Compile Include="Provider\SubmitContactMessageStrategyTest.cs" />
     <Compile Include="Services\Candidate\Strategies\AuthenticateCandidateStrategyTests\AuthenticateCandidateStrategyTests.cs" />
     <Compile Include="Services\Candidate\Strategies\Builders\QueuedLegacySaveCandidateStrategyBuilder.cs" />
@@ -212,6 +213,8 @@
     <Compile Include="Vacancies\VacancyStatusProcessorTests\ProcessVacancyClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\QueueVacanciesForClosure.cs" />
     <Compile Include="Vacancies\VacancyStatusProcessorTests\VacancyStatusProcessorBuilder.cs" />
+    <Compile Include="VacancyPosting\TestBase.cs" />
+    <Compile Include="VacancyPosting\VacancyPostingServiceAuthorisationTests.cs" />
     <Compile Include="VacancyPosting\VacancyPostingServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>

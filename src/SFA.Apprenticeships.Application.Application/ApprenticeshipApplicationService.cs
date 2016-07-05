@@ -38,13 +38,8 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetApplicationCount(vacancyId);
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
         }
-
-        public int GetNewApplicationCount(int vacancyId)
-        {
-            return _apprenticeshipApplicationReadRepository.GetNewApplicationCount(vacancyId);
-        }        
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
         {
@@ -71,9 +66,9 @@
             SetDecision(applicationId, ApplicationStatuses.Unsuccessful);
         }
 
-        public int GetNewApplicationsCount(List<int> liveVacancyIds)
+        public IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds)
         {
-            return _apprenticeshipApplicationReadRepository.GetNewApplicationsCount(liveVacancyIds);
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(vacancyIds);
         }
 
         #region Helpers
@@ -92,7 +87,8 @@
                 LegacyCandidateId = 0, // not required
                 LegacyVacancyId = 0, // not required
                 VacancyStatus = apprenticeshipApplication.VacancyStatus,
-                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate
+                ClosingDate = apprenticeshipApplication.Vacancy.ClosingDate,
+                UpdateSource = ApplicationStatusSummary.Source.Raa //Ensure this update is from RAA so ownership of the application is verified
             };
 
             _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);

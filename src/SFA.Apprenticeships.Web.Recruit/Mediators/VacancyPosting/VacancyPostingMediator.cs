@@ -218,10 +218,17 @@
                 _vacancyPostingProvider.CreateVacancy(existingVacancy.NewVacancyViewModel, ukprn);
             }
 
-            
-            if (vacancyPreviousState != null && viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue
-                && viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false
-                && vacancyPreviousState.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true)
+            var employerHasChanged = vacancyPreviousState != null && existingVacancy != null &&
+                                     existingVacancy.NewVacancyViewModel.OwnerParty.Employer.EmployerId !=
+                                     vacancyPreviousState.NewVacancyViewModel.OwnerParty.Employer.EmployerId;
+
+            var changedFromSameLocationAsEmployerToDifferentLocation =
+                vacancyPreviousState != null &&
+                viewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
+                viewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
+                vacancyPreviousState.NewVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation == true;
+
+            if (changedFromSameLocationAsEmployerToDifferentLocation || employerHasChanged)
             {
                 _vacancyPostingProvider.EmptyVacancyLocation(vacancyPreviousState.VacancyReferenceNumber);
             }

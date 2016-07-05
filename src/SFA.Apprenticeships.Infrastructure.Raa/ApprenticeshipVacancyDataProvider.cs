@@ -13,6 +13,7 @@
     using Mappers;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Vacancies.ErrorCodes;
 
     public class ApprenticeshipVacancyDataProvider : IVacancyDataProvider<ApprenticeshipVacancyDetail>
     {

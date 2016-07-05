@@ -12,6 +12,7 @@
     using RestSharp;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class ReachSmsDispatcher : ISmsDispatcher
     {

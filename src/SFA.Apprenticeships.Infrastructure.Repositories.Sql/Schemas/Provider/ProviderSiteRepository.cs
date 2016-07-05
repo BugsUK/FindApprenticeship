@@ -67,7 +67,7 @@
             return MapProviderSite(dbProviderSite);
         }
         
-        public IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
+        public IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds)
         {
             var providerSiteIdsArray = providerSiteIds as int[] ?? providerSiteIds.ToArray();
 
@@ -82,7 +82,7 @@
 
             var providerSites = _getOpenConnection.Query<Entities.ProviderSite>(sql, sqlParams);
 
-            return providerSites.Select(MapProviderSite);
+            return providerSites.Select(MapProviderSite).ToDictionary(ps => ps.ProviderSiteId);
         }
 
         public IEnumerable<ProviderSite> GetByProviderId(int providerId)

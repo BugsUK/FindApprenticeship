@@ -7,6 +7,7 @@
     using Domain.Interfaces.Messaging;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     public class EmailRequestSubscriber : IServiceBusSubscriber<EmailRequest>
     {

@@ -21,7 +21,7 @@
         public UserRepository(IConfigurationService configurationService, ILogService logService)
         {
             _logService = logService;
-            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().UsersDb;
+            var connectionString = configurationService.Get<MigrateFromFaaToAvmsPlusConfiguration>().SourceUsersDb;
             var databaseName = MongoUrl.Create(connectionString).DatabaseName;
             _database = new MongoClient(connectionString).GetDatabase(databaseName);
         }

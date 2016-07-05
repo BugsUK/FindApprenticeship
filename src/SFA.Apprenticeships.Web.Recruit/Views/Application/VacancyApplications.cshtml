@@ -32,7 +32,7 @@
                     <div class="inner-block-padr">
                         <div>
                             <div class="text" itemprop="description">
-                                <p id="vacancy-description" class="preserve-formatting">@Model.ShortDescription</p>
+                                <p id="vacancy-description" class="@Model.ShortDescription.GetPreserveFormattingCssClass()">@Model.ShortDescription</p>
                                 <p>
                                     <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = Model.VacancyApplicationsSearch.VacancyReferenceNumber})" class="disp-block">View @(Model.VacancyType == VacancyType.Traineeship ? "traineeship" : "apprenticeship")</a>
                                 </p>

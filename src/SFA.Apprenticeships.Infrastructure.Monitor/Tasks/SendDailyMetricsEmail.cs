@@ -6,6 +6,7 @@
     using System.Net.Mail;
     using System.Text;
     using Application.Candidates;
+    using Communication.Configuration;
     using SFA.Infrastructure.Interfaces;
     using Configuration;
     using Domain.Entities.Applications;
@@ -22,6 +23,7 @@
         private const int UnsuccessfulApplicationsToShowTraineeshipsPrompt = 2;
 
         private readonly MonitorConfiguration _monitorConfiguration;
+        private readonly EmailConfiguration _emailConfiguration;
         private readonly ILogService _logger;
 
         private readonly IUserMetricsRepository _userMetricsRepository;
@@ -67,6 +69,7 @@
             _auditMetricsRepository = auditMetricsRepository;
 
             _monitorConfiguration = configurationManager.Get<MonitorConfiguration>();
+            _emailConfiguration = configurationManager.Get<EmailConfiguration>();
             _validNumberOfDaysSinceUserActivity = _monitorConfiguration.ValidNumberOfDaysSinceUserActivity;
         }
 
@@ -244,7 +247,10 @@
 
         private void SendEmail(string from, string to, string body, string subject)
         {
-            var client = new SmtpClient();
+            var client = new SmtpClient("smtp.sendgrid.net", 587)
+            {
+                Credentials = new System.Net.NetworkCredential(_emailConfiguration.Username, _emailConfiguration.Password)
+            };
             var mailMessage = new MailMessage(from, to, subject, body);
 
             client.Send(mailMessage);

@@ -2,15 +2,12 @@
 {
     using System;
     using Application.Candidate;
+    using Application.Interfaces;
     using SFA.Infrastructure.Interfaces;
 
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
-
-    using Application.Candidate.Configuration;
-
-    using SFA.Apprenticeships.Application.Interfaces;
 
     public class CreateCandidateRequestSubscriber : IServiceBusSubscriber<CreateCandidateRequest>
     {
@@ -22,22 +19,18 @@
 
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
 
-        private readonly bool _createCandidateInLegacySystem;
-
         public CreateCandidateRequestSubscriber(
             ILogService logger,
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
             ICandidateWriteRepository candidateWriteRepository,
-            ILegacyCandidateProvider legacyCandidateProvider,
-            IConfigurationService configurationService)
+            ILegacyCandidateProvider legacyCandidateProvider)
         {
             _logger = logger;
             _candidateReadRepository = candidateReadRepository;
             _userReadRepository = userReadRepository;
             _candidateWriteRepository = candidateWriteRepository;
             _legacyCandidateProvider = legacyCandidateProvider;
-            _createCandidateInLegacySystem = configurationService.Get<ServicesConfiguration>().ServiceImplementation == ServicesConfiguration.Legacy;
         }
 
         [ServiceBusTopicSubscription(TopicName = "CreateCandidate")]
@@ -50,37 +43,34 @@
         {
             try
             {
-                if(_createCandidateInLegacySystem)
+                _logger.Debug("Creating candidate Id: {0}", request.CandidateId);
+
+                var user = _userReadRepository.Get(request.CandidateId);
+                user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked, UserStatuses.Dormant);
+
+                var candidate = _candidateReadRepository.Get(request.CandidateId, true);
+
+                if (candidate.LegacyCandidateId == 0)
                 {
-                    _logger.Debug("Creating candidate Id: {0}", request.CandidateId);
+                    _logger.Info("Sending request to create candidate in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
 
-                    var user = _userReadRepository.Get(request.CandidateId);
-                    user.AssertState("Create legacy user", UserStatuses.Active, UserStatuses.Locked, UserStatuses.Dormant);
+                    var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
 
-                    var candidate = _candidateReadRepository.Get(request.CandidateId, true);
+                    candidate.LegacyCandidateId = legacyCandidateId;
+                    _candidateWriteRepository.Save(candidate);
 
-                    if (candidate.LegacyCandidateId == 0)
-                    {
-                        _logger.Info("Sending request to create candidate in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
-
-                        var legacyCandidateId = _legacyCandidateProvider.CreateCandidate(candidate);
-
-                        candidate.LegacyCandidateId = legacyCandidateId;
-                        _candidateWriteRepository.Save(candidate);
-
-                        _logger.Info("Candidate created in legacy system: Candidate Id: \"{0}\", Legacy Candidate Id: \"{1}\"", request.CandidateId, legacyCandidateId);
-                    }
-                    else
-                    {
-                        _logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
-                    }
+                    _logger.Info("Candidate created in legacy system: Candidate Id: \"{0}\", Legacy Candidate Id: \"{1}\"", request.CandidateId, legacyCandidateId);
+                }
+                else
+                {
+                    _logger.Warn("User has already been activated in legacy system: Candidate Id: \"{0}\"", request.CandidateId);
                 }
 
                 return ServiceBusMessageStates.Complete;
             }
             catch (Exception ex)
             {
-                _logger.Error(string.Format("Create candidate with id {0} request async process failed", request.CandidateId), ex);
+                _logger.Error($"Create candidate with id {request.CandidateId} request async process failed", ex);
 
                 return ServiceBusMessageStates.Requeue;
             }

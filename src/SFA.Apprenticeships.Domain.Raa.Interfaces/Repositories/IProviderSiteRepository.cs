@@ -9,7 +9,7 @@
 
         ProviderSite GetByEdsUrn(string edsUrn);
 
-        IEnumerable<ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
+        IReadOnlyDictionary<int, ProviderSite> GetByIds(IEnumerable<int> providerSiteIds);
 
         IEnumerable<ProviderSite> GetByProviderId(int providerId);
     }

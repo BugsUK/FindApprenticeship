@@ -16,6 +16,7 @@
     using NUnit.Framework;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Candidates.ErrorCodes;
 
     public class SaveCandidateRequestSubscriberTests
     {

@@ -14,6 +14,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     using StructureMap;
+    using ErrorCodes = Application.Interfaces.Communications.ErrorCodes;
 
     [TestFixture]
     public class CandidateEmailTests

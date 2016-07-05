@@ -74,6 +74,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.For<IProviderService>().Use<ProviderService>();
                 x.For<IUserProfileService>().Use<UserProfileService>();
                 x.For<IProviderUserAccountService>().Use<ProviderUserAccountService>();
+                x.For<IProviderVacancyAuthorisationService>().Use<ProviderVacancyAuthorisationService>();
                 x.For<IVacancyPostingService>().Use<VacancyPostingService>();
                 x.For<IVacancyLockingService>().Use<VacancyLockingService>();
 

@@ -8,6 +8,7 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
     using FluentAssertions;
     using Infrastructure.Processes.Applications;
     using Moq;
@@ -25,6 +26,7 @@
         private Mock<IApprenticeshipApplicationWriteRepository> _mockApprenticeshipApplicationWriteRepository;
         private Mock<ICandidateReadRepository> _mockCandidateReadRepository;
         private Mock<IUserReadRepository> _mockUserReadRepository;
+        private Mock<IVacancyReadRepository> _mockVacancyReadRepository;
 
         private Mock<ILegacyApplicationProvider> _mockLegacyApplicationProvider;
         private Mock<ILegacyCandidateProvider> _mockLegacyCandidateProvider;
@@ -40,6 +42,7 @@
             _mockApprenticeshipApplicationReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
             _mockApprenticeshipApplicationWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             _mockCandidateReadRepository = new Mock<ICandidateReadRepository>();
+            _mockVacancyReadRepository = new Mock<IVacancyReadRepository>();
 
             _mockLegacyApplicationProvider = new Mock<ILegacyApplicationProvider>();
             _mockLegacyCandidateProvider = new Mock<ILegacyCandidateProvider>();
@@ -51,7 +54,8 @@
                 _mockCandidateReadRepository.Object,
                 _mockUserReadRepository.Object,
                 _mockLegacyApplicationProvider.Object,
-                _mockLegacyCandidateProvider.Object);
+                _mockLegacyCandidateProvider.Object,
+                _mockVacancyReadRepository.Object);
         }
 
         [Test]

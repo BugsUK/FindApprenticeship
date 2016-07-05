@@ -153,6 +153,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+      <Compile Include="..\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>   
     <Compile Include="Builders\AgencyUserBuilder.cs" />
     <Compile Include="Factory\RoleListFactory.cs" />
     <Compile Include="Mappers\CandidateMappersTests.cs" />

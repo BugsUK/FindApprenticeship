@@ -11,6 +11,7 @@
     using SFA.Apprenticeships.Application.Interfaces;
 
     using ViewModels.VacancySearch;
+    using ErrorCodes = Application.Interfaces.Locations.ErrorCodes;
 
     public class SearchProvider : ISearchProvider
     {

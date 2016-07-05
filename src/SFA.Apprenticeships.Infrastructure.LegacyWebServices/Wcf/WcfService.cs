@@ -75,19 +75,19 @@
             }
             catch (ServerTooBusyException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(LegacyWebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (EndpointNotFoundException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(LegacyWebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (CommunicationException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(LegacyWebServices.ErrorCodes.WebServiceFailed, e);
             }
             catch (TimeoutException e)
             {
-                throw new BoundaryException(ErrorCodes.WebServiceFailed, e);
+                throw new BoundaryException(LegacyWebServices.ErrorCodes.WebServiceFailed, e);
             }
             finally
             {

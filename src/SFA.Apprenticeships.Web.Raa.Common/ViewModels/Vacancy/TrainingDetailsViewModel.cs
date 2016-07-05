@@ -49,6 +49,7 @@
 
         public List<SelectListItem> Sectors { get; set; }
 
+        [AllowHtml]
         [Display(Name = VacancyViewModelMessages.TrainingProvidedMessages.LabelText)]
         public string TrainingProvided { get; set; }
 

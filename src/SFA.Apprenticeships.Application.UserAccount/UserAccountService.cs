@@ -12,6 +12,7 @@
 
     using Strategies;
     using Web.Common.Constants;
+    using ErrorCodes = Interfaces.Users.ErrorCodes;
 
     public class UserAccountService : IUserAccountService
     {

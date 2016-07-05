@@ -87,7 +87,7 @@
 
         private CandidateVacancy GetCandidateVacancy(int vacancyId, ApplicationViewModel applicationViewModel)
         {
-            var vacancyViewModel = _vacancyQaProvider.GetVacancy(vacancyId);
+            var vacancyViewModel = _vacancyQaProvider.GetVacancyById(vacancyId);
             vacancyViewModel.IsEditable = false;
             vacancyViewModel.IsCandidateView = true;
             return new CandidateVacancy

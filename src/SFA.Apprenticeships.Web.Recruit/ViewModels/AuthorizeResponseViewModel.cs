@@ -5,5 +5,6 @@
         public string Username { get; set; }
         public string EmailAddress { get; set; }
         public bool EmailAddressVerified { get; set; }
+        public int ProviderId { get; set; }
     }
 }

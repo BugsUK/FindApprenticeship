@@ -43,6 +43,7 @@
                 CurrentPage = 1,
                 DesiredStatuses = new List<VacancyStatus>() { VacancyStatus.Live },
                 LatestClosingDate = deadline,
+                EditedInRaa = true,
                 PageSize = 1000 };
 
             int resultCount;

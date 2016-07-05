@@ -17,6 +17,8 @@ The live service runs on the [Azure](http://azure.microsoft.com) platform and in
 	- https://recruit.findapprenticeship.service.gov.uk
 - Manage An Apprenticeship
 	- https://manage.findapprenticeship.service.gov.uk
+- Web Proxy
+	- Azure Web Application that deploys directly from the Github master
 
 ## Azure worker roles ##
 
@@ -33,7 +35,7 @@ The live service runs on the [Azure](http://azure.microsoft.com) platform and in
 	- Communication House Keeper
 	- Candidate Saved Searches
 	- Apprenticeship Vacancy Indexer
-	- Traneeship Vacancy Indexer
+	- Traineeship Vacancy Indexer
 
 ## Dependencies ##
 

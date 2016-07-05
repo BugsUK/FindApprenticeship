@@ -15,7 +15,7 @@
             Warning = warning;
             ViewValidationResultUrl = viewValidationResultUrl;
             AnchorName = anchorName;
-            CommentViewModel = new CommentViewModel(status, comment, viewValidationResultUrl, string.Empty);
+            CommentViewModel = new CommentViewModel(status, anchorName, comment, viewValidationResultUrl, string.Empty);
         }
 
         public VacancyStatus Status { get; private set; }

@@ -46,7 +46,7 @@
                 if (apprenticeshipApplication != null)
                 {
                     _applicationStatusUpdateStrategy.Update(apprenticeshipApplication, applicationStatusSummary);
-                    return;
+                    continue;
                 }
 
                 var traineeshipApplication = _traineeshipApplicationReadRepository.GetForCandidate(candidate.EntityId, legacyVacancyId);
@@ -58,7 +58,7 @@
                         _traineeshipApplicationWriteRepository.Save(traineeshipApplication);
                     }
 
-                    return;
+                    continue;
                 }
 
                 _logger.Warn("Unable to find apprenticeship or traineeship application with legacy ID \"{0}\".", applicationStatusSummary.LegacyApplicationId);

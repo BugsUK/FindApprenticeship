@@ -156,7 +156,7 @@
     <Compile Include="Configuration\ConfigurationExpressionExtension.cs" />
     <Compile Include="Configuration\CachedConfigurationService.cs" />
     <Compile Include="Configuration\SecureConfigurationSection.cs" />
-    <Compile Include="CurrentUser\ICurrentUserService.cs" />
+    <Compile Include="CurrentUser\CurrentUserService.cs" />
     <Compile Include="IoC\CommonRegistry.cs" />
     <Compile Include="Mappers\MapperEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

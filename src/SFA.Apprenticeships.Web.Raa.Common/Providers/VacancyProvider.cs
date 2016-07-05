@@ -1,37 +1,34 @@
-﻿using SFA.Apprenticeships.Application.Interfaces.Locations;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.Providers
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Web.Mvc;
     using Application.Interfaces.Applications;
     using Application.Interfaces.Employers;
-    using SFA.Infrastructure.Interfaces;
+    using Application.Interfaces.Locations;
     using Application.Interfaces.Providers;
     using Application.Interfaces.ReferenceData;
     using Application.Interfaces.Users;
     using Application.Interfaces.Vacancies;
     using Application.Interfaces.VacancyPosting;
     using Configuration;
-    using ViewModels.Vacancy;
-    using Web.Common.Configuration;
     using Converters;
+    using Domain.Entities.Applications;
     using Domain.Entities.Exceptions;
     using Domain.Entities.Raa.Locations;
-    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Reference;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Factories;
     using Infrastructure.Presentation;
-
-    using SFA.Apprenticeships.Application.Interfaces;
-
+    using SFA.Infrastructure.Interfaces;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Web.Mvc;
+    using Application.Interfaces;
     using ViewModels.Provider;
     using ViewModels.ProviderUser;
+    using ViewModels.Vacancy;
     using ViewModels.VacancyPosting;
+    using Web.Common.Configuration;
     using Web.Common.ViewModels;
     using Web.Common.ViewModels.Locations;
 
@@ -46,6 +43,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         private readonly IDateTimeService _dateTimeService;
         private readonly IApprenticeshipApplicationService _apprenticeshipApplicationService;
         private readonly ITraineeshipApplicationService _traineeshipApplicationService;
+        private readonly IDictionary<VacancyType, ICommonApplicationService> _commonApplicationService;
         private readonly IVacancyLockingService _vacancyLockingService;
         private readonly ICurrentUserService _currentUserService;
         private readonly IUserProfileService _userProfileService;
@@ -72,6 +70,10 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             _mapper = mapper;
             _apprenticeshipApplicationService = apprenticeshipApplicationService;
             _traineeshipApplicationService = traineeshipApplicationService;
+            _commonApplicationService = new Dictionary<VacancyType, ICommonApplicationService>() {
+                { VacancyType.Apprenticeship, apprenticeshipApplicationService },
+                { VacancyType.Traineeship,    traineeshipApplicationService }
+            };
             _vacancyLockingService = vacancyLockingService;
             _currentUserService = currentUserService;
             _userProfileService = userProfileService;
@@ -96,7 +98,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 vacancyViewModel.LocationAddresses = GetLocationsAddressViewModel(existingVacancy);
                 return vacancyViewModel;
             }
-            
+
             return new NewVacancyViewModel
             {
                 OwnerParty = vacancyPartyViewModel,
@@ -113,19 +115,19 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             if (locationAddresses != null && locationAddresses.Any())
             {
                 return
-                    _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);                
+                    _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(locationAddresses);
             }
             if (vacancy.IsEmployerLocationMainApprenticeshipLocation.HasValue &&
                 vacancy.IsEmployerLocationMainApprenticeshipLocation.Value == false &&
                 vacancy.Address != null)
             {
-                   
+
                 locationAddressesVm.Add(
                     new VacancyLocationAddressViewModel
-                        {
-                            Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
-                            NumberOfPositions = vacancy.NumberOfPositions
-                        });                    
+                    {
+                        Address = _mapper.Map<PostalAddress, AddressViewModel>(vacancy.Address),
+                        NumberOfPositions = vacancy.NumberOfPositions
+                    });
             }
             return locationAddressesVm;
         }
@@ -135,8 +137,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
             var viewModel = _mapper.Map<Vacancy, NewVacancyViewModel>(vacancy);
-            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);            
-            viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);            
+            var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
+            viewModel.LocationAddresses = GetLocationsAddressViewModel(vacancy);
             viewModel.OwnerParty = vacancyParty.Convert(employer);
             viewModel.AutoSaveTimeoutInSeconds =
                 _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds;
@@ -183,9 +185,9 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 foreach (var vacancyLocation in vacancyLocations)
                 {
                     vacancyLocation.VacancyId = vacancy.VacancyId;
-					
-					vacancyLocation.LocalAuthorityCode =
-                    _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
+
+                    vacancyLocation.LocalAuthorityCode =
+                        _localAuthorityLookupService.GetLocalAuthorityCode(vacancyLocation.Address.Postcode);
                 }
                 _vacancyPostingService.SaveVacancyLocations(vacancyLocations);
             }
@@ -195,8 +197,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             return locationSearchViewModel;
         }
-		
-		private void GeoCodeVacancyLocations(LocationSearchViewModel viewModel)
+
+        private void GeoCodeVacancyLocations(LocationSearchViewModel viewModel)
         {
             foreach (var vacancyLocationAddressViewModel in viewModel.Addresses)
             {
@@ -233,7 +235,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                     AutoSaveTimeoutInSeconds = _configurationService.Get<RecruitWebConfiguration>().AutoSaveTimeoutInSeconds,
                     ProviderSiteId = providerSite.ProviderSiteId
                 };
-                
+
                 var locationAddresses = _vacancyPostingService.GetVacancyLocations(vacancy.VacancyId);
                 if (locationAddresses.Any())
                 {
@@ -254,7 +256,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                             });
                     }
                 }
-                
+
                 return viewModel;
             }
             else
@@ -348,12 +350,12 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             return vacancy;
         }
-        
+
         private string GetFrameworkCodeName(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Standards ? null : CategoryPrefixes.GetOriginalFrameworkCode(trainingDetailsViewModel.FrameworkCodeName);
         }
-        
+
         private int? GetStandardId(TrainingDetailsViewModel trainingDetailsViewModel)
         {
             return trainingDetailsViewModel.TrainingType == TrainingType.Frameworks ? null : trainingDetailsViewModel.StandardId;
@@ -504,7 +506,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             {
                 vacancy.PossibleStartDate = viewModel.VacancyDatesViewModel.PossibleStartDate?.Date;
             }
-            
+
             vacancy.LongDescription = viewModel.LongDescription;
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
@@ -594,7 +596,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
                 return result;
             }
-            
+
             result = _mapper.Map<Vacancy, VacancyDatesViewModel>(vacancy);
             result.State = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId) > 0 ? UpdateVacancyDatesState.UpdatedHasApplications : UpdateVacancyDatesState.UpdatedNoApplications;
             result.AutoSaveTimeoutInSeconds =
@@ -617,6 +619,17 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(vacancyReferenceNumber);
+
+            if (vacancy == null)
+                return null;
+
+            var viewModel = GetVacancyViewModelFrom(vacancy);
+            return viewModel;
+        }
+
+        public VacancyViewModel GetVacancyById(int vacancyId)
+        {
+            var vacancy = _vacancyPostingService.GetVacancy(vacancyId);
 
             if (vacancy == null)
                 return null;
@@ -648,7 +661,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 viewModel.NewVacancyViewModel.OwnerParty = vacancyParty.Convert(employer, vacancy.EmployerAnonymousName);
                 var providerSite = _providerService.GetProviderSite(vacancyParty.ProviderSiteId);
                 viewModel.ProviderSite = providerSite.Convert();
-            }            
+            }
             viewModel.FrameworkName = string.IsNullOrEmpty(viewModel.TrainingDetailsViewModel.FrameworkCodeName)
                 ? viewModel.TrainingDetailsViewModel.FrameworkCodeName
                 : _referenceDataService.GetSubCategoryByCode(viewModel.TrainingDetailsViewModel.FrameworkCodeName).FullName;
@@ -664,7 +677,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 {
                     viewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
                 }
-                else if(viewModel.VacancyType == VacancyType.Traineeship)
+                else if (viewModel.VacancyType == VacancyType.Traineeship)
                 {
                     viewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancy.VacancyId);
                 }
@@ -674,7 +687,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 vacancyManager, vacancy);
             var vacancyLocationAddressViewModels = GetLocationsAddressViewModel(vacancy);
 
-            viewModel.LocationAddresses =  vacancyLocationAddressViewModels;   
+            viewModel.LocationAddresses = vacancyLocationAddressViewModels;
             viewModel.NewVacancyViewModel.LocationAddresses = vacancyLocationAddressViewModels;
             return viewModel;
         }
@@ -692,7 +705,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             vacancy.SubmissionCount++;
 
             vacancy = _vacancyPostingService.UpdateVacancy(vacancy);
-            
+
             //TODO: should we return this VM or the one returned by GetVacancyByReferenceNumber?
             var viewModel = _mapper.Map<Vacancy, VacancyViewModel>(vacancy);
 
@@ -714,7 +727,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             {
                 if (sector.SubCategories != null)
                 {
-                    var sectorGroup = new SelectListGroup {Name = sector.FullName};
+                    var sectorGroup = new SelectListGroup { Name = sector.FullName };
                     foreach (var framework in sector.SubCategories)
                     {
                         sectorsAndFrameworkItems.Add(new SelectListItem
@@ -735,8 +748,8 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var sectors = _referenceDataService.GetSectors();
 
             return (from sector in sectors
-                from standard in sector.Standards
-                select standard.Convert(sector)).ToList();
+                    from standard in sector.Standards
+                    select standard.Convert(sector)).ToList();
         }
 
         public List<SelectListItem> GetSectors()
@@ -772,10 +785,13 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             return standard.Convert(sector);
         }
 
-        
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
+            bool t = true;
+            if (t)
+                return GetVacanciesSummaryForProviderOptimised(providerId, providerSiteId, vacanciesSummarySearch);
+
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
@@ -784,10 +800,14 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             }
 
             //TODO: Unit tests
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
+            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).Where(p => p.VacancyPartyId == -4).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
+
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+
+            //var vacancies = new List<VacancySummary> { _vacancyPostingService.GetVacancyByReferenceNumber(1100214) };
             var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
+
             var hasVacancies = vacancies.Count > 0;
             vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
 
@@ -800,12 +820,15 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
             var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
             var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
             var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
-            var newApplications = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
-                vacancies.Where(v => v.Status == VacancyStatus.Live && _apprenticeshipApplicationService.GetNewApplicationCount(v.VacancyId) > 0).ToList() :
-                vacancies.Where(v => v.Status == VacancyStatus.Live && _traineeshipApplicationService.GetNewApplicationCount(v.VacancyId) > 0).ToList();
-            var newApplicationsCount = vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship ?
-                _apprenticeshipApplicationService.GetNewApplicationsCount(liveVacancyIds):
-                _traineeshipApplicationService.GetNewApplicationsCount(liveVacancyIds);
+
+            var applicationCountsByVacancyId = (vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship) ?
+                _apprenticeshipApplicationService.GetCountsForVacancyIds(vacancies.Select(v => v.VacancyId)) :
+                _traineeshipApplicationService.GetCountsForVacancyIds(vacancies.Select(v => v.VacancyId));
+
+            var newApplications = vacancies.Where(v => v.Status == VacancyStatus.Live && applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
+
+            var newApplicationsCount = liveVacancyIds.Sum(v => applicationCountsByVacancyId[v].NewApplications);
+
             var withdrawn = vacancies.Where(v => v.Status == VacancyStatus.Withdrawn).ToList();
             var completed = vacancies.Where(v => v.Status == VacancyStatus.Completed).ToList();
 
@@ -860,25 +883,19 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
             {
-                Page = vacancySummaries.Skip((vacanciesSummarySearch.CurrentPage - 1)*vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).ToList(),
+                Page = vacancySummaries.Skip((vacanciesSummarySearch.CurrentPage - 1) * vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).ToList(),
                 ResultsCount = vacancySummaries.Count,
                 CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = vacancySummaries.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancySummaries.Count/vacanciesSummarySearch.PageSize)
+                TotalNumberOfPages = vacancySummaries.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancySummaries.Count / vacanciesSummarySearch.PageSize)
             };
 
             //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
+
+            //var applicationCounts = 
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
             {
-                if (vacancyViewModel.VacancyType == VacancyType.Apprenticeship)
-                {
-                    vacancyViewModel.ApplicationCount = _apprenticeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
-                    vacancyViewModel.NewApplicationCount = _apprenticeshipApplicationService.GetNewApplicationCount(vacancyViewModel.VacancyId);
-                }
-                else if (vacancyViewModel.VacancyType == VacancyType.Traineeship)
-                {
-                    vacancyViewModel.ApplicationCount = _traineeshipApplicationService.GetApplicationCount(vacancyViewModel.VacancyId);
-                    vacancyViewModel.NewApplicationCount = _traineeshipApplicationService.GetNewApplicationCount(vacancyViewModel.VacancyId);
-                }
+                vacancyViewModel.ApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications;
+                vacancyViewModel.NewApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications; // TODO: This is correct as AllApplicationCount is used when displaying the application counts
             }
 
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))
@@ -895,15 +912,164 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 ClosingSoonCount = closingSoon.Count,
                 ClosedCount = closed.Count,
                 DraftCount = draft.Count,
-                NewApplicationsCount = newApplicationsCount,
+                NewApplicationsAcrossAllVacanciesCount = newApplicationsCount,
                 WithdrawnCount = withdrawn.Count,
                 CompletedCount = completed.Count,
                 HasVacancies = hasVacancies,
                 Vacancies = vacancyPage
             };
 
-            return vacanciesSummary; 
+            return vacanciesSummary;
         }
+
+        public VacanciesSummaryViewModel GetVacanciesSummaryForProviderOptimised(int providerId, int providerSiteId,
+             VacanciesSummarySearchViewModel vacanciesSummarySearch)
+        {
+            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
+            if (isVacancySearch)
+            {
+                //When searching the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
+                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
+            }
+
+            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
+
+            // Although the most straightforward thing to do would be to get by Vacancy.VacancyManagerId, this is sometimes null.
+            // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
+            var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
+
+            var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(vacancyParties.Select(vp => vp.VacancyPartyId))
+                .Values
+                .SelectMany(a => a)
+                .Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown);
+
+            var hasVacancies = minimalVacancyDetails.Any();
+
+            // Unfortunately (from a performance / load / scalability perspective), the view includes application counts for every vacancy, including those completed months/years ago
+            var vacanciesToCountNewApplicationsFor = minimalVacancyDetails.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()).Select(a => a.VacancyId);
+            //var vacanciesToCountNewApplicationsFor = vacancyIdsByVacancyPartyId.Where(v => v.VacancyStatus.CanHaveApplicationsOrClickThroughs() && v.VacancyStatus != VacancyStatus.Completed).Select(a => a.VacancyId);
+
+            var applicationCountsByVacancyId = _commonApplicationService[vacanciesSummarySearch.VacancyType].GetCountsForVacancyIds(vacanciesToCountNewApplicationsFor);
+
+            // Apply each of the filters to the vacancies
+
+            // Get vacancies for selected filter
+            var filteredVacancies = (IEnumerable<IMinimalVacancyDetails>)Filter(minimalVacancyDetails, vacanciesSummarySearch.FilterType, applicationCountsByVacancyId).ToList();
+
+            // If doing a vacancy search then all the vacancies need to be fetched now, otherwise just fetch the first page
+            var vacanciesToFetch = isVacancySearch ? filteredVacancies : Sort(filteredVacancies, vacanciesSummarySearch.FilterType).GetCurrentPage(vacanciesSummarySearch).ToList();
+
+            var vacancyPartyIds = new HashSet<int>(vacanciesToFetch.Select(v => v.OwnerPartyId));
+            var employers = _employerService.GetEmployers(vacancyParties.Where(vp => vacancyPartyIds.Contains(vp.VacancyPartyId)).Select(vp => vp.EmployerId).Distinct());
+
+            var vacancyLocationsByVacancyId = _vacancyPostingService.GetVacancyLocationsByVacancyIds(vacancyPartyIds);
+
+            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
+            var vacancies = Sort(_vacancyPostingService.GetVacancySummariesByIds(vacanciesToFetch.Select(v => v.VacancyId)), vacanciesSummarySearch.FilterType);
+
+            if (isVacancySearch)
+            {
+                // If doing a search then all the vacancies have been fetched and after filtering need to be cut down to the current page
+
+                vacancies = vacancies.Where(v =>
+                    (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) ||
+                    vacancyPartyToEmployerMap.GetValue(v.OwnerPartyId).Name.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0
+                );
+
+                filteredVacancies = vacancies.ToList();
+
+                vacancies = vacancies
+                    .GetCurrentPage(vacanciesSummarySearch)
+                    .ToList();
+            }
+
+            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
+
+            foreach (var vacancySummary in vacancySummaries)
+            {
+                vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).Name;
+                vacancySummary.ApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications;
+                vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications; // TODO: This is correct as AllApplicationCount is used when displaying the application counts
+                vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
+            }
+
+            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
+            {
+                Page = vacancySummaries,
+                ResultsCount = vacancySummaries.Count,
+                CurrentPage = vacanciesSummarySearch.CurrentPage,
+                TotalNumberOfPages = filteredVacancies.TotalPages(vacanciesSummarySearch)
+            };
+
+            Func<VacanciesSummaryFilterTypes, int> count = type => Filter(minimalVacancyDetails, type, applicationCountsByVacancyId).Count();
+            var vacanciesSummary = new VacanciesSummaryViewModel
+            {
+                VacanciesSummarySearch = vacanciesSummarySearch,
+                LiveCount        = count(VacanciesSummaryFilterTypes.Live),
+                SubmittedCount   = count(VacanciesSummaryFilterTypes.Submitted),
+                RejectedCount    = count(VacanciesSummaryFilterTypes.Rejected),
+                ClosingSoonCount = count(VacanciesSummaryFilterTypes.ClosingSoon),
+                ClosedCount      = count(VacanciesSummaryFilterTypes.Closed),
+                DraftCount       = count(VacanciesSummaryFilterTypes.Draft),
+                NewApplicationsAcrossAllVacanciesCount = minimalVacancyDetails.Sum(v => applicationCountsByVacancyId[v.VacancyId].NewApplications),
+                WithdrawnCount   = count(VacanciesSummaryFilterTypes.Withdrawn),
+                CompletedCount   = count(VacanciesSummaryFilterTypes.Completed),
+                HasVacancies     = hasVacancies,
+                Vacancies = vacancyPage
+            };
+
+            return vacanciesSummary;
+        }
+
+        private IEnumerable<T> Filter<T>(IEnumerable<T> data, VacanciesSummaryFilterTypes vacanciesSummaryFilterType, IReadOnlyDictionary<int, IApplicationCounts> applicationCountsByVacancyId) where T : IMinimalVacancyDetails
+        {
+            switch (vacanciesSummaryFilterType)
+            {
+                case VacanciesSummaryFilterTypes.All:       return data;
+                case VacanciesSummaryFilterTypes.Live:      return data.Where(v => v.Status == VacancyStatus.Live);
+                case VacanciesSummaryFilterTypes.Submitted: return data.Where(v => v.Status.EqualsAnyOf(VacancyStatus.Submitted, VacancyStatus.ReservedForQA));
+                case VacanciesSummaryFilterTypes.Rejected:  return data.Where(v => v.Status == VacancyStatus.Referred);
+                case VacanciesSummaryFilterTypes.ClosingSoon:
+                    return data.Where(v =>
+                    v.Status == VacancyStatus.Live &&
+                    v.LiveClosingDate >= _dateTimeService.UtcNow.Date &&
+                    v.LiveClosingDate.AddDays(-5) < _dateTimeService.UtcNow);
+                case VacanciesSummaryFilterTypes.Closed:    return data.Where(v => v.Status == VacancyStatus.Closed);
+                case VacanciesSummaryFilterTypes.Draft:     return data.Where(v => v.Status == VacancyStatus.Draft);
+                case VacanciesSummaryFilterTypes.NewApplications:
+                    return data.Where(v => applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
+                case VacanciesSummaryFilterTypes.Withdrawn: return data.Where(v => v.Status == VacancyStatus.Withdrawn);
+                case VacanciesSummaryFilterTypes.Completed: return data.Where(v => v.Status == VacancyStatus.Completed);
+                default: throw new ArgumentException($"{vacanciesSummaryFilterType}");
+            }
+        }
+
+        private IEnumerable<T> Sort<T>(IEnumerable<T> data, VacanciesSummaryFilterTypes vacanciesSummaryFilterType) where T : IMinimalVacancyDetails
+        {
+            switch (vacanciesSummaryFilterType)
+            {
+                case VacanciesSummaryFilterTypes.ClosingSoon:
+                case VacanciesSummaryFilterTypes.NewApplications:
+                    return data.OrderBy(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
+                case VacanciesSummaryFilterTypes.Closed:
+                    return data.OrderByDescending(v => v.LiveClosingDate).ThenByDescending(v => v.VacancyId);
+                case VacanciesSummaryFilterTypes.Completed:
+                    return data.OrderByDescending(v => v.SyntheticUpdatedDateTime).ThenByDescending(v => v.VacancyId);
+                case VacanciesSummaryFilterTypes.All:
+                case VacanciesSummaryFilterTypes.Withdrawn:
+                case VacanciesSummaryFilterTypes.Live:
+                case VacanciesSummaryFilterTypes.Submitted:
+                case VacanciesSummaryFilterTypes.Rejected:
+                case VacanciesSummaryFilterTypes.Draft:
+                    // Requirement is "most recently created first" (Faizal 30/6/2016).
+                    // Previously there was no ordering in the code and it was coming out in natural database order
+                    return data.OrderByDescending(v => v.VacancyId < 0 ? 1000000 - v.VacancyId : v.VacancyId);
+                default:
+                    throw new ArgumentException($"{vacanciesSummaryFilterType}");
+            }
+        }
+
+
 
         public VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber)
         {
@@ -1248,7 +1414,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
         {
             // TODO: merge with vacancypostingprovider? -> how we deal with comments. Add them as hidden fields in vacancy posting journey?
             var vacancy = _vacancyPostingService.GetVacancyByReferenceNumber(viewModel.VacancyReferenceNumber);
-
+            
             if (!_vacancyLockingService.IsVacancyAvailableToQABy(_currentUserService.CurrentUserName, vacancy))
             {
                 return new QAActionResult<FurtherVacancyDetailsViewModel>(QAActionResultCode.InvalidVacancy);
@@ -1547,6 +1713,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
                 vacancy.LocationAddressesComment = null;
                 vacancy.AdditionalLocationInformation = null;
                 vacancy.AdditionalLocationInformationComment = null;
+                vacancy.VacancyLocationType = VacancyLocationType.Unknown;
                 _vacancyPostingService.UpdateVacancy(vacancy);
 
                 _vacancyPostingService.DeleteVacancyLocationsFor(vacancy.VacancyId);
@@ -1576,5 +1743,77 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
 
             return viewModel;
         }
+
+        private static class ExtensionMethods
+        {
+            public static V GetValueOrDefault<K,V>(IReadOnlyDictionary<K,V> dict, K key, Func<K,V> getDefault)
+            {
+                V result;
+                if (dict.TryGetValue(key, out result))
+                    return result;
+                else
+                    return getDefault(key);
+            }
+        }
+
+        
+    }
+
+    public static class Extensions
+    {
+        public static V GetValueOrDefault<K,V>(this IReadOnlyDictionary<K,V> dict, K key)
+        {
+            return GetValueOrDefault(dict, key, _ => default(V));
+        }
+
+        public static V GetValueOrDefault<K, V>(this IReadOnlyDictionary<K, V> dict, K key, Func<K, V> getDefault)
+        {
+            V result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                return getDefault(key);
+        }
+
+        public static IEnumerable<V> GetValueOrEmpty<K, V>(this IReadOnlyDictionary<K, IEnumerable<V>> dict, K key)
+        {
+            IEnumerable<V> result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                return Enumerable.Empty<V>();
+        }
+
+        public static V GetValue<K, V>(this IReadOnlyDictionary<K, V> dict, K key)
+        {
+            V result;
+            if (dict.TryGetValue(key, out result))
+                return result;
+            else
+                throw new KeyNotFoundException($"{key} in ({string.Join(",", dict.Keys.Take(10))})");
+        }
+
+        public static bool EqualsAnyOf<T>(this T value, params T[] values)
+        {
+            foreach (var v in values)
+            {
+                if ((v == null && value == null) || value.Equals(v))
+                    return true;
+            }
+
+            return false;
+        }
+
+        public static IEnumerable<T> GetCurrentPage<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        {
+            return enumerable.Skip((pagedSearchCriteria.CurrentPage - 1) * pagedSearchCriteria.PageSize).Take(pagedSearchCriteria.PageSize);
+        }
+
+        public static int TotalPages<T>(this IEnumerable<T> enumerable, IPagedSearchCriteria pagedSearchCriteria)
+        {
+            // TODO: This looks overly complicated
+            return enumerable.Any() ? (int)Math.Ceiling((double)enumerable.Count() / pagedSearchCriteria.PageSize) : 1;
+        }
+
     }
 }

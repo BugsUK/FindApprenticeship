@@ -51,7 +51,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ErrorCodes.GetCandidateInfoServiceFailed, e, context);
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetCandidateInfoServiceFailed, e, context);
             }
             catch (Exception e)
             {
@@ -82,7 +82,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
             }
             catch (Exception e)
             {
@@ -113,7 +113,7 @@
             catch (BoundaryException e)
             {
                 _logger.Error(e, context);
-                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetApplicationsStatusServiceFailed, e, context);
             }
             catch (Exception e)
             {
@@ -149,7 +149,7 @@
                         response.ValidationErrors.Count(), JsonConvert.SerializeObject(response, Formatting.None));
                 }
 
-                throw new DomainException(ErrorCodes.GetCandidateInfoServiceFailed, new { message, candidateId = candidate.EntityId, legacyCandidateId = candidate.LegacyCandidateId });
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetCandidateInfoServiceFailed, new { message, candidateId = candidate.EntityId, legacyCandidateId = candidate.LegacyCandidateId });
             }
 
             return _mapper.Map<CandidateApplication[], IEnumerable<ApplicationStatusSummary>>(response.CandidateApplications).ToList();
@@ -165,7 +165,7 @@
 
             if (response == null)
             {
-                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed,
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetApplicationsStatusServiceFailed,
                     new { pageNumber = request.PageNumber, applicationStatusExtractWindow, rangeFrom = request.RangeFrom, rangeTo = request.RangeTo });
             }
 
@@ -182,7 +182,7 @@
 
             if (response == null)
             {
-                throw new DomainException(ErrorCodes.GetApplicationsStatusServiceFailed,
+                throw new DomainException(LegacyWebServices.ErrorCodes.GetApplicationsStatusServiceFailed,
                     new { pageNumber, applicationStatusExtractWindow, rangeFrom = request.RangeFrom, rangeTo = request.RangeTo });
             }
 

@@ -52,7 +52,7 @@
                 <p class="subtitle" id="vacancy-employer">@Model.VacancyDetail.EmployerName</p>
             </div>
             @Html.HiddenFor(m => m.VacancyDetail.Description)
-            <p id="vacancy-summary">@Model.VacancyDetail.Description</p>
+            <p id="vacancy-summary" class="@Model.VacancyDetail.Description.GetPreserveFormattingCssClass()">@Model.VacancyDetail.Description</p>
             <p id="appTourSummary">
                 <a href="@Url.RouteUrl(CandidateRouteNames.ApprenticeshipDetails, new { id = Model.VacancyId })">View apprenticeship</a>
             </p>

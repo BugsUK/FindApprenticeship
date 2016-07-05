@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
+    using Application.Interfaces;
     using Common;
     using Common.Configuration;
     using Domain.Entities.Raa.Vacancies;
@@ -13,8 +14,7 @@
     using MongoDB.Bson;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
-
-    using SFA.Apprenticeships.Application.Interfaces;
+    using Domain.Entities.Raa.Locations;
     using SFA.Infrastructure.Interfaces;
 
     public class VacancyRepository : GenericMongoClient2<MongoVacancy>, IVacancyReadRepository, IVacancyWriteRepository
@@ -87,10 +87,10 @@
             return count;
         }
 
-        public List<VacancySummary> GetWithStatus(int pageSize, int page, params VacancyStatus[] desiredStatuses)
+        public List<VacancySummary> GetWithStatus(int pageSize, int page, bool filterByProviderBeenMigrated, params VacancyStatus[] desiredStatuses)
         {
             _logger.Debug("Called Mongodb to get apprenticeship vacancies in status {0}", string.Join(",", desiredStatuses));
-
+            
             var mongoEntities = Collection.Find(Query<Vacancy>.In(v => v.Status, desiredStatuses))
                 .Select(e => _mapper.Map<MongoVacancy, VacancySummary>(e))
                 .ToList();
@@ -257,6 +257,16 @@
 
             _logger.Warn($"Call to Mongodb to get and reserve vacancy with reference number: {vacancyReferenceNumber} for QA failed: {result.Code}, {result.ErrorMessage}");
             return null;
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<IMinimalVacancyDetails>> GetMinimalVacancyDetails(IEnumerable<int> vacancyPartyIds)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IReadOnlyDictionary<int, IEnumerable<VacancyLocation>> GetVacancyLocationsByVacancyIds(IEnumerable<int> vacancyIds)
+        {
+            throw new NotImplementedException();
         }
     }
 }

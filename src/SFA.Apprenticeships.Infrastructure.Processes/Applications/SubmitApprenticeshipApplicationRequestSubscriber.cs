@@ -9,8 +9,10 @@
     using Domain.Entities.Users;
     using Domain.Interfaces.Messaging;
     using Domain.Interfaces.Repositories;
+    using Domain.Raa.Interfaces.Repositories;
 
     using SFA.Apprenticeships.Application.Interfaces;
+    using ErrorCodes = Application.Interfaces.Applications.ErrorCodes;
 
     public class SubmitApprenticeshipApplicationRequestSubscriber : IServiceBusSubscriber<SubmitApprenticeshipApplicationRequest>
     {
@@ -20,6 +22,7 @@
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ICandidateReadRepository _candidateReadRepository;
         private readonly IUserReadRepository _userReadRepository;
+        private readonly IVacancyReadRepository _vacancyReadRepository;
 
         private readonly ILegacyApplicationProvider _legacyApplicationProvider;
         private readonly ILegacyCandidateProvider _legacyCandidateProvider;
@@ -31,7 +34,8 @@
             ICandidateReadRepository candidateReadRepository,
             IUserReadRepository userReadRepository,
             ILegacyApplicationProvider legacyApplicationProvider,
-            ILegacyCandidateProvider legacyCandidateProvider)
+            ILegacyCandidateProvider legacyCandidateProvider, 
+            IVacancyReadRepository vacancyReadRepository)
         {
             _logger = logger;
             _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
@@ -40,6 +44,7 @@
             _userReadRepository = userReadRepository;
             _legacyApplicationProvider = legacyApplicationProvider;
             _legacyCandidateProvider = legacyCandidateProvider;
+            _vacancyReadRepository = vacancyReadRepository;
         }
 
         [ServiceBusTopicSubscription(TopicName = "SubmitApprenticeshipApplication")]
@@ -56,8 +61,14 @@
 
             try
             {
-                var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId, true);
+                var vacancy = _vacancyReadRepository.Get(applicationDetail.Vacancy.Id);
+                if (vacancy != null && vacancy.EditedInRaa)
+                {
+                    SetApplicationStateSubmitted(applicationDetail);
+                    return ServiceBusMessageStates.Complete;
+                }
 
+                var candidate = _candidateReadRepository.Get(applicationDetail.CandidateId, true);
                 if (candidate.LegacyCandidateId == 0)
                 {
                     var user = _userReadRepository.Get(applicationDetail.CandidateId);

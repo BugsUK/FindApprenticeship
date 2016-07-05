@@ -2,6 +2,7 @@
 
 namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using System;
     using System.Security.Claims;
     using System.Web.Mvc;
     using Attributes;
@@ -12,7 +13,6 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Common.Mediators;
     using Common.Providers;
     using Constants;
-    using Domain.Entities;
     using Domain.Entities.Raa;
     using FluentValidation.Mvc;
     using Mediators.ProviderUser;
@@ -20,8 +20,10 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using SFA.Apprenticeships.Application.Interfaces;
 
     using ViewModels;
-    using ClaimTypes = System.Security.Claims.ClaimTypes;
     using SFA.Infrastructure.Interfaces;
+    using SystemClaimTypes = System.Security.Claims.ClaimTypes;
+    using ClaimTypes = Common.Constants.ClaimTypes;
+
     [OwinSessionTimeout]
     public class ProviderUserController : RecruitmentControllerBase
     {
@@ -58,11 +60,12 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
             //Add domain claims
             if (viewModel.EmailAddress != null)
             {
-                AddClaim(ClaimTypes.Email, viewModel.EmailAddress, viewModel);
+                AddClaim(SystemClaimTypes.Email, viewModel.EmailAddress, viewModel);
             }
+
             if (viewModel.EmailAddressVerified)
             {
-                AddClaim(ClaimTypes.Role, Roles.VerifiedEmail, viewModel);
+                AddClaim(SystemClaimTypes.Role, Roles.VerifiedEmail, viewModel);
             }
 
             if (message != null)
@@ -75,6 +78,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case ProviderUserMediatorCodes.Authorize.EmptyUsername:
                 case ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier:
                 case ProviderUserMediatorCodes.Authorize.MissingServicePermission:
+                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
                     _cookieAuthorizationDataProvider.Clear(HttpContext);
 
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new
@@ -202,7 +206,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     return View(response.ViewModel);
 
                 case ProviderUserMediatorCodes.UpdateUser.EmailUpdated:
-                    _cookieAuthorizationDataProvider.RemoveClaim(ClaimTypes.Role, Roles.VerifiedEmail, HttpContext, User.Identity.Name);
+                    _cookieAuthorizationDataProvider.RemoveClaim(SystemClaimTypes.Role, Roles.VerifiedEmail, HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
 
                 case ProviderUserMediatorCodes.UpdateUser.AccountUpdated:
@@ -254,7 +258,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View(verifyEmailViewModel);
                 case ProviderUserMediatorCodes.VerifyEmailAddress.Ok:
-                    _cookieAuthorizationDataProvider.AddClaim(new Claim(ClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
+                    _cookieAuthorizationDataProvider.AddClaim(new Claim(SystemClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
