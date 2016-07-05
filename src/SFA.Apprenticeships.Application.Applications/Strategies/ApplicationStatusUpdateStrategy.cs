@@ -10,16 +10,19 @@
     {
         private readonly ILogService _logger;
 
+        private readonly IApprenticeshipApplicationReadRepository _apprenticeshipApplicationReadRepository;
         private readonly IApprenticeshipApplicationWriteRepository _apprenticeshipApplicationWriteRepository;
         private readonly ITraineeshipApplicationWriteRepository _traineeshipApplicationWriteRepository;
         private readonly IApplicationStatusAlertStrategy _applicationStatusAlertStrategy;
 
         public ApplicationStatusUpdateStrategy(
+            IApprenticeshipApplicationReadRepository apprenticeshipApplicationReadRepository,
             IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository,
             ITraineeshipApplicationWriteRepository traineeshipApplicationWriteRepository,
             IApplicationStatusAlertStrategy applicationStatusAlertStrategy,
             ILogService logger)
         {
+            _apprenticeshipApplicationReadRepository = apprenticeshipApplicationReadRepository;
             _apprenticeshipApplicationWriteRepository = apprenticeshipApplicationWriteRepository;
             _traineeshipApplicationWriteRepository = traineeshipApplicationWriteRepository;
             _applicationStatusAlertStrategy = applicationStatusAlertStrategy;
@@ -35,7 +38,7 @@
             var originalUnsuccessfulReason = apprenticeshipApplication.UnsuccessfulReason;
 
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
-            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary, _apprenticeshipApplicationWriteRepository))
+            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary, _apprenticeshipApplicationReadRepository, _apprenticeshipApplicationWriteRepository))
             {
                 const string format =
                     "Updating apprenticeship application (id='{0}', vacancy id='{1}', candidate='{2})" +

@@ -16,12 +16,14 @@
     {
         public class WhenLegacySystemUpdate
         {
-            private Mock<IApprenticeshipApplicationWriteRepository> _mockRepository;
+            private Mock<IApprenticeshipApplicationReadRepository> _mockReadRepository;
+            private Mock<IApprenticeshipApplicationWriteRepository> _mockWriteRepository;
 
             [SetUp]
             public void SetUp()
             {
-                _mockRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
+                _mockReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
+                _mockWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             }
 
             [TestCase(1, 2, true)]
@@ -41,7 +43,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockReadRepository.Object, _mockWriteRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
@@ -68,7 +70,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockReadRepository.Object, _mockWriteRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
@@ -100,32 +102,36 @@
 
                 var ignoreOwnershipCheck = summary.UpdateSource == ApplicationStatusSummary.Source.Raa;
 
-                _mockRepository.Setup(mock => mock
-                    .UpdateApplicationStatus(detail, ignoreOwnershipCheck))
-                    .Returns(detail);
+                _mockReadRepository.Setup(mock => mock.Get(detail.EntityId)).Returns(new ApprenticeshipApplicationDetail {Status = newStatus});
+
+                _mockWriteRepository.Setup(mock => mock
+                    .UpdateApplicationStatus(detail, newStatus, ignoreOwnershipCheck))
+                    .Returns(expected);
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockReadRepository.Object, _mockWriteRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
                 detail.IsArchived.Should().Be(!expected);
                 detail.Status.Should().Be(summary.ApplicationStatus);
 
-                _mockRepository.Verify(mock => mock
-                    .UpdateApplicationStatus(detail, ignoreOwnershipCheck),
+                _mockWriteRepository.Verify(mock => mock
+                    .UpdateApplicationStatus(detail, newStatus, ignoreOwnershipCheck),
                     Times.Exactly(expected ? 1 : 0));
             }
         }
 
         public class WhenAnyUpdate
         {
-            private Mock<IApprenticeshipApplicationWriteRepository> _mockRepository;
+            private Mock<IApprenticeshipApplicationReadRepository> _mockReadRepository;
+            private Mock<IApprenticeshipApplicationWriteRepository> _mockWriteRepository;
 
             [SetUp]
             public void SetUp()
             {
-                _mockRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
+                _mockReadRepository = new Mock<IApprenticeshipApplicationReadRepository>();
+                _mockWriteRepository = new Mock<IApprenticeshipApplicationWriteRepository>();
             }
 
             [TestCase(VacancyStatuses.Live, VacancyStatuses.Expired, true)]
@@ -147,7 +153,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockReadRepository.Object, _mockWriteRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
@@ -178,7 +184,7 @@
                 };
 
                 // Act.
-                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockRepository.Object);
+                var actual = detail.UpdateApprenticeshipApplicationDetail(summary, _mockReadRepository.Object, _mockWriteRepository.Object);
 
                 // Assert.
                 actual.Should().Be(expected);
