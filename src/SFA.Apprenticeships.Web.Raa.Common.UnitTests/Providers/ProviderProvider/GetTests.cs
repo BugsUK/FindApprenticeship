@@ -39,6 +39,7 @@
 
             viewModel.ProviderId.Should().Be(provider.ProviderId);
             viewModel.ProviderName.Should().Be(provider.Name);
+            viewModel.IsMigrated.Should().Be(provider.IsMigrated);
 
             viewModel.ProviderSiteViewModels.Should().NotBeNull();
             viewModel.ProviderSiteViewModels.Count().Should().Be(providerSites.Length);
