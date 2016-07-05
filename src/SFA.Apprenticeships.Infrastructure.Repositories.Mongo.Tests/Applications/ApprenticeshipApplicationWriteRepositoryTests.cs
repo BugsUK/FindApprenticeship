@@ -8,7 +8,9 @@
     using Infrastructure.Repositories.Mongo.Applications.Entities;
     using MongoDB.Driver;
     using MongoDB.Driver.Builders;
+    using Moq;
     using NUnit.Framework;
+    using SFA.Infrastructure.Interfaces;
 
     [TestFixture]
     public class ApprenticeshipApplicationWriteRepositoryTests : RepositoryIntegrationTest
@@ -54,8 +56,54 @@
             savedApplication.Should().BeNull();
         }
 
+        //should update if not owned by RAA and not ignoring ownership
+        //should update if ignoring ownership
+        //should not update if owned by RAA and not ignoring ownership
+        [TestCase(false, false ,true), Category("Integration")]
+        [TestCase(false, true, true), Category("Integration")]
+        [TestCase(true, true, true), Category("Integration")]
+        [TestCase(true, false, false), Category("Integration")]
+        public void TestUpdateApplicationStatus(bool ownedByRaa, bool ignoreOwnership, bool shouldUpdate)
+        {
+            // arrange
+            Mock<IDateTimeService> dateTimeService = new Mock<IDateTimeService>();
+            Container.Configure(c => c.For<IDateTimeService>().Use(dateTimeService.Object));
+            var newDateTimeValue = DateTime.UtcNow;
+            dateTimeService.Setup(m => m.UtcNow).Returns(newDateTimeValue);
+
+            var newApplicationStatus = ApplicationStatuses.Submitted;
+            var originalApplicationStatus = ApplicationStatuses.Successful;
+            var originalDateTimeValue = DateTime.UtcNow.AddDays(-1);
+
+            var writer = Container.GetInstance<IApprenticeshipApplicationWriteRepository>();
+            var reader = Container.GetInstance<IApprenticeshipApplicationReadRepository>();
+
+            var originalApplication = CreateTestApplication(originalDateTimeValue, originalApplicationStatus, ownedByRaa);
+            writer.Save(originalApplication);
+
+            var updatedApplication = originalApplication;
+            updatedApplication.Status = newApplicationStatus;
+
+           // act
+            writer.UpdateApplicationStatus(updatedApplication, ignoreOwnership);
+
+            //assert
+            var savedApplication = reader.Get(originalApplication.LegacyApplicationId, true);
+            if (shouldUpdate)
+            {
+                savedApplication.Status.Should().Be(newApplicationStatus);
+                savedApplication.DateUpdated.Should().BeExactly(new TimeSpan(newDateTimeValue.Ticks));
+            }
+            else
+            {
+                savedApplication.Status.Should().Be(originalApplicationStatus);
+                savedApplication.DateUpdated.Should().BeExactly(new TimeSpan(originalDateTimeValue.Ticks));
+            }
+            
+        }
+
         #region Helpers
-        private static ApprenticeshipApplicationDetail CreateTestApplication()
+        private static ApprenticeshipApplicationDetail CreateTestApplication(DateTime dateUpdated = new DateTime(), ApplicationStatuses status = ApplicationStatuses.Unknown, bool ownedByRaa = true)
         {
             return new ApprenticeshipApplicationDetail
             {
@@ -63,6 +111,10 @@
                 CandidateId = Guid.NewGuid(),
                 LegacyApplicationId = LegacyApplicationId,
                 VacancyStatus = VacancyStatuses.Live,
+                Status = status,
+                DateLastViewed = ownedByRaa ? DateTime.Today : new DateTime?(),
+                DateUpdated = dateUpdated,
+                DateCreated = DateTime.Now.AddDays(-3),
                 CandidateDetails =
                 {
                     FirstName = "Johnny",

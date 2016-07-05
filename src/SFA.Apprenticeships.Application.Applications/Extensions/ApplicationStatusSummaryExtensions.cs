@@ -3,7 +3,7 @@
     using System;
     using Entities;
 
-    internal static class ApplicationStatusSummaryExtensions
+    public static class ApplicationStatusSummaryExtensions
     {
         public static bool IsLegacySystemUpdate(this ApplicationStatusSummary applicationStatusSummary)
         {
