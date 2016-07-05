@@ -1,13 +1,15 @@
 ﻿namespace SFA.Apprenticeships.Application.Applications.Extensions
 {
-    using System;
     using Domain.Entities.Applications;
     using Domain.Interfaces.Repositories;
     using Entities;
 
-    internal static class ApprenticeshipApplicationDetailExtension
+    public static class ApprenticeshipApplicationDetailExtension
     {
-        internal static bool UpdateApprenticeshipApplicationDetail(this ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary, IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
+        public static bool UpdateApprenticeshipApplicationDetail(
+            this ApprenticeshipApplicationDetail apprenticeshipApplication,
+            ApplicationStatusSummary applicationStatusSummary,
+            IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
         {
             var updated = false;
 

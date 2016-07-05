@@ -38,7 +38,7 @@
 
         public int GetApplicationCount(int vacancyId)
         {
-            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new int[] { vacancyId })[vacancyId].AllApplications;
+            return _apprenticeshipApplicationReadRepository.GetCountsForVacancyIds(new[] { vacancyId })[vacancyId].AllApplications;
         }
 
         public ApprenticeshipApplicationDetail GetApplication(Guid applicationId)
