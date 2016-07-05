@@ -75,6 +75,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 case ProviderUserMediatorCodes.Authorize.EmptyUsername:
                 case ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier:
                 case ProviderUserMediatorCodes.Authorize.MissingServicePermission:
+                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
                     _cookieAuthorizationDataProvider.Clear(HttpContext);
 
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new

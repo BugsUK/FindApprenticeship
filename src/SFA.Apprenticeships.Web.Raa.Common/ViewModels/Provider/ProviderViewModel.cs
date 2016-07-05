@@ -19,5 +19,6 @@ namespace SFA.Apprenticeships.Web.Raa.Common.ViewModels.Provider
         [Display(Name = ProviderViewModelMessages.ProviderNameMessages.LabelText)]
         public string ProviderName { get; set; }
         public IEnumerable<ProviderSiteViewModel> ProviderSiteViewModels { get; set; }
+        public bool IsMigrated { get; set; }
     }
 }

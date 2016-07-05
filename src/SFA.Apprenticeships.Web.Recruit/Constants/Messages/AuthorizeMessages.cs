@@ -11,6 +11,7 @@
         public const string NoUserProfile = "Enter your user profile";
         public const string EmailAddressNotVerified = "Verify your email address";
         public const string SignedOut = "You have successfully signed out";
-        public const string SignedOutTimeout = "You have been signed out due to inactivity";        
+        public const string SignedOutTimeout = "You have been signed out due to inactivity";
+        public const string ProviderNotMigrated = "There is a problem with your account. Please call our helpdesk on 0800 015 0400 to resolve this issue. The helpdesk is open daily from 8am to 10pm.";
     }
 }
