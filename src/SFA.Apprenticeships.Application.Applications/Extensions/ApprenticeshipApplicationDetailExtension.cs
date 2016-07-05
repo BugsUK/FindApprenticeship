@@ -2,11 +2,12 @@
 {
     using System;
     using Domain.Entities.Applications;
+    using Domain.Interfaces.Repositories;
     using Entities;
 
     internal static class ApprenticeshipApplicationDetailExtension
     {
-        internal static bool UpdateApprenticeshipApplicationDetail(this ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary)
+        internal static bool UpdateApprenticeshipApplicationDetail(this ApprenticeshipApplicationDetail apprenticeshipApplication, ApplicationStatusSummary applicationStatusSummary, IApprenticeshipApplicationWriteRepository apprenticeshipApplicationWriteRepository)
         {
             var updated = false;
 
@@ -15,21 +16,19 @@
                 // Only update application status etc. if update originated from Legacy system.
                 if (apprenticeshipApplication.Status != applicationStatusSummary.ApplicationStatus)
                 {
+                    var originalApplicationStatus = apprenticeshipApplication.Status;
+
                     apprenticeshipApplication.Status = applicationStatusSummary.ApplicationStatus;
 
-                    switch (apprenticeshipApplication.Status)
-                    {
-                        case ApplicationStatuses.Successful:
-                            apprenticeshipApplication.SuccessfulDateTime = DateTime.UtcNow;
-                            break;
-                        case ApplicationStatuses.Unsuccessful:
-                            apprenticeshipApplication.UnsuccessfulDateTime = DateTime.UtcNow;
-                            break;
-                    }
+                    var ignoreOwnershipCheck = applicationStatusSummary.UpdateSource == ApplicationStatusSummary.Source.Raa;
+                    apprenticeshipApplication = apprenticeshipApplicationWriteRepository.UpdateApplicationStatus(apprenticeshipApplication, ignoreOwnershipCheck);
 
-                    // Application status has changed, ensure it appears on the candidate's dashboard.
-                    apprenticeshipApplication.IsArchived = false;
-                    updated = true;
+                    if (originalApplicationStatus != apprenticeshipApplication.Status)
+                    {
+                        // Application status has changed, ensure it appears on the candidate's dashboard.
+                        apprenticeshipApplication.IsArchived = false;
+                        updated = true;
+                    }
                 }
 
                 if (apprenticeshipApplication.LegacyApplicationId != applicationStatusSummary.LegacyApplicationId)

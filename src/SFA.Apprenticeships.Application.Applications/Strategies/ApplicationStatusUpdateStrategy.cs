@@ -35,7 +35,7 @@
             var originalUnsuccessfulReason = apprenticeshipApplication.UnsuccessfulReason;
 
             // invoked because the status of the apprenticeshipApplication / vacancy *may* have changed
-            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary))
+            if (apprenticeshipApplication.UpdateApprenticeshipApplicationDetail(applicationStatusSummary, _apprenticeshipApplicationWriteRepository))
             {
                 const string format =
                     "Updating apprenticeship application (id='{0}', vacancy id='{1}', candidate='{2})" +

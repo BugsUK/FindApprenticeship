@@ -250,5 +250,52 @@
                 throw new Exception(message);
             }
         }
+
+        public ApprenticeshipApplicationDetail UpdateApplicationStatus(ApprenticeshipApplicationDetail entity, bool ignoreOwnershipCheck)
+        {
+            var applicationId = entity.EntityId;
+            var updatedStatus = entity.Status;
+
+            _logger.Debug("Calling repository to try to update apprenticeship application status={1} for application with Id={0}", applicationId, updatedStatus);
+
+            var idMatchQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.Id, applicationId);
+            //Only update if not owned by RAA (using the setting of DateLastViewed as a proxy for that ownership) or if ownership should be ignored
+            //http://stackoverflow.com/questions/4057196/how-do-you-query-this-in-mongo-is-not-null
+            var isOwnedByRaaQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.DateLastViewed, null);
+
+            var query = ignoreOwnershipCheck
+                ? idMatchQuery
+                : new QueryBuilder<MongoApprenticeshipApplicationDetail>().And(idMatchQuery, isOwnedByRaaQuery);
+
+            var update = Update<MongoApprenticeshipApplicationDetail>
+                .Set(e => e.Status, updatedStatus)
+                .Set(e => e.DateUpdated, DateTime.UtcNow);
+
+            switch (updatedStatus)
+            {
+                case ApplicationStatuses.Successful:
+                    update = update.Set(e => e.SuccessfulDateTime, DateTime.UtcNow);
+                    break;
+                case ApplicationStatuses.Unsuccessful:
+                    update = update.Set(e => e.UnsuccessfulDateTime, DateTime.UtcNow);
+                    break;
+            }
+
+            var result = Collection.Update(query,
+                update);
+
+            if (result.Ok)
+            {
+                _logger.Debug("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}", applicationId, updatedStatus, result.Code);
+            }
+            else
+            {
+                var message = $"Call to repository to update apprenticeship application status={updatedStatus} for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+                _logger.Warn(message);
+            }
+
+            //TODO: Probably return a bool and rename to TryUpdateStatus with the entity as an out parameter
+            return Get(applicationId);
+        }
     }
 }
