@@ -256,16 +256,16 @@
             var applicationId = entity.EntityId;
             var updatedStatus = entity.Status;
 
-            _logger.Debug("Calling repository to try to update apprenticeship application status={1} for application with Id={0}", applicationId, updatedStatus);
+            _logger.Info("Calling repository to try to update apprenticeship application status={1} for application with Id={0}", applicationId, updatedStatus);
 
             var idMatchQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.Id, applicationId);
             //Only update if not owned by RAA (using the setting of DateLastViewed as a proxy for that ownership) or if ownership should be ignored
             //http://stackoverflow.com/questions/4057196/how-do-you-query-this-in-mongo-is-not-null
-            var isOwnedByRaaQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.DateLastViewed, null);
+            var isNotOwnedByRaaQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.DateLastViewed, null);
 
             var query = ignoreOwnershipCheck
                 ? idMatchQuery
-                : new QueryBuilder<MongoApprenticeshipApplicationDetail>().And(idMatchQuery, isOwnedByRaaQuery);
+                : new QueryBuilder<MongoApprenticeshipApplicationDetail>().And(idMatchQuery, isNotOwnedByRaaQuery);
 
             var update = Update<MongoApprenticeshipApplicationDetail>
                 .Set(e => e.Status, updatedStatus)
@@ -281,12 +281,11 @@
                     break;
             }
 
-            var result = Collection.Update(query,
-                update);
+            var result = Collection.Update(query, update);
 
             if (result.Ok)
             {
-                _logger.Debug("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}", applicationId, updatedStatus, result.Code);
+                _logger.Info("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}", applicationId, updatedStatus, result.Code);
             }
             else
             {
