@@ -1,5 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.ReferenceData
 {
+    using System.CodeDom;
+
     public class CategoryPrefixes
     {
         public const string SectorSubjectAreaTier1 = "SSAT1.";
@@ -40,6 +42,24 @@
         {
             if (string.IsNullOrEmpty(code)) return code;
             return code.StartsWith(Sector) ? code : $"{Sector}{code}";
+        }
+
+        public static bool IsSectorSubjectAreaTier1Code(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return false;
+            return code.StartsWith(SectorSubjectAreaTier1);
+        }
+
+        public static bool IsFrameworkCode(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return false;
+            return code.StartsWith(Framework);
+        }
+
+        public static bool IsStandardSectorCode(string code)
+        {
+            if (string.IsNullOrEmpty(code)) return false;
+            return code.StartsWith(StandardSector);
         }
 
         public static string GetOriginalSectorSubjectAreaTier1Code(string code)

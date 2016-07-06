@@ -203,6 +203,8 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
         {
             UserDataProvider.Pop(CandidateDataItemNames.VacancyDistance);
 
+            NormalizeCategoriesAndSubcategories(model);
+
             if (model.ResultsPerPage == 0)
             {
                 model.ResultsPerPage = GetResultsPerPage();
@@ -333,6 +335,25 @@ namespace SFA.Apprenticeships.Web.Candidate.Mediators.Search
             }
             
             return GetMediatorResponse(ApprenticeshipSearchMediatorCodes.Results.Ok, results);
+        }
+
+        private void NormalizeCategoriesAndSubcategories(ApprenticeshipSearchViewModel model)
+        {
+            if (!CategoryPrefixes.IsSectorSubjectAreaTier1Code(model.Category))
+            {
+                model.Category = CategoryPrefixes.GetSectorSubjectAreaTier1Code(model.Category);
+            }
+
+            model.SubCategories = model.SubCategories?.Select(c =>
+            {
+                if (!CategoryPrefixes.IsFrameworkCode(c) && !CategoryPrefixes.IsStandardSectorCode(c))
+                {
+                    // Is an old saved search, so it's a framework
+                    return CategoryPrefixes.GetFrameworkCode(c);
+                }
+
+                return c;
+            }).ToArray();
         }
 
         public MediatorResponse<ApprenticeshipSearchViewModel> SaveSearch(Guid candidateId, ApprenticeshipSearchViewModel viewModel)
