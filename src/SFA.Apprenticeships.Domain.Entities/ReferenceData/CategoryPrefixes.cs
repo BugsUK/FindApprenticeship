@@ -1,7 +1,5 @@
 ﻿namespace SFA.Apprenticeships.Domain.Entities.ReferenceData
 {
-    using System.CodeDom;
-
     public class CategoryPrefixes
     {
         public const string SectorSubjectAreaTier1 = "SSAT1.";

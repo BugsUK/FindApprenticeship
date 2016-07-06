@@ -211,8 +211,6 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        // TODO: We don't need to do that anymore?. We need to normalize categories to the new format.
-                        // TODO: AG: ensure compatibility between old and new category code formats and existing saved searches / URLs. This code should be refactored / unit tested.
                         var categoryCodes = new List<string>
                         {
                             parameters.CategoryCode
