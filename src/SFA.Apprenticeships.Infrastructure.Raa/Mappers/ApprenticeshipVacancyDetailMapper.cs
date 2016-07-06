@@ -128,28 +128,36 @@
             };
         }
 
-        private static string GetContactInformation(Vacancy vacancy)
+        private static string GetContactInformation(Vacancy vacancy, ProviderSite providerSite)
         {
             var sb = new StringBuilder();
-            if (!string.IsNullOrEmpty(vacancy.ContactName))
+
+            if (!vacancy.EditedInRaa)
             {
-                sb.Append(vacancy.ContactName);
+                sb.Append(providerSite.ContactDetailsForCandidate);
             }
-            if (!string.IsNullOrEmpty(vacancy.ContactNumber))
+            else
             {
-                if (sb.Length > 0)
+                if (!string.IsNullOrEmpty(vacancy.ContactName))
                 {
-                    sb.Append(" ");
+                    sb.Append(vacancy.ContactName);
                 }
-                sb.Append(vacancy.ContactNumber);
-            }
-            if (!string.IsNullOrEmpty(vacancy.ContactEmail))
-            {
-                if (sb.Length > 0)
+                if (!string.IsNullOrEmpty(vacancy.ContactNumber))
                 {
-                    sb.Append(" ");
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactNumber);
                 }
-                sb.Append(vacancy.ContactEmail);
+                if (!string.IsNullOrEmpty(vacancy.ContactEmail))
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactEmail);
+                }
             }
 
             return sb.ToString();
