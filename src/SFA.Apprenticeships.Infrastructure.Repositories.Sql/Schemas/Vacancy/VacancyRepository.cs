@@ -1270,7 +1270,7 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
         {            
             var vacancyCollections = new List<dynamic>();                               
             var partyIds = vacancyPartyIds as int[] ?? vacancyPartyIds.ToArray();
-            var splitVacancyPartyIds = DbHelpers.SplitInputIntoChunks(partyIds);            
+            var splitVacancyPartyIds = DbHelpers.SplitIds(partyIds);            
             foreach (var splitVacancyPartyId in splitVacancyPartyIds)
             {
                 IList<dynamic> singleCollection = _getOpenConnection.Query<dynamic>(@"
