@@ -77,7 +77,7 @@
                 ProviderName = provider.Name,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
-                Contact = GetContactInformation(vacancy, providerSite),
+                Contact = vacancy.GetContactInformation(providerSite),
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
@@ -126,41 +126,6 @@
                 Longitude = geoPoint.Longitude,
                 Latitude = geoPoint.Latitude
             };
-        }
-
-        private static string GetContactInformation(Vacancy vacancy, ProviderSite providerSite)
-        {
-            var sb = new StringBuilder();
-
-            if (!vacancy.EditedInRaa)
-            {
-                sb.Append(providerSite.ContactDetailsForCandidate);
-            }
-            else
-            {
-                if (!string.IsNullOrEmpty(vacancy.ContactName))
-                {
-                    sb.Append(vacancy.ContactName);
-                }
-                if (!string.IsNullOrEmpty(vacancy.ContactNumber))
-                {
-                    if (sb.Length > 0)
-                    {
-                        sb.Append(" ");
-                    }
-                    sb.Append(vacancy.ContactNumber);
-                }
-                if (!string.IsNullOrEmpty(vacancy.ContactEmail))
-                {
-                    if (sb.Length > 0)
-                    {
-                        sb.Append(" ");
-                    }
-                    sb.Append(vacancy.ContactEmail);
-                }
-            }
-
-            return sb.ToString();
         }
     }
 }
