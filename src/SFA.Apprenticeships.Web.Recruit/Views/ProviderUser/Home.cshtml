@@ -89,98 +89,106 @@
             </h2>
             <ul class="vacancies-summary">
                 <li>
-                        @if (filterType == VacanciesSummaryFilterTypes.Live)
-                        {
+                    @if (filterType == VacanciesSummaryFilterTypes.Live)
+                    {
+                        <figure class="data">
+                            <p class="count">@Model.VacanciesSummary.LiveCount</p>
+                            <figcaption><h2>Live</h2></figcaption>
+                        </figure>
+                    }
+                    else
+                    {
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">
                             <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.LiveCount</p>
                                 <figcaption><h2>Live</h2></figcaption>
                             </figure>
-                        }
-                        else
-                        {
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">
-                                <figure class="data">
-                                    <p class="count">@Model.VacanciesSummary.LiveCount</p>
-                                    <figcaption><h2>Live</h2></figcaption>
-                                </figure>
-                            </a>
-                        }
+                        </a>
+                    }
                 </li>
                 <li>
-                    <!--TODO: Move anchor to the outside of the figure tag-->
-                    <figure class="data">                        
-                        @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
-                        {                          
-                            if (newApplicationsCount == 1)
-                            {
+                    @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
+                    {
+                        if (newApplicationsCount == 1)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                 <figcaption>
                                     <h2>New application</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                 <figcaption>
                                     <h2>New applications</h2>
                                 </figcaption>
-                            }
+                            </figure>
                         }
-                        else
-                        {                            
-                            if (newApplicationsCount == 1)
-                            {
+                    }
+                    else
+                    {                            
+                        if (newApplicationsCount == 1)
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New application</h2>
                                     </figcaption>
                                 </a>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New applications</h2>
                                     </figcaption>
                                 </a>
-                            }
-
+                            </figure>
                         }
-                    </figure>
+                    }
                 </li>
                 <li>
-                    <figure class="data">
-                        @if (filterType == VacanciesSummaryFilterTypes.Rejected)
+                    @if (filterType == VacanciesSummaryFilterTypes.Rejected)
                     {
+                        <figure class="data">
                             <p class="count">@Model.VacanciesSummary.RejectedCount</p>
                             <figcaption><h2>Referred</h2></figcaption>
-                        }
-                        else
-                        {
+                        </figure>
+                    }
+                    else
+                    {
+                        <figure class="data">
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">
                                 <p class="count">@Model.VacanciesSummary.RejectedCount</p>
                                 <figcaption><h2>Referred</h2></figcaption>
                             </a>
-                        }
-                    </figure>
+                        </figure>
+                    }
                 </li>
                 <li>
-                    <figure class="data">
-                        @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
+                    @if (filterType == VacanciesSummaryFilterTypes.ClosingSoon)
                     {
+                        <figure class="data">
                             <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
                             <figcaption><h2>Closing soon</h2></figcaption>
-                        }
-                        else
-                        {
+                        </figure>
+                    }
+                    else
+                    {
+                        <figure class="data">
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">
                                 <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
                                 <figcaption><h2>Closing soon</h2></figcaption>
                             </a>
-                        }
-                    </figure>
+                        </figure>
+                    }
                 </li>
                 <li>
                     <figure class="data">
@@ -202,104 +210,114 @@
                 @if (showAllLotteryNumbers)
                 {
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Draft)
-                            {
+                        @if (filterType == VacanciesSummaryFilterTypes.Draft)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.DraftCount</p>
                                 <figcaption>
                                     <h2>Draft</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.DraftCount</p>
                                     <figcaption>
                                         <h2>Draft</h2>
                                     </figcaption>
                                 </a>
-                            }
-                        </figure>
+                            </figure>
+                        }
                     </li>
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Submitted)
-                            {
+                        @if (filterType == VacanciesSummaryFilterTypes.Submitted)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
                                 <figcaption>
                                     <h2>Submitted</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
                                     <figcaption>
                                         <h2>Submitted</h2>
                                     </figcaption>
                                 </a>
-                            }
-                        </figure>
+                            </figure>
+                        }
                     </li>
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Closed)
-                            {
+                        @if (filterType == VacanciesSummaryFilterTypes.Closed)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.ClosedCount</p>
                                 <figcaption>
                                     <h2>Closed</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.ClosedCount</p>
                                     <figcaption>
                                         <h2>Closed</h2>
                                     </figcaption>
                                 </a>
-                            }
-                        </figure>
+                            </figure>
+                        }
                     </li>
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Withdrawn)
-                            {
+                        @if (filterType == VacanciesSummaryFilterTypes.Withdrawn)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
                                 <figcaption>
                                     <h2>Withdrawn</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
                                     <figcaption>
                                         <h2>Withdrawn</h2>
                                     </figcaption>
                                 </a>
-                            }
-                        </figure>
+                            </figure>
+                        }
                     </li>
                     <li>
-                        <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Completed)
-                            {
+                        @if (filterType == VacanciesSummaryFilterTypes.Completed)
+                        {
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.CompletedCount</p>
                                 <figcaption>
                                     <h2>Completed</h2>
                                 </figcaption>
-                            }
-                            else
-                            {
+                            </figure>
+                        }
+                        else
+                        {
+                            <figure class="data">
                                 <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed))" class="vacancy-filter">
                                     <p class="count">@Model.VacanciesSummary.CompletedCount</p>
                                     <figcaption>
                                         <h2>Completed</h2>
                                     </figcaption>
                                 </a>
-                            }
-                        </figure>
+                            </figure>
+                        }
                     </li>
                 }
             </ul>
@@ -312,7 +330,7 @@
                     <details class="@open" @open>
                         <summary>Search your @vacanciesLabel</summary>
                         <div class="detail-content">
-                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString)
+                            @Html.TextBoxFor(m => m.VacanciesSummary.VacanciesSummarySearch.SearchString, new {aria_label = "Search your " + vacanciesLabel })
                             <button id="search-vacancies-button" class="button" name="SearchVacanciesAction" value="SearchVacancies">Search</button>
                         </div>
                     </details>
