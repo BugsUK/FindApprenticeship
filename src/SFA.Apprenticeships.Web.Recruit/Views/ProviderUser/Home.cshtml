@@ -51,7 +51,7 @@
                 }
                 else
                 {
-                    <p class="form-label">Change provider site</p>
+                    <label for="provider-site" class="form-label">Change provider site</label>
                     @Html.DropDownListFor(m => m.ProviderUserViewModel.DefaultProviderSiteId, Model.ProviderSites, new { id = "provider-site", @class = "chosen-select grid grid-1-1" })
                     <noscript>
                         <button class="button" name="ChangeProviderSiteAction" value="ChangeProviderSite">Change provider site</button>
@@ -89,22 +89,25 @@
             </h2>
             <ul class="vacancies-summary">
                 <li>
-                    <figure class="data">
                         @if (filterType == VacanciesSummaryFilterTypes.Live)
-                    {
-                            <p class="count">@Model.VacanciesSummary.LiveCount</p>
-                            <figcaption><h2>Live</h2></figcaption>
+                        {
+                            <figure class="data">
+                                <p class="count">@Model.VacanciesSummary.LiveCount</p>
+                                <figcaption><h2>Live</h2></figcaption>
+                            </figure>
                         }
                         else
                         {
                             <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Live))" class="vacancy-filter">
-                                <p class="count">@Model.VacanciesSummary.LiveCount</p>
-                                <figcaption><h2>Live</h2></figcaption>
+                                <figure class="data">
+                                    <p class="count">@Model.VacanciesSummary.LiveCount</p>
+                                    <figcaption><h2>Live</h2></figcaption>
+                                </figure>
                             </a>
                         }
-                    </figure>
                 </li>
                 <li>
+                    <!--TODO: Move anchor to the outside of the figure tag-->
                     <figure class="data">                        
                         @if (filterType == VacanciesSummaryFilterTypes.NewApplications)
                         {                          
@@ -351,12 +354,12 @@
                             <tbody>
                                 @foreach (var vacancy in Model.VacanciesSummary.Vacancies.Page)
                                 {
+                                    var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
                                     var isOfflineVacancy = vacancy.OfflineVacancy == true;
                                     <tr>
                                         <td data-label="Vacancy title">
                                             <div class="vac-title">
                                                 @{
-                                                    var title = string.IsNullOrEmpty(vacancy.Title) ? "(No Title)" : vacancy.Title;
                                                     var routeName = RecruitmentRouteNames.PreviewVacancy;
                                                     if (vacancy.Status == VacancyStatus.Unknown || vacancy.Status == VacancyStatus.Draft)
                                                     {
@@ -441,11 +444,11 @@
                                             <td class="vac-toolbox">
                                                 @if (VacancyIsClonable(vacancy))
                                                 {
-                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Clone</a>
+                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.CloneVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Clone @title for @vacancy.EmployerName">Clone</a>
                                                 }
                                                 @if (vacancy.Status == VacancyStatus.Referred)
                                                 {
-                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})">Edit and resubmit</a>
+                                                    <a href="@Url.RouteUrl(RecruitmentRouteNames.PreviewVacancy, new {vacancyReferenceNumber = vacancy.VacancyReferenceNumber})" title="Edit and resubmit @title for @vacancy.EmployerName">Edit and resubmit</a>
                                                 }
                                             </td>
                                         </tr>
