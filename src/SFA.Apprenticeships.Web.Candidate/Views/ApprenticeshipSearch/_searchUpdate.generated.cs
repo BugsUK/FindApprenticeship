@@ -47,6 +47,7 @@ namespace SFA.Apprenticeships.Web.Candidate.Views.ApprenticeshipSearch
     using SFA.Apprenticeships.Web.Common.Framework;
     using SFA.Apprenticeships.Web.Common.Models.Common;
     using SFA.Apprenticeships.Web.Common.ViewModels.Locations;
+    using SFA.Apprenticeships.Web.Common.Views.Shared.DisplayTemplates;
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("RazorGenerator", "2.0.0.0")]
     [System.Web.WebPages.PageVirtualPathAttribute("~/Views/ApprenticeshipSearch/_searchUpdate.cshtml")]
@@ -424,6 +425,17 @@ WriteLiteral("                ");
             
             #line default
             #line hidden
+WriteLiteral("\r\n");
+
+WriteLiteral("                ");
+
+            
+            #line 66 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+           Write(Html.HiddenFor(m=> m.Category));
+
+            
+            #line default
+            #line hidden
 WriteLiteral("\r\n                ");
 
 WriteLiteral("\r\n                <input");
@@ -434,14 +446,14 @@ WriteLiteral(" name=\"LocationType\"");
 
 WriteLiteral(" type=\"hidden\"");
 
-WriteAttribute("value", Tuple.Create(" value=\"", 4369), Tuple.Create("\"", 4396)
+WriteAttribute("value", Tuple.Create(" value=\"", 4418), Tuple.Create("\"", 4445)
             
-            #line 67 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
-  , Tuple.Create(Tuple.Create("", 4377), Tuple.Create<System.Object, System.Int32>(Model.LocationType
+            #line 68 "..\..\Views\ApprenticeshipSearch\_searchUpdate.cshtml"
+  , Tuple.Create(Tuple.Create("", 4426), Tuple.Create<System.Object, System.Int32>(Model.LocationType
             
             #line default
             #line hidden
-, 4377), false)
+, 4426), false)
 );
 
 WriteLiteral(" />\r\n            </div>\r\n        </fieldset>\r\n    </div>\r\n</section>");

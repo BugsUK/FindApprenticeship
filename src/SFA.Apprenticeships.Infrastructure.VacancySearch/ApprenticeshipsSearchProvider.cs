@@ -8,6 +8,7 @@
     using Application.Interfaces.Vacancies;
     using Application.Vacancy;
     using Configuration;
+    using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies.Apprenticeships;
     using Elastic.Common.Configuration;
     using Nest;
@@ -210,25 +211,10 @@
 
                     if (!string.IsNullOrWhiteSpace(parameters.CategoryCode))
                     {
-                        // TODO: AG: ensure compatibility between old and new category code formats and existing saved searches / URLs. This code should be refactored / unit tested.
                         var categoryCodes = new List<string>
                         {
                             parameters.CategoryCode
                         };
-
-                        if (parameters.CategoryCode.StartsWith("SSAT1."))
-                        {
-                            var oldCategoryCode = parameters.CategoryCode.Replace("SSAT1.", "");
-
-                            categoryCodes.Add(oldCategoryCode);
-                        }
-
-                        if (!parameters.CategoryCode.StartsWith("SSAT1."))
-                        {
-                            var newCategoryCode = "SSAT1." + parameters.CategoryCode;
-
-                            categoryCodes.Add(newCategoryCode);
-                        }
 
                         var queryCategory = q.Terms(f => f.CategoryCode, categoryCodes.Distinct());
 
@@ -334,20 +320,6 @@
                     var subCategoryCodes = new List<string>();
 
                     subCategoryCodes.AddRange(parameters.SubCategoryCodes);
-
-                    // TODO: AG: ensure compatibility between old and new subcategory code formats and existing saved searches / URLs. This code should be refactored / unit tested.
-                    var oldSubCategoryCodes = subCategoryCodes
-                        .Where(subCategoryCode => subCategoryCode.StartsWith("FW."))
-                        .Select(subCategoryCode => subCategoryCode.Replace("FW.", ""))
-                        .ToList();
-
-                    var newSubCategoryCodes = subCategoryCodes
-                        .Where(subCategoryCode => !subCategoryCode.StartsWith("FW."))
-                        .Select(subCategoryCode => "FW." + subCategoryCode)
-                        .ToList();
-
-                    subCategoryCodes.AddRange(oldSubCategoryCodes);
-                    subCategoryCodes.AddRange(newSubCategoryCodes);
 
                     s.Filter(ff => ff.Terms(f => f.SubCategoryCode, subCategoryCodes.Distinct()));
                 }
