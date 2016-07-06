@@ -77,7 +77,7 @@
                 ProviderName = provider.Name,
                 TradingName = employer.TradingName,
                 //ProviderDescription = vacancy.,
-                Contact = GetContactInformation(vacancy),
+                Contact = GetContactInformation(vacancy, providerSite),
                 TrainingToBeProvided = vacancy.TrainingProvided,
                 //TODO: How is this captured in RAA?
                 //ContractOwner = vacancy.,
