@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
@@ -36,6 +38,41 @@
                 default:
                     throw new ArgumentException("Apprenticeship Level: " + apprenticeshipLevel + " was not recognized");
             }
+        }
+
+        public static string GetContactInformation(this Vacancy vacancy, ProviderSite providerSite)
+        {
+            var sb = new StringBuilder();
+
+            if (!vacancy.EditedInRaa)
+            {
+                sb.Append(providerSite.ContactDetailsForCandidate);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(vacancy.ContactName))
+                {
+                    sb.Append(vacancy.ContactName);
+                }
+                if (!string.IsNullOrEmpty(vacancy.ContactNumber))
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactNumber);
+                }
+                if (!string.IsNullOrEmpty(vacancy.ContactEmail))
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactEmail);
+                }
+            }
+
+            return sb.ToString();
         }
 
         public static Domain.Entities.Vacancies.TrainingType GetTrainingType(this TrainingType trainingType)
