@@ -132,25 +132,25 @@
                     {                            
                         if (newApplicationsCount == 1)
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New application</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.NewApplications))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.NewApplicationsAcrossAllVacanciesCount</p>
                                     <figcaption>
                                         <h2>New applications</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     }
                 </li>
@@ -164,12 +164,12 @@
                     }
                     else
                     {
-                        <figure class="data">
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Rejected))" class="vacancy-filter">
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.RejectedCount</p>
                                 <figcaption><h2>Referred</h2></figcaption>
-                            </a>
-                        </figure>
+                            </figure>
+                        </a>
                     }
                 </li>
                 <li>
@@ -182,17 +182,17 @@
                     }
                     else
                     {
-                        <figure class="data">
-                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">
+                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.ClosingSoon))" class="vacancy-filter">
+                            <figure class="data">
                                 <p class="count">@Model.VacanciesSummary.ClosingSoonCount</p>
                                 <figcaption><h2>Closing soon</h2></figcaption>
-                            </a>
-                        </figure>
+                            </figure>
+                        </a>
                     }
                 </li>
                 <li>
-                    <figure class="data">
-                        <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, !showAllLotteryNumbers))" class="vacancy-filter">
+                    <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, !showAllLotteryNumbers))" class="vacancy-filter">
+                        <figure class="data">
                             <p class="count">&nbsp;</p>
                             <figcaption class="underline">
                                 @if (showAllLotteryNumbers)
@@ -204,8 +204,8 @@
                                     <h2>Show more...</h2>
                                 }
                             </figcaption>
-                        </a>
-                    </figure>
+                        </figure>
+                    </a>
                 </li>
                 @if (showAllLotteryNumbers)
                 {
@@ -221,14 +221,14 @@
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Draft))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.DraftCount</p>
                                     <figcaption>
                                         <h2>Draft</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     </li>
                     <li>
@@ -243,14 +243,14 @@
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Submitted))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.SubmittedCount</p>
                                     <figcaption>
                                         <h2>Submitted</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     </li>
                     <li>
@@ -265,14 +265,14 @@
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Closed))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.ClosedCount</p>
                                     <figcaption>
                                         <h2>Closed</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     </li>
                     <li>
@@ -287,14 +287,14 @@
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
                                     <figcaption>
                                         <h2>Withdrawn</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     </li>
                     <li>
@@ -309,14 +309,14 @@
                         }
                         else
                         {
-                            <figure class="data">
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed))" class="vacancy-filter">
+                            <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Completed))" class="vacancy-filter">
+                                <figure class="data">
                                     <p class="count">@Model.VacanciesSummary.CompletedCount</p>
                                     <figcaption>
                                         <h2>Completed</h2>
                                     </figcaption>
-                                </a>
-                            </figure>
+                                </figure>
+                            </a>
                         }
                     </li>
                 }
