@@ -24,9 +24,10 @@
 
         IReadOnlyDictionary<int, IApplicationCounts> GetCountsForVacancyIds(IEnumerable<int> vacancyIds);
     }
-
+    
     public interface IApprenticeshipApplicationWriteRepository : IWriteRepository<ApprenticeshipApplicationDetail> {
         void ExpireOrWithdrawForCandidate(Guid value, int vacancyId);
         void UpdateApplicationNotes(Guid applicationId, string notes);
+        bool UpdateApplicationStatus(ApprenticeshipApplicationDetail entity, ApplicationStatuses updatedStatus, bool ignoreOwnershipCheck);
     }
 }

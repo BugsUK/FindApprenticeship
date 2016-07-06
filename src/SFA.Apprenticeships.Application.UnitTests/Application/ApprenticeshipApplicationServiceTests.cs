@@ -166,7 +166,8 @@
                 LegacyCandidateId = 0,
                 LegacyVacancyId = 0,
                 VacancyStatus = apprenticeshipApplicationDetail.VacancyStatus,
-                ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate
+                ClosingDate = apprenticeshipApplicationDetail.Vacancy.ClosingDate,
+                UpdateSource = ApplicationStatusSummary.Source.Raa
             });
         }
     }

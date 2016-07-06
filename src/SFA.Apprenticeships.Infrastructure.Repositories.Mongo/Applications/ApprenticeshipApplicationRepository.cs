@@ -18,17 +18,19 @@
         IApprenticeshipApplicationWriteRepository
     {
         private readonly ILogService _logger;
+        private readonly IDateTimeService _dataTimeService;
 
         private readonly IMapper _mapper;
 
         private readonly CommonApplicationRepository _commonApplicationRepository;
 
-        public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger)
+        public ApprenticeshipApplicationRepository(IConfigurationService configurationService, IMapper mapper, ILogService logger, IDateTimeService dataTimeService)
         {
             var config = configurationService.Get<MongoConfiguration>();
             Initialise(config.ApplicationsDb, "apprenticeships");
             _mapper = mapper;
             _logger = logger;
+            _dataTimeService = dataTimeService;
             _commonApplicationRepository = new CommonApplicationRepository(logger, Collection);
         }
 
@@ -237,7 +239,7 @@
                     .EQ(e => e.Id, applicationId),
                 Update<MongoApprenticeshipApplicationDetail>
                     .Set(e => e.Notes, notes)
-                    .Set(e => e.DateUpdated, DateTime.UtcNow));
+                    .Set(e => e.DateUpdated, _dataTimeService.UtcNow));
 
             if (result.Ok)
             {
@@ -249,6 +251,50 @@
                 _logger.Error(message);
                 throw new Exception(message);
             }
+        }
+
+        public bool UpdateApplicationStatus(ApprenticeshipApplicationDetail entity, ApplicationStatuses updatedStatus, bool ignoreOwnershipCheck)
+        {
+            var applicationId = entity.EntityId;
+            var now = _dataTimeService.UtcNow;
+
+            _logger.Info("Calling repository to try to update apprenticeship application status={1} for application with Id={0}", applicationId, updatedStatus);
+
+            var idMatchQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.Id, applicationId);
+            //Only update if not owned by RAA (using the setting of DateLastViewed as a proxy for that ownership) or if ownership should be ignored
+            //http://stackoverflow.com/questions/4057196/how-do-you-query-this-in-mongo-is-not-null
+            var isNotOwnedByRaaQuery = Query<MongoApprenticeshipApplicationDetail>.EQ(e => e.DateLastViewed, null);
+
+            var query = ignoreOwnershipCheck
+                ? idMatchQuery
+                : new QueryBuilder<MongoApprenticeshipApplicationDetail>().And(idMatchQuery, isNotOwnedByRaaQuery);
+
+            var update = Update<MongoApprenticeshipApplicationDetail>
+                .Set(e => e.Status, updatedStatus)
+                .Set(e => e.IsArchived, false) // Application status has changed, ensure it appears on the candidate's dashboard.
+                .Set(e => e.DateUpdated, now);
+
+            switch (updatedStatus)
+            {
+                case ApplicationStatuses.Successful:
+                    update = update.Set(e => e.SuccessfulDateTime, now);
+                    break;
+                case ApplicationStatuses.Unsuccessful:
+                    update = update.Set(e => e.UnsuccessfulDateTime, now);
+                    break;
+            }
+
+            var result = Collection.Update(query, update);
+
+            if (result.Ok)
+            {
+                _logger.Info("Called repository to update apprenticeship application status={1} for application with Id={0} successfully with code={2}. Documents affected={3}", applicationId, updatedStatus, result.Code, result.DocumentsAffected);
+                return result.DocumentsAffected == 1;
+            }
+
+            var message = $"Call to repository to update apprenticeship application status={updatedStatus} for application with Id={applicationId} failed! Exit code={result.Code}, error message={result.ErrorMessage}";
+            _logger.Error(message);
+            throw new Exception(message);
         }
     }
 }
