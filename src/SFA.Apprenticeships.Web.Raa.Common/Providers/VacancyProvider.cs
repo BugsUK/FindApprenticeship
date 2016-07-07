@@ -799,7 +799,7 @@
             }
 
             //TODO: Unit tests
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).Where(p => p.VacancyPartyId == -4).ToList();
+            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
             var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
 
             var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
@@ -894,7 +894,7 @@
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
             {
                 vacancyViewModel.ApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications;
-                vacancyViewModel.NewApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications; // TODO: This is correct as AllApplicationCount is used when displaying the application counts
+                vacancyViewModel.NewApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].NewApplications;
             }
 
             foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))
@@ -988,7 +988,7 @@
             {
                 vacancySummary.EmployerName = vacancyPartyToEmployerMap.GetValue(vacancySummary.OwnerPartyId).Name;
                 vacancySummary.ApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications;
-                vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].AllApplications; // TODO: This is correct as AllApplicationCount is used when displaying the application counts
+                vacancySummary.NewApplicationCount = applicationCountsByVacancyId[vacancySummary.VacancyId].NewApplications;
                 vacancySummary.LocationAddresses = _mapper.Map<IEnumerable<VacancyLocation>, IEnumerable<VacancyLocationAddressViewModel>>(vacancyLocationsByVacancyId.GetValueOrEmpty(vacancySummary.VacancyId)).ToList();
             }
 
