@@ -47,12 +47,19 @@ namespace SFA.Apprenticeships.Infrastructure.Postcode
                 AddressLine1 = address.Line1,
                 AddressLine2 = address.Line2,
                 AddressLine3 = address.Line3,
-                AddressLine4 = address.City,
+                AddressLine4 = address.Line4,
+                Town = address.City,
+                County = GetCounty(address),
                 Postcode = address.PostalCode,
                 Uprn = address.DomesticId
             };
         }
 
+        private string GetCounty(AddressInfo address)
+        {
+            return !string.IsNullOrWhiteSpace(address.ProvinceName) ? address.ProvinceName : address.City;
+        }
+        
         private static string GetRetrieveServiceUrl()
         {
             return "&key={key}&id={id}";
