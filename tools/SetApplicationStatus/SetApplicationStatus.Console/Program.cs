@@ -1,6 +1,7 @@
 ﻿namespace SetApplicationStatus.Console
 {
     using System;
+    using System.Diagnostics;
     using System.Linq;
     using Entities.Sql;
     using NLog;
@@ -11,25 +12,22 @@
 
         public static void Main(string[] args)
         {
-            // Get MongoDB connection string from args
-            // Get SQL connection string from args
-            // Get ukprns from args
-
-            // For each ukprn:
-            //  For each applications in AvmsPlus where status is In Progress:
-            //      Get application from MongoDB
-            //      If application status is Submitted:
-            //          Set application status to In Progress
-            //          Set DateUpdated to UTC now
-
-            // TODO: flag to update / not update
             // TODO: traineeships
 
-            var ukprn = args[0];
-            var sqlConnectionString = args[1];
-            var mongoConnectionString = args[2];
-            var readOnly = args.Length == 4 && string.Equals(args[3], "Y", StringComparison.InvariantCultureIgnoreCase);
-            
+            var options = new CommandLineOptions();
+
+            if (!CommandLine.Parser.Default.ParseArguments(args, options))
+            {
+                Console.WriteLine(options.GetUsage());
+                Environment.ExitCode = 1;
+                return;
+            }
+
+            var ukprn = options.Ukprn;
+            var sqlConnectionString = options.SqlConnectionString;
+            var mongoConnectionString = options.MongoConnectionString;
+            var update = options.Update;
+
             Logger.Info("Started");
 
             var sqlApplicationRepository = new Repositories.Sql.ApplicationRepository(sqlConnectionString);
@@ -61,11 +59,10 @@
 
                         if (targetApplication.Status == Entities.Mongo.ApplicationStatus.Submitted)
                         {
-                            if (!readOnly)
+                            if (update)
                             {
                                 var updated = mongoApplicationRepository.SetApplicationStatus(
-                                    Guid.NewGuid(),
-                                    Entities.Mongo.ApplicationStatus.InProgress);
+                                    targetApplication.Id, Entities.Mongo.ApplicationStatus.InProgress);
 
                                 if (updated)
                                 {
