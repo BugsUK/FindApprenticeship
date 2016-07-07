@@ -1,7 +1,6 @@
 ﻿namespace SetApplicationStatus.Console
 {
     using System;
-    using System.Diagnostics;
     using System.Linq;
     using Entities.Sql;
     using NLog;

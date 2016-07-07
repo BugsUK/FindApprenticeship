@@ -4,7 +4,7 @@
     using NUnit.Framework;
 
     [TestFixture]
-    public class Class1
+    public class CommandLineOptionsTests
     {
         public void ShouldBeAwesome()
         {
