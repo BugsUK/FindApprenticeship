@@ -52,27 +52,33 @@
                 {
                     Logger.Info($"TARGET: Id: {targetApplication.Id} Legacy Application ID: {targetApplication.LegacyApplicationId}, Status: {targetApplication.Status}");
 
-                    if (targetApplication.Status != Entities.Mongo.ApplicationStatus.InProgress)
+                    if (targetApplication.Status == Entities.Mongo.ApplicationStatus.InProgress)
                     {
-                        Logger.Warn($"Expected: {Entities.Mongo.ApplicationStatus.InProgress}, Actual: {targetApplication.Status}");
+                        continue;
+                    }
 
-                        if (targetApplication.Status == Entities.Mongo.ApplicationStatus.Submitted)
-                        {
-                            if (update)
-                            {
-                                var updated = mongoApplicationRepository.SetApplicationStatus(
-                                    targetApplication.Id, Entities.Mongo.ApplicationStatus.InProgress);
+                    Logger.Warn($"Expected: {Entities.Mongo.ApplicationStatus.InProgress}, Actual: {targetApplication.Status}");
 
-                                if (updated)
-                                {
-                                    Logger.Info("^Updated");
-                                }
-                                else
-                                {
-                                    Logger.Error("^Update failed");
-                                }
-                            }
-                        }
+                    if (targetApplication.Status != Entities.Mongo.ApplicationStatus.Submitted)
+                    {
+                        continue;
+                    }
+
+                    if (!update)
+                    {
+                        continue;
+                    }
+
+                    var updated = mongoApplicationRepository.SetApplicationStatus(
+                        targetApplication.Id, Entities.Mongo.ApplicationStatus.InProgress);
+
+                    if (updated)
+                    {
+                        Logger.Info("^Updated");
+                    }
+                    else
+                    {
+                        Logger.Error("^Update failed");
                     }
                 }
             }
