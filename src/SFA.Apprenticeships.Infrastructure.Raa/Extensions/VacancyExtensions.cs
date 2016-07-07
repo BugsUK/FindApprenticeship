@@ -105,17 +105,24 @@
                     return VacancyStatuses.Unknown;
                 case VacancyStatus.Draft:
                     return VacancyStatuses.Unavailable;
-                case VacancyStatus.Submitted:
-                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Live:
                     return VacancyStatuses.Live;
-                case VacancyStatus.ReservedForQA:
-                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Referred:
                     return VacancyStatuses.Unavailable;
+                case VacancyStatus.Deleted:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.Submitted:
+                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Closed:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.Withdrawn:
+                    return VacancyStatuses.Expired;
                 case VacancyStatus.Completed:
                     return VacancyStatuses.Expired;
+                case VacancyStatus.PostedInError:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.ReservedForQA:
+                    return VacancyStatuses.Unavailable;
                 default:
                     throw new ArgumentException("Provider Vacancy Status: " + vacancyStatuses + " was not recognized");
             }
