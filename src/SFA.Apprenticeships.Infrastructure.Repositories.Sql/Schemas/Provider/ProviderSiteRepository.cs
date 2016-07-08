@@ -136,14 +136,18 @@
 
             return providerSite;
         }
+
         // Contracted
         private int GetProviderIdByProviderSiteId(int providerSiteId)
         {
+            //TODO: Deal with Subcontractors and recruitment consultants. Should be done with ContractOwnerId rather than like this
+
             const string sql = @"
                 SELECT psr.ProviderID
                 FROM dbo.ProviderSiteRelationship AS psr 
                 JOIN ProviderSite AS ps ON psr.ProviderSiteID = ps.ProviderSiteId 
-                WHERE ps.ProviderSiteId = @providerSiteId";
+                WHERE ps.ProviderSiteId = @providerSiteId
+                ORDER BY psr.ProviderSiteRelationshipTypeID"; //Forces non Subcontractors and Recruitment Consultants to the end of the list to prioritize owners
 
             var sqlParams = new
             {
