@@ -73,6 +73,7 @@ DECLARE @DeliveryOrganisationId INT
 DECLARE @VacancyManagerId INT 
 DECLARE @Version50 NVARCHAR(5)
 declare @localAuthorityId int
+DECLARE @VacancyTypeId int
 	BEGIN TRY 
 			
 		SET @Version50 = '5.0'
@@ -110,6 +111,14 @@ declare @localAuthorityId int
 		--IF (@TrainingProviderId IS NULL AND @EmployerID IS NULL)
 		--	SET @errorCode = '-10045,-10046' --ProviderEDSURNDoesNotExist AND EmployerEDSURNDoesNotExist
 		SET @errorCode = SUBSTRING(@errorCode,2,LEN(@errorCode))
+
+		IF(@ApprenticeshipType = 4)
+			SET @VacancyTypeId = 2
+		ELSE IF(@ApprenticeshipType = 0)
+			SET @VacancyTypeId = 0
+		ELSE
+			SET @VacancyTypeId = 1
+		
 
 		IF (@errorCode='')
 		BEGIN
@@ -304,6 +313,7 @@ declare @localAuthorityId int
 						ApplyOutsideNAVMS,    
 						EmployersApplicationInstructions,    
 						EmployersRecruitmentWebsite,
+						VacancyTypeId,
 						VacancyLocationTypeId,
 						--5.1
 				  	    VacancyManagerID,
@@ -351,6 +361,7 @@ declare @localAuthorityId int
 						@ApplyOutsideNAVMS,    
 						@EmployersApplicationInstructions,    
 						@EmployersRecruitmentWebsite,
+						@VacancyTypeId,
 						@VacancyLocationType,
 						--5.1
 						@VacancyManagerId,
