@@ -66,8 +66,16 @@
         };
 
         self.addLocationAddressByField = function (addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName) {
+            var specialCities = [];
+            specialCities["London"] = "London";
+            specialCities["York"] = "North Yorkshire";
+
             if (!provinceName) {
-                provinceName = town;
+                if (specialCities[town]) {
+                    provinceName = specialCities[town];
+                } else {
+                    provinceName = "";
+                }
             }
 
             var locationAddressItem = new locationAddressItemModel(addressLine1, addressLine2, addressLine3, addressLine4, town, postcode, numberOfPositions, uprn, provinceName);
