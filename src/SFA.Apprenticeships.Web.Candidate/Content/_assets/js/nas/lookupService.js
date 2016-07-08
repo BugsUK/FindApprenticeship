@@ -153,7 +153,20 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
-        var county = address.ProvinceName || address.City;
+        var specialCities = [];
+        specialCities["London"] = "London";
+        specialCities["York"] = "North Yorkshire";
+
+        var county = address.ProvinceName;
+
+        if (!address.ProvinceName) {
+            if (specialCities[address.City]) {
+                county = specialCities[address.City];
+            } else {
+                county = "";
+            }
+        }
+
         $('#Address_AddressLine1').val(address.Line1);
         $('#Address_AddressLine2').val(address.Line2);
         $('#Address_AddressLine3').val(address.City);
