@@ -75,11 +75,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationStatusPatch.cs" />
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Entities\Mongo\ApplicationStatus.cs" />
     <Compile Include="Entities\Sql\ApplicationStatus.cs" />
     <Compile Include="Entities\Mongo\Application.cs" />
     <Compile Include="Entities\Sql\Application.cs" />
+    <Compile Include="InProgressApplicationPatch.cs" />
     <Compile Include="Repositories\Mongo\ApplicationRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
