@@ -318,6 +318,7 @@ DECLARE @VacancyTypeId int
 						--5.1
 				  	    VacancyManagerID,
 						DeliveryOrganisationID,
+						OriginalContractOwnerID,
 						ContractOwnerID,   
 						SmallEmployerWageIncentive,
 						VacancyManagerAnonymous,
@@ -366,6 +367,7 @@ DECLARE @VacancyTypeId int
 						--5.1
 						@VacancyManagerId,
 						@DeliveryOrganisationId,
+						@ContractOwnerId,
 						@ContractOwnerId,
 						@IsSmallEmployerWageIncentive, 
 						case WHEN @VacancyManagerId = @TrainingProviderId THEN 0 ELSE @IsVacancyManagerAnonymous END, --Its VM=VO then always display
