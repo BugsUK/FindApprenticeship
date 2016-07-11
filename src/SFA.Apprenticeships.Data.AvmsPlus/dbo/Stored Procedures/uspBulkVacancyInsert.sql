@@ -407,7 +407,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Training to be provided'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@Trainingtobeprovided )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@Trainingtobeprovided,'') )       
 						
 					  SET @FieldId = 0      
 					  Select @FieldId = vacancytextfieldValueId     
@@ -415,7 +415,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Other important information'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@Otherimportantinformation )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@Otherimportantinformation,'') )       
 						
 					  SET @FieldId = 0      
 						
@@ -424,7 +424,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Reality Check'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@RealityCheck )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@RealityCheck,'') )       
 						
 					  SET @FieldId = 0      
 						
@@ -433,7 +433,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Future Prospects'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@FutureProspectsValue )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''), NULLIF(@FutureProspectsValue,'') )     
 						
 					  SET @FieldId = 0      
 						
@@ -442,7 +442,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Skills Required'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@SkillRequired )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''), NULLIF(@SkillRequired,''))
 						
 						
 					  SET @FieldId = 0      
@@ -452,7 +452,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Qualifications Required'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@QualificationRequired )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@QualificationRequired,'') )     
 						
 					  SET @FieldId = 0      
 					  Select @FieldId = vacancytextfieldValueId     
@@ -460,7 +460,7 @@ DECLARE @VacancyTypeId int
 					  where FullName = 'Personal Qualities'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@PersonalQualities )        
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@PersonalQualities,'') )        
 		  
 					/**************************** History Entry*****************************************/  
 							  
