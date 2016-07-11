@@ -462,7 +462,7 @@ DECLARE @VacancyTypeId int
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
 					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@PersonalQualities )        
 		  
-					/**************************** Histoty Entry*****************************************/  
+					/**************************** History Entry*****************************************/  
 							  
 					  declare @VacancyHistoryEventTypeId int   
 					  declare @Comment Varchar(200)   
