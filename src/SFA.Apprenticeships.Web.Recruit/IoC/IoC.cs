@@ -29,6 +29,7 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
     using Infrastructure.Repositories.Sql.Configuration;
     using Infrastructure.Repositories.Sql.IoC;
     using Infrastructure.Repositories.Sql.Schemas.Vacancy.IoC;
+    using Raa.Common.Providers;
     using StructureMap;
     using StructureMap.Web;
 
@@ -80,8 +81,8 @@ namespace SFA.Apprenticeships.Web.Recruit.IoC
                 x.AddRegistry<RecruitmentWebRegistry>();
 
                 x.For<IUserDataProvider>().HttpContextScoped().Use<CookieUserDataProvider>();
-                x.For<IEuCookieDirectiveProvider>().Use<EuCookieDirectiveProvider>();
-                x.For<ICookieDetectionProvider>().Use<CookieDetectionProvider>();
+                x.For<IEuCookieDirectiveProvider>().Use<RaaEuCookieDirectiveProvider>();
+                x.For<ICookieDetectionProvider>().Use<RaaCookieDetectionProvider>();
                 x.For<IRobotCrawlerProvider>().Use<RobotCrawlerProvider>().Singleton();
                 x.For<IDismissPlannedOutageMessageCookieProvider>().Use<DismissPlannedOutageMessageCookieProvider>();
                 x.For<IHelpCookieProvider>().Use<HelpCookieProvider>();

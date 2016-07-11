@@ -343,6 +343,12 @@
                defaults: new { controller = "TraineeshipApplication", action = "Review" }
                );
 
+            routes.MapRoute(
+                name: RecruitmentRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

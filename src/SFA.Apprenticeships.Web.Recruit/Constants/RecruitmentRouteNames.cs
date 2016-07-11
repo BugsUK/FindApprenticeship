@@ -27,6 +27,7 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string WebTrendsOptOut = "WebTrendsOptOut";
 
         // Vacancy posting
         public const string CreateVacancy = "CreateVacancy";

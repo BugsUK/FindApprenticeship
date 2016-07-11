@@ -14,6 +14,7 @@
         public const string Privacy = "Privacy";
         public const string TermsAndConditions = "TermsAndConditions";
         public const string ContactUs = "ContactUs";
+        public const string WebTrendsOptOut = "WebTrendsOptOut";
 
         //QA
         public const string ReviewVacancy = "ReviewVacancy";

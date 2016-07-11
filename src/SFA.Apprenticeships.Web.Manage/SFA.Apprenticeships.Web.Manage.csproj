@@ -398,6 +398,11 @@
     <Compile Include="ViewModels\ReportSuccessfulCandidatesParameters.cs" />
     <Compile Include="ViewModels\ReportVacanciesParameters.cs" />
     <Compile Include="ViewModels\ReportVacancyExtensionsParameters.cs" />
+    <Compile Include="Views\Home\Cookies.generated.cs">
+      <DependentUpon>Cookies.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -613,6 +618,10 @@
     <Content Include="Views\Report\SuccessfulCandidatesCsv.cshtml" />
     <Content Include="Views\Report\UnsuccessfulCandidatesCsv.cshtml" />
     <Content Include="Views\Report\VacancyExtensionsCsv.cshtml" />
+    <Content Include="Views\Home\Cookies.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Cookies.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>
