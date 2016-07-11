@@ -12,9 +12,11 @@
             {
                 case "Sent":
                 case "New":
-                case "In progress":
                 case "Unsent":
                     return ApplicationStatuses.Submitted;
+
+                case "In progress":
+                    return ApplicationStatuses.InProgress;
 
                 case "Successful":
                     return ApplicationStatuses.Successful;

@@ -3,6 +3,8 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Text;
+    using Domain.Entities.Raa.Parties;
     using Domain.Entities.Raa.Vacancies;
     using Domain.Entities.ReferenceData;
     using Domain.Entities.Vacancies;
@@ -38,6 +40,41 @@
             }
         }
 
+        public static string GetContactInformation(this Vacancy vacancy, ProviderSite providerSite)
+        {
+            var sb = new StringBuilder();
+
+            if (!vacancy.EditedInRaa)
+            {
+                sb.Append(providerSite.ContactDetailsForCandidate);
+            }
+            else
+            {
+                if (!string.IsNullOrEmpty(vacancy.ContactName))
+                {
+                    sb.Append(vacancy.ContactName);
+                }
+                if (!string.IsNullOrEmpty(vacancy.ContactNumber))
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactNumber);
+                }
+                if (!string.IsNullOrEmpty(vacancy.ContactEmail))
+                {
+                    if (sb.Length > 0)
+                    {
+                        sb.Append(" ");
+                    }
+                    sb.Append(vacancy.ContactEmail);
+                }
+            }
+
+            return sb.ToString();
+        }
+
         public static Domain.Entities.Vacancies.TrainingType GetTrainingType(this TrainingType trainingType)
         {
             switch (trainingType)
@@ -68,17 +105,24 @@
                     return VacancyStatuses.Unknown;
                 case VacancyStatus.Draft:
                     return VacancyStatuses.Unavailable;
-                case VacancyStatus.Submitted:
-                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Live:
                     return VacancyStatuses.Live;
-                case VacancyStatus.ReservedForQA:
-                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Referred:
                     return VacancyStatuses.Unavailable;
+                case VacancyStatus.Deleted:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.Submitted:
+                    return VacancyStatuses.Unavailable;
                 case VacancyStatus.Closed:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.Withdrawn:
+                    return VacancyStatuses.Expired;
                 case VacancyStatus.Completed:
                     return VacancyStatuses.Expired;
+                case VacancyStatus.PostedInError:
+                    return VacancyStatuses.Expired;
+                case VacancyStatus.ReservedForQA:
+                    return VacancyStatuses.Unavailable;
                 default:
                     throw new ArgumentException("Provider Vacancy Status: " + vacancyStatuses + " was not recognized");
             }

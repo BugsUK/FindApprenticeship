@@ -440,20 +440,20 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         [Test]
         public void TestCategorySearchModification()
         {
-            const string selectedCategoryCode = "2";
-            const string selectedCategorySubCategory = "2_2";
+            const string selectedCategoryCode = "SSAT1.2";
+            const string selectedCategorySubCategory = "FW.2_2";
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category(1, "1_1", "1_1", CategoryType.Framework),
-                        new Category(2, "1_2", "1_2", CategoryType.Framework)
+                        new Category(1, "FW.1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "FW.1_2", "1_2", CategoryType.Framework)
                     }
                 ),
                 new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework),
                         new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
                 )
@@ -468,8 +468,8 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
                 //Select Sub Categories from a different category than the one selected plus a valid one
                 SubCategories = new[]
                 {
-                    "1_1",
-                    "1_2",
+                    "FW.1_1",
+                    "FW.1_2",
                     selectedCategorySubCategory
                 },
                 SearchMode = ApprenticeshipSearchMode.Category
@@ -508,20 +508,20 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
         [Test]
         public void TestKeywordSearchModification()
         {
-            const string selectedCategoryCode = "2";
-            const string selectedCategorySubCategory = "2_2";
+            const string selectedCategoryCode = "SSAT1.2";
+            const string selectedCategorySubCategory = "FW.2_2";
 
             ReferenceDataService.Setup(rds => rds.GetCategories()).Returns(new List<Category>
             {
-                new Category(1, "1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
+                new Category(1, "SSAT1.1", "1", CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category(1, "1_1", "1_1", CategoryType.Framework),
-                        new Category(2, "1_2", "1_2", CategoryType.Framework)
+                        new Category(1, "FW.1_1", "1_1", CategoryType.Framework),
+                        new Category(2, "FW.1_2", "1_2", CategoryType.Framework)
                     }
                 ),
                 new Category(2, selectedCategoryCode, selectedCategoryCode, CategoryType.SectorSubjectAreaTier1, new List<Category>
                     {
-                        new Category(1, "2_1", "2_1", CategoryType.Framework),
+                        new Category(1, "FW.2_1", "2_1", CategoryType.Framework),
                         new Category(2, selectedCategorySubCategory, selectedCategorySubCategory, CategoryType.Framework)
                     }
                 )
@@ -623,8 +623,41 @@ namespace SFA.Apprenticeships.Web.Candidate.UnitTests.Mediators.ApprenticeshipSe
             };
 
             UserDataProvider.Setup(x => x.Push(It.IsAny<string>(), It.IsAny<string>()));
-            var response = Mediator.Results(null, searchViewModel);
+            Mediator.Results(null, searchViewModel);
             UserDataProvider.Verify(x => x.Push(UserDataItemNames.LastSearchedLocation, ACityWithOneSuggestedLocation + "|0|0"), Times.Once);
         }
+
+        [Test]
+        public void CategoryIsNormalizedToNewFormat()
+        {
+            const string oldFormattedCategoryCode = "HBY";
+            const string expectedCategoryCode = "SSAT1.HBY";
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                Category = oldFormattedCategoryCode
+            };
+
+            var response = Mediator.Results(null, searchViewModel);
+
+            response.ViewModel.VacancySearch.Category.Should().Be(expectedCategoryCode);
+        }
+
+        [Test]
+        public void SubcategoriesAreNormalizedToNewFormat()
+        {
+            const string oldFormattedSubcategoryCode = "490";
+            const string expectedSubcategoryCode = "FW.490";
+
+            var searchViewModel = new ApprenticeshipSearchViewModel
+            {
+                SubCategories = new [] {oldFormattedSubcategoryCode}
+            };
+
+            var response = Mediator.Results(null, searchViewModel);
+
+            response.ViewModel.VacancySearch.SubCategories.ShouldBeEquivalentTo(new [] {expectedSubcategoryCode});
+        }
+
     }
 }
