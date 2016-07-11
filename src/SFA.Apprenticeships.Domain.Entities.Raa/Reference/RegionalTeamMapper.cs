@@ -119,7 +119,7 @@
 
         public static RegionalTeam GetRegionalTeam(string postcode)
         {
-            if (string.IsNullOrEmpty(postcode))
+            if (string.IsNullOrWhiteSpace(postcode))
             {
                 return RegionalTeam.Other;
             }
