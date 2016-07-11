@@ -563,8 +563,10 @@ WHERE  ApprenticeshipOccupationId IN @Ids",
 
         private static string SanitizeFrameworkFullName(string frameworkFullName)
         {
-            var sanitizedFrameworkFullName =
-                frameworkFullName.Substring(0, frameworkFullName.IndexOf("(")).Trim().ToLowerInvariant();
+            var sanitizedFrameworkFullName = frameworkFullName.IndexOf("(") == -1
+                ? frameworkFullName
+                : frameworkFullName.Substring(0, frameworkFullName.IndexOf("(")).Trim().ToLowerInvariant();
+
             return sanitizedFrameworkFullName;
         }
 
