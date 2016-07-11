@@ -367,7 +367,7 @@ WHERE  ApprenticeshipFrameworkId IN @Ids",
         private void MapApprenticeshipType(Vacancy dbVacancy, VacancySummary result)
         {
             if (dbVacancy.ApprenticeshipType.HasValue)
-            {
+            {   
                 var educationLevelCodeName =
                     _getOpenConnection.QueryCached<string>(_cacheDuration, @"
 SELECT el.CodeName
@@ -722,23 +722,26 @@ order by HistoryDate desc
 
         private void MapRegionalTeam(VacancySummary vacancySummary)
         {
-            vacancySummary.RegionalTeam = vacancySummary.Address != null
-                                              ? RegionalTeamMapper.GetRegionalTeam(vacancySummary.Address.Postcode)
-                                              : RegionalTeam.Other;
+            const string sql = @"
+                SELECT ps.PostCode
+                FROM dbo.Vacancy v
+                INNER JOIN dbo.VacancyOwnerRelationship vor
+                ON vor.VacancyOwnerRelationshipId = v.VacancyOwnerRelationshipId
+                INNER JOIN dbo.ProviderSite ps
+                ON ps.ProviderSiteId = vor.ProviderSiteId
+                WHERE v.VacancyId = @vacancyId
+                ";
 
-            if (vacancySummary.RegionalTeam == RegionalTeam.Other)
+            var sqlParams = new
             {
-                //Try and get region from vacancy locations
-                var vacancyLocation =
-                    _getOpenConnection.Query<VacancyLocation>(
-                        "SELECT * FROM dbo.VacancyLocation WHERE VacancyId = @VacancyId ORDER BY VacancyLocationId DESC", new {vacancySummary.VacancyId})
-                        .FirstOrDefault();
-                if (vacancyLocation != null)
-                {
-                    vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(vacancyLocation.PostCode);
-                }
-            }
-        }        
+                vacancySummary.VacancyId,
+                vacancySummary.OwnerPartyId
+            };
+
+            var postcode = _getOpenConnection.Query<string>(sql, sqlParams).FirstOrDefault();
+
+            vacancySummary.RegionalTeam = RegionalTeamMapper.GetRegionalTeam(postcode);
+        }
 
         private static void MapDuration(Vacancy dbVacancy, VacancySummary result)
         {
