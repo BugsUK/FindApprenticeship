@@ -601,7 +601,7 @@ WHERE  FullName = @FrameworkFullName",
                 new
                 {
                     FrameworkFullName = fullName
-                }).Single();
+                }).SingleOrDefault();
         }
 
         private string GetTextField(IReadOnlyDictionary<string, string> textFields, string codeName)
