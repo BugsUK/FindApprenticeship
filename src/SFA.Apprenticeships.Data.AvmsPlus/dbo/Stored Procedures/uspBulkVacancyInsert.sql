@@ -122,7 +122,7 @@ DECLARE @VacancyTypeId int
 
 		IF (@errorCode='')
 		BEGIN
-			-- TODO MMA Join will contacin the third priary key to validate the relationship 5.1
+			-- TODO MMA Join will contain the third primary key to validate the relationship 5.1
 			-- Checking if Training Provider is Authorized to put in this Vacancy
 			IF (@SystemType = 2 AND NOT EXISTS (SELECT 1 FROM dbo.[ProviderSite] PS
 				JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
