@@ -260,26 +260,6 @@
                     </li>
                     <li>
                         <figure class="data">
-                            @if (filterType == VacanciesSummaryFilterTypes.Withdrawn)
-                            {
-                                <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
-                                <figcaption>
-                                    <h2>Withdrawn</h2>
-                                </figcaption>
-                            }
-                            else
-                            {
-                                <a href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome, new VacanciesSummarySearchViewModel(Model.VacanciesSummary.VacanciesSummarySearch, VacanciesSummaryFilterTypes.Withdrawn))" class="vacancy-filter">
-                                    <p class="count">@Model.VacanciesSummary.WithdrawnCount</p>
-                                    <figcaption>
-                                        <h2>Withdrawn</h2>
-                                    </figcaption>
-                                </a>
-                            }
-                        </figure>
-                    </li>
-                    <li>
-                        <figure class="data">
                             @if (filterType == VacanciesSummaryFilterTypes.Completed)
                             {
                                 <p class="count">@Model.VacanciesSummary.CompletedCount</p>
