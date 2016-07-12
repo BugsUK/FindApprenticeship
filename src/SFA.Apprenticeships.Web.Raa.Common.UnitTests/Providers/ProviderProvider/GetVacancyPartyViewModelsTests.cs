@@ -18,39 +18,33 @@
     {
         public class GetByProviderSiteId : TestBase
         {
-            [Test]
-            public void ShoulReturnEmployersForProviderSite()
+            private const int PageSize = 10;
+
+            [SetUp]
+            public void SetUp2()
             {
-                // Arrange.
-                const int pageSize = 10;
-                const int pageNumber = 1;
-
-                const int providerSiteId = 42;
-
                 MockConfigurationService.Setup(mock => mock
                     .Get<RecruitWebConfiguration>())
                     .Returns(new RecruitWebConfiguration
                     {
-                        PageSize = pageSize
+                        PageSize = PageSize
                     });
+            }
+
+            [TestCase(0)]
+            [TestCase(1)]
+            [TestCase(PageSize)]
+            public void ShoulReturnEmployersForProviderSite(int unactivatedEmployerCount)
+            {
+                // Arrange.
+                const int pageNumber = 1;
+                const int providerSiteId = 42;
 
                 var employers = new Fixture()
-                    .CreateMany<Employer>(pageSize)
+                    .CreateMany<Employer>(PageSize)
                     .ToArray();
 
-                var vacancyParties = new Fixture()
-                    .CreateMany<VacancyParty>(pageSize)
-                    .ToArray();
-
-                var random = new Random();
-
-                // Assign each vacancy party a random employer.
-                foreach (var vacancyParty in vacancyParties)
-                {
-                    var employerIndex = random.Next(pageSize);
-
-                    vacancyParty.EmployerId = employers[employerIndex].EmployerId;
-                }
+                var vacancyParties = BuildFakeVacancyParties(employers, unactivatedEmployerCount);
 
                 var pageableVacancyParties = new Fixture()
                     .Build<Pageable<VacancyParty>>()
@@ -60,7 +54,7 @@
                 Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == providerSiteId;
 
                 MockProviderService.Setup(mock => mock
-                    .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, pageSize))
+                    .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, PageSize))
                     .Returns(pageableVacancyParties);
 
                 Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
@@ -80,31 +74,13 @@
                 viewModel.ProviderSiteId.Should().Be(providerSiteId);
 
                 viewModel.EmployerResultsPage.Should().NotBeNull();
-                viewModel.EmployerResultsPage.Page.Count().Should().Be(pageSize);
+                viewModel.EmployerResultsPage.Page.Count().Should().Be(PageSize - unactivatedEmployerCount);
             }
 
-            [Test]
-            public void ShoulNotReturnUnactivatedEmployers()
+            private static IEnumerable<VacancyParty> BuildFakeVacancyParties(IReadOnlyList<Employer> employers, int unactivatedEmployerCount)
             {
-                // Arrange.
-                const int pageSize = 10;
-                const int pageNumber = 1;
-
-                const int providerSiteId = 42;
-
-                MockConfigurationService.Setup(mock => mock
-                    .Get<RecruitWebConfiguration>())
-                    .Returns(new RecruitWebConfiguration
-                    {
-                        PageSize = pageSize
-                    });
-
-                var employers = new Fixture()
-                    .CreateMany<Employer>(pageSize)
-                    .ToArray();
-
                 var vacancyParties = new Fixture()
-                    .CreateMany<VacancyParty>(pageSize)
+                    .CreateMany<VacancyParty>(PageSize)
                     .ToArray();
 
                 var random = new Random();
@@ -112,57 +88,17 @@
                 // Assign each vacancy party a random employer.
                 foreach (var vacancyParty in vacancyParties)
                 {
-                    var employerIndex = random.Next(pageSize);
+                    var employerIndex = random.Next(PageSize);
 
                     vacancyParty.EmployerId = employers[employerIndex].EmployerId;
                 }
 
-                // Assign an 'unactivated' employer to a vacancy party.
-                vacancyParties[0].EmployerId = employers.Max(employer => employer.EmployerId) + 1;
-
-                var pageableVacancyParties = new Fixture()
-                    .Build<Pageable<VacancyParty>>()
-                    .With(each => each.Page, vacancyParties)
-                    .Create();
-
-                Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == providerSiteId;
-
-                MockProviderService.Setup(mock => mock
-                    .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, pageSize))
-                    .Returns(pageableVacancyParties);
-
-                Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
-
-                MockEmployerService.Setup(mock => mock
-                    .GetEmployers(It.Is(matchingEmployerIds)))
-                    .Returns(employers);
-
-                var provider = GetProviderProvider();
-
-                // Act.
-                var viewModel = provider.GetVacancyPartyViewModels(providerSiteId);
-
-                // Assert.
-                viewModel.Should().NotBeNull();
-
-                viewModel.ProviderSiteId.Should().Be(providerSiteId);
-
-                viewModel.EmployerResultsPage.Should().NotBeNull();
-                viewModel.EmployerResultsPage.Page.Count().Should().Be(pageSize);
-            }
-        }
-
-        public class GetByEmployerSearchViewModel
-        {
-            [Test]
-            public void ShouldBeAwesome()
-            {
-                // Arrange.
-
-                // Act.
-
-                // Assert.
-                Assert.Fail();
+                // Assign 'unactivated' employers to vacancy parties.
+                for (var i = 0; i < unactivatedEmployerCount; i++)
+                {
+                    vacancyParties[i].EmployerId = employers.Max(employer => employer.EmployerId) + 1;
+                }
+                return vacancyParties;
             }
         }
     }
