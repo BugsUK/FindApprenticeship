@@ -108,7 +108,6 @@
 
             var employerIds = vacancyParties.Page
                 .Select(vp => vp.EmployerId).Distinct()
-                .OrderBy(employerId => employerId)
                 .ToArray();
 
             var employers = _employerService.GetEmployers(employerIds);
