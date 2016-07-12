@@ -10,7 +10,7 @@ namespace SFA.Apprenticeships.Web.Common.Controllers
     using Configuration;
     using StructureMap.Attributes;
     using SFA.Infrastructure.Interfaces;
-    using SFA.Apprenticeships.Infrastructure.Logging;
+    using Infrastructure.Logging;
     using NLog.Contrib; // TODO: Inject logging context setter implementation rather than using directly (but use separate interface from ILogService)
     using System;
     using System.Collections.Generic;

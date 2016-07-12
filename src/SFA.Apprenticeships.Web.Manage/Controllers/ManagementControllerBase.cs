@@ -1,7 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Manage.Controllers
 {
     using System.Web.Mvc;
-    using Common.Attributes;
+    using Raa.Common.Attributes;
     using Common.Constants;
     using Constants;
     using Raa.Common.ViewModels.Vacancy;

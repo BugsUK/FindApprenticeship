@@ -6,7 +6,7 @@
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizationData,
-    CookiesEnabled,
+    Raa.Common.Attributes.CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class RecruitmentControllerBase : Common.Controllers.ControllerBase
     {
