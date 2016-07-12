@@ -374,6 +374,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Home\ContactMessageViewModel.cs" />
+    <Compile Include="Views\Home\Cookies.generated.cs">
+      <DependentUpon>Cookies.cshtml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Views\Shared\EditorTemplates\DateViewModel.generated.cs">
       <DependentUpon>DateViewModel.cshtml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -594,6 +599,10 @@
     <Content Include="Views\ApprenticeshipApplication\ConfirmSuccessfulDecision.cshtml" />
     <Content Include="Views\ApprenticeshipApplication\ConfirmUnsuccessfulDecision.cshtml" />
     <Content Include="Views\TraineeshipApplication\Review.cshtml" />
+    <Content Include="Views\Home\Cookies.cshtml">
+      <Generator>RazorGenerator</Generator>
+      <LastGenOutput>Cookies.generated.cs</LastGenOutput>
+    </Content>
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

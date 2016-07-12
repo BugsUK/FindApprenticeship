@@ -343,6 +343,18 @@
                defaults: new { controller = "TraineeshipApplication", action = "Review" }
                );
 
+            routes.MapRoute(
+                name: RecruitmentRouteNames.WebTrendsOptOut,
+                url: "webtrendsoptout",
+                defaults: new { controller = "Home", action = "WebTrendsOptOut" }
+                );
+
+            routes.MapRoute(
+                name: RecruitmentRouteNames.Cookies,
+                url: "cookies",
+                defaults: new { controller = "Home", action = "Cookies" }
+                );
+
             routes.LowercaseUrls = true;
         }
     }

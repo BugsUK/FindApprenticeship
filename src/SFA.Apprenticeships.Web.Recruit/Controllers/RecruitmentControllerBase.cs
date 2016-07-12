@@ -1,15 +1,12 @@
 ﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
-    using System.Globalization;
-    using System.Linq;
     using System.Web.Mvc;
     using Common.Attributes;
     using Common.Constants;
-    using NLog.Contrib;
     using SFA.Infrastructure.Interfaces;
 
     [AuthorizationData,
+    CookiesEnabled,
     OutputCache(CacheProfile = CacheProfiles.None)]
     public abstract class RecruitmentControllerBase : Common.Controllers.ControllerBase
     {
