@@ -1,7 +1,8 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
-    using System.Collections.Generic;
+    using System;
     using System.Linq;
+    using System.Linq.Expressions;
     using Application.Interfaces.Employers;
     using Application.Interfaces.Generic;
     using Configuration;
@@ -45,8 +46,10 @@
                     .With(each => each.Page, vacancyParties)
                     .Create();
 
+                Expression<Func<EmployerSearchRequest, bool>> matchingSearchRequest = it => it.ProviderSiteId == providerSiteId;
+
                 MockProviderService.Setup(mock => mock
-                    .GetVacancyParties(It.IsAny<EmployerSearchRequest>(), pageNumber, pageSize))
+                    .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, pageSize))
                     .Returns(pageableVacancyParties);
                 
                 MockEmployerService.Setup(mock => mock
@@ -58,11 +61,10 @@
                 // Act.
                 var viewModel = provider.GetVacancyPartyViewModels(providerSiteId);
 
-
                 // Assert.
                 viewModel.Should().NotBeNull();
 
-                Assert.Fail();
+                viewModel.ProviderSiteId.Should().Be(providerSiteId);
             }
         }
 
