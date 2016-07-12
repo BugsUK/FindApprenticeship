@@ -23,16 +23,16 @@
 
         public static class ShortDescription
         {
-            public const string LabelText = "Short description of the role";
-            public const string RequiredErrorText = "Enter the short description of the role";
-            public const string TooLongErrorText = "The short description of the role must not be more than 350 characters";
+            public const string LabelText = "Brief overview of vacancy role";
+            public const string RequiredErrorText = "Enter the brief overview of the role";
+            public const string TooLongErrorText = "The brief overview of the role must not be more than 350 characters";
             public const string WhiteListRegularExpression = Whitelists.FreetextWhitelist.RegularExpression;
-            public const string WhiteListErrorText = "The short description of the role " + Whitelists.FreetextWhitelist.ErrorText;
+            public const string WhiteListErrorText = "The brief overview of the role " + Whitelists.FreetextWhitelist.ErrorText;
         }
 
         public static class ShortDescriptionComment
         {
-            public const string LabelText = "Short description of the role comment";
+            public const string LabelText = "Brief overview of the role comment";
         }
 
         public static class VacancyType
