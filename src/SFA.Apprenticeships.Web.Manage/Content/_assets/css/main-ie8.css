@@ -6222,7 +6222,8 @@ h2 a i.raa-icon-comment {
     display: block;
     float: left; }
     .vacancies-summary li a {
-      text-decoration: none; }
+      text-decoration: none;
+      display: block; }
     .vacancies-summary li figure.data .count {
       font-family: "ntatabularnumbers", "nta", Arial, sans-serif;
       font-size: 48px;

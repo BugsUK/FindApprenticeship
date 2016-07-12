@@ -1,5 +1,4 @@
 ﻿@using SFA.Apprenticeships.Web.Recruit.Constants
-@using SFA.Apprenticeships.Web.Recruit.Controllers
 @using Roles = SFA.Apprenticeships.Domain.Entities.Raa.Roles
 
 @if (Request.IsAuthenticated)
@@ -12,8 +11,6 @@
         {
             <div>
                 <a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.RecruitmentHome)">Home</a>
-                <!--<a class="account-link" id="applicationsLink" href="@Url.RouteUrl(RecruitmentRouteNames.ManageProviderSites)">Provider details</a>-->
-                <!--<a class="" id="applicationsLink" href="user-info.html">Contact details</a>-->
             </div>
         }
     </div>
