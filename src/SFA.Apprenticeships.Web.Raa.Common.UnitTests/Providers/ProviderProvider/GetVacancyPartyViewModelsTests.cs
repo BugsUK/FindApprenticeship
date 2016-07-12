@@ -98,6 +98,7 @@
                 {
                     vacancyParties[i].EmployerId = employers.Max(employer => employer.EmployerId) + 1;
                 }
+
                 return vacancyParties;
             }
         }

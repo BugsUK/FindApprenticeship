@@ -112,15 +112,13 @@
 
             var employers = _employerService.GetEmployers(employerIds);
 
-            // Remove employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
-            vacancyParties.Page = vacancyParties.Page
-                .Where(vacancyParty => employers
-                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId));
-
             var result = vacancyParties.ToViewModel(vacancyParties.Page
+                // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
+                .Where(vacancyParty => employers
+                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
                 .Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId))
-                .Employer
-                .ConvertToResult()));
+                    .Employer
+                    .ConvertToResult()));
 
             return new EmployerSearchViewModel
             {
