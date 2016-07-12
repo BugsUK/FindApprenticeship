@@ -4,7 +4,7 @@
     using System.Web;
     using Web.Common.Providers;
 
-    public class RaaCookieDetectionProvider : ICookieDetectionProvider
+    public class CookieDetectionProvider : ICookieDetectionProvider
     {
         private const string CookieDetection = "RAA.CookieDetection";
 

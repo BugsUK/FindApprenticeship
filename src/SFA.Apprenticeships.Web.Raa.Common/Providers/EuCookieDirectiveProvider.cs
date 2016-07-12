@@ -4,7 +4,7 @@
     using System.Web;
     using Web.Common.Providers;
 
-    public class RaaEuCookieDirectiveProvider : IEuCookieDirectiveProvider
+    public class EuCookieDirectiveProvider : IEuCookieDirectiveProvider
     {
         private const string EuCookieName = "RAA.DisplayEuCookieDirective";
 
