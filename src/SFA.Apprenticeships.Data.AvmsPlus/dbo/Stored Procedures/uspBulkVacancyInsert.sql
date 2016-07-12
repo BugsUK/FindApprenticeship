@@ -73,6 +73,7 @@ DECLARE @DeliveryOrganisationId INT
 DECLARE @VacancyManagerId INT 
 DECLARE @Version50 NVARCHAR(5)
 declare @localAuthorityId int
+DECLARE @VacancyTypeId int
 	BEGIN TRY 
 			
 		SET @Version50 = '5.0'
@@ -111,9 +112,17 @@ declare @localAuthorityId int
 		--	SET @errorCode = '-10045,-10046' --ProviderEDSURNDoesNotExist AND EmployerEDSURNDoesNotExist
 		SET @errorCode = SUBSTRING(@errorCode,2,LEN(@errorCode))
 
+		IF(@ApprenticeshipType = 4)
+			SET @VacancyTypeId = 2
+		ELSE IF(@ApprenticeshipType = 0)
+			SET @VacancyTypeId = 0
+		ELSE
+			SET @VacancyTypeId = 1
+		
+
 		IF (@errorCode='')
 		BEGIN
-			-- TODO MMA Join will contacin the third priary key to validate the relationship 5.1
+			-- TODO MMA Join will contain the third primary key to validate the relationship 5.1
 			-- Checking if Training Provider is Authorized to put in this Vacancy
 			IF (@SystemType = 2 AND NOT EXISTS (SELECT 1 FROM dbo.[ProviderSite] PS
 				JOIN dbo.ProviderSiteRelationShip PSR ON PS.ProviderSiteID = PSR.ProviderSiteID 
@@ -304,10 +313,12 @@ declare @localAuthorityId int
 						ApplyOutsideNAVMS,    
 						EmployersApplicationInstructions,    
 						EmployersRecruitmentWebsite,
+						VacancyTypeId,
 						VacancyLocationTypeId,
 						--5.1
 				  	    VacancyManagerID,
 						DeliveryOrganisationID,
+						OriginalContractOwnerID,
 						ContractOwnerID,   
 						SmallEmployerWageIncentive,
 						VacancyManagerAnonymous,
@@ -351,10 +362,12 @@ declare @localAuthorityId int
 						@ApplyOutsideNAVMS,    
 						@EmployersApplicationInstructions,    
 						@EmployersRecruitmentWebsite,
+						@VacancyTypeId,
 						@VacancyLocationType,
 						--5.1
 						@VacancyManagerId,
 						@DeliveryOrganisationId,
+						@ContractOwnerId,
 						@ContractOwnerId,
 						@IsSmallEmployerWageIncentive, 
 						case WHEN @VacancyManagerId = @TrainingProviderId THEN 0 ELSE @IsVacancyManagerAnonymous END, --Its VM=VO then always display
@@ -394,7 +407,7 @@ declare @localAuthorityId int
 					  where FullName = 'Training to be provided'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@Trainingtobeprovided )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@Trainingtobeprovided,'') )       
 						
 					  SET @FieldId = 0      
 					  Select @FieldId = vacancytextfieldValueId     
@@ -402,7 +415,7 @@ declare @localAuthorityId int
 					  where FullName = 'Other important information'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@Otherimportantinformation )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@Otherimportantinformation,'') )       
 						
 					  SET @FieldId = 0      
 						
@@ -411,7 +424,7 @@ declare @localAuthorityId int
 					  where FullName = 'Reality Check'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@RealityCheck )       
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@RealityCheck,'') )       
 						
 					  SET @FieldId = 0      
 						
@@ -420,7 +433,7 @@ declare @localAuthorityId int
 					  where FullName = 'Future Prospects'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@FutureProspectsValue )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''), NULLIF(@FutureProspectsValue,'') )     
 						
 					  SET @FieldId = 0      
 						
@@ -429,7 +442,7 @@ declare @localAuthorityId int
 					  where FullName = 'Skills Required'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@SkillRequired )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''), NULLIF(@SkillRequired,''))
 						
 						
 					  SET @FieldId = 0      
@@ -439,7 +452,7 @@ declare @localAuthorityId int
 					  where FullName = 'Qualifications Required'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@QualificationRequired )     
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@QualificationRequired,'') )     
 						
 					  SET @FieldId = 0      
 					  Select @FieldId = vacancytextfieldValueId     
@@ -447,9 +460,9 @@ declare @localAuthorityId int
 					  where FullName = 'Personal Qualities'    
 						
 					  INSERT INTO [dbo].[vacancytextfield]([VacancyId],[Field],[Value])      
-					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),@PersonalQualities )        
+					  VALUES  (@VacancyId,ISNULL(@FieldId, ''),NULLIF(@PersonalQualities,'') )        
 		  
-					/**************************** Histoty Entry*****************************************/  
+					/**************************** History Entry*****************************************/  
 							  
 					  declare @VacancyHistoryEventTypeId int   
 					  declare @Comment Varchar(200)   

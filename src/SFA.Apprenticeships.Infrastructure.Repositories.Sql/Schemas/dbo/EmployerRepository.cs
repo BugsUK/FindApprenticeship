@@ -36,21 +36,26 @@
                 _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EdsUrn = @EdsUrn AND EmployerStatusTypeId != 2",
                     new { EdsUrn = Convert.ToInt32(edsUrn) }).SingleOrDefault();
 
-            return MapEmployer(employer);
+            return employer == null ? null : MapEmployer(employer);
         }
 
         public List<DomainEmployer> GetByIds(IEnumerable<int> employerIds)
         {
-            var employers =
-                _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
-                    new { EmployerIds = employerIds }).ToList();
-
+            List<Employer> employers = new List<Employer>();
+            var splitEmployerIds = DbHelpers.SplitIds(employerIds);           
+            foreach (int[] employersIds in splitEmployerIds)
+            {
+                var splitEmployer= _getOpenConnection.Query<Employer>("SELECT * FROM dbo.Employer WHERE EmployerId IN @EmployerIds AND EmployerStatusTypeId != 2",
+                    new { EmployerIds = employersIds }).ToList();
+                employers.AddRange(splitEmployer);
+            }                                 
             return employers.Select(MapEmployer).ToList();
         }
 
         public DomainEmployer Save(DomainEmployer employer)
         {
             var dbEmployer = _mapper.Map<DomainEmployer, Employer>(employer);
+            PopulateCountyId(employer, dbEmployer);
 
             if (dbEmployer.EmployerId == 0)
             {
@@ -95,6 +100,21 @@
         {
             var result = _mapper.Map<Employer, DomainEmployer>(employer);
             return MapCountyId(employer, result);
+        }
+
+        private void PopulateCountyId(DomainEmployer entity, Employer dbVacancyLocation)
+        {
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
+            {
+                dbVacancyLocation.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
+SELECT CountyId
+FROM   dbo.County
+WHERE  FullName = @CountyFullName",
+                    new
+                    {
+                        CountyFullName = entity.Address.County
+                    }).Single();
+            }
         }
 
         private DomainEmployer MapCountyId(Employer dbEmployer, DomainEmployer result)

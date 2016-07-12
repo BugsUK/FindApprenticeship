@@ -9,6 +9,7 @@
     {
         private readonly IEmployerService _employerService;
         private readonly IGeoCodeLookupService _geoCodeLookupService;
+        private const string InvalidCountyName = "Please Select...";
 
         public GeoCodingProvider(IEmployerService employerService, IGeoCodeLookupService geoCodeLookupService)
         {
@@ -49,7 +50,7 @@
 
         private bool InvalidCounty(PostalAddress address)
         {
-            return string.IsNullOrWhiteSpace(address.County);
+            return string.IsNullOrWhiteSpace(address.County) || address.County == InvalidCountyName;
         }
     }
 }

@@ -126,6 +126,7 @@
     <Compile Include="Schemas\Address\Entities\PostalAddress.cs" />
     <Compile Include="Schemas\Address\Entities\ValidationSource.cs" />
     <Compile Include="Schemas\dbo\Constants.cs" />
+    <Compile Include="Schemas\dbo\DbHelpers.cs" />
     <Compile Include="Schemas\dbo\Entities\Employer.cs" />
     <Compile Include="Schemas\dbo\Entities\VacancyOwnerRelationship.cs" />
     <Compile Include="Schemas\dbo\ReferenceNumberRepository.cs" />
