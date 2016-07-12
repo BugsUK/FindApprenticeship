@@ -1,6 +1,7 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.ProviderProvider
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
     using Application.Interfaces.Employers;
@@ -33,13 +34,32 @@
                         PageSize = pageSize
                     });
 
-                var employerIds = Enumerable.Empty<int>();
-
                 var employers = new Fixture()
-                    .CreateMany<Employer>(pageSize);
+                    .CreateMany<Employer>(pageSize)
+                    .ToArray();
 
                 var vacancyParties = new Fixture()
-                    .CreateMany<VacancyParty>(pageSize);
+                    .CreateMany<VacancyParty>(pageSize)
+                    .ToArray();
+
+                var random = new Random();
+
+                // Assign each vacancy party a random employer.
+                foreach (var vacancyParty in vacancyParties)
+                {
+                    var employerIndex = random.Next(pageSize);
+
+                    vacancyParty.EmployerId = employers[employerIndex].EmployerId;
+                }
+
+                /*
+                var employerIds = Enumerable.Empty<int>();
+
+                var vacancyPartyEmployerIds = vacancyParties
+                    .Select(vacancyParty => vacancyParty.EmployerId)
+                    .Distinct()
+                    .OrderBy(employerId => employerId);
+                */
 
                 var pageableVacancyParties = new Fixture()
                     .Build<Pageable<VacancyParty>>()
@@ -51,9 +71,11 @@
                 MockProviderService.Setup(mock => mock
                     .GetVacancyParties(It.Is(matchingSearchRequest), pageNumber, pageSize))
                     .Returns(pageableVacancyParties);
-                
+
+                Expression<Func<IEnumerable<int>, bool>> matchingEmployerIds = it => true;
+
                 MockEmployerService.Setup(mock => mock
-                    .GetEmployers(employerIds))
+                    .GetEmployers(It.Is(matchingEmployerIds)))
                     .Returns(employers);
 
                 var provider = GetProviderProvider();
@@ -65,6 +87,9 @@
                 viewModel.Should().NotBeNull();
 
                 viewModel.ProviderSiteId.Should().Be(providerSiteId);
+
+                viewModel.EmployerResultsPage.Should().NotBeNull();
+                viewModel.EmployerResultsPage.Page.Count().Should().Be(pageSize);
             }
         }
 
