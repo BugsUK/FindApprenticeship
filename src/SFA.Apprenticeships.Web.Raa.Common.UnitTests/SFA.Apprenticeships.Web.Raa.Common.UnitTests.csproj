@@ -165,6 +165,7 @@
     <Compile Include="Providers\LocationsProvider\TestBase.cs" />
     <Compile Include="Providers\ProviderProvider\CreateVacancyTests.cs" />
     <Compile Include="Providers\ProviderProvider\GetTests.cs" />
+    <Compile Include="Providers\ProviderProvider\GetVacancyPartyViewModelsTests.cs" />
     <Compile Include="Providers\ProviderProvider\TestBase.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderBuilder.cs" />
     <Compile Include="Providers\ProviderUser\ProviderUserProviderTests.cs" />
