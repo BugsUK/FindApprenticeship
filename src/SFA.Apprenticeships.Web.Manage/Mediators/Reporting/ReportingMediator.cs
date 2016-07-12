@@ -4,13 +4,13 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
-    using Application.Interfaces.Reporting;
     using Common.Constants;
     using Common.Extensions;
     using Common.Mediators;
     using Constants.Messages;
     using CsvClassMaps;
     using CsvHelper.Configuration;
+    using Domain.Raa.Interfaces.Reporting;
     using Domain.Raa.Interfaces.Reporting.Models;
     using Infrastructure.Presentation;
     using SFA.Infrastructure.Interfaces;
@@ -19,11 +19,11 @@
 
     public class ReportingMediator : MediatorBase, IReportingMediator
     {
-        private readonly IReportingService _reportingService;
+        private readonly IReportingRepository _reportingService;
         private readonly ReportParametersDateRangeValidator _reportDateRangeValidator;
         private readonly ILogService _logService;
 
-        public ReportingMediator(IReportingService reportingService, ILogService logService)
+        public ReportingMediator(IReportingRepository reportingService, ILogService logService)
         {
             _reportingService = reportingService;
             _reportDateRangeValidator = new ReportParametersDateRangeValidator();
@@ -116,9 +116,9 @@
             try
             {
                 var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
-                result.ManagedByList = localAuthorities.ToListOfListItem();
-                var regions = _reportingService.RegionsIncludingAll();
-                result.RegionList = regions.ToListOfListItem();
+                result.ManagedByList = localAuthorities.ToListItemList();
+                var regions = _reportingService.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
             }
             catch (Exception ex)
@@ -135,9 +135,9 @@
             try
             {
                 var localAuthorities = _reportingService.LocalAuthorityManagerGroups();
-                result.ManagedByList = localAuthorities.ToListOfListItem();
-                var regions = _reportingService.RegionsIncludingAll();
-                result.RegionList = regions.ToListOfListItem();
+                result.ManagedByList = localAuthorities.ToListItemList();
+                var regions = _reportingService.GeoRegionsIncludingAll();
+                result.RegionList = regions.ToListItemList();
                 return GetMediatorResponse(ReportingMediatorCodes.ReportCodes.Ok, result);
             }
             catch (Exception ex)

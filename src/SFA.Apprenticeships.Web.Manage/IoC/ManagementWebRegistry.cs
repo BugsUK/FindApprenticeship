@@ -29,11 +29,9 @@
     using StructureMap;
     using StructureMap.Configuration.DSL;
     using Application.Interfaces.ReferenceData;
-    using Application.Interfaces.Reporting;
     using Application.Interfaces.Vacancies;
     using Application.Location;
     using Application.ReferenceData;
-    using Application.Reporting;
     using Mappers;
     using Mediators.Candidate;
     using Mediators.Reporting;
@@ -75,7 +73,6 @@
             For<IGeoCodeLookupService>().Use<GeoCodeLookupService>();
             For<IOrganisationService>().Use<OrganisationService>();
             For<IReferenceDataService>().Use<ReferenceDataService>();
-            For<IReportingService>().Use<ReportingService>();
             For<IProviderCommunicationService>().Use<ProviderCommunicationService>();
             For<IVacancyPostingService>().Use<VacancyPostingService>();
             For<IVacancyLockingService>().Use<VacancyLockingService>();
