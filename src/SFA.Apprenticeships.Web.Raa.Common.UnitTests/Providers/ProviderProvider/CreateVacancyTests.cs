@@ -117,8 +117,6 @@
                 s =>
                     s.SaveVacancy(
                         It.Is<Vacancy>(v => v.OwnerPartyId == vacancyPartyId)), Times.Never);
-
-
         }
     }
 }

@@ -9,6 +9,11 @@
             return !string.IsNullOrEmpty(returnUrl) && (returnUrl.StartsWith("/") || returnUrl.ToLower().StartsWith("%2f")) && returnUrl != "/" && returnUrl != "%2f";
         }
 
+        public static bool IsValidReturnUrlIncludingRoot(this string returnUrl)
+        {
+            return !string.IsNullOrEmpty(returnUrl) && (returnUrl.StartsWith("/") || returnUrl.ToLower().StartsWith("%2f"));
+        }
+
         public static T? GetValueOrNull<T>(this string valueAsString) where T : struct
         {
             if (string.IsNullOrEmpty(valueAsString)) return null;

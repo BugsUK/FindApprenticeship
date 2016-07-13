@@ -153,10 +153,26 @@ $(document).ready(function () {
     }
 
     function populateAddress(address) {
+        var specialCities = [];
+        specialCities["London"] = "London";
+        specialCities["York"] = "North Yorkshire";
+
+        var provinceName = address.ProvinceName;
+
+        if (!address.ProvinceName) {
+            if (specialCities[address.City]) {
+                provinceName = specialCities[address.City];
+            } else {
+                provinceName = "";
+            }
+        }
+
+        var county = provinceName || address.AdminAreaName;
+
         $('#Address_AddressLine1').val(address.Line1);
         $('#Address_AddressLine2').val(address.Line2);
-        $('#Address_AddressLine3').val(address.Line3);
-        $('#Address_AddressLine4').val(address.City);
+        $('#Address_AddressLine3').val(address.City);
+        $('#Address_AddressLine4').val(county);
         $('#Address_Postcode').val(address.PostalCode);
         $("#Address_Uprn").val(address.DomesticId);
 

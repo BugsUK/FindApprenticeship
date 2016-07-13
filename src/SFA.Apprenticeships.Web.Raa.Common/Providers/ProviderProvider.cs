@@ -105,8 +105,20 @@
             var pageSize = _configurationService.Get<RecruitWebConfiguration>().PageSize;
             var parameters = new EmployerSearchRequest(providerSiteId);
             var vacancyParties = _providerService.GetVacancyParties(parameters, 1, pageSize);
-            var employers = _employerService.GetEmployers(vacancyParties.Page.Select(vp => vp.EmployerId).Distinct());
-            var result = vacancyParties.ToViewModel(vacancyParties.Page.Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId)).Employer.ConvertToResult()));
+
+            var employerIds = vacancyParties.Page
+                .Select(vp => vp.EmployerId)
+                .Distinct();
+
+            var employers = _employerService.GetEmployers(employerIds);
+
+            var result = vacancyParties.ToViewModel(vacancyParties.Page
+                // Exclude employers from search results that are NOT returned from Employer Service, status may be 'Suspended' etc.
+                .Where(vacancyParty => employers
+                    .Any(employer => employer.EmployerId == vacancyParty.EmployerId))
+                .Select(vp => vp.Convert(employers.Single(e => e.EmployerId == vp.EmployerId))
+                    .Employer
+                    .ConvertToResult()));
 
             return new EmployerSearchViewModel
             {

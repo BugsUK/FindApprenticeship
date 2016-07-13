@@ -784,150 +784,20 @@
             return standard.Convert(sector);
         }
 
+        /// <summary>
+        /// TODO: OO: Refactor/clean up this code.  Not a priority for now, as it works, but this is horrendous.
+        /// </summary>
+        /// <param name="providerId"></param>
+        /// <param name="providerSiteId"></param>
+        /// <param name="vacanciesSummarySearch"></param>
+        /// <returns></returns>
         public VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId,
             VacanciesSummarySearchViewModel vacanciesSummarySearch)
         {
-            bool t = true;
-            if (t)
-                return GetVacanciesSummaryForProviderOptimised(providerId, providerSiteId, vacanciesSummarySearch);
-
             var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
             if (isVacancySearch)
             {
-                //When searching the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
-                vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
-            }
-
-            //TODO: Unit tests
-            var vacancyParties = _providerService.GetVacancyParties(providerSiteId).ToList();
-            var employers = _employerService.GetEmployers(vacancyParties.Select(vp => vp.EmployerId));
-
-            var vacancyPartyToEmployerMap = vacancyParties.ToDictionary(vp => vp.VacancyPartyId, vp => employers.SingleOrDefault(e => e.EmployerId == vp.EmployerId));
-
-            //var vacancies = new List<VacancySummary> { _vacancyPostingService.GetVacancyByReferenceNumber(1100214) };
-            var vacancies = _vacancyPostingService.GetByOwnerPartyIds(vacancyParties.Select(vp => vp.VacancyPartyId));
-
-            var hasVacancies = vacancies.Count > 0;
-            vacancies = vacancies.Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown).ToList();
-
-            var live = vacancies.Where(v => v.Status == VacancyStatus.Live).ToList();
-            var liveVacancyIds = live.Select(vacancySummary => vacancySummary.VacancyId).ToList();
-
-            var submitted = vacancies.Where(v => v.Status == VacancyStatus.Submitted || v.Status == VacancyStatus.ReservedForQA).ToList();
-            var rejected = vacancies.Where(v => v.Status == VacancyStatus.Referred).ToList();
-            //TODO: Agree on closing soon range and make configurable
-            var closingSoon = vacancies.Where(v => v.Status == VacancyStatus.Live && v.ClosingDate.HasValue && v.ClosingDate >= _dateTimeService.UtcNow.Date && v.ClosingDate.Value.AddDays(-5) < _dateTimeService.UtcNow).ToList();
-            var closed = vacancies.Where(v => v.Status == VacancyStatus.Closed).ToList();
-            var draft = vacancies.Where(v => v.Status == VacancyStatus.Draft).ToList();
-
-            var applicationCountsByVacancyId = (vacanciesSummarySearch.VacancyType == VacancyType.Apprenticeship) ?
-                _apprenticeshipApplicationService.GetCountsForVacancyIds(vacancies.Select(v => v.VacancyId)) :
-                _traineeshipApplicationService.GetCountsForVacancyIds(vacancies.Select(v => v.VacancyId));
-
-            var newApplications = vacancies.Where(v => v.Status == VacancyStatus.Live && applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
-
-            var newApplicationsCount = liveVacancyIds.Sum(v => applicationCountsByVacancyId[v].NewApplications);
-
-            var withdrawn = vacancies.Where(v => v.Status == VacancyStatus.Withdrawn).ToList();
-            var completed = vacancies.Where(v => v.Status == VacancyStatus.Completed).ToList();
-
-            switch (vacanciesSummarySearch.FilterType)
-            {
-                case VacanciesSummaryFilterTypes.Live:
-                    vacancies = live;
-                    break;
-                case VacanciesSummaryFilterTypes.Submitted:
-                    vacancies = submitted;
-                    break;
-                case VacanciesSummaryFilterTypes.Rejected:
-                    vacancies = rejected;
-                    break;
-                case VacanciesSummaryFilterTypes.ClosingSoon:
-                    vacancies = closingSoon.OrderBy(v => v.ClosingDate).ToList();
-                    break;
-                case VacanciesSummaryFilterTypes.Closed:
-                    vacancies = closed.OrderByDescending(v => v.ClosingDate).ToList();
-                    break;
-                case VacanciesSummaryFilterTypes.Draft:
-                    vacancies = draft;
-                    break;
-                case VacanciesSummaryFilterTypes.NewApplications:
-                    vacancies = newApplications.OrderBy(v => v.ClosingDate).ToList();
-                    break;
-                case VacanciesSummaryFilterTypes.Withdrawn:
-                    vacancies = withdrawn;
-                    break;
-                case VacanciesSummaryFilterTypes.Completed:
-                    vacancies = completed.OrderByDescending(v => v.UpdatedDateTime).ToList();
-                    break;
-            }
-
-            vacanciesSummarySearch.PageSizes = SelectListItemsFactory.GetPageSizes(vacanciesSummarySearch.PageSize);
-
-            var vacancySummaries = vacancies.Select(v => _mapper.Map<VacancySummary, VacancySummaryViewModel>(v)).ToList();
-            foreach (var vacancySummary in vacancySummaries)
-            {
-                var employer = vacancyPartyToEmployerMap[vacancySummary.OwnerPartyId];
-                if (employer == null)
-                {
-                    throw new Exception($"Current employer could not be found for {vacancySummary.VacancyId}");
-                }
-                vacancySummary.EmployerName = employer.Name;
-            }
-
-            if (isVacancySearch)
-            {
-                vacancySummaries = vacancySummaries.Where(v => (!string.IsNullOrEmpty(v.Title) && v.Title.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0) || v.EmployerName.IndexOf(vacanciesSummarySearch.SearchString, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
-            }
-
-            var vacancyPage = new PageableViewModel<VacancySummaryViewModel>
-            {
-                Page = vacancySummaries.Skip((vacanciesSummarySearch.CurrentPage - 1) * vacanciesSummarySearch.PageSize).Take(vacanciesSummarySearch.PageSize).ToList(),
-                ResultsCount = vacancySummaries.Count,
-                CurrentPage = vacanciesSummarySearch.CurrentPage,
-                TotalNumberOfPages = vacancySummaries.Count == 0 ? 1 : (int)Math.Ceiling((double)vacancySummaries.Count / vacanciesSummarySearch.PageSize)
-            };
-
-            //TODO: This information will be returned from _apprenticeshipVacancyReadRepository.GetForProvider or similar once FAA has been migrated
-
-            //var applicationCounts = 
-            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.Status.CanHaveApplicationsOrClickThroughs()))
-            {
-                vacancyViewModel.ApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].AllApplications;
-                vacancyViewModel.NewApplicationCount = applicationCountsByVacancyId[vacancyViewModel.VacancyId].NewApplications;
-            }
-
-            foreach (var vacancyViewModel in vacancyPage.Page.Where(v => v.IsEmployerLocationMainApprenticeshipLocation.HasValue && !v.IsEmployerLocationMainApprenticeshipLocation.Value))
-            {
-                vacancyViewModel.LocationAddresses = _mapper.Map<List<VacancyLocation>, List<VacancyLocationAddressViewModel>>(_vacancyPostingService.GetVacancyLocations(vacancyViewModel.VacancyId));
-            }
-
-            var vacanciesSummary = new VacanciesSummaryViewModel
-            {
-                VacanciesSummarySearch = vacanciesSummarySearch,
-                LiveCount = live.Count,
-                SubmittedCount = submitted.Count,
-                RejectedCount = rejected.Count,
-                ClosingSoonCount = closingSoon.Count,
-                ClosedCount = closed.Count,
-                DraftCount = draft.Count,
-                NewApplicationsAcrossAllVacanciesCount = newApplicationsCount,
-                WithdrawnCount = withdrawn.Count,
-                CompletedCount = completed.Count,
-                HasVacancies = hasVacancies,
-                Vacancies = vacancyPage
-            };
-
-            return vacanciesSummary;
-        }
-
-        public VacanciesSummaryViewModel GetVacanciesSummaryForProviderOptimised(int providerId, int providerSiteId,
-             VacanciesSummarySearchViewModel vacanciesSummarySearch)
-        {
-            var isVacancySearch = !string.IsNullOrEmpty(vacanciesSummarySearch.SearchString);
-            if (isVacancySearch)
-            {
-                //When searching the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
+                //When searching, the ﬁlters (lottery numbers) are ignored and the search applies to all vacancies
                 vacanciesSummarySearch.FilterType = VacanciesSummaryFilterTypes.All;
             }
 
@@ -937,10 +807,13 @@
             // TODO: It may be that we should (and AVMS did) try Vacancy.VacancyManagerId first and then fall back to VacancyParty (aka VacancyOwnerRelationship)
             var vacancyParties = _providerService.GetVacancyParties(providerSiteId);
 
-            var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(vacancyParties.Select(vp => vp.VacancyPartyId))
+            var minimalVacancyDetails = _vacancyPostingService.GetMinimalVacancyDetails(
+                vacancyParties.Select(vp => vp.VacancyPartyId))
                 .Values
                 .SelectMany(a => a)
-                .Where(v => v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown);
+                .Where(
+                    v => (v.VacancyType == vacanciesSummarySearch.VacancyType || v.VacancyType == VacancyType.Unknown)
+                         && v.Status != VacancyStatus.Withdrawn);
 
             var hasVacancies = minimalVacancyDetails.Any();
 
@@ -1011,7 +884,6 @@
                 ClosedCount      = count(VacanciesSummaryFilterTypes.Closed),
                 DraftCount       = count(VacanciesSummaryFilterTypes.Draft),
                 NewApplicationsAcrossAllVacanciesCount = minimalVacancyDetails.Sum(v => applicationCountsByVacancyId[v.VacancyId].NewApplications),
-                WithdrawnCount   = count(VacanciesSummaryFilterTypes.Withdrawn),
                 CompletedCount   = count(VacanciesSummaryFilterTypes.Completed),
                 HasVacancies     = hasVacancies,
                 Vacancies = vacancyPage
@@ -1037,7 +909,6 @@
                 case VacanciesSummaryFilterTypes.Draft:     return data.Where(v => v.Status == VacancyStatus.Draft);
                 case VacanciesSummaryFilterTypes.NewApplications:
                     return data.Where(v => applicationCountsByVacancyId[v.VacancyId].NewApplications > 0);
-                case VacanciesSummaryFilterTypes.Withdrawn: return data.Where(v => v.Status == VacancyStatus.Withdrawn);
                 case VacanciesSummaryFilterTypes.Completed: return data.Where(v => v.Status == VacancyStatus.Completed);
                 default: throw new ArgumentException($"{vacanciesSummaryFilterType}");
             }
@@ -1055,7 +926,6 @@
                 case VacanciesSummaryFilterTypes.Completed:
                     return data.OrderByDescending(v => v.SyntheticUpdatedDateTime).ThenByDescending(v => v.VacancyId);
                 case VacanciesSummaryFilterTypes.All:
-                case VacanciesSummaryFilterTypes.Withdrawn:
                 case VacanciesSummaryFilterTypes.Live:
                 case VacanciesSummaryFilterTypes.Submitted:
                 case VacanciesSummaryFilterTypes.Rejected:

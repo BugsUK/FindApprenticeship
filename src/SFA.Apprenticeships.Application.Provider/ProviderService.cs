@@ -161,12 +161,9 @@ namespace SFA.Apprenticeships.Application.Provider
                 }
                 else if (request.IsNameAndLocationQuery)
                 {
-                    employers = employers.Where(e =>
-                        e.Name.ToLower().Contains(request.Name.ToLower()) &&
-                        ((e.Address.Postcode != null &&
-                          e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
-                         (e.Address.AddressLine4 != null &&
-                          e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower()))));
+                    employers = employers.Where(employer =>
+                        employer.Name.ToLower().Contains(request.Name.ToLower()) &&
+                        IsMatchingAddress(request, employer));
                 }
                 else if (request.IsNameQuery)
                 {
@@ -174,17 +171,24 @@ namespace SFA.Apprenticeships.Application.Provider
                 }
                 else if (request.IsLocationQuery)
                 {
-                    employers = employers.Where(e =>
-                        (e.Address.Postcode != null &&
-                         e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
-                        (e.Address.AddressLine4 != null &&
-                         e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower())));
+                    employers = employers.Where(e => IsMatchingAddress(request, e));
                 }
 
                 vacancyParties = vacancyParties.Where(vp => employers.Any(e => e.EmployerId == vp.EmployerId)).ToList();
             }
 
             return vacancyParties;
+        }
+
+        private static bool IsMatchingAddress(EmployerSearchRequest request, Employer e)
+        {
+            return
+                (e.Address.Postcode != null &&
+                 e.Address.Postcode.ToLower().Contains(request.Location.ToLower())) ||
+                (e.Address.AddressLine4 != null &&
+                 e.Address.AddressLine4.ToLower().Contains(request.Location.ToLower())) ||
+                (e.Address.Town != null &&
+                 e.Address.Town.ToLower().Contains(request.Location.ToLower()));
         }
 
         public Pageable<VacancyParty> GetVacancyParties(EmployerSearchRequest request, int currentPage, int pageSize)
@@ -197,6 +201,7 @@ namespace SFA.Apprenticeships.Application.Provider
             };
 
             var resultCount = results.Count;
+
             pageable.Page = results.Skip((currentPage - 1) * pageSize).Take(pageSize).ToList();
             pageable.ResultsCount = resultCount;
             pageable.TotalNumberOfPages = (resultCount / pageSize) + 1;

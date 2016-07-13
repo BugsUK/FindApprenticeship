@@ -4,11 +4,9 @@
     using System.Web.Mvc;
     using Attributes;
     using Common.Attributes;
-    using Common.Configuration;
     using Common.Constants;
     using Common.Controllers;
     using SFA.Infrastructure.Interfaces;
-    using Infrastructure.Logging;
     using NLog.Contrib;
     using Providers;
 
