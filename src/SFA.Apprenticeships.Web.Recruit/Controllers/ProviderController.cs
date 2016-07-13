@@ -9,7 +9,6 @@
     using Mediators.Provider;
     using Raa.Common.ViewModels.Provider;
     using Constants;
-    using Domain.Entities;
     using Domain.Entities.Raa;
     using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Faa)]
