@@ -12,6 +12,7 @@
     using Domain.Entities.Raa;
     using SFA.Infrastructure.Interfaces;
     [AuthorizeUser(Roles = Roles.Faa)]
+    [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     [OwinSessionTimeout]
     public class ProviderController : RecruitmentControllerBase
     {
@@ -55,7 +56,6 @@
         }
 
         [HttpGet]
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult AddSite()
         {
             var response = _providerMediator.AddSite();
@@ -64,7 +64,6 @@
         }
 
         [HttpPost]
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         [MultipleFormActionsButton(SubmitButtonActionName = "AddSiteByEmployerReferenceNumber")]
         public ActionResult AddSiteByEmployerReferenceNumber(ProviderSiteSearchViewModel viewModel)
         {
@@ -94,7 +93,6 @@
         }
 
         [HttpGet]
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(string edsUrn)
         {
             var response = _providerMediator.GetSite(edsUrn);
@@ -104,7 +102,6 @@
         }
 
         [HttpPost]
-        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
         public ActionResult EditSite(ProviderSiteViewModel providerSiteViewModel)
         {
             var response = _providerMediator.UpdateSite(providerSiteViewModel);
