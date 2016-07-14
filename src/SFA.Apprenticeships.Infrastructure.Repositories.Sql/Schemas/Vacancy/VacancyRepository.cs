@@ -1011,7 +1011,7 @@ WHERE  CodeName = @FrameworkCodeName",
 
         private void PopulateCountyId(DomainVacancy entity, Vacancy dbVacancy)
         {
-            if (entity.Address?.County != null)
+            if (!string.IsNullOrWhiteSpace(entity.Address?.County))
             {
                 dbVacancy.CountyId = _getOpenConnection.QueryCached<int>(_cacheDuration, @"
 SELECT CountyId

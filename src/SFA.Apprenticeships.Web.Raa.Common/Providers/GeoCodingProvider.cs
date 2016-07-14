@@ -9,7 +9,6 @@
     {
         private readonly IEmployerService _employerService;
         private readonly IGeoCodeLookupService _geoCodeLookupService;
-        private const string InvalidCountyName = "Please Select...";
 
         public GeoCodingProvider(IEmployerService employerService, IGeoCodeLookupService geoCodeLookupService)
         {
@@ -20,11 +19,6 @@
         public GeoCodeAddressResult EmployerHasAValidAddress(int employerId)
         {
             var employer = _employerService.GetEmployer(employerId);
-
-            if (InvalidCounty(employer.Address))
-            {
-                return GeoCodeAddressResult.InvalidAddress;
-            }
 
             if (NoGeoPoint(employer.Address) || InvalidGeopoint(employer.Address))
             {
@@ -46,11 +40,6 @@
             const double tolerance = 0.001;
 
             return Math.Abs(address.GeoPoint.Latitude) < 0.0001 && Math.Abs(address.GeoPoint.Longitude) < tolerance;
-        }
-
-        private bool InvalidCounty(PostalAddress address)
-        {
-            return string.IsNullOrWhiteSpace(address.County) || address.County == InvalidCountyName;
         }
     }
 }
