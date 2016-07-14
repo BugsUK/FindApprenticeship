@@ -1,8 +1,6 @@
-﻿using SFA.Apprenticeships.Web.Raa.Common.ViewModels.ProviderUser;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
-    using System;
+    using Raa.Common.ViewModels.ProviderUser;
     using System.Security.Claims;
     using System.Web.Mvc;
     using Attributes;
@@ -19,7 +17,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using ViewModels;
     using SFA.Infrastructure.Interfaces;
     using SystemClaimTypes = System.Security.Claims.ClaimTypes;
-    using ClaimTypes = Common.Constants.ClaimTypes;
+    //using ClaimTypes = Common.Constants.ClaimTypes;
 
     [OwinSessionTimeout]
     public class ProviderUserController : RecruitmentControllerBase

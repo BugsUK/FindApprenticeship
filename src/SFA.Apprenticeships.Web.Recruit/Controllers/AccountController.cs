@@ -1,14 +1,12 @@
-﻿using SFA.Apprenticeships.Web.Recruit.Constants;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using Constants;
     using System.Web;
     using System.Web.Mvc;
     using Common.Constants;
     using Common.Framework;
     using Common.Providers;
     using Constants.Messages;
-    using Domain.Entities.Raa;
     using Microsoft.Owin.Security;
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;

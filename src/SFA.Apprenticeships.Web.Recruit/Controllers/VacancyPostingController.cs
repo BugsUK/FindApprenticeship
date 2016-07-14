@@ -19,6 +19,7 @@
     using Raa.Common.ViewModels.Vacancy;
     using Raa.Common.ViewModels.VacancyPosting;
     using SFA.Infrastructure.Interfaces;
+
     //TODO: Split this class by code region
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]

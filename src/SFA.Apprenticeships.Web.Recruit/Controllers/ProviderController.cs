@@ -11,6 +11,7 @@
     using Constants;
     using Domain.Entities.Raa;
     using SFA.Infrastructure.Interfaces;
+
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     [OwinSessionTimeout]

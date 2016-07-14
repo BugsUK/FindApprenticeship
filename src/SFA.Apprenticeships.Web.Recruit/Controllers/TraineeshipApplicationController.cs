@@ -11,6 +11,7 @@
     using Raa.Common.ViewModels.Application;
     using Raa.Common.ViewModels.Application.Traineeship;
     using SFA.Infrastructure.Interfaces;
+
     [AuthorizeUser(Roles = Roles.Faa)]
     [AuthorizeUser(Roles = Roles.VerifiedEmail)]
     public class TraineeshipApplicationController : RecruitmentControllerBase
