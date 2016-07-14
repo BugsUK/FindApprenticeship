@@ -323,7 +323,7 @@
             var employer = _employerService.GetEmployer(vacancyParty.EmployerId);
             var provider = _providerService.GetProvider(ukprn);
 
-            if (employer.Address.GeoPoint == null)
+            if (!employer.Address.GeoPoint.IsValid())
             {
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
