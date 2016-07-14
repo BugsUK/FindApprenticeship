@@ -73,7 +73,6 @@
                 case ProviderUserMediatorCodes.Authorize.EmptyUsername:
                 case ProviderUserMediatorCodes.Authorize.MissingProviderIdentifier:
                 case ProviderUserMediatorCodes.Authorize.MissingServicePermission:
-                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
                     _cookieAuthorizationDataProvider.Clear(HttpContext);
 
                     return RedirectToRoute(RecruitmentRouteNames.SignOut, new
@@ -101,7 +100,8 @@
                     }
 
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
-
+                case ProviderUserMediatorCodes.Authorize.ProviderNotMigrated:
+                    return RedirectToRoute(RecruitmentRouteNames.OnBoardingComplete);
                 default:
                     throw new InvalidMediatorCodeException(response.Code);
             }
@@ -252,6 +252,9 @@
                 case ProviderUserMediatorCodes.VerifyEmailAddress.InvalidCode:
                     SetUserMessage(response.Message.Text, response.Message.Level);
                     return View(verifyEmailViewModel);
+                case ProviderUserMediatorCodes.VerifyEmailAddress.OkNotYetMigrated:
+                    _cookieAuthorizationDataProvider.AddClaim(new Claim(SystemClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
+                    return RedirectToRoute(RecruitmentRouteNames.OnBoardingComplete);
                 case ProviderUserMediatorCodes.VerifyEmailAddress.Ok:
                     _cookieAuthorizationDataProvider.AddClaim(new Claim(SystemClaimTypes.Role, Roles.VerifiedEmail), HttpContext, User.Identity.Name);
                     return RedirectToRoute(RecruitmentRouteNames.RecruitmentHome);
@@ -273,6 +276,14 @@
             }
 
             return View("VerifyEmail", verifyEmailViewModel);
+        }
+
+        [HttpGet]
+        [AuthorizeUser(Roles = Roles.Faa)]
+        [AuthorizeUser(Roles = Roles.VerifiedEmail)]
+        public ActionResult OnBoardingComplete()
+        {
+            return View();
         }
 
         #region Helpers
