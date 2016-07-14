@@ -132,7 +132,7 @@ WHERE  CountyId = @CountyId",
                     new
                     {
                         CountyId = dbVacancyLocation.CountyId
-                    }).Single();
+                    }).SingleOrDefault();
             }
         }
     }
