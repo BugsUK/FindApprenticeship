@@ -1329,6 +1329,36 @@ SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
             return MapVacancy(dbVacancy);
         }
 
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            _logger.Debug(
+                $"Calling database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA");
+
+            var dbVacancy = _getOpenConnection.MutatingQuery<Vacancy>(@"
+UPDATE dbo.Vacancy
+SET    QAUserName             = null,
+       VacancyStatusId        = @VacancyStatusId
+WHERE  VacancyReferenceNumber = @VacancyReferenceNumber
+
+SELECT * FROM dbo.Vacancy WHERE VacancyReferenceNumber = @VacancyReferenceNumber
+",
+                new
+                {
+                    VacancyStatusId = VacancyStatus.Submitted,
+                    VacancyReferenceNumber = vacancyReferenceNumber
+                })
+                .SingleOrDefault();
+            if (dbVacancy == null)
+            {
+                _logger.Warn(
+                    $"Call to database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA failed");
+                return;
+            }
+
+            _logger.Info(
+                $"Called database to get and unreserve vacancy with reference number: {vacancyReferenceNumber} for QA successfully");
+        }
+
         private void UpdateEntityTimestamps(DomainVacancy entity)
         {
             // determine whether this is a "new" entity being saved for the first time

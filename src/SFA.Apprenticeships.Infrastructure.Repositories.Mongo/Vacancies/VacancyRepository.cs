@@ -149,6 +149,12 @@
             return vacancies;
         }
 
+        public void UnReserveVacancyForQa(int vacancyReferenceNumber)
+        {
+            // TODO: Unreserve vacancy not implemented for mongo
+            throw new NotImplementedException();
+        }
+
         public void IncrementOfflineApplicationClickThrough(int vacancyReferenceNumber)
         {
             _logger.Debug("Calling Mongodb to increment the OfflineApplicationClickThroughCount property by one for vacancy with reference number: {0}", vacancyReferenceNumber);

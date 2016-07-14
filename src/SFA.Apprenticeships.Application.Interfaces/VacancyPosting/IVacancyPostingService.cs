@@ -27,6 +27,8 @@
 
         Vacancy ReserveVacancyForQA(int vacancyReferenceNumber);
 
+        void UnReserveVacancyForQa(int vacancyReferenceNumber);
+
         List<VacancyLocation> GetVacancyLocations(int vacancyId);
 
         List<VacancyLocation> SaveVacancyLocations(List<VacancyLocation> vacancyLocations);
