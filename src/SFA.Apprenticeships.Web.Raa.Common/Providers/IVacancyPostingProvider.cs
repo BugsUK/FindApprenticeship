@@ -14,7 +14,7 @@
 
         NewVacancyViewModel GetNewVacancyViewModel(int vacancyPartyId, Guid vacancyGuid, int? numberOfPositions);
 
-        NewVacancyViewModel CreateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
+        NewVacancyViewModel UpdateVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn);
 
         TrainingDetailsViewModel GetTrainingDetailsViewModel(int vacancyReferenceNumber);
 
@@ -47,8 +47,6 @@
         VacanciesSummaryViewModel GetVacanciesSummaryForProvider(int providerId, int providerSiteId, VacanciesSummarySearchViewModel vacanciesSummarySearch);
 
         VacancyPartyViewModel CloneVacancy(int vacancyReferenceNumber);
-
-        LocationSearchViewModel CreateVacancy(LocationSearchViewModel newVacancyViewModel, string ukprn);
 
         LocationSearchViewModel LocationAddressesViewModel(string ukprn, int providerSiteId, int employerId, Guid vacancyGuid);
 
