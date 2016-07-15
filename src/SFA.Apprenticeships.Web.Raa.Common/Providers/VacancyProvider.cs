@@ -322,7 +322,7 @@
                     vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
                 VacancyGuid = vacancyMinimumData.VacancyGuid,
                 Ukprn = vacancyMinimumData.Ukprn,
-                NumberOfPositions = vacancyMinimumData.NumberOfPosition,
+                NumberOfPositions = vacancyMinimumData.NumberOfPositions,
                 OwnerParty = new VacancyPartyViewModel
                 {
                     VacancyPartyId = vacancyMinimumData.VacancyPartyId
@@ -346,7 +346,7 @@
             {
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
-
+            
             var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
             {
                 VacancyGuid = newVacancyViewModel.VacancyGuid,
@@ -361,7 +361,7 @@
                 IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation,
                 NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0,
                 VacancyType = newVacancyViewModel.VacancyType,
-                Address = employer.Address,
+                Address = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value ? employer.Address : null,
                 ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
                 LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode)
             });

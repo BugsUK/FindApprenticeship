@@ -209,6 +209,7 @@
             }
             else
             {
+                viewModel.VacancyPartyId = newViewModel.VacancyPartyId;
                 CreateNewVacancy(viewModel, ukprn);
             }
 
@@ -245,7 +246,7 @@
             {
                 IsEmployerLocationMainApprenticeshipLocation =
                     viewModel.IsEmployerLocationMainApprenticeshipLocation.Value,
-                NumberOfPosition = viewModel.NumberOfPositions,
+                NumberOfPositions = viewModel.NumberOfPositions,
                 Ukprn = ukprn,
                 VacancyGuid = viewModel.VacancyGuid,
                 VacancyPartyId = viewModel.VacancyPartyId

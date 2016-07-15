@@ -250,7 +250,7 @@
                 VacancyGuid = vacancyGuid,
                 VacancyPartyId = vacanyPartyId,
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
-                NumberOfPosition = numberOfPositions
+                NumberOfPositions = numberOfPositions
             }));
         }
 
@@ -296,7 +296,7 @@
                 VacancyGuid = vacancyGuid,
                 VacancyPartyId = vacancyPartyId,
                 Ukprn = ukprn,
-                NumberOfPosition = numberOfPositions
+                NumberOfPositions = numberOfPositions
             });
 
             // Assert.
@@ -321,6 +321,57 @@
                 && v.Address == address 
                 && v.ProviderId == providerId 
                 && v.LocalAuthorityCode == localAuthorityCode
+            )));
+        }
+
+        [Test]
+        public void CreateVacancyShouldNullTheAddressIfItsAMultilocationVacancy()
+        {
+            const int vacancyPartyId = 1;
+            const int employerId = 2;
+            const string ukprn = "1234";
+            const string employersPostcode = "cv1 9SX";
+            var vacancyGuid = Guid.NewGuid();
+            const int vacancyReferenceNumber = 123456;
+            const bool isEmployerLocationMainApprenticeshipLocation = false;
+            int? numberOfPositions = null;
+            var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
+            const int providerId = 4;
+            const string localAuthorityCode = "lac";
+
+            // Arrange.
+            MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(vacancyReferenceNumber);
+            MockProviderService.Setup(s => s.GetVacancyParty(vacancyPartyId, true))
+                .Returns(
+                    new Fixture().Build<VacancyParty>()
+                        .With(v => v.VacancyPartyId, vacancyPartyId)
+                        .With(v => v.EmployerId, employerId)
+                        .Create());
+            MockEmployerService.Setup(s => s.GetEmployer(employerId))
+                .Returns(
+                    new Fixture().Build<Employer>()
+                        .With(e => e.EmployerId, employerId)
+                        .With(e => e.Address, address)
+                        .Create());
+            MockProviderService.Setup(s => s.GetProvider(ukprn))
+                .Returns(new Fixture().Build<Provider>().With(p => p.ProviderId, providerId).Create());
+            MockLocalAuthorityService.Setup(s => s.GetLocalAuthorityCode(employersPostcode)).Returns(localAuthorityCode);
+
+
+            // Act.
+            var provider = GetVacancyPostingProvider();
+            provider.CreateVacancy(new VacancyMinimumData
+            {
+                IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
+                VacancyGuid = vacancyGuid,
+                VacancyPartyId = vacancyPartyId,
+                Ukprn = ukprn,
+                NumberOfPositions = numberOfPositions
+            });
+
+            // Assert.
+            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v =>
+                v.Address == null
             )));
         }
 
@@ -370,7 +421,7 @@
                 VacancyGuid = vacancyGuid,
                 VacancyPartyId = vacancyPartyId,
                 Ukprn = ukprn,
-                NumberOfPosition = numberOfPositions
+                NumberOfPositions = numberOfPositions
             });
 
             // Assert.
