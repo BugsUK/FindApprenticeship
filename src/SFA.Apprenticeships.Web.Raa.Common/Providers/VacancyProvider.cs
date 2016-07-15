@@ -391,7 +391,7 @@
                 ? _vacancyPostingService.GetVacancyByReferenceNumber(newVacancyViewModel.VacancyReferenceNumber.Value)
                 : _vacancyPostingService.GetVacancy(newVacancyViewModel.VacancyGuid);
 
-            if (employer.Address.GeoPoint == null)
+            if (!employer.Address.GeoPoint.IsValid())
             {
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
@@ -404,7 +404,7 @@
             vacancy.IsEmployerLocationMainApprenticeshipLocation = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation;
             vacancy.NumberOfPositions = newVacancyViewModel.NumberOfPositions ?? 0;
             vacancy.VacancyType = newVacancyViewModel.VacancyType;
-
+            vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode);
             vacancy.Address = newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.HasValue
                               && newVacancyViewModel.IsEmployerLocationMainApprenticeshipLocation.Value == false
                               && newVacancyViewModel.LocationAddresses != null
