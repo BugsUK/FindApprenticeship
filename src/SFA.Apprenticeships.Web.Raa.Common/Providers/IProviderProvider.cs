@@ -7,6 +7,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.Providers
     public interface IProviderProvider
     {
         ProviderViewModel GetProviderViewModel(string ukprn);
+        ProviderViewModel GetProviderViewModel(int providerId);
         ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn);
         IEnumerable<ProviderSiteViewModel> GetProviderSiteViewModels(string ukprn);
         VacancyPartyViewModel GetVacancyPartyViewModel(int vacancyPartyId);

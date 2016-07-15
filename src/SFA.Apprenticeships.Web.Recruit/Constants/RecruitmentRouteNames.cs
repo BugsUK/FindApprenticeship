@@ -8,6 +8,7 @@
         public const string ManageProviderSites = "ManageProviderSites";
         public const string AddProviderSite = "AddProviderSite";
         public const string EditProviderSite = "EditProviderSite";
+        public const string OnBoardingComplete = "OnBoardingComplete";
 
         // Account set up
         public const string Settings = "Settings";
