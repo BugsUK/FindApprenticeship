@@ -65,5 +65,6 @@
         VacancyDatesViewModel UpdateVacancy(VacancyDatesViewModel viewModel);
 
         void EmptyVacancyLocation(int vacancyReferenceNumber);
+        void CreateVacancy(VacancyMinimumData vacancyMinimumData);
     }
 }

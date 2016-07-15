@@ -238,7 +238,15 @@
             }
             else
             {
-                // Always create the vacancy
+                _vacancyPostingProvider.CreateVacancy(new VacancyMinimumData
+                {
+                    IsEmployerLocationMainApprenticeshipLocation =
+                        viewModel.IsEmployerLocationMainApprenticeshipLocation.Value,
+                    NumberOfPosition = viewModel.NumberOfPositions,
+                    Ukprn = ukprn,
+                    VacancyGuid = viewModel.VacancyGuid,
+                    VacancyPartyId = viewModel.VacancyPartyId
+                });
             }
 
 

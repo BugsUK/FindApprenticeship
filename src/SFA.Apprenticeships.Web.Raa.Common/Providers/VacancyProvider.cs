@@ -314,6 +314,25 @@
             return resultViewModel;
         }
 
+        public void CreateVacancy(VacancyMinimumData vacancyMinimumData)
+        {
+            var newVacancyViewModel = new NewVacancyViewModel
+            {
+                IsEmployerLocationMainApprenticeshipLocation =
+                    vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation,
+                VacancyGuid = vacancyMinimumData.VacancyGuid,
+                Ukprn = vacancyMinimumData.Ukprn,
+                NumberOfPositions = vacancyMinimumData.NumberOfPosition,
+                OwnerParty = new VacancyPartyViewModel
+                {
+                    VacancyPartyId = vacancyMinimumData.VacancyPartyId
+                }
+            };
+
+            CreateNewVacancy(newVacancyViewModel, vacancyMinimumData.Ukprn);
+
+        }
+
         private Vacancy CreateNewVacancy(NewVacancyViewModel newVacancyViewModel, string ukprn)
         {
             var offlineApplicationUrl = !string.IsNullOrEmpty(newVacancyViewModel.OfflineApplicationUrl) ? new UriBuilder(newVacancyViewModel.OfflineApplicationUrl).Uri.ToString() : newVacancyViewModel.OfflineApplicationUrl;
@@ -614,6 +633,8 @@
 
             _vacancyPostingService.UpdateVacancy(vacancy);
         }
+
+        
 
         public VacancyViewModel GetVacancy(int vacancyReferenceNumber)
         {
