@@ -1,5 +1,6 @@
 ﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
+    using System;
     using System.Collections.Generic;
     using Domain.Entities.Raa.Locations;
     using Domain.Entities.Raa.Parties;
@@ -73,6 +74,8 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithoutGeocode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -95,6 +98,8 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithoutGeocode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -105,7 +110,7 @@
         }
         
         [Test]
-        public void ShouldCreateApprenticeshipVacancyWithGeocodeIfEmployerDoesNotHaveGeocode()
+        public void ShouldUpdateVacancyWithGeocodeIfEmployerDoesNotHaveGeocode()
         {
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
@@ -119,6 +124,8 @@
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockGeocodeService.Setup(m => m.GetGeoPointFor(postalAddress)).Returns(geopoint);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -126,11 +133,11 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.UpdateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
-        public void ShouldCreateApprenticeshipVacancyWithGeocodeIfEmployerGeocodeIsNotValid()
+        public void ShouldUpdateVacancyWithGeocodeIfEmployerGeocodeIsNotValid()
         {
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
@@ -144,6 +151,8 @@
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockGeocodeService.Setup(m => m.GetGeoPointFor(postalAddress)).Returns(geopoint);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -151,11 +160,11 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.UpdateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
-        public void ShouldCreateApprenticeshipVacancyWithGeocodeIfEmployerHasGeocode()
+        public void ShouldUpdateVacancyWithGeocodeIfEmployerHasGeocode()
         {
             // Arrange.
             var vvm = new Fixture().Build<NewVacancyViewModel>().Create();
@@ -168,6 +177,8 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
@@ -175,7 +186,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.UpdateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
@@ -187,6 +198,8 @@
             MockMapper.Setup(m => m.Map<Vacancy, NewVacancyViewModel>(It.IsAny<Vacancy>())).Returns(vvm);
             MockEmployerService.Setup(m => m.GetEmployer(It.IsAny<int>())).Returns(employerWithGeocode);
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
+            MockVacancyPostingService.Setup(s => s.GetVacancy(It.IsAny<Guid>())).Returns(new Fixture().Create<Vacancy>());
+
             var provider = GetVacancyPostingProvider();
 
             // Act.
