@@ -261,7 +261,9 @@
                 NumberOfPositions = vacancyMinimumData.NumberOfPositions ?? 0,
                 Address = vacancyMinimumData.IsEmployerLocationMainApprenticeshipLocation ? employer.Address : null,
                 ProviderId = provider.ProviderId, //Confirmed from ReportUnsuccessfulCandidateApplications stored procedure
-                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode)
+                LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(employer.Address.Postcode),
+                EmployerDescription = vacancyMinimumData.EmployerDescription,
+                EmployerWebsiteUrl = vacancyMinimumData.EmployerWebsiteUrl
             });
         }
         

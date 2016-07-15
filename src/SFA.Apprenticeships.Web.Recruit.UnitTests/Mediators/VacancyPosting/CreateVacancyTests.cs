@@ -13,6 +13,7 @@
     using Domain.Entities.Raa.Parties;
     using FluentAssertions;
     using Ploeh.AutoFixture;
+    using Raa.Common.Constants.ViewModels;
     using Raa.Common.ViewModels.VacancyPosting;
 
     [TestFixture]
@@ -220,7 +221,8 @@
             const int vacanyPartyId = 1;
             const bool isEmployerLocationMainApprenticeshipLocation = true;
             int? numberOfPositions = 2;
-
+            const string employerWebsiteUrl = "www.google.com";
+            const string employerDescription = "description";
 
             var viewModel = new VacancyPartyViewModel
             {
@@ -231,7 +233,8 @@
                 {
                     EmployerId = 7
                 },
-                EmployerDescription = "Text about Employer Description",
+                EmployerDescription = employerDescription,
+                EmployerWebsiteUrl = employerWebsiteUrl,
                 VacancyPartyId = vacanyPartyId,
                 VacancyGuid = vacancyGuid
             };
@@ -242,7 +245,6 @@
             var mediator = GetMediator();
             mediator.ConfirmEmployer(viewModel, ukprn);
             
-
             // Assert.
             VacancyPostingProvider.Verify(p => p.CreateVacancy(new VacancyMinimumData
             {
@@ -250,7 +252,9 @@
                 VacancyGuid = vacancyGuid,
                 VacancyPartyId = vacanyPartyId,
                 IsEmployerLocationMainApprenticeshipLocation = isEmployerLocationMainApprenticeshipLocation,
-                NumberOfPositions = numberOfPositions
+                NumberOfPositions = numberOfPositions,
+                EmployerWebsiteUrl = employerWebsiteUrl,
+                EmployerDescription = employerDescription
             }));
         }
 
@@ -268,6 +272,8 @@
             var address = new Fixture().Build<PostalAddress>().With(a => a.Postcode, employersPostcode).Create();
             const int providerId = 4;
             const string localAuthorityCode = "lac";
+            const string employerWebsiteUrl = "www.google.com";
+            const string employerDescription = "employer description";
 
             // Arrange.
             MockVacancyPostingService.Setup(s => s.GetNextVacancyReferenceNumber()).Returns(vacancyReferenceNumber);
@@ -296,7 +302,9 @@
                 VacancyGuid = vacancyGuid,
                 VacancyPartyId = vacancyPartyId,
                 Ukprn = ukprn,
-                NumberOfPositions = numberOfPositions
+                NumberOfPositions = numberOfPositions,
+                EmployerWebsiteUrl = employerWebsiteUrl,
+                EmployerDescription = employerDescription
             });
 
             // Assert.
@@ -321,6 +329,8 @@
                 && v.Address == address 
                 && v.ProviderId == providerId 
                 && v.LocalAuthorityCode == localAuthorityCode
+                && v.EmployerWebsiteUrl == employerWebsiteUrl
+                && v.EmployerDescription == employerDescription
             )));
         }
 

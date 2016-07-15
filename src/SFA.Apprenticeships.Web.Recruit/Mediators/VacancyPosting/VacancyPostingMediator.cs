@@ -250,8 +250,8 @@
                 Ukprn = ukprn,
                 VacancyGuid = viewModel.VacancyGuid,
                 VacancyPartyId = viewModel.VacancyPartyId,
-                //EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
-                //EmployerDescription = viewModel.EmployerDescription
+                EmployerWebsiteUrl = viewModel.EmployerWebsiteUrl,
+                EmployerDescription = viewModel.EmployerDescription
             });
         }
 
@@ -456,7 +456,7 @@
 
             return SwitchingFromOnlineToOfflineVacancy(newVacancyViewModel, storedVacancy)
                 ? GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.OkWithWarning, createdVacancyViewModel,
-                    "TODO: questions will not appear on offline vacancies.", UserMessageLevel.Info)
+                    NewVacancyViewModelMessages.OptionalQuestions.WontBeVisible, UserMessageLevel.Info)
                 : GetMediatorResponse(VacancyPostingMediatorCodes.CreateVacancy.Ok, createdVacancyViewModel);
         }
 
