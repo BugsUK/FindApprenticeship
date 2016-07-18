@@ -603,6 +603,7 @@
       <Generator>RazorGenerator</Generator>
       <LastGenOutput>Cookies.generated.cs</LastGenOutput>
     </Content>
+    <Content Include="Views\ProviderUser\OnBoardingComplete.cshtml" />
     <None Include="Web.Demo.config">
       <DependentUpon>Web.config</DependentUpon>
       <SubType>Designer</SubType>

@@ -32,6 +32,12 @@
                 );
 
             routes.MapRoute(
+                name: RecruitmentRouteNames.OnBoardingComplete,
+                url: "onboardingcomplete",
+                defaults: new { controller = "ProviderUser", action = "OnBoardingComplete" }
+                );
+
+            routes.MapRoute(
                 name: RecruitmentRouteNames.Privacy,
                 url: "privacy",
                 defaults: new { controller = "Home", action = "Privacy" }

@@ -38,6 +38,14 @@
             return Convert(provider, providerSites);
         }
 
+        public ProviderViewModel GetProviderViewModel(int providerId)
+        {
+            var provider = _providerService.GetProvider(providerId);
+            var providerSites = _providerService.GetProviderSites(provider.Ukprn);
+
+            return Convert(provider, providerSites);
+        }
+
         public ProviderSiteViewModel GetProviderSiteViewModel(string edsUrn)
         {
             var providerSite = _providerService.GetProviderSite(edsUrn);

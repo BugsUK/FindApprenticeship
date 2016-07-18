@@ -1,7 +1,6 @@
-﻿using SFA.Apprenticeships.Web.Recruit.Constants;
-
-namespace SFA.Apprenticeships.Web.Recruit.Controllers
+﻿namespace SFA.Apprenticeships.Web.Recruit.Controllers
 {
+    using Constants;
     using System.Web;
     using System.Web.Mvc;
     using Common.Constants;
@@ -12,6 +11,8 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
     using Microsoft.Owin.Security.Cookies;
     using Microsoft.Owin.Security.WsFederation;
     using SFA.Infrastructure.Interfaces;
+    using Attributes;
+
     public class AccountController : RecruitmentControllerBase
     {
         private const string DefaultScheme = "https";
@@ -39,6 +40,7 @@ namespace SFA.Apprenticeships.Web.Recruit.Controllers
                 properties, WsFederationAuthenticationDefaults.AuthenticationType);
         }
 
+        [AuthorizeUser]
         public void SignOut(string returnRoute)
         {
             var callbackUrl = Url.RouteUrl(returnRoute ?? RecruitmentRouteNames.SignOutCallback, new {timeout = false}, Request.Url?.Scheme ?? DefaultScheme);

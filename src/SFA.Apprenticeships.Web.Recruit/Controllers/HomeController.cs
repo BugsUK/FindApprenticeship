@@ -11,6 +11,7 @@
     using Raa.Common.Constants.Pages;
     using ViewModels.Home;
     using SFA.Infrastructure.Interfaces;
+
     public class HomeController : RecruitmentControllerBase
     {
         private readonly IHomeMediator _homeMediator;
