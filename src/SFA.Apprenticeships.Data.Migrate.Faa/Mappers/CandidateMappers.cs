@@ -157,6 +157,13 @@
             }
         }
 
+        public CandidateWithHistory MapCandidateWithHistory(CandidateUser candidateUser, IDictionary<Guid, CandidateSummary> candidateSummaries, IDictionary<string, int> vacancyLocalAuthorities, IDictionary<int, int> localAuthorityCountyIds, IDictionary<int, Dictionary<int, int>> candidateHistoryIds, bool anonymise)
+        {
+            var candidatePerson = MapCandidatePerson(candidateUser, candidateSummaries, vacancyLocalAuthorities, localAuthorityCountyIds, anonymise);
+            var candidateHistory = candidateUser.MapCandidateHistory(candidatePerson.Candidate.CandidateId, candidateHistoryIds);
+            return new CandidateWithHistory { CandidatePerson = candidatePerson, CandidateHistory = candidateHistory };
+        }
+
         public Dictionary<string, object> MapCandidateDictionary(Candidate candidate)
         {
             return new Dictionary<string, object>
