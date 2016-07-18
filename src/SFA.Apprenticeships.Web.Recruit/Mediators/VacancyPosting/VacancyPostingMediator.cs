@@ -194,7 +194,7 @@
 
             if (!validationResult.IsValid)
             {
-                var existingViewModel = PathVacancyPartyViewModelWithErrors(viewModel);
+                var existingViewModel = PatchVacancyPartyViewModelWithErrors(viewModel);
 
                 return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.FailedValidation, existingViewModel, validationResult);
             }
@@ -218,7 +218,7 @@
             return GetMediatorResponse(VacancyPostingMediatorCodes.ConfirmEmployer.Ok, newViewModel);
         }
 
-        private VacancyPartyViewModel PathVacancyPartyViewModelWithErrors(VacancyPartyViewModel viewModel)
+        private VacancyPartyViewModel PatchVacancyPartyViewModelWithErrors(VacancyPartyViewModel viewModel)
         {
             var existingViewModel = _providerProvider.GetVacancyPartyViewModel(viewModel.ProviderSiteId,
                 viewModel.Employer.EdsUrn);
