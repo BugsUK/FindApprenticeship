@@ -75,8 +75,8 @@
                 .MapMemberFrom(v => v.Town, av => av.Address.Town)
                 .MapMemberFrom(v => v.Latitude, av => (decimal)av.Address.GeoPoint.Latitude) 
                 .MapMemberFrom(v => v.Longitude, av => (decimal)av.Address.GeoPoint.Longitude)
-                .MapMemberFrom(v => v.GeocodeEasting, av => (int)av.Address.GeoPoint.Easting) 
-                .MapMemberFrom(v => v.GeocodeNorthing, av => (int)av.Address.GeoPoint.Northing) 
+                .MapMemberFrom(v => v.GeocodeEasting, av => av.Address.GeoPoint.Easting) 
+                .MapMemberFrom(v => v.GeocodeNorthing, av => av.Address.GeoPoint.Northing) 
 
                 .MapMemberFrom(v => v.VacancyReferenceNumber, av => av.VacancyReferenceNumber)
                 .MapMemberFrom(v => v.ContactName, av => av.ContactName)
@@ -129,6 +129,7 @@
                 .MapMemberFrom(v => v.ContractOwnerID, av => av.ProviderId)
                 .MapMemberFrom(v => v.OriginalContractOwnerId, av => av.ProviderId)
                 .IgnoreMember(v => v.LocalAuthorityId)
+                .MapMemberFrom(v => v.VacancySourceId, av => av.VacancySource)
                 .End();
 
             Mapper.CreateMap<DbVacancy, DomainVacancy>()
@@ -227,6 +228,7 @@
                 .MapMemberFrom(av => av.ProviderId, v => v.ContractOwnerID ?? 0)
                 .IgnoreMember(av => av.LocalAuthorityCode)
                 .MapMemberFrom(av => av.EditedInRaa, v => v.EditedInRaa)
+                .MapMemberFrom(av => av.VacancySource, v => v.VacancySourceId)
                 .AfterMap((v, av) =>
                 {
                     if (!string.IsNullOrWhiteSpace(v.AddressLine1) || !string.IsNullOrWhiteSpace(v.AddressLine2)
