@@ -68,7 +68,8 @@
 	[VacancyTypeId]					   INT				NULL,
 	[SectorId]						   INT				NULL,
 	[UpdatedDateTime]				   DATETIME			NULL,
-	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0
+	[EditedInRaa]					   BIT				NOT NULL DEFAULT 0,
+	[VacancySourceId]			       INT				NULL
 	
 
     CONSTRAINT [PK_Vacancy_1] PRIMARY KEY CLUSTERED ([VacancyId] ASC),
@@ -85,6 +86,7 @@
     CONSTRAINT [FK_Vacancy_VacancyStatusType] FOREIGN KEY ([VacancyStatusId]) REFERENCES [dbo].[VacancyStatusType] ([VacancyStatusTypeId]),
 	CONSTRAINT [FK_Vacancy_DurationType] FOREIGN KEY ([DurationTypeId]) REFERENCES [dbo].[DurationType] ([DurationTypeId]),
 	CONSTRAINT [FK_Vacancy_WageType] FOREIGN KEY ([WageType]) REFERENCES [dbo].[WageType] ([WageTypeId]),
+	CONSTRAINT [FK_Vacancy_VacancySource] FOREIGN KEY ([VacancySourceId]) REFERENCES [dbo].[VacancySource] ([VacancySourceId]),
     CONSTRAINT [uq_idx_vacancy] UNIQUE NONCLUSTERED ([VacancyReferenceNumber] ASC)
 );
 
