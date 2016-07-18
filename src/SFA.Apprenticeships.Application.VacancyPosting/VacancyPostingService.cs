@@ -46,8 +46,7 @@
             _providerVacancyAuthorisationService = providerVacancyAuthorisationService;
         }
 
-        // TODO: AG: REFACTOR: should be CreateVacancy (could be Traineeship or Apprenticeship).
-        public Vacancy CreateApprenticeshipVacancy(Vacancy vacancy)
+        public Vacancy CreateVacancy(Vacancy vacancy)
         {
             Condition.Requires(vacancy);
 
@@ -62,11 +61,9 @@
                 }
             }
 
-            return SaveVacancy(vacancy);
-        }
+            // Always set VacancySource as Raa when creating a vacancy from Raa
+            vacancy.VacancySource = VacancySource.Raa;
 
-        public Vacancy SaveVacancy(Vacancy vacancy)
-        {
             return UpsertVacancy(vacancy, v => _vacancyWriteRepository.Create(v));
         }
 

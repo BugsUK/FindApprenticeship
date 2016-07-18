@@ -83,7 +83,7 @@
             foreach (var number in vacancyNumbers)
             {
                 vacancyPostingService.Verify(r =>
-                    r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
+                    r.CreateVacancy(It.Is<Vacancy>(av => av.VacancyReferenceNumber == number
                                                                        && av.Status == VacancyStatus.Live &&
                                                                        av.ParentVacancyId ==
                                                                        parentVacancyId &&
@@ -94,7 +94,7 @@
             //save new vacancies with only one of the new addresses and the position count
             foreach (var location in locationAddresses.Skip(1))
             {
-                vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.Is<Vacancy>(av
+                vacancyPostingService.Verify(r => r.CreateVacancy(It.Is<Vacancy>(av
                     => av.Address.Postcode == location.Address.Postcode
                        && av.Address.AddressLine1 == location.Address.AddressLine1
                        && av.Address.AddressLine2 == location.Address.AddressLine2
@@ -108,7 +108,7 @@
             vacancyPostingService.Verify(r => r.UpdateVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             //Create each child vacancy once
-            vacancyPostingService.Verify(r => r.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()),
+            vacancyPostingService.Verify(r => r.CreateVacancy(It.IsAny<Vacancy>()),
                 Times.Exactly(locationAddressCount - 1));
 
             vacancyPostingService.Verify(s => s.DeleteVacancyLocationsFor(vacancy.VacancyId));

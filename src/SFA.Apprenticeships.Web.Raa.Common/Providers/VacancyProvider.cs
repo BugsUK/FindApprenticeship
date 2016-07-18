@@ -173,11 +173,11 @@
                 vacancy.Address = _mapper.Map<AddressViewModel, PostalAddress>(addressViewModel.Address);
                 vacancy.LocalAuthorityCode = _localAuthorityLookupService.GetLocalAuthorityCode(vacancy.Address.Postcode);
                 vacancy.NumberOfPositions = addressViewModel.NumberOfPositions;
-                _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+                _vacancyPostingService.CreateVacancy(vacancy);
             }
             else
             {
-                vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+                vacancy = _vacancyPostingService.CreateVacancy(vacancy);
                 var vacancyLocations =
                     _mapper.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         locationSearchViewModel.Addresses);
@@ -328,7 +328,7 @@
                 employer.Address.GeoPoint = _geoCodingService.GetGeoPointFor(employer.Address);
             }
 
-            var vacancy = _vacancyPostingService.CreateApprenticeshipVacancy(new Vacancy
+            var vacancy = _vacancyPostingService.CreateVacancy(new Vacancy
             {
                 VacancyGuid = newVacancyViewModel.VacancyGuid,
                 VacancyReferenceNumber = vacancyReferenceNumber,
@@ -990,7 +990,7 @@
             vacancy.VacancyId = 0;
             vacancy.VacancyGuid = Guid.NewGuid();
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(vacancy);
+            _vacancyPostingService.CreateVacancy(vacancy);
 
             var vacancyParty = _providerService.GetVacancyParty(vacancy.OwnerPartyId, true);
             if (vacancyParty == null)
@@ -1189,7 +1189,7 @@
             newVacancy.NumberOfPositions = address.NumberOfPositions;
             newVacancy.IsEmployerLocationMainApprenticeshipLocation = true;
 
-            _vacancyPostingService.CreateApprenticeshipVacancy(newVacancy);
+            _vacancyPostingService.CreateVacancy(newVacancy);
         }
 
         public QAActionResultCode ApproveVacancy(int vacancyReferenceNumber)

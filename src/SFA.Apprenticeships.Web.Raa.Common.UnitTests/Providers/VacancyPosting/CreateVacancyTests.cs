@@ -1,6 +1,4 @@
-﻿using SFA.Apprenticeships.Domain.Entities.Locations;
-
-namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
+﻿namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 {
     using System;
     using System.Collections.Generic;
@@ -69,11 +67,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
 
             MockVacancyPostingService.Setup(mock => mock.GetVacancyByReferenceNumber(_validNewVacancyViewModelWithReferenceNumber.VacancyReferenceNumber.Value))
                 .Returns(_existingVacancy);
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
-                .Returns<Vacancy>(v => v);
-            MockVacancyPostingService.Setup(mock => mock.SaveVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockReferenceDataService.Setup(mock => mock.GetSectors())
                 .Returns(new List<Sector>
@@ -142,7 +136,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             var provider = GetVacancyPostingProvider();
 
             // Act.
-            var viewModel = provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
+            provider.CreateVacancy(_validNewVacancyViewModelWithReferenceNumber, Ukprn);
 
             // Assert.
             MockVacancyPostingService.Verify(mock =>
@@ -165,7 +159,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 mock.GetVacancyByReferenceNumber(It.IsAny<int>()), Times.Never);
             MockVacancyPostingService.Verify(mock => mock.GetNextVacancyReferenceNumber(), Times.Once);
             MockVacancyPostingService.Verify(mock =>
-                mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+                mock.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
 
             viewModel.VacancyReferenceNumber.Should().HaveValue();
         }
@@ -195,7 +189,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 OfflineApplicationInstructions = offlineApplicationInstructions,
             }, Ukprn);
 
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.OfflineVacancy == offlineVacancy 
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => v.OfflineVacancy == offlineVacancy 
             && v.OfflineApplicationUrl.StartsWith("http://") && v.OfflineApplicationInstructions == offlineApplicationInstructions)));
         }
 
@@ -222,7 +216,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
                 }
             }, Ukprn);
 
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(v => v.VacancyGuid == vacancyGuid)));
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(v => v.VacancyGuid == vacancyGuid)));
         }
 
         [Test]
@@ -317,7 +311,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Status == VacancyStatus.Draft)));
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.Is<Vacancy>(av => av.Status == VacancyStatus.Draft)));
         }
 
         [Test]
@@ -341,7 +335,7 @@ namespace SFA.Apprenticeships.Web.Raa.Common.UnitTests.Providers.VacancyPosting
             provider.CreateVacancy(locationSearchViewModel, Ukprn);
 
             //Assert
-            MockVacancyPostingService.Verify(s => s.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+            MockVacancyPostingService.Verify(s => s.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
         }
     }
 }

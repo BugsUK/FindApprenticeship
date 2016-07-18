@@ -50,7 +50,7 @@
                 },
                 OfflineVacancy = false,
             };
-            MockVacancyPostingService.Setup(mock => mock.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(mock => mock.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns<Vacancy>(v => v);
             MockProviderService.Setup(s => s.GetVacancyParty(ProviderSiteId, EdsUrn))
                 .Returns(_vacancyParty);
@@ -136,7 +136,7 @@
                 m =>
                     m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
-            MockVacancyPostingService.Setup(v => v.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             MockProviderService.Setup(s => s.GetProvider(Ukprn)).Returns(new Provider());
 
@@ -147,7 +147,7 @@
 
             // Assert.
             MockGeocodeService.Verify(gs => gs.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Exactly(2));
-            MockVacancyPostingService.Verify(m => m.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+            MockVacancyPostingService.Verify(m => m.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
             MockVacancyPostingService.Verify(m => m.SaveVacancyLocations(vacancyLocations), Times.Once);
         }
 
@@ -185,8 +185,8 @@
             // Assert.
             MockGeocodeService.Verify(gs => gs.GetGeoPointFor(It.IsAny<PostalAddress>()), Times.Once);
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
-            MockVacancyPostingService.Verify(m => m.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()), Times.Once);
+                m => m.CreateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+            MockVacancyPostingService.Verify(m => m.CreateVacancy(It.IsAny<Vacancy>()), Times.Once);
         }
 
         [Test]
@@ -211,7 +211,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.CreateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
@@ -236,7 +236,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.CreateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
@@ -260,7 +260,7 @@
 
             // Assert.
             MockVacancyPostingService.Verify(
-                m => m.CreateApprenticeshipVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
+                m => m.CreateVacancy(It.Is<Vacancy>(av => av.Address.GeoPoint.Equals(geopoint))));
         }
 
         [Test]
@@ -362,7 +362,7 @@
                 m =>
                     m.Map<List<VacancyLocationAddressViewModel>, List<VacancyLocation>>(
                         It.IsAny<List<VacancyLocationAddressViewModel>>())).Returns(vacancyLocations);
-            MockVacancyPostingService.Setup(v => v.CreateApprenticeshipVacancy(It.IsAny<Vacancy>()))
+            MockVacancyPostingService.Setup(v => v.CreateVacancy(It.IsAny<Vacancy>()))
                 .Returns(new Vacancy());
             var vacancy = new Fixture().Create<Vacancy>();
             MockVacancyPostingService.Setup(s => s.GetVacancyByReferenceNumber(It.IsAny<int>()))
